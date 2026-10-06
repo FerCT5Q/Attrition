@@ -1,0 +1,101 @@
+schema_version: 1
+plan_version: 8
+plan_revision_reason: >-
+  El 2026-09-09 el dueño de negocio aprobó una ventana de seis meses, salidas
+  Voluntary estrictas, y que la exposición persista aunque el empleado reciba
+  un nuevo manager. Esta versión convierte la atribución histórica validada en
+  una distribución reproducible para la lámina 40.
+language: es
+created_before_execution: true
+deliverable_mode: presentation
+variable: Manager leaving
+concept: >-
+  Exposición de un empleado activo a una salida Voluntary ya conocida de un
+  manager que lo supervisaba antes de dicha salida.
+intended_use: >-
+  Describir una posible disrupción posterior a la salida voluntaria de un
+  manager como señal time-safe para attrition; no evaluar al manager ni probar
+  causalidad.
+outcome_boundary: >-
+  Una salida voluntaria futura del empleado es un outcome para un estudio
+  retrospectivo de seis meses, no un componente de esta feature ni de su
+  distribución al snapshot.
+knowledge_date: >-
+  El evento sólo se activa desde el primer cierre mensual igual o posterior a
+  term_date. Para el corte seleccionado, ningún term_date posterior al
+  2026-08-23 puede entrar.
+population: >-
+  Empleados regulares activos (worker_type='Employee', employee_type='Regular',
+  active_status=1) al cierre mensual 2026-08-23, con employee_id utilizable.
+grain: Empleado-snapshot mensual
+semantic_type: derived_feature
+source_reasoning: >-
+  La relación histórica empleado-manager y reg_non_intern_dir_reports provienen
+  de hrda.post_hire_monthly_worker_dtls. Los eventos canónicos provienen de
+  hrda.all_terminations. El flag de manager requiere más de cero reportes
+  directos en el último snapshot disponible dentro de los 45 días antes de la
+  salida.
+definition:
+  snapshot_date: '2026-08-23'
+  event_scope: term_type normalizado exactamente a Voluntary
+  manager_eligibility: >-
+    El manager tiene reg_non_intern_dir_reports > 0 en su último snapshot
+    anterior a term_date, dentro de los 45 días previos.
+  employee_attribution: >-
+    El empleado reportaba a ese manager en su último snapshot activo y regular
+    anterior a term_date, dentro de los 45 días previos.
+  exposure_window: '[term_date, term_date + 6 meses], observado sólo en cierres posteriores al evento'
+  reassignment_policy: >-
+    La exposición se conserva hasta terminar la ventana aun si el manager
+    vigente al snapshot ya es distinto; la reasignación posterior no borra el
+    evento histórico.
+  primary_feature: >-
+    manager_leaving_flag = 1 si el empleado tiene una o más exposiciones
+    elegibles en la ventana; 0 en otro caso.
+  sensitivity_feature: >-
+    manager_leaving_event_count = número de eventos elegibles distintos por
+    manager_id + term_date; se publica como 0, 1 y 2+ sólo si cada bucket
+    cumple n >= 30; de otro modo se combina 1 y 2+ como 1+.
+validation_story:
+  - id: source_access
+    criterion: source
+    evidence_role: defining
+    question: ¿Existen las tablas y todos los campos requeridos para la derivación?
+    why: Sin claves, fechas y el indicador de reportes directos no se puede reconstruir el evento.
+    fields: [employee_id, manager_employee_id, reg_non_intern_dir_reports, fis_mo_end_dt, employeeid, term_date, term_type]
+    method: Auditoría agregada de information_schema.
+    sql_reference: queries/audits/manager_leaving_voluntary_6m_source_access_20260909.sql
+    acceptance_rule: missing_required_items = 0.
+  - id: voluntary_event_and_temporal_attribution
+    criterion: definition
+    evidence_role: defining
+    question: ¿La salida Voluntary, el manager previo, la relación histórica y la ventana de seis meses producen una feature sin leakage?
+    why: La terminación debe ser estrictamente Voluntary, conocida al cierre y atribuida al manager previo, no al reemplazante.
+    fields: [term_type, term_date, manager_employee_id, reg_non_intern_dir_reports, fis_mo_end_dt]
+    method: >-
+      Deduplicar manager_id + term_date, resolver el último snapshot anterior
+      del manager y del empleado, mapear el primer cierre que conoce el evento,
+      y contar la exposición sin requerir el manager vigente al corte.
+    sql_reference: queries/audits/manager_leaving_voluntary_6m_distribution_20260909.sql
+    acceptance_rule: >-
+      Existen eventos Voluntary y población elegible; las claves empleado-snapshot
+      no se duplican ni entran eventos futuros; cada bucket publicado reconcilia
+      exactamente con la población y tiene n >= 30.
+  - id: binary_vs_count_sensitivity
+    criterion: effort
+    evidence_role: supporting
+    question: ¿El conteo de salidas agrega información distribuible frente al flag binario?
+    why: El conteo sólo es útil si existen exposiciones repetidas publicables; de lo contrario complica la interpretación sin aportar una señal estable.
+    fields: [manager_id, term_date, employee_id]
+    method: Comparar la distribución agregada 0/1+ contra 0/1/2+ en la misma población.
+    sql_reference: queries/audits/manager_leaving_voluntary_6m_distribution_20260909.sql
+    acceptance_rule: >-
+      Se recomienda el flag como feature primaria; el conteo queda como
+      sensibilidad y sólo conserva 2+ si el bucket cumple n >= 30.
+planned_sql:
+  - queries/audits/manager_leaving_voluntary_6m_source_access_20260909.sql
+  - queries/audits/manager_leaving_voluntary_6m_distribution_20260909.sql
+publication_controls:
+  - Modo presentation; sólo resultados agregados.
+  - No publicar employee_id, manager_id, nombres, ni filas individuales.
+  - Todo bucket visible debe tener n >= 30.

@@ -1,0 +1,96 @@
+schema_version: 1
+plan_version: 3
+plan_revision_reason: >-
+  La auditoría de cobertura demostró que una ventana calendario completa puede
+  tener 12 o 13 month-ends, según la separación entre cierres. La regla exacta
+  de 12 excluía erróneamente ventanas completas. Se adopta una condición de al
+  menos 12 snapshots y un span observado de al menos 330 días.
+language: es
+created_before_execution: true
+deliverable_mode: internal_analysis
+variable: More than 1 employee leaves in a year
+concept: >-
+  Sensibilidad anual de exposición a equipos con dos o más salidas voluntarias,
+  usando una ventana calendario de doce meses con cobertura mensual completa.
+intended_use: >-
+  Añadir debajo de la serie semestral una comparación anual descriptiva que
+  responda al comentario de negocio sin redefinir la feature principal.
+knowledge_date: Cierre mensual t; sólo información conocida en o antes de t.
+population: >-
+  Empleados worker_type='Employee', employee_type='Regular' y active_status=1
+  con equipo directo observable en t.
+grain: Scope × attribution × employee snapshot mensual
+semantic_type: derived_feature
+definition:
+  primary_window: '(t - 6 meses, t] — señal principal existente'
+  annual_window: '(t - 12 meses, t] — comparación suplementaria'
+  annual_completeness: >-
+    Al menos 12 snapshots mensuales distintos y 330 días o más entre el primer
+    y último snapshot observado dentro de la ventana; 13 cierres también son
+    válidos cuando la cadencia mensual los ubica dentro del año calendario.
+  event_key: employee_id + term_date, con term_type normalizado exactamente a Voluntary
+  scopes:
+    - all_teams: equipos con al menos 1 reporte directo
+    - teams_gt_5: equipos con al menos 6 reportes directos
+  attribution:
+    manager_at_evaluation: último manager no nulo observado hasta t
+    manager_at_exit: último manager no nulo observado hasta term_date
+  flag: >-
+    1 cuando el equipo del empleado tiene al menos dos eventos Voluntary
+    distintos en la ventana; 0 en otro caso.
+validation_story:
+  - id: annual_window_reconstruction
+    criterion: definition
+    evidence_role: supporting
+    question: >-
+      ¿La comparación anual reconstruye la misma exposición del equipo con una
+      ventana calendario completa de doce meses?
+    why: >-
+      La vista anual debe conservar población, evento, deduplicación y
+      atribución de la serie primaria; únicamente cambia el horizonte.
+    fields: [employee_id, manager_employee_id, fis_mo_end_dt, term_date, term_type]
+    method: >-
+      Reconstruir equipos directos en t, deduplicar employee_id + term_date,
+      contar Voluntary en (t - 12 meses, t] y calcular empleados expuestos /
+      empleados observables por scope y atribución.
+    sql_reference: queries/audits/more_than_1_employee_leaves_team_12m_20260909.sql
+    acceptance_rule: >-
+      Cada ventana publicada debe tener >=12 snapshots y >=330 días observados;
+      todos los puntos deben cumplir flagged_employees <= observable_employees
+      y denominador >=30. Para fechas compartidas, la exposición anual debe ser
+      mayor o igual a la semestral anidada.
+  - id: annual_history_coverage
+    criterion: history
+    evidence_role: defining
+    question: >-
+      ¿Qué cortes semestrales tienen cobertura completa para la comparación
+      anual?
+    why: La gráfica anual no debe presentar como completa una ventana truncada.
+    fields: [fis_mo_end_dt, employee_id]
+    method: >-
+      Contar snapshots mensuales y span observado dentro de (t - 12 meses, t]
+      para los cortes de la serie semestral.
+    sql_reference: queries/audits/more_than_1_employee_leaves_annual_window_coverage_20260909.sql
+    acceptance_rule: >-
+      Publicar sólo cortes con >=12 snapshots y span >=330 días; los cortes
+      tempranos incompletos se excluyen y se documenta su cantidad.
+  - id: primary_window_preserved
+    criterion: definition
+    evidence_role: contextual
+    question: ¿La comparación anual reemplaza la señal semestral elegida?
+    why: La pregunta anual es complementaria, no una redefinición de la feature.
+    fields: [fis_mo_end_dt, term_date]
+    method: >-
+      Renderizar la serie semestral arriba y la anual abajo con etiquetas
+      explícitas de primary y annual comparison.
+    sql_reference: queries/audits/more_than_1_employee_leaves_team_12m_20260909.sql
+    acceptance_rule: >-
+      Los slides deben identificar seis meses como primary y doce meses como
+      annual comparison sin mezclar las ventanas.
+planned_sql:
+  - queries/audits/more_than_1_employee_leaves_annual_window_coverage_20260909.sql
+  - queries/audits/more_than_1_employee_leaves_team_12m_20260909.sql
+publication_controls:
+  - Modo internal_analysis; resultados agregados únicamente.
+  - No mostrar employee_id, manager_employee_id, nombres ni filas individuales.
+  - Cada punto publicado requiere al menos 30 empleados observables.

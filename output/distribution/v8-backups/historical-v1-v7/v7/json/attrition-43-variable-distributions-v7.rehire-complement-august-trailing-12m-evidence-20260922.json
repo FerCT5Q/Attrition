@@ -1,0 +1,38 @@
+{
+  "artifact_type": "aggregate_rehire_complement_august_trailing_12m_attrition_evidence",
+  "version": 1,
+  "generated_on": "2026-09-22",
+  "deliverable_mode": "presentation",
+  "artifact_classification": "presentation",
+  "purpose": "Comparar la distribución Rehire frente a su complemento y la attrition voluntaria trailing 12 meses en la cohorte más reciente de agosto.",
+  "definition": {
+    "concept": "Stored is_rehire flag",
+    "population": "Active Regular Employees at the 24-Aug-2025 fiscal-August closing snapshot",
+    "grain": "Deduplicated employee cohort at the baseline snapshot",
+    "outcome": "Strict VOLUNTARY termination in (2025-08-24, 2026-08-23]",
+    "minimum_cohort": 30,
+    "complement_rule": "Not a rehire = baseline is_rehire is not 1, including null stored values"
+  },
+  "query": "queries/audits/v7_rehire_complement_august_trailing_12m_attrition_20260922.sql",
+  "query_sha256": "787EB0D70FAD685B319386766E2498A312F1FEC67FEF6ACCB013001C50FA4AB5",
+  "rows": [
+    {
+      "rehire_group": "Rehire",
+      "baseline_employee_count": 5747,
+      "distinct_employee_count": 5747,
+      "voluntary_exit_count": 461,
+      "trailing_12m_voluntary_attrition_rate_percent": 8.0216,
+      "duplicate_employee_snapshot_count": 0
+    },
+    {
+      "rehire_group": "Not a rehire",
+      "baseline_employee_count": 39256,
+      "distinct_employee_count": 39256,
+      "voluntary_exit_count": 2023,
+      "trailing_12m_voluntary_attrition_rate_percent": 5.1534,
+      "duplicate_employee_snapshot_count": 0
+    }
+  ],
+  "acceptance_rule": "Both displayed cohorts have n>=30, one baseline row per employee, and voluntary exits / baseline cohort reconciles to the trailing-12-month rate.",
+  "outcome": "pass"
+}

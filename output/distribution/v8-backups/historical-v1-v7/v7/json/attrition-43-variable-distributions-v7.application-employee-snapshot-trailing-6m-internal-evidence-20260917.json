@@ -1,0 +1,468 @@
+{
+  "schema_version": 1,
+  "artifact": "application_employee_snapshot_trailing_6m_distribution",
+  "artifact_classification": "internal_analysis",
+  "generated_on": "2026-09-17",
+  "reporting_mode": "internal_analysis",
+  "authorization": {
+    "authorization_id": "attrition-v7-internal-aggregate-visibility-20260917",
+    "authorized_on": "2026-09-17",
+    "status": "approved",
+    "reporting_mode": "internal_analysis",
+    "authorized_audience": "requester and Julia, both project developers",
+    "purpose": "Review every aggregate percentage and count in Attrition V7, including buckets below the shared-output threshold, before deciding whether any variable should be used for attrition.",
+    "scope": {
+      "artifact": "output/distribution/attrition-43-variable-distributions-v7.html",
+      "slides": "all 50 slides",
+      "aggregate_buckets": "show every available category, count and percentage; do not suppress solely because n is below 30",
+      "historical_window": "retain the V7 source history and the previously documented Career goals history from 2024 onward; 2023 remains a mapping note"
+    },
+    "small_cell_exception": {
+      "allow_subthreshold_aggregate_buckets": true,
+      "minimum_displayed_count": 0,
+      "reason": "Explicit internal exploratory request for two named project developers; the audience can review aggregate percentages without employee-level detail.",
+      "not_a_general_privacy_policy_change": true
+    },
+    "non_negotiable_controls": {
+      "aggregate_only": true,
+      "employee_rows_persisted": false,
+      "employee_ids_persisted": false,
+      "names_persisted": false,
+      "emails_persisted": false,
+      "addresses_persisted": false,
+      "manager_access": false,
+      "redistribution": false,
+      "operational_use": false,
+      "score_v4_change": false,
+      "production_feature_approval": false,
+      "exact_compensation_values": false
+    },
+    "interpretation": "The exception changes only aggregate display suppression for this internal V7 artifact. It does not impute unavailable metrics, create employee-level records, change attrition definitions, or make a non-estimable rate estimable."
+  },
+  "query": {
+    "path": "queries/profiles/application_employee_snapshot_trailing_6m_distribution_20260913.sql",
+    "sha256": "eb40167666baf679be30b1fb0cb1fb11e1698b50c1e964c4e76c31efeb0cd56b",
+    "result_sha256": "e7fb765442f77e9dae95adaab3bd11be6164369fae73fc109ab24e7436ab7804",
+    "columns": [
+      "snapshot_date",
+      "fiscal_year",
+      "application_bucket",
+      "employee_snapshots",
+      "eligible_employee_snapshots",
+      "observed_employee_snapshots",
+      "unknown_employee_snapshots",
+      "percent_of_eligible_snapshots",
+      "coverage_percent",
+      "unknown_percent",
+      "source_rule"
+    ]
+  },
+  "population": "Active regular employee-snapshots with time-safe qualified application coverage handling.",
+  "grain": "employee-snapshot aggregate by application bucket",
+  "window": "Six months before and including each monthly snapshot.",
+  "bucket_definition": {
+    "0": "zero unique requisitions with time-safe source coverage",
+    "1": "one unique requisition",
+    "2+": "two or more unique requisitions",
+    "Unknown": "no usable qualified event observable by the snapshot"
+  },
+  "latest_snapshot": "2026-08-23",
+  "latest_distribution": [
+    {
+      "snapshot_date": "2026-08-23",
+      "fiscal_year": "2026",
+      "application_bucket": "0",
+      "employee_snapshots": 4054,
+      "eligible_employee_snapshots": 50043,
+      "observed_employee_snapshots": 4884,
+      "unknown_employee_snapshots": 45159,
+      "percent_of_eligible_snapshots": 8.101,
+      "coverage_percent": 9.7596,
+      "unknown_percent": 90.2404
+    },
+    {
+      "snapshot_date": "2026-08-23",
+      "fiscal_year": "2026",
+      "application_bucket": "1",
+      "employee_snapshots": 810,
+      "eligible_employee_snapshots": 50043,
+      "observed_employee_snapshots": 4884,
+      "unknown_employee_snapshots": 45159,
+      "percent_of_eligible_snapshots": 1.6186,
+      "coverage_percent": 9.7596,
+      "unknown_percent": 90.2404
+    },
+    {
+      "snapshot_date": "2026-08-23",
+      "fiscal_year": "2026",
+      "application_bucket": "2+",
+      "employee_snapshots": 20,
+      "eligible_employee_snapshots": 50043,
+      "observed_employee_snapshots": 4884,
+      "unknown_employee_snapshots": 45159,
+      "percent_of_eligible_snapshots": 0.04,
+      "coverage_percent": 9.7596,
+      "unknown_percent": 90.2404
+    },
+    {
+      "snapshot_date": "2026-08-23",
+      "fiscal_year": "2026",
+      "application_bucket": "Unknown",
+      "employee_snapshots": 45159,
+      "eligible_employee_snapshots": 50043,
+      "observed_employee_snapshots": 4884,
+      "unknown_employee_snapshots": 45159,
+      "percent_of_eligible_snapshots": 90.2404,
+      "coverage_percent": 9.7596,
+      "unknown_percent": 90.2404
+    }
+  ],
+  "trend": [
+    {
+      "snapshot_date": "2025-09-28",
+      "fiscal_year": "2025",
+      "eligible_employee_snapshots": 45141,
+      "observed_employee_snapshots": 3790,
+      "unknown_employee_snapshots": 41351,
+      "coverage_percent": 8.3959,
+      "unknown_percent": 91.6041,
+      "buckets": {
+        "0": {
+          "employee_snapshots": 3411,
+          "percent_of_eligible_snapshots": 7.5563
+        },
+        "1": {
+          "employee_snapshots": 374,
+          "percent_of_eligible_snapshots": 0.8285
+        },
+        "2+": {
+          "employee_snapshots": 5,
+          "percent_of_eligible_snapshots": 0.0111
+        },
+        "Unknown": {
+          "employee_snapshots": 41351,
+          "percent_of_eligible_snapshots": 91.6041
+        }
+      },
+      "publication_status": "internal_analysis_exception"
+    },
+    {
+      "snapshot_date": "2025-10-26",
+      "fiscal_year": "2026",
+      "eligible_employee_snapshots": 45255,
+      "observed_employee_snapshots": 3811,
+      "unknown_employee_snapshots": 41444,
+      "coverage_percent": 8.4212,
+      "unknown_percent": 91.5788,
+      "buckets": {
+        "0": {
+          "employee_snapshots": 3456,
+          "percent_of_eligible_snapshots": 7.6367
+        },
+        "1": {
+          "employee_snapshots": 351,
+          "percent_of_eligible_snapshots": 0.7756
+        },
+        "2+": {
+          "employee_snapshots": 4,
+          "percent_of_eligible_snapshots": 0.0088
+        },
+        "Unknown": {
+          "employee_snapshots": 41444,
+          "percent_of_eligible_snapshots": 91.5788
+        }
+      },
+      "publication_status": "internal_analysis_exception"
+    },
+    {
+      "snapshot_date": "2025-11-23",
+      "fiscal_year": "2026",
+      "eligible_employee_snapshots": 45571,
+      "observed_employee_snapshots": 3851,
+      "unknown_employee_snapshots": 41720,
+      "coverage_percent": 8.4505,
+      "unknown_percent": 91.5495,
+      "buckets": {
+        "0": {
+          "employee_snapshots": 3503,
+          "percent_of_eligible_snapshots": 7.6869
+        },
+        "1": {
+          "employee_snapshots": 341,
+          "percent_of_eligible_snapshots": 0.7483
+        },
+        "2+": {
+          "employee_snapshots": 7,
+          "percent_of_eligible_snapshots": 0.0154
+        },
+        "Unknown": {
+          "employee_snapshots": 41720,
+          "percent_of_eligible_snapshots": 91.5495
+        }
+      },
+      "publication_status": "internal_analysis_exception"
+    },
+    {
+      "snapshot_date": "2025-12-28",
+      "fiscal_year": "2026",
+      "eligible_employee_snapshots": 47134,
+      "observed_employee_snapshots": 3906,
+      "unknown_employee_snapshots": 43228,
+      "coverage_percent": 8.287,
+      "unknown_percent": 91.713,
+      "buckets": {
+        "0": {
+          "employee_snapshots": 3659,
+          "percent_of_eligible_snapshots": 7.763
+        },
+        "1": {
+          "employee_snapshots": 235,
+          "percent_of_eligible_snapshots": 0.4986
+        },
+        "2+": {
+          "employee_snapshots": 12,
+          "percent_of_eligible_snapshots": 0.0255
+        },
+        "Unknown": {
+          "employee_snapshots": 43228,
+          "percent_of_eligible_snapshots": 91.713
+        }
+      },
+      "publication_status": "internal_analysis_exception"
+    },
+    {
+      "snapshot_date": "2026-01-25",
+      "fiscal_year": "2026",
+      "eligible_employee_snapshots": 47258,
+      "observed_employee_snapshots": 3939,
+      "unknown_employee_snapshots": 43319,
+      "coverage_percent": 8.3351,
+      "unknown_percent": 91.6649,
+      "buckets": {
+        "0": {
+          "employee_snapshots": 3687,
+          "percent_of_eligible_snapshots": 7.8019
+        },
+        "1": {
+          "employee_snapshots": 241,
+          "percent_of_eligible_snapshots": 0.51
+        },
+        "2+": {
+          "employee_snapshots": 11,
+          "percent_of_eligible_snapshots": 0.0233
+        },
+        "Unknown": {
+          "employee_snapshots": 43319,
+          "percent_of_eligible_snapshots": 91.6649
+        }
+      },
+      "publication_status": "internal_analysis_exception"
+    },
+    {
+      "snapshot_date": "2026-02-22",
+      "fiscal_year": "2026",
+      "eligible_employee_snapshots": 47666,
+      "observed_employee_snapshots": 4000,
+      "unknown_employee_snapshots": 43666,
+      "coverage_percent": 8.3917,
+      "unknown_percent": 91.6083,
+      "buckets": {
+        "0": {
+          "employee_snapshots": 3697,
+          "percent_of_eligible_snapshots": 7.7561
+        },
+        "1": {
+          "employee_snapshots": 288,
+          "percent_of_eligible_snapshots": 0.6042
+        },
+        "2+": {
+          "employee_snapshots": 15,
+          "percent_of_eligible_snapshots": 0.0315
+        },
+        "Unknown": {
+          "employee_snapshots": 43666,
+          "percent_of_eligible_snapshots": 91.6083
+        }
+      },
+      "publication_status": "internal_analysis_exception"
+    },
+    {
+      "snapshot_date": "2026-03-29",
+      "fiscal_year": "2026",
+      "eligible_employee_snapshots": 47850,
+      "observed_employee_snapshots": 4038,
+      "unknown_employee_snapshots": 43812,
+      "coverage_percent": 8.4389,
+      "unknown_percent": 91.5611,
+      "buckets": {
+        "0": {
+          "employee_snapshots": 3684,
+          "percent_of_eligible_snapshots": 7.6991
+        },
+        "1": {
+          "employee_snapshots": 338,
+          "percent_of_eligible_snapshots": 0.7064
+        },
+        "2+": {
+          "employee_snapshots": 16,
+          "percent_of_eligible_snapshots": 0.0334
+        },
+        "Unknown": {
+          "employee_snapshots": 43812,
+          "percent_of_eligible_snapshots": 91.5611
+        }
+      },
+      "publication_status": "internal_analysis_exception"
+    },
+    {
+      "snapshot_date": "2026-04-26",
+      "fiscal_year": "2026",
+      "eligible_employee_snapshots": 48044,
+      "observed_employee_snapshots": 4084,
+      "unknown_employee_snapshots": 43960,
+      "coverage_percent": 8.5005,
+      "unknown_percent": 91.4995,
+      "buckets": {
+        "0": {
+          "employee_snapshots": 3697,
+          "percent_of_eligible_snapshots": 7.695
+        },
+        "1": {
+          "employee_snapshots": 369,
+          "percent_of_eligible_snapshots": 0.768
+        },
+        "2+": {
+          "employee_snapshots": 18,
+          "percent_of_eligible_snapshots": 0.0375
+        },
+        "Unknown": {
+          "employee_snapshots": 43960,
+          "percent_of_eligible_snapshots": 91.4995
+        }
+      },
+      "publication_status": "internal_analysis_exception"
+    },
+    {
+      "snapshot_date": "2026-05-24",
+      "fiscal_year": "2026",
+      "eligible_employee_snapshots": 48334,
+      "observed_employee_snapshots": 4125,
+      "unknown_employee_snapshots": 44209,
+      "coverage_percent": 8.5344,
+      "unknown_percent": 91.4656,
+      "buckets": {
+        "0": {
+          "employee_snapshots": 3756,
+          "percent_of_eligible_snapshots": 7.7709
+        },
+        "1": {
+          "employee_snapshots": 350,
+          "percent_of_eligible_snapshots": 0.7241
+        },
+        "2+": {
+          "employee_snapshots": 19,
+          "percent_of_eligible_snapshots": 0.0393
+        },
+        "Unknown": {
+          "employee_snapshots": 44209,
+          "percent_of_eligible_snapshots": 91.4656
+        }
+      },
+      "publication_status": "internal_analysis_exception"
+    },
+    {
+      "snapshot_date": "2026-06-28",
+      "fiscal_year": "2026",
+      "eligible_employee_snapshots": 48826,
+      "observed_employee_snapshots": 4367,
+      "unknown_employee_snapshots": 44459,
+      "coverage_percent": 8.944,
+      "unknown_percent": 91.056,
+      "buckets": {
+        "0": {
+          "employee_snapshots": 3846,
+          "percent_of_eligible_snapshots": 7.877
+        },
+        "1": {
+          "employee_snapshots": 504,
+          "percent_of_eligible_snapshots": 1.0322
+        },
+        "2+": {
+          "employee_snapshots": 17,
+          "percent_of_eligible_snapshots": 0.0348
+        },
+        "Unknown": {
+          "employee_snapshots": 44459,
+          "percent_of_eligible_snapshots": 91.056
+        }
+      },
+      "publication_status": "internal_analysis_exception"
+    },
+    {
+      "snapshot_date": "2026-07-26",
+      "fiscal_year": "2026",
+      "eligible_employee_snapshots": 49652,
+      "observed_employee_snapshots": 4809,
+      "unknown_employee_snapshots": 44843,
+      "coverage_percent": 9.6854,
+      "unknown_percent": 90.3146,
+      "buckets": {
+        "0": {
+          "employee_snapshots": 3936,
+          "percent_of_eligible_snapshots": 7.9272
+        },
+        "1": {
+          "employee_snapshots": 843,
+          "percent_of_eligible_snapshots": 1.6978
+        },
+        "2+": {
+          "employee_snapshots": 30,
+          "percent_of_eligible_snapshots": 0.0604
+        },
+        "Unknown": {
+          "employee_snapshots": 44843,
+          "percent_of_eligible_snapshots": 90.3146
+        }
+      },
+      "publication_status": "internal_analysis_exception"
+    },
+    {
+      "snapshot_date": "2026-08-23",
+      "fiscal_year": "2026",
+      "eligible_employee_snapshots": 50043,
+      "observed_employee_snapshots": 4884,
+      "unknown_employee_snapshots": 45159,
+      "coverage_percent": 9.7596,
+      "unknown_percent": 90.2404,
+      "buckets": {
+        "0": {
+          "employee_snapshots": 4054,
+          "percent_of_eligible_snapshots": 8.101
+        },
+        "1": {
+          "employee_snapshots": 810,
+          "percent_of_eligible_snapshots": 1.6186
+        },
+        "2+": {
+          "employee_snapshots": 20,
+          "percent_of_eligible_snapshots": 0.04
+        },
+        "Unknown": {
+          "employee_snapshots": 45159,
+          "percent_of_eligible_snapshots": 90.2404
+        }
+      },
+      "publication_status": "internal_analysis_exception"
+    }
+  ],
+  "privacy": {
+    "aggregate_only": true,
+    "small_cell_exception": true,
+    "minimum_displayed_count": 0,
+    "employee_rows_persisted": false,
+    "employee_ids_persisted": false,
+    "names_persisted": false,
+    "emails_persisted": false
+  },
+  "outcome": "pass"
+}

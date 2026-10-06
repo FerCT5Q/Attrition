@@ -1,0 +1,323 @@
+{
+  "artifact_type": "aggregate_display_evidence",
+  "evidence_version": 1,
+  "deliverable_mode": "internal_analysis",
+  "variable": "Level grouped by grade family",
+  "semantic_type": "grouped_mapping",
+  "publication_status": "exploratory_display_only",
+  "snapshot_date": "2026-08-23",
+  "population": "worker_type='Employee'; employee_type='Regular'; active_status=1",
+  "grain": "Distinct employee snapshot",
+  "score_v4_change": "none",
+  "definition": {
+    "primary_field": "level_grouped",
+    "context_field": "compensation_grade",
+    "family_proxy": "First alphabetic grade prefix, with V and the small unmapped tail pooled for privacy.",
+    "interpretation": "The chart describes how the stored grade-family proxy is distributed within the stored Level bands; it does not infer a universal numeric ladder or an official track mapping."
+  },
+  "rule_applied": {
+    "level_order": [
+      "VP & Above",
+      "Sr Dir",
+      "Princ/Directors",
+      "Mgrs Corp",
+      "Sr Staff & /Mgr",
+      "Staff & /Mgr",
+      "Senior & Lead",
+      "Assoc & Int/Eng",
+      "Support"
+    ],
+    "family_order": [
+      "M",
+      "P",
+      "R",
+      "S",
+      "T",
+      "V / other grade families"
+    ],
+    "family_mapping": "M, P, R, S and T remain visible prefixes; V and non-M/P/R/S/T prefixes are pooled as V / other grade families so every visible cell meets n >= 30.",
+    "small_cell_rule": "No displayed Level-family cell, Level band or family total may be below n=30.",
+    "denominator_rule": "All active Regular Employee rows in the exact 2026-08-23 snapshot; no compensation or RF360 filter is applied."
+  },
+  "matrix": [
+    {
+      "level": "VP & Above",
+      "segments": [
+        {
+          "family": "V / other grade families",
+          "employee_count": 428,
+          "percentage_within_level": 100.0
+        }
+      ],
+      "employee_count": 428
+    },
+    {
+      "level": "Sr Dir",
+      "segments": [
+        {
+          "family": "M",
+          "employee_count": 548,
+          "percentage_within_level": 36.21943159
+        },
+        {
+          "family": "R",
+          "employee_count": 375,
+          "percentage_within_level": 24.78519498
+        },
+        {
+          "family": "T",
+          "employee_count": 590,
+          "percentage_within_level": 38.99537343
+        }
+      ],
+      "employee_count": 1513
+    },
+    {
+      "level": "Princ/Directors",
+      "segments": [
+        {
+          "family": "M",
+          "employee_count": 820,
+          "percentage_within_level": 18.88530631
+        },
+        {
+          "family": "R",
+          "employee_count": 1171,
+          "percentage_within_level": 26.96913865
+        },
+        {
+          "family": "T",
+          "employee_count": 2351,
+          "percentage_within_level": 54.14555504
+        }
+      ],
+      "employee_count": 4342
+    },
+    {
+      "level": "Mgrs Corp",
+      "segments": [
+        {
+          "family": "M",
+          "employee_count": 2654,
+          "percentage_within_level": 97.32306564
+        },
+        {
+          "family": "P",
+          "employee_count": 73,
+          "percentage_within_level": 2.67693436
+        }
+      ],
+      "employee_count": 2727
+    },
+    {
+      "level": "Sr Staff & /Mgr",
+      "segments": [
+        {
+          "family": "P",
+          "employee_count": 451,
+          "percentage_within_level": 6.17047476
+        },
+        {
+          "family": "R",
+          "employee_count": 4480,
+          "percentage_within_level": 61.29429471
+        },
+        {
+          "family": "T",
+          "employee_count": 2378,
+          "percentage_within_level": 32.53523054
+        }
+      ],
+      "employee_count": 7309
+    },
+    {
+      "level": "Staff & /Mgr",
+      "segments": [
+        {
+          "family": "P",
+          "employee_count": 1272,
+          "percentage_within_level": 14.26328773
+        },
+        {
+          "family": "R",
+          "employee_count": 7027,
+          "percentage_within_level": 78.7956941
+        },
+        {
+          "family": "T",
+          "employee_count": 619,
+          "percentage_within_level": 6.94101817
+        }
+      ],
+      "employee_count": 8918
+    },
+    {
+      "level": "Senior & Lead",
+      "segments": [
+        {
+          "family": "P",
+          "employee_count": 1782,
+          "percentage_within_level": 12.25753199
+        },
+        {
+          "family": "R",
+          "employee_count": 12756,
+          "percentage_within_level": 87.74246801
+        }
+      ],
+      "employee_count": 14538
+    },
+    {
+      "level": "Assoc & Int/Eng",
+      "segments": [
+        {
+          "family": "P",
+          "employee_count": 1296,
+          "percentage_within_level": 16.67095446
+        },
+        {
+          "family": "R",
+          "employee_count": 6478,
+          "percentage_within_level": 83.32904554
+        }
+      ],
+      "employee_count": 7774
+    },
+    {
+      "level": "Support",
+      "segments": [
+        {
+          "family": "S",
+          "employee_count": 2494,
+          "percentage_within_level": 100.0
+        }
+      ],
+      "employee_count": 2494
+    }
+  ],
+  "level_totals": [
+    {
+      "level": "VP & Above",
+      "employee_count": 428,
+      "percentage": 0.85526447
+    },
+    {
+      "level": "Sr Dir",
+      "employee_count": 1513,
+      "percentage": 3.02339988
+    },
+    {
+      "level": "Princ/Directors",
+      "employee_count": 4342,
+      "percentage": 8.67653818
+    },
+    {
+      "level": "Mgrs Corp",
+      "employee_count": 2727,
+      "percentage": 5.44931359
+    },
+    {
+      "level": "Sr Staff & /Mgr",
+      "employee_count": 7309,
+      "percentage": 14.60543932
+    },
+    {
+      "level": "Staff & /Mgr",
+      "employee_count": 8918,
+      "percentage": 17.82067422
+    },
+    {
+      "level": "Senior & Lead",
+      "employee_count": 14538,
+      "percentage": 29.05101613
+    },
+    {
+      "level": "Assoc & Int/Eng",
+      "employee_count": 7774,
+      "percentage": 15.53464021
+    },
+    {
+      "level": "Support",
+      "employee_count": 2494,
+      "percentage": 4.98371401
+    }
+  ],
+  "family_totals": [
+    {
+      "family": "M",
+      "employee_count": 4022,
+      "percentage": 8.0370881
+    },
+    {
+      "family": "P",
+      "employee_count": 4874,
+      "percentage": 9.73962392
+    },
+    {
+      "family": "R",
+      "employee_count": 32287,
+      "percentage": 64.51851408
+    },
+    {
+      "family": "S",
+      "employee_count": 2494,
+      "percentage": 4.98371401
+    },
+    {
+      "family": "T",
+      "employee_count": 5938,
+      "percentage": 11.86579542
+    },
+    {
+      "family": "V / other grade families",
+      "employee_count": 428,
+      "percentage": 0.85526447
+    }
+  ],
+  "metrics": {
+    "duplicate_employee_snapshot_count": 0,
+    "duplicate_employee_snapshot_row_count": 0,
+    "eligible_employee_count": 50043,
+    "employee_family_conflict_count": 0,
+    "employee_grade_conflict_count": 0,
+    "employee_level_conflict_count": 0,
+    "level_band_count": 9,
+    "missing_grade_employee_count": 0,
+    "missing_level_employee_count": 0,
+    "raw_grade_family_count": 7,
+    "raw_matrix_cell_count": 20,
+    "raw_matrix_cells_below_minimum_count": 0,
+    "raw_matrix_employee_count": 50043,
+    "source_row_count": 50043
+  },
+  "validations": {
+    "exact_snapshot": true,
+    "zero_duplicate_employee_snapshot": true,
+    "zero_employee_mapping_conflicts": true,
+    "zero_level_missingness": true,
+    "zero_grade_missingness": true,
+    "nine_level_bands": true,
+    "matrix_reconciliation": true,
+    "level_reconciliation": true,
+    "family_reconciliation": true,
+    "all_visible_cells_n_ge_30": true,
+    "all_visible_bands_n_ge_30": true,
+    "all_visible_families_n_ge_30": true,
+    "no_future_snapshot": true
+  },
+  "limitations": [
+    "La familia de grade es un proxy descriptivo del prefijo almacenado; no existe un campo oficial track confirmado en esta vista.",
+    "El sufijo numérico no se interpreta como escala transversal porque el mismo sufijo cambia de significado entre prefijos.",
+    "La cola de prefijos no M/P/R/S/T se agrupa con V para preservar el umbral de privacidad; no se presenta como una familia oficial."
+  ],
+  "provenance": {
+    "audit": {
+      "query_path": "queries/audits/level_grouped_by_compensation_grade_family_20260911.sql",
+      "sql_sha256": "dc03d7647c10f5782040ce723ab94fe9b51a11886eca5d97e203666f08475ace",
+      "result_sha256": "d2775aaa9517a5063cd6fef16b44f2556b245552d361d82d1b5e9e8aa135e5f0"
+    }
+  },
+  "publication_rule": "Aggregate counts and percentages only; every displayed cell and total has n >= 30; no identities, IDs, names, exact compensation or employee rows are persisted.",
+  "outcome": "pass",
+  "generated_on": "2026-09-11"
+}

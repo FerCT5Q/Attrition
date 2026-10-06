@@ -1,0 +1,423 @@
+{
+  "artifact": "internal_analysis",
+  "evidence_type": "aggregate-only QVoice open-text remote/hybrid requests and onsite-policy concerns",
+  "generated_on": "2026-09-21",
+  "outcome": "pass",
+  "minimum_shared_cohort": 30,
+  "population": "QVoice survey participants with a usable key in the Raw data worksheet; comment groups are participant-wave cases and no-comment is the complementary participant group with no selected open-text response.",
+  "classification_rule": {
+    "requested_remote_hybrid_or_raised_onsite_policy_concern": "A participant has either (a) a remote/hybrid topic plus an explicit request, preference, or flexibility action in the same sentence-like clause, or (b) an office/onsite topic plus a policy, enforcement, requirement, exception, flexibility, or commute burden in the same clause.",
+    "all_other_open_text_commenters": "Every other participant with at least one selected open-text comment, including neutral/positive topic mentions and people who did not mention the topic.",
+    "compliance_boundary": "Compliance qualifies only where it appears in the same office/onsite clause; generic compliance is excluded.",
+    "home_office_boundary": "The phrase home office is treated as a remote-work phrase and is excluded from the office/onsite detector."
+  },
+  "subtheme_rule": "Jan-2026 subthemes are non-exclusive. Each requires its topic and qualifier in the same sentence-like clause; only n >= 30 subthemes are rendered.",
+  "outcome_contract": {
+    "historical": "For Mar-2023, Jan-2024, and Jan-2025, strict VOLUNTARY termination in the 12 months after the survey wave began.",
+    "jan_2026": "For the 2025 QVoice survey fielded Jan 2026, strict VOLUNTARY termination from 07 Jan 2026 through the 23 Aug 2026 snapshot. This is YTD partial-year and is not annualized.",
+    "population": "worker_type='Employee'; employee_type='Regular'; active_status=1 at the wave-specific pre-survey baseline snapshot.",
+    "grain": "Distinct survey participant in each QVoice wave and displayed group after a time-safe employee-date join; no-comment excludes participants with any selected open-text response."
+  },
+  "waves": [
+    {
+      "wave": "Mar-2023",
+      "survey_label": "Mar-2023",
+      "open_text_commenter_count": 3901,
+      "groups": [
+        {
+          "group": "requested_remote_hybrid_or_raised_onsite_policy_concern",
+          "commenter_count": 397,
+          "share_of_open_text_commenters_percent": 10.1769,
+          "source_commenter_count": 397,
+          "matched_employee_count": 393,
+          "unmatched_employee_count": 4,
+          "voluntary_exit_count": 11,
+          "voluntary_attrition_rate_percent": 2.799
+        },
+        {
+          "group": "all_other_open_text_commenters",
+          "commenter_count": 3504,
+          "share_of_open_text_commenters_percent": 89.8231,
+          "source_commenter_count": 3504,
+          "matched_employee_count": 3156,
+          "unmatched_employee_count": 348,
+          "voluntary_exit_count": 127,
+          "voluntary_attrition_rate_percent": 4.0241
+        }
+      ],
+      "no_comment": {
+        "group": "no_open_text_comment",
+        "label": "No comment submitted",
+        "participant_count": 3413,
+        "source_participant_count": 3413,
+        "matched_employee_count": 3097,
+        "unmatched_employee_count": 316,
+        "voluntary_exit_count": 120,
+        "voluntary_attrition_rate_percent": 3.8747
+      },
+      "attrition_window": {
+        "baseline_snapshot": "2023-02-19",
+        "outcome_start": "2023-03-01",
+        "outcome_end": "2024-03-01",
+        "outcome_type": "annual_12m",
+        "label": "12-month voluntary attrition after the survey"
+      },
+      "source_quality": {
+        "wave": "Mar-2023",
+        "source_file": "March 2023 Pulse_raw data.xlsx",
+        "source_rows": 7314,
+        "selected_open_text_prompt_roles": [
+          "doing_well",
+          "can_improve"
+        ],
+        "selected_open_text_prompt_count": 2,
+        "nonempty_rows_by_prompt": {
+          "doing_well": 3650,
+          "can_improve": 3510
+        },
+        "commenter_count": 3901,
+        "distinct_usable_participant_keys": 7314,
+        "no_comment_participant_count": 3413,
+        "invalid_key_rows": 0,
+        "comments_without_usable_key": 0,
+        "duplicate_participant_keys": 0,
+        "duplicate_participant_rows": 0,
+        "group_counts": {
+          "requested_remote_hybrid_or_raised_onsite_policy_concern": 397,
+          "all_other_open_text_commenters": 3504
+        },
+        "subtheme_counts": {
+          "remote_hybrid_flexibility_request": 286,
+          "required_onsite_days": 57,
+          "policy_enforcement_compliance_exceptions": 42,
+          "commute_parking_travel_time": 19,
+          "office_space_or_facilities": 15
+        },
+        "groups_reconcile_to_all_commenters": true,
+        "participants_reconcile_to_commenters_and_no_comment": true
+      }
+    },
+    {
+      "wave": "Jan-2024",
+      "survey_label": "Jan-2024",
+      "open_text_commenter_count": 20965,
+      "groups": [
+        {
+          "group": "requested_remote_hybrid_or_raised_onsite_policy_concern",
+          "commenter_count": 927,
+          "share_of_open_text_commenters_percent": 4.4217,
+          "source_commenter_count": 927,
+          "matched_employee_count": 915,
+          "unmatched_employee_count": 12,
+          "voluntary_exit_count": 43,
+          "voluntary_attrition_rate_percent": 4.6995
+        },
+        {
+          "group": "all_other_open_text_commenters",
+          "commenter_count": 20038,
+          "share_of_open_text_commenters_percent": 95.5783,
+          "source_commenter_count": 20038,
+          "matched_employee_count": 18330,
+          "unmatched_employee_count": 1708,
+          "voluntary_exit_count": 860,
+          "voluntary_attrition_rate_percent": 4.6918
+        }
+      ],
+      "no_comment": {
+        "group": "no_open_text_comment",
+        "label": "No comment submitted",
+        "participant_count": 15841,
+        "source_participant_count": 15841,
+        "matched_employee_count": 14027,
+        "unmatched_employee_count": 1814,
+        "voluntary_exit_count": 793,
+        "voluntary_attrition_rate_percent": 5.6534
+      },
+      "attrition_window": {
+        "baseline_snapshot": "2023-12-24",
+        "outcome_start": "2024-01-01",
+        "outcome_end": "2025-01-01",
+        "outcome_type": "annual_12m",
+        "label": "12-month voluntary attrition after the survey"
+      },
+      "source_quality": {
+        "wave": "Jan-2024",
+        "source_file": "Jan 2024 Qvoice raw data.xlsx",
+        "source_rows": 36807,
+        "selected_open_text_prompt_roles": [
+          "doing_well",
+          "can_improve"
+        ],
+        "selected_open_text_prompt_count": 2,
+        "nonempty_rows_by_prompt": {
+          "doing_well": 19445,
+          "can_improve": 19318
+        },
+        "commenter_count": 20965,
+        "distinct_usable_participant_keys": 36806,
+        "no_comment_participant_count": 15841,
+        "invalid_key_rows": 0,
+        "comments_without_usable_key": 0,
+        "duplicate_participant_keys": 0,
+        "duplicate_participant_rows": 0,
+        "group_counts": {
+          "requested_remote_hybrid_or_raised_onsite_policy_concern": 927,
+          "all_other_open_text_commenters": 20038
+        },
+        "subtheme_counts": {
+          "remote_hybrid_flexibility_request": 735,
+          "required_onsite_days": 87,
+          "policy_enforcement_compliance_exceptions": 70,
+          "commute_parking_travel_time": 34,
+          "office_space_or_facilities": 29
+        },
+        "groups_reconcile_to_all_commenters": true,
+        "participants_reconcile_to_commenters_and_no_comment": true
+      }
+    },
+    {
+      "wave": "Jan-2025",
+      "survey_label": "Jan-2025",
+      "open_text_commenter_count": 20161,
+      "groups": [
+        {
+          "group": "requested_remote_hybrid_or_raised_onsite_policy_concern",
+          "commenter_count": 1708,
+          "share_of_open_text_commenters_percent": 8.4718,
+          "source_commenter_count": 1708,
+          "matched_employee_count": 1691,
+          "unmatched_employee_count": 17,
+          "voluntary_exit_count": 87,
+          "voluntary_attrition_rate_percent": 5.1449
+        },
+        {
+          "group": "all_other_open_text_commenters",
+          "commenter_count": 18453,
+          "share_of_open_text_commenters_percent": 91.5282,
+          "source_commenter_count": 18453,
+          "matched_employee_count": 17561,
+          "unmatched_employee_count": 892,
+          "voluntary_exit_count": 828,
+          "voluntary_attrition_rate_percent": 4.715
+        }
+      ],
+      "no_comment": {
+        "group": "no_open_text_comment",
+        "label": "No comment submitted",
+        "participant_count": 17676,
+        "source_participant_count": 17676,
+        "matched_employee_count": 15668,
+        "unmatched_employee_count": 2008,
+        "voluntary_exit_count": 746,
+        "voluntary_attrition_rate_percent": 4.7613
+      },
+      "attrition_window": {
+        "baseline_snapshot": "2024-12-29",
+        "outcome_start": "2025-01-01",
+        "outcome_end": "2026-01-01",
+        "outcome_type": "annual_12m",
+        "label": "12-month voluntary attrition after the survey"
+      },
+      "source_quality": {
+        "wave": "Jan-2025",
+        "source_file": "Jan 2025_Qvoice_raw data.xlsx",
+        "source_rows": 37837,
+        "selected_open_text_prompt_roles": [
+          "doing_well",
+          "can_improve",
+          "processes_to_improve"
+        ],
+        "selected_open_text_prompt_count": 3,
+        "nonempty_rows_by_prompt": {
+          "doing_well": 17566,
+          "can_improve": 17474,
+          "processes_to_improve": 7090
+        },
+        "commenter_count": 20161,
+        "distinct_usable_participant_keys": 37837,
+        "no_comment_participant_count": 17676,
+        "invalid_key_rows": 0,
+        "comments_without_usable_key": 0,
+        "duplicate_participant_keys": 0,
+        "duplicate_participant_rows": 0,
+        "group_counts": {
+          "requested_remote_hybrid_or_raised_onsite_policy_concern": 1708,
+          "all_other_open_text_commenters": 18453
+        },
+        "subtheme_counts": {
+          "remote_hybrid_flexibility_request": 1012,
+          "required_onsite_days": 261,
+          "policy_enforcement_compliance_exceptions": 420,
+          "commute_parking_travel_time": 117,
+          "office_space_or_facilities": 57
+        },
+        "groups_reconcile_to_all_commenters": true,
+        "participants_reconcile_to_commenters_and_no_comment": true
+      }
+    },
+    {
+      "wave": "Jan-2026",
+      "survey_label": "2025 QVoice survey (fielded Jan 2026)",
+      "open_text_commenter_count": 15351,
+      "groups": [
+        {
+          "group": "requested_remote_hybrid_or_raised_onsite_policy_concern",
+          "commenter_count": 1686,
+          "share_of_open_text_commenters_percent": 10.983,
+          "source_commenter_count": 1686,
+          "matched_employee_count": 1680,
+          "unmatched_employee_count": 6,
+          "voluntary_exit_count": 44,
+          "voluntary_attrition_rate_percent": 2.619
+        },
+        {
+          "group": "all_other_open_text_commenters",
+          "commenter_count": 13665,
+          "share_of_open_text_commenters_percent": 89.017,
+          "source_commenter_count": 13665,
+          "matched_employee_count": 13142,
+          "unmatched_employee_count": 523,
+          "voluntary_exit_count": 425,
+          "voluntary_attrition_rate_percent": 3.2339
+        }
+      ],
+      "no_comment": {
+        "group": "no_open_text_comment",
+        "label": "No comment submitted",
+        "participant_count": 26852,
+        "source_participant_count": 26852,
+        "matched_employee_count": 24372,
+        "unmatched_employee_count": 2480,
+        "voluntary_exit_count": 842,
+        "voluntary_attrition_rate_percent": 3.4548
+      },
+      "attrition_window": {
+        "baseline_snapshot": "2025-12-28",
+        "outcome_start": "2026-01-07",
+        "outcome_end": "2026-08-23",
+        "outcome_type": "ytd_partial",
+        "label": "YTD voluntary attrition through Aug 2026 (partial year)"
+      },
+      "source_quality": {
+        "wave": "Jan-2026",
+        "source_file": "Jan 2026 Qvoice_raw data.xlsx",
+        "source_rows": 42203,
+        "selected_open_text_prompt_roles": [
+          "doing_well",
+          "can_improve",
+          "processes_to_improve"
+        ],
+        "selected_open_text_prompt_count": 3,
+        "nonempty_rows_by_prompt": {
+          "processes_to_improve": 6536,
+          "doing_well": 11077,
+          "can_improve": 12192
+        },
+        "commenter_count": 15351,
+        "distinct_usable_participant_keys": 42203,
+        "no_comment_participant_count": 26852,
+        "invalid_key_rows": 0,
+        "comments_without_usable_key": 0,
+        "duplicate_participant_keys": 0,
+        "duplicate_participant_rows": 0,
+        "group_counts": {
+          "requested_remote_hybrid_or_raised_onsite_policy_concern": 1686,
+          "all_other_open_text_commenters": 13665
+        },
+        "subtheme_counts": {
+          "remote_hybrid_flexibility_request": 1147,
+          "required_onsite_days": 212,
+          "policy_enforcement_compliance_exceptions": 340,
+          "commute_parking_travel_time": 140,
+          "office_space_or_facilities": 59
+        },
+        "groups_reconcile_to_all_commenters": true,
+        "participants_reconcile_to_commenters_and_no_comment": true
+      }
+    }
+  ],
+  "latest_survey_subthemes": [
+    {
+      "subtheme": "remote_hybrid_flexibility_request",
+      "label": "Request for remote or hybrid flexibility",
+      "commenter_count": 1147,
+      "share_of_request_or_concern_group_percent": 68.0308
+    },
+    {
+      "subtheme": "policy_enforcement_compliance_exceptions",
+      "label": "Policy enforcement, compliance, or exceptions",
+      "commenter_count": 340,
+      "share_of_request_or_concern_group_percent": 20.1661
+    },
+    {
+      "subtheme": "required_onsite_days",
+      "label": "Required days in the office",
+      "commenter_count": 212,
+      "share_of_request_or_concern_group_percent": 12.5741
+    },
+    {
+      "subtheme": "commute_parking_travel_time",
+      "label": "Commute, parking, or travel time",
+      "commenter_count": 140,
+      "share_of_request_or_concern_group_percent": 8.3037
+    },
+    {
+      "subtheme": "office_space_or_facilities",
+      "label": "Office space or facilities",
+      "commenter_count": 59,
+      "share_of_request_or_concern_group_percent": 3.4994
+    }
+  ],
+  "validation": {
+    "outcome": "pass",
+    "all_selected_prompts_present": true,
+    "prompt_contract": {
+      "Mar-2023": [
+        "doing_well",
+        "can_improve"
+      ],
+      "Jan-2024": [
+        "doing_well",
+        "can_improve"
+      ],
+      "Jan-2025": [
+        "doing_well",
+        "can_improve",
+        "processes_to_improve"
+      ],
+      "Jan-2026": [
+        "doing_well",
+        "can_improve",
+        "processes_to_improve"
+      ]
+    },
+    "all_visible_groups_reconcile_to_open_text_commenters": true,
+    "all_visible_no_comment_cohorts_reconcile_to_survey_participants": true,
+    "all_visible_group_and_subtheme_cohorts_n_at_least": 30,
+    "all_attrition_rates_reconcile_to_exits_and_matched_cohort": true,
+    "historical_followup_is_12_months": true,
+    "jan_2026_cutoff": "2026-08-23",
+    "jan_2026_ytd_is_partial_and_not_annualized": true,
+    "runtime_join_sql_persisted": false,
+    "runtime_join_sql_template_persisted": true
+  },
+  "privacy": {
+    "employee_identifiers_persisted": false,
+    "employee_rows_persisted": false,
+    "raw_comment_text_persisted": false,
+    "runtime_join_sql_persisted": false,
+    "runtime_join_sql_template_persisted": true
+  },
+  "provenance": {
+    "window_audit": "queries/audits/qvoice_open_text_request_concern_attrition_window_audit_20260918.sql",
+    "window_audit_sha256": "e45c8deb5ef481589b92e73464d890c9bbd432cd9bb4b0d4695e00995e5c1f02",
+    "runtime_join_sql_template": "queries/audits/qvoice_open_text_no_comment_attrition_runtime_template_20260921.sql",
+    "runtime_join_sql_template_sha256": "ea149074397d357090bf1e9e3b6b9966c9224459f60cb952df07330dc39547d5",
+    "raw_workbooks": [
+      "March 2023 Pulse_raw data.xlsx",
+      "Jan 2024 Qvoice raw data.xlsx",
+      "Jan 2025_Qvoice_raw data.xlsx",
+      "Jan 2026 Qvoice_raw data.xlsx"
+    ]
+  }
+}

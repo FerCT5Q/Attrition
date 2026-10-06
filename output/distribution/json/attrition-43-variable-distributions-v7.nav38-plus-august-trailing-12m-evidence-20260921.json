@@ -1,0 +1,775 @@
+{
+  "artifact_type": "aggregate_segment_attrition_evidence",
+  "version": 1,
+  "generated_on": "2026-09-21",
+  "deliverable_mode": "presentation",
+  "artifact_classification": "presentation",
+  "purpose": "Añadir attrition voluntario de los últimos doce meses a las categorías de manager-context y support desde el slide visible 38.",
+  "outcome": "pass",
+  "population": "worker_type='Employee' AND employee_type='Regular' AND active_status=1 AND COALESCE(is_rf360_yes_no, 0)=0",
+  "grain": "baseline employee snapshot; manager/team displays retain their visible manager counts, but attrition labels use the assigned baseline direct reports",
+  "baseline_snapshot_date": "2025-08-24",
+  "outcome_cutoff_date": "2026-08-23",
+  "outcome_window": "(2025-08-24, 2026-08-23]",
+  "target": "strict term_type='VOLUNTARY' with term_date in the outcome window",
+  "minimum_shared_cohort": 30,
+  "publication_rule": "Publish a rate when the displayed employee cohort has at least 30 baseline employees; preserve below-30 buckets as not estimable.",
+  "definition": "For each category, voluntary exits from the same baseline employee population divided by baseline employees in that category.",
+  "queries": {
+    "simple_categories": {
+      "query_path": "queries/audits/v7_nav38_plus_august_trailing_12m_attrition_20260921.sql",
+      "query_sha256": "04b74c64d24f80c5da3e707af84b5709547dfd978044a08b0a8e214bfbc3d0d0",
+      "result_sha256": "5851a3b8170b7b9af2404876a9ba447dd1949b9ad65f022e34e5fec01ae410bb",
+      "columns": [
+        "row_type",
+        "metric",
+        "category",
+        "employee_count",
+        "voluntary_exits",
+        "annual_attrition_rate_percent",
+        "diagnostic_metric",
+        "diagnostic_value",
+        "publication_status"
+      ],
+      "rows": [
+        {
+          "row_type": "category",
+          "metric": "All observed manager changes · trailing 12 months",
+          "category": "0",
+          "employee_count": 30366,
+          "voluntary_exits": 1614,
+          "annual_attrition_rate_percent": "5.3152",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "All observed manager changes · trailing 12 months",
+          "category": "1",
+          "employee_count": 8858,
+          "voluntary_exits": 551,
+          "annual_attrition_rate_percent": "6.2204",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "All observed manager changes · trailing 12 months",
+          "category": "2",
+          "employee_count": 2151,
+          "voluntary_exits": 175,
+          "annual_attrition_rate_percent": "8.1358",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "All observed manager changes · trailing 12 months",
+          "category": "3+",
+          "employee_count": 382,
+          "voluntary_exits": 37,
+          "annual_attrition_rate_percent": "9.6859",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "All observed manager changes · trailing 6 months",
+          "category": "0",
+          "employee_count": 35148,
+          "voluntary_exits": 1920,
+          "annual_attrition_rate_percent": "5.4626",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "All observed manager changes · trailing 6 months",
+          "category": "1",
+          "employee_count": 5738,
+          "voluntary_exits": 384,
+          "annual_attrition_rate_percent": "6.6922",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "All observed manager changes · trailing 6 months",
+          "category": "2",
+          "employee_count": 822,
+          "voluntary_exits": 69,
+          "annual_attrition_rate_percent": "8.3942",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "All observed manager changes · trailing 6 months",
+          "category": "3+",
+          "employee_count": 49,
+          "voluntary_exits": 4,
+          "annual_attrition_rate_percent": "8.1633",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "Sensitivity: exclude same-date transfer/promotion · trailing 12 months",
+          "category": "0",
+          "employee_count": 30998,
+          "voluntary_exits": 1653,
+          "annual_attrition_rate_percent": "5.3326",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "Sensitivity: exclude same-date transfer/promotion · trailing 12 months",
+          "category": "1",
+          "employee_count": 8523,
+          "voluntary_exits": 537,
+          "annual_attrition_rate_percent": "6.3006",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "Sensitivity: exclude same-date transfer/promotion · trailing 12 months",
+          "category": "2",
+          "employee_count": 1926,
+          "voluntary_exits": 159,
+          "annual_attrition_rate_percent": "8.2555",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "Sensitivity: exclude same-date transfer/promotion · trailing 12 months",
+          "category": "3+",
+          "employee_count": 310,
+          "voluntary_exits": 28,
+          "annual_attrition_rate_percent": "9.0323",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "Sensitivity: exclude same-date transfer/promotion · trailing 6 months",
+          "category": "0",
+          "employee_count": 35504,
+          "voluntary_exits": 1941,
+          "annual_attrition_rate_percent": "5.4670",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "Sensitivity: exclude same-date transfer/promotion · trailing 6 months",
+          "category": "1",
+          "employee_count": 5477,
+          "voluntary_exits": 374,
+          "annual_attrition_rate_percent": "6.8286",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "Sensitivity: exclude same-date transfer/promotion · trailing 6 months",
+          "category": "2",
+          "employee_count": 737,
+          "voluntary_exits": 60,
+          "annual_attrition_rate_percent": "8.1411",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "Sensitivity: exclude same-date transfer/promotion · trailing 6 months",
+          "category": "3+",
+          "employee_count": 39,
+          "voluntary_exits": 2,
+          "annual_attrition_rate_percent": "5.1282",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "et_field_presence",
+          "category": "et_1",
+          "employee_count": 41737,
+          "voluntary_exits": 2372,
+          "annual_attrition_rate_percent": "5.6832",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "et_field_presence",
+          "category": "et_10",
+          "employee_count": 49,
+          "voluntary_exits": 3,
+          "annual_attrition_rate_percent": "6.1224",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "et_field_presence",
+          "category": "et_2",
+          "employee_count": 41581,
+          "voluntary_exits": 2358,
+          "annual_attrition_rate_percent": "5.6709",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "et_field_presence",
+          "category": "et_3",
+          "employee_count": 40841,
+          "voluntary_exits": 2330,
+          "annual_attrition_rate_percent": "5.7051",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "et_field_presence",
+          "category": "et_4",
+          "employee_count": 38739,
+          "voluntary_exits": 2237,
+          "annual_attrition_rate_percent": "5.7745",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "et_field_presence",
+          "category": "et_5",
+          "employee_count": 33841,
+          "voluntary_exits": 2026,
+          "annual_attrition_rate_percent": "5.9868",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "et_field_presence",
+          "category": "et_6",
+          "employee_count": 24732,
+          "voluntary_exits": 1571,
+          "annual_attrition_rate_percent": "6.3521",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "et_field_presence",
+          "category": "et_7",
+          "employee_count": 13142,
+          "voluntary_exits": 875,
+          "annual_attrition_rate_percent": "6.6580",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "et_field_presence",
+          "category": "et_8",
+          "employee_count": 4668,
+          "voluntary_exits": 298,
+          "annual_attrition_rate_percent": "6.3839",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "et_field_presence",
+          "category": "et_9",
+          "employee_count": 742,
+          "voluntary_exits": 57,
+          "annual_attrition_rate_percent": "7.6819",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "et_populated_field_count",
+          "category": "0",
+          "employee_count": 20,
+          "voluntary_exits": 5,
+          "annual_attrition_rate_percent": "25.0000",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "not_estimable_below_30_baseline_employees"
+        },
+        {
+          "row_type": "category",
+          "metric": "et_populated_field_count",
+          "category": "1",
+          "employee_count": 156,
+          "voluntary_exits": 14,
+          "annual_attrition_rate_percent": "8.9744",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "et_populated_field_count",
+          "category": "2",
+          "employee_count": 740,
+          "voluntary_exits": 28,
+          "annual_attrition_rate_percent": "3.7838",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "et_populated_field_count",
+          "category": "3+",
+          "employee_count": 40841,
+          "voluntary_exits": 2330,
+          "annual_attrition_rate_percent": "5.7051",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "major_inflection_proxy",
+          "category": "1+ proxy movement",
+          "employee_count": 2297,
+          "voluntary_exits": 148,
+          "annual_attrition_rate_percent": "6.4432",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "major_inflection_proxy",
+          "category": "No proxy movement",
+          "employee_count": 39460,
+          "voluntary_exits": 2229,
+          "annual_attrition_rate_percent": "5.6488",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "manager_change",
+          "category": "Manager change (1)",
+          "employee_count": 1177,
+          "voluntary_exits": 85,
+          "annual_attrition_rate_percent": "7.2218",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "manager_change",
+          "category": "No manager change (0)",
+          "employee_count": 40580,
+          "voluntary_exits": 2292,
+          "annual_attrition_rate_percent": "5.6481",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "manager_leaving_baseline_6m",
+          "category": "Exposed (1+)",
+          "employee_count": 4,
+          "voluntary_exits": 1,
+          "annual_attrition_rate_percent": "25.0000",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "not_estimable_below_30_baseline_employees"
+        },
+        {
+          "row_type": "category",
+          "metric": "manager_leaving_baseline_6m",
+          "category": "Not exposed",
+          "employee_count": 41753,
+          "voluntary_exits": 2376,
+          "annual_attrition_rate_percent": "5.6906",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "office_site_relationship",
+          "category": "Different office_site",
+          "employee_count": 2252,
+          "voluntary_exits": 138,
+          "annual_attrition_rate_percent": "6.1279",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "office_site_relationship",
+          "category": "Not comparable / missing site",
+          "employee_count": 2938,
+          "voluntary_exits": 182,
+          "annual_attrition_rate_percent": "6.1947",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "office_site_relationship",
+          "category": "Same office_site",
+          "employee_count": 36567,
+          "voluntary_exits": 2057,
+          "annual_attrition_rate_percent": "5.6253",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "recent_team_exits_under_manager",
+          "category": "0",
+          "employee_count": 36777,
+          "voluntary_exits": 1992,
+          "annual_attrition_rate_percent": "5.4164",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "recent_team_exits_under_manager",
+          "category": "1",
+          "employee_count": 4320,
+          "voluntary_exits": 327,
+          "annual_attrition_rate_percent": "7.5694",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "recent_team_exits_under_manager",
+          "category": "2+",
+          "employee_count": 659,
+          "voluntary_exits": 58,
+          "annual_attrition_rate_percent": "8.8012",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "publishable"
+        },
+        {
+          "row_type": "category",
+          "metric": "recent_team_exits_under_manager",
+          "category": "Unknown",
+          "employee_count": 1,
+          "voluntary_exits": 0,
+          "annual_attrition_rate_percent": "0.0000",
+          "diagnostic_metric": null,
+          "diagnostic_value": null,
+          "publication_status": "not_estimable_below_30_baseline_employees"
+        },
+        {
+          "row_type": "diagnostic",
+          "metric": null,
+          "category": null,
+          "employee_count": null,
+          "voluntary_exits": null,
+          "annual_attrition_rate_percent": null,
+          "diagnostic_metric": "baseline_cohort_voluntary_exit_count",
+          "diagnostic_value": 2713,
+          "publication_status": null
+        },
+        {
+          "row_type": "diagnostic",
+          "metric": null,
+          "category": null,
+          "employee_count": null,
+          "voluntary_exits": null,
+          "annual_attrition_rate_percent": null,
+          "diagnostic_metric": "baseline_employee_count",
+          "diagnostic_value": 41757,
+          "publication_status": null
+        },
+        {
+          "row_type": "diagnostic",
+          "metric": null,
+          "category": null,
+          "employee_count": null,
+          "voluntary_exits": null,
+          "annual_attrition_rate_percent": null,
+          "diagnostic_metric": "conflicting_employee_snapshot_count",
+          "diagnostic_value": 0,
+          "publication_status": null
+        },
+        {
+          "row_type": "diagnostic",
+          "metric": null,
+          "category": null,
+          "employee_count": null,
+          "voluntary_exits": null,
+          "annual_attrition_rate_percent": null,
+          "diagnostic_metric": "duplicate_employee_snapshot_count",
+          "diagnostic_value": 0,
+          "publication_status": null
+        }
+      ]
+    },
+    "manager_observed_expected": {
+      "query_path": "queries/audits/v7_manager_observed_expected_august_trailing_12m_attrition_20260921.sql",
+      "query_sha256": "b496c930b1c4d1c31d3e16e0534c42bf32d6cf561003d7106c5e025642a196a8",
+      "result_sha256": "6b336a1607a1c36a2acaa42ee72be0e4d5c0953b2c9b85387a13b6dc3f22adbc",
+      "columns": [
+        "row_type",
+        "category",
+        "manager_count",
+        "employee_count",
+        "voluntary_exits",
+        "annual_attrition_rate_percent",
+        "diagnostic_metric",
+        "diagnostic_value"
+      ],
+      "rows": [
+        {
+          "row_type": "category",
+          "category": "0.5–<1.0×",
+          "manager_count": 7769,
+          "employee_count": 32744,
+          "voluntary_exits": 1718,
+          "annual_attrition_rate_percent": "5.2468",
+          "diagnostic_metric": null,
+          "diagnostic_value": null
+        },
+        {
+          "row_type": "category",
+          "category": "1.0–<1.5×",
+          "manager_count": 291,
+          "employee_count": 869,
+          "voluntary_exits": 31,
+          "annual_attrition_rate_percent": "3.5673",
+          "diagnostic_metric": null,
+          "diagnostic_value": null
+        },
+        {
+          "row_type": "category",
+          "category": "<0.5×",
+          "manager_count": 350,
+          "employee_count": 3114,
+          "voluntary_exits": 236,
+          "annual_attrition_rate_percent": "7.5787",
+          "diagnostic_metric": null,
+          "diagnostic_value": null
+        },
+        {
+          "row_type": "category",
+          "category": "≥1.5×",
+          "manager_count": 879,
+          "employee_count": 4808,
+          "voluntary_exits": 371,
+          "annual_attrition_rate_percent": "7.7163",
+          "diagnostic_metric": null,
+          "diagnostic_value": null
+        },
+        {
+          "row_type": "diagnostic",
+          "category": null,
+          "manager_count": null,
+          "employee_count": null,
+          "voluntary_exits": null,
+          "annual_attrition_rate_percent": null,
+          "diagnostic_metric": "baseline_employee_count",
+          "diagnostic_value": 41756
+        },
+        {
+          "row_type": "diagnostic",
+          "category": null,
+          "manager_count": null,
+          "employee_count": null,
+          "voluntary_exits": null,
+          "annual_attrition_rate_percent": null,
+          "diagnostic_metric": "historical_employee_intervals",
+          "diagnostic_value": 201635
+        },
+        {
+          "row_type": "diagnostic",
+          "category": null,
+          "manager_count": null,
+          "employee_count": null,
+          "voluntary_exits": null,
+          "annual_attrition_rate_percent": null,
+          "diagnostic_metric": "historical_interval_count",
+          "diagnostic_value": 5
+        },
+        {
+          "row_type": "diagnostic",
+          "category": null,
+          "manager_count": null,
+          "employee_count": null,
+          "voluntary_exits": null,
+          "annual_attrition_rate_percent": null,
+          "diagnostic_metric": "scored_manager_count",
+          "diagnostic_value": 9289
+        },
+        {
+          "row_type": "diagnostic",
+          "category": null,
+          "manager_count": null,
+          "employee_count": null,
+          "voluntary_exits": null,
+          "annual_attrition_rate_percent": null,
+          "diagnostic_metric": "unscored_manager_count",
+          "diagnostic_value": 97
+        }
+      ]
+    },
+    "above_average_team_turnover": {
+      "query_path": "queries/audits/v7_above_average_team_turnover_august_trailing_12m_attrition_20260921.sql",
+      "query_sha256": "a1243b08640cdaf5452cfe618b734d79d511f5efe9098f0926a3d8e4f0a3cb6a",
+      "result_sha256": "1d8995efcd86e67060a663786dcff7dd939e79a648c5f69503f17db1341b7802",
+      "columns": [
+        "row_type",
+        "category",
+        "employee_count",
+        "voluntary_exits",
+        "annual_attrition_rate_percent",
+        "diagnostic_metric",
+        "diagnostic_value"
+      ],
+      "rows": [
+        {
+          "row_type": "category",
+          "category": "0",
+          "employee_count": 2841,
+          "voluntary_exits": 236,
+          "annual_attrition_rate_percent": "8.3069",
+          "diagnostic_metric": null,
+          "diagnostic_value": null
+        },
+        {
+          "row_type": "category",
+          "category": "1",
+          "employee_count": 754,
+          "voluntary_exits": 54,
+          "annual_attrition_rate_percent": "7.1618",
+          "diagnostic_metric": null,
+          "diagnostic_value": null
+        },
+        {
+          "row_type": "category",
+          "category": "Unknown",
+          "employee_count": 38161,
+          "voluntary_exits": 2087,
+          "annual_attrition_rate_percent": "5.4689",
+          "diagnostic_metric": null,
+          "diagnostic_value": null
+        },
+        {
+          "row_type": "diagnostic",
+          "category": null,
+          "employee_count": null,
+          "voluntary_exits": null,
+          "annual_attrition_rate_percent": null,
+          "diagnostic_metric": "baseline_employee_count",
+          "diagnostic_value": 41756
+        },
+        {
+          "row_type": "diagnostic",
+          "category": null,
+          "employee_count": null,
+          "voluntary_exits": null,
+          "annual_attrition_rate_percent": null,
+          "diagnostic_metric": "eligible_manager_count",
+          "diagnostic_value": 476
+        },
+        {
+          "row_type": "diagnostic",
+          "category": null,
+          "employee_count": null,
+          "voluntary_exits": null,
+          "annual_attrition_rate_percent": null,
+          "diagnostic_metric": "historical_interval_count",
+          "diagnostic_value": 18
+        },
+        {
+          "row_type": "diagnostic",
+          "category": null,
+          "employee_count": null,
+          "voluntary_exits": null,
+          "annual_attrition_rate_percent": null,
+          "diagnostic_metric": "ineligible_manager_count",
+          "diagnostic_value": 8910
+        }
+      ]
+    }
+  },
+  "metric_map": {
+    "office_site_relationship": "office_site_relationship",
+    "recent_team_exits_under_manager": "recent_team_exits_under_manager",
+    "manager_leaving": "manager_leaving_baseline_6m",
+    "manager_change": "manager_change",
+    "number_of_manager_changes": [
+      "All observed manager changes · trailing 6 months",
+      "All observed manager changes · trailing 12 months",
+      "Sensitivity: exclude same-date transfer/promotion · trailing 6 months",
+      "Sensitivity: exclude same-date transfer/promotion · trailing 12 months"
+    ],
+    "major_inflection_proxy": "major_inflection_proxy",
+    "et_populated_field_count": "et_populated_field_count",
+    "manager_observed_expected_ratio": "manager_observed_expected",
+    "above_average_team_turnover": "above_average_team_turnover"
+  },
+  "unavailable_features": {
+    "talent_index": {
+      "status": "not_estimable",
+      "reason": "La fuente recupera el último cycle almacenado, pero no confirma una fecha efectiva conocida en el baseline; una tasa prospectiva sería leakage potencial.",
+      "distribution_evidence": "output/distribution/json/talent-index-latest-recoverable-distribution-evidence-20260909.json"
+    },
+    "manager_leaving_exposed": {
+      "status": "not_estimable_below_30_baseline_employees",
+      "reason": "La categoría expuesta no alcanza el mínimo de 30 empleados en la cohorte de agosto 2025."
+    }
+  },
+  "acceptance": {
+    "duplicate_employee_snapshot_count": 0,
+    "conflicting_employee_snapshot_count": 0,
+    "rate_reconciliation": "pass",
+    "time_safe_baseline": "pass",
+    "aggregate_only": true
+  }
+}

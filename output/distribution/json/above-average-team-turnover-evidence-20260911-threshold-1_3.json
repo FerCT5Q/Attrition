@@ -1,0 +1,90 @@
+{
+  "artifact_type": "aggregate_distribution_evidence",
+  "deliverable_mode": "presentation",
+  "variable": "Above-average team turnover",
+  "candidate_number": 44,
+  "generated_at": "2026-09-11T08:50:22-06:00",
+  "source_assessment_run": "above-average-team-turnover-v4-20260910-r13",
+  "population": "Empleados regulares activos con manager_employee_id en el cierre mensual t.",
+  "grain": "Empleado-snapshot mensual; cálculo intermedio manager-snapshot agregado.",
+  "definition": "1 si el manager vigente es elegible y su tasa histórica Voluntary equivalente a seis meses es >=1.3 veces el benchmark ponderado; 0 si es elegible y queda por debajo; Unknown en cualquier otro caso.",
+  "window": "18 intervalos mensuales cerrados anteriores a t (19 cierres).",
+  "event_scope": "term_type exactamente Voluntary; Voluntary Exception, involuntarias y nulos se excluyen.",
+  "attribution": "Cada salida se atribuye al manager del empleado al inicio del intervalo mensual correspondiente.",
+  "eligibility": {
+    "required_consecutive_intervals": 18,
+    "minimum_average_team_size": 4,
+    "minimum_distinct_voluntary_exits": 2
+  },
+  "benchmark": {
+    "definition": "Salidas Voluntary de managers elegibles / exposición histórica elegible * 6; equivalente al promedio de tasas ponderado por tamaño medio de equipo.",
+    "six_month_rate": 0.09709225018189116,
+    "flag_threshold_multiplier": 1.3,
+    "flag_threshold_six_month_rate": 0.12621992523645853
+  },
+  "latest_snapshot": "2026-09-27",
+  "distribution": [
+    {
+      "signal": "0",
+      "employee_count": 3329
+    },
+    {
+      "signal": "1",
+      "employee_count": 1116
+    },
+    {
+      "signal": "Unknown",
+      "employee_count": 45761
+    }
+  ],
+  "aggregate_counts": {
+    "eligible_employees": 50206,
+    "observable_employees": 4445,
+    "flagged_employees": 1116,
+    "unknown_employees": 45761
+  },
+  "assessment_validation": {
+    "source_missing_items": 0,
+    "snapshots_checked": 6,
+    "interval_count": 18,
+    "minimum_eligible_average_team_size": 4.0,
+    "minimum_eligible_voluntary_exits": 2,
+    "duplicate_count": 0,
+    "multiple_event_interval_assignments": 0,
+    "multiple_event_manager_assignments": 0,
+    "future_event_usage_count": 0,
+    "unmatched_employee_assignments": 0,
+    "multi_match_employee_assignments": 0,
+    "rule_implementation_failure_count": 0,
+    "benchmark_reconciliation_failure_count": 0
+  },
+  "termination_source_reconciliation": {
+    "primary_event_count": 4194,
+    "all_terminations_event_count": 7076,
+    "matched_event_count": 4186,
+    "primary_only_event_count": 8,
+    "all_terminations_only_event_count": 2890,
+    "discrepancy_count": 2898,
+    "primary_match_rate_percent": "99.80925131139723414400"
+  },
+  "privacy": {
+    "minimum_shared_cohort": 30,
+    "identifiers_persisted": false,
+    "employee_rows_persisted": false,
+    "manager_rates_persisted": false,
+    "manager_rankings_persisted": false
+  },
+  "interpretation_limit": "Señal asociativa y sensible de contexto de equipo; no es evaluación individual de managers, atribución causal ni feature productiva aprobada.",
+  "definition_limit": "Definition permanece en 1: falta lineage aprobado de terminaciones y la reconciliación agregada con all_terminations conserva diferencias.",
+  "provenance": {
+    "assessment_evidence": "output/assessments/above-average-team-turnover-v4-20260910-r13/vars/01-above-average-team-turnover/evidence/query-results.json",
+    "assessment_evidence_sha256": "db3bd182418c322d81190e2f40c4a79b10af0703ea1a905d2be76adf2446756a",
+    "presentation_query": "queries/profiles/above_average_team_turnover_presentation_distribution_20260911_threshold_1_3.sql",
+    "presentation_query_sha256": "ec740f76f2a5640ad1cfe48bcd4c70a5cb0f06cb5fdfd459e36970e31558d930",
+    "presentation_result_sha256": "7b9bbe6ec74a2e000040234351ff40c79e86a15c2bd7f317bfaf82624c205065",
+    "audit_query": "queries/audits/above_average_team_turnover_18m_audit_20260911_threshold_1_3.sql",
+    "audit_query_sha256": "b75828d423b75dc986d0f5e20cd3676869eced61a49d22ac72a41ac3aa4bdf4b",
+    "audit_result_sha256": "0aa32d70025dbaaa846693ac7167f3626f0ef78ea265ceaf36bf2b591801f67f"
+  },
+  "outcome": "pass"
+}

@@ -1,0 +1,61 @@
+schema_version: 1
+plan_version: 1
+language: es
+created_before_execution: true
+plan_authorship: codex_explicit
+variable: Average of all Qvoice items-scale
+concept: Composite ordinal 1-5 calculado con el item set 1-5 disponible por wave.
+intended_use: Explorar el composite ordinal 1-5 de QVoice frente a attrition posterior.
+knowledge_date: Fecha de la wave QVoice; excluir informacion posterior.
+population: Respuestas QVoice con una fila por empleado-wave y composite 1-5 valido.
+grain: Employee-wave derived aggregate
+semantic_type: derived_feature
+validation_story:
+  - id: source_access
+    criterion: source
+    evidence_role: supporting
+    question: ¿Los componentes ordinales del composite estan disponibles en los workbooks raw?
+    why: El composite 1-5 requiere una forma ordinal observable y no debe inferirse desde Favorable.
+    method: schema_access_check
+    sql_reference: queries/audits/qvoice_excel_source_inventory_20260826-2.sql
+    acceptance_rule: Debe existir un item set 1-5 utilizable y missing_items debe ser 0.
+    metric_map:
+      missing_items: {column: missing_items, aggregate: sum}
+    metric_checks:
+      - {metric: missing_items, operator: eq, threshold: 0, aggregate: sum}
+  - id: independent_scale_recalculation
+    criterion: definition
+    evidence_role: defining
+    question: ¿El composite 1-5 se puede recalcular con una regla de completitud explicita?
+    why: El promedio ordinal necesita formula, minimo de respuestas, rango valido y una version del item set.
+    method: independent_recalculation
+    sql_reference: queries/audits/qvoice_excel_definition_audit_20260826-2.sql
+    acceptance_rule: La regla provisional exige al menos 70% de items 1-5 validos, ningun valor invalido y un item set versionado.
+    metric_checks:
+      - {metric: eligible_count, operator: gt, threshold: 0, aggregate: sum}
+      - {metric: populated_count, operator: gt, threshold: 0, aggregate: sum}
+      - {metric: invalid_count, operator: eq, threshold: 0, aggregate: sum}
+      - {metric: item_set_change_count, operator: eq, threshold: 0, aggregate: sum}
+  - id: scale_composite_consistency
+    criterion: consistency
+    evidence_role: defining
+    question: ¿El item set 1-5 y su rango son estables entre 2025 y 2026?
+    why: La historia ordinal corta y el cambio de item set limitan la comparabilidad del promedio.
+    method: longitudinal_aggregate_audit
+    sql_reference: queries/audits/qvoice_excel_consistency_audit_20260826-2.sql
+    acceptance_rule: No deben existir invalidos ni cambios de item set sin una regla aprobada.
+    metric_checks:
+      - {metric: invalid_count, operator: eq, threshold: 0, aggregate: sum}
+      - {metric: item_set_change_count, operator: eq, threshold: 0, aggregate: sum}
+  - id: scale_composite_employee_wave_grain
+    criterion: join
+    evidence_role: supporting
+    question: ¿El composite 1-5 queda en un grain unico de empleado-wave?
+    why: La unica historia ordinal disponible debe deduplicarse antes del join temporal.
+    method: key_grain_and_temporal_reconciliation
+    sql_reference: queries/audits/qvoice_excel_join_grain_audit_20260826-2.sql
+    acceptance_rule: No deben quedar duplicados o unmatched internos; el workforce join sigue pendiente.
+    metric_checks:
+      - {metric: matched_count, operator: gt, threshold: 0, aggregate: sum}
+      - {metric: unmatched_count, operator: eq, threshold: 0, aggregate: sum}
+      - {metric: duplicate_count, operator: eq, threshold: 0, aggregate: sum}

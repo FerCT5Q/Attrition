@@ -1,0 +1,54 @@
+{
+  "artifact_type": "aggregate_rehire_trailing_12m_attrition_evidence",
+  "version": 7,
+  "generated_on": "2026-09-21",
+  "deliverable_mode": "internal_analysis",
+  "artifact_classification": "internal_analysis",
+  "purpose": "Etiquetar las tres barras recientes de Rehire con attrition voluntaria trailing 12 meses desde cada cierre fiscal de agosto.",
+  "definition": {
+    "concept": "Stored is_rehire flag",
+    "population": "Active Regular Employees at each fiscal August closing snapshot",
+    "grain": "Deduplicated employee cohort at baseline snapshot",
+    "outcome": "Strict VOLUNTARY termination in (baseline_snapshot_date, outcome_cutoff_date]",
+    "minimum_cohort": 30
+  },
+  "query": "queries/audits/v7_rehire_august_trailing_12m_attrition_20260921.sql",
+  "query_sha256": "e32eba6ac593662c3761b23a176ce481958cabb909833cce57fb6abc66d47cf8",
+  "rows": [
+    {
+      "fiscal_year": "2024",
+      "baseline_snapshot_date": "2023-08-20",
+      "outcome_cutoff_date": "2024-08-25",
+      "outcome_window": "(2023-08-20, 2024-08-25]",
+      "baseline_rehire_employee_count": 4970,
+      "distinct_employee_count": 4970,
+      "voluntary_exit_count": 339,
+      "trailing_12m_voluntary_attrition_rate_percent": 6.8209,
+      "publication_status": "publishable_trailing_12m"
+    },
+    {
+      "fiscal_year": "2025",
+      "baseline_snapshot_date": "2024-08-25",
+      "outcome_cutoff_date": "2025-08-24",
+      "outcome_window": "(2024-08-25, 2025-08-24]",
+      "baseline_rehire_employee_count": 5224,
+      "distinct_employee_count": 5224,
+      "voluntary_exit_count": 377,
+      "trailing_12m_voluntary_attrition_rate_percent": 7.2167,
+      "publication_status": "publishable_trailing_12m"
+    },
+    {
+      "fiscal_year": "2026",
+      "baseline_snapshot_date": "2025-08-24",
+      "outcome_cutoff_date": "2026-08-23",
+      "outcome_window": "(2025-08-24, 2026-08-23]",
+      "baseline_rehire_employee_count": 5747,
+      "distinct_employee_count": 5747,
+      "voluntary_exit_count": 461,
+      "trailing_12m_voluntary_attrition_rate_percent": 8.0216,
+      "publication_status": "publishable_trailing_12m"
+    }
+  ],
+  "acceptance_rule": "Every displayed fiscal-year cohort has n>=30, exactly one baseline row per employee, and voluntary exits / baseline cohort reconciles to the T12 rate.",
+  "outcome": "pass"
+}

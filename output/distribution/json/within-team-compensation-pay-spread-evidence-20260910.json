@@ -1,0 +1,142 @@
+{
+  "artifact_type": "aggregate_distribution_evidence",
+  "deliverable_mode": "presentation",
+  "variable": "Within team compensation range",
+  "semantic_type": "derived_feature",
+  "publication_status": "validated_descriptive_distribution",
+  "execution_date": "2026-09-10",
+  "snapshot_date": "2026-08-23",
+  "population": "worker_type='Employee'; employee_type='Regular'; active_status=1 at the 2026-08-23 monthly snapshot",
+  "grain": "Direct-manager team at one monthly snapshot; manager is excluded from their own report group",
+  "definition": {
+    "team_membership": "Active regular direct reports sharing manager_employee_id in the cutoff snapshot; reg_non_intern_dir_reports > 0 corroborates the manager record.",
+    "comparable_group": "Within one direct-manager team, direct reports sharing country, compensation_grade, and FTE annual-base-pay currency.",
+    "eligibility": "At least two direct reports with nonblank country, compensation_grade, currency, and positive fte_annual_base_pay. Missing inputs and singleton groups do not form a comparable group.",
+    "pay_spread": "max(fte_annual_base_pay) / min(fte_annual_base_pay) - 1, calculated only inside an eligible comparable group.",
+    "flag_rule": "A comparable group is flagged when its FTE-adjusted base-pay spread is at least 10%.",
+    "manager_metrics": "For each manager with one or more eligible groups: flagged-group count and flagged-group share of eligible comparable groups. Managers with no eligible group are kept in a separate No comparable groups state, not assigned zero."
+  },
+  "distributions": {
+    "flagged_group_count_per_team": [
+      {
+        "key": "count_0_0",
+        "label": "0 flagged groups",
+        "manager_count": 3421,
+        "percent_of_comparable_managers": 43.97172236503856
+      },
+      {
+        "key": "count_1_1",
+        "label": "1 flagged group",
+        "manager_count": 3355,
+        "percent_of_comparable_managers": 43.123393316195376
+      },
+      {
+        "key": "count_2_2",
+        "label": "2 flagged groups",
+        "manager_count": 821,
+        "percent_of_comparable_managers": 10.552699228791774
+      },
+      {
+        "key": "count_3_3",
+        "label": "3 flagged groups",
+        "manager_count": 143,
+        "percent_of_comparable_managers": 1.8380462724935733
+      },
+      {
+        "key": "count_4_7",
+        "label": "4–7 flagged groups",
+        "manager_count": 40,
+        "percent_of_comparable_managers": 0.5141388174807198
+      }
+    ],
+    "flagged_group_share_per_team": [
+      {
+        "key": "rate_0_to_rate_0",
+        "label": "0%",
+        "manager_count": 3421,
+        "percent_of_comparable_managers": 43.97172236503856
+      },
+      {
+        "key": "rate_gt0_lt25_to_rate_25_lt50",
+        "label": ">0–<50%",
+        "manager_count": 265,
+        "percent_of_comparable_managers": 3.4061696658097684
+      },
+      {
+        "key": "rate_50_lt75_to_rate_50_lt75",
+        "label": "50–<75%",
+        "manager_count": 1414,
+        "percent_of_comparable_managers": 18.174807197943444
+      },
+      {
+        "key": "rate_75_lt100_to_rate_75_lt100",
+        "label": "75–<100%",
+        "manager_count": 50,
+        "percent_of_comparable_managers": 0.6426735218508998
+      },
+      {
+        "key": "rate_100_to_rate_100",
+        "label": "100%",
+        "manager_count": 2630,
+        "percent_of_comparable_managers": 33.804627249357324
+      }
+    ],
+    "non_comparable_state": [
+      {
+        "key": "no_comparable_groups",
+        "label": "No comparable groups",
+        "manager_count": 2803
+      }
+    ]
+  },
+  "metrics": {
+    "active_regular_employee_count": 50043,
+    "manager_universe_count": 10583,
+    "comparable_manager_count": 7780,
+    "no_comparable_group_manager_count": 2803,
+    "eligible_comparable_group_count": 12108,
+    "flagged_comparable_group_count": 5602,
+    "flagged_comparable_group_percent": 46.266930954740666,
+    "complete_member_count": 49630,
+    "excluded_missing_required_input_member_count": 412,
+    "singleton_group_count": 15592,
+    "minimum_published_bucket_count": 40,
+    "minimum_cohort": 30,
+    "pay_spread_threshold_percent": 10.0
+  },
+  "validation": {
+    "membership_integrity": {
+      "outcome": "pass",
+      "acceptance_rule": "No active-regular or active-manager snapshot duplicate keys; every assigned direct-report manager resolves uniquely and has reg_non_intern_dir_reports > 0."
+    },
+    "reconciliation": {
+      "outcome": "pass",
+      "acceptance_rule": "Comparable-manager count and No comparable groups state reconcile to the direct-manager universe; both count and rate distributions reconcile to comparable managers; flagged groups do not exceed eligible groups."
+    },
+    "privacy": {
+      "outcome": "pass",
+      "acceptance_rule": "Presentation evidence stores aggregate manager counts only; all displayed buckets meet n >= 30 and omit identifiers, country/grade/currency labels, and pay values."
+    }
+  },
+  "provenance": {
+    "audit_sql": "queries/audits/within_team_compensation_pay_spread_integrity_20260823.sql",
+    "audit_sql_sha256": "6ff025ce8619e530a8b03a1992bc8d60afb536feb1870608b4655bfcd29c2e16",
+    "audit_result_sha256": "6fd7ccd4cab6355c98efab1be1a15dc5c14fbf361035c192a394979917527801",
+    "profile_sql": "queries/profiles/within_team_compensation_pay_spread_distribution_20260823.sql",
+    "profile_sql_sha256": "dc62d3735bdcf0de2476199ad05b630644ed6848dd2369fad53c76a512093cca",
+    "profile_result_sha256": "da397dc2d9501f7ff5bf76ac19a2f2a1cb33c004a935a1d8071b49b47f4b3879",
+    "raw_aggregate_rows_persisted": false
+  },
+  "privacy_checks": {
+    "identifiers_persisted": false,
+    "employee_rows_persisted": false,
+    "manager_rows_persisted": false,
+    "exact_compensation_persisted": false,
+    "country_grade_currency_labels_persisted": false,
+    "all_displayed_buckets_meet_minimum": true,
+    "minimum_cohort": 30
+  },
+  "score_v4_change": "none",
+  "limitation": "This is a descriptive review signal, not a pay-equity finding. It does not model tenure, performance, job profile, labor-market differences within a country, or other legitimate compensation factors. The stored FTE annual-base-pay field is used as an operational normalization and does not establish authoritative compensation lineage.",
+  "outcome": "pass"
+}

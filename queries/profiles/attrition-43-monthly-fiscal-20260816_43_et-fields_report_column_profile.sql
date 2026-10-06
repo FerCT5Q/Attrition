@@ -1,0 +1,142 @@
+SELECT
+  'et_1_leader' AS column_name,
+  COUNT(*) AS eligible_rows,
+  COUNT(DISTINCT "employee_id") AS eligible_employees,
+  SUM(CASE WHEN NULLIF(TRIM(CAST("et_1_leader" AS VARCHAR)), '') IS NOT NULL THEN 1 ELSE 0 END) AS populated_rows,
+  COUNT(DISTINCT CASE WHEN NULLIF(TRIM(CAST("et_1_leader" AS VARCHAR)), '') IS NOT NULL THEN "employee_id" END) AS populated_employees,
+  COUNT(DISTINCT CASE WHEN NULLIF(TRIM(CAST("et_1_leader" AS VARCHAR)), '') IS NOT NULL THEN CAST("et_1_leader" AS VARCHAR(512)) END) AS distinct_values,
+  MIN(CASE WHEN NULLIF(TRIM(CAST("et_1_leader" AS VARCHAR)), '') IS NOT NULL THEN CAST("fis_mo_end_dt" AS DATE) END) AS first_populated_date,
+  MAX(CASE WHEN NULLIF(TRIM(CAST("et_1_leader" AS VARCHAR)), '') IS NOT NULL THEN CAST("fis_mo_end_dt" AS DATE) END) AS latest_populated_date
+FROM "hrda"."post_hire_monthly_worker_dtls"
+WHERE "worker_type" = 'Employee' AND "employee_type" = 'Regular' AND "active_status" = 1
+  AND "fis_mo_end_dt" IS NOT NULL
+UNION ALL
+SELECT
+  'et_2_leader' AS column_name,
+  COUNT(*) AS eligible_rows,
+  COUNT(DISTINCT "employee_id") AS eligible_employees,
+  SUM(CASE WHEN NULLIF(TRIM(CAST("et_2_leader" AS VARCHAR)), '') IS NOT NULL THEN 1 ELSE 0 END) AS populated_rows,
+  COUNT(DISTINCT CASE WHEN NULLIF(TRIM(CAST("et_2_leader" AS VARCHAR)), '') IS NOT NULL THEN "employee_id" END) AS populated_employees,
+  COUNT(DISTINCT CASE WHEN NULLIF(TRIM(CAST("et_2_leader" AS VARCHAR)), '') IS NOT NULL THEN CAST("et_2_leader" AS VARCHAR(512)) END) AS distinct_values,
+  MIN(CASE WHEN NULLIF(TRIM(CAST("et_2_leader" AS VARCHAR)), '') IS NOT NULL THEN CAST("fis_mo_end_dt" AS DATE) END) AS first_populated_date,
+  MAX(CASE WHEN NULLIF(TRIM(CAST("et_2_leader" AS VARCHAR)), '') IS NOT NULL THEN CAST("fis_mo_end_dt" AS DATE) END) AS latest_populated_date
+FROM "hrda"."post_hire_monthly_worker_dtls"
+WHERE "worker_type" = 'Employee' AND "employee_type" = 'Regular' AND "active_status" = 1
+  AND "fis_mo_end_dt" IS NOT NULL
+UNION ALL
+SELECT
+  'et_3_leader' AS column_name,
+  COUNT(*) AS eligible_rows,
+  COUNT(DISTINCT "employee_id") AS eligible_employees,
+  SUM(CASE WHEN NULLIF(TRIM(CAST("et_3_leader" AS VARCHAR)), '') IS NOT NULL THEN 1 ELSE 0 END) AS populated_rows,
+  COUNT(DISTINCT CASE WHEN NULLIF(TRIM(CAST("et_3_leader" AS VARCHAR)), '') IS NOT NULL THEN "employee_id" END) AS populated_employees,
+  COUNT(DISTINCT CASE WHEN NULLIF(TRIM(CAST("et_3_leader" AS VARCHAR)), '') IS NOT NULL THEN CAST("et_3_leader" AS VARCHAR(512)) END) AS distinct_values,
+  MIN(CASE WHEN NULLIF(TRIM(CAST("et_3_leader" AS VARCHAR)), '') IS NOT NULL THEN CAST("fis_mo_end_dt" AS DATE) END) AS first_populated_date,
+  MAX(CASE WHEN NULLIF(TRIM(CAST("et_3_leader" AS VARCHAR)), '') IS NOT NULL THEN CAST("fis_mo_end_dt" AS DATE) END) AS latest_populated_date
+FROM "hrda"."post_hire_monthly_worker_dtls"
+WHERE "worker_type" = 'Employee' AND "employee_type" = 'Regular' AND "active_status" = 1
+  AND "fis_mo_end_dt" IS NOT NULL
+UNION ALL
+SELECT
+  'et_4_leader' AS column_name,
+  COUNT(*) AS eligible_rows,
+  COUNT(DISTINCT "employee_id") AS eligible_employees,
+  SUM(CASE WHEN NULLIF(TRIM(CAST("et_4_leader" AS VARCHAR)), '') IS NOT NULL THEN 1 ELSE 0 END) AS populated_rows,
+  COUNT(DISTINCT CASE WHEN NULLIF(TRIM(CAST("et_4_leader" AS VARCHAR)), '') IS NOT NULL THEN "employee_id" END) AS populated_employees,
+  COUNT(DISTINCT CASE WHEN NULLIF(TRIM(CAST("et_4_leader" AS VARCHAR)), '') IS NOT NULL THEN CAST("et_4_leader" AS VARCHAR(512)) END) AS distinct_values,
+  MIN(CASE WHEN NULLIF(TRIM(CAST("et_4_leader" AS VARCHAR)), '') IS NOT NULL THEN CAST("fis_mo_end_dt" AS DATE) END) AS first_populated_date,
+  MAX(CASE WHEN NULLIF(TRIM(CAST("et_4_leader" AS VARCHAR)), '') IS NOT NULL THEN CAST("fis_mo_end_dt" AS DATE) END) AS latest_populated_date
+FROM "hrda"."post_hire_monthly_worker_dtls"
+WHERE "worker_type" = 'Employee' AND "employee_type" = 'Regular' AND "active_status" = 1
+  AND "fis_mo_end_dt" IS NOT NULL
+UNION ALL
+SELECT
+  'et_5_leader' AS column_name,
+  COUNT(*) AS eligible_rows,
+  COUNT(DISTINCT "employee_id") AS eligible_employees,
+  SUM(CASE WHEN NULLIF(TRIM(CAST("et_5_leader" AS VARCHAR)), '') IS NOT NULL THEN 1 ELSE 0 END) AS populated_rows,
+  COUNT(DISTINCT CASE WHEN NULLIF(TRIM(CAST("et_5_leader" AS VARCHAR)), '') IS NOT NULL THEN "employee_id" END) AS populated_employees,
+  COUNT(DISTINCT CASE WHEN NULLIF(TRIM(CAST("et_5_leader" AS VARCHAR)), '') IS NOT NULL THEN CAST("et_5_leader" AS VARCHAR(512)) END) AS distinct_values,
+  MIN(CASE WHEN NULLIF(TRIM(CAST("et_5_leader" AS VARCHAR)), '') IS NOT NULL THEN CAST("fis_mo_end_dt" AS DATE) END) AS first_populated_date,
+  MAX(CASE WHEN NULLIF(TRIM(CAST("et_5_leader" AS VARCHAR)), '') IS NOT NULL THEN CAST("fis_mo_end_dt" AS DATE) END) AS latest_populated_date
+FROM "hrda"."post_hire_monthly_worker_dtls"
+WHERE "worker_type" = 'Employee' AND "employee_type" = 'Regular' AND "active_status" = 1
+  AND "fis_mo_end_dt" IS NOT NULL
+UNION ALL
+SELECT
+  'et_6_leader' AS column_name,
+  COUNT(*) AS eligible_rows,
+  COUNT(DISTINCT "employee_id") AS eligible_employees,
+  SUM(CASE WHEN NULLIF(TRIM(CAST("et_6_leader" AS VARCHAR)), '') IS NOT NULL THEN 1 ELSE 0 END) AS populated_rows,
+  COUNT(DISTINCT CASE WHEN NULLIF(TRIM(CAST("et_6_leader" AS VARCHAR)), '') IS NOT NULL THEN "employee_id" END) AS populated_employees,
+  COUNT(DISTINCT CASE WHEN NULLIF(TRIM(CAST("et_6_leader" AS VARCHAR)), '') IS NOT NULL THEN CAST("et_6_leader" AS VARCHAR(512)) END) AS distinct_values,
+  MIN(CASE WHEN NULLIF(TRIM(CAST("et_6_leader" AS VARCHAR)), '') IS NOT NULL THEN CAST("fis_mo_end_dt" AS DATE) END) AS first_populated_date,
+  MAX(CASE WHEN NULLIF(TRIM(CAST("et_6_leader" AS VARCHAR)), '') IS NOT NULL THEN CAST("fis_mo_end_dt" AS DATE) END) AS latest_populated_date
+FROM "hrda"."post_hire_monthly_worker_dtls"
+WHERE "worker_type" = 'Employee' AND "employee_type" = 'Regular' AND "active_status" = 1
+  AND "fis_mo_end_dt" IS NOT NULL
+UNION ALL
+SELECT
+  'et_7_leader' AS column_name,
+  COUNT(*) AS eligible_rows,
+  COUNT(DISTINCT "employee_id") AS eligible_employees,
+  SUM(CASE WHEN NULLIF(TRIM(CAST("et_7_leader" AS VARCHAR)), '') IS NOT NULL THEN 1 ELSE 0 END) AS populated_rows,
+  COUNT(DISTINCT CASE WHEN NULLIF(TRIM(CAST("et_7_leader" AS VARCHAR)), '') IS NOT NULL THEN "employee_id" END) AS populated_employees,
+  COUNT(DISTINCT CASE WHEN NULLIF(TRIM(CAST("et_7_leader" AS VARCHAR)), '') IS NOT NULL THEN CAST("et_7_leader" AS VARCHAR(512)) END) AS distinct_values,
+  MIN(CASE WHEN NULLIF(TRIM(CAST("et_7_leader" AS VARCHAR)), '') IS NOT NULL THEN CAST("fis_mo_end_dt" AS DATE) END) AS first_populated_date,
+  MAX(CASE WHEN NULLIF(TRIM(CAST("et_7_leader" AS VARCHAR)), '') IS NOT NULL THEN CAST("fis_mo_end_dt" AS DATE) END) AS latest_populated_date
+FROM "hrda"."post_hire_monthly_worker_dtls"
+WHERE "worker_type" = 'Employee' AND "employee_type" = 'Regular' AND "active_status" = 1
+  AND "fis_mo_end_dt" IS NOT NULL
+UNION ALL
+SELECT
+  'et_8_leader' AS column_name,
+  COUNT(*) AS eligible_rows,
+  COUNT(DISTINCT "employee_id") AS eligible_employees,
+  SUM(CASE WHEN NULLIF(TRIM(CAST("et_8_leader" AS VARCHAR)), '') IS NOT NULL THEN 1 ELSE 0 END) AS populated_rows,
+  COUNT(DISTINCT CASE WHEN NULLIF(TRIM(CAST("et_8_leader" AS VARCHAR)), '') IS NOT NULL THEN "employee_id" END) AS populated_employees,
+  COUNT(DISTINCT CASE WHEN NULLIF(TRIM(CAST("et_8_leader" AS VARCHAR)), '') IS NOT NULL THEN CAST("et_8_leader" AS VARCHAR(512)) END) AS distinct_values,
+  MIN(CASE WHEN NULLIF(TRIM(CAST("et_8_leader" AS VARCHAR)), '') IS NOT NULL THEN CAST("fis_mo_end_dt" AS DATE) END) AS first_populated_date,
+  MAX(CASE WHEN NULLIF(TRIM(CAST("et_8_leader" AS VARCHAR)), '') IS NOT NULL THEN CAST("fis_mo_end_dt" AS DATE) END) AS latest_populated_date
+FROM "hrda"."post_hire_monthly_worker_dtls"
+WHERE "worker_type" = 'Employee' AND "employee_type" = 'Regular' AND "active_status" = 1
+  AND "fis_mo_end_dt" IS NOT NULL
+UNION ALL
+SELECT
+  'et_9_leader' AS column_name,
+  COUNT(*) AS eligible_rows,
+  COUNT(DISTINCT "employee_id") AS eligible_employees,
+  SUM(CASE WHEN NULLIF(TRIM(CAST("et_9_leader" AS VARCHAR)), '') IS NOT NULL THEN 1 ELSE 0 END) AS populated_rows,
+  COUNT(DISTINCT CASE WHEN NULLIF(TRIM(CAST("et_9_leader" AS VARCHAR)), '') IS NOT NULL THEN "employee_id" END) AS populated_employees,
+  COUNT(DISTINCT CASE WHEN NULLIF(TRIM(CAST("et_9_leader" AS VARCHAR)), '') IS NOT NULL THEN CAST("et_9_leader" AS VARCHAR(512)) END) AS distinct_values,
+  MIN(CASE WHEN NULLIF(TRIM(CAST("et_9_leader" AS VARCHAR)), '') IS NOT NULL THEN CAST("fis_mo_end_dt" AS DATE) END) AS first_populated_date,
+  MAX(CASE WHEN NULLIF(TRIM(CAST("et_9_leader" AS VARCHAR)), '') IS NOT NULL THEN CAST("fis_mo_end_dt" AS DATE) END) AS latest_populated_date
+FROM "hrda"."post_hire_monthly_worker_dtls"
+WHERE "worker_type" = 'Employee' AND "employee_type" = 'Regular' AND "active_status" = 1
+  AND "fis_mo_end_dt" IS NOT NULL
+UNION ALL
+SELECT
+  'et_10_leader' AS column_name,
+  COUNT(*) AS eligible_rows,
+  COUNT(DISTINCT "employee_id") AS eligible_employees,
+  SUM(CASE WHEN NULLIF(TRIM(CAST("et_10_leader" AS VARCHAR)), '') IS NOT NULL THEN 1 ELSE 0 END) AS populated_rows,
+  COUNT(DISTINCT CASE WHEN NULLIF(TRIM(CAST("et_10_leader" AS VARCHAR)), '') IS NOT NULL THEN "employee_id" END) AS populated_employees,
+  COUNT(DISTINCT CASE WHEN NULLIF(TRIM(CAST("et_10_leader" AS VARCHAR)), '') IS NOT NULL THEN CAST("et_10_leader" AS VARCHAR(512)) END) AS distinct_values,
+  MIN(CASE WHEN NULLIF(TRIM(CAST("et_10_leader" AS VARCHAR)), '') IS NOT NULL THEN CAST("fis_mo_end_dt" AS DATE) END) AS first_populated_date,
+  MAX(CASE WHEN NULLIF(TRIM(CAST("et_10_leader" AS VARCHAR)), '') IS NOT NULL THEN CAST("fis_mo_end_dt" AS DATE) END) AS latest_populated_date
+FROM "hrda"."post_hire_monthly_worker_dtls"
+WHERE "worker_type" = 'Employee' AND "employee_type" = 'Regular' AND "active_status" = 1
+  AND "fis_mo_end_dt" IS NOT NULL
+UNION ALL
+SELECT
+  'et_11_leader' AS column_name,
+  COUNT(*) AS eligible_rows,
+  COUNT(DISTINCT "employee_id") AS eligible_employees,
+  SUM(CASE WHEN NULLIF(TRIM(CAST("et_11_leader" AS VARCHAR)), '') IS NOT NULL THEN 1 ELSE 0 END) AS populated_rows,
+  COUNT(DISTINCT CASE WHEN NULLIF(TRIM(CAST("et_11_leader" AS VARCHAR)), '') IS NOT NULL THEN "employee_id" END) AS populated_employees,
+  COUNT(DISTINCT CASE WHEN NULLIF(TRIM(CAST("et_11_leader" AS VARCHAR)), '') IS NOT NULL THEN CAST("et_11_leader" AS VARCHAR(512)) END) AS distinct_values,
+  MIN(CASE WHEN NULLIF(TRIM(CAST("et_11_leader" AS VARCHAR)), '') IS NOT NULL THEN CAST("fis_mo_end_dt" AS DATE) END) AS first_populated_date,
+  MAX(CASE WHEN NULLIF(TRIM(CAST("et_11_leader" AS VARCHAR)), '') IS NOT NULL THEN CAST("fis_mo_end_dt" AS DATE) END) AS latest_populated_date
+FROM "hrda"."post_hire_monthly_worker_dtls"
+WHERE "worker_type" = 'Employee' AND "employee_type" = 'Regular' AND "active_status" = 1
+  AND "fis_mo_end_dt" IS NOT NULL

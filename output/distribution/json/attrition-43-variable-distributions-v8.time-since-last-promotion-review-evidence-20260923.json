@@ -1,0 +1,309 @@
+{
+  "artifact_type": "aggregate_segment_attrition_evidence",
+  "version": 8,
+  "artifact_classification": "internal_analysis",
+  "deliverable_mode": "internal_analysis",
+  "variable": "Time since last promotion",
+  "semantic_type": "derived_feature",
+  "execution_date": "2026-09-24",
+  "display_snapshot_date": "2026-08-23",
+  "baseline_snapshot_date": "2025-08-24",
+  "outcome_cutoff_date": "2026-08-23",
+  "outcome_window": "(2025-08-24, 2026-08-23]",
+  "population": "worker_type='Employee'; employee_type='Regular'; active_status=1",
+  "grain": "Distinct active Regular employee at the named snapshot",
+  "definition": {
+    "latest_recorded_promotion": "Maximum distinct promotion_date where is_promo=1, the date is known by its event snapshot, and it is on or after max_hire_rehire_date for the employee's current episode.",
+    "no_event_state": "No promotion recorded in current episode is an observed no-event state, not a claim of never having been promoted.",
+    "role_context": "Stored time_in_role is shown separately from the tenure calculated from the later of time_in_job_profile_start_date and max_hire_rehire_date.",
+    "annual_attrition": "Strict VOLUNTARY exits from the same 2025-08-24 baseline category in (2025-08-24, 2026-08-23]."
+  },
+  "display_distribution": [
+    {
+      "label": "0–<1 year",
+      "employee_count": 5514,
+      "voluntary_exits": null,
+      "annual_attrition_rate_percent": 6.3083,
+      "annual_baseline_employee_count": 4930,
+      "annual_voluntary_exits": 311,
+      "publication_status": "publishable"
+    },
+    {
+      "label": "1–<2 years",
+      "employee_count": 4637,
+      "voluntary_exits": null,
+      "annual_attrition_rate_percent": 5.6143,
+      "annual_baseline_employee_count": 4542,
+      "annual_voluntary_exits": 255,
+      "publication_status": "publishable"
+    },
+    {
+      "label": "2–<3 years",
+      "employee_count": 4107,
+      "voluntary_exits": null,
+      "annual_attrition_rate_percent": 5.1902,
+      "annual_baseline_employee_count": 4759,
+      "annual_voluntary_exits": 247,
+      "publication_status": "publishable"
+    },
+    {
+      "label": "3–<5 years",
+      "employee_count": 7227,
+      "voluntary_exits": null,
+      "annual_attrition_rate_percent": 3.7877,
+      "annual_baseline_employee_count": 5861,
+      "annual_voluntary_exits": 222,
+      "publication_status": "publishable"
+    },
+    {
+      "label": "5+ years",
+      "employee_count": 1695,
+      "voluntary_exits": null,
+      "annual_attrition_rate_percent": 0.0,
+      "annual_baseline_employee_count": 7,
+      "annual_voluntary_exits": 0,
+      "publication_status": "internal_exploratory_small_cohort"
+    },
+    {
+      "label": "No promotion recorded in current episode",
+      "employee_count": 23001,
+      "voluntary_exits": null,
+      "annual_attrition_rate_percent": 6.4184,
+      "annual_baseline_employee_count": 20223,
+      "annual_voluntary_exits": 1298,
+      "publication_status": "publishable"
+    },
+    {
+      "label": "History predates observed promotion events",
+      "employee_count": 3862,
+      "voluntary_exits": null,
+      "annual_attrition_rate_percent": 3.2258,
+      "annual_baseline_employee_count": 4681,
+      "annual_voluntary_exits": 151,
+      "publication_status": "publishable"
+    }
+  ],
+  "no_promotion_recorded_current_episode": {
+    "employee_count": 23001,
+    "percent_of_display_population": 45.96247227384449,
+    "level_grouped": [
+      {
+        "label": "1 - VP & Above",
+        "employee_count": 90,
+        "voluntary_exits": null,
+        "annual_attrition_rate_percent": 14.2857,
+        "annual_baseline_employee_count": 70,
+        "annual_voluntary_exits": 10,
+        "publication_status": "publishable"
+      },
+      {
+        "label": "2 - Sr Dir",
+        "employee_count": 245,
+        "voluntary_exits": null,
+        "annual_attrition_rate_percent": 5.4726,
+        "annual_baseline_employee_count": 201,
+        "annual_voluntary_exits": 11,
+        "publication_status": "publishable"
+      },
+      {
+        "label": "3 - Princ/Directors",
+        "employee_count": 1109,
+        "voluntary_exits": null,
+        "annual_attrition_rate_percent": 6.3702,
+        "annual_baseline_employee_count": 832,
+        "annual_voluntary_exits": 53,
+        "publication_status": "publishable"
+      },
+      {
+        "label": "4 - Mgrs Corp",
+        "employee_count": 1146,
+        "voluntary_exits": null,
+        "annual_attrition_rate_percent": 6.3344,
+        "annual_baseline_employee_count": 963,
+        "annual_voluntary_exits": 61,
+        "publication_status": "publishable"
+      },
+      {
+        "label": "5 - Sr Staff & /Mgr",
+        "employee_count": 1602,
+        "voluntary_exits": null,
+        "annual_attrition_rate_percent": 7.9177,
+        "annual_baseline_employee_count": 1263,
+        "annual_voluntary_exits": 100,
+        "publication_status": "publishable"
+      },
+      {
+        "label": "6 - Staff & /Mgr",
+        "employee_count": 2391,
+        "voluntary_exits": null,
+        "annual_attrition_rate_percent": 7.1696,
+        "annual_baseline_employee_count": 2134,
+        "annual_voluntary_exits": 153,
+        "publication_status": "publishable"
+      },
+      {
+        "label": "7 - Senior & Lead",
+        "employee_count": 7991,
+        "voluntary_exits": null,
+        "annual_attrition_rate_percent": 6.2777,
+        "annual_baseline_employee_count": 6993,
+        "annual_voluntary_exits": 439,
+        "publication_status": "publishable"
+      },
+      {
+        "label": "8 - Assoc & Int/Eng",
+        "employee_count": 6724,
+        "voluntary_exits": null,
+        "annual_attrition_rate_percent": 6.8205,
+        "annual_baseline_employee_count": 5982,
+        "annual_voluntary_exits": 408,
+        "publication_status": "publishable"
+      },
+      {
+        "label": "9 - Support",
+        "employee_count": 1703,
+        "voluntary_exits": null,
+        "annual_attrition_rate_percent": 3.5294,
+        "annual_baseline_employee_count": 1785,
+        "annual_voluntary_exits": 63,
+        "publication_status": "publishable"
+      }
+    ],
+    "time_in_role": [
+      {
+        "label": "<1 year",
+        "employee_count": 7593,
+        "voluntary_exits": null,
+        "annual_attrition_rate_percent": 5.491,
+        "annual_baseline_employee_count": 6028,
+        "annual_voluntary_exits": 331,
+        "publication_status": "publishable"
+      },
+      {
+        "label": "1–<2 years",
+        "employee_count": 5787,
+        "voluntary_exits": null,
+        "annual_attrition_rate_percent": 7.2797,
+        "annual_baseline_employee_count": 4176,
+        "annual_voluntary_exits": 304,
+        "publication_status": "publishable"
+      },
+      {
+        "label": "2–<3 years",
+        "employee_count": 3288,
+        "voluntary_exits": null,
+        "annual_attrition_rate_percent": 7.2999,
+        "annual_baseline_employee_count": 3274,
+        "annual_voluntary_exits": 239,
+        "publication_status": "publishable"
+      },
+      {
+        "label": "3–<5 years",
+        "employee_count": 3739,
+        "voluntary_exits": null,
+        "annual_attrition_rate_percent": 7.6746,
+        "annual_baseline_employee_count": 4352,
+        "annual_voluntary_exits": 334,
+        "publication_status": "publishable"
+      },
+      {
+        "label": "5–<10 years",
+        "employee_count": 2594,
+        "voluntary_exits": null,
+        "annual_attrition_rate_percent": 3.761,
+        "annual_baseline_employee_count": 2393,
+        "annual_voluntary_exits": 90,
+        "publication_status": "publishable"
+      }
+    ],
+    "role_start_vs_current_employment_episode": [
+      {
+        "label": "Role began with current employment episode",
+        "employee_count": 17008,
+        "voluntary_exits": null,
+        "annual_attrition_rate_percent": null
+      },
+      {
+        "label": "Role began after current employment episode",
+        "employee_count": 5993,
+        "voluntary_exits": null,
+        "annual_attrition_rate_percent": null
+      }
+    ],
+    "stored_time_in_role_vs_date_calculation": [
+      {
+        "label": "Within 3 months",
+        "employee_count": 20279,
+        "voluntary_exits": null,
+        "annual_attrition_rate_percent": null
+      },
+      {
+        "label": "3–12 months apart",
+        "employee_count": 1197,
+        "voluntary_exits": null,
+        "annual_attrition_rate_percent": null
+      },
+      {
+        "label": "More than 12 months apart",
+        "employee_count": 1525,
+        "voluntary_exits": null,
+        "annual_attrition_rate_percent": null
+      }
+    ]
+  },
+  "metrics": {
+    "display_active_regular_employee_count": 50043,
+    "baseline_active_regular_employee_count": 45003,
+    "baseline_voluntary_exits": 2484,
+    "baseline_invalid_job_profile_start_count": 45003,
+    "pre_episode_promotion_events_excluded": 506,
+    "minimum_cohort": 30
+  },
+  "validation": {
+    "metadata_preflight": {
+      "outcome": "pass",
+      "acceptance_rule": "Required fields and compatible data types exist in hrda.post_hire_monthly_worker_dtls."
+    },
+    "event_integrity": {
+      "outcome": "pass",
+      "acceptance_rule": "No target duplicates/conflicts, invalid promotion flags, flag/date conflicts, future dates, or dates after their event snapshot."
+    },
+    "reconciliation": {
+      "outcome": "pass",
+      "acceptance_rule": "Current bands equal 50,043 employees; baseline bands equal 45,003; and strict voluntary exits reconcile to 2,484."
+    },
+    "role_context": {
+      "outcome": "pass",
+      "acceptance_rule": "Current no-event level, time-in-role, role-start and alignment groups each reconcile to the no-event denominator."
+    },
+    "privacy": {
+      "outcome": "pass",
+      "acceptance_rule": "Only aggregate counts/rates are frozen; no employee rows, IDs, names, individual dates, or exact compensation values are written."
+    }
+  },
+  "authorization": {
+    "path": "config/attrition_v8_internal_analysis_authorization_20260923.json",
+    "sha256": "41de775cf7152ce6588c5ba7348b8c2006a29bdfa4aa63bdd1c8cb02015b4249",
+    "authorization_id": "attrition-v8-internal-aggregate-visibility-20260923"
+  },
+  "provenance": {
+    "metadata_sql": "queries/audits/v8_time_since_last_promotion_metadata_preflight_20260923.sql",
+    "metadata_sql_sha256": "721eb67beab7524ea87db93570877259102bd05137a5d979cb293f2dbc169178",
+    "metadata_result_sha256": "1fc722f7e9dd3cf32481774a178c4ea9a8a9f3f0ba87fa3fea14329eea81ea14",
+    "review_sql": "queries/audits/v8_time_since_last_promotion_review_20260923.sql",
+    "review_sql_sha256": "bf56c54cfa10e010dad1d2283e075af085e4c4a20275b938b4f2a5ef2216e6e3",
+    "review_result_sha256": "38e1dec3a607d63e3f42a734de2f6323099551e0abae11c885daab6fada10524",
+    "raw_aggregate_rows_persisted": false
+  },
+  "privacy_checks": {
+    "employee_rows_persisted": false,
+    "employee_ids_persisted": false,
+    "names_persisted": false,
+    "individual_dates_persisted": false,
+    "exact_compensation_values_persisted": false,
+    "all_displayed_context_buckets_meet_minimum": true
+  },
+  "score_v4_change": "none",
+  "limitation": "The visual reports recorded events within observable history. It does not assert a promotion policy, causal relationship, or that people without a recorded event were never promoted. job-profile dates are unavailable for the historical baseline, so the role-start comparison is current-distribution context only.",
+  "outcome": "pass"
+}

@@ -1,0 +1,59 @@
+schema_version: 1
+language: es
+unknown_policy: conservative
+
+problem_context:
+  problem_statement: >-
+    Revalidar el Join de Number of manager changes para determinar si los eventos
+    de cambio de manager pueden asociarse de forma única, completa y time-safe a
+    cada snapshot mensual del empleado.
+  decision_or_use_case: >-
+    Decidir si el criterio Join puede subir de 1 a 2 sin asumir todavía una ventana
+    definitiva para el conteo histórico.
+  outcome: >-
+    Attrition voluntario ocurrido después del snapshot mensual de predicción y antes
+    del siguiente snapshot.
+  population: Empleados regulares activos en cada snapshot mensual de predicción.
+  unit_of_analysis: Empleado-snapshot mensual.
+  time_horizon: Un mes después del cierre de cada snapshot mensual.
+  knowledge_boundary: >-
+    Para cada snapshot sólo pueden utilizarse eventos con fecha efectiva anterior o
+    igual al cierre del snapshot; nunca se enlazan cambios futuros.
+  stakeholders:
+    - Equipo de People Analytics / Attrition
+  constraints:
+    - Sólo SQL read-only y resultados agregados con cohortes de al menos 30.
+    - No publicar IDs, nombres, categorías protegidas, compensación ni texto libre.
+    - La validación de Join no debe inventar la ventana final del conteo.
+    - Los eventos se deduplican internamente por empleado y fecha efectiva.
+  assumptions:
+    - Number of manager changes es una feature derivada.
+    - El evento candidato se identifica con manager_change y manager_change_date.
+    - La ventana del conteo permanece pendiente y mantiene Definition por debajo de 2.
+  stakeholder_questions:
+    - ¿Es único el grain empleado-snapshot de la población objetivo?
+    - ¿Cada evento fechado cae exactamente en un snapshot mensual del mismo empleado?
+    - ¿Existen eventos sin fecha, fechas futuras, duplicados o multi-match?
+    - ¿La feature derivada puede regresar exactamente una fila por empleado-snapshot?
+  success_criteria:
+    - Guardar y ejecutar SQL agregado específico para el join.
+    - Reportar eligible, matched, unmatched, duplicate y multi-match counts.
+    - Exigir cero fechas futuras y cero eventos positivos sin fecha.
+    - Emitir un assessment v4 nuevo sin sobrescribir el resultado histórico.
+
+variables:
+  - name: Number of manager changes
+    intended_use: >-
+      Medir inestabilidad organizacional mediante cambios repetidos de manager
+      conocidos antes del snapshot de predicción.
+    population: Empleados regulares activos en cada snapshot mensual.
+    knowledge_date: Cierre de cada snapshot mensual de predicción.
+    context_role: Manager movement
+    context_relevance: >-
+      El conteo sólo es utilizable si la historia de eventos se une sin duplicados,
+      pérdidas ni información futura.
+
+decisions:
+  event_key: employee_id_and_manager_change_date
+  join_validation_scope: independent_of_final_lookback_window
+  unresolved_window_policy: keep_definition_capped_at_1

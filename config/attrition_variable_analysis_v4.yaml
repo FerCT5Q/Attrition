@@ -1,0 +1,652 @@
+version: 2
+language: es
+semantic_hint_registry: ../.codex/skills/evaluate-attrition-variable/references/semantic-hints.yaml
+defaults:
+  prediction_cutoff: Usar únicamente información conocida hasta el snapshot mensual de predicción, inclusive.
+  population: Empleados regulares activos, salvo que el plan específico indique otra población.
+  prior_evidence_policy: Los resultados previos sólo aportan contexto; cada afirmación debe revalidarse con el mismo grain, población, ventana y evidencia vigente.
+  publication_translations:
+    categories:
+      Applications / internal mobility: Solicitudes / movilidad interna
+      Career progression: Progresión de carrera
+      Compensation: Compensación
+      Demographics: Demografía
+      Employment history: Historia laboral
+      External pull factors: Factores externos de atracción
+      Location / workplace: Ubicación / lugar de trabajo
+      Manager / workplace: Manager / lugar de trabajo
+      Manager movement: Movimientos de manager
+      Manager risk: Riesgo de manager
+      Organization events: Eventos organizacionales
+      Organization structure: Estructura organizacional
+      Role / job: Rol / puesto
+      Survey data: Datos de encuesta
+      Talent: Talento
+      Talent / expert track: Talento / expert track
+      Tenure: Antigüedad
+      Turnover contagion: Contagio de rotación
+      Work arrangement: Modalidad laboral
+    grains:
+      Eligible employee / respondent: Empleado elegible / respondente
+      Eligible employee / respondent-region: Empleado elegible / respondente-región
+      Employee / external profile: Empleado / perfil externo
+      Employee location: Ubicación del empleado
+      Employee rolling event count: Conteo móvil de eventos por empleado
+      Employee snapshot: Snapshot de empleado
+      Employee snapshot / event: Snapshot de empleado / evento
+      Employee within team: Empleado dentro del equipo
+      Employee-cycle: Empleado-ciclo
+      Employee-event: Empleado-evento
+      Employee-event history: Historia empleado-evento
+      Employee-manager event: Evento empleado-manager
+      Employee-manager pair: Par empleado-manager
+      Geography-period: Geografía-periodo
+      Labor market / geography: Mercado laboral / geografía
+      Manager / team: Manager / equipo
+      Organization-event proxy: Proxy de evento organizacional
+      Respondent text (absent): Texto de respondente (ausente)
+      TBD employee or organization: Empleado u organización por definir
+      Team / employee context: Contexto equipo / empleado
+    frequencies:
+      Event-driven; captured monthly from the application feed: Orientada a eventos; captura mensual desde el feed de solicitudes
+      Monthly derived from application events: Derivada mensualmente desde eventos de solicitud
+      Annual or cycle-based talent process: Proceso anual o basado en ciclos de talento
+    column_descriptions:
+      job_family: Job family detallada registrada en el snapshot mensual del empleado.
+      job_family_short: Código o etiqueta abreviada de la job family detallada.
+      job_family_group: Agrupación de nivel superior de job families.
+      job_family_group_short: Código o etiqueta abreviada del grupo de job family.
+variables:
+  Applied to a job:
+    definition: El empleado tuvo al menos una solicitud interna de empleo deduplicada durante el mes anterior.
+    numerator_definition: Empleados vinculados al feed de solicitudes; los eventos se deduplican por empleado, fecha y requisición.
+    semantic_type: derived_feature
+    attrition_use: La búsqueda interna reciente puede señalar intención de movilidad o riesgo de salida.
+    source_reasoning: Existen eventos de solicitud, pero el indicador mensual requiere deduplicación, definición de ventana y join temporal.
+    validation_focus:
+      - Validamos el grain del evento y los estados elegibles porque solicitudes repetidas o retiradas pueden inflar la señal.
+      - Validamos la deduplicación por empleado, fecha y requisición porque una misma solicitud puede aparecer en varios estados.
+      - Validamos el join con el snapshot y el límite de un mes porque el evento debe conocerse antes de la predicción.
+      - Validamos la continuidad del feed porque una fuente desactualizada no sirve para scoring vigente.
+    score_overrides:
+      history:
+        reason: Existen eventos históricos, pero el feed no llega al periodo actual de scoring.
+        evidence: La auditoría agregada observó eventos entre 2020-07-13 y 2024-10-29, mientras los snapshots laborales continúan hasta 2026-08-23.
+        recommended_action: Restablecer y validar el feed vigente y después repetir el perfil longitudinal.
+  More than 3 job applications:
+    depends_on: [Applied to a job]
+    definition: El empleado presentó más de tres solicitudes internas deduplicadas durante los 12 meses previos al snapshot.
+    numerator_definition: Empleados vinculados al feed; el evento ocurre al superar tres requisiciones deduplicadas en la ventana móvil de 12 meses.
+    semantic_type: derived_feature
+    attrition_use: Un volumen alto de solicitudes puede distinguir movilidad activa de una solicitud aislada.
+    source_reasoning: No existe un flag directo; debe calcularse un conteo móvil de solicitudes elegibles y deduplicadas.
+    derivation_formula: Más de tres requisiciones internas deduplicadas en los 12 meses que terminan en el snapshot.
+    validation_focus:
+      - Validamos qué estados cuentan como solicitud porque retiradas, correcciones o duplicados pueden alterar el umbral.
+      - Validamos exactamente el límite mayor que tres porque tres y cuatro solicitudes deben clasificarse distinto.
+      - Validamos las fronteras de la ventana móvil de 12 meses para excluir eventos futuros o fuera de periodo.
+      - Validamos la continuidad del feed porque una ventana incompleta subestima el conteo.
+    score_overrides:
+      history:
+        reason: El conteo tiene soporte histórico, pero el feed de solicitudes está desactualizado.
+        evidence: Los eventos aplicados terminan en 2024-10-29 y los snapshots laborales continúan hasta 2026-08-23.
+        recommended_action: Restablecer el feed y validar ventanas completas de 12 meses antes de usar la variable.
+  Transfer within past year:
+    definition: El empleado tuvo una transferencia efectiva durante los 12 meses previos a cada snapshot.
+    numerator_definition: Empleados regulares activos con `is_transferred` observable; la prevalencia usa `is_transferred=1`.
+    semantic_type: derived_feature
+    attrition_use: Una movilidad interna reciente puede modificar el riesgo de salida después del cambio.
+    source_reasoning: Existen flag y fecha de transferencia, pero la condición de 12 meses se deriva para cada snapshot.
+    validation_focus:
+      - Validamos que `is_transferred` y `transfer_date` coincidan porque contradicciones impiden reconstruir el evento.
+      - Validamos `transfer_date <= snapshot_date` para impedir leakage de transferencias futuras.
+      - Validamos transferencias repetidas y fronteras de 12 meses porque la variable representa una ventana móvil.
+      - Validamos el join empleado-fecha y la historia observable para asegurar comparabilidad longitudinal.
+  Location:
+    definition: País de trabajo y sitio de oficina del empleado en cada snapshot mensual.
+    numerator_definition: Empleados regulares activos con país de trabajo y sitio de oficina poblados.
+    semantic_type: direct_field
+    attrition_use: La geografía laboral permite segmentar por mercado de trabajo, sitio y contexto operativo.
+    source_reasoning: '`country` y `office_site` son atributos directos con diferente granularidad y relación muchos-a-uno o uno-a-muchos.'
+    validation_focus:
+      - Validamos el significado de país frente a sitio porque representan niveles geográficos distintos.
+      - Validamos países con varios sitios y sitios asociados a varios países para detectar mappings ambiguos.
+      - Validamos nulos, aliases y cambios temporales porque los códigos de sitio pueden cambiar o faltar.
+      - Validamos unicidad empleado-snapshot para evitar duplicar la geografía en el modelo.
+  Within team compensation range:
+    documentation_path: compensation/README.md
+    depends_on: [Comp ratio]
+    definition: Posición relativa de compensación del empleado dentro del equipo de su manager en el snapshot.
+    numerator_definition: Empleados regulares activos con `compa_ratio`, grado de compensación y manager poblados.
+    semantic_type: derived_feature
+    attrition_use: La posición relativa dentro de un grupo comparable puede capturar compresión salarial o valores atípicos.
+    source_reasoning: La comparación no existe directamente y requiere definir equipo, población comparable y estadística protegida.
+    derivation_formula: Banda o percentil de `compa_ratio` dentro del equipo y grupo comparable del snapshot.
+    validation_focus:
+      - Validamos la definición temporal del equipo porque las asignaciones de manager cambian entre snapshots.
+      - Validamos grado y población comparable porque mezclar estructuras salariales vuelve engañosa la comparación.
+      - Validamos tamaño mínimo, nulos y outliers para proteger privacidad y evitar estadísticas inestables.
+      - Validamos lineage de `compa_ratio` y ausencia de leakage antes de calcular bandas o percentiles.
+  Team turnover:
+    definition: Tasa rezagada de rotación del equipo calculada sólo con terminaciones conocidas en cada snapshot.
+    numerator_definition: Empleados regulares activos con manager y estado de terminación observables; la prevalencia mostrada corresponde al flag de terminación subyacente.
+    semantic_type: derived_feature
+    attrition_use: La rotación reciente del equipo puede reflejar inestabilidad local relacionada con attrition.
+    source_reasoning: Membresía por manager y terminaciones fechadas son componentes de una tasa móvil, no un campo directo.
+    derivation_formula: Terminaciones elegibles del equipo durante la ventana aprobada divididas entre la población de equipo definida para el mismo periodo.
+    validation_focus:
+      - Validamos numerador, denominador y alcance voluntario porque distintas definiciones producen tasas diferentes.
+      - Validamos membresía histórica del equipo porque no debe atribuirse una salida al manager equivocado.
+      - Validamos deduplicación de terminaciones y equipos pequeños para evitar doble conteo e inestabilidad.
+      - Validamos que toda terminación sea conocida al snapshot para eliminar leakage.
+  More than 1 employee leaves in a year:
+    depends_on: [Team turnover]
+    definition: El equipo del manager tuvo más de una terminación elegible durante los 12 meses previos al snapshot.
+    numerator_definition: Empleados regulares activos con manager y estado de terminación observables; la prevalencia mostrada usa el flag de terminación subyacente.
+    semantic_type: derived_feature
+    attrition_use: La concentración de salidas puede representar exposición a pérdidas repetidas dentro del equipo.
+    source_reasoning: El resultado binario debe derivarse de membresía histórica, terminaciones y una ventana móvil.
+    derivation_formula: Conteo de terminaciones elegibles del equipo mayor que uno en los 12 meses previos al snapshot.
+    validation_focus:
+      - Validamos la frontera mayor que uno porque una y dos salidas deben clasificarse distinto.
+      - Validamos alcance de terminación y asignación temporal del equipo para atribuir eventos correctamente.
+      - Validamos equipos pequeños y deduplicación porque una sola persona no debe generar múltiples eventos.
+      - Validamos la ventana de 12 meses y `term_date <= snapshot_date` para impedir leakage.
+  Job family:
+    documentation_path: job-family/README.md
+    definition: Job family detallada y agrupada registradas para cada empleado activo en el snapshot.
+    numerator_definition: Empleados regulares activos con `job_family` y `job_family_group` poblados.
+    semantic_type: grouped_mapping
+    attrition_use: La familia detallada aporta contexto ocupacional y el grupo permite segmentos más amplios.
+    source_reasoning: Los campos detallado, short, agrupado y short-group son niveles relacionados, pero no equivalentes.
+    validation_focus:
+      - Validamos qué representa cada una de las cuatro columnas para no confundir detalle, abreviatura y agrupación.
+      - Validamos dominios y cardinalidades porque muestran el nivel de granularidad de cada campo.
+      - Validamos contradicciones detalle-grupo y valores sin mapping porque una familia no debería agruparse de forma ambigua en el mismo periodo.
+      - Validamos cambios del mapping en el tiempo para distinguir recategorizaciones reales de errores de consistencia.
+  Region:
+    definition: Región de trabajo registrada para cada empleado activo en el snapshot.
+    numerator_definition: Empleados regulares activos con `region` poblada.
+    semantic_type: direct_field
+    attrition_use: La región permite controles geográficos amplios y segmentación por mercado laboral.
+    source_reasoning: '`region` es directa, pero su dominio, relación con país y evolución temporal requieren validación.'
+    validation_focus:
+      - Validamos dominio y nulos para confirmar que la región es observable en la población objetivo.
+      - Validamos la relación región-país porque mappings contradictorios afectan la interpretación geográfica.
+      - Validamos cambios longitudinales para detectar recodificaciones o movimientos reales.
+      - Validamos unicidad empleado-snapshot para asegurar un join temporal reproducible.
+  Gender:
+    documentation_path: gender/README.md
+    definition: Atributo demográfico protegido registrado en el snapshot; su uso requiere aprobación de gobernanza independiente.
+    numerator_definition: Empleados regulares activos con `gender` no vacío; no se publican categorías.
+    semantic_type: direct_field
+    attrition_use: Se limita a monitoreo de fairness; su uso predictivo requiere aprobación formal.
+    source_reasoning: El campo existe, pero es protegido y sus valores deben permanecer suprimidos en los artefactos compartidos.
+    validation_focus:
+      - Validamos únicamente cobertura agregada y estabilidad temporal para no exponer categorías protegidas.
+      - Validamos que no se publiquen valores ni cohorts pequeños porque la privacidad prevalece sobre el detalle analítico.
+      - Validamos el propósito y las restricciones de uso porque disponibilidad técnica no equivale a autorización predictiva.
+  Remote / hybrid / in office status:
+    documentation_path: work-arrangement/README.md
+    definition: Categoría de modalidad laboral efectiva para el empleado en cada snapshot mensual.
+    numerator_definition: Empleados regulares activos con categoría de modalidad laboral no vacía.
+    semantic_type: direct_field
+    attrition_use: La modalidad puede relacionarse de forma distinta con retención según rol y ubicación.
+    source_reasoning: Existen categoría y fechas efectivas; deben resolverse solapamientos, expiraciones y precedencia temporal.
+    validation_focus:
+      - Validamos categorías permitidas y aliases para asegurar un dominio interpretable.
+      - Validamos inicio, fin y snapshot porque la categoría debe ser efectiva en la fecha de predicción.
+      - Validamos solapamientos y arreglos expirados porque pueden producir más de un estado por empleado.
+      - Validamos transiciones temporales para diferenciar cambios reales de recodificaciones.
+  Engineering vs. non-engineering:
+    definition: Clasificación de ingeniería frente a no ingeniería para cada empleado en el snapshot.
+    numerator_definition: Empleados regulares activos con la clasificación de ingeniería poblada.
+    semantic_type: grouped_mapping
+    attrition_use: El segmento controla diferencias materiales entre mercados laborales técnicos y no técnicos.
+    source_reasoning: La agrupación almacenada depende de un mapping upstream de job family o perfil laboral.
+    validation_focus:
+      - Validamos lineage del mapping porque el nombre del campo no demuestra qué roles se consideran engineering.
+      - Validamos contradicciones con job family y valores sin mapping para medir consistencia semántica.
+      - Validamos cambios temporales del mapping porque una recategorización puede alterar tendencias históricas.
+      - Validamos el join empleado-snapshot para asegurar una clasificación única por fecha.
+  Rehire:
+    documentation_path: rehire/README.md
+    definition: Estado de recontratación o evento fechado de rehire observable al momento del snapshot.
+    numerator_definition: Empleados regulares activos con `is_rehire` observable; la prevalencia usa `is_rehire=1`.
+    semantic_type: direct_field
+    attrition_use: Rehire distingue experiencia previa en la compañía y modifica la interpretación de tenure.
+    source_reasoning: Existen flag y fecha, pero su coherencia, secuencia laboral y cambios de captura histórica deben reconciliarse.
+    related_columns: [original_hire_date, max_hire_rehire_date, job_family, job_level_primary_position]
+    known_findings:
+      - La captura histórica cambia de forma abrupta alrededor de 2022-10-23 y requiere una regla de era de fuente.
+      - Se observaron flags sin fecha, fechas sin flag y fechas posteriores al snapshot; esas excepciones impiden tratar el campo como completamente estandarizado.
+    validation_focus:
+      - Validamos la coherencia entre `is_rehire` y `rehire_date` porque ambos deben describir el mismo estado laboral.
+      - Validamos que la fecha no sea futura y siga a la contratación original para impedir leakage y secuencias imposibles.
+      - Validamos rupturas de prevalencia y transiciones para distinguir cambios reales de una modificación en la captura de la fuente.
+      - Revisamos job family y primary position alrededor del evento sólo como contexto de la nueva etapa laboral; no son requisitos de un rehire.
+    validation_story:
+      - id: rehire_flag_date_alignment
+        criterion: consistency
+        evidence_role: defining
+        question: ¿Coinciden el flag `is_rehire` y la fecha `rehire_date` en cada snapshot?
+        why: Un flag sin fecha, una fecha sin flag o una fecha futura impiden reconstruir el evento de forma reproducible.
+        fields: [is_rehire, rehire_date, fis_mo_end_dt]
+        method: Reconciliación agregada mensual de flags, fechas y límite del snapshot.
+        sql_reference: queries/audits/rehire_consistency_audit.sql
+        acceptance_rule: No debe haber flags sin fecha, fechas sin flag ni fechas posteriores al snapshot.
+        metric_checks:
+          - {metric: flagged_without_date_employees, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: date_without_flag_employees, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: future_rehire_date_employees, aggregate: sum, operator: eq, threshold: 0}
+      - id: rehire_employment_sequence
+        criterion: definition
+        evidence_role: defining
+        question: ¿La fecha de rehire respeta la secuencia de contratación del empleado?
+        why: '`rehire_date` debe seguir a `original_hire_date` y alinearse con la fecha de contratación o recontratación más reciente.'
+        fields: [original_hire_date, rehire_date, max_hire_rehire_date, fis_mo_end_dt]
+        method: Comparación agregada de orden y concordancia de fechas por snapshot.
+        sql_reference: queries/audits/rehire_consistency_audit.sql
+        acceptance_rule: No debe haber rehires anteriores a la contratación original ni discrepancias inexplicadas con la fecha más reciente.
+        metric_checks:
+          - {metric: rehire_before_original_hire_employees, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: rehire_vs_max_hire_mismatch_employees, aggregate: sum, operator: eq, threshold: 0}
+      - id: rehire_source_era
+        criterion: consistency
+        evidence_role: supporting
+        question: ¿La prevalencia y las transiciones de rehire son comparables durante toda la historia?
+        why: Un salto abrupto puede representar una nueva era de captura y no un cambio real de la población.
+        fields: [is_rehire, rehire_date, fis_mo_end_dt]
+        method: Serie mensual agregada de prevalencia, transiciones y excepciones.
+        sql_reference: queries/audits/rehire_consistency_audit.sql
+        acceptance_rule: Todo cambio estructural debe identificarse, explicarse y tratarse con una regla temporal antes del modelado.
+        metric_fields: [eligible_employees, flagged_rehire_employees, flag_zero_to_one_transitions, flag_one_to_zero_transitions]
+      - id: rehire_contextual_job_change
+        criterion: definition
+        evidence_role: contextual
+        question: ¿El nuevo episodio laboral coincide con cambios de job family o primary position?
+        why: Estos cambios pueden describir el contexto del regreso, pero un empleado puede volver al mismo rol y un cambio de rol puede ocurrir sin rehire.
+        fields: [rehire_date, job_family, job_level_primary_position]
+        method: Comparación agregada del último snapshot previo y el primero posterior al inicio del episodio.
+        sql_reference: queries/audits/rehire_consistency_audit.sql
+        acceptance_rule: Se reporta la distribución de cambios; no se exige un cambio para confirmar rehire y esta prueba no eleva el score.
+        metric_fields: [rehire_transitions_with_prior_snapshot, rehire_with_job_family_change, rehire_with_level_change, rehire_with_neither_change]
+  Years of experience prior to Qualcomm:
+    definition: Años numéricos de experiencia laboral acumulados antes del empleo en Qualcomm.
+    numerator_definition: Empleados regulares activos con `prior_qc_work_years` poblado.
+    semantic_type: precomputed_metric
+    attrition_use: La experiencia previa distingue etapa profesional más allá del tenure en la compañía.
+    source_reasoning: Existe una métrica, pero su fórmula, redondeo y lineage de experiencia previa no están confirmados.
+    validation_focus:
+      - Validamos fórmula, unidad y fuente porque un número almacenado no demuestra cómo se calculó.
+      - Validamos negativos, valores imposibles y outliers para definir límites de calidad.
+      - Validamos estabilidad entre snapshots porque la experiencia previa no debería cambiar sin una corrección justificada.
+      - Validamos semántica de hire y rehire para evitar contar experiencia interna como previa.
+  Commute distance:
+    definition: Distancia de traslado entre un proxy aprobado de ubicación del empleado y el sitio de trabajo efectivo.
+    numerator_definition: No validado porque siguen sin resolverse el proxy permitido de domicilio y la fuente de geocoding.
+    semantic_type: external_source
+    attrition_use: La carga de traslado puede interactuar con modalidad laboral y asistencia.
+    source_reasoning: No existe una fuente aprobada de distancia y la ubicación de domicilio es sensible.
+    population: Empleados regulares activos; los campos geográficos permitidos aún no están aprobados.
+    validation_focus:
+      - Validamos proveedor, propietario y base legal antes de acceder a cualquier ubicación sensible.
+      - Validamos el proxy geográfico, modo de traslado y unidad porque producen medidas distintas.
+      - Validamos direcciones y sitios efectivos en el tiempo para evitar usar la ubicación actual en snapshots pasados.
+      - Validamos el join y la minimización de datos antes de considerar una derivación.
+  RTO/hybrid comment in Qvoice:
+    definition: Indica si un comentario de texto libre de QVoice trata sobre RTO, modalidad híbrida o asistencia a oficina.
+    numerator_definition: No disponible porque la fuente estructurada validada no contiene comentarios.
+    semantic_type: survey
+    attrition_use: Un topic flag gobernado podría medir sentimiento sobre la modalidad laboral.
+    source_reasoning: La tabla de encuesta validada sólo contiene respuestas estructuradas y no expone texto libre.
+    population: No existe una fuente elegible de texto.
+    validation_focus:
+      - Validamos primero que exista un campo de comentario porque los items estructurados no reproducen texto libre.
+      - Validamos consentimiento, propósito y gobernanza de NLP antes de procesar respuestas abiertas.
+      - Validamos elegibilidad, wave y fecha de disponibilidad para impedir selección incorrecta o leakage.
+      - Validamos cobertura de texto y join sólo si aparece una fuente de-identificada y aprobada.
+  Any comment on Qvoice:
+    definition: Indica si un empleado elegible envió algún comentario de texto libre en QVoice.
+    numerator_definition: No disponible porque no se confirmó una columna o tabla de comentarios.
+    semantic_type: survey
+    attrition_use: La participación mediante comentarios podría aportar una señal de engagement entre empleados elegibles.
+    source_reasoning: La fuente estructurada validada no contiene un campo de comentario ni de presencia de texto.
+    population: No existe una fuente elegible de texto.
+    validation_focus:
+      - Validamos existencia de fuente antes de interpretar ausencia de texto como no participación.
+      - Validamos denominador de elegibilidad porque sólo los invitados pueden clasificarse correctamente.
+      - Validamos consentimiento y privacidad porque incluso la presencia de comentario es comportamiento sensible.
+      - Validamos employee-wave join y fecha de cierre sólo después de confirmar una fuente gobernada.
+  Non-respondents:
+    definition: Empleado regular activo en la población proxy previa al lanzamiento sin una respuesta QVoice para esa wave.
+    numerator_definition: Empleados proxy-elegibles clasificados como respondentes o no respondentes mediante el roster de respuestas de la fecha de lanzamiento.
+    semantic_type: survey
+    attrition_use: La no respuesta sólo es interpretable entre personas invitadas y elegibles para la encuesta.
+    source_reasoning: La ausencia en la tabla de respuestas no basta; se necesita roster de elegibilidad, cierre de wave y deduplicación.
+    population: Empleados regulares activos en el último snapshot anterior o igual al lanzamiento de la encuesta.
+    derivation_formula: Empleado elegible en la wave sin una respuesta deduplicada al cierre aprobado.
+    validation_focus:
+      - Validamos roster y reglas de elegibilidad porque ausencia de respuesta no implica invitación.
+      - Validamos cierre de wave porque una respuesta posterior no debe clasificarse prematuramente como no respuesta.
+      - Validamos deduplicación empleado-wave para evitar contar varias respuestas de la misma persona.
+      - Validamos el join al snapshot pre-survey y documentamos sesgo de selección.
+  Intent to Stay items:
+    definition: Dos respuestas estructuradas de Intent to Stay para un empleado elegible en una wave de QVoice.
+    numerator_definition: Empleados elegibles con ambos items de Intent to Stay poblados.
+    semantic_type: survey
+    attrition_use: Los items miden directamente intención declarada de permanencia.
+    source_reasoning: Los dos items existen, pero deben confirmarse codificación, dirección de escala, faltantes y comparabilidad entre waves.
+    population: Empleados regulares activos en el último snapshot anterior o igual al lanzamiento de la encuesta.
+    derivation_formula: Par de respuestas válidas de Intent to Stay con reglas aprobadas para items parciales.
+    validation_focus:
+      - Validamos versión, texto y codificación de cada item porque un cambio de escala altera su significado.
+      - Validamos elegibilidad y deduplicación por wave para construir el denominador correcto.
+      - Validamos respuestas parciales y dirección de escala antes de combinar o usar los items.
+      - Validamos comparabilidad entre waves y join temporal previo a la predicción.
+  Career goals item:
+    definition: Respuesta estructurada de QVoice al item sobre la posibilidad de cumplir metas profesionales.
+    numerator_definition: Empleados elegibles con el item de career goals poblado.
+    semantic_type: survey
+    attrition_use: La percepción de poder cumplir metas profesionales puede relacionarse con retención.
+    source_reasoning: El item existe, pero su versión, codificación y comparabilidad temporal deben confirmarse.
+    population: Empleados regulares activos en el último snapshot anterior o igual al lanzamiento de la encuesta.
+    derivation_formula: Respuesta válida del item de career goals para un empleado elegible en la wave.
+    validation_focus:
+      - Validamos versión y texto del item porque cambios de redacción pueden romper comparabilidad.
+      - Validamos escala, códigos inválidos y dirección para interpretar correctamente los valores.
+      - Validamos elegibilidad, respuestas parciales y deduplicación empleado-wave.
+      - Validamos comparabilidad entre waves y join al snapshot pre-survey.
+  Average of all Qvoice items:
+    definition: Promedio por empleado sobre un conjunto aprobado de items estructurados de QVoice.
+    numerator_definition: Empleados elegibles con una respuesta estructurada; la completitud por item requiere validación separada.
+    semantic_type: derived_feature
+    attrition_use: Un composite amplio puede resumir sentimiento si su constructo y cálculo están gobernados.
+    source_reasoning: El composite no existe directamente; lo definen inclusión de items, reverse coding, ponderación y tratamiento de faltantes.
+    population: Empleados regulares activos en el último snapshot anterior o igual al lanzamiento de la encuesta.
+    derivation_formula: Promedio de los items aprobados después de aplicar dirección, validez y mínimo de respuestas.
+    validation_focus:
+      - Validamos el conjunto de items porque promediar escalas o constructos distintos cambia el significado.
+      - Validamos reverse coding y dirección de escala para evitar cancelar señales opuestas.
+      - Validamos mínimo de items, ponderación y faltantes porque afectan comparabilidad entre empleados.
+      - Validamos reconciliación independiente, waves y join temporal sin leakage.
+  Standardized / normalized within region:
+    depends_on: [Average of all Qvoice items, Region]
+    definition: Composite aprobado de QVoice estandarizado dentro de cohorts suficientemente grandes de región y wave.
+    numerator_definition: Respondentes elegibles de QVoice que hacen join con una región de trabajo poblada.
+    semantic_type: derived_feature
+    attrition_use: La normalización regional podría reducir diferencias de estilo de respuesta entre geografías.
+    source_reasoning: Se requieren medida base, mapping regional, población de referencia y estadísticas calculadas sin información futura.
+    population: Empleados regulares activos en el último snapshot anterior o igual al lanzamiento de la encuesta.
+    derivation_formula: Estandarización del composite base dentro de región y wave con cohorte mínima y fallback aprobados.
+    validation_focus:
+      - Validamos la medida base antes de normalizar porque una transformación no corrige un composite indefinido.
+      - Validamos mapping de región y cohorte mínima para evitar grupos ambiguos o identificables.
+      - Validamos fórmula, referencia y fallback para regiones pequeñas o varianza cero.
+      - Validamos que media y desviación usen sólo datos disponibles en la wave para impedir leakage.
+  Tech industry unemployment data:
+    definition: Tasa periódica de desempleo de la industria tecnológica mapeada a una geografía laboral aprobada.
+    numerator_definition: No validado hasta seleccionar serie externa y crosswalk geográfico.
+    semantic_type: external_source
+    attrition_use: La estrechez del mercado laboral puede contextualizar el riesgo de attrition voluntario.
+    source_reasoning: No se ha aprobado proveedor, definición de industria ni mapping geográfico; también importan lag de publicación y vintages.
+    population: Empleados regulares activos; mapping geográfico externo todavía no validado.
+    validation_focus:
+      - Validamos proveedor, propietario y definición de industria porque distintas series no son equivalentes.
+      - Validamos calendario de publicación y vintage para usar sólo valores conocidos al snapshot.
+      - Validamos revisiones, unidades y periodos faltantes para medir estabilidad histórica.
+      - Validamos el crosswalk geográfico y cohorts mínimos antes del join con empleados.
+  Draup data:
+    definition: Señal de mercado laboral por definir proveniente de un feed licenciado de Draup.
+    numerator_definition: No validado porque no se seleccionó campo ni población del proveedor.
+    semantic_type: external_source
+    attrition_use: El concepto no es evaluable hasta seleccionar un dataset, campo y uso específicos.
+    source_reasoning: No se encontró feed, propietario, grain, historia ni claves de join validados.
+    population: Población del proveedor no validada.
+    validation_focus:
+      - Validamos licencia, acceso y propietario antes de asumir disponibilidad de Draup.
+      - Validamos el campo, unidad y grain porque el nombre del proveedor no define una variable.
+      - Validamos historia, revisiones y frecuencia para determinar uso temporal.
+      - Validamos un join aprobado por geografía u ocupación sin identity matching individual.
+  LinkedIn scraping:
+    definition: Señal mensual de perfil profesional externo asociada a un empleado mediante un método de recopilación aprobado.
+    numerator_definition: No validado porque no existe feed ni población externa aprobados.
+    semantic_type: external_source
+    attrition_use: La fuente solicitada no define una feature y presenta riesgos de consentimiento, términos de uso e identity matching.
+    source_reasoning: No existe feed aprobado ni crosswalk gobernado entre empleados y perfiles.
+    population: Población externa de perfiles no validada.
+    validation_focus:
+      - Validamos fuente aprobada, base legal y consentimiento antes de cualquier recopilación.
+      - Validamos el campo y significado temporal porque un perfil no es una variable por sí mismo.
+      - Validamos calidad, historia y reproducibilidad de la captura.
+      - Validamos identity resolution y join sólo con aprobación explícita; de otro modo la ruta queda bloqueada.
+  Position / time in level:
+    documentation_path: job-level/README.md
+    definition: Tiempo desde la fecha efectiva de entrada al nivel, con contexto opcional de tenure en rol.
+    numerator_definition: Empleados regulares activos con `levelentrydate` poblada.
+    semantic_type: derived_feature
+    attrition_use: El tiempo en nivel puede identificar progresión estancada o avance reciente.
+    source_reasoning: Existen varias fechas; debe elegirse la fecha autoritativa y definir resets por movimientos laterales o rehire.
+    derivation_formula: Diferencia completa entre `levelentrydate` aprobada y cada snapshot.
+    validation_focus:
+      - Validamos si el concepto es posición, rol o nivel porque cada fecha representa un tenure distinto.
+      - Validamos unidad, fechas futuras y duraciones negativas para asegurar cálculo reproducible.
+      - Validamos resets por promoción, movimiento lateral y rehire.
+      - Validamos fórmula al snapshot y reconciliación con `time_in_role` sólo como contexto.
+  Company tenure:
+    definition: Tiempo de servicio completado desde la fecha de contratación aprobada hasta cada snapshot.
+    numerator_definition: Empleados regulares activos con `original_hire_date` poblada.
+    semantic_type: derived_feature
+    attrition_use: Company tenure es un control central del ciclo laboral para modelos de attrition.
+    source_reasoning: '`original_hire_date` y `max_hire_rehire_date` representan definiciones distintas de servicio.'
+    derivation_formula: Diferencia entre snapshot y la base de hire aprobada, con regla explícita para interrupciones y rehires.
+    validation_focus:
+      - Validamos servicio continuo frente a servicio total porque producen valores distintos después de un rehire.
+      - Validamos gaps, rehires y precedencia entre fechas de contratación.
+      - Validamos fechas futuras, duraciones negativas y límites del snapshot.
+      - Validamos la fórmula en meses o años completados y sus reglas de redondeo.
+  Time since last promotion:
+    definition: Tiempo completado desde la promoción más reciente conocida al momento del snapshot.
+    numerator_definition: Empleados regulares activos con flag de promoción observable; la prevalencia usa `is_promo=1`.
+    semantic_type: derived_feature
+    attrition_use: Un periodo largo sin promoción puede reflejar fricción de progresión.
+    source_reasoning: Existen indicador y fecha de promoción; elapsed time y el tratamiento sin evento deben derivarse.
+    derivation_formula: Diferencia entre snapshot y la última `promotion_date` conocida, con categoría separada para sin promoción observable.
+    validation_focus:
+      - Validamos coherencia entre `is_promo` y `promotion_date` porque ambos deben describir el mismo evento.
+      - Validamos que se seleccione la promoción más reciente cuando existan eventos repetidos.
+      - Validamos el tratamiento de personas sin promoción y de historia censurada.
+      - Validamos fechas negativas, fronteras y exclusión de promociones futuras.
+  Promoted vs. hired into level:
+    documentation_path: job-level/README.md
+    definition: Clasifica la entrada al nivel actual como promoción, contratación o desconocida usando sólo eventos conocidos al snapshot.
+    numerator_definition: Empleados regulares activos con fecha de entrada a nivel, estado de promoción y fechas de hire poblados.
+    semantic_type: derived_feature
+    attrition_use: La vía de entrada al nivel distingue progresión interna de colocación externa.
+    source_reasoning: No existe un campo directo; eventos del mismo día, rehires y movimientos laterales requieren precedencia explícita.
+    derivation_formula: Comparar `levelentrydate` con promoción y hire/rehire usando tolerancia y una clase Unknown.
+    validation_focus:
+      - Validamos tolerancia de fechas y precedencia porque eventos del mismo día pueden tener significados distintos.
+      - Validamos rehires y movimientos laterales para no clasificarlos automáticamente como promoción.
+      - Validamos completitud de la historia de niveles porque eventos antiguos pueden estar censurados.
+      - Validamos distribución de Unknown y reconciliación independiente antes de confirmar la feature.
+  Level:
+    documentation_path: job-level/README.md
+    definition: Nivel de puesto o management level del empleado registrado en cada snapshot mensual.
+    numerator_definition: Empleados regulares activos con al menos uno de los campos de nivel aprobados poblado.
+    semantic_type: grouped_mapping
+    attrition_use: Level controla etapa profesional, alcance y contexto de compensación.
+    source_reasoning: '`job_level_primary_position`, `level_grouped` y `management_level` son constructos distintos y no deben tratarse como sinónimos.'
+    validation_focus:
+      - Validamos qué representa cada campo de nivel porque puesto, grupo y management level tienen objetivos diferentes.
+      - Validamos dominios y mappings cruzados para mostrar qué valores agrupa cada columna.
+      - Validamos contradicciones y valores sin mapping porque una agrupación ambigua afecta segmentación.
+      - Validamos cambios del mapping en el tiempo y unicidad empleado-snapshot.
+  Layers from CEO:
+    documentation_path: organizational-layers/README.md
+    definition: Profundidad organizacional del snapshot desde la raíz superior de la jerarquía supervisora.
+    numerator_definition: Empleados regulares activos con nivel de organización supervisora poblado.
+    semantic_type: hierarchy
+    attrition_use: La profundidad organizacional puede representar distancia de decisión y posición estructural.
+    source_reasoning: Un campo level-from-top no demuestra distancia al CEO sin reconstruir cadenas y validar la semántica de la raíz.
+    validation_focus:
+      - Validamos cadenas de manager dentro del mismo snapshot porque mezclar fechas produce jerarquías imposibles.
+      - Validamos raíces, convergencia, ciclos y cadenas no resueltas para medir integridad estructural.
+      - Validamos profundidad reconstruida frente al campo almacenado para detectar offsets o definiciones distintas.
+      - Validamos por separado que la raíz corresponda al CEO gobernado; una raíz común no basta.
+  Compensation grade:
+    documentation_path: compensation/README.md
+    definition: Grado de compensación del empleado registrado en cada snapshot mensual.
+    numerator_definition: Empleados regulares activos con `compensation_grade` poblado.
+    semantic_type: direct_field
+    attrition_use: El grado controla estructura de compensación, pero es información gobernada y puede codificar nivel.
+    source_reasoning: Existe un grado directo; sus valores, relación con nivel y uso permitido requieren controles de privacidad.
+    validation_focus:
+      - Validamos gobernanza y supresión de valores porque el grado es información de compensación sensible.
+      - Validamos normalización y dominio para detectar aliases o valores inválidos.
+      - Validamos relación con level sin asumir que ambos campos son equivalentes.
+      - Validamos cambios temporales y unicidad empleado-snapshot.
+  Comp ratio:
+    documentation_path: compensation/README.md
+    definition: Compa-ratio precalculado en el snapshot, destinado a representar la posición del base pay frente al midpoint aplicable; numerador y denominador autoritativos siguen pendientes.
+    numerator_definition: Empleados regulares activos con `compa_ratio` poblado.
+    semantic_type: precomputed_metric
+    attrition_use: La posición relativa frente al rango salarial mide alineación de mercado sin publicar compensación exacta.
+    source_reasoning: El ratio almacenado no tiene confirmados numerador, midpoint, currency, FTE, fecha efectiva, redondeo ni lineage.
+    material_questions:
+      - "Parece una división; ¿qué constituye el numerador y el denominador?"
+    validation_focus:
+      - Validamos lineage y fórmula completa porque una distribución plausible no demuestra el cálculo.
+      - Validamos componentes y reconciliación con tolerancia sobre la misma población objetivo.
+      - Validamos nulos, valores no positivos y outliers para definir limpieza gobernada.
+      - Validamos cambios temporales y representación final en bandas o percentiles seguros.
+    numeric_bands:
+      column: compa_ratio
+      edges: [0.8, 0.9, 1.0, 1.1, 1.2]
+  Co-location with manager:
+    definition: Empleado y manager activo comparten el mismo sitio de oficina no vacío en el mismo snapshot.
+    numerator_definition: Empleados con sitio poblado para sí mismos y para el manager activo matched; el evento representa igualdad de sitio.
+    semantic_type: derived_feature
+    attrition_use: La co-location física puede influir en acceso al manager y experiencia local del equipo.
+    source_reasoning: No existe flag directo; se requiere self-join por snapshot y una regla de equivalencia de sitios.
+    population: Snapshots de empleados regulares activos y sus managers regulares activos.
+    derivation_formula: Comparar sitios normalizados de empleado y manager después de un self-join en el mismo snapshot.
+    validation_focus:
+      - Validamos self-join empleado-manager en la misma fecha para evitar usar el manager actual en historia pasada.
+      - Validamos aliases y equivalencia de sitios porque códigos distintos pueden representar la misma ubicación.
+      - Validamos casos remote, sitios faltantes y managers no matched.
+      - Validamos duplicados y cardinalidad para obtener una sola clasificación por empleado-snapshot.
+  Hours away from manager:
+    depends_on: [Location]
+    definition: Distancia aprobada en tiempo de viaje o zona horaria entre sitios efectivos de empleado y manager.
+    numerator_definition: No validado hasta seleccionar una referencia de sitios y una definición de distancia aprobadas.
+    semantic_type: external_source
+    attrition_use: La separación horaria o de viaje puede representar carga de coordinación.
+    source_reasoning: HRDA contiene sitios, pero no una referencia aprobada de travel time o distancia de zona horaria.
+    population: Empleados regulares activos; mapping externo de distancia entre sitios no validado.
+    validation_focus:
+      - Validamos si hours significa viaje o diferencia horaria porque son conceptos distintos.
+      - Validamos proveedor, unidades y vigencia histórica de la referencia externa.
+      - Validamos normalización de sitios y self-join de manager en el mismo snapshot.
+      - Validamos cobertura del mapping y tratamiento de managers o sitios faltantes.
+  High risk manager:
+    depends_on: [Team turnover]
+    definition: Clasificación gobernada de riesgo del manager, por definir, derivada de resultados históricos del equipo.
+    numerator_definition: Observabilidad técnica de manager y terminaciones; no se produce actualmente una etiqueta aprobada de riesgo.
+    semantic_type: derived_feature
+    attrition_use: Una etiqueta de riesgo del manager afectaría equipos completos y tiene riesgos altos de gobernanza y fairness.
+    source_reasoning: No existe target, horizonte, umbral, método, propietario ni aprobación de uso.
+    derivation_formula: Por definir; no debe construirse hasta aprobar target, horizonte, validación y uso organizacional.
+    validation_focus:
+      - Validamos target y horizonte porque high risk no tiene significado reproducible sin ambos.
+      - Validamos leakage y evaluación out-of-time antes de atribuir resultados históricos a un manager.
+      - Validamos tamaño mínimo de equipo, fairness y estabilidad para evitar etiquetas individuales inestables.
+      - Validamos gobernanza, propietario y uso permitido antes de cualquier desarrollo.
+  High turnover under this person:
+    depends_on: [Team turnover]
+    definition: El equipo del manager supera un umbral aprobado de rotación durante una ventana histórica.
+    numerator_definition: Empleados con manager y estado de terminación observables; la prevalencia mostrada corresponde al flag subyacente.
+    semantic_type: derived_feature
+    attrition_use: La rotación histórica del equipo puede representar presión local de retención.
+    source_reasoning: Deben derivarse tasa móvil, membresía temporal, denominador mínimo y umbral.
+    derivation_formula: Tasa de terminaciones elegibles del equipo en la ventana aprobada mayor que un umbral gobernado.
+    validation_focus:
+      - Validamos tipo de terminación, denominador y ventana porque definen la tasa.
+      - Validamos historia de manager para atribuir cada salida al equipo correcto.
+      - Validamos umbral y tamaño mínimo para evitar clasificaciones inestables de equipos pequeños.
+      - Validamos que sólo se usen eventos conocidos al snapshot y una evaluación out-of-time.
+  Manager leaving:
+    definition: El manager asignado al empleado en el snapshot tiene una terminación conocida dentro de la ventana aprobada.
+    numerator_definition: Empleados con manager y estado de terminación observables; la prevalencia mostrada corresponde al flag de terminación subyacente.
+    semantic_type: derived_feature
+    attrition_use: La salida conocida de un manager puede alterar la experiencia del equipo; una salida futura produciría leakage.
+    source_reasoning: Debe reconstruirse el self-join de manager, la fecha efectiva de asignación y la observabilidad del evento.
+    derivation_formula: Flag de terminación del manager con `term_date` conocida y dentro de la ventana previa al snapshot.
+    validation_focus:
+      - Validamos self-join del manager en el mismo snapshot y duplicados.
+      - Validamos observabilidad y alcance de terminación porque ausencia de evento no siempre significa no salida.
+      - Validamos `term_date <= snapshot_date` para excluir conocimiento futuro.
+      - Validamos cambios de manager alrededor del evento para atribuirlo al equipo correcto.
+  Manager change:
+    definition: El empleado tuvo un cambio de manager efectivo dentro de la ventana aprobada.
+    numerator_definition: Empleados regulares activos con flag de cambio observable; la prevalencia usa `manager_change=1`.
+    semantic_type: direct_field
+    attrition_use: Un cambio reciente de manager puede representar disrupción organizacional.
+    source_reasoning: Existen flag y fecha directos, pero se debe validar su coherencia y temporalidad.
+    validation_focus:
+      - Validamos coherencia entre `manager_change` y `manager_change_date` porque ambos describen el mismo evento.
+      - Validamos eventos repetidos y correcciones para evitar doble conteo.
+      - Validamos que la fecha sea conocida al snapshot para impedir leakage.
+      - Validamos grain empleado-fecha y transiciones longitudinales.
+  Number of manager changes:
+    depends_on: [Manager change]
+    definition: Conteo de eventos fechados de cambio de manager dentro de una ventana histórica aprobada.
+    numerator_definition: Empleados regulares activos con cambio de manager observable; la prevalencia mostrada usa el flag subyacente.
+    semantic_type: derived_feature
+    attrition_use: Cambios repetidos de manager pueden medir inestabilidad organizacional prolongada.
+    source_reasoning: El conteo no existe directamente y debe derivarse de historia de eventos.
+    derivation_formula: Número de eventos deduplicados de cambio de manager en la ventana previa al snapshot.
+    validation_focus:
+      - Validamos longitud de ventana porque determina qué significa un conteo alto.
+      - Validamos deduplicación de eventos y correcciones del mismo periodo.
+      - Validamos fronteras exactas y tratamiento de nulos como no evento sólo cuando el flag es observable.
+      - Validamos exclusión de fechas futuras y reconciliación contra eventos mensuales.
+  Talent index:
+    definition: Composite existente por ciclo de talento, excluyendo toda información futura o del outcome para uso en attrition.
+    numerator_definition: Empleados del ciclo con `talent_index` poblado; la cobertura es interna a la fuente.
+    semantic_type: precomputed_metric
+    attrition_use: Un composite gobernado podría añadir contexto de performance, pero es sensible y propenso a leakage.
+    source_reasoning: Fórmula, componentes restringidos, timing de ciclos y presencia de `term_reason` impiden tratar el valor actual como time-safe.
+    population: Empleados presentes en cada ciclo de talent index.
+    derivation_formula: Rediseño pendiente usando sólo componentes conocidos antes del corte de predicción.
+    validation_focus:
+      - Validamos fórmula y componentes porque el composite almacenado no expone lineage suficiente.
+      - Validamos fecha de ciclo y disponibilidad de cada componente para impedir información futura.
+      - Validamos explícitamente exclusión de `term_reason` y cualquier señal del outcome.
+      - Validamos join, historia, gobernanza y desempeño out-of-time del composite rediseñado.
+  Major inflection points:
+    depends_on: [Manager change, Transfer within past year]
+    definition: Evento organizacional autoritativo, por definir, que representa una reorganización o punto de inflexión material.
+    numerator_definition: Empleados con al menos un proxy observable; esto no demuestra que exista un evento organizacional autoritativo.
+    semantic_type: derived_feature
+    attrition_use: Un composite de cambios mayores podría representar disrupción acumulada.
+    source_reasoning: No existe taxonomía, fuente, pesos, ventana ni regla de solapamiento aprobados; los movimientos individuales son sólo proxies.
+    derivation_formula: Por definir a partir de una fuente organizacional autoritativa; no inferir únicamente desde picos de movimientos individuales.
+    validation_focus:
+      - Validamos fuente y propietario del evento porque los proxies individuales no demuestran una reorganización.
+      - Validamos taxonomía, alcance, severidad y fecha efectiva.
+      - Validamos ventana, pesos y deduplicación de eventos simultáneos.
+      - Validamos disponibilidad al snapshot y ausencia de leakage antes de construir un composite.
+  ET fields:
+    documentation_path: organizational-layers/README.md
+    definition: Clasificación expert-track por definir, por ejemplo engineering ET1/ET2 o non-engineering ET1.
+    numerator_definition: Observabilidad técnica de campos jerárquicos ET; no se ha establecido su semántica como expert track.
+    semantic_type: hierarchy
+    attrition_use: Una clasificación expert-track podría segmentar carrera, pero el acrónimo y mapping objetivo son ambiguos.
+    source_reasoning: Los campos `et_1_leader` a `et_11_leader` parecen jerárquicos y no confirman una clasificación ET1/ET2 de carrera.
+    population: Empleados u organizaciones según una definición todavía pendiente.
+    validation_focus:
+      - Validamos el significado autoritativo de ET antes de interpretar columnas con el mismo prefijo.
+      - Validamos si los campos representan jerarquía ejecutiva o expert track porque son conceptos incompatibles.
+      - Validamos orden, raíz, completitud y contradicciones sólo si el objetivo es jerárquico.
+      - Validamos mapping de niveles y grain sólo después de confirmar la fuente de expert track.

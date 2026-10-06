@@ -1,0 +1,137 @@
+schema_version: 1
+plan_version: 1
+language: es
+created_before_execution: true
+variable: High risk manager
+concept: >-
+  Riesgo historico ajustado de attrition voluntario asociado al manager, medido
+  en manager-snapshot y asignado al empleado-snapshot vigente.
+intended_use: >-
+  Incorporar al modelo una posible influencia del entorno de liderazgo sin
+  tratar la senal como causal ni como evaluacion individual del manager.
+knowledge_date: >-
+  Cierre fiscal mensual. Cada terminacion se conoce desde el primer cierre igual
+  o posterior a term_date y se atribuye al ultimo manager observado antes del evento.
+population: Empleados regulares activos en cada snapshot mensual de prediccion.
+grain: Manager-snapshot para calculo; empleado-snapshot para consumo del modelo.
+semantic_type: derived_feature
+source_reasoning: >-
+  La tabla mensual contiene membresia, calendario y controles del baseline. La
+  tabla all_terminations contiene los eventos canonicos. No se usa is_termed
+  mensual como definidor porque una validacion previa encontro contradicciones;
+  esa observacion es contexto y la fuente canonica se revalida aqui. Los campos
+  agrupados se contrastan con job_family y job_level_primary_position porque el
+  preflight confirmo que su mapping es material para el baseline.
+plan_authorship:
+  mode: codex_explicit
+  revision_reason: >-
+    Primera ejecucion con la metodologia acordada y los insumos de ajuste
+    completos; no modifica reglas ni codigo de los skills.
+  generated_story_fallback: false
+validation_story:
+  - id: source_access
+    criterion: source
+    evidence_role: defining
+    question: ¿Existen ambas fuentes y todos los campos requeridos por la metodologia?
+    why: Sin membresia, calendario, controles y eventos no existe una ruta reproducible.
+    fields: [employee_id, manager_employee_id, fis_mo_end_dt, region, job_family, job_family_group, job_level_primary_position, level_grouped, max_hire_rehire_date, service_date, employeeid, term_date, term_type]
+    method: Auditoria de information_schema para las dos fuentes y columnas seleccionadas.
+    sql_reference: queries/audits/high_risk_manager_source_access_20260821.sql
+    acceptance_rule: La prueba se aprueba solo cuando missing_items es cero.
+    metric_checks:
+      - {metric: missing_items, aggregate: sum, operator: eq, threshold: 0}
+  - id: component_coverage
+    criterion: coverage
+    evidence_role: supporting
+    question: ¿Que tan completos estan manager, region, job family, nivel y tenure en cada snapshot?
+    why: El coverage historico anterior solo media manager e is_termed y no representaba la feature propuesta.
+    fields: [manager_employee_id, region, job_family_group, level_grouped, max_hire_rehire_date, service_date, original_hire_date]
+    method: Conteos agregados mensuales de poblacion elegible y cada componente observable.
+    sql_reference: queries/audits/high_risk_manager_input_components_20260821.sql
+    acceptance_rule: >-
+      La consulta debe reconciliar cada componente contra la poblacion mensual;
+      la puntuacion cuantitativa se basara en el profile estructural de la feature.
+    metric_fields: [eligible_count, manager_count, region_count, job_family_count, level_count, tenure_count, all_inputs_count]
+  - id: input_and_event_consistency
+    criterion: consistency
+    evidence_role: defining
+    question: ¿Las llaves, fechas, mappings agrupados y terminaciones son coherentes durante la historia utilizable?
+    why: Duplicados o contradicciones multiplicarian exposicion, eventos o salidas observadas.
+    fields: [employee_id, manager_employee_id, fis_mo_end_dt, region, job_family, job_family_group, job_level_primary_position, level_grouped, max_hire_rehire_date, employeeid, term_date, term_type]
+    method: >-
+      Auditoria longitudinal agregada de grain, fechas, conflictos, dominio
+      normalizado y contradicciones detalle-grupo por snapshot y a traves del tiempo.
+    sql_reference: queries/audits/high_risk_manager_consistency_20260821.sql
+    acceptance_rule: >-
+      Deben existir al menos 24 meses y anomaly_count, invalid_count y
+      unexplained_change_count deben ser cero.
+    metric_checks:
+      - {metric: observations_checked, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: months_checked, aggregate: max, operator: gte, threshold: 24}
+      - {metric: anomaly_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: invalid_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: unexplained_change_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: job_family_mapping_contradiction_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: level_mapping_contradiction_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: unmapped_group_rows, aggregate: sum, operator: eq, threshold: 0}
+  - id: termination_and_feature_join
+    criterion: join
+    evidence_role: defining
+    question: ¿Cada salida elegible encuentra un solo manager previo y cada empleado-snapshot un solo manager-score?
+    why: Una perdida, multiplicacion o fecha futura cambia el manager al que se atribuye el evento y contamina la feature.
+    fields: [employeeid, term_date, employee_id, manager_employee_id, fis_mo_end_dt]
+    method: >-
+      Deduplicar eventos, seleccionar el ultimo snapshot menor a term_date,
+      determinar el primer cierre que conoce el evento y reconciliar la
+      asignacion manager-snapshot al empleado-snapshot.
+    sql_reference: queries/audits/high_risk_manager_temporal_join_20260821.sql
+    acceptance_rule: >-
+      Deben existir eventos y matches; todas las perdidas, duplicados,
+      multi-match y usos futuros incluidos en la puerta deben ser cero.
+    metric_checks:
+      - {metric: eligible_count, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: matched_count, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: unmatched_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: duplicate_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: multi_match_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: knowledge_unmatched_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: knowledge_multi_match_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: feature_assignment_unmatched_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: feature_assignment_multi_match_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: future_event_usage_count, aggregate: sum, operator: eq, threshold: 0}
+  - id: structural_feature_coverage
+    criterion: history
+    evidence_role: defining
+    question: ¿Desde cuando y para que proporcion de empleados puede calcularse la feature con historia suficiente?
+    why: Un manager con poca exposicion o menos de seis scores evaluables debe quedar Unknown, no cero.
+    fields: [employee_id, manager_employee_id, fis_mo_end_dt]
+    method: >-
+      Para cada manager-snapshot contar empleado-meses y reportes distintos en
+      12 snapshots, exigir seis scores consecutivos evaluables y asignar el
+      resultado al empleado-snapshot vigente.
+    sql_reference: queries/profiles/high_risk_manager_feature_coverage_20260821.sql
+    acceptance_rule: >-
+      El profile debe devolver una fila por snapshot con elegibles y observables;
+      Coverage, Missingness e History se calcularan con las reglas vigentes del skill.
+    metric_fields: [eligible_employees, observable_employees]
+  - id: unresolved_statistical_definition
+    criterion: definition
+    evidence_role: contextual
+    question: ¿La disponibilidad de insumos confirma ya la formula estadistica y sus umbrales?
+    why: Una feature derivada compleja requiere recalculo independiente, calibracion y reconciliacion, no solo columnas completas.
+    fields: [term_type, region, job_family_group, level_grouped, max_hire_rehire_date]
+    method: >-
+      Separar la factibilidad demostrada por cobertura y joins de la validacion
+      futura del baseline, shrinkage, percentiles y persistencia.
+    sql_reference: queries/audits/high_risk_manager_consistency_20260821.sql
+    acceptance_rule: >-
+      Esta evidencia no elevara Definition por encima de uno; se requiere una
+      segunda implementacion y backtest out-of-time antes del score dos.
+    metric_fields: [voluntary_event_rows, voluntary_exception_event_rows, involuntary_event_rows]
+planned_sql:
+  - queries/audits/high_risk_manager_source_access_20260821.sql
+  - queries/audits/high_risk_manager_input_components_20260821.sql
+  - queries/audits/high_risk_manager_consistency_20260821.sql
+  - queries/audits/high_risk_manager_temporal_join_20260821.sql
+  - queries/profiles/high_risk_manager_feature_coverage_20260821.sql
+acceptance_rules_frozen: true

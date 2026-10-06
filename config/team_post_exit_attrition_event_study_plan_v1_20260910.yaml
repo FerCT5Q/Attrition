@@ -1,0 +1,104 @@
+schema_version: 1
+plan_version: 1
+language: es
+created_before_execution: true
+deliverable_mode: presentation
+variable: More than 1 employee leaves in a year
+concept: >-
+  Estudio longitudinal agregado de salidas secuenciales: compara la incidencia
+  acumulada de una salida Voluntary de integrantes que permanecían en el equipo
+  después de una salida inicial, contra equipos sin salida reciente comparables
+  por cierre mensual y banda de tamaño.
+intended_use: >-
+  Contestar la hipótesis descriptiva de si una salida inicial precede una mayor
+  incidencia posterior de attrition dentro del mismo equipo. Es evidencia
+  contextual para revisar continuidad operativa y retención; no demuestra
+  contagio, causalidad, desempeño de managers ni riesgo individual.
+attrition_use: >-
+  Apoyar la decisión de investigar cohortes de equipos donde ya ocurrió una
+  salida, sin utilizar el resultado posterior como feature en el snapshot índice
+  ni recomendar acciones no aprobadas.
+semantic_type: derived_feature
+study_type: descriptive_post_event_cohort_comparison
+knowledge_boundary: >-
+  La salida índice es conocida al cierre mensual t. Los seis cierres posteriores
+  se usan exclusivamente como outcome retrospectivo de esta evidencia, nunca
+  como información disponible para una predicción en t.
+population: >-
+  Empleados con worker_type='Employee', employee_type='Regular' y
+  active_status=1 al cierre mensual índice y manager_employee_id no nulo.
+grain: Integrante de roster índice × episodio de equipo × intervalo mensual de seguimiento.
+source_reasoning: >-
+  hrda.post_hire_monthly_worker_dtls aporta el roster activo mensual, la relación
+  histórica con manager y las fechas/tipos de terminación. employee_id y
+  manager_employee_id sólo se usan dentro de los joins; la consulta devuelve
+  agregados sin identidades.
+definitions:
+  team: >-
+    Reportes directos regulares activos con el mismo manager_employee_id en el
+    cierre índice t. El manager nunca se publica ni se usa para ranking.
+  index_event: >-
+    Una sola terminación distinta por employee_id y term_date con
+    term_type='Voluntary' durante el intervalo mensual que termina en t; para
+    ese equipo no debe haber otra salida Voluntary en los seis intervalos
+    mensuales cerrados (t-6, t].
+  index_roster: >-
+    Personas activas en t bajo el manager índice después de la salida inicial;
+    la persona que salió no aparece en el roster por la condición active_status=1.
+  reference_team: >-
+    Equipo activo en el mismo cierre t y banda de tamaño, sin salida Voluntary
+    en los seis intervalos mensuales cerrados (t-6, t].
+  size_bands: ['1–5', '6–10', '11–20', '21+']
+  outcome: >-
+    Primera terminación con term_type='Voluntary' de una persona del roster
+    durante los seis cierres posteriores, sólo si el manager atribuido al evento
+    sigue siendo el manager índice.
+  censoring: >-
+    Censurar al primer cambio de manager observado en cierre mensual, terminación
+    con tipo no Voluntary o pérdida de observación; una salida Voluntary atribuida
+    al manager índice en el mismo intervalo tiene precedencia como evento.
+  estimand: >-
+    Incidencia acumulada a 1–6 meses calculada como 1 menos supervivencia
+    Kaplan–Meier, con censura descrita y referencia estandarizada por la
+    distribución expuesta de cierre mensual y banda de tamaño.
+validation_story:
+  - id: snapshot_calendar
+    question: ¿Cada episodio cuenta con seis intervalos previos y seis seguimientos mensuales completos?
+    why: Huecos de calendario pueden convertir seis puntos en una ventana de duración desigual.
+    method: Verificar cada brecha consecutiva entre 20 y 45 días antes y después de t.
+    sql_reference: queries/audits/team_post_exit_attrition_event_study_20260910.sql
+    acceptance_rule: Sólo se incluyen índices con 12 brechas consecutivas observables dentro de 20–45 días.
+  - id: event_and_roster_attribution
+    question: ¿La salida índice y los outcomes se atribuyen a un manager histórico único y al roster correcto?
+    why: Atribuir al manager posterior o duplicar eventos altera tanto el comparador como el outcome.
+    method: Deduplicar evento por employee_id y term_date; recuperar el último manager único observado en o antes de term_date y auditar conflictos.
+    sql_reference: queries/audits/team_post_exit_attrition_event_study_20260910.sql
+    acceptance_rule: No se publican episodios con manager ambiguo; la salida índice debe ser única en su ventana y todo evento publicado debe estar después de t.
+  - id: control_standardization
+    question: ¿La referencia está disponible en el mismo cierre y banda de tamaño, sin salida reciente?
+    why: El tamaño y la mezcla temporal afectan la oportunidad de observar una salida posterior.
+    method: Construir controles por cierre × banda y ponderar sus curvas por la distribución de roster expuesto.
+    sql_reference: queries/audits/team_post_exit_attrition_event_study_20260910.sql
+    acceptance_rule: Cada estrato incluido tiene al menos 30 integrantes de roster expuesto y de referencia; si falta, se suprime y se registra.
+  - id: outcome_and_privacy
+    question: ¿Las curvas respetan censura, rango matemático y umbral de publicación?
+    why: La ausencia de seguimiento no es un no-evento y una cohorte pequeña no es publicable.
+    method: Auditar eventos, censuras, personas en riesgo y límites 0–100 de cada punto publicado.
+    sql_reference: queries/audits/team_post_exit_attrition_event_study_20260910.sql
+    acceptance_rule: Cada punto publicado tiene n inicial y n en riesgo de al menos 30, sin incidencias fuera de rango ni resultados individuales.
+acceptance_rules_frozen: true
+planned_sql:
+  - queries/audits/team_post_exit_attrition_event_study_20260910.sql
+output_contract:
+  scopes:
+    all_teams: Todos los equipos elegibles; comparación principal.
+    teams_6_plus: Sensibilidad para equipos índice y de referencia con seis o más reportes.
+  visible_series:
+    - Equipo tras una salida inicial única
+    - Equipos sin salida reciente, ajustados
+  suppression: Ocultar cualquier estrato o punto que no alcance n >= 30.
+  prohibited_claims:
+    - causalidad
+    - contagio demostrado
+    - ranking o evaluación de managers
+    - predicción individual

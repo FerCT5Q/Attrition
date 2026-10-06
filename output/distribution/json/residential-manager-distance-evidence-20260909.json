@@ -1,0 +1,436 @@
+{
+  "artifact": "internal_analysis",
+  "variable": "Residential distance from manager",
+  "execution_date": "2026-09-10",
+  "snapshot_date": "2026-08-23",
+  "population": "Active regular employees with active same-snapshot manager matching",
+  "grain": "Aggregate employee-manager pair at one monthly snapshot",
+  "method": {
+    "distance": "Haversine kilometers between employee and same-snapshot manager public postal-code centroids",
+    "unit": "kilometers",
+    "binning": "One-kilometer intervals through 30 km, dynamically coalesced with adjacent intervals until every displayed band has n >= 30; all remaining calculable pairs are 30+ km",
+    "postal_proxy_handling": "Employee and manager postal-code variants are one-way hashed in Redshift, matched locally in memory, and never persisted in this evidence",
+    "not_measured": [
+      "travel time",
+      "route distance",
+      "office distance",
+      "actual home address",
+      "commute burden"
+    ]
+  },
+  "references": {
+    "geonames_postal_centroids": {
+      "dataset": "GeoNames postal-code coordinates",
+      "access": "Public country ZIP downloads; source content used only in process memory",
+      "country_sources": {
+        "AT": {
+          "source_url": "https://download.geonames.org/export/zip/AT.zip",
+          "sha256": "ae4c3f71dd53e285e3db566a74b4925a492ad473db50d0f247cd057f3258dcf5",
+          "source_format": "GeoNames country ZIP",
+          "source_rows_read": 19225
+        },
+        "AU": {
+          "source_url": "https://download.geonames.org/export/zip/AU.zip",
+          "sha256": "179bb86aaeec0776262ee4133fc4090638a5774c547c4cd72cce58e824623481",
+          "source_format": "GeoNames country ZIP",
+          "source_rows_read": 18521
+        },
+        "BE": {
+          "source_url": "https://download.geonames.org/export/zip/BE.zip",
+          "sha256": "318f40205ad82ebb1e3d1a6020f5db11124aa57a3bb7eadcb6c285dbe4e5320e",
+          "source_format": "GeoNames country ZIP",
+          "source_rows_read": 2781
+        },
+        "BR": {
+          "source_url": "https://download.geonames.org/export/zip/BR.zip",
+          "sha256": "2a09ab3a9d12d4571ac6af35135ad4bf94864169298956a30ff697436612f31b",
+          "source_format": "GeoNames country ZIP",
+          "source_rows_read": 5525
+        },
+        "CA": {
+          "source_url": "https://download.geonames.org/export/zip/CA.zip",
+          "sha256": "746c5a48167776e8db3bb10eef33edfb9b5420bbc7e33faebc0d0b7a5fcc6d72",
+          "source_format": "GeoNames country ZIP",
+          "source_rows_read": 1657
+        },
+        "CH": {
+          "source_url": "https://download.geonames.org/export/zip/CH.zip",
+          "sha256": "745ead818ba7d496ed7f09d825a55172051480be6c7ee49a68ff9f37e0b3d7d1",
+          "source_format": "GeoNames country ZIP",
+          "source_rows_read": 4520
+        },
+        "CN": {
+          "source_url": "https://download.geonames.org/export/zip/CN.zip",
+          "sha256": "a55f44580b18c052d95f0d3caaab89513cefddae07b05d185ceca1acd9d55508",
+          "source_format": "GeoNames country ZIP",
+          "source_rows_read": 2352
+        },
+        "DE": {
+          "source_url": "https://download.geonames.org/export/zip/DE.zip",
+          "sha256": "a6bece08947c97b526bdba8bf51b7767157f21f16d0a45bb10854df41a8ec120",
+          "source_format": "GeoNames country ZIP",
+          "source_rows_read": 23297
+        },
+        "ES": {
+          "source_url": "https://download.geonames.org/export/zip/ES.zip",
+          "sha256": "a0ec88b01272a3024c178cc8cd942c45a2d4d1d01c1cb3206367de8f693019fb",
+          "source_format": "GeoNames country ZIP",
+          "source_rows_read": 37867
+        },
+        "FI": {
+          "source_url": "https://download.geonames.org/export/zip/FI.zip",
+          "sha256": "f5cb3a7b315ddf596dc65129717725e8f83fcbf3707ba913bdd222c52d4b7168",
+          "source_format": "GeoNames country ZIP",
+          "source_rows_read": 3576
+        },
+        "FR": {
+          "source_url": "https://download.geonames.org/export/zip/FR.zip",
+          "sha256": "b3ba20fabb7424121da36382f81bf311470fa290b0a9c866b96b45f3190c1a7c",
+          "source_format": "GeoNames country ZIP",
+          "source_rows_read": 51611
+        },
+        "GB": {
+          "source_url": "https://download.geonames.org/export/zip/GB.zip",
+          "sha256": "a468f551000c792484949f6374768df85ca2fd4190ed7d03c4fc1013b24b5b04",
+          "source_format": "GeoNames country ZIP",
+          "source_rows_read": 27450
+        },
+        "ID": {
+          "source_url": "https://download.geonames.org/export/zip/ID.zip",
+          "sha256": "33ef55dd9099ce589adb4e510fb3d78895d2faad228ca9cb9e1272535c0b9715",
+          "source_format": "GeoNames country ZIP",
+          "source_rows_read": 81058
+        },
+        "IE": {
+          "source_url": "https://download.geonames.org/export/zip/IE.zip",
+          "sha256": "c13446c3a5a1d6ca969c417064a78344d94613b78cf027420cf47c22598b9da6",
+          "source_format": "GeoNames country ZIP",
+          "source_rows_read": 139
+        },
+        "IN": {
+          "source_url": "https://download.geonames.org/export/zip/IN.zip",
+          "sha256": "4fa1e8c00a543efff5496c74afb133b7b811b74811f3295fb054c7419c0238a2",
+          "source_format": "GeoNames country ZIP",
+          "source_rows_read": 155570
+        },
+        "IT": {
+          "source_url": "https://download.geonames.org/export/zip/IT.zip",
+          "sha256": "11ffe787a104288deced0263d93c59a85430b0900bb80ab9e9f2e6930ccb3d46",
+          "source_format": "GeoNames country ZIP",
+          "source_rows_read": 18415
+        },
+        "JP": {
+          "source_url": "https://download.geonames.org/export/zip/JP.zip",
+          "sha256": "727805185a92f12065e8b35aa6cc41604a8df4ae1a2eacd68d7cf448dd2ecfcf",
+          "source_format": "GeoNames country ZIP",
+          "source_rows_read": 146883
+        },
+        "KR": {
+          "source_url": "https://download.geonames.org/export/zip/KR.zip",
+          "sha256": "b74f93c28e2c1038e641903fe75280acd055864cdbf0c4040c6e696e1e83443a",
+          "source_format": "GeoNames country ZIP",
+          "source_rows_read": 35583
+        },
+        "MX": {
+          "source_url": "https://download.geonames.org/export/zip/MX.zip",
+          "sha256": "25c8923f452384f780c143eaff32bf9fd779e3f4853f0ef4031a0190c1a69d27",
+          "source_format": "GeoNames country ZIP",
+          "source_rows_read": 144655
+        },
+        "NL": {
+          "source_url": "https://download.geonames.org/export/zip/NL.zip",
+          "sha256": "d2c8473a5cbdeaf2b8b4fe7532f650fb72b01e9a6a73eacd593552ec00d9df05",
+          "source_format": "GeoNames country ZIP",
+          "source_rows_read": 4334
+        },
+        "RO": {
+          "source_url": "https://download.geonames.org/export/zip/RO.zip",
+          "sha256": "b0afac8ca4ab6468ccbbccba26e5c6e0599852eb35d59494ed8acd995625a378",
+          "source_format": "GeoNames country ZIP",
+          "source_rows_read": 37915
+        },
+        "SE": {
+          "source_url": "https://download.geonames.org/export/zip/SE.zip",
+          "sha256": "fad5d512675bf0914d55298c9fe731495fd24e17285f52f183c0a83df9ed2622",
+          "source_format": "GeoNames country ZIP",
+          "source_rows_read": 18887
+        },
+        "SG": {
+          "source_url": "https://download.geonames.org/export/zip/SG.zip",
+          "sha256": "728a46d58592b5b12f94a3362999947e08c3de718db3c5d684f51bb588e51968",
+          "source_format": "GeoNames country ZIP",
+          "source_rows_read": 121154
+        },
+        "US": {
+          "source_url": "https://download.geonames.org/export/zip/US.zip",
+          "sha256": "06f614d8ea3d8e73b54667944059089940fdf5908e5f2b62cb44e52c886a1652",
+          "source_format": "GeoNames country ZIP",
+          "source_rows_read": 41490
+        }
+      },
+      "unavailable_country_source_count": 5
+    }
+  },
+  "distribution": [
+    {
+      "category": "0–<1 km",
+      "lower_km": 0,
+      "upper_km": 1,
+      "employee_count": 5955,
+      "percent_of_calculable_pairs": 13.97395283
+    },
+    {
+      "category": "1–<2 km",
+      "lower_km": 1,
+      "upper_km": 2,
+      "employee_count": 112,
+      "percent_of_calculable_pairs": 0.26281826
+    },
+    {
+      "category": "2–<3 km",
+      "lower_km": 2,
+      "upper_km": 3,
+      "employee_count": 467,
+      "percent_of_calculable_pairs": 1.09585827
+    },
+    {
+      "category": "3–<4 km",
+      "lower_km": 3,
+      "upper_km": 4,
+      "employee_count": 465,
+      "percent_of_calculable_pairs": 1.09116508
+    },
+    {
+      "category": "4–<5 km",
+      "lower_km": 4,
+      "upper_km": 5,
+      "employee_count": 615,
+      "percent_of_calculable_pairs": 1.44315382
+    },
+    {
+      "category": "5–<6 km",
+      "lower_km": 5,
+      "upper_km": 6,
+      "employee_count": 566,
+      "percent_of_calculable_pairs": 1.32817083
+    },
+    {
+      "category": "6–<7 km",
+      "lower_km": 6,
+      "upper_km": 7,
+      "employee_count": 1060,
+      "percent_of_calculable_pairs": 2.48738707
+    },
+    {
+      "category": "7–<8 km",
+      "lower_km": 7,
+      "upper_km": 8,
+      "employee_count": 989,
+      "percent_of_calculable_pairs": 2.32077907
+    },
+    {
+      "category": "8–<9 km",
+      "lower_km": 8,
+      "upper_km": 9,
+      "employee_count": 505,
+      "percent_of_calculable_pairs": 1.18502875
+    },
+    {
+      "category": "9–<10 km",
+      "lower_km": 9,
+      "upper_km": 10,
+      "employee_count": 1170,
+      "percent_of_calculable_pairs": 2.74551214
+    },
+    {
+      "category": "10–<11 km",
+      "lower_km": 10,
+      "upper_km": 11,
+      "employee_count": 617,
+      "percent_of_calculable_pairs": 1.447847
+    },
+    {
+      "category": "11–<12 km",
+      "lower_km": 11,
+      "upper_km": 12,
+      "employee_count": 597,
+      "percent_of_calculable_pairs": 1.40091517
+    },
+    {
+      "category": "12–<13 km",
+      "lower_km": 12,
+      "upper_km": 13,
+      "employee_count": 878,
+      "percent_of_calculable_pairs": 2.0603074
+    },
+    {
+      "category": "13–<14 km",
+      "lower_km": 13,
+      "upper_km": 14,
+      "employee_count": 1161,
+      "percent_of_calculable_pairs": 2.72439282
+    },
+    {
+      "category": "14–<15 km",
+      "lower_km": 14,
+      "upper_km": 15,
+      "employee_count": 431,
+      "percent_of_calculable_pairs": 1.01138097
+    },
+    {
+      "category": "15–<16 km",
+      "lower_km": 15,
+      "upper_km": 16,
+      "employee_count": 983,
+      "percent_of_calculable_pairs": 2.30669952
+    },
+    {
+      "category": "16–<17 km",
+      "lower_km": 16,
+      "upper_km": 17,
+      "employee_count": 719,
+      "percent_of_calculable_pairs": 1.68719934
+    },
+    {
+      "category": "17–<18 km",
+      "lower_km": 17,
+      "upper_km": 18,
+      "employee_count": 478,
+      "percent_of_calculable_pairs": 1.12167077
+    },
+    {
+      "category": "18–<19 km",
+      "lower_km": 18,
+      "upper_km": 19,
+      "employee_count": 629,
+      "percent_of_calculable_pairs": 1.4760061
+    },
+    {
+      "category": "19–<20 km",
+      "lower_km": 19,
+      "upper_km": 20,
+      "employee_count": 598,
+      "percent_of_calculable_pairs": 1.40326176
+    },
+    {
+      "category": "20–<21 km",
+      "lower_km": 20,
+      "upper_km": 21,
+      "employee_count": 306,
+      "percent_of_calculable_pairs": 0.71805702
+    },
+    {
+      "category": "21–<22 km",
+      "lower_km": 21,
+      "upper_km": 22,
+      "employee_count": 426,
+      "percent_of_calculable_pairs": 0.99964801
+    },
+    {
+      "category": "22–<23 km",
+      "lower_km": 22,
+      "upper_km": 23,
+      "employee_count": 690,
+      "percent_of_calculable_pairs": 1.61914819
+    },
+    {
+      "category": "23–<24 km",
+      "lower_km": 23,
+      "upper_km": 24,
+      "employee_count": 267,
+      "percent_of_calculable_pairs": 0.62653995
+    },
+    {
+      "category": "24–<25 km",
+      "lower_km": 24,
+      "upper_km": 25,
+      "employee_count": 662,
+      "percent_of_calculable_pairs": 1.55344362
+    },
+    {
+      "category": "25–<26 km",
+      "lower_km": 25,
+      "upper_km": 26,
+      "employee_count": 308,
+      "percent_of_calculable_pairs": 0.72275021
+    },
+    {
+      "category": "26–<27 km",
+      "lower_km": 26,
+      "upper_km": 27,
+      "employee_count": 230,
+      "percent_of_calculable_pairs": 0.53971606
+    },
+    {
+      "category": "27–<28 km",
+      "lower_km": 27,
+      "upper_km": 28,
+      "employee_count": 267,
+      "percent_of_calculable_pairs": 0.62653995
+    },
+    {
+      "category": "28–<29 km",
+      "lower_km": 28,
+      "upper_km": 29,
+      "employee_count": 151,
+      "percent_of_calculable_pairs": 0.35433533
+    },
+    {
+      "category": "29–<30 km",
+      "lower_km": 29,
+      "upper_km": 30,
+      "employee_count": 246,
+      "percent_of_calculable_pairs": 0.57726153
+    },
+    {
+      "category": "30+ km",
+      "lower_km": 30,
+      "upper_km": null,
+      "employee_count": 20067,
+      "percent_of_calculable_pairs": 47.08905315
+    }
+  ],
+  "metrics": {
+    "employee_duplicate_source_rows": 0,
+    "feature_eligible_pairs": 49556,
+    "manager_duplicate_source_rows": 0,
+    "employee_country_conflicts": 0,
+    "active_regular_employees": 50043,
+    "unmatched_managers": 0,
+    "employee_manager_conflicts": 0,
+    "manager_postal_code_conflicts": 0,
+    "employees_without_one_manager": 1,
+    "manager_country_conflicts": 0,
+    "key_unavailable_employees": 487,
+    "employee_postal_code_conflicts": 0,
+    "observable_pairs": 42615,
+    "not_observable_pairs": 6941,
+    "total_unavailable_employees": 7428,
+    "employee_centroid_matched_pairs": 43574,
+    "manager_centroid_matched_pairs": 43829,
+    "employee_centroid_unmatched_pairs": 2969,
+    "manager_centroid_unmatched_pairs": 2714,
+    "unrecognized_country_pairs": 33,
+    "unavailable_reference_pairs": 2980,
+    "calculable_coverage_percent_of_feature_eligible": 85.99362338,
+    "calculable_coverage_percent_of_active_workforce": 85.15676518,
+    "published_pair_count": 42615,
+    "published_band_count": 31,
+    "minimum_published_band_count": 112,
+    "minimum_cohort": 30,
+    "country_mapping_categories_checked": 47
+  },
+  "provenance": {
+    "profile_sql": "queries/profiles/residential_manager_distance_postal_pair_hash_distribution_20260909.sql",
+    "profile_sql_sha256": "10051345e7d2e678ded6dcefcd42bc01f7d91b65f9d4114d79928e72417dfc5b",
+    "profile_result_sha256": "7ffc5cbd5e7a55ae2e05aa8e0f43a69137114a83ff97cbdedbf006cfd75e1090",
+    "audit_sql": "queries/audits/residential_manager_distance_snapshot_reconciliation_20260909.sql",
+    "audit_sql_sha256": "cc93fd7c43427498a75cd899ede94d89065aa54777a07abc563d403973dbb52c",
+    "audit_result_sha256": "572e5588e251e902f25d65725ae04fcb78b11f77495b5ca08f8a08d477f8ab3f",
+    "country_mapping_audit_sql": "queries/audits/residential_manager_distance_country_mapping_20260910.sql",
+    "country_mapping_audit_sql_sha256": "c2af0a6c45aa377c7b01e53bd06f27f8104be0f9db177b9e46f4e5a88ec99212",
+    "country_mapping_audit_result_sha256": "4789160515d90d5791f9a4db48a2bf9aaeec5aad8fb2b276dca0d5f7db6b02f7"
+  },
+  "acceptance_rule": "Fixed active-workforce and feature-eligible counts reconcile; duplicate/conflict safeguards are zero; all publishable stored country labels map to an ISO centroid source; unrecognized or unavailable country references remain not observable rather than falling forward or using office data; observable + not observable equals feature eligible; every shown band has n >= 30; shown bands and percentages reconcile to calculable employee-manager pairs; no raw postal, employee, manager, address, or pair-hash value is persisted.",
+  "outcome": "pass"
+}

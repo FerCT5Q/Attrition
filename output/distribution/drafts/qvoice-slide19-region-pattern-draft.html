@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QVoice comments by theme — draft</title>
+  <style>
+    /* =====================================================================
+       UNIVERSAL PRESENTATION TEMPLATE — base-fullscreen.html
+       - No sticky navbar — content fills 1440x810 stage, scaled to viewport
+       - Right edge: side-collapsed THEME switcher
+       - Left edge:  side-collapsed SLIDE NAVIGATOR (for multi-slide decks)
+       - JS fitSlide() scales to fit any monitor; DPR Ctrl+zoom-safe
+       - Multi-slide: add additional .slide-stage blocks; add nav-pill per slide
+
+       SINGLE SLIDE usage:
+         - Keep one .slide-stage, one nav-pill. Nav tab hides gracefully.
+       MULTI-SLIDE DECK usage:
+         - Clone .slide-stage blocks, each with unique content.
+         - Add <button class="nav-pill" data-slide="N">N. Title</button> per slide.
+         - Keyboard arrows and nav tab handle navigation.
+       ===================================================================== */
+
+    /* 1. CSS VARIABLES & THEMES
+       ================================================================== */
+    :root {
+      --font-main: Aptos, "Segoe UI", system-ui, -apple-system, sans-serif;
+
+      --bg-body:      #f4f5f8;
+      --bg-surface:   #ffffff;
+      --bg-surface-2: #f6f8ff;
+      --bg-surface-3: #eef2ff;
+
+      --accent:       #2457ff;
+      --accent-2:     #3b82f6;
+      --accent-soft:  #e2e7ff;
+
+      --text-main:    #0f172a;
+      --text-muted:   #5b6478;
+      --text-invert:  #ffffff;
+
+      --border-subtle: rgba(15, 23, 42, 0.08);
+      --border-strong: rgba(36, 87, 255, 0.22);
+
+      --shadow-soft:   0 18px 44px rgba(2, 6, 23, 0.12);
+
+      --radius-card:   18px;
+      --radius-pill:   999px;
+
+      --donut-hole-bg: #ffffff;
+
+      --diamond-fill:   color-mix(in oklab, #f59e0b 18%, var(--bg-surface));
+      --diamond-stroke: #f59e0b;
+      --diamond-tx:     #92400e;
+      --exit-yes-bg:    color-mix(in oklab, #22c55e 12%, transparent);
+      --exit-yes-bd:    #16a34a;
+      --exit-yes-tx:    #14532d;
+      --exit-no-bg:     color-mix(in oklab, #ef4444 12%, transparent);
+      --exit-no-bd:     #dc2626;
+      --exit-no-tx:     #7f1d1d;
+      --conn-color:     var(--border-subtle);
+    }
+
+    body.theme-light-classic {
+      --bg-body:       #f4f5f8;
+      --bg-surface:    #ffffff;
+      --bg-surface-2:  #f6f8ff;
+      --bg-surface-3:  #eef2ff;
+      --text-main:     #0f172a;
+      --text-muted:    #5b6478;
+      --border-subtle: rgba(15, 23, 42, 0.08);
+      --border-strong: rgba(36, 87, 255, 0.22);
+      --donut-hole-bg: #ffffff;
+      --diamond-fill:  color-mix(in oklab, #f59e0b 18%, #ffffff);
+      --diamond-tx:    #92400e;
+    }
+
+    body.theme-light-soft {
+      --bg-body:       #eef2ff;
+      --bg-surface:    #f8faff;
+      --bg-surface-2:  #f0f4ff;
+      --bg-surface-3:  #e4ebff;
+      --text-main:     #1e2a4a;
+      --text-muted:    #4a5572;
+      --border-subtle: rgba(30, 42, 74, 0.09);
+      --border-strong: rgba(36, 87, 255, 0.20);
+      --donut-hole-bg: #f8faff;
+      --diamond-fill:  color-mix(in oklab, #f59e0b 18%, #f8faff);
+      --diamond-tx:    #78350f;
+    }
+
+    body.theme-dark-royal {
+      --bg-body:       #0d1b3e;
+      --bg-surface:    #162040;
+      --bg-surface-2:  #1a2650;
+      --bg-surface-3:  #1e2c5a;
+      --text-main:     #e8eeff;
+      --text-muted:    #8fa0cc;
+      --text-invert:   #ffffff;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(100, 149, 255, 0.28);
+      --accent:        #5b8cff;
+      --accent-2:      #7aabff;
+      --accent-soft:   rgba(91, 140, 255, 0.14);
+      --donut-hole-bg: #162040;
+      --diamond-fill:  color-mix(in oklab, #f59e0b 22%, #162040);
+      --diamond-tx:    #fde68a;
+      --exit-yes-tx:   #bbf7d0;
+      --exit-no-tx:    #fecaca;
+      --conn-color:    rgba(255,255,255,0.08);
+    }
+
+    body.theme-dark-carbon {
+      --bg-body:       #111318;
+      --bg-surface:    #1c1f26;
+      --bg-surface-2:  #22262f;
+      --bg-surface-3:  #282c36;
+      --text-main:     #e2e5ef;
+      --text-muted:    #7a8098;
+      --text-invert:   #ffffff;
+      --border-subtle: rgba(255, 255, 255, 0.07);
+      --border-strong: rgba(100, 149, 255, 0.22);
+      --accent:        #5b8cff;
+      --accent-2:      #7aabff;
+      --accent-soft:   rgba(91, 140, 255, 0.12);
+      --donut-hole-bg: #1c1f26;
+      --diamond-fill:  color-mix(in oklab, #f59e0b 20%, #1c1f26);
+      --diamond-tx:    #fde68a;
+      --exit-yes-tx:   #bbf7d0;
+      --exit-no-tx:    #fecaca;
+      --conn-color:    rgba(255,255,255,0.07);
+    }
+
+    /* 2. BASE RESET & BODY
+       ================================================================== */
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html {
+      height: 100%;
+      background: #000;
+    }
+
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: var(--font-main);
+      font-size: 16px;
+      color: var(--text-main);
+      /* Letterbox: dark tint of the active theme's bg-body */
+      background: color-mix(in oklab, var(--bg-body) 35%, #000);
+      transition: background 0.25s;
+    }
+
+    /* 3. SLIDE STAGE — fixed 1440×810, scaled via JS fitSlide()
+       Each .slide-stage is one slide. Add more for multi-slide decks.
+       ================================================================== */
+    .slide-stage {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1440px;
+      height: 810px;
+      transform-origin: top left;
+      background: var(--bg-body);
+      overflow: hidden;
+      padding: 14px 16px 10px;
+      display: grid;
+      gap: 6px;
+      /* Default grid: heading row auto-height + content fills remaining space.
+         Override grid-template-rows in content-specific styles as needed. */
+      grid-template-rows: auto 1fr;
+    }
+
+    /* 4. SLIDE HEADING
+       ================================================================== */
+    .slide-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4px 8px;
+      border-bottom: 3px solid var(--accent);
+      flex-shrink: 0;
+    }
+
+    .slide-title-text {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin: 0;
+      letter-spacing: -0.01em;
+    }
+
+    .slide-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin: 2px 0 0;
+    }
+
+    /* 5. CARD COMPONENT
+       ================================================================== */
+    .card {
+      background: color-mix(in oklab, var(--bg-surface) 92%, transparent);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-soft);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      overflow: hidden;
+      height: 100%;
+    }
+
+    .card-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 6px;
+      margin-bottom: 4px;
+    }
+
+    .card-compact {
+      padding: 7px 10px;
+      gap: 4px;
+      border-radius: 10px;
+    }
+
+    .card-compact .card-title {
+      font-size: 11px;
+      padding-bottom: 3px;
+      margin-bottom: 2px;
+    }
+
+    .card-full {
+      width: 100%;
+      flex: 1;
+    }
+
+    /* 6. BADGE & CHIP SYSTEM
+       Always use color-mix() — never hardcode light-theme hex.
+       ================================================================== */
+    .badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .badge-success  { background: color-mix(in oklab, #22c55e 15%, transparent); color: #16a34a; border: 1px solid color-mix(in oklab, #22c55e 30%, transparent); }
+    .badge-warning  { background: color-mix(in oklab, #f59e0b 15%, transparent); color: #d97706; border: 1px solid color-mix(in oklab, #f59e0b 30%, transparent); }
+    .badge-neutral  { background: color-mix(in oklab, var(--text-muted) 12%, transparent); color: var(--text-muted); border: 1px solid var(--border-subtle); }
+    .badge-info     { background: color-mix(in oklab, var(--accent) 12%, transparent); color: var(--accent); border: 1px solid color-mix(in oklab, var(--accent) 25%, transparent); }
+    .badge-wip      { background: color-mix(in oklab, #f97316 15%, transparent); color: #ea580c; border: 1px solid color-mix(in oklab, #f97316 30%, transparent); }
+    .badge-beta     { background: color-mix(in oklab, #22c55e 10%, transparent); color: #15803d; border: 1px dashed color-mix(in oklab, #22c55e 40%, transparent); }
+    .badge-coming-soon { background: color-mix(in oklab, #8b5cf6 12%, transparent); color: #7c3aed; border: 1px solid color-mix(in oklab, #8b5cf6 25%, transparent); }
+
+    .chip {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .chip-linux   { background: color-mix(in oklab, #f59e0b 15%, transparent); color: #92400e; }
+    .chip-rtos    { background: color-mix(in oklab, #3b82f6 12%, transparent); color: #1e40af; }
+    .chip-android { background: color-mix(in oklab, #22c55e 12%, transparent); color: #14532d; }
+    .chip-windows { background: color-mix(in oklab, #8b5cf6 12%, transparent); color: #4c1d95; }
+
+    .term-pill {
+      display: inline-block;
+      padding: 1px 7px;
+      border-radius: var(--radius-pill);
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.9em;
+      font-weight: 600;
+    }
+
+    /* 7. BULLET LIST
+       ================================================================== */
+    .bullet-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .bullet-list li {
+      padding-left: 16px;
+      position: relative;
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--text-main);
+    }
+
+    .bullet-list li::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 11px;
+    }
+
+    /* 8. LAYOUT CONTAINERS
+       ================================================================== */
+    .slide-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .grid-4col {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .vertical-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* 9. 4-COLUMN TRACKING GRID
+       ================================================================== */
+    .tracking-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr 0.9fr;
+      gap: 6px;
+      align-items: start;
+      overflow: hidden;
+    }
+
+    .col-header {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 5px 10px;
+      border-radius: 8px;
+      color: var(--text-invert);
+      text-align: center;
+    }
+
+    .col-opportunity { background: #2457ff; }
+    .col-state       { background: #7c3aed; }
+    .col-plan        { background: #0891b2; }
+    .col-eta         { background: #059669; }
+
+    .track-divider {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 2px 0;
+    }
+
+    .track-divider hr {
+      flex: 1;
+      border: none;
+      border-top: 1px solid var(--border-subtle);
+      margin: 0;
+    }
+
+    .track-divider span {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .track-card {
+      background: color-mix(in oklab, var(--bg-surface) 92%, transparent);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 7px 10px;
+      gap: 4px;
+      display: flex;
+      flex-direction: column;
+      font-size: 13px;
+      line-height: 1.4;
+      color: var(--text-main);
+    }
+
+    .track-card.col-opportunity { border-left: 4px solid #2457ff; }
+    .track-card.col-state       { border-left: 4px solid #7c3aed; }
+    .track-card.col-plan        { border-left: 4px solid #0891b2; }
+    .track-card.col-eta         { border-left: 4px solid #059669; }
+
+    .callout-imperative {
+      background: color-mix(in oklab, #22c55e 10%, var(--bg-surface));
+      border-left: 3px solid #22c55e;
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 12px;
+      color: var(--text-main);
+      line-height: 1.35;
+    }
+
+    .eta-bar-wrap {
+      width: 100%;
+      height: 4px;
+      background: var(--border-subtle);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .eta-bar {
+      height: 100%;
+      background: #059669;
+      border-radius: 2px;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      flex-shrink: 0;
+      animation: pulse-green 1.8s ease-in-out infinite;
+    }
+
+    @keyframes pulse-green {
+      0%, 100% { opacity: 1;   transform: scale(1);   }
+      50%       { opacity: 0.5; transform: scale(1.4); }
+    }
+
+    /* 10. ADOPTION GAUGE (conic-gradient donut)
+       ================================================================== */
+    .gauge-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .gauge {
+      position: relative;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      /* Angle calculation:
+         current_deg = (current_pct / 100) * 360
+         goal_deg    = (goal_pct / 100) * 360
+         conic-gradient: accent 0 current_deg, green current_deg goal_deg, muted goal_deg 360deg */
+      background: conic-gradient(
+        var(--accent)            0deg 151.2deg,
+        #10b981               151.2deg 288deg,
+        var(--border-subtle)  288deg   360deg
+      );
+    }
+
+    .gauge-hole {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px; height: 40px;
+      background: var(--bg-body);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gauge-pct { font-size: 11px; font-weight: 800; color: var(--text-main); line-height: 1; }
+    .gauge-sub { font-size: 9px; color: var(--text-muted); }
+
+    .gauge-meta { display: flex; flex-direction: column; gap: 3px; }
+
+    .gauge-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .gm-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .gm-current { background: var(--accent); }
+    .gm-goal    { background: #10b981; }
+
+    /* 11. SIDE CONTROLS — shared base for both theme tab (right) and nav tab (left)
+       ================================================================== */
+    .side-controls,
+    .nav-ctrl {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1000;
+      display: flex;
+      align-items: stretch;
+    }
+
+    /* RIGHT EDGE — THEME SWITCHER */
+    .side-controls {
+      right: 0;
+    }
+
+    .side-panel {
+      width: 0;
+      overflow: hidden;
+      transition: width 0.22s ease;
+      background: color-mix(in oklab, var(--bg-surface) 95%, transparent);
+      border: 1px solid var(--border-subtle);
+      border-right: none;
+      border-radius: 12px 0 0 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 0;
+      box-shadow: -4px 0 20px rgba(0, 0, 0, 0.14);
+      backdrop-filter: blur(8px);
+    }
+
+    .side-controls:hover .side-panel {
+      width: 136px;
+      padding: 12px 10px;
+    }
+
+    .side-tab {
+      width: 22px;
+      background: color-mix(in oklab, var(--bg-surface) 90%, transparent);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px 0 0 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      writing-mode: vertical-rl;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 14px 0;
+      transition: background 0.15s, color 0.15s;
+      user-select: none;
+      font-family: var(--font-main);
+    }
+
+    .side-controls:hover .side-tab {
+      background: color-mix(in oklab, var(--accent) 15%, var(--bg-surface));
+      color: var(--accent);
+    }
+
+    /* LEFT EDGE — SLIDE NAVIGATOR */
+    .nav-ctrl {
+      left: 0;
+    }
+
+    .nav-panel {
+      width: 0;
+      overflow: hidden;
+      transition: width 0.22s ease;
+      background: color-mix(in oklab, var(--bg-surface) 95%, transparent);
+      border: 1px solid var(--border-subtle);
+      border-left: none;
+      border-radius: 0 12px 12px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 0;
+      box-shadow: 4px 0 20px rgba(0, 0, 0, 0.14);
+      backdrop-filter: blur(8px);
+      order: 1; /* panel appears to the right of the tab */
+    }
+
+    .nav-ctrl:hover .nav-panel {
+      width: 164px;
+      padding: 12px 10px;
+    }
+
+    .nav-tab {
+      width: 22px;
+      background: color-mix(in oklab, var(--bg-surface) 90%, transparent);
+      border: 1px solid var(--border-subtle);
+      border-radius: 0 8px 8px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg); /* read bottom-to-top for left-edge orientation */
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 14px 0;
+      transition: background 0.15s, color 0.15s;
+      user-select: none;
+      font-family: var(--font-main);
+      order: 0; /* tab stays on the left */
+    }
+
+    .nav-ctrl:hover .nav-tab {
+      background: color-mix(in oklab, var(--accent) 15%, var(--bg-surface));
+      color: var(--accent);
+    }
+
+    /* Shared label + pill styles for both panels */
+    .side-label,
+    .nav-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      white-space: nowrap;
+      margin-bottom: 2px;
+      font-family: var(--font-main);
+    }
+
+    .side-pill,
+    .nav-pill {
+      appearance: none;
+      border: 1px solid var(--border-subtle);
+      background: color-mix(in oklab, var(--bg-surface) 88%, transparent);
+      color: var(--text-main);
+      padding: 6px 10px;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      font-family: var(--font-main);
+      cursor: pointer;
+      text-align: left;
+      white-space: nowrap;
+      width: 100%;
+      transition: border-color 0.12s, background 0.12s;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .side-pill:hover,
+    .nav-pill:hover {
+      border-color: var(--border-strong);
+    }
+
+    .side-pill.pill-active,
+    .nav-pill.pill-active {
+      background: linear-gradient(135deg,
+        color-mix(in oklab, var(--accent) 92%, #fff 8%),
+        var(--accent-2));
+      color: var(--text-invert);
+      border-color: transparent;
+    }
+
+    /* 12. CODE BLOCKS (always dark — theme-independent)
+       ================================================================== */
+    .code-block, .dir-tree {
+      font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+      font-size: 13px;
+      line-height: 2;
+      color: #c9d1d9;
+      background: #161b22;
+      border-radius: 10px;
+      padding: 16px 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    .dir-tree .dir { color: #79c0ff; font-weight: 600; }
+    .dir-tree .dim { color: #6e7681; }
+    .dir-tree .hl  { color: #7ee787; font-weight: 600; }
+
+    code {
+      font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+      font-size: 0.88em;
+      background: rgba(110, 118, 129, 0.15);
+      color: var(--text-main);
+      padding: 1px 6px;
+      border-radius: 5px;
+    }
+
+    /* 13. CONTENT-SPECIFIC STYLES — add below this line
+       ================================================================== */
+
+    #slide-1 { grid-template-rows:auto 1fr; gap:8px; }
+    #slide-1 .slide-title-text { font-size:22px; }
+    .qv19-card { padding:16px 18px 12px; gap:10px; }
+    .qv19-intro { display:grid; grid-template-columns:1.35fr 1fr; gap:12px; padding:10px 12px; border:1px solid var(--border-subtle); border-radius:12px; background:color-mix(in oklab,var(--bg-surface-2) 76%,transparent); }
+    .qv19-intro-block { display:flex; flex-direction:column; gap:3px; min-width:0; }
+    .qv19-eyebrow { color:var(--text-muted); font-size:10px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
+    .qv19-intro strong { color:var(--text-main); font-size:13px; line-height:1.2; }
+    .qv19-panel-head { display:flex; align-items:baseline; justify-content:space-between; gap:12px; border-bottom:2px solid var(--accent); padding:0 0 6px; }
+    .qv19-panel-head strong { color:var(--text-main); font-size:13px; }
+    .qv19-panel-head span { color:var(--text-muted); font-size:10px; white-space:nowrap; }
+    .qv19-column-head, .qv19-row { display:grid; grid-template-columns:250px minmax(0,1fr) 176px; gap:12px; align-items:center; }
+    .qv19-column-head { padding:2px 0 4px; color:var(--text-muted); font-size:9px; font-weight:800; letter-spacing:.07em; text-transform:uppercase; }
+    .qv19-column-head span:last-child { text-align:right; }
+    .qv19-list { display:grid; gap:8px; }
+    .qv19-row { min-height:42px; }
+    .qv19-label { color:var(--text-main); font-size:12px; font-weight:700; line-height:1.15; }
+    .qv19-track { height:17px; overflow:hidden; border:1px solid var(--border-subtle); border-radius:var(--radius-pill); background:var(--bg-surface-3); }
+    .qv19-fill { height:100%; min-width:4px; border-radius:inherit; background:linear-gradient(90deg,var(--accent-2),var(--accent)); }
+    .qv19-distribution { color:var(--text-main); font-size:11px; font-weight:800; font-variant-numeric:tabular-nums; white-space:nowrap; }
+    .qv19-attrition-cell { display:flex; align-items:center; justify-content:flex-end; gap:7px; min-width:0; }
+    .qv19-attrition-pill { display:inline-flex; align-items:center; justify-content:center; min-width:52px; padding:4px 9px; border-radius:var(--radius-pill); border:1px solid color-mix(in oklab,var(--accent) 28%,transparent); background:color-mix(in oklab,var(--accent) 12%,transparent); color:var(--accent); font-size:11px; font-weight:900; font-variant-numeric:tabular-nums; white-space:nowrap; }
+    .qv19-attrition-pill.attr-low { border-color:color-mix(in oklab,#22c55e 35%,transparent); background:color-mix(in oklab,#22c55e 13%,transparent); color:#15803d; }
+    .qv19-attrition-pill.attr-high { border-color:color-mix(in oklab,#f97316 35%,transparent); background:color-mix(in oklab,#f97316 13%,transparent); color:#c2410c; }
+    .qv19-unpublishable { display:grid; grid-template-columns:250px minmax(0,1fr) 176px; gap:12px; align-items:center; margin-top:2px; padding:9px 10px; border:1px solid color-mix(in oklab,var(--accent) 28%,var(--border-subtle)); border-radius:10px; background:color-mix(in oklab,var(--accent) 7%,transparent); }
+    .qv19-unpublishable strong { color:var(--text-main); font-size:11px; }
+    .qv19-unpublishable span { color:var(--text-muted); font-size:9px; }
+    .qv19-unpublishable b { color:var(--accent); font-size:11px; text-align:right; }
+    .qv19-footer { display:flex; justify-content:space-between; gap:12px; padding-top:6px; border-top:1px solid var(--border-subtle); color:var(--text-muted); font-size:9.5px; line-height:1.2; }
+    .qv19-footer strong { color:var(--text-main); }
+  </style>
+</head>
+<!-- Default theme: change class to theme-light-soft / theme-dark-royal / theme-dark-carbon -->
+<body class="theme-light-classic">
+
+  <!-- ================================================================
+       SLIDE 1 — Replace placeholder content with real slide content.
+       Keep .slide-stage wrapper and .slide-heading structure.
+       ================================================================ -->
+  <div class="slide-stage" id="slide-1">
+
+    <!-- Slide heading row — title left, optional gauge right.
+         Remove .gauge-wrap if no adoption metric. See fullscreen_presentation_mode.md Pattern 4. -->
+    <div class="slide-heading">
+      <div>
+        <h2 class="slide-title-text">QVoice comments by theme</h2>
+        <p class="slide-subtitle">Jan-2026 improvement themes · distribution and 12-month attrition</p>
+      </div>
+      <span class="badge badge-wip">Internal draft · illustrative attrition</span>
+    </div>
+
+    <article class="card card-full qv19-card">
+      <div class="qv19-intro">
+        <div class="qv19-intro-block">
+          <span class="qv19-eyebrow">Population</span>
+          <strong>Employees with at least one selected improvement comment</strong>
+        </div>
+        <div class="qv19-intro-block">
+          <span class="qv19-eyebrow">Reading the chart</span>
+          <strong>Bar = share of commenting employees · pill = 12-month attrition</strong>
+        </div>
+      </div>
+
+      <div class="qv19-panel-head">
+        <strong>What employees commented about</strong>
+        <span>Jan-2026 · n = 13,862 commenters</span>
+      </div>
+
+      <div class="qv19-column-head" aria-hidden="true">
+        <span>Comment theme</span>
+        <span>Distribution</span>
+        <span>12-month attrition</span>
+      </div>
+
+      <div class="qv19-list">
+        <div class="qv19-row">
+          <div class="qv19-label">Tools / processes / bureaucracy</div>
+          <div class="qv19-track"><div class="qv19-fill" style="width:100%"></div></div>
+          <div class="qv19-attrition-cell"><span class="qv19-distribution">18.1% · n=2,505</span><span class="qv19-attrition-pill attr-low">3.3%</span></div>
+        </div>
+        <div class="qv19-row">
+          <div class="qv19-label">Work arrangement / RTO / commute</div>
+          <div class="qv19-track"><div class="qv19-fill" style="width:97.24%"></div></div>
+          <div class="qv19-attrition-cell"><span class="qv19-distribution">17.6% · n=2,443</span><span class="qv19-attrition-pill attr-low">3.7%</span></div>
+        </div>
+        <div class="qv19-row">
+          <div class="qv19-label">Manager / leadership / respect</div>
+          <div class="qv19-track"><div class="qv19-fill" style="width:77.35%"></div></div>
+          <div class="qv19-attrition-cell"><span class="qv19-distribution">14.0% · n=1,944</span><span class="qv19-attrition-pill attr-high">5.3%</span></div>
+        </div>
+        <div class="qv19-row">
+          <div class="qv19-label">Workload / staffing / work-life</div>
+          <div class="qv19-track"><div class="qv19-fill" style="width:59.67%"></div></div>
+          <div class="qv19-attrition-cell"><span class="qv19-distribution">10.8% · n=1,502</span><span class="qv19-attrition-pill">4.3%</span></div>
+        </div>
+        <div class="qv19-row">
+          <div class="qv19-label">Rewards</div>
+          <div class="qv19-track"><div class="qv19-fill" style="width:50.28%"></div></div>
+          <div class="qv19-attrition-cell"><span class="qv19-distribution">9.1% · n=1,254</span><span class="qv19-attrition-pill">4.7%</span></div>
+        </div>
+      </div>
+
+      <div class="qv19-unpublishable">
+        <strong>Explicit intent to leave</strong>
+        <span>Shown separately; category is too small to publish an attrition estimate.</span>
+        <b>Not publishable (n&lt;30)</b>
+      </div>
+
+      <div class="qv19-footer">
+        <span><strong>Draft note:</strong> attrition pills are illustrative for layout review.</span>
+        <span>Final calculation: exits during the 12 months after the snapshot.</span>
+      </div>
+
+  </div><!-- /.slide-stage (Slide 1) -->
+
+
+  <!-- ================================================================
+       SLIDE 2+ (MULTI-SLIDE DECKS ONLY)
+       Clone the .slide-stage block below for each additional slide.
+       Give each a unique id="slide-2", id="slide-3", etc.
+       Add a matching nav-pill in #slide-nav for each slide:
+         <button class="nav-pill" data-slide="1">2. Title</button>
+
+       Example slide block (remove this comment and paste as HTML):
+         <div class="slide-stage" id="slide-2">
+           <div class="slide-heading">
+             <div>
+               <h2 class="slide-title-text">[Slide 2 Title]</h2>
+             </div>
+           </div>
+           [content here]
+         </div>
+       ================================================================ -->
+
+
+  <!-- ================================================================
+       LEFT EDGE — SLIDE NAVIGATOR
+       Hover the left edge to reveal the slide list.
+       For a single-slide file, keep only one nav-pill (it still works).
+       Add one nav-pill per slide, matching data-slide to the 0-based index.
+       ================================================================ -->
+  <div class="nav-ctrl" id="slide-nav">
+    <div class="nav-tab">Slides</div>
+    <div class="nav-panel">
+      <div class="nav-label">Navigation</div>
+      <button class="nav-pill pill-active" data-slide="0">1. QVoice comments by theme</button>
+      <!-- <button class="nav-pill" data-slide="1">2. [Second Slide Title]</button> -->
+      <!-- <button class="nav-pill" data-slide="2">3. [Third Slide Title]</button> -->
+    </div>
+  </div>
+
+
+  <!-- ================================================================
+       RIGHT EDGE — THEME SWITCHER
+       Hover the right edge of the screen to reveal theme pills.
+       ================================================================ -->
+  <div class="side-controls" id="theme-selector">
+    <div class="side-panel">
+      <div class="side-label">Theme</div>
+      <button class="side-pill pill-active" data-theme="theme-light-classic">Light – Classic</button>
+      <button class="side-pill" data-theme="theme-light-soft">Light – Soft Blue</button>
+      <button class="side-pill" data-theme="theme-dark-royal">Dark – Royal</button>
+      <button class="side-pill" data-theme="theme-dark-carbon">Dark – Carbon</button>
+    </div>
+    <div class="side-tab">Theme</div>
+  </div>
+
+
+  <script>
+    /* =================================================================
+       THEME PERSISTENCE — localStorage key: "slide-studio-theme"
+       ================================================================= */
+    (function () {
+      var themePills = Array.from(document.querySelectorAll('#theme-selector [data-theme]'));
+
+      function applyTheme(themeClass, activeBtn) {
+        document.body.className = themeClass;
+        themePills.forEach(function (b) {
+          b.classList.toggle('pill-active', b === activeBtn);
+        });
+        try { localStorage.setItem('slide-studio-theme', themeClass); } catch (e) {}
+      }
+
+      themePills.forEach(function (btn) {
+        btn.addEventListener('click', function () { applyTheme(btn.dataset.theme, btn); });
+      });
+
+      var saved = null;
+      try { saved = localStorage.getItem('slide-studio-theme'); } catch (e) {}
+      var savedBtn = themePills.find(function (b) { return b.dataset.theme === saved; });
+      applyTheme(saved || document.body.className, savedBtn || themePills[0]);
+    })();
+
+
+    /* =================================================================
+       SLIDE NAVIGATION + fitSlide()
+
+       fitSlide() — scale 1440×810 stage to fill any viewport.
+       DPR-zoom guard: skip recalculation when Ctrl+/- changes devicePixelRatio
+       (browser zoom) vs an actual window resize.
+
+       showSlide(n) — hide all .slide-stage elements, show index n, re-fit.
+
+       Keyboard: ArrowRight/Down = next; ArrowLeft/Up = prev; Home/End = first/last.
+       ================================================================= */
+    (function () {
+      var SLIDE_W = 1440, SLIDE_H = 810;
+      var allStages = Array.from(document.querySelectorAll('.slide-stage'));
+      var navBtns   = Array.from(document.querySelectorAll('#slide-nav [data-slide]'));
+      var current   = 0;
+      var stage     = allStages[0];
+      var lastDPR   = window.devicePixelRatio;
+
+      function fitSlide() {
+        if (!stage) return;
+        var vw = window.innerWidth, vh = window.innerHeight;
+        var scale = Math.min(vw / SLIDE_W, vh / SLIDE_H);
+        stage.style.transform = 'scale(' + scale + ')';
+        stage.style.left = Math.max(0, (vw - SLIDE_W * scale) / 2) + 'px';
+        stage.style.top  = Math.max(0, (vh - SLIDE_H * scale) / 2) + 'px';
+      }
+
+      function showSlide(n) {
+        n = Math.max(0, Math.min(allStages.length - 1, n));
+        allStages.forEach(function (s, i) {
+          s.style.display = i === n ? '' : 'none';
+        });
+        navBtns.forEach(function (b, i) {
+          b.classList.toggle('pill-active', i === n);
+        });
+        stage   = allStages[n];
+        current = n;
+        fitSlide();
+      }
+
+      window.addEventListener('resize', function () {
+        var newDPR = window.devicePixelRatio;
+        if (newDPR !== lastDPR) { lastDPR = newDPR; return; } // Ctrl+zoom — skip
+        fitSlide();
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); showSlide(current + 1); }
+        if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   { e.preventDefault(); showSlide(current - 1); }
+        if (e.key === 'Home')                                  { e.preventDefault(); showSlide(0); }
+        if (e.key === 'End')                                   { e.preventDefault(); showSlide(allStages.length - 1); }
+      });
+
+      showSlide(0); // show first slide + initial fit
+    })();
+  </script>
+</body>
+</html>

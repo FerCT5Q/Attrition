@@ -1,0 +1,62 @@
+{
+  "artifact_type": "aggregate_job_family_august_distribution_and_trailing_12m_attrition_evidence",
+  "version": 7,
+  "generated_on": "2026-09-22",
+  "deliverable_mode": "presentation",
+  "artifact_classification": "presentation",
+  "purpose": "Agregar a Job family los labels de attrition de los ultimos 12 meses usando la cohorte historica de agosto de 2025 y mantener la distribucion visible de agosto de 2026.",
+  "definition": {
+    "concept": "Stored HRDA job_family",
+    "current_distribution_population": "Active Regular Employees with a nonblank job_family at the fiscal August 2026 closing snapshot",
+    "attrition_population": "Distinct active Regular Employees with a nonblank job_family at the fiscal August 2025 closing snapshot",
+    "grain": "One distinct employee at each snapshot; aggregate display category rows only",
+    "category_assignment": "Historical job_family is mapped to the current August 2026 Top 20 labels; all remaining historical families are grouped as Other job families.",
+    "outcome": "At least one strict VOLUNTARY termination with term_date in (baseline_snapshot_date, outcome_cutoff_date]",
+    "minimum_cohort": 30
+  },
+  "window": {
+    "current_snapshot_date": "2026-08-23",
+    "baseline_snapshot_date": "2025-08-24",
+    "outcome_cutoff_date": "2026-08-23",
+    "outcome_interval": "(2025-08-24, 2026-08-23]"
+  },
+  "query": "queries/audits/v7_job_family_august_trailing_12m_attrition_20260922.sql",
+  "query_sha256": "8d8379435409029d692cf74f868f214e63156f6a6f4a7c5373b12d73d6c23a1a",
+  "summary": {
+    "current_source_rows": 50043,
+    "current_distinct_employees": 50043,
+    "current_observable_employees": 50043,
+    "current_duplicate_source_rows": 0,
+    "baseline_source_rows": 45003,
+    "baseline_distinct_employees": 45003,
+    "baseline_observable_employees": 45003,
+    "baseline_duplicate_source_rows": 0,
+    "baseline_extra_job_family_mappings": 0,
+    "display_category_count": 21
+  },
+  "rows": [
+    {"display_order": 1, "category_label": "Software Engineering", "current_employee_count": 10950, "baseline_employee_count": 9469, "voluntary_exit_count": 469, "trailing_12m_voluntary_attrition_rate_percent": 4.9530},
+    {"display_order": 2, "category_label": "Hardware Engineering", "current_employee_count": 8849, "baseline_employee_count": 7697, "voluntary_exit_count": 629, "trailing_12m_voluntary_attrition_rate_percent": 8.1720},
+    {"display_order": 3, "category_label": "ASICS Engineering", "current_employee_count": 3190, "baseline_employee_count": 2595, "voluntary_exit_count": 187, "trailing_12m_voluntary_attrition_rate_percent": 7.2062},
+    {"display_order": 4, "category_label": "Systems Engineering", "current_employee_count": 2657, "baseline_employee_count": 2375, "voluntary_exit_count": 141, "trailing_12m_voluntary_attrition_rate_percent": 5.9368},
+    {"display_order": 5, "category_label": "Software Applications Engineering", "current_employee_count": 1794, "baseline_employee_count": 1654, "voluntary_exit_count": 40, "trailing_12m_voluntary_attrition_rate_percent": 2.4184},
+    {"display_order": 6, "category_label": "Systems Test Engineering", "current_employee_count": 1706, "baseline_employee_count": 1635, "voluntary_exit_count": 40, "trailing_12m_voluntary_attrition_rate_percent": 2.4465},
+    {"display_order": 7, "category_label": "Operator", "current_employee_count": 954, "baseline_employee_count": 976, "voluntary_exit_count": 23, "trailing_12m_voluntary_attrition_rate_percent": 2.3566},
+    {"display_order": 8, "category_label": "Machine Learning Engineering", "current_employee_count": 911, "baseline_employee_count": 725, "voluntary_exit_count": 56, "trailing_12m_voluntary_attrition_rate_percent": 7.7241},
+    {"display_order": 9, "category_label": "Software Test Engineering", "current_employee_count": 873, "baseline_employee_count": 747, "voluntary_exit_count": 26, "trailing_12m_voluntary_attrition_rate_percent": 3.4806},
+    {"display_order": 10, "category_label": "Program Management", "current_employee_count": 795, "baseline_employee_count": 628, "voluntary_exit_count": 22, "trailing_12m_voluntary_attrition_rate_percent": 3.5032},
+    {"display_order": 11, "category_label": "IT Engineering", "current_employee_count": 632, "baseline_employee_count": 627, "voluntary_exit_count": 26, "trailing_12m_voluntary_attrition_rate_percent": 4.1467},
+    {"display_order": 12, "category_label": "Modem Technologies", "current_employee_count": 628, "baseline_employee_count": 647, "voluntary_exit_count": 36, "trailing_12m_voluntary_attrition_rate_percent": 5.5641},
+    {"display_order": 13, "category_label": "GPU ASICS Engineering", "current_employee_count": 576, "baseline_employee_count": 550, "voluntary_exit_count": 37, "trailing_12m_voluntary_attrition_rate_percent": 6.7273},
+    {"display_order": 14, "category_label": "Hardware Applications Engineering", "current_employee_count": 575, "baseline_employee_count": 515, "voluntary_exit_count": 13, "trailing_12m_voluntary_attrition_rate_percent": 2.5243},
+    {"display_order": 15, "category_label": "CPU Engineering", "current_employee_count": 568, "baseline_employee_count": 438, "voluntary_exit_count": 40, "trailing_12m_voluntary_attrition_rate_percent": 9.1324},
+    {"display_order": 16, "category_label": "Product Management", "current_employee_count": 480, "baseline_employee_count": 416, "voluntary_exit_count": 26, "trailing_12m_voluntary_attrition_rate_percent": 6.2500},
+    {"display_order": 17, "category_label": "Support Engineering", "current_employee_count": 458, "baseline_employee_count": 424, "voluntary_exit_count": 12, "trailing_12m_voluntary_attrition_rate_percent": 2.8302},
+    {"display_order": 18, "category_label": "Cellular System Test Engineering", "current_employee_count": 420, "baseline_employee_count": 447, "voluntary_exit_count": 13, "trailing_12m_voluntary_attrition_rate_percent": 2.9083},
+    {"display_order": 19, "category_label": "Finance", "current_employee_count": 335, "baseline_employee_count": 313, "voluntary_exit_count": 24, "trailing_12m_voluntary_attrition_rate_percent": 7.6677},
+    {"display_order": 20, "category_label": "Machine Maintenance Technician", "current_employee_count": 320, "baseline_employee_count": 323, "voluntary_exit_count": 20, "trailing_12m_voluntary_attrition_rate_percent": 6.1920},
+    {"display_order": 21, "category_label": "Other job families", "current_employee_count": 12372, "baseline_employee_count": 11802, "voluntary_exit_count": 604, "trailing_12m_voluntary_attrition_rate_percent": 5.1178}
+  ],
+  "acceptance_rule": "Exactly 21 displayed categories; current and baseline snapshots have one distinct employee per source row; no duplicate or contradictory baseline job_family mappings; each baseline display category has n>=30; rates reconcile as 100 * voluntary_exit_count / baseline_employee_count.",
+  "outcome": "pass"
+}

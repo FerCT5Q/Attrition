@@ -1,0 +1,66 @@
+schema_version: 1
+language: es
+unknown_policy: conservative
+
+problem_context:
+  problem_statement: >-
+    Revalidar Consistency y Join de Manager leaving para determinar si la
+    asignacion historica empleado-manager y la terminacion del manager pueden
+    reconstruirse de forma unica, completa y segura en el tiempo.
+  decision_or_use_case: >-
+    Decidir si Consistency y Join pueden subir de 1 a 2 aunque la ventana final
+    durante la cual el empleado permanece expuesto siga pendiente.
+  outcome: >-
+    Attrition voluntario del empleado ocurrido despues del snapshot mensual de
+    prediccion y antes del siguiente snapshot.
+  population: Empleados regulares activos en cada snapshot mensual de prediccion.
+  unit_of_analysis: Empleado-snapshot mensual.
+  time_horizon: Un mes despues del cierre de cada snapshot mensual.
+  knowledge_boundary: >-
+    La salida del manager solo puede utilizarse desde un snapshot cuyo cierre sea
+    igual o posterior a term_date; ninguna terminacion futura puede marcar al
+    empleado como expuesto.
+  stakeholders:
+    - Equipo de People Analytics / Attrition
+  constraints:
+    - Solo SQL read-only y resultados agregados con cohortes de al menos 30.
+    - No publicar IDs, nombres, categorias protegidas, compensacion ni texto libre.
+    - La ventana final de exposicion permanece pendiente y mantiene Definition en 1.
+    - La relacion relevante es el manager que supervisaba al empleado antes de la salida.
+  assumptions:
+    - Manager leaving es una feature derivada.
+    - La terminacion se identifica inicialmente con is_termed y term_date.
+    - El manager debe reconstruirse mediante manager_employee_id y employee_id.
+    - Todas las terminaciones se usan para validar la ruta; el alcance voluntario
+      frente a todas las salidas permanece como decision de Definition.
+  stakeholder_questions:
+    - Es unico el grain empleado-snapshot de la poblacion objetivo?
+    - Cada manager asignado encuentra exactamente un registro del manager en el mismo snapshot?
+    - Se puede vincular cada manager con una terminacion canonica unica sin usar informacion futura?
+    - Existen terminaciones sin fecha, fechas sin flag, fechas futuras, duplicados o multi-match?
+    - La asignacion previa a la salida evita atribuir el evento al manager reemplazante?
+  success_criteria:
+    - Guardar y ejecutar SQL agregado especifico para Consistency y Join.
+    - Reportar eligible, matched, unmatched, duplicate y multi-match counts.
+    - Exigir cero contradicciones materiales de flag-fecha y cero uso de eventos futuros.
+    - Emitir un assessment v4 nuevo sin sobrescribir el resultado historico.
+
+variables:
+  - name: Manager leaving
+    intended_use: >-
+      Medir la exposicion del empleado a la salida reciente del manager que lo
+      supervisaba, usando solo informacion conocida al cierre del snapshot.
+    population: Empleados regulares activos en cada snapshot mensual.
+    knowledge_date: Cierre de cada snapshot mensual de prediccion.
+    context_role: Manager movement
+    context_relevance: >-
+      La salida de un manager puede generar disrupcion y preceder la salida de
+      miembros de su equipo, pero la feature solo es valida si la relacion y el
+      evento se reconstruyen sin perdidas, multiplicaciones ni leakage.
+
+decisions:
+  manager_relationship: manager_assigned_before_termination
+  termination_scope_for_route_validation: all_terminations
+  temporal_rule: term_date_on_or_before_prediction_snapshot
+  validation_scope: consistency_and_join_independent_of_final_exposure_window
+  unresolved_window_policy: keep_definition_capped_at_1

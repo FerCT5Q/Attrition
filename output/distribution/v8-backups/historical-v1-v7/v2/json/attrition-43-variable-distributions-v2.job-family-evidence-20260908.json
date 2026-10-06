@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "reporting_mode": "internal_analysis",
+  "generated_on": "2026-09-08",
+  "query_path": "queries/profiles/job_family_daily_snapshot_top20_20260908.sql",
+  "availability_audit": "queries/audits/job_family_snapshot_availability_20260908.sql",
+  "claim": "Each published panel is a detailed Job family distribution for its named employee snapshot. August uses the frozen monthly snapshot; September 7 uses the selected post-weekend daily snapshot. Rankings are independent because the September reorganization changes category meaning.",
+  "population": "Active regular employees at the named snapshot",
+  "grain": "Distinct employee snapshot; monthly August and daily September",
+  "minimum_shared_cohort": 30,
+  "display_panels": {
+    "2026-08-23": {
+      "source_type": "frozen_assessment_evidence",
+      "source_table": "hrda.post_hire_monthly_worker_dtls",
+      "date_field": "fis_mo_end_dt",
+      "source_evidence": "output/assessments/attrition-43-monthly-fiscal-20260816/vars/07-job-family/evidence/query-results.json",
+      "eligible_employees": 50033,
+      "observable_employees": 50033,
+      "top_20_employee_count": 37656,
+      "other_job_families_employee_count": 12377,
+      "top_20_min_employee_count": 320,
+      "display_decision": "Preserve the August distribution already used by the deck."
+    },
+    "2026-09-07": {
+      "source_type": "executed_aggregate_query",
+      "source_table": "hrda.post_hire_daily_worker_dtls",
+      "date_field": "transaction_date",
+      "eligible_employees": 50214,
+      "observable_employees": 50214,
+      "detailed_family_count": 285,
+      "top_20_category_count": 20,
+      "top_20_employee_count": 35630,
+      "other_job_families_employee_count": 14584,
+      "top_20_min_employee_count": 458,
+      "top_20": [
+        {"rank": 1, "label": "Software Engineering", "employee_count": 8953},
+        {"rank": 2, "label": "ASICS Engineering", "employee_count": 7329},
+        {"rank": 3, "label": "Hardware Engineering", "employee_count": 2565},
+        {"rank": 4, "label": "Software Applications Engineering", "employee_count": 1796},
+        {"rank": 5, "label": "Systems Test Engineering", "employee_count": 1700},
+        {"rank": 6, "label": "Systems Engineering", "employee_count": 1455},
+        {"rank": 7, "label": "Cellular System Test Engineering", "employee_count": 1279},
+        {"rank": 8, "label": "CPU Engineering", "employee_count": 1263},
+        {"rank": 9, "label": "GPU ASICS Engineering", "employee_count": 1238},
+        {"rank": 10, "label": "Cellular Technologies Software", "employee_count": 1123},
+        {"rank": 11, "label": "Operator", "employee_count": 954},
+        {"rank": 12, "label": "Machine Learning Engineering", "employee_count": 915},
+        {"rank": 13, "label": "Camera Engineering", "employee_count": 824},
+        {"rank": 14, "label": "Program Management", "employee_count": 802},
+        {"rank": 15, "label": "Cellular Technologies", "employee_count": 720},
+        {"rank": 16, "label": "IT Engineering", "employee_count": 635},
+        {"rank": 17, "label": "Hardware Applications Engineering", "employee_count": 586},
+        {"rank": 18, "label": "Modem Technologies", "employee_count": 556},
+        {"rank": 19, "label": "Product Management", "employee_count": 479},
+        {"rank": 20, "label": "Support Engineering", "employee_count": 458}
+      ]
+    }
+  },
+  "live_query_revalidation": {
+    "executed_on": "2026-09-08",
+    "2026-08-23": {
+      "eligible_employees": 50043,
+      "observable_employees": 50043,
+      "top_20_category_count": 20,
+      "top_20_employee_count": 37671,
+      "other_job_families_employee_count": 12372,
+      "top_20_min_employee_count": 320,
+      "outcome": "pass",
+      "note": "The current warehouse contains a small historical restatement. The display retains the pre-existing frozen August evidence as requested."
+    },
+    "2026-09-07": {
+      "source_table": "hrda.post_hire_daily_worker_dtls",
+      "date_field": "transaction_date",
+      "active_regular_employee_day_rows": 50214,
+      "eligible_employees": 50214,
+      "observable_employees": 50214,
+      "detailed_family_count": 285,
+      "top_20_category_count": 20,
+      "top_20_employee_count": 35630,
+      "other_job_families_employee_count": 14584,
+      "top_20_min_employee_count": 458,
+      "outcome": "pass"
+    },
+    "acceptance_rule": "The daily snapshot exists, has one active-regular row per employee, retains 20 visible detailed families with n >= 30, and top 20 plus Other reconciles to its observable population.",
+    "outcome": "pass"
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "artifact_type": "aggregate_segment_attrition_evidence",
+  "version": 7,
+  "generated_on": "2026-09-21",
+  "deliverable_mode": "internal_analysis",
+  "purpose": "Distribucion al cierre fiscal de agosto y attrition voluntaria trailing 12m para proximidad de sitio asignado con manager.",
+  "outcome_contract": {
+    "baseline_snapshot": "2025-08-24",
+    "outcome_cutoff_date": "2026-08-23",
+    "target": "term_type='VOLUNTARY' con term_date en (baseline_snapshot, outcome_cutoff_date]",
+    "label": "Annual voluntary attrition (12 months); not annualized",
+    "time_zone_rule": "same stored office_site first; otherwise IANA UTC-offset difference of <=4 hours or >4 hours at each snapshot date"
+  },
+  "catalog_mapping": {
+    "catalog_office_count": 205,
+    "site_key_count": 293,
+    "city_country_key_count": 200,
+    "ambiguous_site_key_count": 1,
+    "ambiguous_city_country_key_count": 1,
+    "invalid_coordinate_count": 1,
+    "unresolved_timezone_count": 0
+  },
+  "query": "queries/audits/v7_manager_timezone_august_trailing_12m_attrition_20260921.sql",
+  "query_sha256": "669f33b9f97abfa13ace47f3c3ba253b0ebb471686ea6f4c1d18c1c45b985aeb",
+  "annual_attrition": {
+    "different_site_more_than_4_hours": {
+      "row_type": "annual_attrition",
+      "category": "different_site_more_than_4_hours",
+      "employee_count": 515,
+      "voluntary_exit_count": 21,
+      "attrition_rate_percent": "4.0777",
+      "diagnostic_value": null,
+      "publication_status": "publishable"
+    },
+    "different_site_up_to_4_hours": {
+      "row_type": "annual_attrition",
+      "category": "different_site_up_to_4_hours",
+      "employee_count": 2848,
+      "voluntary_exit_count": 206,
+      "attrition_rate_percent": "7.2331",
+      "diagnostic_value": null,
+      "publication_status": "publishable"
+    },
+    "same_office_site": {
+      "row_type": "annual_attrition",
+      "category": "same_office_site",
+      "employee_count": 39652,
+      "voluntary_exit_count": 2164,
+      "attrition_rate_percent": "5.4575",
+      "diagnostic_value": null,
+      "publication_status": "publishable"
+    }
+  },
+  "latest_distribution": {
+    "different_site_more_than_4_hours": {
+      "row_type": "current_distribution",
+      "category": "different_site_more_than_4_hours",
+      "employee_count": 626,
+      "voluntary_exit_count": null,
+      "attrition_rate_percent": null,
+      "diagnostic_value": null
+    },
+    "different_site_up_to_4_hours": {
+      "row_type": "current_distribution",
+      "category": "different_site_up_to_4_hours",
+      "employee_count": 3466,
+      "voluntary_exit_count": null,
+      "attrition_rate_percent": null,
+      "diagnostic_value": null
+    },
+    "same_office_site": {
+      "row_type": "current_distribution",
+      "category": "same_office_site",
+      "employee_count": 43747,
+      "voluntary_exit_count": null,
+      "attrition_rate_percent": null,
+      "diagnostic_value": null
+    },
+    "unmapped_time_zone_proxy": {
+      "row_type": "current_distribution",
+      "category": "unmapped_time_zone_proxy",
+      "employee_count": 2009,
+      "voluntary_exit_count": null,
+      "attrition_rate_percent": null,
+      "diagnostic_value": null
+    }
+  },
+  "diagnostics": {
+    "baseline_duplicate_employee_source_count": 0,
+    "baseline_pair_count": 44737,
+    "current_duplicate_employee_source_count": 0,
+    "current_pair_count": 49848
+  },
+  "acceptance_rule": "Each displayed baseline category has n>=30, no duplicate employee snapshot rows, and its rate reconciles exactly to voluntary exits / baseline cohort.",
+  "outcome": "pass"
+}

@@ -1,0 +1,74 @@
+schema_version: 1
+plan_version: 7
+plan_revision_reason: >-
+  La decisión vigente cambia la ventana de doce meses a seis cierres mensuales
+  completos y precisa que la población de managers se reconstruye desde los
+  reportes directos activos, con los conteos almacenados sólo como control.
+language: es
+created_before_execution: true
+variable: High risk manager
+concept: >-
+  Score continuo de exceso de attrition voluntario de los reportes directos de
+  un manager durante seis cierres mensuales, comparado con lo esperado para
+  exposiciones de composición equivalente y suavizado para equipos pequeños.
+intended_use: >-
+  Asignar al empleado-snapshot una señal continua del contexto histórico de su
+  manager vigente, no una evaluación individual ni una afirmación causal.
+knowledge_date: >-
+  El score en t usa seis intervalos mensuales completos anteriores y hasta t;
+  cada salida se atribuye al último manager no nulo observado en o antes de
+  term_date.
+population: Empleados worker_type='Employee', employee_type='Regular' y active_status=1.
+grain: Manager-snapshot para el cálculo; empleado-snapshot para asignación.
+semantic_type: derived_feature
+source_reasoning: >-
+  La relación manager_employee_id define los equipos. Las exposiciones se
+  estratifican por mes, region, job_family, job_level_primary_position y banda
+  de tenure time-safe. Para celdas de menos de 30 empleado-meses se usa la tasa
+  global del mes; un prior de 60 empleado-meses suaviza el ratio hacia uno.
+validation_story:
+  - id: six_closure_adjusted_score
+    criterion: definition
+    evidence_role: defining
+    question: >-
+      ¿El score continuo compara salidas Voluntary observadas con salidas
+      esperadas en seis intervalos completos, con el mismo manager temporal y
+      controles de composición explícitos?
+    why: >-
+      La rotación bruta de un equipo no distingue un exceso relativo de una
+      composición laboral que de por sí tiene una tasa diferente.
+    fields: [employee_id, manager_employee_id, fis_mo_end_dt, term_date, term_type, region, job_family, job_level_primary_position, max_hire_rehire_date, service_date, original_hire_date]
+    method: >-
+      Formar seis intervalos entre cierres consecutivos; estimar tasas de
+      salida por estrato y mes con fallback global para celdas pequeñas;
+      calcular esperado por manager y aplicar un prior equivalente a 60
+      empleado-meses antes de formar observado/esperado.
+    sql_reference: queries/audits/high_risk_manager_6m_score_distribution_20260909.sql
+    acceptance_rule: >-
+      Debe haber seis intervalos completos, una tasa global positiva, cero
+      duplicados después de deduplicar empleado-fecha, y ningún manager con
+      exposición positiva sin ruta de score o estado Unknown explícito.
+    metric_checks:
+      - {metric: interval_count, aggregate: sum, operator: eq, threshold: 6}
+      - {metric: global_voluntary_event_count, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: deduplicated_event_duplicate_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: scored_manager_count, aggregate: sum, operator: gte, threshold: 30}
+  - id: manager_population_and_assignment
+    criterion: join
+    evidence_role: defining
+    question: >-
+      ¿Cada empleado con manager vigente recibe a lo sumo un score de su
+      manager y se cuantifican por separado los managers sin historia?
+    why: >-
+      Un join duplicado o una ausencia no explícita distorsiona tanto la
+      distribución como la cobertura de la feature asignada al empleado.
+    fields: [employee_id, manager_employee_id, fis_mo_end_dt]
+    method: >-
+      Reconstruir managers actuales desde reportes directos, unirlos una vez al
+      score manager-snapshot y contar las asignaciones observables y Unknown.
+    sql_reference: queries/audits/high_risk_manager_6m_score_distribution_20260909.sql
+    acceptance_rule: >-
+      Ningún empleado puede tener múltiples scores; todas las ausencias deben
+      clasificarse como historia insuficiente u otro motivo agregado.
+    metric_checks:
+      - {metric: employee_score_multi_match_count, aggregate: sum, operator: eq, threshold: 0}

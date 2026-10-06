@@ -1,0 +1,67 @@
+version: 2
+language: es
+defaults:
+  prediction_cutoff: Usar únicamente información conocida al cierre del snapshot mensual.
+  population: Empleados regulares activos cuyo job_family coincide con el catálogo Critical Tech.
+  prior_evidence_policy: Los resultados previos son contexto; la definición actual requiere revalidación con el mapping y la ventana vigentes.
+variables:
+  Critical Tech job families:
+    documentation_path: critical-tech-job-families/README.md
+    definition: El catálogo hrda.critical_tech define las job families incluidas en Critical Tech y su segmento operativo.
+    numerator_definition: Empleados regulares activos con job_family normalizado coincidente con extended_job_family.
+    semantic_type: grouped_mapping
+    attrition_use: Filtrar la población del modelo de People Analytics y descubrir cohortes con attrition voluntario elevado dentro de Critical Tech.
+    source_reasoning: La tabla auxiliar es la definición de negocio del scope; el snapshot mensual aporta la family observada y la fecha de conocimiento.
+    prediction_cutoff: El mapping y la job_family deben ser conocidos o aprobados para la fecha de scoring; no se incorporan cambios futuros.
+    validation_focus:
+    - Validar acceso y columnas de critical_tech y critical_tech_archive.
+    - Validar que cada extended_job_family tenga un único seg.
+    - Reconciliar el mapping contra job_family con valores no mapeados y contradicciones.
+    - Separar la definición actual de la membership histórica y documentar la limitación temporal.
+    - Medir cobertura mensual y volumen de eventos voluntarios por segmento sin publicar cohortes pequeñas.
+    validation_story:
+    - id: source_access
+      criterion: source
+      evidence_role: defining
+      question: ¿Están accesibles las tablas y columnas que definen Critical Tech?
+      why: Sin la fuente y sus columnas no se puede reproducir la población del modelo.
+      fields: [extended_job_family, seg, tech, effective_begin_date, effective_end_date, current_indicator]
+      method: Consulta agregada de information_schema.
+      sql_reference: queries/audits/critical_tech_source_access_20260907.sql
+      acceptance_rule: Las siete columnas requeridas deben existir en hrda.
+    - id: mapping_integrity
+      criterion: definition
+      evidence_role: defining
+      question: ¿Cada family del catálogo tiene una definición única y coincide con job_family?
+      why: Un mapping ambiguo o incompleto cambia quién entra al modelo y puede producir sesgo de selección.
+      fields: [extended_job_family, seg, job_family]
+      method: Reconciliación agregada de dominio, cardinalidad y exact match normalizado.
+      sql_reference: queries/audits/critical_tech_mapping_definition_join_20260907.sql
+      acceptance_rule: Cero vacíos, contradicciones y unmapped keys; una sola relación family-segment.
+    - id: temporal_membership
+      criterion: consistency
+      evidence_role: defining
+      question: ¿Podemos reconstruir la membership de Critical Tech a través del tiempo?
+      why: Aplicar el catálogo actual a snapshots antiguos puede atribuir retrospectivamente una definición que no era vigente.
+      fields: [extended_job_family, tech, effective_begin_date, effective_end_date, current_indicator]
+      method: Reconciliación agregada entre el catálogo actual y el archive.
+      sql_reference: queries/audits/critical_tech_temporal_reconciliation_20260907.sql
+      acceptance_rule: La regla histórica sólo pasa cuando el archive y el catálogo actual se reconcilian al mismo grain.
+    - id: snapshot_join
+      criterion: join
+      evidence_role: defining
+      question: ¿El filtro se puede aplicar una sola vez por employee-snapshot?
+      why: Duplicados o múltiples segmentos inflarían exposición y alterarían la tasa de attrition.
+      fields: [employee_id, fis_mo_end_dt, job_family, extended_job_family, seg]
+      method: Join agregado y perfil mensual de cobertura.
+      sql_reference: queries/profiles/critical_tech_mapping_coverage_20260907.sql
+      acceptance_rule: El join debe tener un mapping único y al menos 30 empleados por fecha publicada.
+    - id: event_volume
+      criterion: coverage
+      evidence_role: supporting
+      question: ¿Existe suficiente exposición y attrition voluntario para analizar segmentos?
+      why: Una family puede ser importante para negocio pero no permitir estimaciones estables por falta de eventos.
+      fields: [fis_mo_end_dt, term_date, term_type, job_family, seg]
+      method: Hazard discreto mensual con eventos voluntarios deduplicados y supresión de conteos pequeños.
+      sql_reference: queries/audits/critical_tech_hazard_preflight_20260907.sql
+      acceptance_rule: Los diagnósticos independientes requieren al menos 30 eventos positivos y 24 intervalos completos; los demás segmentos se poolen.

@@ -1,0 +1,99 @@
+schema_version: 1
+plan_version: 1
+language: es
+created_before_execution: true
+variable: Number of manager changes
+concept: >-
+  Feature derivada que cuenta eventos de cambio de manager por empleado-snapshot.
+  Esta revisión valida exclusivamente la ruta de Join; la longitud de la ventana
+  retrospectiva permanece pendiente.
+intended_use: >-
+  Medir inestabilidad organizacional mediante cambios repetidos de manager conocidos
+  antes del snapshot para analizar attrition posterior.
+knowledge_date: Cierre de cada snapshot mensual de predicción.
+population: >-
+  Filas con worker_type='Employee', employee_type='Regular' y active_status=1.
+grain: Empleado-snapshot mensual; evento canónico empleado-fecha efectiva.
+semantic_type: derived_feature
+source_reasoning: >-
+  La tabla mensual contiene el flag y la fecha efectiva, pero la feature debe
+  reconstruir eventos, deduplicarlos y unirlos temporalmente a cada snapshot.
+validation_story:
+  - id: source_access
+    criterion: source
+    evidence_role: defining
+    question: ¿Existen y son accesibles todos los campos requeridos para la ruta time-safe?
+    why: Sin empleado, periodos fiscales, población, flag y fecha no puede probarse el Join.
+    fields: [employee_id, fis_mo_beg_dt, fis_mo_end_dt, worker_type, employee_type, active_status, manager_change, manager_change_date]
+    method: Auditoría agregada de information_schema.
+    sql_reference: queries/audits/number_of_manager_changes_source_access_20260820.sql
+    acceptance_rule: missing_items debe ser igual a 0.
+    metric_checks:
+      - {metric: missing_items, aggregate: sum, operator: eq, threshold: 0}
+
+  - id: snapshot_grain_uniqueness
+    criterion: join
+    evidence_role: defining
+    question: ¿La población objetivo tiene una sola fila por empleado y snapshot?
+    why: Un grain duplicado multiplicaría eventos y produciría conteos diferentes según la estrategia de join.
+    fields: [employee_id, fis_mo_end_dt]
+    method: Conteo agregado de llaves y filas excedentes en la población objetivo.
+    sql_reference: queries/audits/number_of_manager_changes_join_reconciliation_20260820.sql
+    acceptance_rule: duplicate_count debe ser 0.
+    metric_checks:
+      - {metric: duplicate_count, aggregate: sum, operator: eq, threshold: 0}
+
+  - id: event_key_and_temporal_safety
+    criterion: join
+    evidence_role: defining
+    question: ¿Los eventos positivos tienen fecha y nunca se observan antes de su fecha efectiva?
+    why: Un evento sin fecha no puede ubicarse y una fecha futura introduciría leakage.
+    fields: [manager_change, manager_change_date, fis_mo_end_dt]
+    method: Reconciliación agregada del flag, fecha efectiva y snapshot de observación.
+    sql_reference: queries/audits/number_of_manager_changes_join_reconciliation_20260820.sql
+    acceptance_rule: flagged_without_date_rows, future_positive_flag_rows e invalid_flag_rows deben ser 0.
+    metric_checks:
+      - {metric: flagged_without_date_rows, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: future_positive_flag_rows, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: invalid_flag_rows, aggregate: sum, operator: eq, threshold: 0}
+
+  - id: event_to_snapshot_reconciliation
+    criterion: join
+    evidence_role: defining
+    question: ¿Cada evento canónico dentro de la historia disponible cae exactamente en un periodo fiscal del mismo empleado?
+    why: El conteo móvil necesita ubicar cada evento una sola vez antes de acumularlo en snapshots posteriores.
+    fields: [employee_id, manager_change_date, fis_mo_beg_dt, fis_mo_end_dt]
+    method: Join agregado del evento canónico contra el periodo fiscal que contiene su fecha.
+    sql_reference: queries/audits/number_of_manager_changes_join_reconciliation_20260820.sql
+    acceptance_rule: unmatched_event_count y multi_match_event_count deben ser 0; event_match_rate_percent debe ser 100.
+    metric_checks:
+      - {metric: unmatched_event_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: multi_match_event_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: event_match_rate_percent, aggregate: min, operator: eq, threshold: 100}
+
+  - id: derived_output_cardinality
+    criterion: join
+    evidence_role: defining
+    question: ¿La derivación devuelve exactamente una fila para cada empleado-snapshot elegible?
+    why: Éste es el contrato final requerido para incorporar la feature al dataset de modelado.
+    fields: [employee_id, fis_mo_end_dt, manager_change_date]
+    method: Construcción agregada del conteo acumulado time-safe y reconciliación contra las llaves objetivo.
+    sql_reference: queries/audits/number_of_manager_changes_join_reconciliation_20260820.sql
+    acceptance_rule: matched_count debe ser mayor que 0; unmatched_count y multi_match_count deben ser 0; match_rate_percent debe ser 100.
+    metric_checks:
+      - {metric: matched_count, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: unmatched_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: multi_match_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: match_rate_percent, aggregate: min, operator: eq, threshold: 100}
+
+  - id: unresolved_window_boundary
+    criterion: definition
+    evidence_role: contextual
+    question: ¿Esta prueba define la longitud final de la ventana histórica?
+    why: La cardinalidad puede validarse sin decidir si el conteo usa 12, 24 meses o toda la historia.
+    fields: [manager_change_date, fis_mo_end_dt]
+    method: Revisar métricas de la ruta acumulada únicamente como prueba de Join.
+    sql_reference: queries/audits/number_of_manager_changes_join_reconciliation_20260820.sql
+    acceptance_rule: La consulta puede validar Join, pero Definition permanece en 1 hasta aprobar y reconciliar la ventana.
+    metric_fields: [eligible_count, eligible_event_count, prehistory_event_count]
+

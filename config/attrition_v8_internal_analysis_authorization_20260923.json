@@ -1,0 +1,35 @@
+{
+  "authorization_id": "attrition-v8-internal-aggregate-visibility-20260923",
+  "authorized_on": "2026-09-23",
+  "status": "approved",
+  "reporting_mode": "internal_analysis",
+  "authorized_audience": "requester and Julia, both project developers",
+  "purpose": "Review the V8 reorganization of the Attrition distribution deck and its aggregate exploratory charts before deciding which variables merit further analysis.",
+  "scope": {
+    "artifact": "output/distribution/attrition-43-variable-distributions-v8.html",
+    "slides": "all V8 slides",
+    "aggregate_buckets": "show available aggregate categories, counts and percentages; do not add employee-level data or exact compensation values",
+    "historical_window": "retain the documented historical windows of the V7 evidence and the revised Time since last promotion aggregate review"
+  },
+  "small_cell_exception": {
+    "allow_subthreshold_aggregate_buckets": true,
+    "minimum_displayed_count": 0,
+    "reason": "Explicit internal exploratory request for two named project developers; visibility is limited to aggregate review.",
+    "not_a_general_privacy_policy_change": true
+  },
+  "non_negotiable_controls": {
+    "aggregate_only": true,
+    "employee_rows_persisted": false,
+    "employee_ids_persisted": false,
+    "names_persisted": false,
+    "emails_persisted": false,
+    "addresses_persisted": false,
+    "manager_access": false,
+    "redistribution": false,
+    "operational_use": false,
+    "score_v4_change": false,
+    "production_feature_approval": false,
+    "exact_compensation_values": false
+  },
+  "interpretation": "This authorization permits only internal aggregate exploration in V8. It does not impute unavailable values, identify employees, change attrition definitions, or approve a production feature."
+}

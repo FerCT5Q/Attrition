@@ -1,0 +1,209 @@
+schema_version: 1
+language: es
+defaults:
+  language: es
+  intended_use: Usar la senal de QVoice conocida en la fecha de la wave para estudiar attrition posterior sin usar informacion futura.
+  prediction_cutoff: Fecha de la wave QVoice; excluir informacion posterior a esa fecha.
+  source_reasoning: Excel conserva la historia raw de QVoice y permite observar por separado las representaciones binaria y 1-5, pero requiere un contrato de columnas y una reconciliacion temporal a workforce.
+  validation_focus:
+    - disponibilidad de la forma solicitada por wave
+    - dominio y completitud de respuestas
+    - cambios de item set y wording
+    - unicidad interna empleado-wave
+    - limitacion del join temporal a workforce
+
+variables:
+  Intent to Stay items:
+    semantic_type: derived_feature
+    definition: KPI Intent to Stay calculado como el promedio de las preguntas Q4 y Q12 definidas en survey_structure.xlsx, usando los componentes validos disponibles por empleado-wave.
+    numerator_definition: Respuestas con al menos un componente Q4/Q12 valido en 0/1; se separan las respuestas completas de las parciales.
+    intended_use: Comparar el KPI binario historico de Intent to Stay, calculado desde sus preguntas componentes, con attrition posterior.
+    source_reasoning: survey_structure.xlsx define Q4 y Q12 como los dos componentes del KPI. Las waves antiguas pueden aportar solo Q4 y las recientes pueden tener ambas columnas pero respuestas parciales.
+    validation_focus:
+      - mapping survey_structure.xlsx a Q4 y Q12 por workbook
+      - promedio de componentes disponibles y respuestas completas versus parciales
+      - continuidad 2019-2026 y waves sin el par completo
+      - grain empleado-wave y deduplicacion
+
+  Intent to Stay items-scale:
+    semantic_type: derived_feature
+    definition: KPI Intent to Stay calculado como el promedio ordinal de las preguntas Q4 y Q12 definidas en survey_structure.xlsx, usando los componentes validos disponibles por empleado-wave.
+    numerator_definition: Respuestas con al menos un componente Q4/Q12 valido en 1-5; se separan las respuestas completas de las parciales.
+    intended_use: Comparar el KPI ordinal historico de Intent to Stay, calculado desde sus preguntas componentes, con attrition posterior.
+    source_reasoning: survey_structure.xlsx define Q4 y Q12 como los dos componentes del KPI. La forma 1-5 solo aparece en 2025-2026 y debe conservar la brecha entre respuestas completas y parciales.
+    validation_focus:
+      - mapping survey_structure.xlsx a Q4 y Q12 por workbook
+      - promedio de componentes disponibles y respuestas completas versus parciales
+      - dominio ordinal 1-5
+      - historia disponible y continuidad de waves
+      - grain empleado-wave y deduplicacion
+
+  Career goals item:
+    semantic_type: survey
+    definition: Respuesta binaria de career goals por empleado-wave.
+    numerator_definition: Respuestas con el item de career goals valido en 0/1.
+    intended_use: Usar la respuesta binaria de career goals como senal de desarrollo percibido y attrition posterior.
+    source_reasoning: El item binario existe desde el longitudinal y en 2024-2026, aunque su wording cambia entre waves.
+    validation_focus:
+      - mapping del wording career goals por wave
+      - dominio binario y missingness
+      - continuidad historica
+      - grain empleado-wave
+
+  Career goals item-scale:
+    semantic_type: survey
+    definition: Respuesta ordinal 1-5 de career goals por empleado-wave.
+    numerator_definition: Respuestas con el item de career goals valido en 1-5.
+    intended_use: Usar la respuesta ordinal 1-5 de career goals como senal de desarrollo percibido y attrition posterior.
+    source_reasoning: La escala 1-5 existe en 2025-2026, con historia insuficiente para asumir estabilidad longitudinal.
+    validation_focus:
+      - presencia de la columna 1-5
+      - rango y completitud
+      - historia disponible
+      - grain empleado-wave
+
+  Average of all Qvoice items:
+    semantic_type: derived_feature
+    definition: Promedio binario por empleado-wave de los items Favorable/FAV disponibles, con minimo tecnico de 70%.
+    numerator_definition: Respuestas con al menos 70% de items binarios validos y sin valores fuera de dominio.
+    intended_use: Explorar si un composite binario de QVoice resume una senal general asociada con attrition posterior.
+    source_reasoning: El promedio no existe como campo directo; se recalcula desde el item set binario disponible por wave y requiere una regla de completitud y versionado.
+    validation_focus:
+      - item set por wave y cambios de wording
+      - recalculo del promedio y minimo de 70%
+      - missingness item-level y valores invalidos
+      - continuidad y join temporal
+
+  Average of all Qvoice items-scale:
+    semantic_type: derived_feature
+    definition: Promedio ordinal 1-5 por empleado-wave de los items scale disponibles, con minimo tecnico de 70%.
+    numerator_definition: Respuestas con al menos 70% de items 1-5 validos y sin valores fuera de rango.
+    intended_use: Explorar si un composite ordinal 1-5 resume una senal general asociada con attrition posterior.
+    source_reasoning: El composite ordinal se recalcula desde las columnas 1-5 de 2025-2026 y no tiene lineage autoritativo ni historia suficiente.
+    validation_focus:
+      - item set ordinal y cambios entre 2025-2026
+      - recalculo del promedio y minimo de 70%
+      - rango, missingness y comparabilidad
+      - join temporal a workforce
+
+  Standardized / normalized within region:
+    semantic_type: derived_feature
+    definition: Z-score poblacional del composite binario dentro de cohortes Region-wave de al menos 30.
+    numerator_definition: Respuestas con composite binario, Region poblada y cohorte Region-wave de al menos 30.
+    depends_on: [Average of all Qvoice items]
+    intended_use: Explorar una senal binaria relativa a la distribucion regional de la misma wave para attrition posterior.
+    source_reasoning: El z-score depende del composite binario, de Region y de cohortes de al menos 30; ninguno de esos criterios tiene lineage de feature gobernado en Excel.
+    validation_focus:
+      - dependencia y formula del composite base
+      - region-wave cohortes y small-cell suppression
+      - desviacion cero y estabilidad de distribuciones
+      - join temporal de Region a workforce
+
+  Standardized / normalized within region-scale:
+    semantic_type: derived_feature
+    definition: Z-score poblacional del composite 1-5 dentro de cohortes Region-wave de al menos 30.
+    numerator_definition: Respuestas con composite 1-5, Region poblada y cohorte Region-wave de al menos 30.
+    depends_on: [Average of all Qvoice items-scale]
+    intended_use: Explorar una senal ordinal relativa a la distribucion regional de la misma wave para attrition posterior.
+    source_reasoning: El z-score ordinal depende del composite 1-5, Region y cohortes de 30, con solo dos waves observables y sin lineage autoritativo.
+    validation_focus:
+      - dependencia y formula del composite ordinal
+      - region-wave cohortes y privacidad
+      - desviacion cero y estabilidad
+      - join temporal de Region a workforce
+
+  Engagement items:
+    semantic_type: derived_feature
+    definition: KPI Engagement calculado como promedio de Q1, Q2 y Q3 segun survey_structure.xlsx, usando componentes validos disponibles.
+    numerator_definition: Respuestas con al menos un componente Q1/Q2/Q3 valido en 0/1; se separan completas, parciales y sin componente.
+    intended_use: Comparar el KPI binario Engagement basado en sus componentes con attrition posterior.
+    source_reasoning: El diccionario define Q1, Q2 y Q3 como Engagement; el historial raw puede omitir componentes por wave o por respuesta.
+    validation_focus:
+      - mapping de Q1/Q2/Q3 por workbook
+      - headers disponibles y respuestas completas versus parciales
+      - dominio binario y valores invalidos
+      - continuidad historica y grain empleado-wave
+
+  Engagement items-scale:
+    semantic_type: derived_feature
+    definition: KPI Engagement ordinal calculado como promedio de Q1, Q2 y Q3 en escala 1-5 segun survey_structure.xlsx.
+    numerator_definition: Respuestas con al menos un componente Q1/Q2/Q3 valido en 1-5; se separan completas, parciales y sin componente.
+    intended_use: Comparar el KPI ordinal Engagement basado en sus componentes con attrition posterior.
+    source_reasoning: La forma 1-5 de los componentes se observa solo en waves recientes y puede tener respuestas parciales.
+    validation_focus:
+      - mapping de Q1/Q2/Q3 en forma 1-5
+      - headers disponibles y respuestas completas versus parciales
+      - dominio 1-5 y cambios de item set
+      - historia disponible y grain empleado-wave
+
+  Workplace Connection items:
+    semantic_type: derived_feature
+    definition: KPI Workplace Connection calculado como promedio de Q5, Q6 y Q7 segun survey_structure.xlsx.
+    numerator_definition: Respuestas con al menos un componente Q5/Q6/Q7 valido en 0/1; se separan completas, parciales y sin componente.
+    intended_use: Comparar el KPI binario Workplace Connection basado en sus componentes con attrition posterior.
+    source_reasoning: El diccionario define Q5, Q6 y Q7; los workbooks pueden tener solo una parte del conjunto por wave.
+    validation_focus:
+      - mapping de Q5/Q6/Q7 por workbook
+      - headers faltantes y completitud de respuestas
+      - dominio binario y cambios de wording
+      - continuidad y grain empleado-wave
+
+  Workplace Connection items-scale:
+    semantic_type: derived_feature
+    definition: KPI Workplace Connection ordinal calculado como promedio de Q5, Q6 y Q7 en escala 1-5.
+    numerator_definition: Respuestas con al menos un componente Q5/Q6/Q7 valido en 1-5; se separan completas, parciales y sin componente.
+    intended_use: Comparar el KPI ordinal Workplace Connection basado en sus componentes con attrition posterior.
+    source_reasoning: La forma 1-5 debe resolver el mismo texto de Q5, Q6 y Q7 y tiene historia corta.
+    validation_focus:
+      - mapping ordinal de Q5/Q6/Q7
+      - completitud por componente y wave
+      - dominio 1-5 y continuidad
+      - grain empleado-wave y join temporal pendiente
+
+  Wellbeing items:
+    semantic_type: derived_feature
+    definition: KPI Wellbeing calculado como promedio de Q8, Q9, Q10 y Q11 segun survey_structure.xlsx.
+    numerator_definition: Respuestas con al menos un componente Q8/Q9/Q10/Q11 valido en 0/1; se separan completas, parciales y sin componente.
+    intended_use: Comparar el KPI binario Wellbeing basado en sus componentes con attrition posterior.
+    source_reasoning: El diccionario define cuatro componentes de Wellbeing y el conjunto puede cambiar entre waves.
+    validation_focus:
+      - mapping de Q8/Q9/Q10/Q11 por workbook
+      - headers faltantes y respuestas parciales
+      - dominio binario y cambios de wording
+      - continuidad historica y grain empleado-wave
+
+  Wellbeing items-scale:
+    semantic_type: derived_feature
+    definition: KPI Wellbeing ordinal calculado como promedio de Q8, Q9, Q10 y Q11 en escala 1-5.
+    numerator_definition: Respuestas con al menos un componente Q8/Q9/Q10/Q11 valido en 1-5; se separan completas, parciales y sin componente.
+    intended_use: Comparar el KPI ordinal Wellbeing basado en sus componentes con attrition posterior.
+    source_reasoning: La escala 1-5 de los cuatro componentes aparece en waves recientes y requiere validar su comparabilidad.
+    validation_focus:
+      - mapping ordinal y disponibilidad de Q8/Q9/Q10/Q11
+      - respuestas completas versus parciales
+      - dominio 1-5 y cambios de item set
+      - historia y grain empleado-wave
+
+  Confidence items:
+    semantic_type: derived_feature
+    definition: KPI Confidence calculado como promedio de Q13 y Q17 segun survey_structure.xlsx.
+    numerator_definition: Respuestas con al menos un componente Q13/Q17 valido en 0/1; se separan completas, parciales y sin componente.
+    intended_use: Comparar el KPI binario Confidence basado en sus componentes con attrition posterior.
+    source_reasoning: El diccionario define Q13 y Q17; el mapping histórico puede tener componentes ausentes antes de 2024.
+    validation_focus:
+      - mapping de Q13/Q17 por workbook
+      - headers faltantes y respuestas parciales
+      - dominio binario y estabilidad temporal
+      - grain empleado-wave
+
+  Confidence items-scale:
+    semantic_type: derived_feature
+    definition: KPI Confidence ordinal calculado como promedio de Q13 y Q17 en escala 1-5.
+    numerator_definition: Respuestas con al menos un componente Q13/Q17 valido en 1-5; se separan completas, parciales y sin componente.
+    intended_use: Comparar el KPI ordinal Confidence basado en sus componentes con attrition posterior.
+    source_reasoning: La forma ordinal de Q13 y Q17 solo aparece en waves recientes y debe mantener visibles sus faltantes.
+    validation_focus:
+      - mapping ordinal de Q13/Q17
+      - componentes disponibles y completitud por wave
+      - dominio 1-5 e historia corta
+      - grain empleado-wave

@@ -1,0 +1,128 @@
+{
+  "artifact_type": "aggregate_job_family_snapshot_evidence",
+  "version": 7,
+  "generated_on": "2026-09-21",
+  "deliverable_mode": "internal_analysis",
+  "artifact_classification": "internal_analysis",
+  "purpose": "Renderizar una sola distribución de Job family al cierre fiscal de agosto de 2026, sin comparación con un snapshot de septiembre.",
+  "definition": {
+    "concept": "Stored HRDA job_family",
+    "population": "Active Regular Employees at the fiscal August closing snapshot",
+    "grain": "Distinct employee snapshot",
+    "minimum_cohort": 30
+  },
+  "query": "queries/audits/v7_job_family_august_snapshot_20260921.sql",
+  "query_sha256": "b99f8a10a669f7bd726107ee8845b961b66de7a7b7c7970d3de19c9486812b29",
+  "snapshot": {
+    "snapshot_date": "2026-08-23",
+    "active_regular_employee_count": 50043,
+    "observable_employee_count": 50043,
+    "top_20_employee_count": 37671,
+    "other_job_families_employee_count": 12372,
+    "top_20_min_employee_count": 320
+  },
+  "top_20": [
+    {
+      "rank": 1,
+      "label": "Software Engineering",
+      "employee_count": 10950
+    },
+    {
+      "rank": 2,
+      "label": "Hardware Engineering",
+      "employee_count": 8849
+    },
+    {
+      "rank": 3,
+      "label": "ASICS Engineering",
+      "employee_count": 3190
+    },
+    {
+      "rank": 4,
+      "label": "Systems Engineering",
+      "employee_count": 2657
+    },
+    {
+      "rank": 5,
+      "label": "Software Applications Engineering",
+      "employee_count": 1794
+    },
+    {
+      "rank": 6,
+      "label": "Systems Test Engineering",
+      "employee_count": 1706
+    },
+    {
+      "rank": 7,
+      "label": "Operator",
+      "employee_count": 954
+    },
+    {
+      "rank": 8,
+      "label": "Machine Learning Engineering",
+      "employee_count": 911
+    },
+    {
+      "rank": 9,
+      "label": "Software Test Engineering",
+      "employee_count": 873
+    },
+    {
+      "rank": 10,
+      "label": "Program Management",
+      "employee_count": 795
+    },
+    {
+      "rank": 11,
+      "label": "IT Engineering",
+      "employee_count": 632
+    },
+    {
+      "rank": 12,
+      "label": "Modem Technologies",
+      "employee_count": 628
+    },
+    {
+      "rank": 13,
+      "label": "GPU ASICS Engineering",
+      "employee_count": 576
+    },
+    {
+      "rank": 14,
+      "label": "Hardware Applications Engineering",
+      "employee_count": 575
+    },
+    {
+      "rank": 15,
+      "label": "CPU Engineering",
+      "employee_count": 568
+    },
+    {
+      "rank": 16,
+      "label": "Product Management",
+      "employee_count": 480
+    },
+    {
+      "rank": 17,
+      "label": "Support Engineering",
+      "employee_count": 458
+    },
+    {
+      "rank": 18,
+      "label": "Cellular System Test Engineering",
+      "employee_count": 420
+    },
+    {
+      "rank": 19,
+      "label": "Finance",
+      "employee_count": 335
+    },
+    {
+      "rank": 20,
+      "label": "Machine Maintenance Technician",
+      "employee_count": 320
+    }
+  ],
+  "acceptance_rule": "Exactly one active-Regular row per employee; all active employees have a nonblank job_family; each Top-20 and Other category has n>=30; Top 20 + Other reconciles to the observable population.",
+  "outcome": "pass"
+}

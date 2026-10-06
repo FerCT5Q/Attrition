@@ -1,0 +1,182 @@
+{
+  "artifact_type": "aggregate_distribution_evidence",
+  "deliverable_mode": "internal_analysis",
+  "variable": "Time in current job profile vs. current detailed level",
+  "semantic_type": "derived_feature",
+  "publication_status": "exploratory",
+  "execution_date": "2026-09-10",
+  "snapshot_date": "2026-08-23",
+  "population": "worker_type='Employee'; employee_type='Regular'; active_status=1 at the 2026-08-23 monthly snapshot",
+  "grain": "Distinct active regular employee at one monthly snapshot",
+  "definitions": {
+    "time_in_current_job_profile": "Descriptive date-field proxy from the later of time_in_job_profile_start_date and max_hire_rehire_date; HRIS construct lineage is not confirmed.",
+    "time_at_current_detailed_level": "Descriptive date-field proxy from the later of levelentrydate and max_hire_rehire_date, displayed with populated job_level_primary_position; HRIS construct lineage is not confirmed.",
+    "time_in_role": "Supporting audit field only; it does not define either published clock."
+  },
+  "reset_policy": {
+    "job_profile_change": "Resets the job-profile clock only.",
+    "detailed_level_change": "Resets the detailed-level clock only.",
+    "rehire": "Both clocks use the later stored start date and max_hire_rehire_date.",
+    "promotion_demotion": "Validation context only; flags do not automatically reset a clock.",
+    "manager_location_cost_center_transfer_job_family": "Do not reset either clock unless the selected construct changes."
+  },
+  "authoritative_lineage": {
+    "status": "not_confirmed",
+    "authority": "Not supplied",
+    "confirmation_date": "",
+    "source_reference": "No authoritative HRIS lineage confirmation was supplied; this is a descriptive stored-field analysis.",
+    "time_in_job_profile_start_date_confirmed_construct": "not_confirmed",
+    "job_level_primary_position_confirmed_construct": "not_confirmed",
+    "lineage_sha256": "5db1b7f1d451bc9ad2072a4e70b2c2af69dfee76809723c3d2810d7b96bbb419"
+  },
+  "coverage": {
+    "eligible_employee_count": 50043,
+    "role_calculable_employee_count": 50043,
+    "role_not_calculable_employee_count": 0,
+    "level_calculable_employee_count": 50043,
+    "level_not_calculable_employee_count": 0
+  },
+  "distribution": [
+    {
+      "label": "<1 year",
+      "source_band_keys": [
+        "lt_1"
+      ],
+      "role_employee_count": 15250,
+      "level_employee_count": 14008,
+      "role_percent_of_calculable": 30.47379254,
+      "level_percent_of_calculable": 27.99192694
+    },
+    {
+      "label": "1–<2 years",
+      "source_band_keys": [
+        "y1_to_lt2"
+      ],
+      "role_employee_count": 11791,
+      "level_employee_count": 10890,
+      "role_percent_of_calculable": 23.56173691,
+      "level_percent_of_calculable": 21.76128529
+    },
+    {
+      "label": "2–<3 years",
+      "source_band_keys": [
+        "y2_to_lt3"
+      ],
+      "role_employee_count": 7558,
+      "level_employee_count": 7383,
+      "role_percent_of_calculable": 15.10301141,
+      "level_percent_of_calculable": 14.75331215
+    },
+    {
+      "label": "3–<5 years",
+      "source_band_keys": [
+        "y3_to_lt5"
+      ],
+      "role_employee_count": 9897,
+      "level_employee_count": 10152,
+      "role_percent_of_calculable": 19.77699179,
+      "level_percent_of_calculable": 20.28655356
+    },
+    {
+      "label": "5–<10 years",
+      "source_band_keys": [
+        "y5_to_lt10"
+      ],
+      "role_employee_count": 4981,
+      "level_employee_count": 6390,
+      "role_percent_of_calculable": 9.95344004,
+      "level_percent_of_calculable": 12.76901864
+    },
+    {
+      "label": "10+ years",
+      "source_band_keys": [
+        "y10_plus"
+      ],
+      "role_employee_count": 566,
+      "level_employee_count": 1220,
+      "role_percent_of_calculable": 1.13102732,
+      "level_percent_of_calculable": 2.4379034
+    }
+  ],
+  "metrics": {
+    "comparable_transition_snapshot_count": 2950970,
+    "demotion_level_transition_intersection_count": 147,
+    "detailed_level_transition_count": 43805,
+    "detailed_level_transition_with_date_reset_count": 37707,
+    "history_conflicting_employee_snapshot_count": 0,
+    "history_duplicate_employee_snapshot_count": 0,
+    "job_profile_reset_with_proxy_change_count": 9140,
+    "job_profile_reset_without_proxy_change_count": 2,
+    "job_profile_start_reset_count": 9142,
+    "job_proxy_change_without_profile_reset_count": 44569,
+    "level_calculable_employee_count": 50043,
+    "level_rehire_adjustment_count": 114,
+    "level_start_future_date_count": 0,
+    "promotion_level_transition_intersection_count": 31046,
+    "rehire_date_future_count": 0,
+    "rehire_flag_without_date_count": 0,
+    "rehire_level_transition_intersection_count": 0,
+    "role_calculable_employee_count": 50043,
+    "role_rehire_adjustment_count": 0,
+    "role_start_future_date_count": 0,
+    "target_conflicting_employee_count": 0,
+    "target_duplicate_employee_count": 0,
+    "target_duplicate_row_excess_count": 0,
+    "target_source_row_count": 50043,
+    "target_unique_employee_count": 50043,
+    "time_in_role_support_populated_count": 50043,
+    "transfer_level_transition_intersection_count": 350,
+    "unexplained_detailed_level_reset_count": 28,
+    "unexplained_detailed_level_transition_count": 6098,
+    "published_band_count": 6,
+    "minimum_published_role_band_count": 566,
+    "minimum_published_level_band_count": 1220,
+    "minimum_cohort": 30
+  },
+  "validations": {
+    "employee_snapshot_grain": {
+      "outcome": "pass",
+      "rule": "No duplicate or conflicting employee-snapshot rows."
+    },
+    "dates_and_rehire": {
+      "outcome": "pass",
+      "rule": "No future dates or unresolved rehire conflicts; later-date adjustment applied."
+    },
+    "detailed_level_transition": {
+      "outcome": "warning",
+      "rule": "Transition mismatch is reported as a caveat in exploratory mode; validated publication requires no unexplained detailed-level transition or date reset."
+    },
+    "distribution_reconciliation": {
+      "outcome": "pass",
+      "rule": "Both distributions sum exactly to their calculable denominators and 100%."
+    },
+    "privacy": {
+      "outcome": "pass",
+      "rule": "Every published shared band has n >= 30 in both clocks."
+    },
+    "authoritative_lineage": {
+      "outcome": "not_confirmed",
+      "rule": "Exploratory mode does not assert field semantics."
+    }
+  },
+  "provenance": {
+    "audit_sql": "queries/audits/role_level_tenure_transition_audit_20260823.sql",
+    "audit_sql_sha256": "c81e52b7d5e27285dc50d32c85e93bed375cf4ff4a6da003ec123e3f737808fa",
+    "audit_result_sha256": "93cab86edd8e8fbd84dbd3863c117cd938f27ef5f780bf79d8e5368235aa2d87",
+    "profile_sql": "queries/profiles/role_level_tenure_distribution_20260823.sql",
+    "profile_sql_sha256": "3ec9c3c0b7aaa1de12ba2bec101e5670492fc5037e74f6822edf260292f9f76c",
+    "profile_result_sha256": "13596b4d2c828b3042df8c7493db3d6b5ba3d1ab7bcd480a729a2d0a15251490",
+    "raw_aggregate_rows_persisted": false
+  },
+  "privacy_checks": {
+    "identifiers_persisted": false,
+    "employee_rows_persisted": false,
+    "raw_dates_persisted": false,
+    "job_code_or_title_persisted": false,
+    "all_displayed_bands_meet_minimum": true,
+    "minimum_cohort": 30
+  },
+  "acceptance_rule": "Exploratory publication: the active-regular snapshot and history are unique and conflict-free; no future dates or unresolved rehire conflicts exist; each stored-date distribution reconciles to its calculable denominator; every shared visible band has n >= 30; and unresolved construct and transition evidence is displayed as a caveat rather than treated as confirmed semantics.",
+  "exploratory_caveat": "Stored-field distributions only. Do not interpret the chart as proof that either field is the governed current job-profile or current detailed-level clock.",
+  "outcome": "pass"
+}

@@ -1,0 +1,1056 @@
+{
+  "artifact_type": "aggregate_distance_attrition_evidence",
+  "version": 1,
+  "generated_on": "2026-09-17",
+  "deliverable_mode": "presentation",
+  "variable": "Commute distance",
+  "purpose": "Describir la relación no causal entre distancia geográfica estimada y attrition voluntaria posterior al snapshot.",
+  "outcome_contract": {
+    "population": "Employee, Regular, active_status=1 y work_arrangement=ONSITE en cada snapshot",
+    "grain": "employee_snapshot",
+    "snapshot_window": "24 snapshots mensuales, 2024-03-24 a 2026-02-22",
+    "target": "term_type='VOLUNTARY' con term_date en (snapshot_date, snapshot_date + 6 meses]",
+    "excluded": [
+      "Voluntary Exception",
+      "tipos de terminación nulos o ambiguos",
+      "terminaciones involuntarias"
+    ]
+  },
+  "method": {
+    "distance": "Distancia Haversine entre el centroide del código postal residencial y la coordenada del office_site resuelto",
+    "unit": "kilómetros",
+    "binning": "Celdas iniciales de 1 km desde 0 hasta 30 km; 30+ km se mantiene como cola. Las celdas vecinas se combinan hasta que cada banda tenga al menos 30 employee-snapshots y 30 salidas Voluntary.",
+    "interpretation": "Proxy geográfico. No mide distancia por carretera, tiempo de traslado ni commute real.",
+    "residential_data_handling": "postal_code se consulta solo como hash y no se persiste ni se publica."
+  },
+  "coverage": {
+    "eligible_onsite_employee_snapshots": 775105,
+    "complete_location_nonconflicting_employee_snapshots": 766814,
+    "matched_distance_employee_snapshots": 675101,
+    "matched_distance_coverage_percent_of_eligible_onsite": 87.1,
+    "input_employee_snapshot_count": 766814,
+    "input_voluntary_exits": 21672,
+    "matched_distance_employee_snapshot_count": 675101,
+    "matched_distance_voluntary_exits": 20010,
+    "fallback_office_resolved_employee_snapshot_count": 675101,
+    "unmatched_centroid_employee_snapshot_count": 48143,
+    "unmatched_centroid_voluntary_exits": 405,
+    "unmatched_office_employee_snapshot_count": 43570,
+    "unmatched_office_voluntary_exits": 1257
+  },
+  "baseline": {
+    "employee_snapshot_count": 675101,
+    "voluntary_exits": 20010,
+    "attrition_rate_percent": 2.96
+  },
+  "bands": [
+    {
+      "category": "0–<1 km",
+      "lower_km": 0,
+      "upper_km": 1,
+      "employee_snapshot_count": 6528,
+      "average_monthly_onsite_employee_snapshots": 272,
+      "voluntary_exits": 227,
+      "attrition_rate_percent": 3.48,
+      "lift_vs_matched_distance_baseline": 1.173,
+      "snapshot_window_count": 24
+    },
+    {
+      "category": "1–<2 km",
+      "lower_km": 1,
+      "upper_km": 2,
+      "employee_snapshot_count": 10311,
+      "average_monthly_onsite_employee_snapshots": 430,
+      "voluntary_exits": 194,
+      "attrition_rate_percent": 1.88,
+      "lift_vs_matched_distance_baseline": 0.635,
+      "snapshot_window_count": 24
+    },
+    {
+      "category": "2–<3 km",
+      "lower_km": 2,
+      "upper_km": 3,
+      "employee_snapshot_count": 17475,
+      "average_monthly_onsite_employee_snapshots": 728,
+      "voluntary_exits": 378,
+      "attrition_rate_percent": 2.16,
+      "lift_vs_matched_distance_baseline": 0.73,
+      "snapshot_window_count": 24
+    },
+    {
+      "category": "3–<4 km",
+      "lower_km": 3,
+      "upper_km": 4,
+      "employee_snapshot_count": 25628,
+      "average_monthly_onsite_employee_snapshots": 1068,
+      "voluntary_exits": 881,
+      "attrition_rate_percent": 3.44,
+      "lift_vs_matched_distance_baseline": 1.16,
+      "snapshot_window_count": 24
+    },
+    {
+      "category": "4–<5 km",
+      "lower_km": 4,
+      "upper_km": 5,
+      "employee_snapshot_count": 43787,
+      "average_monthly_onsite_employee_snapshots": 1824,
+      "voluntary_exits": 1328,
+      "attrition_rate_percent": 3.03,
+      "lift_vs_matched_distance_baseline": 1.023,
+      "snapshot_window_count": 24
+    },
+    {
+      "category": "5–<6 km",
+      "lower_km": 5,
+      "upper_km": 6,
+      "employee_snapshot_count": 34657,
+      "average_monthly_onsite_employee_snapshots": 1444,
+      "voluntary_exits": 1177,
+      "attrition_rate_percent": 3.4,
+      "lift_vs_matched_distance_baseline": 1.146,
+      "snapshot_window_count": 24
+    },
+    {
+      "category": "6–<7 km",
+      "lower_km": 6,
+      "upper_km": 7,
+      "employee_snapshot_count": 35912,
+      "average_monthly_onsite_employee_snapshots": 1496,
+      "voluntary_exits": 830,
+      "attrition_rate_percent": 2.31,
+      "lift_vs_matched_distance_baseline": 0.78,
+      "snapshot_window_count": 24
+    },
+    {
+      "category": "7–<8 km",
+      "lower_km": 7,
+      "upper_km": 8,
+      "employee_snapshot_count": 12714,
+      "average_monthly_onsite_employee_snapshots": 530,
+      "voluntary_exits": 370,
+      "attrition_rate_percent": 2.91,
+      "lift_vs_matched_distance_baseline": 0.982,
+      "snapshot_window_count": 24
+    },
+    {
+      "category": "8–<9 km",
+      "lower_km": 8,
+      "upper_km": 9,
+      "employee_snapshot_count": 21997,
+      "average_monthly_onsite_employee_snapshots": 917,
+      "voluntary_exits": 452,
+      "attrition_rate_percent": 2.05,
+      "lift_vs_matched_distance_baseline": 0.693,
+      "snapshot_window_count": 24
+    },
+    {
+      "category": "9–<10 km",
+      "lower_km": 9,
+      "upper_km": 10,
+      "employee_snapshot_count": 31033,
+      "average_monthly_onsite_employee_snapshots": 1293,
+      "voluntary_exits": 723,
+      "attrition_rate_percent": 2.33,
+      "lift_vs_matched_distance_baseline": 0.786,
+      "snapshot_window_count": 24
+    },
+    {
+      "category": "10–<11 km",
+      "lower_km": 10,
+      "upper_km": 11,
+      "employee_snapshot_count": 30821,
+      "average_monthly_onsite_employee_snapshots": 1284,
+      "voluntary_exits": 542,
+      "attrition_rate_percent": 1.76,
+      "lift_vs_matched_distance_baseline": 0.593,
+      "snapshot_window_count": 24
+    },
+    {
+      "category": "11–<12 km",
+      "lower_km": 11,
+      "upper_km": 12,
+      "employee_snapshot_count": 14415,
+      "average_monthly_onsite_employee_snapshots": 601,
+      "voluntary_exits": 461,
+      "attrition_rate_percent": 3.2,
+      "lift_vs_matched_distance_baseline": 1.079,
+      "snapshot_window_count": 24
+    },
+    {
+      "category": "12–<13 km",
+      "lower_km": 12,
+      "upper_km": 13,
+      "employee_snapshot_count": 16939,
+      "average_monthly_onsite_employee_snapshots": 706,
+      "voluntary_exits": 492,
+      "attrition_rate_percent": 2.9,
+      "lift_vs_matched_distance_baseline": 0.98,
+      "snapshot_window_count": 24
+    },
+    {
+      "category": "13–<14 km",
+      "lower_km": 13,
+      "upper_km": 14,
+      "employee_snapshot_count": 28328,
+      "average_monthly_onsite_employee_snapshots": 1180,
+      "voluntary_exits": 1131,
+      "attrition_rate_percent": 3.99,
+      "lift_vs_matched_distance_baseline": 1.347,
+      "snapshot_window_count": 24
+    },
+    {
+      "category": "14–<15 km",
+      "lower_km": 14,
+      "upper_km": 15,
+      "employee_snapshot_count": 6338,
+      "average_monthly_onsite_employee_snapshots": 264,
+      "voluntary_exits": 134,
+      "attrition_rate_percent": 2.11,
+      "lift_vs_matched_distance_baseline": 0.713,
+      "snapshot_window_count": 24
+    },
+    {
+      "category": "15–<16 km",
+      "lower_km": 15,
+      "upper_km": 16,
+      "employee_snapshot_count": 19501,
+      "average_monthly_onsite_employee_snapshots": 813,
+      "voluntary_exits": 359,
+      "attrition_rate_percent": 1.84,
+      "lift_vs_matched_distance_baseline": 0.621,
+      "snapshot_window_count": 24
+    },
+    {
+      "category": "16–<17 km",
+      "lower_km": 16,
+      "upper_km": 17,
+      "employee_snapshot_count": 30438,
+      "average_monthly_onsite_employee_snapshots": 1268,
+      "voluntary_exits": 671,
+      "attrition_rate_percent": 2.2,
+      "lift_vs_matched_distance_baseline": 0.744,
+      "snapshot_window_count": 24
+    },
+    {
+      "category": "17–<18 km",
+      "lower_km": 17,
+      "upper_km": 18,
+      "employee_snapshot_count": 7409,
+      "average_monthly_onsite_employee_snapshots": 309,
+      "voluntary_exits": 178,
+      "attrition_rate_percent": 2.4,
+      "lift_vs_matched_distance_baseline": 0.811,
+      "snapshot_window_count": 24
+    },
+    {
+      "category": "18–<19 km",
+      "lower_km": 18,
+      "upper_km": 19,
+      "employee_snapshot_count": 11980,
+      "average_monthly_onsite_employee_snapshots": 499,
+      "voluntary_exits": 354,
+      "attrition_rate_percent": 2.95,
+      "lift_vs_matched_distance_baseline": 0.997,
+      "snapshot_window_count": 24
+    },
+    {
+      "category": "19–<20 km",
+      "lower_km": 19,
+      "upper_km": 20,
+      "employee_snapshot_count": 7838,
+      "average_monthly_onsite_employee_snapshots": 327,
+      "voluntary_exits": 146,
+      "attrition_rate_percent": 1.86,
+      "lift_vs_matched_distance_baseline": 0.628,
+      "snapshot_window_count": 24
+    },
+    {
+      "category": "20–<21 km",
+      "lower_km": 20,
+      "upper_km": 21,
+      "employee_snapshot_count": 5437,
+      "average_monthly_onsite_employee_snapshots": 227,
+      "voluntary_exits": 182,
+      "attrition_rate_percent": 3.35,
+      "lift_vs_matched_distance_baseline": 1.129,
+      "snapshot_window_count": 24
+    },
+    {
+      "category": "21–<22 km",
+      "lower_km": 21,
+      "upper_km": 22,
+      "employee_snapshot_count": 7415,
+      "average_monthly_onsite_employee_snapshots": 309,
+      "voluntary_exits": 150,
+      "attrition_rate_percent": 2.02,
+      "lift_vs_matched_distance_baseline": 0.682,
+      "snapshot_window_count": 24
+    },
+    {
+      "category": "22–<23 km",
+      "lower_km": 22,
+      "upper_km": 23,
+      "employee_snapshot_count": 2701,
+      "average_monthly_onsite_employee_snapshots": 113,
+      "voluntary_exits": 81,
+      "attrition_rate_percent": 3.0,
+      "lift_vs_matched_distance_baseline": 1.012,
+      "snapshot_window_count": 24
+    },
+    {
+      "category": "23–<24 km",
+      "lower_km": 23,
+      "upper_km": 24,
+      "employee_snapshot_count": 6259,
+      "average_monthly_onsite_employee_snapshots": 261,
+      "voluntary_exits": 213,
+      "attrition_rate_percent": 3.4,
+      "lift_vs_matched_distance_baseline": 1.148,
+      "snapshot_window_count": 24
+    },
+    {
+      "category": "24–<25 km",
+      "lower_km": 24,
+      "upper_km": 25,
+      "employee_snapshot_count": 5401,
+      "average_monthly_onsite_employee_snapshots": 225,
+      "voluntary_exits": 170,
+      "attrition_rate_percent": 3.15,
+      "lift_vs_matched_distance_baseline": 1.062,
+      "snapshot_window_count": 24
+    },
+    {
+      "category": "25–<26 km",
+      "lower_km": 25,
+      "upper_km": 26,
+      "employee_snapshot_count": 2790,
+      "average_monthly_onsite_employee_snapshots": 116,
+      "voluntary_exits": 69,
+      "attrition_rate_percent": 2.47,
+      "lift_vs_matched_distance_baseline": 0.834,
+      "snapshot_window_count": 24
+    },
+    {
+      "category": "26–<27 km",
+      "lower_km": 26,
+      "upper_km": 27,
+      "employee_snapshot_count": 5999,
+      "average_monthly_onsite_employee_snapshots": 250,
+      "voluntary_exits": 133,
+      "attrition_rate_percent": 2.22,
+      "lift_vs_matched_distance_baseline": 0.748,
+      "snapshot_window_count": 24
+    },
+    {
+      "category": "27–<28 km",
+      "lower_km": 27,
+      "upper_km": 28,
+      "employee_snapshot_count": 1722,
+      "average_monthly_onsite_employee_snapshots": 72,
+      "voluntary_exits": 53,
+      "attrition_rate_percent": 3.08,
+      "lift_vs_matched_distance_baseline": 1.038,
+      "snapshot_window_count": 24
+    },
+    {
+      "category": "28–<29 km",
+      "lower_km": 28,
+      "upper_km": 29,
+      "employee_snapshot_count": 3013,
+      "average_monthly_onsite_employee_snapshots": 126,
+      "voluntary_exits": 83,
+      "attrition_rate_percent": 2.75,
+      "lift_vs_matched_distance_baseline": 0.929,
+      "snapshot_window_count": 24
+    },
+    {
+      "category": "29–<30 km",
+      "lower_km": 29,
+      "upper_km": 30,
+      "employee_snapshot_count": 15643,
+      "average_monthly_onsite_employee_snapshots": 652,
+      "voluntary_exits": 555,
+      "attrition_rate_percent": 3.55,
+      "lift_vs_matched_distance_baseline": 1.197,
+      "snapshot_window_count": 24
+    },
+    {
+      "category": "30+ km",
+      "lower_km": 30,
+      "upper_km": null,
+      "employee_snapshot_count": 204672,
+      "average_monthly_onsite_employee_snapshots": 8528,
+      "voluntary_exits": 7293,
+      "attrition_rate_percent": 3.56,
+      "lift_vs_matched_distance_baseline": 1.202,
+      "snapshot_window_count": 24
+    }
+  ],
+  "audit_metrics": {
+    "snapshot_count": 24,
+    "first_snapshot_date": "2024-03-24",
+    "last_snapshot_date": "2026-02-22",
+    "active_regular_employee_snapshots": 1043051,
+    "eligible_onsite_employee_snapshots": 775105,
+    "multirow_onsite_employee_snapshots": 0,
+    "conflicting_location_onsite_employee_snapshots": 0,
+    "eligible_onsite_complete_location_employee_snapshots": 766814,
+    "eligible_onsite_complete_location_voluntary_exits": 21672
+  },
+  "reference_sources": {
+    "office_catalog_sha256": "d033f634ef013f6641995b95b18a9efca006b45f0faddc3567162bb3e5f32a58",
+    "office_catalog_locations": 205,
+    "postal_centroid_sources": {
+      "AT": {
+        "sha256": "9ab60f08b8eddd50b766f8e1e8e5674c5ff32ad697fb87b42af714f9b4375ae1",
+        "source_rows_read": 18957
+      },
+      "AU": {
+        "sha256": "27abe1cd520cf66d5ae35d7f4f02dee0813d59688299595fad267b84403c0e70",
+        "source_rows_read": 16873
+      },
+      "BE": {
+        "sha256": "e3f5805bfd1cc578a9eacda3b23bebc76a0cc95a1cc74a2310bbef5358cde5cc",
+        "source_rows_read": 2781
+      },
+      "BR": {
+        "sha256": "9d35d1c3507e1ae249eadb1353d2024e48bbd8b3d3f7e2b639abbbbf923bbc79",
+        "source_rows_read": 5525
+      },
+      "CA": {
+        "sha256": "814cb909649b1901c1911e20f19b4620a95423eb2cd1e975cf838498509df0d4",
+        "source_rows_read": 1655
+      },
+      "CH": {
+        "sha256": "0fecfc796c51df6705d5ec3c6c5fedb3099b97f79afa73f5136856741127c8c7",
+        "source_rows_read": 4521
+      },
+      "CN": {
+        "sha256": "8022be4982ece8d0474a9cf29e54d12ac7f95e82f0b47f35988ed67fddef49ab",
+        "source_rows_read": 2352
+      },
+      "DE": {
+        "sha256": "fe816ea6d25f5d911387d572268e15d0266bf18bd2789e0ae6d4eef2159d6582",
+        "source_rows_read": 16477
+      },
+      "ES": {
+        "sha256": "d34da305aa3371591c59f3fbe8264a528d3e2f09202e8fa61769c7b4731ccaa2",
+        "source_rows_read": 37867
+      },
+      "FI": {
+        "sha256": "6b26b343cb8bfaf534d328d04197a81dfd0d475ea1ed57d65a33fc5157a280b8",
+        "source_rows_read": 3576
+      },
+      "FR": {
+        "sha256": "617dbd86a5323ceef1d73e4b114adadcd1040e8646953e9d9cfa1e849c2849b2",
+        "source_rows_read": 51670
+      },
+      "GB": {
+        "sha256": "c6363f0e2945c85dceb5fe46751ade3caba2b7401c020c0801b57d431dfac8fd",
+        "source_rows_read": 27450
+      },
+      "IE": {
+        "sha256": "3c234a80cb983eafddc07f61e39616cee3cc49e551a9f76468470b65cfef6f40",
+        "source_rows_read": 139
+      },
+      "IN": {
+        "sha256": "3c77b4cfa07ccba2169534edc5b2c991baacbf861fadd488dcc02ff243009ef8",
+        "source_rows_read": 155570
+      },
+      "IT": {
+        "sha256": "af4b4ce0ef50ed560db7e51e6ce0336e6830334fe90b9a8ea3f7e12c4212770b",
+        "source_rows_read": 18415
+      },
+      "JP": {
+        "sha256": "9e1eef525c197de6d4b24a436b7bbcdf78f593fd065f18b4b8023f4849749272",
+        "source_rows_read": 146883
+      },
+      "KR": {
+        "sha256": "2a35cfa72adccee795d98097723b7d60c2d48ee2fbf38a7634012b6957d00440",
+        "source_rows_read": 35583
+      },
+      "MX": {
+        "sha256": "a44eece864730e3349f65fdf9b3095d1b231bef1c59a6b21b14b82484ecddcca",
+        "source_rows_read": 144655
+      },
+      "NL": {
+        "sha256": "942758e56e1ead385d2df4eb14bf2ed9cfa2dce2c61290445d1ca8a496e42300",
+        "source_rows_read": 4334
+      },
+      "RO": {
+        "sha256": "caccc97503146431219a5f616d41608f98c539654208e4e83607e4bb295ff485",
+        "source_rows_read": 37915
+      },
+      "SE": {
+        "sha256": "fd2d886d2a9d812a7ade8786c93aa45a186f96c574b0a830d6dbe3ada3465fb8",
+        "source_rows_read": 18815
+      },
+      "SG": {
+        "sha256": "15c086a1e0d73eb06bb5d087de4c8bf6a731a68105aa94a27ba4cab3c574f926",
+        "source_rows_read": 121154
+      },
+      "US": {
+        "sha256": "36bfc8c52c9acbc2dfd5e3d7f954389640b42b6434ae08e7f6bf95d6b24f5161",
+        "source_rows_read": 41483
+      }
+    },
+    "unavailable_postal_sources": [
+      "ID: HTTPError",
+      "VN: HTTPError"
+    ]
+  },
+  "query": {
+    "profile": "queries/profiles/commute_distance_onsite_six_month_attrition_hash_profile_20260917.sql",
+    "profile_sha256": "b4364c44d58b6e536938b705110bb7a0ad964cb4c36f4d08c09120632f8ac2de",
+    "profile_result_sha256": "3286b9a3beaead127c727c1bdfb661fc8eda8796ead68dc67ebec9be5cf55ead",
+    "country_partitions": "queries/profiles/commute_distance_onsite_six_month_attrition_country_partitions_20260917.sql",
+    "country_partitions_sha256": "6373aab54587e3df56f6a5b0aa1a14ce88f2bb8ffef7cf6ee0c0d5520ce308cd",
+    "country_partitions_result_sha256": "84eb9341a7b00d3029f33d698e35142c4469f5b8aded774cec9d78176e5949b4",
+    "executed_hash_partitions": [
+      {
+        "country_hash": "f03b919de2cb8a36e9e404e0ad494627",
+        "postal_hash_prefix": "0",
+        "row_count": 417,
+        "result_sha256": "86401ee2724592d9a1f5a8988f4dfaeca768304d9904e0af02072b6e938599b2"
+      },
+      {
+        "country_hash": "f03b919de2cb8a36e9e404e0ad494627",
+        "postal_hash_prefix": "1",
+        "row_count": 458,
+        "result_sha256": "80388defa1604586138ee3aed1945328d1027e4d68f8c6e2682816e2db2c3abf"
+      },
+      {
+        "country_hash": "f03b919de2cb8a36e9e404e0ad494627",
+        "postal_hash_prefix": "2",
+        "row_count": 438,
+        "result_sha256": "af7c92a87921bb5b040b13ca281f83b2fbb37b2cd43241f6d670a969ec82a5d9"
+      },
+      {
+        "country_hash": "f03b919de2cb8a36e9e404e0ad494627",
+        "postal_hash_prefix": "3",
+        "row_count": 449,
+        "result_sha256": "2f79c8ef9cd04f70c29e91340f7ed5d63cf4a00179d1dacd187d129a9675563a"
+      },
+      {
+        "country_hash": "f03b919de2cb8a36e9e404e0ad494627",
+        "postal_hash_prefix": "4",
+        "row_count": 427,
+        "result_sha256": "f712a7d918a57346bdb69c21cf30fe7ac5919fcb6febd778552f66b04bf3ba91"
+      },
+      {
+        "country_hash": "f03b919de2cb8a36e9e404e0ad494627",
+        "postal_hash_prefix": "5",
+        "row_count": 375,
+        "result_sha256": "24067dcbf6cce9f8ea81b3446e708ea52eca6cc7a7fe51af888fc5a571d2b227"
+      },
+      {
+        "country_hash": "f03b919de2cb8a36e9e404e0ad494627",
+        "postal_hash_prefix": "6",
+        "row_count": 451,
+        "result_sha256": "3f6cafddc564e164a67c089b579abc57b87751ee72227d7d8ff16f576a70cf7d"
+      },
+      {
+        "country_hash": "f03b919de2cb8a36e9e404e0ad494627",
+        "postal_hash_prefix": "7",
+        "row_count": 434,
+        "result_sha256": "b54096ca6fe33276832523d3a7d371f3d1e5fd64794aab2706731a371c658767"
+      },
+      {
+        "country_hash": "f03b919de2cb8a36e9e404e0ad494627",
+        "postal_hash_prefix": "8",
+        "row_count": 428,
+        "result_sha256": "839ccc016cdbfb2e1de660dc292bb483ab98d6550bd826a3f7b7d09067c2ba9c"
+      },
+      {
+        "country_hash": "f03b919de2cb8a36e9e404e0ad494627",
+        "postal_hash_prefix": "9",
+        "row_count": 399,
+        "result_sha256": "6a41751fd13d9948f0c4135bdb0c7718e42232baecacff2c14929930f8e8ed6a"
+      },
+      {
+        "country_hash": "f03b919de2cb8a36e9e404e0ad494627",
+        "postal_hash_prefix": "a",
+        "row_count": 464,
+        "result_sha256": "32e4a715a279fc81d7d3d652832add49c0001e5df6d47e65fbca83c50dee8b96"
+      },
+      {
+        "country_hash": "f03b919de2cb8a36e9e404e0ad494627",
+        "postal_hash_prefix": "b",
+        "row_count": 454,
+        "result_sha256": "0a7cbf247cfd7b45a355c68e37b81e95bac35dde4d486451a9500c4af264906a"
+      },
+      {
+        "country_hash": "f03b919de2cb8a36e9e404e0ad494627",
+        "postal_hash_prefix": "c",
+        "row_count": 477,
+        "result_sha256": "6bcd77a2f1999c27d7e7d527c61db0c50ad4f2a30bea87044861fda97d7fc0a1"
+      },
+      {
+        "country_hash": "f03b919de2cb8a36e9e404e0ad494627",
+        "postal_hash_prefix": "d",
+        "row_count": 463,
+        "result_sha256": "4e792fa391815c26d7ba8cb3cf3155ab19516181e3891d043e8e171fa6ac9651"
+      },
+      {
+        "country_hash": "f03b919de2cb8a36e9e404e0ad494627",
+        "postal_hash_prefix": "e",
+        "row_count": 366,
+        "result_sha256": "f295a90934c91ba3eb6bf202fe620200664177628e82a25bb4b8ecfc79d682aa"
+      },
+      {
+        "country_hash": "f03b919de2cb8a36e9e404e0ad494627",
+        "postal_hash_prefix": "f",
+        "row_count": 484,
+        "result_sha256": "67670bc443a9fd15779bd10676ebe8f3851cbf315f6cf663dbaa2c0e553cf016"
+      },
+      {
+        "country_hash": "0db90872750d507c431cafd0a81a6943",
+        "postal_hash_prefix": "0",
+        "row_count": 110,
+        "result_sha256": "ff188f3bcc858c4415dcb923fda1953fa66f4f8e5c25ff4af4fcaa1bf98cb2b0"
+      },
+      {
+        "country_hash": "0db90872750d507c431cafd0a81a6943",
+        "postal_hash_prefix": "1",
+        "row_count": 110,
+        "result_sha256": "f1c6d0c29b0f79b60365910d736415b523143688fc11d93f3b5af9d5c904ff6e"
+      },
+      {
+        "country_hash": "0db90872750d507c431cafd0a81a6943",
+        "postal_hash_prefix": "2",
+        "row_count": 81,
+        "result_sha256": "49ec8a553e8c2ceaf9c86dbb65389afaca8d200100f79f82af3f61248c364e92"
+      },
+      {
+        "country_hash": "0db90872750d507c431cafd0a81a6943",
+        "postal_hash_prefix": "3",
+        "row_count": 69,
+        "result_sha256": "4741f19e7fbf4c55068cce91c37c624e2a3a2c99da7640e48be33590da45e29d"
+      },
+      {
+        "country_hash": "0db90872750d507c431cafd0a81a6943",
+        "postal_hash_prefix": "4",
+        "row_count": 105,
+        "result_sha256": "4dd2f5a681ddc55bca017fdc49c2d327be93f9770acfe19a01a9ea7f43bfe2b9"
+      },
+      {
+        "country_hash": "0db90872750d507c431cafd0a81a6943",
+        "postal_hash_prefix": "5",
+        "row_count": 84,
+        "result_sha256": "44c9031c53068e5d926728d6e30f0e289e7508de46adb5227685126336b4d588"
+      },
+      {
+        "country_hash": "0db90872750d507c431cafd0a81a6943",
+        "postal_hash_prefix": "6",
+        "row_count": 77,
+        "result_sha256": "bd1c0896b0819ec0baaa50a3711010f9f76e23a96673b2fcc7d4f7f3b1cd5bd5"
+      },
+      {
+        "country_hash": "0db90872750d507c431cafd0a81a6943",
+        "postal_hash_prefix": "7",
+        "row_count": 78,
+        "result_sha256": "da97e5b0b1dbadf0773863186cb37f9aa9690848ab465b1737cb9bd0ba2ce583"
+      },
+      {
+        "country_hash": "0db90872750d507c431cafd0a81a6943",
+        "postal_hash_prefix": "8",
+        "row_count": 112,
+        "result_sha256": "a125a1f32e989229e9ef630b08916cd2f394918b72a4a350bba8a7ede5cdf862"
+      },
+      {
+        "country_hash": "0db90872750d507c431cafd0a81a6943",
+        "postal_hash_prefix": "9",
+        "row_count": 127,
+        "result_sha256": "9f67f1b9e5567d13bed208281d2b383525870d98cfdca69398f31b7e79ec8104"
+      },
+      {
+        "country_hash": "0db90872750d507c431cafd0a81a6943",
+        "postal_hash_prefix": "a",
+        "row_count": 98,
+        "result_sha256": "d5cd28b23ba63834a70be2383ac6f669c427d2cfc52e419c5776c793ab2cd097"
+      },
+      {
+        "country_hash": "0db90872750d507c431cafd0a81a6943",
+        "postal_hash_prefix": "b",
+        "row_count": 66,
+        "result_sha256": "dee55da9e26f4e5092825029f7d0a3ce846268aeab41c1f1570207b0f5da6a61"
+      },
+      {
+        "country_hash": "0db90872750d507c431cafd0a81a6943",
+        "postal_hash_prefix": "c",
+        "row_count": 82,
+        "result_sha256": "17ccd92735d1e53d5f38d1d96d3e3aadf806bbfc2d57a778aa033d2aae49c9b8"
+      },
+      {
+        "country_hash": "0db90872750d507c431cafd0a81a6943",
+        "postal_hash_prefix": "d",
+        "row_count": 118,
+        "result_sha256": "7d54a8b63c36070f7419402d2093c61f91abb331cbecd5ca589caebb595a7809"
+      },
+      {
+        "country_hash": "0db90872750d507c431cafd0a81a6943",
+        "postal_hash_prefix": "e",
+        "row_count": 111,
+        "result_sha256": "4a17ec18157423ddc1b1920338229b5b3ed5e8ec396a404f102c792f7de96dbe"
+      },
+      {
+        "country_hash": "0db90872750d507c431cafd0a81a6943",
+        "postal_hash_prefix": "f",
+        "row_count": 86,
+        "result_sha256": "f893d0848c7caecd14d1fb192d90069119f0cf8f58a234af0d84ab56214aa7bf"
+      },
+      {
+        "country_hash": "8a035bfda6c16c222a9edbcf7666a6ba",
+        "postal_hash_prefix": "all",
+        "row_count": 442,
+        "result_sha256": "7d0f98c2ffb1ed2a2cb8b703c66607f7b9d047b44658fe7398ceeb45a0c5d6b4"
+      },
+      {
+        "country_hash": "0cb33ad1b82531916cfa68d9eadaa2a8",
+        "postal_hash_prefix": "all",
+        "row_count": 858,
+        "result_sha256": "e7ec77c099cb8ccb7412dba7a4be97f1ca5b16e90c6981e02c321db52e13767f"
+      },
+      {
+        "country_hash": "4e005a9168d7fb69836cceb044717e94",
+        "postal_hash_prefix": "0",
+        "row_count": 83,
+        "result_sha256": "140572c0e97d92b8449ef87d4f345deba17c0bb10a37d3d3fde323b963952d18"
+      },
+      {
+        "country_hash": "4e005a9168d7fb69836cceb044717e94",
+        "postal_hash_prefix": "1",
+        "row_count": 76,
+        "result_sha256": "d1636b3542243cedbd62512fa32ab97cf62bc354a91650c0d719838963b05d8f"
+      },
+      {
+        "country_hash": "4e005a9168d7fb69836cceb044717e94",
+        "postal_hash_prefix": "2",
+        "row_count": 70,
+        "result_sha256": "6cefce1ab5c56bdf9b8f510f85b0eb587772e97250c8ae42804cf7dab19ca78f"
+      },
+      {
+        "country_hash": "4e005a9168d7fb69836cceb044717e94",
+        "postal_hash_prefix": "3",
+        "row_count": 79,
+        "result_sha256": "a6425da996631a9eff921988cfbadc9083ec361db0d9a60beaa82b58fea14377"
+      },
+      {
+        "country_hash": "4e005a9168d7fb69836cceb044717e94",
+        "postal_hash_prefix": "4",
+        "row_count": 76,
+        "result_sha256": "14b26cd3e60c9df91233ed8dc0e5acb2a9606282084d12c81cd041da169e53a3"
+      },
+      {
+        "country_hash": "4e005a9168d7fb69836cceb044717e94",
+        "postal_hash_prefix": "5",
+        "row_count": 91,
+        "result_sha256": "f9b336f0d50efc90240a67984294673796f7bd0fbe7c543138edd2635d54458d"
+      },
+      {
+        "country_hash": "4e005a9168d7fb69836cceb044717e94",
+        "postal_hash_prefix": "6",
+        "row_count": 64,
+        "result_sha256": "51d13fae8eb1c930132354045a93b4bab71177af15c020fa345f31afc876e6ec"
+      },
+      {
+        "country_hash": "4e005a9168d7fb69836cceb044717e94",
+        "postal_hash_prefix": "7",
+        "row_count": 67,
+        "result_sha256": "5db0e535bd98ab798dc59e5a1895c97d6562bdd7412e7ce9214cf223471c135d"
+      },
+      {
+        "country_hash": "4e005a9168d7fb69836cceb044717e94",
+        "postal_hash_prefix": "8",
+        "row_count": 79,
+        "result_sha256": "1c2b1f5d56cac845d7e4aa3269ea3f204347339c391615abe5bc38bb92675b1f"
+      },
+      {
+        "country_hash": "4e005a9168d7fb69836cceb044717e94",
+        "postal_hash_prefix": "9",
+        "row_count": 75,
+        "result_sha256": "b8711ddfdb1b7e7484e2a0bd131f8a7b786f60baf496f0f3c3f70ff52dc35595"
+      },
+      {
+        "country_hash": "4e005a9168d7fb69836cceb044717e94",
+        "postal_hash_prefix": "a",
+        "row_count": 80,
+        "result_sha256": "6a1f415d770d440fa71c0fcaeef34f8851dbf309ccd3375af6c1cfa9d6ab2aed"
+      },
+      {
+        "country_hash": "4e005a9168d7fb69836cceb044717e94",
+        "postal_hash_prefix": "b",
+        "row_count": 92,
+        "result_sha256": "65b7c7e98e9c40e1116322ff992fbf7f7487bb87607b66000b2763331d5adf86"
+      },
+      {
+        "country_hash": "4e005a9168d7fb69836cceb044717e94",
+        "postal_hash_prefix": "c",
+        "row_count": 86,
+        "result_sha256": "ab455385707cec669cd586ae646a2d68b26c65417d6f235b7e4b4bd5f2dfad09"
+      },
+      {
+        "country_hash": "4e005a9168d7fb69836cceb044717e94",
+        "postal_hash_prefix": "d",
+        "row_count": 86,
+        "result_sha256": "3db41dbb2e47c2816d1cf9d8417018620068b23f916cfd9ec362c4f6bf59b748"
+      },
+      {
+        "country_hash": "4e005a9168d7fb69836cceb044717e94",
+        "postal_hash_prefix": "e",
+        "row_count": 73,
+        "result_sha256": "cfc4d55394d1803dbddfbde155e56543440e697e1506361c1462957c4620d958"
+      },
+      {
+        "country_hash": "4e005a9168d7fb69836cceb044717e94",
+        "postal_hash_prefix": "f",
+        "row_count": 82,
+        "result_sha256": "44e48478949b4fd7f99c64cbe5c1ec2574f0e75671be080f143f924f31372e80"
+      },
+      {
+        "country_hash": "f20348cd8ac5ba4fca2aaa3e22f9c881",
+        "postal_hash_prefix": "all",
+        "row_count": 515,
+        "result_sha256": "30e326992127c39ebf653c890ab40396d2e75e8dcbcbe154037066f13b8a9865"
+      },
+      {
+        "country_hash": "3c08b05a853446689e038b1d3471cfa5",
+        "postal_hash_prefix": "all",
+        "row_count": 704,
+        "result_sha256": "6ca0fdeec204b03f4997750d59ea5b9ed38c3a3becfd4bb56da73d2f6512afde"
+      },
+      {
+        "country_hash": "b7fd90b0e7ac0861ffdb762da5fc20be",
+        "postal_hash_prefix": "0",
+        "row_count": 70,
+        "result_sha256": "7240bdd8814784c82617b2e8181809825297667d68283b943b171b85646a1659"
+      },
+      {
+        "country_hash": "b7fd90b0e7ac0861ffdb762da5fc20be",
+        "postal_hash_prefix": "1",
+        "row_count": 63,
+        "result_sha256": "d6dd4932abbe781725f3482cbda19a8859133596055a1bb02d63105f4e6d7424"
+      },
+      {
+        "country_hash": "b7fd90b0e7ac0861ffdb762da5fc20be",
+        "postal_hash_prefix": "2",
+        "row_count": 61,
+        "result_sha256": "90a1f015b9a1d80497c1fcb041a6d09000c80a8eb415f0ef96c1edab6bf398fe"
+      },
+      {
+        "country_hash": "b7fd90b0e7ac0861ffdb762da5fc20be",
+        "postal_hash_prefix": "3",
+        "row_count": 60,
+        "result_sha256": "ef81a30c67195562b3b1a5f04288acb139d25ee21bfdcd6669a0b13adeb78388"
+      },
+      {
+        "country_hash": "b7fd90b0e7ac0861ffdb762da5fc20be",
+        "postal_hash_prefix": "4",
+        "row_count": 66,
+        "result_sha256": "4f75f1a710aa7c2540b280262f3fc8e594507c5e51a5212d7549bff200fc2bcd"
+      },
+      {
+        "country_hash": "b7fd90b0e7ac0861ffdb762da5fc20be",
+        "postal_hash_prefix": "5",
+        "row_count": 63,
+        "result_sha256": "f9668ecf790414df63e70e91c6ed07d4a42def9a43a9b469a7e158244276b607"
+      },
+      {
+        "country_hash": "b7fd90b0e7ac0861ffdb762da5fc20be",
+        "postal_hash_prefix": "6",
+        "row_count": 64,
+        "result_sha256": "efefc538cf245ad39c798fcf22e38000c9d02bb45088a8c6b563fe7ddda18714"
+      },
+      {
+        "country_hash": "b7fd90b0e7ac0861ffdb762da5fc20be",
+        "postal_hash_prefix": "7",
+        "row_count": 65,
+        "result_sha256": "6da12de53196820f53a84b9de977e0a1ea417b4e48c8f2afdba139b0a842a650"
+      },
+      {
+        "country_hash": "b7fd90b0e7ac0861ffdb762da5fc20be",
+        "postal_hash_prefix": "8",
+        "row_count": 66,
+        "result_sha256": "0ef92910d396ce94558cb9a7ecd5230d83f668af10c9f506491ddd90362ec3d8"
+      },
+      {
+        "country_hash": "b7fd90b0e7ac0861ffdb762da5fc20be",
+        "postal_hash_prefix": "9",
+        "row_count": 64,
+        "result_sha256": "016c542ca1274dd7f4fe453e9ad622cfb63f81fe351fa408e7ac0aa4f5fde0c4"
+      },
+      {
+        "country_hash": "b7fd90b0e7ac0861ffdb762da5fc20be",
+        "postal_hash_prefix": "a",
+        "row_count": 60,
+        "result_sha256": "d11f7de3b3dd66865d7b3d9f566ad5536892d29d40ac24d3427f2f977ac529cc"
+      },
+      {
+        "country_hash": "b7fd90b0e7ac0861ffdb762da5fc20be",
+        "postal_hash_prefix": "b",
+        "row_count": 72,
+        "result_sha256": "e79035125d9322ca888ee5d639bffa21625db25cb03355196af3160fa4c6ce50"
+      },
+      {
+        "country_hash": "b7fd90b0e7ac0861ffdb762da5fc20be",
+        "postal_hash_prefix": "c",
+        "row_count": 58,
+        "result_sha256": "d11845acf29aa54ef61fda8259a1d73d783b34ee0caf0b42e4be09ce5df6f224"
+      },
+      {
+        "country_hash": "b7fd90b0e7ac0861ffdb762da5fc20be",
+        "postal_hash_prefix": "d",
+        "row_count": 63,
+        "result_sha256": "f0636eadd4922e23858b76b133538af3c84c600aaf678ba3ebde2a48e5779e40"
+      },
+      {
+        "country_hash": "b7fd90b0e7ac0861ffdb762da5fc20be",
+        "postal_hash_prefix": "e",
+        "row_count": 65,
+        "result_sha256": "eeb7d50522e30ff9c59c2e64d4a5c916f25d8396a1a16bde3b44a7a96269c5af"
+      },
+      {
+        "country_hash": "b7fd90b0e7ac0861ffdb762da5fc20be",
+        "postal_hash_prefix": "f",
+        "row_count": 62,
+        "result_sha256": "883ac2c00f9ca0e285c5f05a41a7717ec13e1febb476879eb2c2341c5d78ea09"
+      },
+      {
+        "country_hash": "cf11da476a9fc9481d298a824f805638",
+        "postal_hash_prefix": "all",
+        "row_count": 819,
+        "result_sha256": "534d573944b35235447b8b21d8df29e6ba188d75ffe4df6de349a8b099d2b72d"
+      },
+      {
+        "country_hash": "b027ff3f749fc2495187b8c583c2fa8e",
+        "postal_hash_prefix": "all",
+        "row_count": 613,
+        "result_sha256": "7529f381fc84d98d344538e689831c1ed48c4ffd13b7a7393ca4f014b4dd2e3a"
+      },
+      {
+        "country_hash": "4af4d260ae26d4084b6c353a4bfc06ca",
+        "postal_hash_prefix": "all",
+        "row_count": 495,
+        "result_sha256": "85478774d9c6515918b039f156adc848b2fa83cc7470923a68c1a2ca18c732ca"
+      },
+      {
+        "country_hash": "ff25664f11040a457d030ac391ddb195",
+        "postal_hash_prefix": "all",
+        "row_count": 348,
+        "result_sha256": "2503d9d7dc3e5a3741646656a1e2103a911735ccaa55feb92e8924f39071f2ea"
+      },
+      {
+        "country_hash": "fd0ff296819dc61da4c30a3ed57fcce6",
+        "postal_hash_prefix": "all",
+        "row_count": 216,
+        "result_sha256": "ef4f1bbb3f23ba1e27273a757a4aa97b612d9cc9180a9509935ec7370c6ba8bc"
+      },
+      {
+        "country_hash": "676de5ba893af6bbc683c93306aaf769",
+        "postal_hash_prefix": "all",
+        "row_count": 164,
+        "result_sha256": "c97094cad86dfd111cc9cb73abf9c464c1fb412c6d781018617052f6fa7c1a67"
+      },
+      {
+        "country_hash": "d33c571079f20a49e9c6040644319202",
+        "postal_hash_prefix": "all",
+        "row_count": 161,
+        "result_sha256": "373301c0fcc01ba57317d05842232d8abdaaa67868f610e38e62678abc24add4"
+      },
+      {
+        "country_hash": "c2da2aca0b0b9198eaf9d35fe9c83766",
+        "postal_hash_prefix": "all",
+        "row_count": 77,
+        "result_sha256": "89023dfe9b45d20a3e59adabd3b281f8fb01ba89c9891f6652859a221e0cf5f9"
+      },
+      {
+        "country_hash": "2cceb0b5c65e259d2519ea446c87fb8c",
+        "postal_hash_prefix": "all",
+        "row_count": 57,
+        "result_sha256": "52faa8b1965fa95b31b1ea55f2110095b61b1061aa36959584b3b8b169ddcb09"
+      },
+      {
+        "country_hash": "adc77a263ba8c6f516421c4e5982a543",
+        "postal_hash_prefix": "all",
+        "row_count": 48,
+        "result_sha256": "68dba41f0683342c33feb12193dedc5ccb7cd0bb45ca3d9c8734e3e37e1d7c86"
+      },
+      {
+        "country_hash": "53851a7a29c6001ec74ce64822c6c432",
+        "postal_hash_prefix": "all",
+        "row_count": 20,
+        "result_sha256": "57fec2fb10a84109b103a5352493f2b7487b6a44e6e43fa66d31d30d4ebfefaf"
+      },
+      {
+        "country_hash": "a38cbb23017269895ea4921bfe91e1df",
+        "postal_hash_prefix": "all",
+        "row_count": 48,
+        "result_sha256": "58e0891d26e57799c57e258d64d98424ee71b5dc99e70f8299e83b3559137f66"
+      },
+      {
+        "country_hash": "e6165388e7da4de2e7f4067be9757abc",
+        "postal_hash_prefix": "all",
+        "row_count": 99,
+        "result_sha256": "1fe00a161db81967bd647523cbe5fbe8e710294aee8dd8b1e2d8f659868af4fe"
+      },
+      {
+        "country_hash": "59240330332adfccfbe033ba96e84f20",
+        "postal_hash_prefix": "all",
+        "row_count": 11,
+        "result_sha256": "fe9e013d85bf64b4b384fbe45fc2d519ced565540b1ce31aa10dbcb662f74200"
+      },
+      {
+        "country_hash": "bfd64a089b03558372aa05ecb073fff4",
+        "postal_hash_prefix": "all",
+        "row_count": 110,
+        "result_sha256": "ea138a3c661efabe88c8475bb9c5733fe96a30e66877796d7f85c4479e4ea897"
+      },
+      {
+        "country_hash": "243cc3954c8a3caa5725ab86276190bf",
+        "postal_hash_prefix": "all",
+        "row_count": 9,
+        "result_sha256": "2fe2c7b65abfa00e48e9b75c653249bfeaf1584b6599e1fc720dd719e30c4cc4"
+      },
+      {
+        "country_hash": "6d3934480b23c0ca3d164cf19fa11946",
+        "postal_hash_prefix": "all",
+        "row_count": 3,
+        "result_sha256": "a5c2184ecadfd2e348f75cdac990d8223fef84061ae9bfcaa7cff118e8667526"
+      },
+      {
+        "country_hash": "ecc919b1c2b77740ffa77cda77176d07",
+        "postal_hash_prefix": "all",
+        "row_count": 12,
+        "result_sha256": "e369c6db878f670e0abf8dfe29da111cce52ee55683d4429cf39ed9891b5d489"
+      },
+      {
+        "country_hash": "aa794f3c1865ae26111ad7195c50e1f6",
+        "postal_hash_prefix": "all",
+        "row_count": 4,
+        "result_sha256": "c6c71e1fa58544cfeb03754f2c419ca0ccc2b7a5a91b22787207d614e4ff1702"
+      },
+      {
+        "country_hash": "7fd3501b939e155dc3fe071c01b5c08f",
+        "postal_hash_prefix": "all",
+        "row_count": 3,
+        "result_sha256": "802c51c3af7de7b103f530767e9a359daf50c6cb7cf871d11abcbd4883014352"
+      },
+      {
+        "country_hash": "a85de25532f765f7ff411acf44bd4234",
+        "postal_hash_prefix": "all",
+        "row_count": 1,
+        "result_sha256": "62897fd24fa29289b3cba5b30a43d2b86feb79e216914e22f4e392065a319ff3"
+      }
+    ],
+    "audit": "queries/audits/commute_distance_onsite_six_month_attrition_audit_20260917.sql",
+    "audit_sha256": "de3a47a3c9d4e5fdd98856ce598533245438333be5256b1e7475f9a7f5f0f630",
+    "audit_result_sha256": "010f76ccaed4596ebbb2acab738b7c8165eb36d001dc07b72f24de3feddbde14"
+  },
+  "acceptance_rule": "24 snapshots exactos; cero conflictos de ubicación; el perfil hash reconcilia exposición y exits con el audit; cobertura de distancia calculable >=70% de Onsite; cada banda publicada tiene >=30 employee-snapshots y >=30 salidas Voluntary.",
+  "outcome": "pass",
+  "limitations": [
+    "La distancia usa centroides postales y coordenadas de oficina, por lo que es una aproximación geográfica.",
+    "La relación es descriptiva; no demuestra causalidad ni produce una predicción individual.",
+    "La población sin distancia calculable permanece fuera de la comparación de tasas y se reporta como cobertura."
+  ]
+}

@@ -1,0 +1,58 @@
+schema_version: 1
+language: es
+deliverable_mode: internal_analysis
+variable: Promotion story by compensation track
+concept: Distribucion por track en agosto de 2026, promocion oficial AR25 y attrition voluntaria trailing 12 months.
+knowledge_boundary: 2026-08-23
+window:
+  start_exclusive: 2025-08-24
+  end_inclusive: 2026-08-23
+population: Employee, Regular y no RF360; active_status=1 para distribucion y exposicion mensual.
+grain:
+  distribution: employee at 2026-08-23
+  promotion: distinct eligible AR25 participant
+  attrition: distinct voluntary termination event and monthly employee exposure
+semantic_type:
+  compensation_track: grouped_mapping
+  promotion_rate: derived_feature
+  attrition_rate: derived_feature
+track_rule: Primera letra de un grade que inicia con letra A-Z seguida de digito; de otro modo Unknown.
+plan_revision_reason: >-
+  La validacion v4 encontro que siete de ocho exits sin snapshot activo previo
+  tienen un unico grade no nulo estable, pero uno contiene dos grades no nulos
+  distintos. Ese evento no se asignara de forma arbitraria. Se acepta publicar
+  tasas por track si la cobertura de asignacion es al menos 99.5%, el evento
+  ambiguo queda fuera de los numeradores por track y la limitacion queda
+  registrada en evidencia y nota metodologica.
+validation_story:
+  - id: fixed_august_window
+    evidence_role: defining
+    question: ¿La ventana fija contiene exactamente doce snapshots y termina el 2026-08-23?
+    method: Fechas literales y conteos agregados.
+    sql_reference: queries/audits/promotion_track_trailing_12m_20260918.sql
+    acceptance_rule: latest_snapshot_date=2026-08-23, baseline_snapshot_date=2025-08-24 y window_snapshot_count=12.
+  - id: track_mapping
+    evidence_role: defining
+    question: ¿La letra se deriva unicamente de codigos letra-numero y las sumas reconcilian?
+    method: Diagnosticos agregados de grades, duplicados y conflictos.
+    sql_reference: queries/audits/promotion_track_trailing_12m_20260918.sql
+    acceptance_rule: Cero conflictos employee-snapshot y suma de distribucion igual a poblacion actual.
+  - id: official_promotion_rate
+    evidence_role: defining
+    question: ¿La tasa usa promotion_yes_no='Yes' sobre participantes elegibles del ciclo AR25?
+    method: Reconciliacion agregada de participantes, promovidos, flags y join poblacional.
+    sql_reference: queries/audits/promotion_track_trailing_12m_20260918.sql
+    acceptance_rule: Cero duplicados, grades o flags contradictorios; promoted <= participants.
+  - id: exit_track_assignment
+    evidence_role: defining
+    question: ¿La asignacion temporal conserva al menos 99.5% de exits sin inventar un track para casos contradictorios?
+    method: Ultimo snapshot activo previo dentro de 45 dias; fallback solo a un grade no nulo estable en todas las filas del evento.
+    sql_reference: queries/audits/promotion_track_unmatched_exit_nonnull_grade_20260918.sql
+    acceptance_rule: Cero asignaciones multiples, cobertura >=99.5%, y todo caso conflictivo permanece sin asignar y fuera de numeradores por track.
+  - id: rate_reconciliation
+    evidence_role: defining
+    question: ¿Cada tasa se recalcula exactamente desde sus numeradores y denominadores declarados?
+    method: Recalculo en el congelador de evidencia y comparacion con el resultado SQL.
+    sql_reference: queries/audits/promotion_track_trailing_12m_20260918.sql
+    acceptance_rule: Diferencia absoluta <=0.0001 puntos porcentuales para cada tasa publicable.
+prior_evidence_policy: V1-V4 documentan la iteracion; V5 y sus resultados ejecutados gobiernan la lamina final.

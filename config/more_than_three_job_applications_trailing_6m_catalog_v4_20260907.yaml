@@ -1,0 +1,156 @@
+version: 4
+generated_from: user decision recorded 2026-09-07
+variables:
+  - category: Applications / internal mobility
+    variable: More than 3 job applications
+    notes: >-
+      Propuesta de feature sensible: seis meses calendario; el uso para modelo
+      permanece restringido hasta completar las validaciones y la gobernanza.
+    definition: >-
+      Hipótesis operativa: al cierre de cada snapshot, el empleado tiene cuatro
+      o más requisiciones internas únicas con cand_applied=1 y application_date
+      en (snapshot_date - 6 meses, snapshot_date].
+    source:
+      type: Database
+      table: hrda.applications
+      columns: [employee_id, candidate_id, cand_applied, application_date, req_id]
+      status: confirmed_accessible
+    profile:
+      mode: aggregate_sql
+      aggregate_sql_file: ../queries/profiles/more_than_three_job_applications_trailing_6m_20260907.sql
+    level_data: Empleado-snapshot; conteo móvil de requisiciones
+    measurement:
+      type: rolling_derived
+      frequency_override: Derivada mensualmente desde eventos de solicitud
+    population:
+      mode: custom
+      display: Empleados regulares activos en cada snapshot mensual con cobertura observable del feed
+    numerator_definition: >-
+      Empleados con cuatro o más req_id únicos en los seis meses calendario
+      anteriores al snapshot, con límite inicial exclusivo y cierre inclusivo.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: mapping_or_validation
+      effort: moderate_transformation
+    rationale:
+      definition:
+        why: >-
+          La ventana de seis meses fue elegida para esta prueba, pero cand_applied,
+          req_id nulo, solicitudes retiradas y la completitud del feed requieren
+          reconciliación con el propietario de Talent Acquisition.
+        evidence: >-
+          La fuente histórica expone employee_id, candidate_id, cand_applied,
+          application_date y req_id; no existe el flag final almacenado.
+        recommended_action: >-
+          Validar la regla de estado y el grain de deduplicación contra el
+          sistema fuente antes de uso productivo.
+      consistency:
+        why: >-
+          La feature depende de deduplicar eventos repetidos y de una historia
+          continua de seis meses para cada snapshot publicable.
+        evidence: >-
+          Las auditorías previstas medirán duplicados, req_id nulos, fronteras
+          temporales y continuidad del feed.
+        recommended_action: >-
+          Establecer SLA de refresh y resolver cualquier discontinuidad antes
+          de interpretar ceros como ausencia de solicitudes.
+      join:
+        why: >-
+          El join empleado-snapshot con eventos fechados debe reconciliarse al
+          grain objetivo y no puede inferirse del nombre de las columnas.
+        evidence: >-
+          La feature requiere unir hrda.applications a snapshots mensuales por
+          employee_id y application_date no futura.
+        recommended_action: >-
+          Ejecutar reconciliación agregada de elegibles, matches, no matches y
+          duplicados antes de habilitar la feature.
+      effort:
+        why: La feature final es un conteo móvil y no un campo directo.
+        evidence: >-
+          La fuente almacena eventos fechados, no el flag de seis meses por
+          empleado-snapshot.
+        recommended_action: >-
+          Mantener la transformación SQL versionada y sus pruebas de frontera.
+    blocker: sensitive_restricted
+    derivation_options:
+      - name: Ventana móvil de seis meses propuesta por el usuario
+        status: testable
+        fields_and_tables: >-
+          hrda.applications(employee_id, candidate_id, cand_applied,
+          application_date, req_id) y hrda.post_hire_monthly_worker_dtls
+          (employee_id, fis_mo_end_dt, fiscal_year).
+        formula: >-
+          Flag=1 cuando COUNT(DISTINCT req_id) es mayor o igual a 4 dentro de
+          (snapshot_date - 6 meses, snapshot_date], con cand_applied=1.
+        grain: Empleado-snapshot mensual.
+        temporal_window: >-
+          Seis meses calendario, límite inicial exclusivo y cierre inclusivo;
+          se excluyen eventos posteriores al snapshot.
+        deduplication: >-
+          Repeticiones del mismo employee_id y req_id cuentan una sola vez por
+          ventana; req_id nulo no contribuye al conteo hasta que el propietario
+          defina su tratamiento.
+        nulls_and_edge_cases: >-
+          application_date nula se excluye; req_id nulo se audita y no cuenta;
+          eventos en el snapshot sí cuentan y los del límite inicial no.
+        leakage_controls: >-
+          El join sólo permite application_date menor o igual al cierre del
+          snapshot y la distribución se limita a periodos con feed observable.
+        snapshot_join: >-
+          Join interno por employee_id al snapshot mensual deduplicado; validar
+          cardinalidad agregada antes de publicar.
+        sensitivity: >-
+          No publicar filas, IDs, nombres, requisiciones ni comportamiento
+          individual; sólo agregados con cohortes de al menos 30.
+        validations_needed: >-
+          Disponibilidad de columnas, frontera temporal, deduplicación,
+          req_id nulo, join empleado-fecha, continuidad y distribución.
+        estimated_effort: Transformación moderada con validaciones de eventos.
+        decision_reason: >-
+          El usuario seleccionó seis meses para la hipótesis; aún debe pasar
+          validación de fuente y semántica para convertirse en feature productiva.
+    selected_derivation: Ventana móvil de seis meses propuesta por el usuario
+    verification:
+      semantic_type: derived_feature
+      source:
+        method: schema_access_check
+        evidence: >-
+          El preflight de metadata ejecutado el 2026-09-07 encontró las cinco
+          columnas requeridas en hrda.applications.
+        result: >-
+          employee_id, candidate_id, cand_applied, application_date y req_id
+          están disponibles en la tabla de fuente declarada.
+        as_of_date: '2026-09-07'
+        query_reference: queries/audits/more-than-3-job-applications-trailing-6m-preflight3-20260907_portfolio_metadata.sql
+        acceptance_rule: Todas las columnas requeridas deben existir en hrda.applications.
+        outcome: pass
+    analysis:
+      language: es
+      semantic_type: derived_feature
+      intended_use: >-
+        Medir movilidad interna intensa como señal histórica de attrition,
+        únicamente en análisis agregado y bajo gobernanza de comportamiento
+        laboral sensible.
+      definition: >-
+        Flag candidato igual a uno cuando el empleado acumula cuatro o más
+        requisiciones internas únicas con cand_applied=1 durante los seis meses
+        calendario previos al cierre del snapshot.
+      numerator_definition: >-
+        Empleados observables con cuatro o más req_id únicos dentro de
+        (snapshot_date - 6 meses, snapshot_date], después de deduplicar por
+        employee_id y req_id.
+      source_reasoning: >-
+        hrda.applications almacena eventos fechados; el flag solicitado debe
+        derivarse por empleado-snapshot con una ventana cerrada al snapshot.
+      validation_focus:
+        - disponibilidad actual de tabla y columnas
+        - frontera de seis meses y exclusión de futuro
+        - deduplicación de requisiciones y req_id nulo
+        - reconciliación empleado-snapshot y continuidad del feed
+        - distribución agregada con cohortes de al menos 30
+      prediction_cutoff: Cierre de cada snapshot mensual de predicción.
+      prior_evidence_policy: >-
+        Los resultados de 12 meses son contexto histórico y no prueban esta
+        definición de seis meses.
+      depends_on: []

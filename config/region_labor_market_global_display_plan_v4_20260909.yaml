@@ -1,0 +1,20 @@
+schema_version: 4
+language: es
+concept: Distribución global de Region y Labor Market
+intended_use: Describir los dos campos geográficos almacenados sin convertir países grandes en categorías adicionales de Region.
+reporting_mode: internal_analysis
+population: Empleados regulares activos en el snapshot mensual 2026-08-23.
+grain: Empleado-snapshot distinto.
+knowledge_boundary: Cierre del snapshot mensual 2026-08-23.
+semantic_types:
+  region: direct_field
+  labor_market: direct_field
+validations:
+  - question: ¿La distribución de Region conserva sólo las categorías almacenadas y reconcilia con la población?
+    method: Conteo agregado por region después de deduplicar employee_id en el snapshot.
+    sql_reference: queries/audits/region_labor_market_global_display_20260909.sql
+    acceptance_rule: India, Americas, APAC y EMEA deben reconciliar con la población elegible; no debe haber categorías sin clasificar ni duplicados o contradicciones por empleado-snapshot.
+  - question: ¿La distribución de Labor Market es global y publicable?
+    method: Top 20 de labor_market más Other Labor Markets sobre la misma población.
+    sql_reference: queries/audits/region_labor_market_global_display_20260909.sql
+    acceptance_rule: Los buckets deben sumar la población elegible, cada valor publicado debe tener n >= 30 y no debe haber valores faltantes o contradictorios.

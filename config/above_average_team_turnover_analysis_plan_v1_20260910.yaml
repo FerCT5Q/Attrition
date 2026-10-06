@@ -1,0 +1,123 @@
+schema_version: 1
+plan_version: 1
+language: es
+created_before_execution: true
+deliverable_mode: presentation
+variable: Above-average team turnover
+concept: >-
+  Señal binaria de contexto de manager: turnover voluntario histórico de su
+  equipo por encima del benchmark ponderado de managers elegibles.
+intended_use: >-
+  Explorar contexto de retención asociado al equipo en análisis longitudinal de
+  attrition; no evaluar managers ni tomar decisiones individuales.
+outcome_boundary: >-
+  Attrition voluntario posterior al cierre t. Las salidas usadas por la señal
+  están cerradas antes de t y nunca incluyen el outcome futuro del reporte.
+knowledge_date: >-
+  Cierre mensual t; usar exactamente los 18 intervalos cerrados anteriores a t
+  y el manager que el empleado tenía al inicio de cada intervalo.
+population: >-
+  Empleados worker_type='Employee', employee_type='Regular' y active_status=1
+  con manager_employee_id al cierre mensual t.
+grain: Empleado-snapshot mensual; cálculo intermedio manager-snapshot
+semantic_type: derived_feature
+source_reasoning: >-
+  hrda.post_hire_monthly_worker_dtls es la fuente primaria porque contiene los
+  snapshots mensuales de la relación manager-equipo y las terminaciones usadas
+  por las señales actuales. hrda.all_terminations se consulta exclusivamente
+  para cuantificar diferencias agregadas; su reconciliación pendiente limita la
+  definición, pero no se sustituye la fuente primaria sin lineage aprobado.
+definition:
+  window: 18 intervalos mensuales cerrados anteriores a t, construidos con 19 cierres fuente.
+  event: term_type exactamente Voluntary; excluir Voluntary Exception, involuntarias y nulos.
+  attribution: Manager del empleado en el snapshot inicial del intervalo de term_date.
+  manager_eligibility: 18 intervalos observables, tamaño medio mensual >=4 y >=2 salidas distintas.
+  rate: salidas voluntarias / exposición histórica de equipo * 6.
+  benchmark: Promedio de tasas elegibles ponderado por tamaño medio de equipo.
+  flag: 1 para tasa >=1.4*benchmark; 0 para manager elegible por debajo; Unknown en otro caso.
+validation_story:
+  - id: source-access-and-grain
+    criterion: source
+    evidence_role: defining
+    question: ¿Existen la fuente mensual, la fuente de reconciliación y todos los campos necesarios?
+    why: Sin snapshots, relación manager-equipo y fechas de terminación no es posible reproducir la señal.
+    fields: [employee_id, manager_employee_id, fis_mo_end_dt, worker_type, employee_type, active_status, term_date, term_type, employeeid]
+    population: Empleados regulares activos con manager al cierre mensual.
+    grain: Metadata de tablas; uso final empleado-snapshot y manager-snapshot.
+    temporal_boundary: La metadata no usa filas de empleados; la ejecución posterior se limita a term_date <= t.
+    method: Auditoría agregada de information_schema para ambas tablas y columnas.
+    sql_reference: queries/audits/above_average_team_turnover_source_access_20260910.sql
+    acceptance_rule: missing_items = 0.
+    observed_evidence: Pendiente antes de ejecutar SQL.
+    outcome_label: Pendiente
+    interpretation: La disponibilidad técnica no prueba aún la definición de negocio.
+    score_effect: Source puede ser 2 sólo si la auditoría pasa con evidencia congelada.
+    limitation: La metadata no resuelve lineage de terminaciones.
+    recommended_action: Ejecutar la auditoría y conservar el resultado congelado.
+  - id: historical-window-event-attribution-and-assignment
+    criterion: join
+    evidence_role: defining
+    question: ¿Los 18 intervalos, eventos y asignaciones actuales son únicos y libres de información futura en varios cierres?
+    why: Una atribución incorrecta puede asociar una salida con el manager posterior o duplicar el evento.
+    fields: [employee_id, manager_employee_id, fis_mo_end_dt, term_date, term_type]
+    population: Reportes directos actuales y exposición activa regular al inicio de los intervalos.
+    grain: Manager-interval y empleado-snapshot.
+    temporal_boundary: Se evalúan seis cierres históricos; cada evento debe caer en un único intervalo terminado en o antes de t.
+    method: Reconstrucción agregada de intervalos, deduplicación de eventos y reconciliación de uniones.
+    sql_reference: queries/audits/above_average_team_turnover_18m_audit_20260910.sql
+    acceptance_rule: >-
+      18 intervalos por cierre, sin uso futuro ni asignaciones múltiples; cada
+      reporte directo actual debe recibir una sola fila de contexto.
+    observed_evidence: Pendiente antes de ejecutar SQL.
+    outcome_label: Pendiente
+    interpretation: La prueba decide la confiabilidad temporal de Join, no el significado gobernado de la fuente.
+    score_effect: Join puede ser 2 sólo con la regla aprobada y métricas congeladas.
+    limitation: La prueba no convierte la fuente primaria en canónica.
+    recommended_action: Ejecutar la auditoría, investigar cualquier pérdida o duplicado y repetir tras cambios de fuente.
+  - id: threshold-and-weighted-benchmark
+    criterion: definition
+    evidence_role: defining
+    question: ¿La regla implementa los mínimos 18, >=4, >=2 y >=1.4, y el benchmark ponderado reconcilia?
+    why: La cardinalidad de equipos no prueba por sí sola el umbral ni la ponderación de la tasa.
+    fields: [manager_employee_id, employee_id, fis_mo_end_dt, term_date, term_type]
+    population: Managers con al menos un reporte directo actual y sus equipos históricos observables.
+    grain: Manager-snapshot, resumido sin identificar managers.
+    temporal_boundary: Seis cierres históricos independientes con ventanas de 18 intervalos cerrados.
+    method: Comparar el benchmark ponderado contra salidas/exposición total y auditar todos los límites programados.
+    sql_reference: queries/audits/above_average_team_turnover_18m_audit_20260910.sql
+    acceptance_rule: >-
+      rule_implementation_failure_count y benchmark_reconciliation_failure_count
+      deben ser 0.
+    observed_evidence: Pendiente antes de ejecutar SQL.
+    outcome_label: Pendiente
+    interpretation: Aunque pase la implementación, Definition permanece limitada a 1 hasta resolver lineage y reconciliación aprobada.
+    score_effect: Evidencia definitoria de la implementación; no habilita Definition=2 por sí sola.
+    limitation: No hay lineage autoritativo de la diferencia entre fuentes de terminación.
+    recommended_action: Guardar resultados, obtener lineage y hacer validación out-of-time antes de cualquier uso operativo.
+  - id: termination-source-reconciliation
+    criterion: definition
+    evidence_role: defining
+    question: ¿Qué tan conciliados están los eventos Voluntary de la fuente primaria y all_terminations?
+    why: La fuente elegida no puede presentarse como canónica si sus eventos no se reconcilian o no hay lineage aprobado.
+    fields: [employee_id, employeeid, term_date, term_type]
+    population: Eventos Voluntary deduplicados en la última ventana de 18 intervalos.
+    grain: Evento deduplicado empleado-fecha, publicado sólo como conteos agregados.
+    temporal_boundary: Última ventana cerrada de 18 intervalos hasta el cierre más reciente.
+    method: Intersección y diferencias agregadas entre employee_id+term_date y employeeid+term_date.
+    sql_reference: queries/audits/above_average_team_turnover_termination_reconciliation_20260910.sql
+    acceptance_rule: La reconciliación debe ejecutarse y cuantificar ambos lados y sus diferencias.
+    observed_evidence: Pendiente antes de ejecutar SQL.
+    outcome_label: Pendiente
+    interpretation: La discrepancia se documenta como límite de Definition; no se rellena con una interpretación de nombres de tabla.
+    score_effect: Definition queda como máximo 1 hasta lineage y reconciliación aprobada.
+    limitation: El resultado agregado no determina cuál feed es el registro gobernado.
+    recommended_action: Acordar fuente canónica, reglas de deduplicación y fecha de conocimiento con el propietario HRIS.
+planned_sql:
+  - queries/audits/above_average_team_turnover_source_access_20260910.sql
+  - queries/audits/above_average_team_turnover_18m_audit_20260910.sql
+  - queries/audits/above_average_team_turnover_termination_reconciliation_20260910.sql
+  - queries/profiles/above_average_team_turnover_18m_profile_20260910.sql
+publication_controls:
+  - Modo presentation; resultados agregados exclusivamente.
+  - No publicar employee_id, manager_employee_id, nombres, tasas individuales ni rankings.
+  - Todo bucket visible de 0, 1 y Unknown debe cumplir n >=30.

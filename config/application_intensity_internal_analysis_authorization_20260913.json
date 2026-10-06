@@ -1,0 +1,42 @@
+{
+  "authorization_id": "application-intensity-internal-collaboration-20260913",
+  "authorized_on": "2026-09-13",
+  "last_amended_on": "2026-09-18",
+  "status": "approved",
+  "reporting_mode": "internal_analysis",
+  "authorized_audience": "requester and Julia, both project developers",
+  "purpose": "Review the aggregate distribution of internal job applications and the descriptive trailing-12-month voluntary attrition observed through each August cutoff before deciding whether the source or feature definition should be advanced.",
+  "scope": {
+    "artifact": "application_intensity_by_fiscal_year",
+    "source": "hrda.job_applications_vw",
+    "buckets": ["1", "2", "3", "4+"],
+    "periods": ["FY2022", "FY2023", "FY2024", "FY2025", "FY2026 YTD through 2026-09-10"],
+    "employee_snapshot_rolling_view": "retain its existing Unknown and time-safe coverage controls",
+    "trailing_12m_august_application_attrition": {
+      "artifact": "application_intensity_trailing_12m_august_attrition",
+      "periods": ["August 2022", "August 2023", "August 2024", "August 2025", "August 2026"],
+      "display_rule": "The slide may show only August 2025 and August 2026; August 2022-2024 remain aggregate evidence only.",
+      "definition": "Distinct linked applicants are bucketed by unique requisitions in the 12 months ending at each August cutoff; the displayed rate is strict voluntary terminations after the first qualifying application and on or before that cutoff.",
+      "subthreshold_aggregate_buckets_authorized": true
+    }
+  },
+  "small_cell_exception": {
+    "allow_subthreshold_aggregate_buckets": true,
+    "minimum_displayed_count": 0,
+    "reason": "Explicit internal exploratory request for two named project developers; no operational or leadership distribution.",
+    "not_a_general_privacy_policy_change": true
+  },
+  "non_negotiable_controls": {
+    "aggregate_only": true,
+    "employee_rows_persisted": false,
+    "employee_ids_persisted": false,
+    "names_persisted": false,
+    "requisition_ids_or_titles_persisted": false,
+    "manager_access": false,
+    "redistribution": false,
+    "operational_use": false,
+    "score_v4_change": false,
+    "production_feature_approval": false
+  },
+  "interpretation": "FY2026 YTD remains a partial fiscal year and is not comparable with full fiscal years. The source is descriptive evidence only and is not approved as identical lineage to hrda.applications or as an individual feature."
+}

@@ -1,0 +1,94 @@
+schema_version: 1
+plan_version: 6
+plan_revision_reason: >-
+  Se evalúa la sugerencia de separar los cambios de manager que coinciden con
+  una transferencia o promoción. La comparación es exploratoria: no sustituye
+  la distribución principal ni aprueba una nueva definición de modelo.
+language: es
+created_before_execution: true
+deliverable_mode: presentation
+variable: Number of manager changes
+concept: >-
+  Conteo retrospectivo de eventos distintos de cambio de manager por empleado
+  activo al snapshot. Se prueba como alternativa un conteo que excluye eventos
+  que coinciden exactamente, para el mismo empleado y fecha efectiva, con una
+  transferencia o promoción registrada.
+intended_use: >-
+  Determinar si la movilidad formal explica una parte material de los cambios
+  de manager y si conviene separar ambos constructos antes de usar la señal en
+  un modelo de riesgo relativo de salida voluntaria a seis meses.
+knowledge_date: >-
+  Sólo entran eventos con fecha efectiva menor o igual al cierre mensual
+  2026-08-23 y observados con su flag positivo en o antes de ese cierre.
+population: >-
+  Empleados regulares activos (worker_type='Employee', employee_type='Regular',
+  active_status=1) con employee_id utilizable al snapshot 2026-08-23.
+grain: Empleado-snapshot mensual; los resultados publicados son agregados.
+semantic_type: derived_feature
+definition:
+  baseline: >-
+    Conteo de llaves distintas employee_id + manager_change_date con
+    manager_change=1 dentro de los seis meses previos al corte.
+  alternative: >-
+    Mismo conteo, excluyendo sólo un evento de manager que tenga una
+    transferencia o promoción con flag positivo en la misma fecha efectiva del
+    mismo empleado. No se presume coincidencia si las fechas difieren.
+  window: '(2026-02-23, 2026-08-23]'
+  deduplication: >-
+    Una observación mensual repetida de la misma llave empleado-fecha cuenta
+    una sola vez por tipo de evento.
+  unresolved_business_rule: >-
+    Falta decidir con el dueño funcional si una transferencia/promoción debe
+    excluir el evento, etiquetarlo en una segunda feature o conservarse como
+    predictor independiente; la prueba no resuelve esa decisión.
+validation_story:
+  - id: same_day_mobility_overlap
+    criterion: definition
+    evidence_role: supporting
+    question: >-
+      ¿Qué proporción de eventos de cambio de manager coincide exactamente con
+      una transferencia o promoción del mismo empleado?
+    why: >-
+      La exclusión propuesta sólo es justificable si se distingue el cambio de
+      manager asociado a movilidad formal del cambio organizacional restante.
+    fields:
+      - employee_id
+      - fis_mo_end_dt
+      - manager_change
+      - manager_change_date
+      - is_transferred
+      - transfer_date
+      - is_promo
+      - promotion_date
+    method: >-
+      Deduplicar cada tipo de evento por empleado-fecha, restringirlos al
+      límite de conocimiento y comparar igualdad exacta de fecha efectiva.
+      Publicar distribuciones agregadas del conteo original y de la alternativa.
+    sql_reference: queries/profiles/number_of_manager_changes_movement_overlap_20260914.sql
+    acceptance_rule: >-
+      Ambas distribuciones deben reconciliar exactamente con la población
+      elegible; los eventos excluidos deben ser subconjunto de los eventos
+      originales y no se publican cohortes menores a 30.
+  - id: business_definition_decision
+    criterion: definition
+    evidence_role: contextual
+    question: >-
+      ¿La coincidencia de fecha demuestra que el evento debe excluirse de la
+      variable?
+    why: >-
+      Una coincidencia técnica no define por sí sola el significado de negocio
+      ni la contribución predictiva de la señal.
+    fields: [manager_change_date, transfer_date, promotion_date]
+    method: >-
+      Mantener la alternativa como análisis de sensibilidad hasta que exista
+      una decisión funcional y una comparación de desempeño longitudinal.
+    sql_reference: queries/profiles/number_of_manager_changes_movement_overlap_20260914.sql
+    acceptance_rule: >-
+      No cambiar la definición primaria ni elevar Definition por esta
+      evidencia; registrar la decisión funcional antes de modelar.
+planned_sql:
+  - queries/profiles/number_of_manager_changes_movement_overlap_20260914.sql
+publication_controls:
+  - Modo presentation; sólo resultados agregados.
+  - No mostrar employee_id, nombres ni filas individuales.
+  - Todo bucket visible debe cumplir n >= 30.

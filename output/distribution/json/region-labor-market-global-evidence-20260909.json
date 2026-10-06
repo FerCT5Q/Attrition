@@ -1,0 +1,182 @@
+{
+  "schema_version": 1,
+  "artifact": "internal_analysis",
+  "generated_on": "2026-09-09",
+  "analysis_plan": "config/region_labor_market_global_display_plan_v4_20260909.yaml",
+  "query_path": "queries/audits/region_labor_market_global_display_20260909.sql",
+  "snapshot": "2026-08-23",
+  "source_table": "hrda.post_hire_monthly_worker_dtls",
+  "date_field": "fis_mo_end_dt",
+  "population": "Active regular employees at the named monthly snapshot",
+  "grain": "Distinct employee snapshot",
+  "minimum_shared_cohort": 30,
+  "eligible_employees": 50043,
+  "display": {
+    "global_region": [
+      {
+        "label": "India",
+        "employee_count": 20814,
+        "percentage": 41.59223,
+        "sort_order": 1
+      },
+      {
+        "label": "Americas",
+        "employee_count": 16040,
+        "percentage": 32.052434,
+        "sort_order": 2
+      },
+      {
+        "label": "APAC",
+        "employee_count": 7631,
+        "percentage": 15.248885,
+        "sort_order": 3
+      },
+      {
+        "label": "EMEA",
+        "employee_count": 5558,
+        "percentage": 11.106448,
+        "sort_order": 4
+      }
+    ],
+    "global_labor_market": [
+      {
+        "label": "IND",
+        "employee_count": 20814,
+        "percentage": 41.59223,
+        "sort_order": 1
+      },
+      {
+        "label": "USA - Market 1",
+        "employee_count": 11635,
+        "percentage": 23.250004,
+        "sort_order": 2
+      },
+      {
+        "label": "CHN - Market 1",
+        "employee_count": 2262,
+        "percentage": 4.520112,
+        "sort_order": 3
+      },
+      {
+        "label": "USA - Market 2",
+        "employee_count": 2043,
+        "percentage": 4.082489,
+        "sort_order": 4
+      },
+      {
+        "label": "TWN",
+        "employee_count": 1963,
+        "percentage": 3.922626,
+        "sort_order": 5
+      },
+      {
+        "label": "DEU",
+        "employee_count": 1568,
+        "percentage": 3.133305,
+        "sort_order": 6
+      },
+      {
+        "label": "CAN",
+        "employee_count": 1182,
+        "percentage": 2.361968,
+        "sort_order": 7
+      },
+      {
+        "label": "SGP - Market 2",
+        "employee_count": 1055,
+        "percentage": 2.108186,
+        "sort_order": 8
+      },
+      {
+        "label": "CHN - Market 2",
+        "employee_count": 1049,
+        "percentage": 2.096197,
+        "sort_order": 9
+      },
+      {
+        "label": "IRL",
+        "employee_count": 852,
+        "percentage": 1.702535,
+        "sort_order": 10
+      },
+      {
+        "label": "ISR",
+        "employee_count": 803,
+        "percentage": 1.60462,
+        "sort_order": 11
+      },
+      {
+        "label": "USA - Market 3",
+        "employee_count": 792,
+        "percentage": 1.582638,
+        "sort_order": 12
+      },
+      {
+        "label": "GBR",
+        "employee_count": 642,
+        "percentage": 1.282896,
+        "sort_order": 13
+      },
+      {
+        "label": "KOR",
+        "employee_count": 536,
+        "percentage": 1.071078,
+        "sort_order": 14
+      },
+      {
+        "label": "FRA",
+        "employee_count": 424,
+        "percentage": 0.847271,
+        "sort_order": 15
+      },
+      {
+        "label": "SWE",
+        "employee_count": 409,
+        "percentage": 0.817297,
+        "sort_order": 16
+      },
+      {
+        "label": "SGP - Market 1",
+        "employee_count": 394,
+        "percentage": 0.787322,
+        "sort_order": 17
+      },
+      {
+        "label": "MEX",
+        "employee_count": 319,
+        "percentage": 0.637451,
+        "sort_order": 18
+      },
+      {
+        "label": "ROM",
+        "employee_count": 250,
+        "percentage": 0.49957,
+        "sort_order": 19
+      },
+      {
+        "label": "ITA",
+        "employee_count": 159,
+        "percentage": 0.317726,
+        "sort_order": 20
+      },
+      {
+        "label": "Other Labor Markets",
+        "employee_count": 892,
+        "percentage": 1.782467,
+        "sort_order": 21
+      }
+    ],
+    "labor_market_source_category_count": 42
+  },
+  "acceptance_rule": "Stored Region categories and global top-20-plus-Other Labor Market reconcile to the eligible population; every displayed bucket has n >= 30; source-row, mapping, classification, and missing-Labor-Market checks equal zero.",
+  "audit_metrics": {
+    "employees_with_conflicting_labor_market_values": 0,
+    "employees_with_conflicting_region_values": 0,
+    "employees_with_multiple_source_rows": 0,
+    "global_missing_labor_market": 0,
+    "unclassified_region_employees": 0
+  },
+  "sql_sha256": "54c877a55e040ed75c39293f1aec4f26c090da0f35d45b82ce5c52268454e0d4",
+  "result_sha256": "bf2a97b6095f5c5e84f6b87f78b18ab2d9eaaaabacb40907ad0af08193046cc0",
+  "outcome": "pass"
+}

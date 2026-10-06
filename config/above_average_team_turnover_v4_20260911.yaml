@@ -1,0 +1,295 @@
+version: 4
+generated_at: '2026-09-10'
+description: >-
+  Candidata 44 independiente de High risk manager y High turnover under this
+  person. La definición usa sólo historia disponible al cierre mensual y se
+  publica únicamente en agregados.
+variables:
+  - category: Manager risk
+    variable: Above-average team turnover
+    notes: >-
+      Candidata 44. Señal asociativa y sensible: no evalúa a una persona manager
+      ni autoriza una intervención individual.
+    definition: >-
+      En cada cierre mensual t, el reporte directo activo recibe 1 cuando su
+      manager vigente es elegible y su tasa histórica de salidas Voluntary,
+      equivalente a seis meses, es al menos 1.3 veces el benchmark ponderado de
+      managers elegibles; recibe 0 cuando el manager elegible queda por debajo y
+      Unknown cuando no existe historia o exposición suficiente.
+    source:
+      type: Database
+      table: hrda.post_hire_monthly_worker_dtls
+      columns:
+        - employee_id
+        - manager_employee_id
+        - fis_mo_end_dt
+        - fiscal_year
+        - worker_type
+        - employee_type
+        - active_status
+        - term_date
+        - term_type
+      status: confirmed_accessible
+    profile:
+      mode: aggregate_sql
+      aggregate_sql_file: ../queries/profiles/above_average_team_turnover_18m_profile_20260911_threshold_1_3.sql
+    level_data: Empleado-snapshot mensual que hereda una señal manager-snapshot
+    measurement:
+      type: rolling_derived
+      frequency_override: Derivada mensual con 18 intervalos mensuales cerrados
+    population:
+      mode: custom
+      display: >-
+        Empleados worker_type='Employee', employee_type='Regular' y
+        active_status=1 con manager_employee_id en cada cierre mensual t.
+    numerator_definition: >-
+      Reportes directos actuales cuyo manager vigente cumple 18 intervalos con
+      exposición de equipo observable, tamaño medio de equipo >=4 y al menos 2
+      salidas Voluntary distintas; el numerador del flag son los managers con tasa
+      >=1.3 veces el benchmark ponderado de managers elegibles.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: reliable_employee_date
+      effort: moderate_transformation
+    rationale:
+      definition:
+        why: >-
+          La fórmula ejecutable queda comprobada contra la fuente mensual, pero
+          la discrepancia agregada con hrda.all_terminations y la ausencia de
+          lineage autoritativo no permiten declarar una definición gobernada.
+        evidence: >-
+          La reconciliación guardada compara eventos Voluntary deduplicados de
+          post_hire_monthly_worker_dtls y all_terminations en la misma ventana.
+          Sus diferencias se conservan como limitación y no se reemplazan por un
+          supuesto sobre cuál fuente es canónica.
+        recommended_action: >-
+          Obtener lineage y propietario de la fuente de terminaciones, resolver
+          las diferencias agregadas y repetir la reconciliación antes de elevar
+          Definition.
+      consistency:
+        why: >-
+          La clasificación depende de snapshots históricos, deduplicación de
+          eventos y una terminología estricta de Voluntary que requiere monitoreo
+          longitudinal y reconciliación de fuentes.
+        evidence: >-
+          La auditoría verifica las fronteras temporales, la unicidad posterior a
+          deduplicación y los límites de elegibilidad; la diferencia entre fuentes
+          permanece como una condición no resuelta.
+        recommended_action: >-
+          Acordar una fuente canónica, versionar las reglas de normalización y
+          monitorear las métricas de discrepancia por cierre.
+      effort:
+        why: >-
+          La señal requiere reconstruir equipos por intervalo, atribuir eventos al
+          manager al inicio del intervalo, calcular benchmarks y aplicar reglas de
+          historia; no es un campo directo.
+        evidence: >-
+          La implementación usa varias etapas temporales agregadas y una unión de
+          manager-snapshot a empleado-snapshot.
+        recommended_action: >-
+          Mantener la transformación versionada, ejecutar validaciones de ventana
+          y benchmark en cada refresh, y hacer backtesting out-of-time antes de un
+          uso operativo.
+    blocker: sensitive_restricted
+    verification:
+      semantic_type: derived_feature
+      source:
+        method: schema_access_check
+        evidence: >-
+          La auditoría de metadata debe confirmar la tabla mensual, la tabla de
+          reconciliación y todas las columnas usadas por la derivación.
+        result: Pendiente de cálculo desde SQL congelado.
+        as_of_date: '2026-09-10'
+        query_reference: queries/audits/above_average_team_turnover_source_access_20260910.sql
+        acceptance_rule: missing_items debe ser igual a 0.
+        outcome: pending
+        metric_checks:
+          - metric: missing_items
+            aggregate: first
+            operator: eq
+            threshold: 0
+      join:
+        method: key_grain_and_temporal_reconciliation
+        evidence: >-
+          La auditoría debe demostrar que cada reporte directo actual recibe una
+          sola asignación de manager-snapshot, que los eventos elegibles tienen a
+          lo sumo una atribución por intervalo y que no se usan eventos futuros.
+        result: Pendiente de cálculo desde SQL congelado.
+        as_of_date: '2026-09-10'
+        query_reference: queries/audits/above_average_team_turnover_18m_audit_20260911_threshold_1_3.sql
+        acceptance_rule: >-
+          matched_count debe ser positivo; unmatched_count, duplicate_count,
+          multi_match_count, future_event_usage_count,
+          event_multiple_interval_assignment_count y
+          event_multiple_manager_assignment_count deben ser 0.
+        outcome: pending
+        metric_checks:
+          - metric: matched_count
+            aggregate: first
+            operator: gt
+            threshold: 0
+          - metric: unmatched_count
+            aggregate: first
+            operator: eq
+            threshold: 0
+          - metric: duplicate_count
+            aggregate: first
+            operator: eq
+            threshold: 0
+          - metric: multi_match_count
+            aggregate: first
+            operator: eq
+            threshold: 0
+          - metric: future_event_usage_count
+            aggregate: first
+            operator: eq
+            threshold: 0
+          - metric: event_multiple_interval_assignment_count
+            aggregate: first
+            operator: eq
+            threshold: 0
+          - metric: event_multiple_manager_assignment_count
+            aggregate: first
+            operator: eq
+            threshold: 0
+    scoring_validations:
+      - id: windows-and-thresholds
+        criterion: definition
+        sql_reference: queries/audits/above_average_team_turnover_18m_audit_20260911_threshold_1_3.sql
+        acceptance_rule: >-
+          Seis cierres históricos deben usar exactamente 18 intervalos, sin
+          solapamientos; las reglas >=4, >=2 y >=1.3 deben cumplirse para todas
+          las asignaciones elegibles.
+        metric: rule_implementation_failure_count
+        operator: eq
+        threshold: 0
+        outcome: pending
+        max_score: 1
+        reason: >-
+          La fórmula técnica puede verificarse, pero falta lineage aprobado y
+          reconciliación de fuente para declarar la definición gobernada.
+        evidence: >-
+          La auditoría aplica los cuatro límites acordados en seis cierres y
+          devuelve sus fallas agregadas sin exponer managers.
+        recommended_action: >-
+          Conservar la prueba de implementación y obtener lineage de eventos
+          antes de elevar Definition.
+      - id: weighted-benchmark-reconciliation
+        criterion: definition
+        sql_reference: queries/audits/above_average_team_turnover_18m_audit_20260911_threshold_1_3.sql
+        acceptance_rule: >-
+          El benchmark ponderado por tamaño medio de equipo debe reconciliar con
+          salidas voluntarias totales / exposición total elegible, expresado a
+          seis meses, en cada cierre histórico evaluado.
+        metric: benchmark_reconciliation_failure_count
+        operator: eq
+        threshold: 0
+        outcome: pending
+        max_score: 1
+        reason: >-
+          La igualdad del benchmark prueba la aritmética, pero no resuelve la
+          fuente canónica de las terminaciones.
+        evidence: >-
+          La auditoría compara la ponderación por tamaño medio con la forma
+          equivalente salidas/exposición*6 para cada cierre evaluado.
+        recommended_action: >-
+          Repetir la reconciliación en cada refresh y completar el lineage de la
+          fuente primaria antes de uso operativo.
+      - id: termination-source-reconciliation
+        criterion: definition
+        sql_reference: queries/audits/above_average_team_turnover_termination_reconciliation_20260910.sql
+        acceptance_rule: >-
+          La comparación agregada con all_terminations debe cuantificar los
+          eventos coincidentes y las diferencias; mientras falte lineage
+          aprobado, esta validación no puede elevar Definition por encima de 1.
+        metric: reconciliation_executed
+        operator: eq
+        threshold: 1
+        outcome: pending
+        max_score: 1
+        reason: >-
+          La consulta cuantifica diferencias, pero ningún resultado agregado
+          identifica por sí solo el feed gobernado.
+        evidence: >-
+          La reconciliación conserva conteos de eventos coincidentes y de cada
+          lado de la diferencia dentro de la misma ventana cerrada.
+        recommended_action: >-
+          Acordar con el propietario HRIS la fuente canónica, las reglas de
+          deduplicación y la fecha de conocimiento.
+    derivation_options:
+      - name: Regla de turnover histórico relativo de manager
+        selected: true
+        status: testable
+        fields_and_tables: >-
+          hrda.post_hire_monthly_worker_dtls: employee_id, manager_employee_id,
+          fis_mo_end_dt, worker_type, employee_type, active_status, term_date y
+          term_type; hrda.all_terminations: employeeid, term_date y term_type
+          sólo para reconciliación agregada.
+        formula: >-
+          Para t, usar 18 intervalos cerrados previos. En cada intervalo atribuir
+          la salida Voluntary al manager del empleado al inicio; exigir 18
+          intervalos observables, promedio de >=4 reportes y >=2 salidas. La tasa
+          es salidas/exposición*6 y el flag compara con 1.3*benchmark ponderado.
+        grain: Manager-snapshot, heredado por reporte directo actual al empleado-snapshot
+        temporal_window: 18 intervalos mensuales cerrados anteriores a t; 19 cierres en total.
+        deduplication: >-
+          Deduplicar eventos por employee_id + term_date dentro de la fuente
+          primaria antes de atribuirlos al intervalo.
+        nulls_and_edge_cases: >-
+          Manager nulo, historia incompleta, menos de cuatro reportes promedio o
+          menos de dos salidas producen Unknown, nunca 0.
+        leakage_controls: >-
+          El evento entra sólo si term_date cae dentro del intervalo cerrado y su
+          final es <=t; la asignación usa el manager al inicio del intervalo.
+        snapshot_join: >-
+          Cada reporte activo actual se une una vez al contexto de su manager
+          vigente en el mismo cierre t.
+        sensitivity: >-
+          Restringida: publicar únicamente conteos y porcentajes agregados; no
+          publicar identificadores, nombres, tasas individuales ni rankings.
+        validations_needed: >-
+          Validar 18 intervalos, continuidad, deduplicación, atribución única,
+          ausencia de eventos futuros, límites de elegibilidad, benchmark y
+          reconciliación con all_terminations.
+        estimated_effort: Transformación moderada y gobernanza antes de uso operativo.
+        decision_reason: >-
+          La ruta está implementada y es verificable con agregados, pero falta
+          lineage de la fuente primaria de terminaciones para una definición
+          gobernada.
+    selected_derivation: Regla de turnover histórico relativo de manager
+    analysis:
+      language: es
+      semantic_type: derived_feature
+      definition: >-
+        Señal binaria de contexto del manager basada en rotación voluntaria
+        histórica relativa y asignada al reporte directo actual.
+      numerator_definition: Reportes actuales con manager elegible cuya tasa es >=1.3 veces el benchmark.
+      intended_use: >-
+        Analizar contexto de retención asociado al equipo, no calificar managers
+        ni tomar decisiones individuales.
+      attrition_use: >-
+        Candidata contextual restringida para investigación longitudinal de
+        attrition con validación temporal y gobierno antes de cualquier uso.
+      source_reasoning: >-
+        post_hire_monthly_worker_dtls permite reconstruir la membresía de equipo
+        y las terminaciones disponibles en snapshots; all_terminations se usa
+        sólo como contraste agregado porque el lineage relativo aún no está
+        aprobado.
+      prediction_cutoff: Cierre mensual t; se excluye toda terminación posterior a t.
+      population: >-
+        Empleados regulares activos con manager_employee_id al cierre mensual t.
+      prior_evidence_policy: >-
+        Las tres señales de manager existentes aportan contexto de fuente, pero
+        no prueban la fórmula ni los scores de esta candidata.
+      validation_focus:
+        - Confirmar componentes, grano mensual y ruta de reconciliación.
+        - Reconstruir 18 intervalos sin eventos futuros ni atribución múltiple.
+        - Comprobar mínimos de historia, exposición, salidas y ratio.
+        - Reconciliar el benchmark ponderado con exposición total elegible.
+        - Cuantificar la discrepancia con all_terminations sin asumir lineage.
+      context_role: Manager risk
+      context_relevance: >-
+        Añade una señal binaria simple de contexto del equipo, sin sustituir
+        High risk manager ni High turnover under this person.
+      documentation_path: above-average-team-turnover/README.md

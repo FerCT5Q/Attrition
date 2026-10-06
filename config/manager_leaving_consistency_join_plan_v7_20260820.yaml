@@ -1,0 +1,130 @@
+schema_version: 1
+plan_version: 7
+plan_revision_reason: >-
+  La ejecucion v6 demostro que las consultas y sus resultados eran validos, pero
+  tambien revelo que el spec conservaba nombres de metricas de una ruta anterior.
+  Esta revision alinea la puerta ejecutable con event_key_count y con las metricas
+  reales del join seleccionado; no cambia las consultas ni las reglas sustantivas.
+language: es
+created_before_execution: true
+variable: Manager leaving
+concept: >-
+  Exposicion del empleado a la terminacion ya ocurrida del manager que lo
+  supervisaba en el ultimo snapshot cerrado anterior al evento.
+intended_use: >-
+  Medir una posible disrupcion posterior a la salida del manager mediante una ruta
+  unica, agregada y segura en el tiempo.
+knowledge_date: >-
+  La fecha de conocimiento sera el primer cierre fiscal mensual igual o posterior
+  a term_date; nunca se utilizara una terminacion futura.
+population: >-
+  Empleados regulares y activos en cada snapshot mensual de prediccion.
+grain: Empleado-snapshot mensual
+semantic_type: derived_feature
+source_reasoning: >-
+  La relacion se obtiene del snapshot mensual y los eventos de all_terminations.
+  Los campos mensuales que mostraron contradicciones se conservan unicamente como
+  contexto y no participan en la formula seleccionada.
+plan_authorship:
+  mode: codex_explicit
+  revision_reason: >-
+    Alineacion de las metricas ejecutables del spec con las columnas realmente
+    producidas por las consultas definitorias ya inspeccionadas.
+  generated_story_fallback: false
+validation_story:
+  - id: source_access
+    criterion: source
+    evidence_role: defining
+    question: ¿Existen la relacion mensual y la fuente de terminaciones con todos los campos requeridos?
+    why: Sin llaves y fechas no puede construirse una caracteristica reproducible.
+    fields: [employee_id, manager_employee_id, fis_mo_end_dt, employeeid, term_date, term_type]
+    method: Auditoria del catalogo tecnico de ambas fuentes mediante information_schema.
+    sql_reference: queries/audits/manager_leaving_source_access_20260820.sql
+    acceptance_rule: La auditoria sera aprobada unicamente cuando missing_items sea igual a cero.
+    metric_checks:
+      - {metric: missing_items, aggregate: sum, operator: eq, threshold: 0}
+  - id: selected_event_source_consistency
+    criterion: consistency
+    evidence_role: defining
+    question: ¿All_terminations tiene llaves de evento unicas, fechas validas y dominios estables durante la historia utilizable?
+    why: La caracteristica necesita eventos reproducibles aunque la ventana final permanezca pendiente.
+    fields: [employeeid, term_date, term_type]
+    method: Auditoria longitudinal agregada de llaves, fechas y normalizacion del dominio.
+    sql_reference: queries/audits/manager_leaving_all_terminations_consistency_v4_20260820.sql
+    acceptance_rule: >-
+      La comprobacion sera aprobada si existen eventos y si anomaly_count,
+      invalid_count y unexplained_change_count son iguales a cero.
+    metric_checks:
+      - {metric: observations_checked, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: event_key_count, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: anomaly_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: invalid_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: unexplained_change_count, aggregate: sum, operator: eq, threshold: 0}
+  - id: termination_to_prior_team_join
+    criterion: join
+    evidence_role: defining
+    question: ¿Cada terminacion utilizable se atribuye de forma unica al equipo observado antes de la salida?
+    why: El evento debe relacionarse con el manager previo y no con su reemplazante.
+    fields: [manager_employee_id, employeeid, term_date, fis_mo_end_dt]
+    method: >-
+      Asignar el evento al primer cierre posterior, seleccionar el ultimo snapshot
+      previo y agregar el resultado al nivel empleado-snapshot.
+    sql_reference: queries/audits/manager_leaving_join_reconciliation_v2_20260820.sql
+    acceptance_rule: >-
+      La comprobacion sera aprobada si existen eventos y atribuciones, y si todos
+      los conteos de perdidas, duplicados, coincidencias multiples, conflictos y
+      uso de informacion futura son iguales a cero.
+    metric_checks:
+      - {metric: eligible_count, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: matched_count, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: manager_event_count, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: attributed_employee_event_count, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: unmatched_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: duplicate_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: multi_match_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: raw_employee_snapshot_duplicate_rows, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: conflicting_manager_snapshot_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: manager_event_knowledge_unmatched_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: manager_event_knowledge_multi_match_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: attribution_unmatched_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: attribution_multi_match_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: duplicate_manager_event_rows, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: manager_event_term_type_conflicts, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: future_event_usage_count, aggregate: sum, operator: eq, threshold: 0}
+  - id: discarded_monthly_fields_context
+    criterion: consistency
+    evidence_role: contextual
+    question: ¿Por que los campos mensuales no se utilizan como evento canonico?
+    why: La auditoria inicial encontro flags sin fecha, fechas efectivas futuras y una tabla alternativa sin flags positivos comparables.
+    fields: [is_termed, manager_effective_date, term_date]
+    method: Conservar la auditoria inicial como explicacion contextual de la fuente descartada.
+    sql_reference: queries/audits/manager_leaving_consistency_reconciliation_v1_20260820.sql
+    acceptance_rule: Esta evidencia solo documentara la exclusion y no elevara el score.
+    metric_fields: [flagged_without_date_rows, future_manager_effective_date_rows, unexplained_change_count]
+  - id: same_snapshot_self_join_context
+    criterion: join
+    evidence_role: supporting
+    question: ¿Los managers sin coincidencia exacta ocurren fuera de su historia observada o dentro de huecos mensuales?
+    why: Debemos explicar la limitacion aunque la ruta definitoria no necesite ese self-join.
+    fields: [manager_employee_id, employee_id, fis_mo_end_dt]
+    method: Clasificar cada falta respecto al primer y ultimo snapshot observado del manager.
+    sql_reference: queries/audits/manager_leaving_same_snapshot_unmatched_v3_20260820.sql
+    acceptance_rule: La evidencia debera reconciliar todos los casos en categorias agregadas sin exponer identidades.
+    metric_fields: [same_snapshot_manager_unmatched_count, before_manager_history_count, gap_inside_manager_history_count]
+  - id: unresolved_exposure_window
+    criterion: definition
+    evidence_role: contextual
+    question: ¿Esta validacion decide cuantos meses permanece expuesto el empleado?
+    why: La ruta tecnica puede validarse sin convertir una ventana no aprobada en una regla definitiva.
+    fields: [term_date, fis_mo_end_dt]
+    method: Separar la validacion de llaves de la eleccion posterior de tres, seis o doce meses.
+    sql_reference: queries/audits/manager_leaving_join_reconciliation_v2_20260820.sql
+    acceptance_rule: Definition permanecera en uno hasta aprobar la ventana y el tipo de salida del manager.
+    metric_fields: [manager_event_count, manager_event_with_prior_team_count]
+planned_sql:
+  - queries/audits/manager_leaving_source_access_20260820.sql
+  - queries/audits/manager_leaving_all_terminations_consistency_v4_20260820.sql
+  - queries/audits/manager_leaving_join_reconciliation_v2_20260820.sql
+  - queries/audits/manager_leaving_consistency_reconciliation_v1_20260820.sql
+  - queries/audits/manager_leaving_same_snapshot_unmatched_v3_20260820.sql
+acceptance_rules_frozen: true

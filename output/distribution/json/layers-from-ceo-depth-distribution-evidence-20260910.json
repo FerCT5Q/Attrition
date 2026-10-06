@@ -1,0 +1,160 @@
+{
+  "artifact_type": "aggregate_distribution_evidence",
+  "deliverable_mode": "internal_analysis",
+  "variable": "Reconstructed manager layers to CEO",
+  "semantic_type": "hierarchy",
+  "execution_date": "2026-09-10",
+  "snapshot_date": "2026-08-23",
+  "population": "worker_type='Employee'; employee_type='Regular'; active_status=1 at the 2026-08-23 monthly snapshot",
+  "node_universe": "All active workers at the same monthly snapshot, including active managers needed to traverse reporting links.",
+  "grain": "Distinct active regular employee at one monthly snapshot",
+  "definition": "Depth is the number of same-snapshot manager_employee_id links from an employee to the HR-approved CEO root. The CEO root is depth 0; a direct report is depth 1.",
+  "traversal_rules": {
+    "snapshot_isolation": "Managers are resolved only from the same 2026-08-23 snapshot; no manager is borrowed from another snapshot.",
+    "maximum_links": 25,
+    "failure_conditions": [
+      "missing manager",
+      "self-manager",
+      "repeated node / cycle",
+      "conflicting manager assignment",
+      "traversal beyond 25 links"
+    ]
+  },
+  "approved_root_check": {
+    "reference": "HR-approved CEO reference bound in memory at execution time",
+    "identifier_persisted": false,
+    "root_count": 1,
+    "approved_root_resolved_count": 66516,
+    "convergence_rate_percent": 100.0,
+    "outcome": "pass"
+  },
+  "stored_level_reconciliation": {
+    "field": "worker_supervisory_organization_level_from_top",
+    "purpose": "Separate reconciliation check only; it is not used as the chart value.",
+    "comparable_active_regular_employees": 50043,
+    "depth_plus_one_match_count": 49367,
+    "depth_plus_one_match_rate_percent": 98.64916172
+  },
+  "distribution": [
+    {
+      "label": "0–2 layers",
+      "lower_depth": 0,
+      "upper_depth": 2,
+      "employee_count": 192,
+      "percent_of_active_regular": 0.38367004
+    },
+    {
+      "label": "3 layers",
+      "lower_depth": 3,
+      "upper_depth": 3,
+      "employee_count": 938,
+      "percent_of_active_regular": 1.87438803
+    },
+    {
+      "label": "4 layers",
+      "lower_depth": 4,
+      "upper_depth": 4,
+      "employee_count": 2510,
+      "percent_of_active_regular": 5.01568651
+    },
+    {
+      "label": "5 layers",
+      "lower_depth": 5,
+      "upper_depth": 5,
+      "employee_count": 5866,
+      "percent_of_active_regular": 11.72191915
+    },
+    {
+      "label": "6 layers",
+      "lower_depth": 6,
+      "upper_depth": 6,
+      "employee_count": 10603,
+      "percent_of_active_regular": 21.18777851
+    },
+    {
+      "label": "7 layers",
+      "lower_depth": 7,
+      "upper_depth": 7,
+      "employee_count": 13306,
+      "percent_of_active_regular": 26.58913335
+    },
+    {
+      "label": "8 layers",
+      "lower_depth": 8,
+      "upper_depth": 8,
+      "employee_count": 10765,
+      "percent_of_active_regular": 21.51150011
+    },
+    {
+      "label": "9 layers",
+      "lower_depth": 9,
+      "upper_depth": 9,
+      "employee_count": 4809,
+      "percent_of_active_regular": 9.60973563
+    },
+    {
+      "label": "10 layers",
+      "lower_depth": 10,
+      "upper_depth": 10,
+      "employee_count": 954,
+      "percent_of_active_regular": 1.90636053
+    },
+    {
+      "label": "11 layers",
+      "lower_depth": 11,
+      "upper_depth": 11,
+      "employee_count": 100,
+      "percent_of_active_regular": 0.19982815
+    }
+  ],
+  "metrics": {
+    "display_eligible_count": 50043,
+    "display_unresolved_chain_count": 0,
+    "stored_level_comparable_count": 50043,
+    "active_source_row_count": 66516,
+    "manager_conflict_chain_count": 0,
+    "display_reconstructed_count": 50043,
+    "missing_manager_chain_count": 0,
+    "approved_root_resolved_count": 66516,
+    "duplicate_source_node_count": 0,
+    "self_manager_chain_count": 0,
+    "manager_conflict_node_count": 0,
+    "self_manager_node_count": 0,
+    "root_count": 1,
+    "display_approved_root_match_count": 50043,
+    "maximum_observed_depth": 11,
+    "universe_node_count": 66516,
+    "cycle_chain_count": 0,
+    "unresolved_chain_count": 0,
+    "maximum_chain_links": 25,
+    "nonmatching_approved_root_count": 0,
+    "reconstructed_count": 66516,
+    "depth_exceeded_chain_count": 0,
+    "stored_level_conflict_node_count": 0,
+    "stored_level_depth_plus_one_match_count": 49367,
+    "root_reference_pass": 1,
+    "convergence_rate_percent": 100.0,
+    "stored_level_depth_plus_one_match_rate_percent": 98.64916172,
+    "published_bucket_count": 10,
+    "published_employee_count": 50043,
+    "minimum_published_bucket_count": 100,
+    "minimum_cohort": 30
+  },
+  "provenance": {
+    "audit_sql": "queries/audits/layers_from_ceo_snapshot_20260823_distribution.sql",
+    "audit_sql_sha256": "f3137022f6c3627702aab99e1a66642611e9c7d7297e45855e74c77affbc76db",
+    "aggregate_result_sha256": "89245b9f9805fbb2c43709c4e8faa3eb3bb4aaa90c684e45753689e5204da4af",
+    "raw_aggregate_rows_persisted": false
+  },
+  "privacy_checks": {
+    "identifiers_persisted": false,
+    "employee_rows_persisted": false,
+    "manager_rows_persisted": false,
+    "names_persisted": false,
+    "root_identifier_persisted": false,
+    "all_displayed_buckets_meet_minimum": true,
+    "root_singleton_displayed": false
+  },
+  "acceptance_rule": "The fixed snapshot exists; all active same-snapshot chains reconstruct without manager conflicts, missing links, self-links, cycles, or paths beyond 25 links; every chain converges to exactly one HR-approved CEO root with 100% convergence; display depth counts reconcile exactly to active regular employees; and every published contiguous layer band has n >= 30 without exposing the CEO root singleton.",
+  "outcome": "pass"
+}

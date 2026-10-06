@@ -1,0 +1,70 @@
+schema_version: 1
+language: es
+unknown_policy: conservative
+problem_context:
+  problem_statement: >-
+    El deck documenta la distribución y evidencia de 43 variables candidatas;
+    no pretende predecir renuncias individuales. El modelo futuro priorizará
+    cohortes con mayor riesgo relativo de salida Voluntary a seis meses para
+    orientar acciones de retención aprobadas.
+  decision_or_use_case: >-
+    Reemplazar una gráfica ambigua por evidencia descriptiva de si, después de
+    una salida Voluntary inicial, los integrantes restantes de un equipo
+    presentan una incidencia posterior distinta frente a equipos comparables sin
+    salida reciente.
+  outcome: >-
+    Terminación Voluntary retrospectiva dentro de los seis cierres mensuales
+    posteriores al episodio índice; no es una etiqueta disponible en t.
+  population: Empleados regulares activos con manager_employee_id en cada cierre mensual.
+  unit_of_analysis: Integrante de roster índice × episodio de equipo, agregado para publicación.
+  knowledge_boundary: >-
+    El evento índice está disponible en t; los seis cierres posteriores son sólo
+    seguimiento retrospectivo y no pueden entrar en la feature de t.
+  constraints:
+    - Sólo SQL read-only y resultados agregados.
+    - Entregable presentation: n >= 30, sin identidades, atributos protegidos ni métricas individuales de managers.
+    - Asociación descriptiva; no atribuir causalidad ni contagio.
+  stakeholder_questions:
+    - ¿Los equipos que pierden a una persona muestran mayor incidencia acumulada de salida Voluntary entre quienes permanecen?
+  success_criteria:
+    - Curvas a seis meses con comparación temporal y por banda de tamaño estandarizada.
+    - Censura explícita por cambio de manager, salida no Voluntary o pérdida de observación.
+  known_relationships:
+    - variables: ['Team turnover', 'More than 1 employee leaves in a year']
+      relationship: Comparten roster histórico de equipo y eventos de terminación, pero este estudio no redefine la feature histórica.
+      why_relevant: La nueva evidencia evalúa secuencia posterior y debe mantenerse separada de la prevalencia de una ventana retrospectiva.
+      source: provided
+  source: provided
+  missing_fields: []
+  completeness: complete
+variables:
+  - name: Team turnover
+    intended_use: >-
+      Dependencia contextual del roster y de las salidas recientes del equipo;
+      se incluye únicamente para completar el preflight del catálogo y no se
+      reevalúa en este estudio.
+    population: Empleados regulares activos con manager_employee_id en cada cierre mensual.
+    knowledge_date: Cierre mensual t y seis intervalos cerrados anteriores.
+    context_role: Manager-team turnover
+    context_relevance: >-
+      Define el antecedente de rotación de equipo que permite separar una salida
+      índice única de un equipo con múltiples salidas recientes.
+  - name: More than 1 employee leaves in a year
+    intended_use: >-
+      Aportar evidencia contextual retrospectiva sobre salidas secuenciales de
+      equipos; no cambiar score, definición ni uso de la feature sin una decisión
+      de gobierno posterior.
+    population: Empleados regulares activos con manager en t, seguidos sólo mientras mantienen ese manager.
+    knowledge_date: Evento índice al cierre t; outcome retrospectivo a seis cierres posteriores.
+    context_role: Turnover contagion
+    context_relevance: >-
+      Una salida puede coincidir con carga, clima o cambios locales que también
+      precedan otras salidas; la comparación no distingue esas explicaciones.
+decisions:
+  event_scope: term_type exactamente Voluntary; excluir del evento Voluntary Exception, involuntarias y nulos.
+  index_window: Un evento índice en el intervalo que termina en t y exactamente uno para el equipo en (t-6, t].
+  roster: Activo en t; seguir sólo bajo manager índice.
+  comparator: Sin salida Voluntary en (t-6, t], mismo t y banda 1–5, 6–10, 11–20 o 21+.
+  outcome_window: Seis cierres mensuales completos posteriores a t.
+  censoring: Cambio de manager observado, salida no Voluntary o pérdida de observación.
+  presentation: Mostrar sólo agregados publicables y etiquetar asociación descriptiva.

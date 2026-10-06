@@ -1,0 +1,28 @@
+{
+  "artifact": "engineering-model-walkthrough",
+  "created_at_utc": "2026-10-03T22:55:11.389111+00:00",
+  "script": "tools\\engineering_model_walkthrough.py",
+  "authorization": {
+    "path": "config\\attrition_model_in_memory_training_authorization_20261001.json",
+    "id": "attrition-model-in-memory-person-month-training-20261001"
+  },
+  "queries": {
+    "calendar": "queries\\profiles\\critical_tech_model_calendar_20260907.sql",
+    "person_month_frame": "queries\\profiles\\engineering_person_month_features_playbook_v2_20261003.sql"
+  },
+  "query_sha256": {
+    "calendar": "e31d37b1fd90573717ef6f672c3f08010767b2ed0514876fb0ffc61b665efaa8",
+    "person_month_frame": "5ca06841ca6d9ab63a4c9637bede3db90c7b9aa7388bcaec8dfde37d073245f7"
+  },
+  "sources": {
+    "output\\analysis\\engineering\\20261003\\playbook-tenure-confirmation-v1\\confirmation-results.json": "9e9da0564f162a049d66a1fb82c17b88616e9e0d5679b3990fb42d19d61e6426",
+    "output\\analysis\\engineering\\20261003\\playbook-group-selection-v1\\group-selection-results.json": "4113cb232f9c51d42f042ce52fa5a8c951ad71cea54b163173a29c4c83d9a1f7"
+  },
+  "result": "output\\analysis\\engineering\\20261003\\model-walkthrough-v1\\walkthrough-results.json",
+  "result_sha256": "4e0dcb070a77f6ca4995755831e5bdd528eb3fe71082f339153cc62ab3534950",
+  "report": "output\\analysis\\engineering\\20261003\\model-walkthrough-v1\\walkthrough-report.md",
+  "report_sha256": "7fbd07557e15ad323b8a006f5de17f5709eaa7da4d05084744b5f397513d076d",
+  "employee_level_rows_persisted": false,
+  "aggregate_training_frame_persisted": false,
+  "individual_scores_published": false
+}

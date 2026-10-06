@@ -1,0 +1,741 @@
+{
+  "artifact": "engineering-model-walkthrough",
+  "created_at_utc": "2026-10-03T22:55:11.389111+00:00",
+  "knowledge_boundary": "2026-09-07",
+  "deliverable_classification": "presentation",
+  "authorization": {
+    "path": "config\\attrition_model_in_memory_training_authorization_20261001.json",
+    "id": "attrition-model-in-memory-person-month-training-20261001"
+  },
+  "model": {
+    "name": "B: A + promoción + recontratación",
+    "features": [
+      "level_grouped",
+      "tenure_playbook_band",
+      "calendar_month",
+      "manager_changes_12m",
+      "team_exits_12m",
+      "direct_reports_band",
+      "time_since_promotion_band",
+      "rehire",
+      "level_x_tenure",
+      "tenure_x_manager_changes"
+    ],
+    "parameters": 82
+  },
+  "design": {
+    "groups": {
+      "I": "3-5 años · con salidas · entrada",
+      "II": "5-10 años · sin salidas · entrada",
+      "III": "10+ años · sin salidas · medio"
+    },
+    "example_people": "ficticios, con señales elegidas a mano",
+    "min_group_people": 300,
+    "min_published_events": 30,
+    "steps": [
+      {
+        "name": "todos",
+        "variables": []
+      },
+      {
+        "name": "antiguedad",
+        "variables": [
+          "antiguedad"
+        ]
+      },
+      {
+        "name": "salidas",
+        "variables": [
+          "antiguedad",
+          "salidas_equipo"
+        ]
+      },
+      {
+        "name": "nivel",
+        "variables": [
+          "antiguedad",
+          "salidas_equipo",
+          "nivel"
+        ]
+      }
+    ]
+  },
+  "example": {
+    "snapshot": "2026-01-25",
+    "months": [
+      "feb",
+      "mar",
+      "abr",
+      "may",
+      "jun",
+      "jul"
+    ],
+    "model_fold": 4,
+    "model_trained_before": "2025-08-24",
+    "people": 34963,
+    "overall": {
+      "people": 34963,
+      "hazard_percent_by_month": [
+        0.436,
+        0.731,
+        0.475,
+        0.348,
+        0.866,
+        0.532
+      ],
+      "r6_formula_percent": 3.342,
+      "r6_mean_of_people_percent": 3.327,
+      "observed_events_published": true,
+      "observed_events": 1192,
+      "observed_6m_percent": 3.409
+    },
+    "groups": {
+      "I": {
+        "label": "3-5 años · con salidas · entrada",
+        "people": 1373,
+        "hazard_percent_by_month": [
+          0.958,
+          1.603,
+          1.044,
+          0.766,
+          1.897,
+          1.169
+        ],
+        "r6_formula_percent": 7.216,
+        "r6_mean_of_people_percent": 7.187,
+        "observed_events_published": true,
+        "observed_events": 76,
+        "observed_6m_percent": 5.535
+      },
+      "II": {
+        "label": "5-10 años · sin salidas · entrada",
+        "people": 2515,
+        "hazard_percent_by_month": [
+          0.501,
+          0.84,
+          0.546,
+          0.4,
+          0.995,
+          0.612
+        ],
+        "r6_formula_percent": 3.831,
+        "r6_mean_of_people_percent": 3.829,
+        "observed_events_published": true,
+        "observed_events": 101,
+        "observed_6m_percent": 4.016
+      },
+      "III": {
+        "label": "10+ años · sin salidas · medio",
+        "people": 3972,
+        "hazard_percent_by_month": [
+          0.208,
+          0.349,
+          0.227,
+          0.166,
+          0.413,
+          0.254
+        ],
+        "r6_formula_percent": 1.606,
+        "r6_mean_of_people_percent": 1.605,
+        "observed_events_published": true,
+        "observed_events": 61,
+        "observed_6m_percent": 1.536
+      }
+    },
+    "employees": [
+      {
+        "name": "Fernando",
+        "fictitious": true,
+        "group": "I",
+        "description": {
+          "raw": {
+            "level_grouped": "8 - Assoc & Int/Eng",
+            "tenure_playbook_band": "3-5 years",
+            "manager_changes_12m": "1",
+            "team_exits_12m": "2+",
+            "direct_reports_band": "0",
+            "time_since_promotion_band": "sin promo, contratado 3+ years",
+            "rehire": "no"
+          },
+          "antiguedad": "3-5 años",
+          "nivel": "nivel 8",
+          "salidas_equipo": "2+ salidas en su equipo",
+          "cambios_manager": "1 cambio de manager",
+          "reportes": "sin reportes",
+          "promocion": "sin promoción registrada",
+          "recontratado": false
+        },
+        "hazard_percent_by_month": [
+          2.138,
+          3.565,
+          2.33,
+          1.712,
+          4.212,
+          2.607
+        ],
+        "r6_percent": 15.482
+      },
+      {
+        "name": "Julia",
+        "fictitious": true,
+        "group": "I",
+        "description": {
+          "raw": {
+            "level_grouped": "7 - Senior & Lead",
+            "tenure_playbook_band": "3-5 years",
+            "manager_changes_12m": "0",
+            "team_exits_12m": "1",
+            "direct_reports_band": "0",
+            "time_since_promotion_band": "promo 1-2 years",
+            "rehire": "no"
+          },
+          "antiguedad": "3-5 años",
+          "nivel": "nivel 7",
+          "salidas_equipo": "1 salida en su equipo",
+          "cambios_manager": "sin cambio de manager",
+          "reportes": "sin reportes",
+          "promocion": "promoción hace 1-2 años",
+          "recontratado": false
+        },
+        "hazard_percent_by_month": [
+          0.834,
+          1.396,
+          0.909,
+          0.667,
+          1.653,
+          1.018
+        ],
+        "r6_percent": 6.308
+      },
+      {
+        "name": "Leah",
+        "fictitious": true,
+        "group": "II",
+        "description": {
+          "raw": {
+            "level_grouped": "7 - Senior & Lead",
+            "tenure_playbook_band": "5-10 years",
+            "manager_changes_12m": "1",
+            "team_exits_12m": "0",
+            "direct_reports_band": "0",
+            "time_since_promotion_band": "promo 3+ years",
+            "rehire": "no"
+          },
+          "antiguedad": "5-10 años",
+          "nivel": "nivel 7",
+          "salidas_equipo": "sin salidas en su equipo",
+          "cambios_manager": "1 cambio de manager",
+          "reportes": "sin reportes",
+          "promocion": "promoción hace 3+ años",
+          "recontratado": false
+        },
+        "hazard_percent_by_month": [
+          0.583,
+          0.978,
+          0.636,
+          0.466,
+          1.158,
+          0.712
+        ],
+        "r6_percent": 4.451
+      },
+      {
+        "name": "Ana",
+        "fictitious": true,
+        "group": "II",
+        "description": {
+          "raw": {
+            "level_grouped": "8 - Assoc & Int/Eng",
+            "tenure_playbook_band": "5-10 years",
+            "manager_changes_12m": "0",
+            "team_exits_12m": "0",
+            "direct_reports_band": "0",
+            "time_since_promotion_band": "promo 2-3 years",
+            "rehire": "yes"
+          },
+          "antiguedad": "5-10 años",
+          "nivel": "nivel 8",
+          "salidas_equipo": "sin salidas en su equipo",
+          "cambios_manager": "sin cambio de manager",
+          "reportes": "sin reportes",
+          "promocion": "promoción hace 2-3 años",
+          "recontratado": true
+        },
+        "hazard_percent_by_month": [
+          0.647,
+          1.084,
+          0.705,
+          0.517,
+          1.283,
+          0.79
+        ],
+        "r6_percent": 4.923
+      },
+      {
+        "name": "Carlos",
+        "fictitious": true,
+        "group": "III",
+        "description": {
+          "raw": {
+            "level_grouped": "6 - Staff & /Mgr",
+            "tenure_playbook_band": "10+ years",
+            "manager_changes_12m": "0",
+            "team_exits_12m": "0",
+            "direct_reports_band": "1-5",
+            "time_since_promotion_band": "promo 3+ years",
+            "rehire": "no"
+          },
+          "antiguedad": "10+ años",
+          "nivel": "nivel 6",
+          "salidas_equipo": "sin salidas en su equipo",
+          "cambios_manager": "sin cambio de manager",
+          "reportes": "1-5 reportes",
+          "promocion": "promoción hace 3+ años",
+          "recontratado": false
+        },
+        "hazard_percent_by_month": [
+          0.178,
+          0.298,
+          0.194,
+          0.142,
+          0.353,
+          0.217
+        ],
+        "r6_percent": 1.374
+      },
+      {
+        "name": "Sofía",
+        "fictitious": true,
+        "group": "III",
+        "description": {
+          "raw": {
+            "level_grouped": "5 - Sr Staff & /Mgr",
+            "tenure_playbook_band": "10+ years",
+            "manager_changes_12m": "0",
+            "team_exits_12m": "0",
+            "direct_reports_band": "6+",
+            "time_since_promotion_band": "promo <1 year",
+            "rehire": "no"
+          },
+          "antiguedad": "10+ años",
+          "nivel": "nivel 5",
+          "salidas_equipo": "sin salidas en su equipo",
+          "cambios_manager": "sin cambio de manager",
+          "reportes": "6+ reportes",
+          "promocion": "promoción hace <1 año",
+          "recontratado": false
+        },
+        "hazard_percent_by_month": [
+          0.104,
+          0.174,
+          0.113,
+          0.083,
+          0.206,
+          0.127
+        ],
+        "r6_percent": 0.803
+      }
+    ],
+    "coefficients": {
+      "intercept": -5.094583,
+      "level_grouped=1 - VP & Above": -0.490809,
+      "level_grouped=2 - Sr Dir": -0.488476,
+      "level_grouped=3 - Princ/Directors": -0.252291,
+      "level_grouped=5 - Sr Staff & /Mgr": -0.348981,
+      "level_grouped=6 - Staff & /Mgr": -0.301995,
+      "level_grouped=8 - Assoc & Int/Eng": 0.215622,
+      "level_grouped=Misc": -0.000531,
+      "tenure_playbook_band=1-2 years": 0.169266,
+      "tenure_playbook_band=10+ years": -0.398597,
+      "tenure_playbook_band=2-3 years": 0.336858,
+      "tenure_playbook_band=3-5 years": 0.139347,
+      "tenure_playbook_band=<1 year": 0.526546,
+      "calendar_month=1": -0.243708,
+      "calendar_month=10": -1.178194,
+      "calendar_month=11": 0.216968,
+      "calendar_month=12": -0.114073,
+      "calendar_month=2": 0.274705,
+      "calendar_month=3": -0.157029,
+      "calendar_month=4": -0.468308,
+      "calendar_month=5": 0.444961,
+      "calendar_month=6": -0.043204,
+      "calendar_month=8": 0.09403,
+      "calendar_month=9": -0.594891,
+      "manager_changes_12m=1": 0.325776,
+      "manager_changes_12m=2+": 0.268459,
+      "team_exits_12m=(unknown)": -0.000584,
+      "team_exits_12m=1": 0.355958,
+      "team_exits_12m=2+": 0.619787,
+      "direct_reports_band=1-5": -0.167128,
+      "direct_reports_band=6+": -0.598369,
+      "time_since_promotion_band=(unknown)": 1.4809,
+      "time_since_promotion_band=promo 1-2 years": 0.060302,
+      "time_since_promotion_band=promo 2-3 years": -0.067568,
+      "time_since_promotion_band=promo 3+ years": -0.128571,
+      "time_since_promotion_band=promo <1 year": -0.115647,
+      "time_since_promotion_band=sin promo, contratado 1-3 years": -0.410109,
+      "time_since_promotion_band=sin promo, contratado 3+ years": -0.102102,
+      "time_since_promotion_band=sin promo, contratado <1 year": -0.884898,
+      "rehire=(unknown)": 1.4809,
+      "rehire=yes": 0.152385,
+      "level_x_tenure=1 - VP & Above | 1-2 years": -0.040699,
+      "level_x_tenure=1 - VP & Above | 10+ years": -0.334731,
+      "level_x_tenure=1 - VP & Above | 2-3 years": -0.050864,
+      "level_x_tenure=1 - VP & Above | 3-5 years": 0.057789,
+      "level_x_tenure=1 - VP & Above | <1 year": -0.041046,
+      "level_x_tenure=2 - Sr Dir | 1-2 years": -0.145189,
+      "level_x_tenure=2 - Sr Dir | 10+ years": -0.05734,
+      "level_x_tenure=2 - Sr Dir | 2-3 years": 0.084403,
+      "level_x_tenure=2 - Sr Dir | 3-5 years": -0.164224,
+      "level_x_tenure=2 - Sr Dir | <1 year": -0.114296,
+      "level_x_tenure=3 - Princ/Directors | 1-2 years": 0.024927,
+      "level_x_tenure=3 - Princ/Directors | 10+ years": -0.191804,
+      "level_x_tenure=3 - Princ/Directors | 2-3 years": 0.206977,
+      "level_x_tenure=3 - Princ/Directors | 3-5 years": 0.209133,
+      "level_x_tenure=3 - Princ/Directors | <1 year": 0.052277,
+      "level_x_tenure=5 - Sr Staff & /Mgr | 1-2 years": 0.36071,
+      "level_x_tenure=5 - Sr Staff & /Mgr | 10+ years": -0.072028,
+      "level_x_tenure=5 - Sr Staff & /Mgr | 2-3 years": 0.071681,
+      "level_x_tenure=5 - Sr Staff & /Mgr | 3-5 years": 0.124362,
+      "level_x_tenure=5 - Sr Staff & /Mgr | <1 year": 0.162712,
+      "level_x_tenure=6 - Staff & /Mgr | 1-2 years": 0.443678,
+      "level_x_tenure=6 - Staff & /Mgr | 10+ years": 0.002054,
+      "level_x_tenure=6 - Staff & /Mgr | 2-3 years": 0.181484,
+      "level_x_tenure=6 - Staff & /Mgr | 3-5 years": 0.250825,
+      "level_x_tenure=6 - Staff & /Mgr | <1 year": 0.409817,
+      "level_x_tenure=8 - Assoc & Int/Eng | 1-2 years": -0.127918,
+      "level_x_tenure=8 - Assoc & Int/Eng | 10+ years": -0.129662,
+      "level_x_tenure=8 - Assoc & Int/Eng | 2-3 years": 0.010794,
+      "level_x_tenure=8 - Assoc & Int/Eng | 3-5 years": 0.494748,
+      "level_x_tenure=8 - Assoc & Int/Eng | <1 year": -0.440294,
+      "level_x_tenure=Misc | 10+ years": -0.000531,
+      "tenure_x_manager_changes=1-2 years | 1": -0.342176,
+      "tenure_x_manager_changes=1-2 years | 2+": -0.282676,
+      "tenure_x_manager_changes=10+ years | 1": 0.021386,
+      "tenure_x_manager_changes=10+ years | 2+": 0.370714,
+      "tenure_x_manager_changes=2-3 years | 1": -0.150596,
+      "tenure_x_manager_changes=2-3 years | 2+": -0.052864,
+      "tenure_x_manager_changes=3-5 years | 1": -0.189244,
+      "tenure_x_manager_changes=3-5 years | 2+": -0.137982,
+      "tenure_x_manager_changes=<1 year | 1": -0.344113,
+      "tenure_x_manager_changes=<1 year | 2+": -0.291904
+    }
+  },
+  "plane": {
+    "snapshot": "2026-07-26",
+    "people": 37221,
+    "mean_predicted_6m_percent": 2.795,
+    "people_per_dot": 100,
+    "steps": [
+      {
+        "name": "todos",
+        "variables": [],
+        "groups": [
+          {
+            "group": "Engineering",
+            "people": 37221,
+            "predicted_6m_percent": 2.795,
+            "dots": 372
+          }
+        ],
+        "groups_eligible": 1,
+        "mean_efficiency": 0.0
+      },
+      {
+        "name": "antiguedad",
+        "variables": [
+          "antiguedad"
+        ],
+        "groups": [
+          {
+            "group": "3-5 años",
+            "people": 7148,
+            "predicted_6m_percent": 4.211,
+            "dots": 71
+          },
+          {
+            "group": "2-3 años",
+            "people": 2286,
+            "predicted_6m_percent": 4.156,
+            "dots": 23
+          },
+          {
+            "group": "5-10 años",
+            "people": 9667,
+            "predicted_6m_percent": 2.942,
+            "dots": 97
+          },
+          {
+            "group": "1-2 años",
+            "people": 3926,
+            "predicted_6m_percent": 2.812,
+            "dots": 39
+          },
+          {
+            "group": "<1 año",
+            "people": 5314,
+            "predicted_6m_percent": 2.42,
+            "dots": 53
+          },
+          {
+            "group": "10+ años",
+            "people": 8880,
+            "predicted_6m_percent": 1.361,
+            "dots": 89
+          }
+        ],
+        "groups_eligible": 6,
+        "mean_efficiency": 0.7315
+      },
+      {
+        "name": "salidas",
+        "variables": [
+          "antiguedad",
+          "salidas_equipo"
+        ],
+        "groups": [
+          {
+            "group": "3-5 años · con salidas",
+            "people": 1854,
+            "predicted_6m_percent": 5.636,
+            "dots": 19
+          },
+          {
+            "group": "2-3 años · con salidas",
+            "people": 683,
+            "predicted_6m_percent": 5.452,
+            "dots": 7
+          },
+          {
+            "group": "5-10 años · con salidas",
+            "people": 2261,
+            "predicted_6m_percent": 4.016,
+            "dots": 23
+          },
+          {
+            "group": "1-2 años · con salidas",
+            "people": 1047,
+            "predicted_6m_percent": 3.775,
+            "dots": 10
+          },
+          {
+            "group": "3-5 años · sin salidas",
+            "people": 5294,
+            "predicted_6m_percent": 3.712,
+            "dots": 53
+          },
+          {
+            "group": "2-3 años · sin salidas",
+            "people": 1603,
+            "predicted_6m_percent": 3.603,
+            "dots": 16
+          },
+          {
+            "group": "<1 año · con salidas",
+            "people": 1645,
+            "predicted_6m_percent": 3.227,
+            "dots": 16
+          },
+          {
+            "group": "5-10 años · sin salidas",
+            "people": 7406,
+            "predicted_6m_percent": 2.614,
+            "dots": 74
+          },
+          {
+            "group": "1-2 años · sin salidas",
+            "people": 2879,
+            "predicted_6m_percent": 2.462,
+            "dots": 29
+          },
+          {
+            "group": "<1 año · sin salidas",
+            "people": 3669,
+            "predicted_6m_percent": 2.058,
+            "dots": 37
+          },
+          {
+            "group": "10+ años · con salidas",
+            "people": 1567,
+            "predicted_6m_percent": 1.892,
+            "dots": 16
+          },
+          {
+            "group": "10+ años · sin salidas",
+            "people": 7313,
+            "predicted_6m_percent": 1.247,
+            "dots": 73
+          }
+        ],
+        "groups_eligible": 12,
+        "mean_efficiency": 0.84151
+      },
+      {
+        "name": "nivel",
+        "variables": [
+          "antiguedad",
+          "salidas_equipo",
+          "nivel"
+        ],
+        "groups": [
+          {
+            "group": "3-5 años · con salidas · entrada",
+            "people": 1310,
+            "predicted_6m_percent": 6.179,
+            "dots": 13
+          },
+          {
+            "group": "2-3 años · con salidas · entrada",
+            "people": 572,
+            "predicted_6m_percent": 5.683,
+            "dots": 6
+          },
+          {
+            "group": "5-10 años · con salidas · entrada",
+            "people": 1028,
+            "predicted_6m_percent": 4.939,
+            "dots": 10
+          },
+          {
+            "group": "3-5 años · con salidas · medio",
+            "people": 478,
+            "predicted_6m_percent": 4.451,
+            "dots": 5
+          },
+          {
+            "group": "3-5 años · sin salidas · entrada",
+            "people": 3807,
+            "predicted_6m_percent": 4.059,
+            "dots": 38
+          },
+          {
+            "group": "<1 año · con salidas · medio",
+            "people": 337,
+            "predicted_6m_percent": 3.922,
+            "dots": 3
+          },
+          {
+            "group": "2-3 años · sin salidas · entrada",
+            "people": 1397,
+            "predicted_6m_percent": 3.757,
+            "dots": 14
+          },
+          {
+            "group": "1-2 años · con salidas · entrada",
+            "people": 849,
+            "predicted_6m_percent": 3.737,
+            "dots": 8
+          },
+          {
+            "group": "5-10 años · con salidas · medio",
+            "people": 1108,
+            "predicted_6m_percent": 3.286,
+            "dots": 11
+          },
+          {
+            "group": "5-10 años · sin salidas · entrada",
+            "people": 3215,
+            "predicted_6m_percent": 3.205,
+            "dots": 32
+          },
+          {
+            "group": "<1 año · con salidas · entrada",
+            "people": 1179,
+            "predicted_6m_percent": 3.052,
+            "dots": 12
+          },
+          {
+            "group": "3-5 años · sin salidas · medio",
+            "people": 1319,
+            "predicted_6m_percent": 2.883,
+            "dots": 13
+          },
+          {
+            "group": "resto",
+            "people": 1406,
+            "predicted_6m_percent": 2.852,
+            "dots": 14
+          },
+          {
+            "group": "1-2 años · sin salidas · medio",
+            "people": 421,
+            "predicted_6m_percent": 2.635,
+            "dots": 4
+          },
+          {
+            "group": "<1 año · sin salidas · medio",
+            "people": 733,
+            "predicted_6m_percent": 2.581,
+            "dots": 7
+          },
+          {
+            "group": "1-2 años · sin salidas · entrada",
+            "people": 2366,
+            "predicted_6m_percent": 2.463,
+            "dots": 24
+          },
+          {
+            "group": "5-10 años · sin salidas · medio",
+            "people": 3886,
+            "predicted_6m_percent": 2.177,
+            "dots": 39
+          },
+          {
+            "group": "10+ años · con salidas · medio",
+            "people": 889,
+            "predicted_6m_percent": 2.087,
+            "dots": 9
+          },
+          {
+            "group": "5-10 años · sin salidas · alto",
+            "people": 305,
+            "predicted_6m_percent": 1.944,
+            "dots": 3
+          },
+          {
+            "group": "<1 año · sin salidas · entrada",
+            "people": 2756,
+            "predicted_6m_percent": 1.925,
+            "dots": 28
+          },
+          {
+            "group": "10+ años · con salidas · alto",
+            "people": 654,
+            "predicted_6m_percent": 1.575,
+            "dots": 7
+          },
+          {
+            "group": "10+ años · sin salidas · medio",
+            "people": 4376,
+            "predicted_6m_percent": 1.345,
+            "dots": 44
+          },
+          {
+            "group": "10+ años · sin salidas · alto",
+            "people": 2830,
+            "predicted_6m_percent": 1.05,
+            "dots": 28
+          }
+        ],
+        "groups_eligible": 22,
+        "mean_efficiency": 0.90855
+      }
+    ],
+    "candidates": 58,
+    "best_tree_efficiency": 0.84981,
+    "top": [
+      "3-5 años · con salidas · entrada",
+      "2-3 años · con salidas · entrada",
+      "5-10 años · con salidas · entrada",
+      "3-5 años · con salidas · medio",
+      "3-5 años · sin salidas · entrada"
+    ]
+  },
+  "privacy": {
+    "employee_level_rows_persisted": false,
+    "employee_ids_selected": false,
+    "aggregate_training_frame_persisted": false,
+    "individual_scores_published": false,
+    "example_employees_fictitious": true
+  }
+}

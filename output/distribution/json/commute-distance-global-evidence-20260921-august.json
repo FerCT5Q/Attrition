@@ -1,0 +1,3583 @@
+{
+  "artifact": "internal_analysis",
+  "variable": "Commute distance",
+  "snapshot_date": "2026-08-23",
+  "population": "All regular active employees",
+  "grain": "Distinct employee snapshot",
+  "office_reference": {
+    "source_url": "https://www.qualcomm.com/company/facilities/offices",
+    "model_url": "https://www.qualcomm.com/company/facilities/offices.model.json",
+    "retrieved_date": "2026-09-08",
+    "catalog_locations": 205,
+    "catalog_sha256": "d033f634ef013f6641995b95b18a9efca006b45f0faddc3567162bb3e5f32a58",
+    "destination_rule": "office_site hash first; city/country fallback only when office_site is not in the catalog; nearest candidate office used when a city has multiple records"
+  },
+  "residential_reference": {
+    "dataset": "GeoNames postal-code coordinates mirrored by symerio",
+    "retrieved_date": "2026-09-08",
+    "country_sources": {
+      "AT": {
+        "source_url": "https://symerio.github.io/postal-codes-data/data/geonames/AT.txt",
+        "sha256": "ae4c3f71dd53e285e3db566a74b4925a492ad473db50d0f247cd057f3258dcf5",
+        "source_rows_read": 19225
+      },
+      "AU": {
+        "source_url": "https://symerio.github.io/postal-codes-data/data/geonames/AU.txt",
+        "sha256": "179bb86aaeec0776262ee4133fc4090638a5774c547c4cd72cce58e824623481",
+        "source_rows_read": 18521
+      },
+      "BE": {
+        "source_url": "https://symerio.github.io/postal-codes-data/data/geonames/BE.txt",
+        "sha256": "318f40205ad82ebb1e3d1a6020f5db11124aa57a3bb7eadcb6c285dbe4e5320e",
+        "source_rows_read": 2781
+      },
+      "BR": {
+        "source_url": "https://symerio.github.io/postal-codes-data/data/geonames/BR.txt",
+        "sha256": "2a09ab3a9d12d4571ac6af35135ad4bf94864169298956a30ff697436612f31b",
+        "source_rows_read": 5525
+      },
+      "CA": {
+        "source_url": "https://symerio.github.io/postal-codes-data/data/geonames/CA.txt",
+        "sha256": "746c5a48167776e8db3bb10eef33edfb9b5420bbc7e33faebc0d0b7a5fcc6d72",
+        "source_rows_read": 1657
+      },
+      "CH": {
+        "source_url": "https://symerio.github.io/postal-codes-data/data/geonames/CH.txt",
+        "sha256": "745ead818ba7d496ed7f09d825a55172051480be6c7ee49a68ff9f37e0b3d7d1",
+        "source_rows_read": 4520
+      },
+      "CN": {
+        "source_url": "https://symerio.github.io/postal-codes-data/data/geonames/CN.txt",
+        "sha256": "a55f44580b18c052d95f0d3caaab89513cefddae07b05d185ceca1acd9d55508",
+        "source_rows_read": 2352
+      },
+      "DE": {
+        "source_url": "https://symerio.github.io/postal-codes-data/data/geonames/DE.txt",
+        "sha256": "a6bece08947c97b526bdba8bf51b7767157f21f16d0a45bb10854df41a8ec120",
+        "source_rows_read": 23297
+      },
+      "ES": {
+        "source_url": "https://symerio.github.io/postal-codes-data/data/geonames/ES.txt",
+        "sha256": "a0ec88b01272a3024c178cc8cd942c45a2d4d1d01c1cb3206367de8f693019fb",
+        "source_rows_read": 37867
+      },
+      "FI": {
+        "source_url": "https://symerio.github.io/postal-codes-data/data/geonames/FI.txt",
+        "sha256": "f5cb3a7b315ddf596dc65129717725e8f83fcbf3707ba913bdd222c52d4b7168",
+        "source_rows_read": 3576
+      },
+      "FR": {
+        "source_url": "https://symerio.github.io/postal-codes-data/data/geonames/FR.txt",
+        "sha256": "b3ba20fabb7424121da36382f81bf311470fa290b0a9c866b96b45f3190c1a7c",
+        "source_rows_read": 51611
+      },
+      "GB": {
+        "source_url": "https://symerio.github.io/postal-codes-data/data/geonames/GB.txt",
+        "sha256": "a468f551000c792484949f6374768df85ca2fd4190ed7d03c4fc1013b24b5b04",
+        "source_rows_read": 27450
+      },
+      "ID": {
+        "source_url": "https://symerio.github.io/postal-codes-data/data/geonames/ID.txt",
+        "sha256": "33ef55dd9099ce589adb4e510fb3d78895d2faad228ca9cb9e1272535c0b9715",
+        "source_rows_read": 81058
+      },
+      "IE": {
+        "source_url": "https://symerio.github.io/postal-codes-data/data/geonames/IE.txt",
+        "sha256": "c13446c3a5a1d6ca969c417064a78344d94613b78cf027420cf47c22598b9da6",
+        "source_rows_read": 139
+      },
+      "IN": {
+        "source_url": "https://symerio.github.io/postal-codes-data/data/geonames/IN.txt",
+        "sha256": "4fa1e8c00a543efff5496c74afb133b7b811b74811f3295fb054c7419c0238a2",
+        "source_rows_read": 155570
+      },
+      "IT": {
+        "source_url": "https://symerio.github.io/postal-codes-data/data/geonames/IT.txt",
+        "sha256": "11ffe787a104288deced0263d93c59a85430b0900bb80ab9e9f2e6930ccb3d46",
+        "source_rows_read": 18415
+      },
+      "JP": {
+        "source_url": "https://symerio.github.io/postal-codes-data/data/geonames/JP.txt",
+        "sha256": "727805185a92f12065e8b35aa6cc41604a8df4ae1a2eacd68d7cf448dd2ecfcf",
+        "source_rows_read": 146883
+      },
+      "KR": {
+        "source_url": "https://symerio.github.io/postal-codes-data/data/geonames/KR.txt",
+        "sha256": "b74f93c28e2c1038e641903fe75280acd055864cdbf0c4040c6e696e1e83443a",
+        "source_rows_read": 35583
+      },
+      "MX": {
+        "source_url": "https://symerio.github.io/postal-codes-data/data/geonames/MX.txt",
+        "sha256": "25c8923f452384f780c143eaff32bf9fd779e3f4853f0ef4031a0190c1a69d27",
+        "source_rows_read": 144655
+      },
+      "NL": {
+        "source_url": "https://symerio.github.io/postal-codes-data/data/geonames/NL.txt",
+        "sha256": "d2c8473a5cbdeaf2b8b4fe7532f650fb72b01e9a6a73eacd593552ec00d9df05",
+        "source_rows_read": 4334
+      },
+      "RO": {
+        "source_url": "https://symerio.github.io/postal-codes-data/data/geonames/RO.txt",
+        "sha256": "b0afac8ca4ab6468ccbbccba26e5c6e0599852eb35d59494ed8acd995625a378",
+        "source_rows_read": 37915
+      },
+      "SE": {
+        "source_url": "https://symerio.github.io/postal-codes-data/data/geonames/SE.txt",
+        "sha256": "fad5d512675bf0914d55298c9fe731495fd24e17285f52f183c0a83df9ed2622",
+        "source_rows_read": 18887
+      },
+      "SG": {
+        "source_url": "https://symerio.github.io/postal-codes-data/data/geonames/SG.txt",
+        "sha256": "728a46d58592b5b12f94a3362999947e08c3de718db3c5d684f51bb588e51968",
+        "source_rows_read": 121154
+      },
+      "US": {
+        "source_url": "https://symerio.github.io/postal-codes-data/data/geonames/US.txt",
+        "sha256": "06f614d8ea3d8e73b54667944059089940fdf5908e5f2b62cb44e52c886a1652",
+        "source_rows_read": 41490
+      }
+    }
+  },
+  "method": {
+    "distance": "Haversine distance between residential postal centroid and Qualcomm office coordinate",
+    "unit": "kilometers",
+    "binning": "floor(distance_km) into one-kilometre intervals before privacy coalescing",
+    "interpretation": "Geographic approximation; not route distance, travel time, or actual commute",
+    "residential_zip_handling": "postal_code queried as MD5 hash and never written to the artifact"
+  },
+  "distribution": [
+    {
+      "category": "0–<1 km",
+      "lower_km": 0,
+      "upper_km": 1,
+      "employee_count": 435
+    },
+    {
+      "category": "1–<2 km",
+      "lower_km": 1,
+      "upper_km": 2,
+      "employee_count": 850
+    },
+    {
+      "category": "2–<3 km",
+      "lower_km": 2,
+      "upper_km": 3,
+      "employee_count": 710
+    },
+    {
+      "category": "3–<4 km",
+      "lower_km": 3,
+      "upper_km": 4,
+      "employee_count": 2045
+    },
+    {
+      "category": "4–<5 km",
+      "lower_km": 4,
+      "upper_km": 5,
+      "employee_count": 2547
+    },
+    {
+      "category": "5–<6 km",
+      "lower_km": 5,
+      "upper_km": 6,
+      "employee_count": 893
+    },
+    {
+      "category": "6–<7 km",
+      "lower_km": 6,
+      "upper_km": 7,
+      "employee_count": 1629
+    },
+    {
+      "category": "7–<8 km",
+      "lower_km": 7,
+      "upper_km": 8,
+      "employee_count": 578
+    },
+    {
+      "category": "8–<9 km",
+      "lower_km": 8,
+      "upper_km": 9,
+      "employee_count": 980
+    },
+    {
+      "category": "9–<10 km",
+      "lower_km": 9,
+      "upper_km": 10,
+      "employee_count": 1831
+    },
+    {
+      "category": "10–<11 km",
+      "lower_km": 10,
+      "upper_km": 11,
+      "employee_count": 2490
+    },
+    {
+      "category": "11–<12 km",
+      "lower_km": 11,
+      "upper_km": 12,
+      "employee_count": 666
+    },
+    {
+      "category": "12–<13 km",
+      "lower_km": 12,
+      "upper_km": 13,
+      "employee_count": 740
+    },
+    {
+      "category": "13–<14 km",
+      "lower_km": 13,
+      "upper_km": 14,
+      "employee_count": 316
+    },
+    {
+      "category": "14–<15 km",
+      "lower_km": 14,
+      "upper_km": 15,
+      "employee_count": 344
+    },
+    {
+      "category": "15–<16 km",
+      "lower_km": 15,
+      "upper_km": 16,
+      "employee_count": 1195
+    },
+    {
+      "category": "16–<17 km",
+      "lower_km": 16,
+      "upper_km": 17,
+      "employee_count": 1431
+    },
+    {
+      "category": "17–<18 km",
+      "lower_km": 17,
+      "upper_km": 18,
+      "employee_count": 827
+    },
+    {
+      "category": "18–<19 km",
+      "lower_km": 18,
+      "upper_km": 19,
+      "employee_count": 630
+    },
+    {
+      "category": "19–<20 km",
+      "lower_km": 19,
+      "upper_km": 20,
+      "employee_count": 443
+    },
+    {
+      "category": "20–<21 km",
+      "lower_km": 20,
+      "upper_km": 21,
+      "employee_count": 191
+    },
+    {
+      "category": "21–<22 km",
+      "lower_km": 21,
+      "upper_km": 22,
+      "employee_count": 445
+    },
+    {
+      "category": "22–<23 km",
+      "lower_km": 22,
+      "upper_km": 23,
+      "employee_count": 155
+    },
+    {
+      "category": "23–<24 km",
+      "lower_km": 23,
+      "upper_km": 24,
+      "employee_count": 573
+    },
+    {
+      "category": "24–<25 km",
+      "lower_km": 24,
+      "upper_km": 25,
+      "employee_count": 266
+    },
+    {
+      "category": "25–<26 km",
+      "lower_km": 25,
+      "upper_km": 26,
+      "employee_count": 171
+    },
+    {
+      "category": "26–<27 km",
+      "lower_km": 26,
+      "upper_km": 27,
+      "employee_count": 328
+    },
+    {
+      "category": "27–<28 km",
+      "lower_km": 27,
+      "upper_km": 28,
+      "employee_count": 107
+    },
+    {
+      "category": "28–<29 km",
+      "lower_km": 28,
+      "upper_km": 29,
+      "employee_count": 172
+    },
+    {
+      "category": "29–<30 km",
+      "lower_km": 29,
+      "upper_km": 30,
+      "employee_count": 4298
+    },
+    {
+      "category": "30–<31 km",
+      "lower_km": 30,
+      "upper_km": 31,
+      "employee_count": 145
+    },
+    {
+      "category": "31–<32 km",
+      "lower_km": 31,
+      "upper_km": 32,
+      "employee_count": 143
+    },
+    {
+      "category": "32–<33 km",
+      "lower_km": 32,
+      "upper_km": 33,
+      "employee_count": 153
+    },
+    {
+      "category": "33–<34 km",
+      "lower_km": 33,
+      "upper_km": 34,
+      "employee_count": 461
+    },
+    {
+      "category": "34–<35 km",
+      "lower_km": 34,
+      "upper_km": 35,
+      "employee_count": 135
+    },
+    {
+      "category": "35–<36 km",
+      "lower_km": 35,
+      "upper_km": 36,
+      "employee_count": 54
+    },
+    {
+      "category": "36–<37 km",
+      "lower_km": 36,
+      "upper_km": 37,
+      "employee_count": 103
+    },
+    {
+      "category": "37–<38 km",
+      "lower_km": 37,
+      "upper_km": 38,
+      "employee_count": 104
+    },
+    {
+      "category": "38–<39 km",
+      "lower_km": 38,
+      "upper_km": 39,
+      "employee_count": 78
+    },
+    {
+      "category": "39–<40 km",
+      "lower_km": 39,
+      "upper_km": 40,
+      "employee_count": 71
+    },
+    {
+      "category": "40–<41 km",
+      "lower_km": 40,
+      "upper_km": 41,
+      "employee_count": 100
+    },
+    {
+      "category": "41–<42 km",
+      "lower_km": 41,
+      "upper_km": 42,
+      "employee_count": 70
+    },
+    {
+      "category": "42–<43 km",
+      "lower_km": 42,
+      "upper_km": 43,
+      "employee_count": 33
+    },
+    {
+      "category": "43–<44 km",
+      "lower_km": 43,
+      "upper_km": 44,
+      "employee_count": 75
+    },
+    {
+      "category": "44–<45 km",
+      "lower_km": 44,
+      "upper_km": 45,
+      "employee_count": 35
+    },
+    {
+      "category": "45–<46 km",
+      "lower_km": 45,
+      "upper_km": 46,
+      "employee_count": 173
+    },
+    {
+      "category": "46–<47 km",
+      "lower_km": 46,
+      "upper_km": 47,
+      "employee_count": 37
+    },
+    {
+      "category": "47–<49 km",
+      "lower_km": 47,
+      "upper_km": 49,
+      "employee_count": 47
+    },
+    {
+      "category": "49–<51 km",
+      "lower_km": 49,
+      "upper_km": 51,
+      "employee_count": 38
+    },
+    {
+      "category": "51–<53 km",
+      "lower_km": 51,
+      "upper_km": 53,
+      "employee_count": 59
+    },
+    {
+      "category": "53–<54 km",
+      "lower_km": 53,
+      "upper_km": 54,
+      "employee_count": 241
+    },
+    {
+      "category": "54–<58 km",
+      "lower_km": 54,
+      "upper_km": 58,
+      "employee_count": 63
+    },
+    {
+      "category": "58–<59 km",
+      "lower_km": 58,
+      "upper_km": 59,
+      "employee_count": 47
+    },
+    {
+      "category": "59–<60 km",
+      "lower_km": 59,
+      "upper_km": 60,
+      "employee_count": 83
+    },
+    {
+      "category": "60–<66 km",
+      "lower_km": 60,
+      "upper_km": 66,
+      "employee_count": 75
+    },
+    {
+      "category": "66–<67 km",
+      "lower_km": 66,
+      "upper_km": 67,
+      "employee_count": 56
+    },
+    {
+      "category": "67–<73 km",
+      "lower_km": 67,
+      "upper_km": 73,
+      "employee_count": 62
+    },
+    {
+      "category": "73–<77 km",
+      "lower_km": 73,
+      "upper_km": 77,
+      "employee_count": 61
+    },
+    {
+      "category": "77–<82 km",
+      "lower_km": 77,
+      "upper_km": 82,
+      "employee_count": 46
+    },
+    {
+      "category": "82–<83 km",
+      "lower_km": 82,
+      "upper_km": 83,
+      "employee_count": 35
+    },
+    {
+      "category": "83–<89 km",
+      "lower_km": 83,
+      "upper_km": 89,
+      "employee_count": 53
+    },
+    {
+      "category": "89–<94 km",
+      "lower_km": 89,
+      "upper_km": 94,
+      "employee_count": 37
+    },
+    {
+      "category": "94–<100 km",
+      "lower_km": 94,
+      "upper_km": 100,
+      "employee_count": 47
+    },
+    {
+      "category": "100–<101 km",
+      "lower_km": 100,
+      "upper_km": 101,
+      "employee_count": 42
+    },
+    {
+      "category": "101–<106 km",
+      "lower_km": 101,
+      "upper_km": 106,
+      "employee_count": 59
+    },
+    {
+      "category": "106–<107 km",
+      "lower_km": 106,
+      "upper_km": 107,
+      "employee_count": 40
+    },
+    {
+      "category": "107–<116 km",
+      "lower_km": 107,
+      "upper_km": 116,
+      "employee_count": 66
+    },
+    {
+      "category": "116–<123 km",
+      "lower_km": 116,
+      "upper_km": 123,
+      "employee_count": 52
+    },
+    {
+      "category": "123–<127 km",
+      "lower_km": 123,
+      "upper_km": 127,
+      "employee_count": 32
+    },
+    {
+      "category": "127–<132 km",
+      "lower_km": 127,
+      "upper_km": 132,
+      "employee_count": 46
+    },
+    {
+      "category": "132–<133 km",
+      "lower_km": 132,
+      "upper_km": 133,
+      "employee_count": 39
+    },
+    {
+      "category": "133–<138 km",
+      "lower_km": 133,
+      "upper_km": 138,
+      "employee_count": 43
+    },
+    {
+      "category": "138–<139 km",
+      "lower_km": 138,
+      "upper_km": 139,
+      "employee_count": 40
+    },
+    {
+      "category": "139–<141 km",
+      "lower_km": 139,
+      "upper_km": 141,
+      "employee_count": 54
+    },
+    {
+      "category": "141–<149 km",
+      "lower_km": 141,
+      "upper_km": 149,
+      "employee_count": 72
+    },
+    {
+      "category": "149–<151 km",
+      "lower_km": 149,
+      "upper_km": 151,
+      "employee_count": 35
+    },
+    {
+      "category": "151–<155 km",
+      "lower_km": 151,
+      "upper_km": 155,
+      "employee_count": 37
+    },
+    {
+      "category": "155–<156 km",
+      "lower_km": 155,
+      "upper_km": 156,
+      "employee_count": 74
+    },
+    {
+      "category": "156–<163 km",
+      "lower_km": 156,
+      "upper_km": 163,
+      "employee_count": 48
+    },
+    {
+      "category": "163–<167 km",
+      "lower_km": 163,
+      "upper_km": 167,
+      "employee_count": 46
+    },
+    {
+      "category": "167–<172 km",
+      "lower_km": 167,
+      "upper_km": 172,
+      "employee_count": 37
+    },
+    {
+      "category": "172–<178 km",
+      "lower_km": 172,
+      "upper_km": 178,
+      "employee_count": 41
+    },
+    {
+      "category": "178–<182 km",
+      "lower_km": 178,
+      "upper_km": 182,
+      "employee_count": 34
+    },
+    {
+      "category": "182–<190 km",
+      "lower_km": 182,
+      "upper_km": 190,
+      "employee_count": 49
+    },
+    {
+      "category": "190–<198 km",
+      "lower_km": 190,
+      "upper_km": 198,
+      "employee_count": 64
+    },
+    {
+      "category": "198–<208 km",
+      "lower_km": 198,
+      "upper_km": 208,
+      "employee_count": 58
+    },
+    {
+      "category": "208–<212 km",
+      "lower_km": 208,
+      "upper_km": 212,
+      "employee_count": 35
+    },
+    {
+      "category": "212–<213 km",
+      "lower_km": 212,
+      "upper_km": 213,
+      "employee_count": 30
+    },
+    {
+      "category": "213–<219 km",
+      "lower_km": 213,
+      "upper_km": 219,
+      "employee_count": 69
+    },
+    {
+      "category": "219–<223 km",
+      "lower_km": 219,
+      "upper_km": 223,
+      "employee_count": 44
+    },
+    {
+      "category": "223–<226 km",
+      "lower_km": 223,
+      "upper_km": 226,
+      "employee_count": 38
+    },
+    {
+      "category": "226–<230 km",
+      "lower_km": 226,
+      "upper_km": 230,
+      "employee_count": 31
+    },
+    {
+      "category": "230–<232 km",
+      "lower_km": 230,
+      "upper_km": 232,
+      "employee_count": 44
+    },
+    {
+      "category": "232–<234 km",
+      "lower_km": 232,
+      "upper_km": 234,
+      "employee_count": 30
+    },
+    {
+      "category": "234–<236 km",
+      "lower_km": 234,
+      "upper_km": 236,
+      "employee_count": 30
+    },
+    {
+      "category": "236–<241 km",
+      "lower_km": 236,
+      "upper_km": 241,
+      "employee_count": 52
+    },
+    {
+      "category": "241–<245 km",
+      "lower_km": 241,
+      "upper_km": 245,
+      "employee_count": 59
+    },
+    {
+      "category": "245–<248 km",
+      "lower_km": 245,
+      "upper_km": 248,
+      "employee_count": 32
+    },
+    {
+      "category": "248–<249 km",
+      "lower_km": 248,
+      "upper_km": 249,
+      "employee_count": 44
+    },
+    {
+      "category": "249–<250 km",
+      "lower_km": 249,
+      "upper_km": 250,
+      "employee_count": 33
+    },
+    {
+      "category": "250–<254 km",
+      "lower_km": 250,
+      "upper_km": 254,
+      "employee_count": 40
+    },
+    {
+      "category": "254–<259 km",
+      "lower_km": 254,
+      "upper_km": 259,
+      "employee_count": 57
+    },
+    {
+      "category": "259–<262 km",
+      "lower_km": 259,
+      "upper_km": 262,
+      "employee_count": 45
+    },
+    {
+      "category": "262–<264 km",
+      "lower_km": 262,
+      "upper_km": 264,
+      "employee_count": 57
+    },
+    {
+      "category": "264–<268 km",
+      "lower_km": 264,
+      "upper_km": 268,
+      "employee_count": 63
+    },
+    {
+      "category": "268–<271 km",
+      "lower_km": 268,
+      "upper_km": 271,
+      "employee_count": 61
+    },
+    {
+      "category": "271–<274 km",
+      "lower_km": 271,
+      "upper_km": 274,
+      "employee_count": 43
+    },
+    {
+      "category": "274–<275 km",
+      "lower_km": 274,
+      "upper_km": 275,
+      "employee_count": 55
+    },
+    {
+      "category": "275–<279 km",
+      "lower_km": 275,
+      "upper_km": 279,
+      "employee_count": 54
+    },
+    {
+      "category": "279–<282 km",
+      "lower_km": 279,
+      "upper_km": 282,
+      "employee_count": 43
+    },
+    {
+      "category": "282–<284 km",
+      "lower_km": 282,
+      "upper_km": 284,
+      "employee_count": 30
+    },
+    {
+      "category": "284–<290 km",
+      "lower_km": 284,
+      "upper_km": 290,
+      "employee_count": 62
+    },
+    {
+      "category": "290–<291 km",
+      "lower_km": 290,
+      "upper_km": 291,
+      "employee_count": 46
+    },
+    {
+      "category": "291–<297 km",
+      "lower_km": 291,
+      "upper_km": 297,
+      "employee_count": 65
+    },
+    {
+      "category": "297–<303 km",
+      "lower_km": 297,
+      "upper_km": 303,
+      "employee_count": 61
+    },
+    {
+      "category": "303–<309 km",
+      "lower_km": 303,
+      "upper_km": 309,
+      "employee_count": 47
+    },
+    {
+      "category": "309–<315 km",
+      "lower_km": 309,
+      "upper_km": 315,
+      "employee_count": 46
+    },
+    {
+      "category": "315–<323 km",
+      "lower_km": 315,
+      "upper_km": 323,
+      "employee_count": 66
+    },
+    {
+      "category": "323–<327 km",
+      "lower_km": 323,
+      "upper_km": 327,
+      "employee_count": 40
+    },
+    {
+      "category": "327–<332 km",
+      "lower_km": 327,
+      "upper_km": 332,
+      "employee_count": 59
+    },
+    {
+      "category": "332–<338 km",
+      "lower_km": 332,
+      "upper_km": 338,
+      "employee_count": 54
+    },
+    {
+      "category": "338–<342 km",
+      "lower_km": 338,
+      "upper_km": 342,
+      "employee_count": 40
+    },
+    {
+      "category": "342–<349 km",
+      "lower_km": 342,
+      "upper_km": 349,
+      "employee_count": 75
+    },
+    {
+      "category": "349–<358 km",
+      "lower_km": 349,
+      "upper_km": 358,
+      "employee_count": 53
+    },
+    {
+      "category": "358–<361 km",
+      "lower_km": 358,
+      "upper_km": 361,
+      "employee_count": 35
+    },
+    {
+      "category": "361–<364 km",
+      "lower_km": 361,
+      "upper_km": 364,
+      "employee_count": 30
+    },
+    {
+      "category": "364–<372 km",
+      "lower_km": 364,
+      "upper_km": 372,
+      "employee_count": 48
+    },
+    {
+      "category": "372–<380 km",
+      "lower_km": 372,
+      "upper_km": 380,
+      "employee_count": 63
+    },
+    {
+      "category": "380–<386 km",
+      "lower_km": 380,
+      "upper_km": 386,
+      "employee_count": 48
+    },
+    {
+      "category": "386–<387 km",
+      "lower_km": 386,
+      "upper_km": 387,
+      "employee_count": 37
+    },
+    {
+      "category": "387–<391 km",
+      "lower_km": 387,
+      "upper_km": 391,
+      "employee_count": 34
+    },
+    {
+      "category": "391–<394 km",
+      "lower_km": 391,
+      "upper_km": 394,
+      "employee_count": 47
+    },
+    {
+      "category": "394–<398 km",
+      "lower_km": 394,
+      "upper_km": 398,
+      "employee_count": 31
+    },
+    {
+      "category": "398–<404 km",
+      "lower_km": 398,
+      "upper_km": 404,
+      "employee_count": 37
+    },
+    {
+      "category": "404–<409 km",
+      "lower_km": 404,
+      "upper_km": 409,
+      "employee_count": 32
+    },
+    {
+      "category": "409–<412 km",
+      "lower_km": 409,
+      "upper_km": 412,
+      "employee_count": 38
+    },
+    {
+      "category": "412–<415 km",
+      "lower_km": 412,
+      "upper_km": 415,
+      "employee_count": 50
+    },
+    {
+      "category": "415–<419 km",
+      "lower_km": 415,
+      "upper_km": 419,
+      "employee_count": 75
+    },
+    {
+      "category": "419–<425 km",
+      "lower_km": 419,
+      "upper_km": 425,
+      "employee_count": 58
+    },
+    {
+      "category": "425–<434 km",
+      "lower_km": 425,
+      "upper_km": 434,
+      "employee_count": 66
+    },
+    {
+      "category": "434–<440 km",
+      "lower_km": 434,
+      "upper_km": 440,
+      "employee_count": 43
+    },
+    {
+      "category": "440–<449 km",
+      "lower_km": 440,
+      "upper_km": 449,
+      "employee_count": 58
+    },
+    {
+      "category": "449–<457 km",
+      "lower_km": 449,
+      "upper_km": 457,
+      "employee_count": 57
+    },
+    {
+      "category": "457–<459 km",
+      "lower_km": 457,
+      "upper_km": 459,
+      "employee_count": 32
+    },
+    {
+      "category": "459–<462 km",
+      "lower_km": 459,
+      "upper_km": 462,
+      "employee_count": 48
+    },
+    {
+      "category": "462–<467 km",
+      "lower_km": 462,
+      "upper_km": 467,
+      "employee_count": 35
+    },
+    {
+      "category": "467–<475 km",
+      "lower_km": 467,
+      "upper_km": 475,
+      "employee_count": 83
+    },
+    {
+      "category": "475–<476 km",
+      "lower_km": 475,
+      "upper_km": 476,
+      "employee_count": 317
+    },
+    {
+      "category": "476–<480 km",
+      "lower_km": 476,
+      "upper_km": 480,
+      "employee_count": 59
+    },
+    {
+      "category": "480–<484 km",
+      "lower_km": 480,
+      "upper_km": 484,
+      "employee_count": 62
+    },
+    {
+      "category": "484–<486 km",
+      "lower_km": 484,
+      "upper_km": 486,
+      "employee_count": 42
+    },
+    {
+      "category": "486–<492 km",
+      "lower_km": 486,
+      "upper_km": 492,
+      "employee_count": 56
+    },
+    {
+      "category": "492–<495 km",
+      "lower_km": 492,
+      "upper_km": 495,
+      "employee_count": 47
+    },
+    {
+      "category": "495–<499 km",
+      "lower_km": 495,
+      "upper_km": 499,
+      "employee_count": 45
+    },
+    {
+      "category": "499–<500 km",
+      "lower_km": 499,
+      "upper_km": 500,
+      "employee_count": 46
+    },
+    {
+      "category": "500–<501 km",
+      "lower_km": 500,
+      "upper_km": 501,
+      "employee_count": 31
+    },
+    {
+      "category": "501–<502 km",
+      "lower_km": 501,
+      "upper_km": 502,
+      "employee_count": 32
+    },
+    {
+      "category": "502–<504 km",
+      "lower_km": 502,
+      "upper_km": 504,
+      "employee_count": 31
+    },
+    {
+      "category": "504–<508 km",
+      "lower_km": 504,
+      "upper_km": 508,
+      "employee_count": 57
+    },
+    {
+      "category": "508–<512 km",
+      "lower_km": 508,
+      "upper_km": 512,
+      "employee_count": 33
+    },
+    {
+      "category": "512–<518 km",
+      "lower_km": 512,
+      "upper_km": 518,
+      "employee_count": 35
+    },
+    {
+      "category": "518–<521 km",
+      "lower_km": 518,
+      "upper_km": 521,
+      "employee_count": 44
+    },
+    {
+      "category": "521–<525 km",
+      "lower_km": 521,
+      "upper_km": 525,
+      "employee_count": 30
+    },
+    {
+      "category": "525–<528 km",
+      "lower_km": 525,
+      "upper_km": 528,
+      "employee_count": 46
+    },
+    {
+      "category": "528–<533 km",
+      "lower_km": 528,
+      "upper_km": 533,
+      "employee_count": 43
+    },
+    {
+      "category": "533–<536 km",
+      "lower_km": 533,
+      "upper_km": 536,
+      "employee_count": 38
+    },
+    {
+      "category": "536–<545 km",
+      "lower_km": 536,
+      "upper_km": 545,
+      "employee_count": 69
+    },
+    {
+      "category": "545–<551 km",
+      "lower_km": 545,
+      "upper_km": 551,
+      "employee_count": 46
+    },
+    {
+      "category": "551–<559 km",
+      "lower_km": 551,
+      "upper_km": 559,
+      "employee_count": 62
+    },
+    {
+      "category": "559–<569 km",
+      "lower_km": 559,
+      "upper_km": 569,
+      "employee_count": 45
+    },
+    {
+      "category": "569–<582 km",
+      "lower_km": 569,
+      "upper_km": 582,
+      "employee_count": 59
+    },
+    {
+      "category": "582–<592 km",
+      "lower_km": 582,
+      "upper_km": 592,
+      "employee_count": 55
+    },
+    {
+      "category": "592–<601 km",
+      "lower_km": 592,
+      "upper_km": 601,
+      "employee_count": 31
+    },
+    {
+      "category": "601–<610 km",
+      "lower_km": 601,
+      "upper_km": 610,
+      "employee_count": 46
+    },
+    {
+      "category": "610–<611 km",
+      "lower_km": 610,
+      "upper_km": 611,
+      "employee_count": 58
+    },
+    {
+      "category": "611–<618 km",
+      "lower_km": 611,
+      "upper_km": 618,
+      "employee_count": 30
+    },
+    {
+      "category": "618–<628 km",
+      "lower_km": 618,
+      "upper_km": 628,
+      "employee_count": 32
+    },
+    {
+      "category": "628–<637 km",
+      "lower_km": 628,
+      "upper_km": 637,
+      "employee_count": 43
+    },
+    {
+      "category": "637–<643 km",
+      "lower_km": 637,
+      "upper_km": 643,
+      "employee_count": 36
+    },
+    {
+      "category": "643–<650 km",
+      "lower_km": 643,
+      "upper_km": 650,
+      "employee_count": 39
+    },
+    {
+      "category": "650–<660 km",
+      "lower_km": 650,
+      "upper_km": 660,
+      "employee_count": 62
+    },
+    {
+      "category": "660–<669 km",
+      "lower_km": 660,
+      "upper_km": 669,
+      "employee_count": 42
+    },
+    {
+      "category": "669–<680 km",
+      "lower_km": 669,
+      "upper_km": 680,
+      "employee_count": 53
+    },
+    {
+      "category": "680–<700 km",
+      "lower_km": 680,
+      "upper_km": 700,
+      "employee_count": 55
+    },
+    {
+      "category": "700–<709 km",
+      "lower_km": 700,
+      "upper_km": 709,
+      "employee_count": 63
+    },
+    {
+      "category": "709–<727 km",
+      "lower_km": 709,
+      "upper_km": 727,
+      "employee_count": 48
+    },
+    {
+      "category": "727–<732 km",
+      "lower_km": 727,
+      "upper_km": 732,
+      "employee_count": 31
+    },
+    {
+      "category": "732–<740 km",
+      "lower_km": 732,
+      "upper_km": 740,
+      "employee_count": 53
+    },
+    {
+      "category": "740–<745 km",
+      "lower_km": 740,
+      "upper_km": 745,
+      "employee_count": 56
+    },
+    {
+      "category": "745–<759 km",
+      "lower_km": 745,
+      "upper_km": 759,
+      "employee_count": 46
+    },
+    {
+      "category": "759–<782 km",
+      "lower_km": 759,
+      "upper_km": 782,
+      "employee_count": 55
+    },
+    {
+      "category": "784–<806 km",
+      "lower_km": 784,
+      "upper_km": 806,
+      "employee_count": 64
+    },
+    {
+      "category": "806–<813 km",
+      "lower_km": 806,
+      "upper_km": 813,
+      "employee_count": 54
+    },
+    {
+      "category": "813–<829 km",
+      "lower_km": 813,
+      "upper_km": 829,
+      "employee_count": 34
+    },
+    {
+      "category": "829–<838 km",
+      "lower_km": 829,
+      "upper_km": 838,
+      "employee_count": 38
+    },
+    {
+      "category": "838–<845 km",
+      "lower_km": 838,
+      "upper_km": 845,
+      "employee_count": 36
+    },
+    {
+      "category": "845–<846 km",
+      "lower_km": 845,
+      "upper_km": 846,
+      "employee_count": 44
+    },
+    {
+      "category": "846–<854 km",
+      "lower_km": 846,
+      "upper_km": 854,
+      "employee_count": 57
+    },
+    {
+      "category": "854–<864 km",
+      "lower_km": 854,
+      "upper_km": 864,
+      "employee_count": 30
+    },
+    {
+      "category": "864–<870 km",
+      "lower_km": 864,
+      "upper_km": 870,
+      "employee_count": 32
+    },
+    {
+      "category": "871–<884 km",
+      "lower_km": 871,
+      "upper_km": 884,
+      "employee_count": 48
+    },
+    {
+      "category": "884–<906 km",
+      "lower_km": 884,
+      "upper_km": 906,
+      "employee_count": 65
+    },
+    {
+      "category": "907–<920 km",
+      "lower_km": 907,
+      "upper_km": 920,
+      "employee_count": 51
+    },
+    {
+      "category": "920–<937 km",
+      "lower_km": 920,
+      "upper_km": 937,
+      "employee_count": 40
+    },
+    {
+      "category": "937–<958 km",
+      "lower_km": 937,
+      "upper_km": 958,
+      "employee_count": 83
+    },
+    {
+      "category": "958–<976 km",
+      "lower_km": 958,
+      "upper_km": 976,
+      "employee_count": 64
+    },
+    {
+      "category": "977–<993 km",
+      "lower_km": 977,
+      "upper_km": 993,
+      "employee_count": 62
+    },
+    {
+      "category": "993–<1002 km",
+      "lower_km": 993,
+      "upper_km": 1002,
+      "employee_count": 42
+    },
+    {
+      "category": "1002–<1013 km",
+      "lower_km": 1002,
+      "upper_km": 1013,
+      "employee_count": 63
+    },
+    {
+      "category": "1013–<1023 km",
+      "lower_km": 1013,
+      "upper_km": 1023,
+      "employee_count": 47
+    },
+    {
+      "category": "1023–<1034 km",
+      "lower_km": 1023,
+      "upper_km": 1034,
+      "employee_count": 31
+    },
+    {
+      "category": "1034–<1044 km",
+      "lower_km": 1034,
+      "upper_km": 1044,
+      "employee_count": 36
+    },
+    {
+      "category": "1044–<1059 km",
+      "lower_km": 1044,
+      "upper_km": 1059,
+      "employee_count": 34
+    },
+    {
+      "category": "1059–<1074 km",
+      "lower_km": 1059,
+      "upper_km": 1074,
+      "employee_count": 45
+    },
+    {
+      "category": "1074–<1084 km",
+      "lower_km": 1074,
+      "upper_km": 1084,
+      "employee_count": 58
+    },
+    {
+      "category": "1084–<1088 km",
+      "lower_km": 1084,
+      "upper_km": 1088,
+      "employee_count": 43
+    },
+    {
+      "category": "1089–<1100 km",
+      "lower_km": 1089,
+      "upper_km": 1100,
+      "employee_count": 57
+    },
+    {
+      "category": "1101–<1119 km",
+      "lower_km": 1101,
+      "upper_km": 1119,
+      "employee_count": 65
+    },
+    {
+      "category": "1119–<1134 km",
+      "lower_km": 1119,
+      "upper_km": 1134,
+      "employee_count": 47
+    },
+    {
+      "category": "1134–<1143 km",
+      "lower_km": 1134,
+      "upper_km": 1143,
+      "employee_count": 36
+    },
+    {
+      "category": "1143–<1147 km",
+      "lower_km": 1143,
+      "upper_km": 1147,
+      "employee_count": 49
+    },
+    {
+      "category": "1147–<1153 km",
+      "lower_km": 1147,
+      "upper_km": 1153,
+      "employee_count": 38
+    },
+    {
+      "category": "1153–<1160 km",
+      "lower_km": 1153,
+      "upper_km": 1160,
+      "employee_count": 47
+    },
+    {
+      "category": "1160–<1167 km",
+      "lower_km": 1160,
+      "upper_km": 1167,
+      "employee_count": 52
+    },
+    {
+      "category": "1167–<1180 km",
+      "lower_km": 1167,
+      "upper_km": 1180,
+      "employee_count": 55
+    },
+    {
+      "category": "1180–<1186 km",
+      "lower_km": 1180,
+      "upper_km": 1186,
+      "employee_count": 32
+    },
+    {
+      "category": "1186–<1187 km",
+      "lower_km": 1186,
+      "upper_km": 1187,
+      "employee_count": 33
+    },
+    {
+      "category": "1188–<1204 km",
+      "lower_km": 1188,
+      "upper_km": 1204,
+      "employee_count": 44
+    },
+    {
+      "category": "1204–<1212 km",
+      "lower_km": 1204,
+      "upper_km": 1212,
+      "employee_count": 47
+    },
+    {
+      "category": "1212–<1221 km",
+      "lower_km": 1212,
+      "upper_km": 1221,
+      "employee_count": 36
+    },
+    {
+      "category": "1221–<1222 km",
+      "lower_km": 1221,
+      "upper_km": 1222,
+      "employee_count": 36
+    },
+    {
+      "category": "1222–<1228 km",
+      "lower_km": 1222,
+      "upper_km": 1228,
+      "employee_count": 38
+    },
+    {
+      "category": "1228–<1236 km",
+      "lower_km": 1228,
+      "upper_km": 1236,
+      "employee_count": 46
+    },
+    {
+      "category": "1236–<1244 km",
+      "lower_km": 1236,
+      "upper_km": 1244,
+      "employee_count": 57
+    },
+    {
+      "category": "1244–<1245 km",
+      "lower_km": 1244,
+      "upper_km": 1245,
+      "employee_count": 44
+    },
+    {
+      "category": "1245–<1250 km",
+      "lower_km": 1245,
+      "upper_km": 1250,
+      "employee_count": 61
+    },
+    {
+      "category": "1250–<1254 km",
+      "lower_km": 1250,
+      "upper_km": 1254,
+      "employee_count": 41
+    },
+    {
+      "category": "1254–<1260 km",
+      "lower_km": 1254,
+      "upper_km": 1260,
+      "employee_count": 53
+    },
+    {
+      "category": "1260–<1264 km",
+      "lower_km": 1260,
+      "upper_km": 1264,
+      "employee_count": 36
+    },
+    {
+      "category": "1264–<1286 km",
+      "lower_km": 1264,
+      "upper_km": 1286,
+      "employee_count": 51
+    },
+    {
+      "category": "1286–<1319 km",
+      "lower_km": 1286,
+      "upper_km": 1319,
+      "employee_count": 45
+    },
+    {
+      "category": "1319–<1353 km",
+      "lower_km": 1319,
+      "upper_km": 1353,
+      "employee_count": 51
+    },
+    {
+      "category": "1355–<1390 km",
+      "lower_km": 1355,
+      "upper_km": 1390,
+      "employee_count": 51
+    },
+    {
+      "category": "1390–<1407 km",
+      "lower_km": 1390,
+      "upper_km": 1407,
+      "employee_count": 48
+    },
+    {
+      "category": "1407–<1421 km",
+      "lower_km": 1407,
+      "upper_km": 1421,
+      "employee_count": 34
+    },
+    {
+      "category": "1421–<1450 km",
+      "lower_km": 1421,
+      "upper_km": 1450,
+      "employee_count": 64
+    },
+    {
+      "category": "1450–<1462 km",
+      "lower_km": 1450,
+      "upper_km": 1462,
+      "employee_count": 35
+    },
+    {
+      "category": "1462–<1488 km",
+      "lower_km": 1462,
+      "upper_km": 1488,
+      "employee_count": 72
+    },
+    {
+      "category": "1488–<1513 km",
+      "lower_km": 1488,
+      "upper_km": 1513,
+      "employee_count": 48
+    },
+    {
+      "category": "1513–<1524 km",
+      "lower_km": 1513,
+      "upper_km": 1524,
+      "employee_count": 60
+    },
+    {
+      "category": "1524–<1537 km",
+      "lower_km": 1524,
+      "upper_km": 1537,
+      "employee_count": 36
+    },
+    {
+      "category": "1538–<1548 km",
+      "lower_km": 1538,
+      "upper_km": 1548,
+      "employee_count": 31
+    },
+    {
+      "category": "1548–<1549 km",
+      "lower_km": 1548,
+      "upper_km": 1549,
+      "employee_count": 60
+    },
+    {
+      "category": "1549–<1558 km",
+      "lower_km": 1549,
+      "upper_km": 1558,
+      "employee_count": 41
+    },
+    {
+      "category": "1558–<1575 km",
+      "lower_km": 1558,
+      "upper_km": 1575,
+      "employee_count": 56
+    },
+    {
+      "category": "1575–<1579 km",
+      "lower_km": 1575,
+      "upper_km": 1579,
+      "employee_count": 58
+    },
+    {
+      "category": "1579–<1586 km",
+      "lower_km": 1579,
+      "upper_km": 1586,
+      "employee_count": 51
+    },
+    {
+      "category": "1586–<1602 km",
+      "lower_km": 1586,
+      "upper_km": 1602,
+      "employee_count": 36
+    },
+    {
+      "category": "1602–<1614 km",
+      "lower_km": 1602,
+      "upper_km": 1614,
+      "employee_count": 49
+    },
+    {
+      "category": "1614–<1645 km",
+      "lower_km": 1614,
+      "upper_km": 1645,
+      "employee_count": 68
+    },
+    {
+      "category": "1647–<1670 km",
+      "lower_km": 1647,
+      "upper_km": 1670,
+      "employee_count": 43
+    },
+    {
+      "category": "1670–<1698 km",
+      "lower_km": 1670,
+      "upper_km": 1698,
+      "employee_count": 34
+    },
+    {
+      "category": "1698–<1699 km",
+      "lower_km": 1698,
+      "upper_km": 1699,
+      "employee_count": 37
+    },
+    {
+      "category": "1699–<1712 km",
+      "lower_km": 1699,
+      "upper_km": 1712,
+      "employee_count": 30
+    },
+    {
+      "category": "1712–<1731 km",
+      "lower_km": 1712,
+      "upper_km": 1731,
+      "employee_count": 49
+    },
+    {
+      "category": "1731–<1741 km",
+      "lower_km": 1731,
+      "upper_km": 1741,
+      "employee_count": 67
+    },
+    {
+      "category": "1741–<1746 km",
+      "lower_km": 1741,
+      "upper_km": 1746,
+      "employee_count": 45
+    },
+    {
+      "category": "1746–<1754 km",
+      "lower_km": 1746,
+      "upper_km": 1754,
+      "employee_count": 45
+    },
+    {
+      "category": "1754–<1799 km",
+      "lower_km": 1754,
+      "upper_km": 1799,
+      "employee_count": 58
+    },
+    {
+      "category": "1800–<1831 km",
+      "lower_km": 1800,
+      "upper_km": 1831,
+      "employee_count": 36
+    },
+    {
+      "category": "1831–<1882 km",
+      "lower_km": 1831,
+      "upper_km": 1882,
+      "employee_count": 33
+    },
+    {
+      "category": "1882–<1928 km",
+      "lower_km": 1882,
+      "upper_km": 1928,
+      "employee_count": 58
+    },
+    {
+      "category": "1931–<1996 km",
+      "lower_km": 1931,
+      "upper_km": 1996,
+      "employee_count": 48
+    },
+    {
+      "category": "1996–<2118 km",
+      "lower_km": 1996,
+      "upper_km": 2118,
+      "employee_count": 43
+    },
+    {
+      "category": "2119–<4113 km",
+      "lower_km": 2119,
+      "upper_km": 4113,
+      "employee_count": 52
+    }
+  ],
+  "onsite_distribution": [
+    {
+      "category": "0–<1 km",
+      "lower_km": 0,
+      "upper_km": 1,
+      "employee_count": 425
+    },
+    {
+      "category": "1–<2 km",
+      "lower_km": 1,
+      "upper_km": 2,
+      "employee_count": 813
+    },
+    {
+      "category": "2–<3 km",
+      "lower_km": 2,
+      "upper_km": 3,
+      "employee_count": 612
+    },
+    {
+      "category": "3–<4 km",
+      "lower_km": 3,
+      "upper_km": 4,
+      "employee_count": 1977
+    },
+    {
+      "category": "4–<5 km",
+      "lower_km": 4,
+      "upper_km": 5,
+      "employee_count": 2435
+    },
+    {
+      "category": "5–<6 km",
+      "lower_km": 5,
+      "upper_km": 6,
+      "employee_count": 849
+    },
+    {
+      "category": "6–<7 km",
+      "lower_km": 6,
+      "upper_km": 7,
+      "employee_count": 1544
+    },
+    {
+      "category": "7–<8 km",
+      "lower_km": 7,
+      "upper_km": 8,
+      "employee_count": 521
+    },
+    {
+      "category": "8–<9 km",
+      "lower_km": 8,
+      "upper_km": 9,
+      "employee_count": 912
+    },
+    {
+      "category": "9–<10 km",
+      "lower_km": 9,
+      "upper_km": 10,
+      "employee_count": 1776
+    },
+    {
+      "category": "10–<11 km",
+      "lower_km": 10,
+      "upper_km": 11,
+      "employee_count": 2444
+    },
+    {
+      "category": "11–<12 km",
+      "lower_km": 11,
+      "upper_km": 12,
+      "employee_count": 605
+    },
+    {
+      "category": "12–<13 km",
+      "lower_km": 12,
+      "upper_km": 13,
+      "employee_count": 704
+    },
+    {
+      "category": "13–<14 km",
+      "lower_km": 13,
+      "upper_km": 14,
+      "employee_count": 254
+    },
+    {
+      "category": "14–<15 km",
+      "lower_km": 14,
+      "upper_km": 15,
+      "employee_count": 313
+    },
+    {
+      "category": "15–<16 km",
+      "lower_km": 15,
+      "upper_km": 16,
+      "employee_count": 1135
+    },
+    {
+      "category": "16–<17 km",
+      "lower_km": 16,
+      "upper_km": 17,
+      "employee_count": 1375
+    },
+    {
+      "category": "17–<18 km",
+      "lower_km": 17,
+      "upper_km": 18,
+      "employee_count": 808
+    },
+    {
+      "category": "18–<19 km",
+      "lower_km": 18,
+      "upper_km": 19,
+      "employee_count": 616
+    },
+    {
+      "category": "19–<20 km",
+      "lower_km": 19,
+      "upper_km": 20,
+      "employee_count": 406
+    },
+    {
+      "category": "20–<21 km",
+      "lower_km": 20,
+      "upper_km": 21,
+      "employee_count": 170
+    },
+    {
+      "category": "21–<22 km",
+      "lower_km": 21,
+      "upper_km": 22,
+      "employee_count": 425
+    },
+    {
+      "category": "22–<23 km",
+      "lower_km": 22,
+      "upper_km": 23,
+      "employee_count": 133
+    },
+    {
+      "category": "23–<24 km",
+      "lower_km": 23,
+      "upper_km": 24,
+      "employee_count": 549
+    },
+    {
+      "category": "24–<25 km",
+      "lower_km": 24,
+      "upper_km": 25,
+      "employee_count": 223
+    },
+    {
+      "category": "25–<26 km",
+      "lower_km": 25,
+      "upper_km": 26,
+      "employee_count": 163
+    },
+    {
+      "category": "26–<27 km",
+      "lower_km": 26,
+      "upper_km": 27,
+      "employee_count": 306
+    },
+    {
+      "category": "27–<28 km",
+      "lower_km": 27,
+      "upper_km": 28,
+      "employee_count": 92
+    },
+    {
+      "category": "28–<29 km",
+      "lower_km": 28,
+      "upper_km": 29,
+      "employee_count": 158
+    },
+    {
+      "category": "29–<30 km",
+      "lower_km": 29,
+      "upper_km": 30,
+      "employee_count": 4041
+    },
+    {
+      "category": "30–<31 km",
+      "lower_km": 30,
+      "upper_km": 31,
+      "employee_count": 135
+    },
+    {
+      "category": "31–<32 km",
+      "lower_km": 31,
+      "upper_km": 32,
+      "employee_count": 132
+    },
+    {
+      "category": "32–<33 km",
+      "lower_km": 32,
+      "upper_km": 33,
+      "employee_count": 134
+    },
+    {
+      "category": "33–<34 km",
+      "lower_km": 33,
+      "upper_km": 34,
+      "employee_count": 445
+    },
+    {
+      "category": "34–<35 km",
+      "lower_km": 34,
+      "upper_km": 35,
+      "employee_count": 127
+    },
+    {
+      "category": "35–<36 km",
+      "lower_km": 35,
+      "upper_km": 36,
+      "employee_count": 46
+    },
+    {
+      "category": "36–<37 km",
+      "lower_km": 36,
+      "upper_km": 37,
+      "employee_count": 94
+    },
+    {
+      "category": "37–<38 km",
+      "lower_km": 37,
+      "upper_km": 38,
+      "employee_count": 93
+    },
+    {
+      "category": "38–<39 km",
+      "lower_km": 38,
+      "upper_km": 39,
+      "employee_count": 72
+    },
+    {
+      "category": "39–<40 km",
+      "lower_km": 39,
+      "upper_km": 40,
+      "employee_count": 60
+    },
+    {
+      "category": "40–<41 km",
+      "lower_km": 40,
+      "upper_km": 41,
+      "employee_count": 79
+    },
+    {
+      "category": "41–<43 km",
+      "lower_km": 41,
+      "upper_km": 43,
+      "employee_count": 98
+    },
+    {
+      "category": "43–<45 km",
+      "lower_km": 43,
+      "upper_km": 45,
+      "employee_count": 98
+    },
+    {
+      "category": "45–<46 km",
+      "lower_km": 45,
+      "upper_km": 46,
+      "employee_count": 170
+    },
+    {
+      "category": "46–<47 km",
+      "lower_km": 46,
+      "upper_km": 47,
+      "employee_count": 31
+    },
+    {
+      "category": "47–<51 km",
+      "lower_km": 47,
+      "upper_km": 51,
+      "employee_count": 70
+    },
+    {
+      "category": "51–<53 km",
+      "lower_km": 51,
+      "upper_km": 53,
+      "employee_count": 46
+    },
+    {
+      "category": "53–<54 km",
+      "lower_km": 53,
+      "upper_km": 54,
+      "employee_count": 230
+    },
+    {
+      "category": "54–<58 km",
+      "lower_km": 54,
+      "upper_km": 58,
+      "employee_count": 52
+    },
+    {
+      "category": "58–<59 km",
+      "lower_km": 58,
+      "upper_km": 59,
+      "employee_count": 42
+    },
+    {
+      "category": "59–<60 km",
+      "lower_km": 59,
+      "upper_km": 60,
+      "employee_count": 72
+    },
+    {
+      "category": "60–<66 km",
+      "lower_km": 60,
+      "upper_km": 66,
+      "employee_count": 60
+    },
+    {
+      "category": "66–<67 km",
+      "lower_km": 66,
+      "upper_km": 67,
+      "employee_count": 54
+    },
+    {
+      "category": "67–<73 km",
+      "lower_km": 67,
+      "upper_km": 73,
+      "employee_count": 52
+    },
+    {
+      "category": "73–<77 km",
+      "lower_km": 73,
+      "upper_km": 77,
+      "employee_count": 57
+    },
+    {
+      "category": "77–<82 km",
+      "lower_km": 77,
+      "upper_km": 82,
+      "employee_count": 40
+    },
+    {
+      "category": "82–<83 km",
+      "lower_km": 82,
+      "upper_km": 83,
+      "employee_count": 34
+    },
+    {
+      "category": "84–<89 km",
+      "lower_km": 84,
+      "upper_km": 89,
+      "employee_count": 38
+    },
+    {
+      "category": "89–<94 km",
+      "lower_km": 89,
+      "upper_km": 94,
+      "employee_count": 33
+    },
+    {
+      "category": "94–<100 km",
+      "lower_km": 94,
+      "upper_km": 100,
+      "employee_count": 40
+    },
+    {
+      "category": "100–<101 km",
+      "lower_km": 100,
+      "upper_km": 101,
+      "employee_count": 40
+    },
+    {
+      "category": "101–<106 km",
+      "lower_km": 101,
+      "upper_km": 106,
+      "employee_count": 51
+    },
+    {
+      "category": "106–<107 km",
+      "lower_km": 106,
+      "upper_km": 107,
+      "employee_count": 40
+    },
+    {
+      "category": "107–<115 km",
+      "lower_km": 107,
+      "upper_km": 115,
+      "employee_count": 38
+    },
+    {
+      "category": "115–<122 km",
+      "lower_km": 115,
+      "upper_km": 122,
+      "employee_count": 50
+    },
+    {
+      "category": "122–<126 km",
+      "lower_km": 122,
+      "upper_km": 126,
+      "employee_count": 42
+    },
+    {
+      "category": "126–<132 km",
+      "lower_km": 126,
+      "upper_km": 132,
+      "employee_count": 48
+    },
+    {
+      "category": "132–<133 km",
+      "lower_km": 132,
+      "upper_km": 133,
+      "employee_count": 37
+    },
+    {
+      "category": "133–<138 km",
+      "lower_km": 133,
+      "upper_km": 138,
+      "employee_count": 39
+    },
+    {
+      "category": "138–<139 km",
+      "lower_km": 138,
+      "upper_km": 139,
+      "employee_count": 38
+    },
+    {
+      "category": "139–<141 km",
+      "lower_km": 139,
+      "upper_km": 141,
+      "employee_count": 53
+    },
+    {
+      "category": "141–<146 km",
+      "lower_km": 141,
+      "upper_km": 146,
+      "employee_count": 49
+    },
+    {
+      "category": "146–<150 km",
+      "lower_km": 146,
+      "upper_km": 150,
+      "employee_count": 38
+    },
+    {
+      "category": "150–<155 km",
+      "lower_km": 150,
+      "upper_km": 155,
+      "employee_count": 46
+    },
+    {
+      "category": "155–<156 km",
+      "lower_km": 155,
+      "upper_km": 156,
+      "employee_count": 74
+    },
+    {
+      "category": "156–<163 km",
+      "lower_km": 156,
+      "upper_km": 163,
+      "employee_count": 46
+    },
+    {
+      "category": "163–<169 km",
+      "lower_km": 163,
+      "upper_km": 169,
+      "employee_count": 57
+    },
+    {
+      "category": "169–<176 km",
+      "lower_km": 169,
+      "upper_km": 176,
+      "employee_count": 43
+    },
+    {
+      "category": "176–<184 km",
+      "lower_km": 176,
+      "upper_km": 184,
+      "employee_count": 51
+    },
+    {
+      "category": "184–<190 km",
+      "lower_km": 184,
+      "upper_km": 190,
+      "employee_count": 34
+    },
+    {
+      "category": "190–<195 km",
+      "lower_km": 190,
+      "upper_km": 195,
+      "employee_count": 42
+    },
+    {
+      "category": "195–<207 km",
+      "lower_km": 195,
+      "upper_km": 207,
+      "employee_count": 52
+    },
+    {
+      "category": "207–<211 km",
+      "lower_km": 207,
+      "upper_km": 211,
+      "employee_count": 34
+    },
+    {
+      "category": "211–<213 km",
+      "lower_km": 211,
+      "upper_km": 213,
+      "employee_count": 47
+    },
+    {
+      "category": "213–<219 km",
+      "lower_km": 213,
+      "upper_km": 219,
+      "employee_count": 67
+    },
+    {
+      "category": "219–<223 km",
+      "lower_km": 219,
+      "upper_km": 223,
+      "employee_count": 43
+    },
+    {
+      "category": "223–<230 km",
+      "lower_km": 223,
+      "upper_km": 230,
+      "employee_count": 63
+    },
+    {
+      "category": "230–<232 km",
+      "lower_km": 230,
+      "upper_km": 232,
+      "employee_count": 41
+    },
+    {
+      "category": "232–<236 km",
+      "lower_km": 232,
+      "upper_km": 236,
+      "employee_count": 57
+    },
+    {
+      "category": "236–<241 km",
+      "lower_km": 236,
+      "upper_km": 241,
+      "employee_count": 49
+    },
+    {
+      "category": "241–<245 km",
+      "lower_km": 241,
+      "upper_km": 245,
+      "employee_count": 55
+    },
+    {
+      "category": "245–<248 km",
+      "lower_km": 245,
+      "upper_km": 248,
+      "employee_count": 30
+    },
+    {
+      "category": "248–<249 km",
+      "lower_km": 248,
+      "upper_km": 249,
+      "employee_count": 44
+    },
+    {
+      "category": "249–<253 km",
+      "lower_km": 249,
+      "upper_km": 253,
+      "employee_count": 56
+    },
+    {
+      "category": "253–<258 km",
+      "lower_km": 253,
+      "upper_km": 258,
+      "employee_count": 50
+    },
+    {
+      "category": "258–<260 km",
+      "lower_km": 258,
+      "upper_km": 260,
+      "employee_count": 34
+    },
+    {
+      "category": "260–<263 km",
+      "lower_km": 260,
+      "upper_km": 263,
+      "employee_count": 45
+    },
+    {
+      "category": "263–<265 km",
+      "lower_km": 263,
+      "upper_km": 265,
+      "employee_count": 57
+    },
+    {
+      "category": "265–<268 km",
+      "lower_km": 265,
+      "upper_km": 268,
+      "employee_count": 39
+    },
+    {
+      "category": "268–<270 km",
+      "lower_km": 268,
+      "upper_km": 270,
+      "employee_count": 32
+    },
+    {
+      "category": "270–<274 km",
+      "lower_km": 270,
+      "upper_km": 274,
+      "employee_count": 65
+    },
+    {
+      "category": "274–<275 km",
+      "lower_km": 274,
+      "upper_km": 275,
+      "employee_count": 54
+    },
+    {
+      "category": "275–<280 km",
+      "lower_km": 275,
+      "upper_km": 280,
+      "employee_count": 70
+    },
+    {
+      "category": "280–<286 km",
+      "lower_km": 280,
+      "upper_km": 286,
+      "employee_count": 66
+    },
+    {
+      "category": "286–<290 km",
+      "lower_km": 286,
+      "upper_km": 290,
+      "employee_count": 43
+    },
+    {
+      "category": "290–<291 km",
+      "lower_km": 290,
+      "upper_km": 291,
+      "employee_count": 43
+    },
+    {
+      "category": "291–<297 km",
+      "lower_km": 291,
+      "upper_km": 297,
+      "employee_count": 61
+    },
+    {
+      "category": "297–<302 km",
+      "lower_km": 297,
+      "upper_km": 302,
+      "employee_count": 51
+    },
+    {
+      "category": "302–<306 km",
+      "lower_km": 302,
+      "upper_km": 306,
+      "employee_count": 33
+    },
+    {
+      "category": "306–<312 km",
+      "lower_km": 306,
+      "upper_km": 312,
+      "employee_count": 40
+    },
+    {
+      "category": "312–<316 km",
+      "lower_km": 312,
+      "upper_km": 316,
+      "employee_count": 30
+    },
+    {
+      "category": "316–<322 km",
+      "lower_km": 316,
+      "upper_km": 322,
+      "employee_count": 32
+    },
+    {
+      "category": "322–<327 km",
+      "lower_km": 322,
+      "upper_km": 327,
+      "employee_count": 44
+    },
+    {
+      "category": "327–<332 km",
+      "lower_km": 327,
+      "upper_km": 332,
+      "employee_count": 59
+    },
+    {
+      "category": "332–<337 km",
+      "lower_km": 332,
+      "upper_km": 337,
+      "employee_count": 41
+    },
+    {
+      "category": "337–<342 km",
+      "lower_km": 337,
+      "upper_km": 342,
+      "employee_count": 45
+    },
+    {
+      "category": "342–<349 km",
+      "lower_km": 342,
+      "upper_km": 349,
+      "employee_count": 68
+    },
+    {
+      "category": "349–<358 km",
+      "lower_km": 349,
+      "upper_km": 358,
+      "employee_count": 50
+    },
+    {
+      "category": "358–<361 km",
+      "lower_km": 358,
+      "upper_km": 361,
+      "employee_count": 30
+    },
+    {
+      "category": "361–<364 km",
+      "lower_km": 361,
+      "upper_km": 364,
+      "employee_count": 30
+    },
+    {
+      "category": "364–<372 km",
+      "lower_km": 364,
+      "upper_km": 372,
+      "employee_count": 44
+    },
+    {
+      "category": "372–<380 km",
+      "lower_km": 372,
+      "upper_km": 380,
+      "employee_count": 55
+    },
+    {
+      "category": "380–<386 km",
+      "lower_km": 380,
+      "upper_km": 386,
+      "employee_count": 40
+    },
+    {
+      "category": "386–<387 km",
+      "lower_km": 386,
+      "upper_km": 387,
+      "employee_count": 36
+    },
+    {
+      "category": "387–<391 km",
+      "lower_km": 387,
+      "upper_km": 391,
+      "employee_count": 33
+    },
+    {
+      "category": "391–<394 km",
+      "lower_km": 391,
+      "upper_km": 394,
+      "employee_count": 44
+    },
+    {
+      "category": "394–<398 km",
+      "lower_km": 394,
+      "upper_km": 398,
+      "employee_count": 30
+    },
+    {
+      "category": "398–<407 km",
+      "lower_km": 398,
+      "upper_km": 407,
+      "employee_count": 49
+    },
+    {
+      "category": "407–<410 km",
+      "lower_km": 407,
+      "upper_km": 410,
+      "employee_count": 34
+    },
+    {
+      "category": "410–<414 km",
+      "lower_km": 410,
+      "upper_km": 414,
+      "employee_count": 41
+    },
+    {
+      "category": "414–<417 km",
+      "lower_km": 414,
+      "upper_km": 417,
+      "employee_count": 50
+    },
+    {
+      "category": "417–<420 km",
+      "lower_km": 417,
+      "upper_km": 420,
+      "employee_count": 60
+    },
+    {
+      "category": "420–<425 km",
+      "lower_km": 420,
+      "upper_km": 425,
+      "employee_count": 39
+    },
+    {
+      "category": "425–<434 km",
+      "lower_km": 425,
+      "upper_km": 434,
+      "employee_count": 63
+    },
+    {
+      "category": "434–<440 km",
+      "lower_km": 434,
+      "upper_km": 440,
+      "employee_count": 41
+    },
+    {
+      "category": "440–<449 km",
+      "lower_km": 440,
+      "upper_km": 449,
+      "employee_count": 58
+    },
+    {
+      "category": "449–<457 km",
+      "lower_km": 449,
+      "upper_km": 457,
+      "employee_count": 51
+    },
+    {
+      "category": "457–<459 km",
+      "lower_km": 457,
+      "upper_km": 459,
+      "employee_count": 31
+    },
+    {
+      "category": "459–<462 km",
+      "lower_km": 459,
+      "upper_km": 462,
+      "employee_count": 47
+    },
+    {
+      "category": "462–<467 km",
+      "lower_km": 462,
+      "upper_km": 467,
+      "employee_count": 33
+    },
+    {
+      "category": "467–<475 km",
+      "lower_km": 467,
+      "upper_km": 475,
+      "employee_count": 77
+    },
+    {
+      "category": "475–<476 km",
+      "lower_km": 475,
+      "upper_km": 476,
+      "employee_count": 311
+    },
+    {
+      "category": "476–<480 km",
+      "lower_km": 476,
+      "upper_km": 480,
+      "employee_count": 55
+    },
+    {
+      "category": "480–<484 km",
+      "lower_km": 480,
+      "upper_km": 484,
+      "employee_count": 59
+    },
+    {
+      "category": "484–<486 km",
+      "lower_km": 484,
+      "upper_km": 486,
+      "employee_count": 38
+    },
+    {
+      "category": "486–<494 km",
+      "lower_km": 486,
+      "upper_km": 494,
+      "employee_count": 83
+    },
+    {
+      "category": "494–<499 km",
+      "lower_km": 494,
+      "upper_km": 499,
+      "employee_count": 59
+    },
+    {
+      "category": "499–<500 km",
+      "lower_km": 499,
+      "upper_km": 500,
+      "employee_count": 45
+    },
+    {
+      "category": "500–<501 km",
+      "lower_km": 500,
+      "upper_km": 501,
+      "employee_count": 30
+    },
+    {
+      "category": "501–<502 km",
+      "lower_km": 501,
+      "upper_km": 502,
+      "employee_count": 31
+    },
+    {
+      "category": "502–<504 km",
+      "lower_km": 502,
+      "upper_km": 504,
+      "employee_count": 30
+    },
+    {
+      "category": "504–<505 km",
+      "lower_km": 504,
+      "upper_km": 505,
+      "employee_count": 32
+    },
+    {
+      "category": "505–<512 km",
+      "lower_km": 505,
+      "upper_km": 512,
+      "employee_count": 53
+    },
+    {
+      "category": "512–<518 km",
+      "lower_km": 512,
+      "upper_km": 518,
+      "employee_count": 35
+    },
+    {
+      "category": "518–<523 km",
+      "lower_km": 518,
+      "upper_km": 523,
+      "employee_count": 50
+    },
+    {
+      "category": "523–<528 km",
+      "lower_km": 523,
+      "upper_km": 528,
+      "employee_count": 64
+    },
+    {
+      "category": "528–<533 km",
+      "lower_km": 528,
+      "upper_km": 533,
+      "employee_count": 41
+    },
+    {
+      "category": "533–<536 km",
+      "lower_km": 533,
+      "upper_km": 536,
+      "employee_count": 35
+    },
+    {
+      "category": "536–<545 km",
+      "lower_km": 536,
+      "upper_km": 545,
+      "employee_count": 67
+    },
+    {
+      "category": "545–<551 km",
+      "lower_km": 545,
+      "upper_km": 551,
+      "employee_count": 43
+    },
+    {
+      "category": "551–<559 km",
+      "lower_km": 551,
+      "upper_km": 559,
+      "employee_count": 59
+    },
+    {
+      "category": "559–<575 km",
+      "lower_km": 559,
+      "upper_km": 575,
+      "employee_count": 54
+    },
+    {
+      "category": "575–<582 km",
+      "lower_km": 575,
+      "upper_km": 582,
+      "employee_count": 43
+    },
+    {
+      "category": "582–<592 km",
+      "lower_km": 582,
+      "upper_km": 592,
+      "employee_count": 54
+    },
+    {
+      "category": "592–<601 km",
+      "lower_km": 592,
+      "upper_km": 601,
+      "employee_count": 30
+    },
+    {
+      "category": "601–<610 km",
+      "lower_km": 601,
+      "upper_km": 610,
+      "employee_count": 44
+    },
+    {
+      "category": "610–<611 km",
+      "lower_km": 610,
+      "upper_km": 611,
+      "employee_count": 57
+    },
+    {
+      "category": "611–<628 km",
+      "lower_km": 611,
+      "upper_km": 628,
+      "employee_count": 56
+    },
+    {
+      "category": "628–<637 km",
+      "lower_km": 628,
+      "upper_km": 637,
+      "employee_count": 43
+    },
+    {
+      "category": "637–<643 km",
+      "lower_km": 637,
+      "upper_km": 643,
+      "employee_count": 35
+    },
+    {
+      "category": "643–<652 km",
+      "lower_km": 643,
+      "upper_km": 652,
+      "employee_count": 50
+    },
+    {
+      "category": "652–<661 km",
+      "lower_km": 652,
+      "upper_km": 661,
+      "employee_count": 59
+    },
+    {
+      "category": "661–<669 km",
+      "lower_km": 661,
+      "upper_km": 669,
+      "employee_count": 32
+    },
+    {
+      "category": "669–<680 km",
+      "lower_km": 669,
+      "upper_km": 680,
+      "employee_count": 52
+    },
+    {
+      "category": "680–<700 km",
+      "lower_km": 680,
+      "upper_km": 700,
+      "employee_count": 54
+    },
+    {
+      "category": "700–<709 km",
+      "lower_km": 700,
+      "upper_km": 709,
+      "employee_count": 58
+    },
+    {
+      "category": "709–<727 km",
+      "lower_km": 709,
+      "upper_km": 727,
+      "employee_count": 46
+    },
+    {
+      "category": "727–<737 km",
+      "lower_km": 727,
+      "upper_km": 737,
+      "employee_count": 62
+    },
+    {
+      "category": "737–<742 km",
+      "lower_km": 737,
+      "upper_km": 742,
+      "employee_count": 42
+    },
+    {
+      "category": "743–<750 km",
+      "lower_km": 743,
+      "upper_km": 750,
+      "employee_count": 47
+    },
+    {
+      "category": "750–<769 km",
+      "lower_km": 750,
+      "upper_km": 769,
+      "employee_count": 58
+    },
+    {
+      "category": "769–<796 km",
+      "lower_km": 769,
+      "upper_km": 796,
+      "employee_count": 44
+    },
+    {
+      "category": "796–<806 km",
+      "lower_km": 796,
+      "upper_km": 806,
+      "employee_count": 36
+    },
+    {
+      "category": "806–<813 km",
+      "lower_km": 806,
+      "upper_km": 813,
+      "employee_count": 51
+    },
+    {
+      "category": "813–<829 km",
+      "lower_km": 813,
+      "upper_km": 829,
+      "employee_count": 34
+    },
+    {
+      "category": "829–<838 km",
+      "lower_km": 829,
+      "upper_km": 838,
+      "employee_count": 37
+    },
+    {
+      "category": "838–<845 km",
+      "lower_km": 838,
+      "upper_km": 845,
+      "employee_count": 36
+    },
+    {
+      "category": "845–<846 km",
+      "lower_km": 845,
+      "upper_km": 846,
+      "employee_count": 44
+    },
+    {
+      "category": "846–<854 km",
+      "lower_km": 846,
+      "upper_km": 854,
+      "employee_count": 55
+    },
+    {
+      "category": "854–<866 km",
+      "lower_km": 854,
+      "upper_km": 866,
+      "employee_count": 48
+    },
+    {
+      "category": "866–<884 km",
+      "lower_km": 866,
+      "upper_km": 884,
+      "employee_count": 57
+    },
+    {
+      "category": "884–<906 km",
+      "lower_km": 884,
+      "upper_km": 906,
+      "employee_count": 61
+    },
+    {
+      "category": "907–<920 km",
+      "lower_km": 907,
+      "upper_km": 920,
+      "employee_count": 50
+    },
+    {
+      "category": "920–<937 km",
+      "lower_km": 920,
+      "upper_km": 937,
+      "employee_count": 39
+    },
+    {
+      "category": "937–<958 km",
+      "lower_km": 937,
+      "upper_km": 958,
+      "employee_count": 81
+    },
+    {
+      "category": "958–<976 km",
+      "lower_km": 958,
+      "upper_km": 976,
+      "employee_count": 62
+    },
+    {
+      "category": "977–<989 km",
+      "lower_km": 977,
+      "upper_km": 989,
+      "employee_count": 40
+    },
+    {
+      "category": "989–<998 km",
+      "lower_km": 989,
+      "upper_km": 998,
+      "employee_count": 44
+    },
+    {
+      "category": "998–<1012 km",
+      "lower_km": 998,
+      "upper_km": 1012,
+      "employee_count": 58
+    },
+    {
+      "category": "1012–<1020 km",
+      "lower_km": 1012,
+      "upper_km": 1020,
+      "employee_count": 41
+    },
+    {
+      "category": "1020–<1034 km",
+      "lower_km": 1020,
+      "upper_km": 1034,
+      "employee_count": 55
+    },
+    {
+      "category": "1034–<1044 km",
+      "lower_km": 1034,
+      "upper_km": 1044,
+      "employee_count": 35
+    },
+    {
+      "category": "1044–<1074 km",
+      "lower_km": 1044,
+      "upper_km": 1074,
+      "employee_count": 77
+    },
+    {
+      "category": "1074–<1084 km",
+      "lower_km": 1074,
+      "upper_km": 1084,
+      "employee_count": 57
+    },
+    {
+      "category": "1084–<1088 km",
+      "lower_km": 1084,
+      "upper_km": 1088,
+      "employee_count": 42
+    },
+    {
+      "category": "1089–<1100 km",
+      "lower_km": 1089,
+      "upper_km": 1100,
+      "employee_count": 56
+    },
+    {
+      "category": "1101–<1119 km",
+      "lower_km": 1101,
+      "upper_km": 1119,
+      "employee_count": 65
+    },
+    {
+      "category": "1119–<1134 km",
+      "lower_km": 1119,
+      "upper_km": 1134,
+      "employee_count": 46
+    },
+    {
+      "category": "1134–<1143 km",
+      "lower_km": 1134,
+      "upper_km": 1143,
+      "employee_count": 36
+    },
+    {
+      "category": "1143–<1147 km",
+      "lower_km": 1143,
+      "upper_km": 1147,
+      "employee_count": 49
+    },
+    {
+      "category": "1147–<1153 km",
+      "lower_km": 1147,
+      "upper_km": 1153,
+      "employee_count": 38
+    },
+    {
+      "category": "1153–<1160 km",
+      "lower_km": 1153,
+      "upper_km": 1160,
+      "employee_count": 46
+    },
+    {
+      "category": "1160–<1167 km",
+      "lower_km": 1160,
+      "upper_km": 1167,
+      "employee_count": 48
+    },
+    {
+      "category": "1167–<1180 km",
+      "lower_km": 1167,
+      "upper_km": 1180,
+      "employee_count": 54
+    },
+    {
+      "category": "1180–<1186 km",
+      "lower_km": 1180,
+      "upper_km": 1186,
+      "employee_count": 32
+    },
+    {
+      "category": "1186–<1187 km",
+      "lower_km": 1186,
+      "upper_km": 1187,
+      "employee_count": 33
+    },
+    {
+      "category": "1188–<1204 km",
+      "lower_km": 1188,
+      "upper_km": 1204,
+      "employee_count": 43
+    },
+    {
+      "category": "1204–<1212 km",
+      "lower_km": 1204,
+      "upper_km": 1212,
+      "employee_count": 44
+    },
+    {
+      "category": "1212–<1221 km",
+      "lower_km": 1212,
+      "upper_km": 1221,
+      "employee_count": 36
+    },
+    {
+      "category": "1221–<1222 km",
+      "lower_km": 1221,
+      "upper_km": 1222,
+      "employee_count": 35
+    },
+    {
+      "category": "1222–<1228 km",
+      "lower_km": 1222,
+      "upper_km": 1228,
+      "employee_count": 35
+    },
+    {
+      "category": "1228–<1236 km",
+      "lower_km": 1228,
+      "upper_km": 1236,
+      "employee_count": 44
+    },
+    {
+      "category": "1236–<1244 km",
+      "lower_km": 1236,
+      "upper_km": 1244,
+      "employee_count": 56
+    },
+    {
+      "category": "1244–<1245 km",
+      "lower_km": 1244,
+      "upper_km": 1245,
+      "employee_count": 42
+    },
+    {
+      "category": "1245–<1250 km",
+      "lower_km": 1245,
+      "upper_km": 1250,
+      "employee_count": 61
+    },
+    {
+      "category": "1250–<1254 km",
+      "lower_km": 1250,
+      "upper_km": 1254,
+      "employee_count": 41
+    },
+    {
+      "category": "1254–<1260 km",
+      "lower_km": 1254,
+      "upper_km": 1260,
+      "employee_count": 52
+    },
+    {
+      "category": "1260–<1264 km",
+      "lower_km": 1260,
+      "upper_km": 1264,
+      "employee_count": 35
+    },
+    {
+      "category": "1264–<1286 km",
+      "lower_km": 1264,
+      "upper_km": 1286,
+      "employee_count": 51
+    },
+    {
+      "category": "1286–<1320 km",
+      "lower_km": 1286,
+      "upper_km": 1320,
+      "employee_count": 47
+    },
+    {
+      "category": "1320–<1361 km",
+      "lower_km": 1320,
+      "upper_km": 1361,
+      "employee_count": 53
+    },
+    {
+      "category": "1361–<1385 km",
+      "lower_km": 1361,
+      "upper_km": 1385,
+      "employee_count": 36
+    },
+    {
+      "category": "1385–<1407 km",
+      "lower_km": 1385,
+      "upper_km": 1407,
+      "employee_count": 53
+    },
+    {
+      "category": "1408–<1421 km",
+      "lower_km": 1408,
+      "upper_km": 1421,
+      "employee_count": 31
+    },
+    {
+      "category": "1421–<1433 km",
+      "lower_km": 1421,
+      "upper_km": 1433,
+      "employee_count": 34
+    },
+    {
+      "category": "1433–<1458 km",
+      "lower_km": 1433,
+      "upper_km": 1458,
+      "employee_count": 52
+    },
+    {
+      "category": "1458–<1479 km",
+      "lower_km": 1458,
+      "upper_km": 1479,
+      "employee_count": 44
+    },
+    {
+      "category": "1479–<1499 km",
+      "lower_km": 1479,
+      "upper_km": 1499,
+      "employee_count": 53
+    },
+    {
+      "category": "1499–<1519 km",
+      "lower_km": 1499,
+      "upper_km": 1519,
+      "employee_count": 61
+    },
+    {
+      "category": "1519–<1536 km",
+      "lower_km": 1519,
+      "upper_km": 1536,
+      "employee_count": 48
+    },
+    {
+      "category": "1536–<1548 km",
+      "lower_km": 1536,
+      "upper_km": 1548,
+      "employee_count": 38
+    },
+    {
+      "category": "1548–<1549 km",
+      "lower_km": 1548,
+      "upper_km": 1549,
+      "employee_count": 60
+    },
+    {
+      "category": "1549–<1565 km",
+      "lower_km": 1549,
+      "upper_km": 1565,
+      "employee_count": 61
+    },
+    {
+      "category": "1565–<1575 km",
+      "lower_km": 1565,
+      "upper_km": 1575,
+      "employee_count": 35
+    },
+    {
+      "category": "1575–<1579 km",
+      "lower_km": 1575,
+      "upper_km": 1579,
+      "employee_count": 57
+    },
+    {
+      "category": "1579–<1586 km",
+      "lower_km": 1579,
+      "upper_km": 1586,
+      "employee_count": 47
+    },
+    {
+      "category": "1586–<1602 km",
+      "lower_km": 1586,
+      "upper_km": 1602,
+      "employee_count": 35
+    },
+    {
+      "category": "1602–<1622 km",
+      "lower_km": 1602,
+      "upper_km": 1622,
+      "employee_count": 56
+    },
+    {
+      "category": "1622–<1643 km",
+      "lower_km": 1622,
+      "upper_km": 1643,
+      "employee_count": 46
+    },
+    {
+      "category": "1643–<1670 km",
+      "lower_km": 1643,
+      "upper_km": 1670,
+      "employee_count": 50
+    },
+    {
+      "category": "1670–<1698 km",
+      "lower_km": 1670,
+      "upper_km": 1698,
+      "employee_count": 32
+    },
+    {
+      "category": "1698–<1712 km",
+      "lower_km": 1698,
+      "upper_km": 1712,
+      "employee_count": 64
+    },
+    {
+      "category": "1712–<1731 km",
+      "lower_km": 1712,
+      "upper_km": 1731,
+      "employee_count": 48
+    },
+    {
+      "category": "1731–<1741 km",
+      "lower_km": 1731,
+      "upper_km": 1741,
+      "employee_count": 66
+    },
+    {
+      "category": "1741–<1746 km",
+      "lower_km": 1741,
+      "upper_km": 1746,
+      "employee_count": 45
+    },
+    {
+      "category": "1746–<1754 km",
+      "lower_km": 1746,
+      "upper_km": 1754,
+      "employee_count": 43
+    },
+    {
+      "category": "1754–<1799 km",
+      "lower_km": 1754,
+      "upper_km": 1799,
+      "employee_count": 56
+    },
+    {
+      "category": "1800–<1864 km",
+      "lower_km": 1800,
+      "upper_km": 1864,
+      "employee_count": 48
+    },
+    {
+      "category": "1866–<1925 km",
+      "lower_km": 1866,
+      "upper_km": 1925,
+      "employee_count": 59
+    },
+    {
+      "category": "1925–<1970 km",
+      "lower_km": 1925,
+      "upper_km": 1970,
+      "employee_count": 48
+    },
+    {
+      "category": "1972–<2066 km",
+      "lower_km": 1972,
+      "upper_km": 2066,
+      "employee_count": 38
+    },
+    {
+      "category": "2066–<4113 km",
+      "lower_km": 2066,
+      "upper_km": 4113,
+      "employee_count": 63
+    }
+  ],
+  "work_arrangement": {
+    "onsite_definition": "UPPER(TRIM(work_arrangement)) = 'ONSITE'",
+    "onsite_employee_count": 45238,
+    "not_onsite_or_unknown_employee_count": 4805,
+    "missing_work_arrangement_employee_count": 204,
+    "population_reconciliation_gap": 0
+  },
+  "metrics": {
+    "eligible_employees": 50043,
+    "postal_observable_employees": 49741,
+    "office_observable_employees": 47738,
+    "postal_missing_employees": 302,
+    "office_missing_employees": 2305,
+    "multirow_employees": 0,
+    "max_postal_values_per_employee": 1,
+    "max_office_values_per_employee": 1,
+    "complete_location_employees": 47463,
+    "matched_distance_employees": 41615,
+    "office_site_resolved_employees": 0,
+    "fallback_resolved_employees": 41615,
+    "unmatched_office_employees": 2912,
+    "unmatched_centroid_employees": 2936,
+    "unresolved_query_groups": 2531,
+    "coverage_percent_of_eligible": 83.1585,
+    "coverage_percent_of_complete_location": 87.6788,
+    "published_employee_count": 41615,
+    "unavailable_employee_count": 8428,
+    "minimum_published_category": 30,
+    "published_categories": 275,
+    "minimum_cohort": 30,
+    "query_result_sha256": "101e0ef9b35f39b99302a1bcc1b27d56c4b6c563566a0f844f1ef8caae778a30",
+    "outcome": "pass",
+    "onsite": {
+      "eligible_employees": 45238,
+      "postal_observable_employees": 44973,
+      "office_observable_employees": 45020,
+      "complete_location_employees": 44758,
+      "matched_distance_employees": 39345,
+      "unmatched_office_employees": 2665,
+      "unmatched_centroid_employees": 2748,
+      "coverage_percent_of_eligible": 86.9733,
+      "coverage_percent_of_complete_location": 87.9061,
+      "published_employee_count": 39345,
+      "unavailable_employee_count": 5893,
+      "minimum_published_category": 30,
+      "published_categories": 262,
+      "minimum_cohort": 30,
+      "outcome": "pass"
+    },
+    "country_coverage": [
+      {
+        "country": "Austria",
+        "eligible": 50,
+        "matched": 49,
+        "unmatched_office": 0,
+        "unmatched_centroid": 1
+      },
+      {
+        "country": "Brazil",
+        "eligible": 44,
+        "matched": 0,
+        "unmatched_office": 0,
+        "unmatched_centroid": 44
+      },
+      {
+        "country": "Canada",
+        "eligible": 1039,
+        "matched": 1036,
+        "unmatched_office": 1,
+        "unmatched_centroid": 2
+      },
+      {
+        "country": "China",
+        "eligible": 3365,
+        "matched": 1307,
+        "unmatched_office": 45,
+        "unmatched_centroid": 2013
+      },
+      {
+        "country": "Finland",
+        "eligible": 64,
+        "matched": 63,
+        "unmatched_office": 1,
+        "unmatched_centroid": 0
+      },
+      {
+        "country": "France",
+        "eligible": 349,
+        "matched": 344,
+        "unmatched_office": 0,
+        "unmatched_centroid": 5
+      },
+      {
+        "country": "Germany",
+        "eligible": 1476,
+        "matched": 1471,
+        "unmatched_office": 0,
+        "unmatched_centroid": 5
+      },
+      {
+        "country": "India",
+        "eligible": 20672,
+        "matched": 20430,
+        "unmatched_office": 12,
+        "unmatched_centroid": 230
+      },
+      {
+        "country": "Ireland",
+        "eligible": 764,
+        "matched": 751,
+        "unmatched_office": 0,
+        "unmatched_centroid": 13
+      },
+      {
+        "country": "Israel",
+        "eligible": 785,
+        "matched": 0,
+        "unmatched_office": 785,
+        "unmatched_centroid": 0
+      },
+      {
+        "country": "Italy",
+        "eligible": 98,
+        "matched": 97,
+        "unmatched_office": 1,
+        "unmatched_centroid": 0
+      },
+      {
+        "country": "Japan",
+        "eligible": 149,
+        "matched": 145,
+        "unmatched_office": 0,
+        "unmatched_centroid": 4
+      },
+      {
+        "country": "Korea, Republic of",
+        "eligible": 457,
+        "matched": 387,
+        "unmatched_office": 0,
+        "unmatched_centroid": 70
+      },
+      {
+        "country": "Mexico",
+        "eligible": 302,
+        "matched": 300,
+        "unmatched_office": 0,
+        "unmatched_centroid": 2
+      },
+      {
+        "country": "Netherlands",
+        "eligible": 131,
+        "matched": 46,
+        "unmatched_office": 84,
+        "unmatched_centroid": 1
+      },
+      {
+        "country": "Romania",
+        "eligible": 95,
+        "matched": 93,
+        "unmatched_office": 0,
+        "unmatched_centroid": 2
+      },
+      {
+        "country": "Singapore",
+        "eligible": 1436,
+        "matched": 1103,
+        "unmatched_office": 0,
+        "unmatched_centroid": 333
+      },
+      {
+        "country": "Sweden",
+        "eligible": 391,
+        "matched": 333,
+        "unmatched_office": 49,
+        "unmatched_centroid": 9
+      },
+      {
+        "country": "Taiwan",
+        "eligible": 1868,
+        "matched": 0,
+        "unmatched_office": 1868,
+        "unmatched_centroid": 0
+      },
+      {
+        "country": "United Kingdom",
+        "eligible": 514,
+        "matched": 513,
+        "unmatched_office": 0,
+        "unmatched_centroid": 1
+      },
+      {
+        "country": "United States of America",
+        "eligible": 13279,
+        "matched": 13108,
+        "unmatched_office": 20,
+        "unmatched_centroid": 151
+      },
+      {
+        "country": "Vietnam",
+        "eligible": 49,
+        "matched": 0,
+        "unmatched_office": 0,
+        "unmatched_centroid": 49
+      }
+    ]
+  },
+  "acceptance_rule": "Las bandas de distancia suman la población cubierta; el remanente se reporta como No calculable; cada categoría visible tiene n>=30; no se imputan ZIPs ni oficinas sin match.",
+  "query_reference": "queries/audits/v7_commute_distance_global_zip_hash_distribution_20260823.sql",
+  "coverage_audit_reference": "queries/audits/v7_commute_distance_global_input_coverage_20260823.sql"
+}

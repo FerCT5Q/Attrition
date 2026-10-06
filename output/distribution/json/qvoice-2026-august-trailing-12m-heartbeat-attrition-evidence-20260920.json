@@ -1,0 +1,81 @@
+{
+  "artifact": "internal_analysis",
+  "evidence_type": "aggregate-only QVoice heartbeat voluntary attrition trailing 12 months through August 2026",
+  "generated_on": "2026-09-20",
+  "outcome": "pass",
+  "minimum_shared_cohort": 30,
+  "outcome_contract": {
+    "window": "(2025-08-23, 2026-08-23]",
+    "window_start": "2025-08-23",
+    "august_cutoff_date": "2026-08-23",
+    "baseline_snapshot": "2025-12-28",
+    "label": "Trailing 12-month voluntary attrition through August 2026",
+    "target": "At least one term_type exactly VOLUNTARY inside the August trailing-12-month window.",
+    "population": "worker_type='Employee'; employee_type='Regular'; active_status=1 at the pre-wave snapshot.",
+    "grain": "Distinct employee in the QVoice heartbeat-eligible group."
+  },
+  "window_audit": {
+    "window_start": "2025-08-23 00:00:00",
+    "august_cutoff_date": "2026-08-23",
+    "baseline_snapshot": "2025-12-28",
+    "baseline_distinct_employee_count": 47134,
+    "duplicate_baseline_employee_count": 0,
+    "voluntary_exit_count": 1957,
+    "multiple_voluntary_event_date_count": 2,
+    "trailing_12m_voluntary_attrition_rate_percent": "4.1520"
+  },
+  "heartbeat_definition": {
+    "personal_average_rule": "At least 38 of 53 valid 1-5 items (70%).",
+    "sign_rule": "+1 when item > personal mean; 0 when item = personal mean; -1 when item < personal mean.",
+    "missing_rule": "Missing or invalid item values are not converted to 0 and are excluded from that item's denominator.",
+    "ranking_rule": "Top five items by upvote_percent and downvote_percent among items with n >= 30.",
+    "absolute_context": "Favorable means scale response 4 or 5 among the same valid item denominator."
+  },
+  "heartbeat_population": {
+    "snapshot_date": "2025-12-28",
+    "definition": "worker_type='Employee'; employee_type='Regular'; active_status=1",
+    "eligible_employees": 47134,
+    "grain": "Distinct employee at the pre-Jan-2026 monthly snapshot"
+  },
+  "slide": {
+    "number": 26,
+    "group": "Heartbeat eligible",
+    "metrics": {
+      "source_employee_count": 40550,
+      "matched_employee_count": 37605,
+      "unmatched_employee_count": 2945,
+      "voluntary_exit_count": 1211,
+      "trailing_12m_voluntary_attrition_rate_percent": 3.2203
+    }
+  },
+  "validation": {
+    "outcome": "pass",
+    "heartbeat_source": {
+      "raw_rows": 42203,
+      "raw_distinct_usable_employee_keys": 42203,
+      "duplicate_key_rows": 0,
+      "duplicate_conflicting_employee_keys": 0,
+      "missing_key_rows": 0,
+      "invalid_key_rows": 0,
+      "invalid_scale_cells": 0,
+      "missing_scale_cells": 128513
+    },
+    "matched_cohort_at_least_30": true,
+    "rate_reconciles_to_exits_and_cohort": true,
+    "runtime_join_sql_persisted": false,
+    "reason_runtime_join_sql_not_persisted": "El join procesa identificadores sólo en memoria y devuelve únicamente agregados."
+  },
+  "privacy": {
+    "employee_identifiers_persisted": false,
+    "employee_rows_persisted": false,
+    "individual_qvoice_values_persisted": false,
+    "runtime_join_sql_persisted": false
+  },
+  "provenance": {
+    "window_audit": "queries/audits/qvoice_heartbeat_august_trailing_12m_attrition_20260920.sql",
+    "window_audit_sha256": "a1a4dd2bfdd1d4514fdf9cae19feb4f917379bcdc7ca382cc81099719084fff5",
+    "heartbeat_source": "output/distribution/json/qvoice-heartbeat-evidence-20260911.json",
+    "heartbeat_source_sha256": "3c71922b025a2eccefde272d92b36124bffe2a9e8ecff34e76b7307b8a81e737",
+    "runtime_join_sql_persisted": false
+  }
+}

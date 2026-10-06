@@ -1,0 +1,73 @@
+schema_version: 1
+language: es
+deliverable_mode: internal_analysis
+variable: Promotion story by compensation track
+concept: >-
+  Vista agregada que colapsa compensation_grade por la letra inicial de un
+  codigo letra-numero y compara distribucion, promociones y attrition.
+intended_use: >-
+  Redisenar la lamina 30 para mostrar la distribucion por track en agosto de
+  2026, la tasa oficial de promocion del ciclo AR25 y la attrition voluntaria
+  de los doce meses cerrados en ese snapshot.
+knowledge_boundary: 2026-08-23
+window:
+  start_exclusive: 2025-08-24
+  end_inclusive: 2026-08-23
+population: >-
+  Employee, Regular y no RF360. La distribucion usa empleados activos en el
+  snapshot 2026-08-23; las tasas usan la poblacion elegible de cada fuente.
+grain:
+  distribution: Distinct employee at the 2026-08-23 monthly snapshot by compensation track.
+  promotion: Distinct AR25 participant by the compensation track stored for the review cycle.
+  attrition: Monthly active headcount exposure and distinct strict-Voluntary exits by time-safe compensation track.
+semantic_type:
+  compensation_track: grouped_mapping
+  promotion_rate: derived_feature
+  attrition_rate: derived_feature
+track_rule: >-
+  TRIM y UPPER del grade; aceptar unicamente codigos cuyo inicio cumpla
+  letra A-Z seguida de un digito. Conservar la primera letra: M10, M20 y M30
+  pertenecen al track M. Los valores restantes quedan como Unknown.
+plan_revision_reason: >-
+  La primera ejecucion selecciono dinamicamente 2026-09-27 y 2025-09-28.
+  Esto contradice el requerimiento de cerrar la vista en el ultimo snapshot
+  mensual de agosto. Ademas aparecieron exits sin snapshot activo previo y se
+  requiere validar, antes de asignarlos, si el grade de la fila de terminacion
+  es unico, contemporaneo y parseable.
+validation_story:
+  - id: fixed_august_window
+    evidence_role: defining
+    question: ¿Existen el corte 2026-08-23, el baseline 2025-08-24 y exactamente doce snapshots posteriores al baseline?
+    why: Evita que un refresh posterior mueva silenciosamente la ventana solicitada.
+    method: Conteos agregados de fechas contra limites literales.
+    sql_reference: queries/audits/promotion_track_trailing_12m_20260918.sql
+    acceptance_rule: Corte y baseline exactos; doce snapshots mensuales en (2025-08-24, 2026-08-23].
+  - id: track_mapping
+    evidence_role: defining
+    question: ¿Cada grade se asigna de forma deterministica a letra-numero o a Unknown, sin perder poblacion?
+    why: Evita interpretar textos como N/A como si fueran el track N.
+    method: Reconciliacion agregada y diagnosticos de grades faltantes, invalidos y conflictivos.
+    sql_reference: queries/audits/promotion_track_trailing_12m_20260918.sql
+    acceptance_rule: La suma de tracks reconcilia con cada poblacion y ningun grade poblado desaparece.
+  - id: official_promotion_rate
+    evidence_role: defining
+    question: ¿La tasa de promocion usa AR25, promotion_yes_no y participantes del Annual Review?
+    why: El flag mensual is_promo no sustituye la definicion oficial del ciclo.
+    method: Reconciliacion agregada de participantes, promovidos y alcance poblacional.
+    sql_reference: queries/audits/promotion_track_trailing_12m_20260918.sql
+    acceptance_rule: Cero duplicados o flags contradictorios; promovidos no exceden participantes.
+  - id: unmatched_exit_fallback
+    evidence_role: defining
+    question: ¿Los exits sin snapshot activo previo tienen un unico grade valido en la fila de terminacion?
+    why: Permite conservar salidas sin asignar un track arbitrario o futuro.
+    method: Auditoria agregada del grade en la fila de terminacion y comparacion con el ultimo snapshot activo.
+    sql_reference: queries/audits/promotion_track_unmatched_exit_grade_20260918.sql
+    acceptance_rule: Todo exit sin track previo tiene exactamente un grade de terminacion parseable y sin conflicto; despues del fallback quedan cero exits sin track.
+  - id: trailing_12m_attrition
+    evidence_role: defining
+    question: ¿Las salidas Voluntary y el headcount mensual usan la ventana fija y tracks conocidos a la fecha del evento?
+    why: Evita usar sobrevivientes del snapshot final o informacion posterior al exit.
+    method: Exits distintos, exposicion mensual promedio y reconciliacion de asignacion temporal.
+    sql_reference: queries/audits/promotion_track_trailing_12m_20260918.sql
+    acceptance_rule: Cada exit se asigna como maximo a un track y la suma por track reconcilia con el total de exits.
+prior_evidence_policy: Contexto solamente; todas las cifras visibles se recalculan para esta ventana.

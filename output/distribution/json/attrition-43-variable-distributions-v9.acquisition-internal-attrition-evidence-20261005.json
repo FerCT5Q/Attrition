@@ -1,0 +1,329 @@
+{
+  "artifact_type": "acquisition_entry_distribution_attrition_evidence",
+  "schema_version": 1,
+  "artifact_classification": "internal_analysis",
+  "deliverable_mode": "internal_analysis",
+  "generated_at_utc": "2026-10-05T15:20:04.043951+00:00",
+  "source_assessment": {
+    "run_id": "acquisition-entry-v4-20260929-r4",
+    "status": "validated",
+    "schema_version": 4,
+    "variable": "Ingreso por adquisición",
+    "final_result": "Baja - exploratoria",
+    "run_manifest_path": "output/assessments/acquisition-entry-v4-20260929-r4/manifest.json",
+    "run_manifest_sha256": "92663d7cceb6ecd83768b3347e6282cef166ce3a3b0e36683d2c3fa5c45bd880",
+    "variable_evidence_ledger_path": "output/assessments/acquisition-entry-v4-20260929-r4/vars/01-ingreso-por-adquisici-n/evidence-ledger.json",
+    "variable_evidence_ledger_sha256": "4828619fbc33af301df34f102dfce1e6946361b9f205a9b6929cdfb2719b6db1"
+  },
+  "definition": {
+    "field": "hrda.post_hire_monthly_worker_dtls.acquisition",
+    "reader_label": "Adquisición registrada",
+    "interpretation": "Marca textual de adquisición registrada en el snapshot mensual. Un valor vacío se presenta como sin adquisición registrada; no prueba que la persona no ingresó mediante una adquisición.",
+    "normalization": "Los valores se normalizaron para espacios y mayúsculas; los nombres mostrados conservan la etiqueta almacenada. No se aplicó un mapping de alias no documentado."
+  },
+  "population": {
+    "worker_type": "Employee",
+    "employee_type": "Regular",
+    "active_status": 1,
+    "unit_of_analysis": "Empleado-snapshot mensual; empleados distintos en cada fecha.",
+    "rf360_included": true
+  },
+  "dates": {
+    "current_snapshot": "2026-08-23",
+    "baseline_snapshot": "2025-08-24",
+    "outcome_window": "(2025-08-24, 2026-08-23]",
+    "attrition_definition": "Una salida voluntaria por persona de la cohorte basal; sólo VOLUNTARY.",
+    "classification_boundary": "La clasificación para attrition se toma del snapshot basal; no se usa un valor posterior para reclasificar la cohorte."
+  },
+  "suppression_policy": {
+    "scope": "Sólo revisión interna autorizada de la lámina de adquisiciones.",
+    "minimum_rate_denominator": 1,
+    "minimum_published_voluntary_events": 0,
+    "small_event_rates_allowed": true,
+    "non_comparable_label": "Sin cohorte al 24 ago 2025"
+  },
+  "totals": {
+    "current_active_regular_employee_count": 50043,
+    "baseline_active_regular_employee_count": 45002,
+    "baseline_voluntary_exit_count": 2484
+  },
+  "overall_distribution": [
+    {
+      "label": "Con adquisición registrada",
+      "current_employee_count": 7711,
+      "current_share_percent": "15.408748476310373",
+      "baseline_employee_count": 6148,
+      "voluntary_exit_count": 193,
+      "annual_attrition_rate_percent": "3.139232270657124268054651919",
+      "publication_status": "publishable"
+    },
+    {
+      "label": "Sin adquisición registrada",
+      "current_employee_count": 42332,
+      "current_share_percent": "84.591251523689626",
+      "baseline_employee_count": 38854,
+      "voluntary_exit_count": 2291,
+      "annual_attrition_rate_percent": "5.896432799711741390847789159",
+      "publication_status": "publishable"
+    }
+  ],
+  "top_acquisitions": [
+    {
+      "label": "RF360",
+      "current_employee_count": 2421,
+      "current_share_percent": "31.396706004409285",
+      "annual_attrition": {
+        "publication_status": "publishable",
+        "baseline_employee_count": 2597,
+        "voluntary_exit_count": 56,
+        "annual_attrition_rate_percent": "2.156334231805929919137466307",
+        "display_note": null,
+        "source_publication_status": "publishable"
+      }
+    },
+    {
+      "label": "Aqua",
+      "current_employee_count": 1148,
+      "current_share_percent": "14.887822591103618",
+      "annual_attrition": {
+        "publication_status": "no_annual_comparable_cohort",
+        "baseline_employee_count": 0,
+        "annual_attrition_rate_percent": null,
+        "display_note": "Sin cohorte al 24 ago 2025; la tasa anual no es estimable.",
+        "source_publication_status": "no_annual_comparable_cohort",
+        "voluntary_exit_count": 0
+      }
+    },
+    {
+      "label": "CSR",
+      "current_employee_count": 632,
+      "current_share_percent": "8.196083517053559",
+      "annual_attrition": {
+        "publication_status": "internal_analysis_exception",
+        "baseline_employee_count": 658,
+        "annual_attrition_rate_percent": "3.191489361702127659574468085",
+        "display_note": null,
+        "source_publication_status": "suppressed_voluntary_events_lt_30",
+        "voluntary_exit_count": 21
+      }
+    },
+    {
+      "label": "Hercules",
+      "current_employee_count": 584,
+      "current_share_percent": "7.573596161327973",
+      "annual_attrition": {
+        "publication_status": "internal_analysis_exception",
+        "baseline_employee_count": 618,
+        "annual_attrition_rate_percent": "4.530744336569579288025889968",
+        "display_note": null,
+        "source_publication_status": "suppressed_voluntary_events_lt_30",
+        "voluntary_exit_count": 28
+      }
+    },
+    {
+      "label": "Atheros",
+      "current_employee_count": 514,
+      "current_share_percent": "6.665802100894825",
+      "annual_attrition": {
+        "publication_status": "internal_analysis_exception",
+        "baseline_employee_count": 530,
+        "annual_attrition_rate_percent": "1.886792452830188679245283019",
+        "display_note": null,
+        "source_publication_status": "suppressed_voluntary_events_lt_30",
+        "voluntary_exit_count": 10
+      }
+    },
+    {
+      "label": "TDK (SAW/BAW filter and module business)",
+      "current_employee_count": 269,
+      "current_share_percent": "3.488522889378809",
+      "annual_attrition": {
+        "publication_status": "internal_analysis_exception",
+        "baseline_employee_count": 307,
+        "annual_attrition_rate_percent": "0.3257328990228013029315960912",
+        "display_note": null,
+        "source_publication_status": "suppressed_voluntary_events_lt_30",
+        "voluntary_exit_count": 1
+      }
+    },
+    {
+      "label": "NAPS",
+      "current_employee_count": 178,
+      "current_share_percent": "2.308390610815717",
+      "annual_attrition": {
+        "publication_status": "no_annual_comparable_cohort",
+        "baseline_employee_count": 0,
+        "annual_attrition_rate_percent": null,
+        "display_note": "Sin cohorte al 24 ago 2025; la tasa anual no es estimable.",
+        "source_publication_status": "no_annual_comparable_cohort",
+        "voluntary_exit_count": 0
+      }
+    },
+    {
+      "label": "Moonshot",
+      "current_employee_count": 167,
+      "current_share_percent": "2.165737258461937",
+      "annual_attrition": {
+        "publication_status": "no_annual_comparable_cohort",
+        "baseline_employee_count": 0,
+        "annual_attrition_rate_percent": null,
+        "display_note": "Sin cohorte al 24 ago 2025; la tasa anual no es estimable.",
+        "source_publication_status": "no_annual_comparable_cohort",
+        "voluntary_exit_count": 0
+      }
+    },
+    {
+      "label": "Arduino",
+      "current_employee_count": 160,
+      "current_share_percent": "2.074957852418622",
+      "annual_attrition": {
+        "publication_status": "no_annual_comparable_cohort",
+        "baseline_employee_count": 0,
+        "annual_attrition_rate_percent": null,
+        "display_note": "Sin cohorte al 24 ago 2025; la tasa anual no es estimable.",
+        "source_publication_status": "no_annual_comparable_cohort",
+        "voluntary_exit_count": 0
+      }
+    },
+    {
+      "label": "Augentix Inc.",
+      "current_employee_count": 118,
+      "current_share_percent": "1.530281416158734",
+      "annual_attrition": {
+        "publication_status": "no_annual_comparable_cohort",
+        "baseline_employee_count": 0,
+        "annual_attrition_rate_percent": null,
+        "display_note": "Sin cohorte al 24 ago 2025; la tasa anual no es estimable.",
+        "source_publication_status": "no_annual_comparable_cohort",
+        "voluntary_exit_count": 0
+      }
+    },
+    {
+      "label": "Otras adquisiciones",
+      "current_employee_count": 1520,
+      "current_share_percent": "19.712099597976916",
+      "annual_attrition": {
+        "publication_status": "publishable",
+        "baseline_employee_count": 1438,
+        "voluntary_exit_count": 77,
+        "annual_attrition_rate_percent": "5.354659248956884561891515994",
+        "display_note": null,
+        "source_publication_status": "publishable"
+      }
+    }
+  ],
+  "color_references": {
+    "overall_distribution": {
+      "reference_id": "acquisition-overall-annual",
+      "label": "Población basal total",
+      "voluntary_exits": 2484,
+      "eligible_baseline_count": 45002,
+      "rate_percent": "5.519754677569885782854095374",
+      "denominator_definition": "Empleados Regular activos al 2025-08-24"
+    },
+    "acquisition_panel": {
+      "reference_id": "acquisition-registered-annual",
+      "label": "Con adquisición registrada",
+      "voluntary_exits": 193,
+      "eligible_baseline_count": 6148,
+      "rate_percent": "3.139232270657124268054651919",
+      "denominator_definition": "Segmento con adquisición registrada al 2025-08-24"
+    }
+  },
+  "historical_baseline_reconciliation": {
+    "current_evidence_baseline_count": 45002,
+    "previous_deck_baseline_count": 45003,
+    "difference": -1,
+    "status": "requires_data_owner_reconciliation",
+    "note": "La diferencia de un empleado frente a evidencia previa del deck está documentada, pero su causa no se atribuye en este artefacto; requiere reconciliación del responsable de datos antes de uso externo."
+  },
+  "source_provenance": {
+    "distribution_query": {
+      "query_path": "queries/audits/acquisition_entry_distribution_attrition_20260929.sql",
+      "sql_sha256": "4c0bef229458d3cce31edbb26e74a6863012eec853eba1a4a30cccacbb5b6af8",
+      "result_sha256": "3567cc86914e6ddb2947c08c92a5db0939382ac1dc7ebf91c70df6c249651930",
+      "row_count": 16,
+      "executed_at": "2026-09-29T20:56:17-06:00"
+    },
+    "source_access_query": {
+      "query_path": "queries/audits/acquisition_entry_source_access_20260929.sql",
+      "sql_sha256": "089f875e0f11ac28f79ad37ef770fd35b715b108c0bb6d9e5c0d12dec7ebfdd1",
+      "result_sha256": "26673cb1f8fc8cdf7079d419fe7d40d53e6e0fbe123b0f4da4a0165c83c6d5d6",
+      "row_count": 1,
+      "executed_at": "2026-09-29T20:56:10-06:00"
+    }
+  },
+  "validation": {
+    "validated_assessment_v4": "pass",
+    "saved_sql_and_result_hashes_match": "pass",
+    "overall_segments_reconcile": "pass",
+    "top_10_plus_other_reconcile": "pass",
+    "published_rates_recalculate_from_counts": "pass",
+    "small_event_rates_suppressed": "not_applicable_authorized_internal_analysis",
+    "no_comparable_cohorts_not_zero_filled": "pass",
+    "historical_baseline_difference": "documented_requires_owner_reconciliation",
+    "aggregate_only": "pass",
+    "internal_authorization_verified": "pass",
+    "all_estimable_rates_recalculated": "pass",
+    "independent_rational_recalculation": "pass",
+    "baseline_and_exits_partition_reconcile": "pass"
+  },
+  "privacy": {
+    "aggregate_only": true,
+    "employee_rows_persisted": false,
+    "individual_identifiers_persisted": false,
+    "small_voluntary_event_counts_persisted": true
+  },
+  "outcome": "pass",
+  "authorization": {
+    "path": "config/acquisition_attrition_internal_analysis_authorization_20261005.json",
+    "sha256": "a2cd28f249cbecfee177a749b6a9aba3247a9317c7ba8e59bbe1f51bd41d08fd",
+    "authorization_id": "acquisition-attrition-internal-review-20261005",
+    "authorized_audience": "requester and Julia, both project developers"
+  },
+  "recalculation": {
+    "method": "División Decimal y comprobación con aritmética racional Fraction sobre agregados congelados.",
+    "source": "frozen_executed_redshift_aggregates",
+    "source_executed_at": "2026-09-29T20:56:17-06:00",
+    "calculated_at_utc": "2026-10-05T15:20:04.051471+00:00",
+    "formula": "100 * voluntary_exit_count / baseline_employee_count",
+    "acceptance_rule": "Base positiva, salidas entre cero y base, error menor a 0.000000000001 puntos; base cero implica tasa nula.",
+    "metrics": {
+      "top_categories_checked": 11,
+      "estimable_rates": 6,
+      "restored_rates": 4,
+      "zero_baseline_categories": 5,
+      "maximum_recalculation_difference_pp": "0",
+      "top_baseline_total": 6148,
+      "top_voluntary_exit_total": 193
+    },
+    "restored_categories": [
+      {
+        "label": "CSR",
+        "baseline_employee_count": 658,
+        "voluntary_exit_count": 21,
+        "annual_attrition_rate_percent": "3.191489361702127659574468085"
+      },
+      {
+        "label": "Hercules",
+        "baseline_employee_count": 618,
+        "voluntary_exit_count": 28,
+        "annual_attrition_rate_percent": "4.530744336569579288025889968"
+      },
+      {
+        "label": "Atheros",
+        "baseline_employee_count": 530,
+        "voluntary_exit_count": 10,
+        "annual_attrition_rate_percent": "1.886792452830188679245283019"
+      },
+      {
+        "label": "TDK (SAW/BAW filter and module business)",
+        "baseline_employee_count": 307,
+        "voluntary_exit_count": 1,
+        "annual_attrition_rate_percent": "0.3257328990228013029315960912"
+      }
+    ],
+    "outcome": "pass",
+    "score_v4_change": false
+  }
+}

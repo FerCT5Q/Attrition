@@ -1,0 +1,89 @@
+{
+  "artifact_type": "time_in_job_profile_time_in_role_august_trailing_12m_slide_evidence",
+  "version": 2,
+  "generated_on": "2026-09-20",
+  "deliverable_mode": "presentation",
+  "purpose": "Mostrar la distribución vigente de ambas medidas y publicar attrition voluntario de los últimos doce meses sólo para Time in role cuando el baseline de agosto es válido.",
+  "display_contract": {
+    "population": "worker_type='Employee' AND employee_type='Regular' AND active_status=1 AND COALESCE(is_rf360_yes_no, 0)=0",
+    "grain": "employee_snapshot",
+    "minimum_shared_cohort": 30,
+    "display_snapshot_date": "2026-08-23",
+    "baseline_snapshot_date": "2025-08-24",
+    "outcome_cutoff_date": "2026-08-23",
+    "outcome_window": "(2025-08-24, 2026-08-23]"
+  },
+  "annual_attrition_contract": {
+    "target": "term_type='VOLUNTARY' con term_date en (baseline_snapshot_date, outcome_cutoff_date]",
+    "time_in_role_rule": "El campo time_in_role es válido en el baseline y la tasa es distinct voluntary exits dividido entre la cohorte baseline por banda.",
+    "time_in_job_profile_rule": "No publicar tasa si las fechas requeridas del baseline son nulas o inválidas.",
+    "publication_decision": "Publicar sólo Time in role; mantener Time in job profile como Not estimable.",
+    "rate_precision_display": "Una decimal porcentual; cálculo auditado a cuatro decimales."
+  },
+  "query_provenance": {
+    "attrition_sql": "queries/audits/qvoice_time_in_job_profile_time_in_role_august_12m_attrition_20260920.sql",
+    "attrition_sql_sha256": "2a5fdb36e4c5092d68e69265fe024bb1282bd97ccf515c34356610b5fafa9d7e",
+    "distribution_sql": "queries/profiles/qvoice_time_in_job_profile_time_in_role_august_current_distribution_20260920.sql",
+    "distribution_sql_sha256": "a6a8363169edb61fb9ec622eba9977b72d0a28ab395817bf6211d4c9b56f931a",
+    "execution_date": "2026-09-20"
+  },
+  "diagnostics": {
+    "display_snapshot_date": "2026-08-23",
+    "display_employee_snapshot_count": 46878,
+    "display_duplicate_employee_snapshot_count": 0,
+    "display_conflicting_employee_snapshot_count": 0,
+    "display_invalid_or_missing_job_profile_count": 0,
+    "display_invalid_or_missing_time_in_role_count": 0,
+    "baseline_snapshot_date": "2025-08-24",
+    "outcome_cutoff_date": "2026-08-23",
+    "baseline_employee_snapshot_count": 41757,
+    "baseline_duplicate_employee_snapshot_count": 0,
+    "baseline_conflicting_employee_snapshot_count": 0,
+    "baseline_invalid_or_missing_job_profile_count": 41757,
+    "baseline_invalid_or_missing_time_in_role_count": 0,
+    "baseline_total_voluntary_exits": 2377
+  },
+  "coverage": {
+    "time_in_job_profile": {
+      "baseline_valid_employee_count": 0,
+      "baseline_invalid_or_missing_employee_count": 41757,
+      "annual_attrition_displayable": false,
+      "decision": "not_estimable_invalid_or_missing_baseline_dates"
+    },
+    "time_in_role": {
+      "baseline_valid_employee_count": 41757,
+      "baseline_invalid_or_missing_employee_count": 0,
+      "annual_attrition_displayable": true,
+      "decision": "publishable_august_baseline_trailing_12m_cohort"
+    }
+  },
+  "display_rows": {
+    "time_in_job_profile": [
+      {"category": "<1 year", "snapshot_date": "2026-08-23", "employee_count": 14876},
+      {"category": "1–<2 years", "snapshot_date": "2026-08-23", "employee_count": 11375},
+      {"category": "2–<3 years", "snapshot_date": "2026-08-23", "employee_count": 7060},
+      {"category": "3–<5 years", "snapshot_date": "2026-08-23", "employee_count": 8948},
+      {"category": "5–<10 years", "snapshot_date": "2026-08-23", "employee_count": 4053},
+      {"category": "10+ years", "snapshot_date": "2026-08-23", "employee_count": 566}
+    ],
+    "time_in_role": [
+      {"category": "<1 year", "snapshot_date": "2026-08-23", "employee_count": 13433},
+      {"category": "1–<2 years", "snapshot_date": "2026-08-23", "employee_count": 10621},
+      {"category": "2–<3 years", "snapshot_date": "2026-08-23", "employee_count": 7115},
+      {"category": "3–<5 years", "snapshot_date": "2026-08-23", "employee_count": 9475},
+      {"category": "5–<10 years", "snapshot_date": "2026-08-23", "employee_count": 5006},
+      {"category": "10+ years", "snapshot_date": "2026-08-23", "employee_count": 1228}
+    ]
+  },
+  "annual_rows": [
+    {"metric": "time_in_role", "category": "<1 year", "baseline_snapshot_date": "2025-08-24", "outcome_cutoff_date": "2026-08-23", "employee_snapshot_count": 11170, "voluntary_exits": 660, "annual_attrition_rate_percent": "5.9087", "publication_status": "publishable"},
+    {"metric": "time_in_role", "category": "1–<2 years", "baseline_snapshot_date": "2025-08-24", "outcome_cutoff_date": "2026-08-23", "employee_snapshot_count": 8733, "voluntary_exits": 560, "annual_attrition_rate_percent": "6.4125", "publication_status": "publishable"},
+    {"metric": "time_in_role", "category": "2–<3 years", "baseline_snapshot_date": "2025-08-24", "outcome_cutoff_date": "2026-08-23", "employee_snapshot_count": 7682, "voluntary_exits": 474, "annual_attrition_rate_percent": "6.1703", "publication_status": "publishable"},
+    {"metric": "time_in_role", "category": "3–<5 years", "baseline_snapshot_date": "2025-08-24", "outcome_cutoff_date": "2026-08-23", "employee_snapshot_count": 8742, "voluntary_exits": 494, "annual_attrition_rate_percent": "5.6509", "publication_status": "publishable"},
+    {"metric": "time_in_role", "category": "5–<10 years", "baseline_snapshot_date": "2025-08-24", "outcome_cutoff_date": "2026-08-23", "employee_snapshot_count": 4492, "voluntary_exits": 154, "annual_attrition_rate_percent": "3.4283", "publication_status": "publishable"},
+    {"metric": "time_in_role", "category": "10+ years", "baseline_snapshot_date": "2025-08-24", "outcome_cutoff_date": "2026-08-23", "employee_snapshot_count": 938, "voluntary_exits": 35, "annual_attrition_rate_percent": "3.7313", "publication_status": "publishable"}
+  ],
+  "outcome": "pass",
+  "annual_attrition_status": "partial_time_in_role_publishable_time_in_job_profile_not_estimable",
+  "annual_attrition_limitation": "Time in job profile no se publica porque las fechas requeridas están ausentes o inválidas para los 41,757 empleados del baseline 2025-08-24. Time in role sí publica una cohorte trailing-12-month explícita desde 2025-08-24 hasta 2026-08-23."
+}

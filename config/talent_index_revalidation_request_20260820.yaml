@@ -1,0 +1,63 @@
+schema_version: 1
+language: es
+unknown_policy: conservative
+
+problem_context:
+  problem_statement: >-
+    Revalidar Talent index como posible predictor longitudinal de attrition sin
+    asumir que las columnas de terminación forman parte de su fórmula.
+  decision_or_use_case: >-
+    Determinar si el valor almacenado puede incorporarse de forma reproducible y
+    time-safe a snapshots mensuales de empleados activos.
+  outcome: >-
+    Attrition voluntario ocurrido después del snapshot mensual de predicción y antes
+    del siguiente snapshot.
+  population: Empleados regulares activos en cada snapshot mensual de predicción.
+  unit_of_analysis: Empleado-snapshot mensual.
+  time_horizon: Un mes después del cierre de cada snapshot mensual.
+  knowledge_boundary: >-
+    Para cada snapshot sólo puede usarse un Talent index publicado o disponible antes
+    de esa fecha; nunca pueden utilizarse term_reason, vol_1_0, ar_beforeterm ni otra
+    información conocida después de la salida.
+  stakeholders:
+    - Equipo de People Analytics / Attrition
+  constraints:
+    - Sólo SQL read-only y resultados agregados con cohortes de al menos 30.
+    - No publicar IDs, nombres, categorías protegidas, compensación exacta ni texto libre.
+    - No inferir la fórmula a partir de nombres de columnas o coexistencia en una tabla.
+    - Separar fecha de carga técnica, fecha del ciclo y fecha real de publicación.
+  assumptions:
+    - Talent index es una métrica precalculada a grain empleado-ciclo.
+    - La fórmula oficial y la fecha real de publicación permanecen pendientes hasta demostrarse.
+    - La coexistencia de campos de terminación es una alerta de integración, no evidencia de fórmula.
+  stakeholder_questions:
+    - ¿El identificador empl_id empata de forma única con employee_id?
+    - ¿Puede asignarse exactamente un valor vigente a cada empleado-snapshot?
+    - ¿Cuál fecha demuestra que el índice ya estaba disponible para la predicción?
+    - ¿Qué fórmula, pesos, versiones y reglas de nulos producen talent_index?
+  success_criteria:
+    - Cuantificar matched, unmatched, duplicados y multi-match para el join.
+    - Separar cobertura interna del source y cobertura sobre la población mensual objetivo.
+    - Auditar consistencia por ciclo, fechas, duplicados y cambios del índice.
+    - Mantener Definition en 1 si fórmula o lineage no pueden reconciliarse.
+    - Emitir un assessment v4 nuevo sin sobrescribir el resultado histórico.
+
+variables:
+  - name: Talent index
+    intended_use: >-
+      Resumir información de talento o desempeño disponible antes del snapshot como
+      señal potencialmente relacionada con attrition, sin incorporar el outcome.
+    population: Empleados regulares activos en cada snapshot mensual de predicción.
+    knowledge_date: >-
+      Último valor del ciclo cuya fecha oficial de publicación sea anterior o igual
+      al cierre del snapshot; si esa fecha no puede demostrarse, continuar de forma
+      conservadora y limitar History y Join.
+    context_role: Talent
+    context_relevance: >-
+      El índice podría aportar una señal válida de talento, pero requiere fórmula,
+      vigencia temporal y join empleado-fecha gobernados.
+
+decisions:
+  formula_policy: unknown_conservative
+  termination_fields_policy: contextual_only_not_formula_evidence
+  temporal_policy: require_official_cycle_publication_date

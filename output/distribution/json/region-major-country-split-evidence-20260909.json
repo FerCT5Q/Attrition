@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "artifact": "internal_analysis",
+  "generated_on": "2026-09-09",
+  "analysis_plan": "config/region_major_country_split_display_plan_v4_20260909.yaml",
+  "query_path": "queries/audits/region_major_country_split_display_20260909.sql",
+  "snapshot": "2026-08-23",
+  "source_table": "hrda.post_hire_monthly_worker_dtls",
+  "date_field": "fis_mo_end_dt",
+  "population": "Active regular employees at the named monthly snapshot",
+  "grain": "Distinct employee snapshot",
+  "minimum_shared_cohort": 30,
+  "eligible_employees": 50043,
+  "display": {
+    "major_country_split": [
+      {
+        "label": "India",
+        "employee_count": 20814,
+        "percentage": 41.59223,
+        "sort_order": 1
+      },
+      {
+        "label": "United States",
+        "employee_count": 14470,
+        "percentage": 28.915132,
+        "sort_order": 2
+      },
+      {
+        "label": "Americas excluding U.S.",
+        "employee_count": 1570,
+        "percentage": 3.137301,
+        "sort_order": 3
+      },
+      {
+        "label": "China",
+        "employee_count": 3389,
+        "percentage": 6.772175,
+        "sort_order": 4
+      },
+      {
+        "label": "APAC excluding China",
+        "employee_count": 4242,
+        "percentage": 8.47671,
+        "sort_order": 5
+      },
+      {
+        "label": "EMEA",
+        "employee_count": 5558,
+        "percentage": 11.106448,
+        "sort_order": 6
+      }
+    ]
+  },
+  "acceptance_rule": "The six display-only buckets reconcile to the eligible population, each has n >= 30, source-row and Region/Country consistency checks equal zero, and United States/China appear only in their expected stored Region.",
+  "audit_metrics": {
+    "china_outside_apac": 0,
+    "employees_with_conflicting_country_values": 0,
+    "employees_with_conflicting_region_values": 0,
+    "employees_with_multiple_source_rows": 0,
+    "missing_country_employees": 0,
+    "unclassified_region_employees": 0,
+    "united_states_outside_americas": 0
+  },
+  "sql_sha256": "401dd066ad3e59457e90fb58784e8c42ae0a8fb6ecb516ce61fa83d01de32efe",
+  "result_sha256": "96c9ab5efa092162656a2db02a182377269dadcd66fadc6ed43016684fce6e99",
+  "outcome": "pass"
+}

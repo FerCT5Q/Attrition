@@ -1,0 +1,119 @@
+schema_version: 1
+plan_version: 1
+language: es
+created_before_execution: true
+variable: Manager leaving
+concept: >-
+  Feature derivada que identifica empleados expuestos a la salida ya ocurrida y
+  conocida del manager que los supervisaba inmediatamente antes de su terminacion.
+intended_use: >-
+  Medir disrupcion potencial despues de la salida del manager sin utilizar
+  terminaciones futuras ni atribuir el evento al manager reemplazante.
+knowledge_date: >-
+  Primer snapshot mensual en el que is_termed=1 y term_date es igual o anterior
+  al cierre del snapshot.
+population: >-
+  Filas con worker_type='Employee', employee_type='Regular' y active_status=1.
+grain: Empleado-snapshot mensual
+semantic_type: derived_feature
+source_reasoning: >-
+  La relacion empleado-manager vive en la tabla mensual; la terminacion del manager
+  debe reconciliarse con all_terminations y atribuirse usando el ultimo snapshot
+  cerrado anterior a term_date.
+plan_authorship:
+  mode: codex_explicit
+  generated_story_fallback: false
+validation_story:
+  - id: source_access
+    criterion: source
+    evidence_role: defining
+    question: ¿Existen ambas fuentes y todos los campos requeridos para reconstruir la relacion y el evento?
+    why: Sin llaves, fechas de snapshot y terminacion no puede probarse una ruta temporal.
+    fields: [employee_id, manager_employee_id, fis_mo_end_dt, is_termed, term_date, employeeid]
+    method: Auditoria de information_schema sobre las dos fuentes candidatas.
+    sql_reference: queries/audits/manager_leaving_source_access_20260820.sql
+    acceptance_rule: missing_items debe ser 0.
+    metric_checks:
+      - {metric: missing_items, aggregate: sum, operator: eq, threshold: 0}
+  - id: termination_and_assignment_consistency
+    criterion: consistency
+    evidence_role: defining
+    question: ¿Son coherentes historicamente el flag, la fecha, el episodio laboral y la fecha efectiva del manager?
+    why: Una contradiccion puede crear una salida inexistente, futura o atribuida al episodio equivocado.
+    fields: [is_termed, term_date, term_type, max_hire_rehire_date, manager_effective_date, fis_mo_end_dt]
+    method: Auditoria longitudinal agregada y reconciliacion de eventos contra all_terminations.
+    sql_reference: queries/audits/manager_leaving_consistency_reconciliation_v1_20260820.sql
+    acceptance_rule: >-
+      Debe existir evidencia comparable y anomaly_count, invalid_count y
+      unexplained_change_count deben ser 0; tampoco puede haber conflictos de
+      term_type ni eventos presentes en una sola fuente.
+    metric_checks:
+      - {metric: observations_checked, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: matched_event_count, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: anomaly_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: invalid_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: unexplained_change_count, aggregate: sum, operator: eq, threshold: 0}
+  - id: same_snapshot_manager_join
+    criterion: join
+    evidence_role: defining
+    question: ¿Cada manager asignado encuentra exactamente un registro del manager en el mismo snapshot?
+    why: La llave organizacional debe resolver de forma unica antes de buscar su terminacion.
+    fields: [employee_id, manager_employee_id, fis_mo_end_dt]
+    method: Self-join agregado por manager_employee_id=employee_id y fis_mo_end_dt.
+    sql_reference: queries/audits/manager_leaving_join_reconciliation_v1_20260820.sql
+    acceptance_rule: >-
+      manager_join_unmatched_count, manager_join_duplicate_rows,
+      manager_join_multi_match_count, raw_employee_snapshot_duplicate_rows y
+      conflicting_manager_snapshot_count deben ser 0.
+    metric_checks:
+      - {metric: manager_join_eligible_count, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: manager_join_unmatched_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: manager_join_duplicate_rows, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: manager_join_multi_match_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: raw_employee_snapshot_duplicate_rows, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: conflicting_manager_snapshot_count, aggregate: sum, operator: eq, threshold: 0}
+  - id: prior_manager_event_attribution
+    criterion: join
+    evidence_role: defining
+    question: ¿La terminacion se atribuye de forma unica a quienes reportaban al manager antes de su salida?
+    why: Usar el manager actual despues de la salida atribuiria el evento al reemplazante.
+    fields: [manager_employee_id, employee_id, term_date, fis_mo_end_dt, is_termed]
+    method: >-
+      Seleccionar el ultimo snapshot cerrado dentro de los 45 dias previos a
+      term_date, fijar la primera fecha de conocimiento y reconciliar el output
+      derivado al grain empleado-snapshot.
+    sql_reference: queries/audits/manager_leaving_join_reconciliation_v1_20260820.sql
+    acceptance_rule: >-
+      La ruta debe producir eventos atribuidos y exactamente una fila por
+      empleado-snapshot; unmatched_count, duplicate_count, multi_match_count,
+      attribution_unmatched_count, attribution_multi_match_count,
+      manager_event_knowledge_unmatched_count,
+      manager_event_knowledge_multi_match_count y future_event_usage_count deben ser 0.
+    metric_checks:
+      - {metric: attributed_employee_event_count, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: matched_count, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: unmatched_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: duplicate_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: multi_match_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: attribution_unmatched_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: attribution_multi_match_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: manager_event_knowledge_unmatched_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: manager_event_knowledge_multi_match_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: future_event_usage_count, aggregate: sum, operator: eq, threshold: 0}
+  - id: unresolved_exposure_window
+    criterion: definition
+    evidence_role: contextual
+    question: ¿Esta validacion decide cuantos meses permanece expuesto el empleado?
+    why: La ruta puede validarse sin convertir una ventana no aprobada en una regla definitiva.
+    fields: [term_date, fis_mo_end_dt]
+    method: Mantener la validacion de llaves separada de la eleccion de 3, 6 o 12 meses.
+    sql_reference: queries/audits/manager_leaving_join_reconciliation_v1_20260820.sql
+    acceptance_rule: >-
+      Esta prueba no eleva Definition; la ventana y el alcance voluntario frente a
+      todas las salidas deben aprobarse y reconciliarse por separado.
+    metric_fields: [manager_event_count, manager_event_with_prior_team_count]
+planned_sql:
+  - queries/audits/manager_leaving_source_access_20260820.sql
+  - queries/audits/manager_leaving_consistency_reconciliation_v1_20260820.sql
+  - queries/audits/manager_leaving_join_reconciliation_v1_20260820.sql
+acceptance_rules_frozen: true

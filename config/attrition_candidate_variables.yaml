@@ -1,0 +1,1431 @@
+version: 2
+# LEGACY: this inventory predates mandatory calculation-based verification for
+# qualitative scores of 2. Do not regenerate it as a current assessment.
+# Migrate each variable to version 3 using fresh aggregate audits; do not invent
+# verification merely to preserve the historical score.
+migration_status: legacy_requires_v3_score2_verification
+
+x-default-population: &default_population
+  mode: default
+
+x-main-measurement: &main_measurement
+  type: snapshot
+  date_column: fis_mo_end_dt
+  fiscal_year_column: fiscal_year
+  employee_id_column: employee_id
+
+x-direct-evidence: &direct_evidence
+  definition: clear_stable
+  consistency: clean_standardized
+  join: reliable_employee_date
+  effort: direct_or_simple_sql
+
+x-rolling-effort-rationale: &rolling_effort_rationale
+  why: The requested feature requires a time-window transformation rather than a direct field.
+  evidence: The validated source stores dated events and monthly snapshots, not the final trailing-window feature.
+  recommended_action: Implement and test a leakage-safe employee-date rolling SQL transformation.
+
+variables:
+  - category: Applications / internal mobility
+    variable: Applied to a job
+    notes: 1C - Confidential internal-mobility behavior.
+    definition: Employee has at least one deduplicated internal job-application event in the preceding month.
+    source:
+      type: Database
+      table: hrda.applications
+      columns: [employee_id, candidate_id, cand_applied, application_date, req_id]
+      status: confirmed_accessible
+    profile:
+      mode: aggregate_sql
+      aggregate_sql_file: ../queries/profiles/applications_applied_profile.sql
+    level_data: Employee-event
+    measurement:
+      type: event
+      frequency_override: Event-driven; captured monthly from the application feed
+    population:
+      mode: custom
+      display: Active Regular Employees at each monthly snapshot
+    numerator_definition: Employees linked to the applications feed; events are deduplicated by employee, date, and requisition.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: reliable_employee_date
+      effort: moderate_transformation
+    rationale:
+      definition:
+        why: The approved lookback, duplicate-state handling, and application-status scope are not fully documented.
+        evidence: Current aggregate SQL deduplicates by employee, date, and requisition and uses cand_applied=1, but no business-owned specification was supplied.
+        recommended_action: Approve the event grain, status scope, and lookback before model feature engineering.
+      consistency:
+        why: The feed requires deduplication and its refresh continuity must be confirmed.
+        evidence: Schema validation confirms the five fields, while aggregate profiling must collapse repeated employee-date-requisition states.
+        recommended_action: Confirm the feed refresh SLA and monitor deduplicated event volumes by month.
+      effort: *rolling_effort_rationale
+    score_overrides:
+      history:
+        score: 1
+        reason: Historical application events exist, but the source is stale for current model scoring.
+        evidence: The 2026-08-11 aggregate audit found 5,045 employees with applied events from 2020-07-13 through 2024-10-29, while workforce snapshots continue through 2026-08-23.
+        recommended_action: Restore and validate the current feed, then rerun longitudinal profiling before model use.
+    blocker: sensitive_restricted
+
+  - category: Applications / internal mobility
+    variable: More than 3 job applications
+    notes: 1C - Confidential internal-mobility behavior.
+    definition: Employee has more than three deduplicated internal job applications in the trailing 12 months.
+    source:
+      type: Database
+      table: hrda.applications
+      columns: [employee_id, candidate_id, cand_applied, application_date, req_id]
+      status: confirmed_accessible
+    profile:
+      mode: aggregate_sql
+      aggregate_sql_file: ../queries/profiles/applications_more_than_three_profile.sql
+    level_data: Employee rolling event count
+    measurement:
+      type: rolling_derived
+      frequency_override: Monthly derived from application events
+    population:
+      mode: custom
+      display: Active Regular Employees at each monthly snapshot
+    numerator_definition: Employees linked to the applications feed; event means more than three deduplicated requisitions in the trailing 12 months.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: reliable_employee_date
+      effort: moderate_transformation
+    rationale:
+      definition:
+        why: The threshold is stated, but the approved counting grain and treatment of withdrawn or repeated applications are unresolved.
+        evidence: The current profile counts distinct requisitions with cand_applied=1 in a trailing 12-month window.
+        recommended_action: Approve the application counting and status rules before feature use.
+      consistency:
+        why: Deduplication and monthly feed continuity require operational validation.
+        evidence: The schema supports employee, date, requisition, and applied status, but raw application states are not the requested rolling count.
+        recommended_action: Reconcile deduplicated monthly counts to the Talent Acquisition source owner.
+      effort: *rolling_effort_rationale
+    score_overrides:
+      history:
+        score: 1
+        reason: The rolling count has historical support, but the underlying application feed is stale.
+        evidence: Applied events span 2020-07-13 through 2024-10-29 for 5,045 employees; current workforce observations extend through 2026-08-23.
+        recommended_action: Restore the feed and validate continuous 12-month windows before production scoring.
+    blocker: sensitive_restricted
+
+  - category: Applications / internal mobility
+    variable: Transfer within past year
+    definition: Employee had a transfer event effective in the trailing 12 months as of each snapshot.
+    source:
+      type: Database
+      table: hrda.post_hire_monthly_worker_dtls
+      columns: [is_transferred, transfer_date]
+      status: confirmed_accessible
+    level_data: Employee-event
+    measurement:
+      <<: *main_measurement
+      type: event
+      observable_columns: [is_transferred]
+      event_conditions:
+        - column: is_transferred
+          operator: positive
+    population: *default_population
+    numerator_definition: Active Regular Employees with an observable transfer flag; event prevalence uses is_transferred=1.
+    evidence:
+      <<: *direct_evidence
+      effort: moderate_transformation
+    rationale:
+      effort: *rolling_effort_rationale
+    blocker: none
+
+  - category: Location / workplace
+    variable: Location
+    notes: Intended grain is within-country work location; home location is excluded.
+    definition: Employee work country and office site at the monthly snapshot.
+    source:
+      type: Database
+      table: hrda.post_hire_monthly_worker_dtls
+      columns: [country, office_site]
+      status: confirmed_accessible
+    level_data: Employee snapshot
+    measurement:
+      <<: *main_measurement
+      observable_columns: [country, office_site]
+      observable_mode: all
+    population: *default_population
+    numerator_definition: Active Regular Employees with both work country and office site populated.
+    evidence:
+      <<: *direct_evidence
+      definition: needs_alignment
+    rationale:
+      definition:
+        why: The model grain below country level and the treatment of virtual or multi-site workers are not approved.
+        evidence: Current schema validation confirms country and office_site, while the candidate request only says within country.
+        recommended_action: Approve the location grain and virtual/multi-site mapping before modeling.
+    blocker: none
+
+  - category: Compensation
+    variable: Within team compensation range
+    notes: 1C - Compensation data and manager-defined team grouping.
+    definition: Employee relative compensation position within the snapshot-specific manager team.
+    source:
+      type: Database
+      table: hrda.post_hire_monthly_worker_dtls
+      columns: [compa_ratio, compensation_grade, manager_employee_id]
+      status: confirmed_accessible
+    level_data: Employee within team
+    measurement:
+      <<: *main_measurement
+      type: derived
+      observable_columns: [compa_ratio, compensation_grade, manager_employee_id]
+      observable_mode: all
+    population: *default_population
+    numerator_definition: Active Regular Employees with compa-ratio, compensation grade, and manager key populated.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: reliable_employee_date
+      effort: moderate_transformation
+    rationale:
+      definition:
+        why: Team membership, comparison population, and range statistic are not yet approved.
+        evidence: The source exposes manager, grade, and compa-ratio at employee-month grain but no governed team-range feature.
+        recommended_action: Define the temporal team, minimum team size, and permitted band or percentile statistic.
+      consistency:
+        why: Numeric validity and compensation-grade comparability require bounded cleanup.
+        evidence: At the latest snapshot all 50,045 employees had compa_ratio, but 849 values were nonpositive and 1 exceeded 3; valid-value rules are not encoded in the source.
+        recommended_action: Apply approved nonpositive/outlier rules and compare only governed grade or job populations.
+      effort:
+        why: The feature requires time-aligned team grouping and within-team aggregation.
+        evidence: No direct within-team range column exists in the validated monthly table.
+        recommended_action: Build snapshot-specific grouped bands with minimum-cohort suppression.
+    blocker: sensitive_restricted
+
+  - category: Turnover contagion
+    variable: Team turnover
+    definition: Lagged team turnover rate using only terminations known by each employee snapshot.
+    source:
+      type: Database
+      table: hrda.post_hire_monthly_worker_dtls
+      columns: [manager_employee_id, employee_id, is_termed, term_date, term_type]
+      status: confirmed_accessible
+    level_data: Team / employee context
+    measurement:
+      <<: *main_measurement
+      type: rolling_derived
+      observable_columns: [manager_employee_id, is_termed]
+      observable_mode: all
+      event_conditions:
+        - column: is_termed
+          operator: positive
+    population: *default_population
+    numerator_definition: Active Regular Employees with manager and termination-state observability; event prevalence is termination-flag prevalence.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: reliable_employee_date
+      effort: moderate_transformation
+    rationale:
+      definition:
+        why: Team denominator, voluntary scope, minimum size, and lookback window require approval.
+        evidence: Source fields support manager-team and termination reconstruction, but no governed team-turnover definition exists.
+        recommended_action: Approve the team, event scope, denominator, lookback, and small-team policy.
+      consistency:
+        why: Historical team membership and termination timing need temporal validation.
+        evidence: Manager and termination fields coexist at monthly grain, but the final lagged team rate is not stored directly.
+        recommended_action: Validate manager membership and term_date <= snapshot_date for sampled aggregate months.
+      effort: *rolling_effort_rationale
+    blocker: none
+
+  - category: Turnover contagion
+    variable: More than 1 employee leaves in a year
+    definition: Snapshot-specific manager team has more than one in-scope termination in the trailing 12 months.
+    source:
+      type: Database
+      table: hrda.post_hire_monthly_worker_dtls
+      columns: [manager_employee_id, employee_id, is_termed, term_date, term_type]
+      status: confirmed_accessible
+    level_data: Team / employee context
+    measurement:
+      <<: *main_measurement
+      type: rolling_derived
+      observable_columns: [manager_employee_id, is_termed]
+      observable_mode: all
+      event_conditions:
+        - column: is_termed
+          operator: positive
+    population: *default_population
+    numerator_definition: Active Regular Employees with manager and termination-state observability; prevalence is the underlying termination flag.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: reliable_employee_date
+      effort: moderate_transformation
+    rationale:
+      definition:
+        why: Leave type, team membership timing, and small-team handling are not yet approved.
+        evidence: The threshold and source fields are known, but the candidate request does not define voluntary scope or temporal team assignment.
+        recommended_action: Approve event scope and snapshot-specific team rules.
+      consistency:
+        why: The derived count depends on validated manager history and effective termination dates.
+        evidence: Monthly manager and termination fields exist, while the requested rolling team count is not a direct source value.
+        recommended_action: Reconcile aggregate team counts across selected months and enforce term_date <= snapshot_date.
+      effort: *rolling_effort_rationale
+    blocker: none
+
+  - category: Role / job
+    variable: Job family
+    notes: CJFs.
+    definition: Job family and grouped job family recorded at each active employee snapshot.
+    source:
+      type: Database
+      table: hrda.post_hire_monthly_worker_dtls
+      columns: [job_family, job_family_group]
+      status: confirmed_accessible
+    level_data: Employee snapshot
+    measurement:
+      <<: *main_measurement
+      observable_columns: [job_family, job_family_group]
+      observable_mode: all
+    population: *default_population
+    numerator_definition: Active Regular Employees with both job-family fields populated.
+    evidence: *direct_evidence
+    blocker: none
+
+  - category: Demographics
+    variable: Region
+    definition: Work region recorded at each active employee snapshot.
+    source:
+      type: Database
+      table: hrda.post_hire_monthly_worker_dtls
+      columns: [region]
+      status: confirmed_accessible
+    level_data: Employee snapshot
+    measurement:
+      <<: *main_measurement
+      observable_columns: [region]
+    population: *default_population
+    numerator_definition: Active Regular Employees with work region populated.
+    evidence: *direct_evidence
+    blocker: none
+
+  - category: Demographics
+    variable: Gender
+    notes: 1C - Protected demographic attribute. Technical audit found 74 monthly observations, 97.4626% minimum coverage, stable 2-value cardinality, zero normalization collisions, zero whitespace anomalies, and at most one nonblank normalized transition per month.
+    definition: Protected demographic attribute recorded at the employee snapshot; use requires separate governance approval.
+    source:
+      type: Database
+      table: hrda.post_hire_monthly_worker_dtls
+      columns: [gender]
+      status: confirmed_accessible
+    level_data: Employee snapshot
+    measurement:
+      <<: *main_measurement
+      observable_columns: [gender]
+    population: *default_population
+    numerator_definition: Active Regular Employees with a nonblank gender field; no category values are exposed.
+    evidence: *direct_evidence
+    blocker: sensitive_restricted
+
+  - category: Work arrangement
+    variable: Remote / hybrid / in office status
+    definition: Employee work-arrangement category effective at each monthly snapshot.
+    source:
+      type: Database
+      table: hrda.post_hire_monthly_worker_dtls
+      columns: [work_arrangement, work_arrangement_start_date, work_arrangement_end_date]
+      status: confirmed_accessible
+    level_data: Employee snapshot
+    measurement:
+      <<: *main_measurement
+      observable_columns: [work_arrangement]
+    population: *default_population
+    numerator_definition: Active Regular Employees with a nonblank work-arrangement category.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: reliable_employee_date
+      effort: moderate_transformation
+    rationale:
+      definition:
+        why: Effective-date edge cases and category semantics are not yet approved for modeling.
+        evidence: The validated schema includes category, start date, and end date, but no business-owned temporal mapping was supplied.
+        recommended_action: Approve category meanings and effective-date precedence rules.
+      consistency:
+        why: Longitudinal category and effective-date alignment still require validation.
+        evidence: The latest aggregate audit found 17 raw and 17 normalized categories with zero whitespace anomalies; it did not establish that changes align to effective start and end dates.
+        recommended_action: Audit normalized category cardinality and category/date transitions by month.
+      effort:
+        why: A time-safe feature must reconcile category and effective-date fields.
+        evidence: Three source columns exist and the requested snapshot status is not guaranteed by category alone.
+        recommended_action: Implement effective-date rules and regression-test transitions.
+    blocker: none
+
+  - category: Role / job
+    variable: Engineering vs. non-engineering
+    definition: Engineering versus non-engineering classification at each employee snapshot.
+    source:
+      type: Database
+      table: hrda.post_hire_monthly_worker_dtls
+      columns: [eng_or_noneng]
+      status: confirmed_accessible
+    level_data: Employee snapshot
+    measurement:
+      <<: *main_measurement
+      observable_columns: [eng_or_noneng]
+    population: *default_population
+    numerator_definition: Active Regular Employees with the engineering classification populated.
+    evidence: *direct_evidence
+    blocker: none
+
+  - category: Employment history
+    variable: Rehire
+    definition: Employee has a rehire state or dated rehire event observable by the snapshot.
+    source:
+      type: Database
+      table: hrda.post_hire_monthly_worker_dtls
+      columns: [is_rehire, rehire_date]
+      status: confirmed_accessible
+    level_data: Employee-event history
+    measurement:
+      <<: *main_measurement
+      type: event
+      observable_columns: [is_rehire]
+      event_conditions:
+        - column: is_rehire
+          operator: positive
+    population: *default_population
+    numerator_definition: Active Regular Employees with an observable rehire flag; prevalence uses is_rehire=1.
+    evidence:
+      definition: clear_stable
+      consistency: normalization_needed
+      join: reliable_employee_date
+      effort: moderate_transformation
+    rationale:
+      consistency:
+        why: Historical rehire capture changes sharply across source eras, so the flag is not directly comparable over the full time series without harmonization.
+        evidence: Across 74 monthly snapshots, rehire prevalence jumped from 0.0260% on 2022-09-25 to 10.3168% on 2022-10-23; the aggregate audit also found 137 flagged-without-date employee-months, 6 date-without-flag employee-months, and 26 future-dated employee-months.
+        recommended_action: Treat 2022-10-23 as a source-era boundary, derive the feature from rehire_date <= snapshot_date, reconcile the flagged/date exceptions, and validate pre/post-cutoff behavior before training.
+      effort:
+        why: A time-safe rehire feature must reconcile a persistent flag with the dated event.
+        evidence: Both is_rehire and rehire_date exist at employee-month grain.
+        recommended_action: Define event-versus-ever-rehired semantics and enforce rehire_date <= snapshot_date.
+    blocker: none
+
+  - category: Employment history
+    variable: Years of experience prior to Qualcomm
+    definition: Numeric years of work experience accumulated before Qualcomm employment.
+    source:
+      type: Database
+      table: hrda.post_hire_monthly_worker_dtls
+      columns: [prior_qc_work_years]
+      status: confirmed_accessible
+    level_data: Employee snapshot
+    measurement:
+      <<: *main_measurement
+      observable_columns: [prior_qc_work_years]
+    population: *default_population
+    numerator_definition: Active Regular Employees with prior_qc_work_years populated.
+    evidence:
+      <<: *direct_evidence
+      definition: needs_alignment
+      consistency: normalization_needed
+    rationale:
+      definition:
+        why: The source calculation, rounding, and treatment of overlapping experience are not documented in the assessment inputs.
+        evidence: Current schema validation confirms a numeric prior_qc_work_years field but not its business derivation.
+        recommended_action: Obtain and version the source-system definition and boundary rules.
+      consistency:
+        why: Numeric range validity and longitudinal revision behavior require validation.
+        evidence: At the latest snapshot all 50,045 employees were populated, with 0 negative values and 4 values above 80 years; approved outlier and revision rules are not encoded.
+        recommended_action: Audit aggregate invalid-value counts and month-to-month revisions before modeling.
+    blocker: none
+
+  - category: Location / workplace
+    variable: Commute distance
+    notes: 1C - Requires personal home-location data and external geocoding.
+    definition: Travel distance between an approved employee home-location proxy and the effective work site.
+    source:
+      type: Database + external
+      detail: hrda.post_hire_monthly_worker_dtls plus an approved external geocoding reference
+      columns: [homeaddresswithcountry, postal_code, office_site, external coordinates or distance]
+      status: likely_unconfirmed
+    profile:
+      mode: external
+    level_data: Employee location
+    measurement:
+      type: external
+    population:
+      mode: default
+      display: Active Regular Employees; permitted location fields not approved
+    numerator_definition: Not validated because the permitted home-location proxy and geocoding source are unresolved.
+    evidence:
+      definition: needs_alignment
+      consistency: unreliable
+      join: mapping_or_validation
+      effort: heavy_or_unresolved
+    rationale:
+      source:
+        why: Internal location fields exist, but no approved geocoding or distance source is confirmed.
+        evidence: Current metadata confirms restricted home address/postal code and office_site; no governed external reference was supplied.
+        recommended_action: Obtain Privacy approval and identify an approved coarse-location or distance provider.
+      definition:
+        why: The permitted home proxy, travel mode, effective work site, and distance unit are unresolved.
+        evidence: The candidate request names commute distance without a governed derivation specification.
+        recommended_action: Approve a privacy-preserving geographic grain and calculation method.
+      consistency:
+        why: Historical addresses, sites, and external coordinates cannot be validated as a common time series.
+        evidence: No approved external mapping or dated home-location history was available for aggregate profiling.
+        recommended_action: Establish versioned location mappings and validate aggregate temporal coverage.
+      join:
+        why: The employee/site-to-geography mapping needs privacy and temporal validation.
+        evidence: Internal employee snapshots have office_site, but the external geography keys and effective dates are not defined.
+        recommended_action: Validate a governed, date-effective site/geography crosswalk.
+      effort:
+        why: The feature requires restricted data handling, geocoding, temporal mapping, and distance calculation.
+        evidence: No direct commute-distance field or approved derivation path exists in HRDA.
+        recommended_action: Prefer a coarse work-site accessibility proxy or defer until governance and engineering are approved.
+    blocker: sensitive_restricted
+
+  - category: Survey data
+    variable: RTO/hybrid comment in Qvoice
+    notes: 1A - No comment field in the validated QVoice schema.
+    definition: Whether a QVoice free-text comment discusses RTO, hybrid, or office attendance.
+    source:
+      type: No usable source
+      detail: hrda.qvoice_survey_data contains structured response items only
+      columns: [No validated comment column]
+      status: unavailable
+    profile:
+      mode: unavailable
+    level_data: Respondent text (absent)
+    measurement:
+      type: unavailable
+    population:
+      mode: all
+      display: No eligible text source
+    numerator_definition: Not available.
+    evidence:
+      definition: clear_stable
+      consistency: unreliable
+      join: not_joinable
+      effort: heavy_or_unresolved
+    rationale:
+      source:
+        why: The validated QVoice table has no free-text comment column.
+        evidence: The 2026-08-11 metadata audit found emp_id, dates, and structured smallint items through ordinal position 55, but no comment field.
+        recommended_action: Exclude this variable unless a governed comment source is identified.
+      consistency:
+        why: Text quality and longitudinal consistency cannot be assessed without a source field.
+        evidence: No comment schema, aggregate text availability, or dated text history exists in the validated table.
+        recommended_action: Profile only an approved de-identified text source if one becomes available.
+      join:
+        why: There is no text record to join to employee and survey date.
+        evidence: QVoice has employee and survey keys but no associated comment column.
+        recommended_action: Reassess joinability only after a governed source is identified.
+      effort:
+        why: The requested NLP feature has no source and would require a new governed text pipeline.
+        evidence: Structured survey responses cannot reproduce RTO/hybrid free-text content.
+        recommended_action: Exclude from the current model phase.
+    blocker: not_available_exclude
+
+  - category: Survey data
+    variable: Any comment on Qvoice
+    notes: 1A - No comment field in the validated QVoice schema.
+    definition: Whether an eligible employee submitted any QVoice free-text comment.
+    source:
+      type: No usable source
+      detail: hrda.qvoice_survey_data contains structured response items only
+      columns: [No validated comment column]
+      status: unavailable
+    profile:
+      mode: unavailable
+    level_data: Respondent text (absent)
+    measurement:
+      type: unavailable
+    population:
+      mode: all
+      display: No eligible text source
+    numerator_definition: Not available.
+    evidence:
+      definition: clear_stable
+      consistency: unreliable
+      join: not_joinable
+      effort: heavy_or_unresolved
+    rationale:
+      source:
+        why: The validated QVoice table has no free-text comment column.
+        evidence: The 2026-08-11 metadata audit found only identifiers, dates, and structured response items.
+        recommended_action: Exclude this variable unless a governed comment source is identified.
+      consistency:
+        why: Comment availability and quality cannot be measured without a source field.
+        evidence: No aggregate text-presence history can be produced from the validated schema.
+        recommended_action: Profile an approved de-identified text source if one becomes available.
+      join:
+        why: There is no comment record to associate with employee and survey launch date.
+        evidence: Existing employee and survey keys do not point to a comment column.
+        recommended_action: Reassess only after a governed comment table is confirmed.
+      effort:
+        why: A new source ingestion and governed text-processing pipeline would be required.
+        evidence: The current table cannot derive comment presence from structured items.
+        recommended_action: Exclude from the current model phase.
+    blocker: not_available_exclude
+
+  - category: Survey data
+    variable: Non-respondents
+    notes: 1C - Confidential survey participation behavior.
+    definition: Active Regular Employee in the pre-launch proxy population with no QVoice response row for the survey wave.
+    source:
+      type: Database
+      table: hrda.qvoice_survey_data plus hrda.post_hire_monthly_worker_dtls
+      columns: [emp_id, survey_launch_date, employee_id, fis_mo_end_dt]
+      status: confirmed_accessible
+    profile:
+      mode: aggregate_sql
+      aggregate_sql_file: ../queries/profiles/qvoice_nonrespondents_profile.sql
+    level_data: Eligible employee / respondent
+    measurement:
+      type: survey
+    population:
+      mode: custom
+      display: Active Regular Employees at the latest snapshot on or before survey launch
+    numerator_definition: Proxy-eligible employees classified as respondent or nonrespondent using the launch-date response roster.
+    evidence:
+      <<: *direct_evidence
+      effort: moderate_transformation
+    rationale:
+      effort:
+        why: The flag requires a launch-date population join and absence logic.
+        evidence: QVoice stores respondents, while nonrespondents are derived by comparison with the pre-launch active workforce snapshot.
+        recommended_action: Confirm the official survey eligibility roster and replace the workforce proxy if available.
+    blocker: sensitive_restricted
+
+  - category: Survey data
+    variable: Intent to Stay items
+    notes: 1C - Confidential survey responses.
+    definition: Two structured QVoice Intent to Stay item responses for an eligible survey-wave employee.
+    source:
+      type: Database
+      table: hrda.qvoice_survey_data plus hrda.post_hire_monthly_worker_dtls
+      columns: [intent_to_stay_kpi_item_1_see_myself_working_at_qualcomm, intent_to_stay_kpi_item_2_rarely_think_about_looking_for_new_job, emp_id, survey_launch_date]
+      status: confirmed_accessible
+    profile:
+      mode: aggregate_sql
+      aggregate_sql_file: ../queries/profiles/qvoice_intent_profile.sql
+    level_data: Eligible employee / respondent
+    measurement:
+      type: survey
+    population:
+      mode: custom
+      display: Active Regular Employees at the latest snapshot on or before survey launch
+    numerator_definition: Eligible employees with both Intent to Stay items populated.
+    evidence: *direct_evidence
+    blocker: sensitive_restricted
+
+  - category: Survey data
+    variable: Career goals item
+    notes: 1C - Confidential survey responses.
+    definition: Structured QVoice response to the career-goals-can-be-met item.
+    source:
+      type: Database
+      table: hrda.qvoice_survey_data plus hrda.post_hire_monthly_worker_dtls
+      columns: [growth_and_development_item_1_career_goals_can_be_met, emp_id, survey_launch_date]
+      status: confirmed_accessible
+    profile:
+      mode: aggregate_sql
+      aggregate_sql_file: ../queries/profiles/qvoice_career_profile.sql
+    level_data: Eligible employee / respondent
+    measurement:
+      type: survey
+    population:
+      mode: custom
+      display: Active Regular Employees at the latest snapshot on or before survey launch
+    numerator_definition: Eligible employees with the career-goals item populated.
+    evidence: *direct_evidence
+    blocker: sensitive_restricted
+
+  - category: Survey data
+    variable: Average of all Qvoice items
+    notes: 1C - Confidential derived survey score.
+    definition: Employee-level average across an approved set of structured QVoice response items.
+    source:
+      type: Database
+      table: hrda.qvoice_survey_data plus hrda.post_hire_monthly_worker_dtls
+      columns: [structured response-item columns 3-55, emp_id, survey_launch_date]
+      status: confirmed_accessible
+    profile:
+      mode: aggregate_sql
+      aggregate_sql_file: ../queries/profiles/qvoice_average_profile.sql
+    level_data: Eligible employee / respondent
+    measurement:
+      type: survey
+    population:
+      mode: custom
+      display: Active Regular Employees at the latest snapshot on or before survey launch
+    numerator_definition: Eligible employees with a structured QVoice response row; item-level completeness needs separate validation.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: reliable_employee_date
+      effort: moderate_transformation
+    rationale:
+      definition:
+        why: The included items, minimum answered-item rule, and scale treatment are not approved.
+        evidence: Metadata confirms structured items at ordinal positions 3-55, but no governed composite definition was supplied.
+        recommended_action: Approve the item set, reverse coding, minimum completeness, and aggregation rule.
+      consistency:
+        why: Item-level missingness and scale comparability require validation before averaging.
+        evidence: The aggregate profile measures respondent-row coverage, not completeness and coding of every item.
+        recommended_action: Audit aggregate item completeness and permitted response ranges for the survey wave.
+      effort:
+        why: The composite requires multi-column validation and a governed row-wise aggregation.
+        evidence: No direct all-items-average field exists in the validated QVoice table.
+        recommended_action: Implement the approved composite with item-level QA and reproducible versioning.
+    blocker: sensitive_restricted
+
+  - category: Survey data
+    variable: Standardized / normalized within region
+    notes: 1C - Derived confidential survey score.
+    definition: Approved QVoice composite standardized within sufficiently large work-region cohorts for the same survey wave.
+    source:
+      type: Database
+      table: hrda.qvoice_survey_data plus hrda.post_hire_monthly_worker_dtls
+      columns: [structured response-item columns, emp_id, survey_launch_date, employee_id, region, fis_mo_end_dt]
+      status: confirmed_accessible
+    profile:
+      mode: aggregate_sql
+      aggregate_sql_file: ../queries/profiles/qvoice_region_normalized_profile.sql
+    level_data: Eligible employee / respondent-region
+    measurement:
+      type: survey
+    population:
+      mode: custom
+      display: Active Regular Employees at the latest snapshot on or before survey launch
+    numerator_definition: Eligible QVoice respondents joining to a populated work region.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: reliable_employee_date
+      effort: moderate_transformation
+    rationale:
+      definition:
+        why: The base score, standardization formula, cohort minimum, and region grain are not approved.
+        evidence: QVoice responses and monthly region are joinable, but no governed within-region normalization specification exists.
+        recommended_action: Approve the base composite, z-score or alternative formula, cohort threshold, and fallback behavior.
+      consistency:
+        why: Regional comparability and small-cohort stability need validation.
+        evidence: The current aggregate profile confirms respondent-to-region joinability, not stable score distributions by region.
+        recommended_action: Validate aggregate regional sample sizes and distribution stability with privacy suppression.
+      effort:
+        why: The feature requires a survey composite, temporal HR join, cohort suppression, and within-region scaling.
+        evidence: No direct normalized score is stored in either validated source.
+        recommended_action: Build a versioned aggregate pipeline with minimum-cohort and missing-item rules.
+    blocker: sensitive_restricted
+
+  - category: External pull factors
+    variable: Tech industry unemployment data
+    notes: 1D - External public labor-market dependency.
+    definition: Periodic technology-industry unemployment rate mapped to an approved employee labor-market geography.
+    source:
+      type: External + database join
+      detail: External source not selected; HRDA work geography is available
+      columns: [external date, external geography, unemployment_rate, labor_market, country, region, fis_mo_end_dt]
+      status: likely_unconfirmed
+    profile:
+      mode: external
+    level_data: Geography-period
+    measurement:
+      type: external
+    population:
+      mode: default
+      display: Active Regular Employees; external geography mapping not validated
+    numerator_definition: Not validated until an external series and geographic crosswalk are selected.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: mapping_or_validation
+      effort: moderate_transformation
+    rationale:
+      source:
+        why: No specific approved external unemployment series or access path is selected.
+        evidence: HRDA contains internal work geography, while the assessment inputs provide no external provider, table, owner, or license.
+        recommended_action: Select an approved public or licensed source and document ownership and refresh cadence.
+      definition:
+        why: Industry scope, unemployment measure, geography, and release-lag handling are unresolved.
+        evidence: The candidate request describes a proxy for job opportunities without a reproducible series definition.
+        recommended_action: Approve the external measure, geographic grain, vintage policy, and lag.
+      consistency:
+        why: External revisions and geographic definitions have not been profiled.
+        evidence: No dated external observations were available for aggregate normalization or revision checks.
+        recommended_action: Profile missing periods, revisions, units, and geographic coverage after source selection.
+      join:
+        why: External geography must be mapped to internal labor-market or work-location fields.
+        evidence: HRDA region and country exist, but no source-specific geographic crosswalk or effective dates are defined.
+        recommended_action: Build and validate a versioned geography crosswalk with minimum-cohort rules.
+      effort:
+        why: The feature requires external ingestion, vintage management, and temporal-geographic mapping.
+        evidence: No direct unemployment feature exists in the validated internal sources.
+        recommended_action: Implement a governed external-data pipeline only after source approval.
+    blocker: external_third_party
+
+  - category: External pull factors
+    variable: Draup data
+    notes: 1D - Vendor data dependency.
+    definition: TBD labor-market signal sourced from the Draup vendor feed.
+    source:
+      type: External
+      detail: External Draup vendor feed; not found in validated HRDA schemas
+      columns: [TBD]
+      status: likely_unconfirmed
+    profile:
+      mode: external
+    level_data: Labor market / geography
+    measurement:
+      type: external
+    population:
+      mode: all
+      display: Vendor population not validated
+    numerator_definition: Not validated.
+    evidence:
+      definition: unclear
+      consistency: normalization_needed
+      join: not_joinable
+      effort: heavy_or_unresolved
+    rationale:
+      source:
+        why: A possible vendor is named, but access, fields, ownership, and license terms are unconfirmed.
+        evidence: The metadata audit found no Draup table in the validated sources used for this assessment.
+        recommended_action: Confirm the vendor contract, approved fields, owner, and historical extract access.
+      definition:
+        why: The intended Draup measure is not specified.
+        evidence: The candidate inventory provides only the vendor name and US note, without a field or calculation.
+        recommended_action: Define the exact business signal, unit, grain, and prediction-time availability.
+      consistency:
+        why: Vendor schema, units, revisions, and historical continuity cannot be assessed.
+        evidence: No aggregate vendor observations or data dictionary were available.
+        recommended_action: Profile aggregate coverage and revisions after an approved extract is obtained.
+      join:
+        why: No employee, geography, occupation, or date key has been proposed.
+        evidence: Source columns and target grain remain TBD.
+        recommended_action: Design and validate a privacy-safe temporal crosswalk.
+      effort:
+        why: Procurement, ingestion, mapping, and feature logic are unresolved.
+        evidence: No internal table or reproducible derivation path currently exists.
+        recommended_action: Defer engineering until the use case and vendor access are approved.
+    blocker: external_third_party
+
+  - category: External pull factors
+    variable: LinkedIn scraping
+    notes: 1D - Scraping and terms-of-use dependency.
+    definition: Monthly external professional-profile signal matched to an employee under an approved collection method.
+    source:
+      type: External
+      detail: LinkedIn source not present in HRDA and no approved feed was provided
+      columns: [TBD employee/profile match, observation_date]
+      status: likely_unconfirmed
+    profile:
+      mode: external
+    level_data: Employee / external profile
+    measurement:
+      type: external
+    population:
+      mode: all
+      display: External profile population not validated
+    numerator_definition: Not validated.
+    evidence:
+      definition: needs_alignment
+      consistency: unreliable
+      join: not_joinable
+      effort: heavy_or_unresolved
+    rationale:
+      source:
+        why: No approved historical feed or access path is confirmed.
+        evidence: No LinkedIn table or licensed extract was found in the validated HRDA sources.
+        recommended_action: Do not scrape; identify an approved licensed source and governance owner if the use case proceeds.
+      definition:
+        why: The permitted signal, collection cadence, and prediction-time meaning are unresolved.
+        evidence: The candidate inventory proposes monthly scraping without a field-level specification.
+        recommended_action: Define a lawful, governed signal and observation-date policy.
+      consistency:
+        why: Profile edits, collection gaps, and identity matching would make the series unreliable without a governed feed.
+        evidence: No schema or aggregate historical observations exist for stability testing.
+        recommended_action: Require provider-level data-quality and historical-continuity evidence before reconsideration.
+      join:
+        why: No reliable approved employee-to-profile and observation-date key exists.
+        evidence: Both matching fields remain TBD.
+        recommended_action: Avoid identity matching unless explicitly approved and technically validated.
+      effort:
+        why: Scraping, identity resolution, history collection, and governance are unresolved.
+        evidence: There is no internal source or approved external pipeline.
+        recommended_action: Exclude from the current model phase.
+    blocker: external_third_party
+
+  - category: Tenure
+    variable: Position / time in level
+    definition: Time since the effective level-entry date, with optional role-tenure context.
+    source:
+      type: Database
+      table: hrda.post_hire_monthly_worker_dtls
+      columns: [levelentrydate, time_in_role, time_in_job_profile_start_date]
+      status: confirmed_accessible
+    level_data: Employee snapshot
+    measurement:
+      <<: *main_measurement
+      type: derived
+      observable_columns: [levelentrydate]
+    population: *default_population
+    numerator_definition: Active Regular Employees with levelentrydate populated.
+    evidence:
+      definition: needs_alignment
+      consistency: clean_standardized
+      join: reliable_employee_date
+      effort: moderate_transformation
+    rationale:
+      definition:
+        why: Position tenure, level tenure, and role tenure are distinct concepts and the requested one is not fully disambiguated.
+        evidence: The validated table exposes levelentrydate, time_in_role, and job-profile start date as separate fields.
+        recommended_action: Select the primary tenure concept and define reset behavior for promotions, transfers, and rehires.
+      effort:
+        why: The model feature must be calculated as of each snapshot and may reconcile multiple tenure concepts.
+        evidence: The source contains dates and a numeric role-tenure field rather than one approved position/time-in-level feature.
+        recommended_action: Implement the selected time-safe date difference and edge-case rules.
+    blocker: none
+
+  - category: Tenure
+    variable: Company tenure
+    definition: Completed service time from the approved hire-date basis to each employee snapshot.
+    source:
+      type: Database
+      table: hrda.post_hire_monthly_worker_dtls
+      columns: [original_hire_date, max_hire_rehire_date]
+      status: confirmed_accessible
+    level_data: Employee snapshot
+    measurement:
+      <<: *main_measurement
+      type: derived
+      observable_columns: [original_hire_date]
+    population: *default_population
+    numerator_definition: Active Regular Employees with original_hire_date populated.
+    evidence: *direct_evidence
+    blocker: none
+
+  - category: Career progression
+    variable: Time since last promotion
+    definition: Completed time from the latest promotion date known by the snapshot.
+    source:
+      type: Database
+      table: hrda.post_hire_monthly_worker_dtls
+      columns: [is_promo, promotion_date]
+      status: confirmed_accessible
+    level_data: Employee-event history
+    measurement:
+      <<: *main_measurement
+      type: event
+      observable_columns: [is_promo]
+      event_conditions:
+        - column: is_promo
+          operator: positive
+    population: *default_population
+    numerator_definition: Active Regular Employees with an observable promotion flag; prevalence uses is_promo=1.
+    evidence:
+      <<: *direct_evidence
+      effort: moderate_transformation
+    rationale:
+      effort: *rolling_effort_rationale
+    blocker: none
+
+  - category: Career progression
+    variable: Promoted vs. hired into level
+    definition: Classify level entry as promotion, hire, or unknown using only events known by the snapshot.
+    source:
+      type: Database
+      table: hrda.post_hire_monthly_worker_dtls
+      columns: [levelentrydate, is_promo, promotion_date, original_hire_date, max_hire_rehire_date]
+      status: confirmed_accessible
+    level_data: Employee snapshot / event
+    measurement:
+      <<: *main_measurement
+      type: derived
+      observable_columns: [levelentrydate, is_promo, original_hire_date]
+      observable_mode: all
+    population: *default_population
+    numerator_definition: Active Regular Employees with level entry, promotion-state, and original-hire inputs populated.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: reliable_employee_date
+      effort: moderate_transformation
+    rationale:
+      definition:
+        why: Same-day events, rehires, lateral moves, and pre-history level entries need explicit classification rules.
+        evidence: The source provides level, promotion, and hire dates but no direct promoted-versus-hired label.
+        recommended_action: Approve a precedence table with an explicit Unknown class for unresolved cases.
+      consistency:
+        why: Left-censored promotion history can disagree with older level-entry dates.
+        evidence: Current inputs are observable at snapshot grain, but event completeness before the captured promotion history has not been established.
+        recommended_action: Quantify unmatched level entries by month and retain Unknown where history is insufficient.
+      effort:
+        why: The feature requires multi-date reconciliation and leakage-safe precedence rules.
+        evidence: No direct classification field exists in the validated monthly table.
+        recommended_action: Implement and unit-test the approved event-precedence logic.
+    blocker: none
+
+  - category: Role / job
+    variable: Level
+    definition: Employee job or management level recorded at each monthly snapshot.
+    source:
+      type: Database
+      table: hrda.post_hire_monthly_worker_dtls
+      columns: [level_grouped, job_level_primary_position, management_level]
+      status: confirmed_accessible
+    level_data: Employee snapshot
+    measurement:
+      <<: *main_measurement
+      observable_columns: [level_grouped, job_level_primary_position, management_level]
+      observable_mode: any
+    population: *default_population
+    numerator_definition: Active Regular Employees with at least one approved level field populated.
+    evidence: *direct_evidence
+    blocker: none
+
+  - category: Organization structure
+    variable: Layers from CEO
+    definition: Snapshot organizational depth from the top of the supervisory hierarchy.
+    source:
+      type: Database
+      table: hrda.post_hire_monthly_worker_dtls
+      columns: [worker_supervisory_organization_level_from_top]
+      status: confirmed_accessible
+    level_data: Employee snapshot
+    measurement:
+      <<: *main_measurement
+      observable_columns: [worker_supervisory_organization_level_from_top]
+    population: *default_population
+    numerator_definition: Active Regular Employees with supervisory-organization level populated.
+    evidence: *direct_evidence
+    blocker: none
+
+  - category: Compensation
+    variable: Compensation grade
+    notes: 1C - Governed compensation information.
+    definition: Employee compensation grade recorded at each monthly snapshot.
+    source:
+      type: Database
+      table: hrda.post_hire_monthly_worker_dtls
+      columns: [compensation_grade]
+      status: confirmed_accessible
+    level_data: Employee snapshot
+    measurement:
+      <<: *main_measurement
+      observable_columns: [compensation_grade]
+    population: *default_population
+    numerator_definition: Active Regular Employees with compensation grade populated.
+    evidence: *direct_evidence
+    blocker: sensitive_restricted
+
+  - category: Compensation
+    variable: Comp ratio
+    notes: 1C - Governed relative compensation information.
+    definition: Precomputed employee compa-ratio at the monthly snapshot, intended to represent base-pay position relative to an applicable pay-range midpoint; the authoritative numerator and denominator remain to be confirmed.
+    source:
+      type: Database
+      table: hrda.post_hire_monthly_worker_dtls
+      columns: [compa_ratio]
+      status: confirmed_accessible
+    level_data: Employee snapshot
+    measurement:
+      <<: *main_measurement
+      observable_columns: [compa_ratio]
+    population: *default_population
+    numerator_definition: Active Regular Employees with compa_ratio populated.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: reliable_employee_date
+      effort: moderate_transformation
+    rationale:
+      definition:
+        why: The employee compa-ratio formula is not authoritatively documented or reproducible from the validated employee table.
+        evidence: Redshift stores compa_ratio as a precomputed field with no column comment; available views and procedures only pass it through, and the employee tables expose no pay-range midpoint. An adjacent offers source matches base_pay_amount / mid_payrange within 0.01 for all 54,461 comparable rows, but this does not confirm the employee field's numerator, range, currency, FTE, effective-date, or rounding rules.
+        recommended_action: Obtain and version the Compensation/HRIS lineage for numerator, midpoint denominator, grade/profile, currency conversion, FTE handling, effective date, and rounding; then perform an aggregate reconciliation before restoring score 2.
+      consistency:
+        why: Numeric validity and outlier treatment require bounded cleanup.
+        evidence: The latest aggregate audit found 50,045 populated values, including 849 nonpositive values and 1 value above 3.
+        recommended_action: Apply governed validity checks and use bands or percentiles rather than exact values.
+      effort:
+        why: Model use requires validity filtering and privacy-preserving transformation.
+        evidence: The source stores exact compa-ratio, while the approved modeling representation should be a band or percentile.
+        recommended_action: Implement approved cleaning, winsorization if permitted, and banding rules.
+    blocker: sensitive_restricted
+
+  - category: Manager / workplace
+    variable: Co-location with manager
+    definition: Employee and active manager have the same nonblank office site at the same monthly snapshot.
+    source:
+      type: Database
+      table: hrda.post_hire_monthly_worker_dtls
+      columns: [employee_id, manager_employee_id, office_site, country]
+      status: confirmed_accessible
+    profile:
+      mode: aggregate_sql
+      aggregate_sql_file: ../queries/profiles/colocation_profile.sql
+    level_data: Employee-manager pair
+    measurement:
+      type: derived
+    population:
+      mode: custom
+      display: Active Regular Employees and active Regular manager snapshots
+    numerator_definition: Employees with populated office sites for both employee and matched active manager; event means sites are equal.
+    evidence:
+      definition: clear_stable
+      consistency: normalization_needed
+      join: reliable_employee_date
+      effort: moderate_transformation
+    rationale:
+      consistency:
+        why: Office-site aliases and unmatched or inactive managers need validation.
+        evidence: At the latest snapshot 49,848 of 50,045 employees matched an active manager and 46,581 had both office sites; exact equality uses no site-alias crosswalk.
+        recommended_action: Validate site normalization and define handling for unmatched managers and virtual sites.
+      effort:
+        why: The feature requires a same-date employee-to-manager self-join.
+        evidence: Employee and manager office sites are stored on separate worker rows rather than as a direct co-location flag.
+        recommended_action: Implement the time-aligned self-join with site normalization and join QA.
+    blocker: none
+
+  - category: Manager / workplace
+    variable: Hours away from manager
+    notes: 1D - Requires travel-time, coordinate, or time-zone reference data.
+    definition: Approved travel-time or time-zone distance between employee and manager effective work sites.
+    source:
+      type: Database + external
+      detail: hrda.post_hire_monthly_worker_dtls plus an approved site-distance reference
+      columns: [employee_id, manager_employee_id, office_site, country, external travel-time or time-zone fields]
+      status: likely_unconfirmed
+    profile:
+      mode: external
+    level_data: Employee-manager pair
+    measurement:
+      type: external
+    population:
+      mode: default
+      display: Active Regular Employees; external site-distance mapping not validated
+    numerator_definition: Not validated until an approved site reference and distance concept are selected.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: mapping_or_validation
+      effort: moderate_transformation
+    rationale:
+      source:
+        why: Internal site and manager fields exist, but no approved distance or time-zone reference is confirmed.
+        evidence: HRDA metadata confirms employee, manager, office_site, and country; no external mapping was supplied.
+        recommended_action: Select a governed site-to-coordinate, travel-time, or time-zone reference.
+      definition:
+        why: Hours could mean travel time or time-zone separation, and the intended measure is unresolved.
+        evidence: The candidate inventory names hours away without mode, routing, or temporal-site rules.
+        recommended_action: Approve the distance concept, site precedence, and units.
+      consistency:
+        why: Site aliases and external reference revisions have not been validated.
+        evidence: No dated external site mapping was available for aggregate continuity checks.
+        recommended_action: Build a versioned site crosswalk and monitor unmapped sites.
+      join:
+        why: A same-date manager join exists internally, but site-to-external-reference mapping remains unvalidated.
+        evidence: The manager key and office site are available; external keys and effective dates are not.
+        recommended_action: Validate same-date manager matching and a date-effective site reference.
+      effort:
+        why: The feature requires manager self-join, site normalization, and external distance logic.
+        evidence: No direct hours-away field exists in HRDA.
+        recommended_action: Implement only after the definition and external reference are approved.
+    blocker: external_third_party
+
+  - category: Manager risk
+    variable: High risk manager
+    notes: 1C - Individual manager risk label and governance risk.
+    definition: TBD governed manager-level risk classification derived from historical team outcomes.
+    source:
+      type: Database
+      table: hrda.post_hire_monthly_worker_dtls
+      columns: [manager_employee_id, employee_id, is_termed, term_date, term_type]
+      status: likely_unconfirmed
+    level_data: Manager / team
+    measurement:
+      <<: *main_measurement
+      type: derived
+      observable_columns: [manager_employee_id, is_termed]
+      observable_mode: all
+    population: *default_population
+    numerator_definition: Technical input observability for manager and termination state; no approved risk label is produced.
+    evidence:
+      definition: unclear
+      consistency: unreliable
+      join: reliable_employee_date
+      effort: heavy_or_unresolved
+    rationale:
+      source:
+        why: Technical inputs exist, but there is no approved source or owner for a manager-risk label.
+        evidence: HRDA contains manager and termination history; metadata contains no governed high-risk-manager field.
+        recommended_action: Obtain governance approval and assign a business owner before defining any label.
+      definition:
+        why: High risk has no approved outcome, time horizon, threshold, or permitted use.
+        evidence: The candidate inventory provides only the label name.
+        recommended_action: Do not score managers; define an aggregate organizational use case with Legal and Privacy review.
+      consistency:
+        why: A reproducible label cannot be tested until the definition and governance are approved.
+        evidence: Source inputs are available, but no stable classification rule exists.
+        recommended_action: If approved, validate aggregate temporal stability and bias before any use.
+      effort:
+        why: The concept requires new modeling, governance controls, monitoring, and restricted outputs.
+        evidence: It is not a direct feature or bounded SQL derivation.
+        recommended_action: Exclude from the current employee attrition feature set.
+    blocker: sensitive_restricted
+
+  - category: Manager risk
+    variable: High turnover under this person
+    notes: 1C - Attributable manager performance/risk metric.
+    definition: Snapshot-specific manager team exceeds an approved trailing turnover threshold.
+    source:
+      type: Database
+      table: hrda.post_hire_monthly_worker_dtls
+      columns: [manager_employee_id, employee_id, is_termed, term_date, term_type]
+      status: confirmed_accessible
+    level_data: Manager / team
+    measurement:
+      <<: *main_measurement
+      type: rolling_derived
+      observable_columns: [manager_employee_id, is_termed]
+      observable_mode: all
+      event_conditions:
+        - column: is_termed
+          operator: positive
+    population: *default_population
+    numerator_definition: Employees with manager and termination-state observability; prevalence is the underlying termination flag.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: reliable_employee_date
+      effort: moderate_transformation
+    rationale:
+      definition:
+        why: Turnover type, denominator, lookback, threshold, and small-team handling require approval.
+        evidence: Manager and termination inputs exist, but no governed high-turnover classification is stored.
+        recommended_action: Approve the temporal team and threshold rules with governance review.
+      consistency:
+        why: Historical team membership and event timing require validation.
+        evidence: The requested manager metric is derived from monthly assignments and dated terminations.
+        recommended_action: Reconstruct snapshot-specific teams and validate aggregate rates by month.
+      effort: *rolling_effort_rationale
+    blocker: sensitive_restricted
+
+  - category: Manager movement
+    variable: Manager leaving
+    definition: Employee's snapshot-specific manager has a termination event known within the approved lookback window.
+    source:
+      type: Database
+      table: hrda.post_hire_monthly_worker_dtls
+      columns: [manager_employee_id, employee_id, is_termed, term_date, term_type]
+      status: confirmed_accessible
+    level_data: Employee-manager event
+    measurement:
+      <<: *main_measurement
+      type: rolling_derived
+      observable_columns: [manager_employee_id, is_termed]
+      observable_mode: all
+      event_conditions:
+        - column: is_termed
+          operator: positive
+    population: *default_population
+    numerator_definition: Employees with manager and termination-state observability; prevalence is the underlying termination flag.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: reliable_employee_date
+      effort: moderate_transformation
+    rationale:
+      definition:
+        why: Lookback window, manager effective date, and termination scope are not finalized.
+        evidence: The source supports a same-date manager join and termination dates but no direct manager-leaving feature.
+        recommended_action: Approve lookback, event scope, and manager-assignment precedence.
+      consistency:
+        why: Manager assignment and termination timing must be aligned without future information.
+        evidence: Monthly snapshots and term_date coexist, while the requested relationship-event feature is derived.
+        recommended_action: Enforce term_date <= snapshot_date and validate manager changes around the event.
+      effort: *rolling_effort_rationale
+    blocker: none
+
+  - category: Manager movement
+    variable: Manager change
+    definition: Employee has a manager-change event effective in the approved lookback window.
+    source:
+      type: Database
+      table: hrda.post_hire_monthly_worker_dtls
+      columns: [manager_change, manager_change_date]
+      status: confirmed_accessible
+    level_data: Employee-event
+    measurement:
+      <<: *main_measurement
+      type: event
+      observable_columns: [manager_change]
+      event_conditions:
+        - column: manager_change
+          operator: positive
+    population: *default_population
+    numerator_definition: Active Regular Employees with an observable manager-change flag; prevalence uses manager_change=1.
+    evidence:
+      <<: *direct_evidence
+      effort: moderate_transformation
+    rationale:
+      effort: *rolling_effort_rationale
+    blocker: none
+
+  - category: Manager movement
+    variable: Number of manager changes
+    definition: Count of dated manager-change events in an approved trailing time window.
+    source:
+      type: Database
+      table: hrda.post_hire_monthly_worker_dtls
+      columns: [manager_change, manager_change_date]
+      status: confirmed_accessible
+    level_data: Employee rolling event count
+    measurement:
+      <<: *main_measurement
+      type: rolling_derived
+      observable_columns: [manager_change]
+      event_conditions:
+        - column: manager_change
+          operator: positive
+    population: *default_population
+    numerator_definition: Active Regular Employees with manager-change observability; prevalence is the underlying change flag.
+    evidence:
+      definition: needs_alignment
+      consistency: clean_standardized
+      join: reliable_employee_date
+      effort: moderate_transformation
+    rationale:
+      definition:
+        why: The counting window and treatment of same-period corrections are not specified.
+        evidence: The candidate inventory says in X amount of time, while the source provides dated events.
+        recommended_action: Approve a fixed lookback and event-deduplication rule.
+      effort: *rolling_effort_rationale
+    blocker: none
+
+  - category: Talent
+    variable: Talent index
+    notes: 1A - Current composite is not leakage-safe for this model phase.
+    definition: Existing talent-index composite by talent cycle, excluding any future outcome information for model use.
+    source:
+      type: Database
+      table: hrda.master_talent_index
+      columns: [empl_id, talent_index, perf, stock, bonus, promo_index, term_reason, cycle_number, last_modified_date]
+      status: confirmed_accessible
+    profile:
+      mode: aggregate_sql
+      aggregate_sql_file: ../queries/profiles/talent_index_profile.sql
+    level_data: Employee-cycle
+    measurement:
+      type: derived
+      frequency_override: Cycle-based
+    population:
+      mode: all
+      display: Employees present in each talent-index cycle
+    numerator_definition: Cycle employees with talent_index populated; coverage is source-internal.
+    quality:
+      leakage_risk: true
+    evidence:
+      definition: needs_alignment
+      consistency: unreliable
+      join: reliable_employee_date
+      effort: heavy_or_unresolved
+    rationale:
+      definition:
+        why: A leakage-safe version and prediction-time field set are not defined.
+        evidence: Current metadata confirms the composite alongside term_reason and cycle fields in the same source.
+        recommended_action: Define a new snapshot-safe composite using only fields known before the prediction date.
+      consistency:
+        why: The current composite is not time-safe for attrition modeling.
+        evidence: The validated source includes termination information and cycle-level derived components with the outcome context.
+        recommended_action: Rebuild and revalidate the composite without termination or future-cycle information.
+      effort:
+        why: A safe feature requires composite redesign, backtesting, and governance approval.
+        evidence: Removing leakage is not a bounded cleanup of the existing talent_index value.
+        recommended_action: Exclude the current field and scope a governed redevelopment separately.
+    blocker: not_available_exclude
+
+  - category: Organization events
+    variable: Major inflection points
+    notes: Current fields are event proxies, not an authoritative reorganization history.
+    definition: TBD authoritative organization-level event indicating a material reorganization or strategic inflection point.
+    source:
+      type: Database proxy
+      table: hrda.post_hire_monthly_worker_dtls
+      columns: [manager_change, manager_change_date, cost_center_change, cost_center_change_date, job_family_change, job_family_change_date, location_change, location_change_date, is_transferred, transfer_date]
+      status: likely_unconfirmed
+    level_data: Organization-event proxy
+    measurement:
+      <<: *main_measurement
+      type: derived
+      observable_columns: [manager_change, cost_center_change, job_family_change, location_change, is_transferred]
+      observable_mode: any
+    population: *default_population
+    numerator_definition: Employees with at least one observable proxy-event flag; this does not establish an authoritative inflection event.
+    evidence:
+      definition: unclear
+      consistency: unreliable
+      join: reliable_employee_date
+      effort: heavy_or_unresolved
+    rationale:
+      source:
+        why: Several employee-movement proxies exist, but no authoritative major-inflection source is confirmed.
+        evidence: Current metadata validates manager, cost-center, job-family, location, and transfer events only.
+        recommended_action: Identify a governed organization-event source and owner.
+      definition:
+        why: Major inflection point has no approved event taxonomy, scope, or effective date.
+        evidence: The candidate inventory gives reorg only as an example.
+        recommended_action: Define event types, organizational scope, severity, and prediction-time availability.
+      consistency:
+        why: Proxy employee movements cannot reliably distinguish a major organization event.
+        evidence: The available flags represent individual changes and may occur without an enterprise inflection point.
+        recommended_action: Do not infer major events solely from movement spikes; validate against an authoritative calendar.
+      effort:
+        why: The intended feature requires new event sourcing or complex proxy detection and validation.
+        evidence: No direct major-event field exists in the validated source.
+        recommended_action: Defer until an authoritative event history is available.
+    blocker: none
+
+  - category: Talent / expert track
+    variable: ET fields
+    notes: Not scored as ready - the acronym and intended expert-track mapping are ambiguous.
+    definition: TBD expert-track classification such as engineering ET1/ET2 or non-engineering ET1.
+    source:
+      type: Database (mapping TBD)
+      table: hrda.post_hire_monthly_worker_dtls
+      columns: [et_1_leader, et_2_leader, et_3_leader, et_4_leader, et_5_leader, et_6_leader, et_7_leader, et_8_leader, et_9_leader, et_10_leader, et_11_leader]
+      status: likely_unconfirmed
+    level_data: TBD employee or organization
+    measurement:
+      <<: *main_measurement
+      observable_columns: [et_1_leader, et_2_leader, et_3_leader, et_4_leader, et_5_leader, et_6_leader, et_7_leader, et_8_leader, et_9_leader, et_10_leader, et_11_leader]
+      observable_mode: any
+    population: *default_population
+    numerator_definition: Technical observability of ET hierarchy fields; intended expert-track semantics are not established.
+    evidence:
+      definition: unclear
+      consistency: unreliable
+      join: reliable_employee_date
+      effort: heavy_or_unresolved
+    rationale:
+      source:
+        why: ET-named hierarchy columns exist, but their relationship to the requested expert-track classification is unconfirmed.
+        evidence: The metadata audit confirms et_1_leader through et_11_leader as character fields on employee snapshots.
+        recommended_action: Confirm the authoritative expert-track source and mapping with the business owner.
+      definition:
+        why: ET may refer to executive hierarchy or expert track, and the requested levels are not reproducibly defined.
+        evidence: The candidate note mentions engineering ET1/ET2 and non-engineering ET1, while the visible source fields are leader hierarchy columns.
+        recommended_action: Resolve the acronym, target grain, and level mapping before scoring readiness.
+      consistency:
+        why: The visible hierarchy values cannot be validated as expert-track categories.
+        evidence: Aggregate nonblank coverage of leader fields does not establish the intended classification semantics.
+        recommended_action: Profile the authoritative mapped field after definition and source confirmation.
+      effort:
+        why: The current concept requires unresolved source mapping and business-rule development.
+        evidence: No direct expert-track classification matching the candidate definition has been confirmed.
+        recommended_action: Defer engineering until source and definition are approved.
+    blocker: tbd

@@ -1,0 +1,30 @@
+schema_version: 1
+language: es
+unknown_policy: conservative
+problem_context:
+  problem_statement: Identificar grupos dentro de Critical Tech con attrition voluntario elevado y encontrar señales asociadas que puedan orientar acciones de retención.
+  decision_or_use_case: Definir y validar la población Critical Tech del modelo de People Analytics y priorizar cohortes accionables.
+  outcome: Attrition voluntario posterior al snapshot mensual, con riesgo acumulado operativo de seis meses.
+  population: Empleados regulares activos cuyo job_family coincide con hrda.critical_tech.
+  unit_of_analysis: Employee-snapshot mensual y mapping family-segment.
+  time_horizon: Hazard entre snapshots mensuales y riesgo acumulado a seis meses.
+  knowledge_boundary: Información disponible al cierre de cada snapshot mensual; el catálogo debe tener una regla de vigencia aprobada.
+  stakeholders: Equipo de People Analytics / Attrition.
+  assumptions:
+  - Critical Tech es un filtro de población, no un target que el modelo deba aprender.
+  - Los grupos de alto attrition se descubrirán dentro de la población filtrada.
+  - Los drivers son asociaciones; las acciones se evaluarán posteriormente con pilotos o diseños causales.
+  constraints:
+  - Sólo consultas read-only y resultados agregados.
+  - Cohortes compartidas de al menos 30 empleados; suprimir eventos pequeños.
+  - No publicar IDs, nombres, correos, atributos protegidos, compensación exacta, domicilios ni texto libre.
+  - Validación temporal, sin particiones aleatorias como evaluación principal.
+variables:
+- name: Critical Tech job families
+  intended_use: Filtrar la población del modelo y validar el mapping family-segment que se usará para descubrir cohortes de attrition.
+  population: Empleados regulares activos en snapshots mensuales con job_family coincidente con critical_tech.
+  knowledge_date: Cierre del snapshot mensual y versión aprobada del catálogo.
+decisions:
+  current_mapping_scope: Usar hrda.critical_tech como scope actual; excluir keys no reconciliadas.
+  historical_membership: Mantener como pendiente hasta reconciliar critical_tech_archive al mismo grain.
+  small_segments: Pooling en el modelo común; no crear modelos independientes ni publicar diagnósticos con menos de 30 eventos.

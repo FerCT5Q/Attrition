@@ -1,0 +1,139 @@
+{
+  "artifact_type": "aggregate_distribution_evidence",
+  "deliverable_mode": "internal_analysis",
+  "variable": "Company tenure",
+  "semantic_type": "direct_field",
+  "publication_status": "descriptive_stored_fields",
+  "score_v4_change": "none",
+  "execution_date": "2026-09-10",
+  "snapshot_date": "2026-08-23",
+  "population": "worker_type='Employee'; employee_type='Regular'; active_status=1 at the fixed 2026-08-23 monthly snapshot",
+  "grain": "Distinct active regular employee at one monthly snapshot",
+  "definitions": {
+    "original_hire_date": "Proxy descriptivo: antigüedad por aniversario desde el valor almacenado original_hire_date.",
+    "max_hire_rehire_date": "Proxy descriptivo: antigüedad por aniversario desde el valor almacenado max_hire_rehire_date.",
+    "cross_field_policy": "No se aplica una fecha sobre la otra; cada gráfica describe directamente su propio campo almacenado."
+  },
+  "coverage": {
+    "eligible_employee_count": 50043,
+    "original_hire_calculable_employee_count": 50043,
+    "original_hire_not_calculable_employee_count": 0,
+    "latest_hire_rehire_calculable_employee_count": 50043,
+    "latest_hire_rehire_not_calculable_employee_count": 0
+  },
+  "distribution": [
+    {
+      "label": "<1 year",
+      "source_band_key": "lt_1",
+      "original_hire_employee_count": 6784,
+      "latest_hire_rehire_employee_count": 7644,
+      "original_hire_percent_of_calculable": 13.55634155,
+      "latest_hire_rehire_percent_of_calculable": 15.27486362
+    },
+    {
+      "label": "1–<2 years",
+      "source_band_key": "y1_to_lt2",
+      "original_hire_employee_count": 4978,
+      "latest_hire_rehire_employee_count": 5312,
+      "original_hire_percent_of_calculable": 9.9474452,
+      "latest_hire_rehire_percent_of_calculable": 10.61487121
+    },
+    {
+      "label": "2–<3 years",
+      "source_band_key": "y2_to_lt3",
+      "original_hire_employee_count": 3024,
+      "latest_hire_rehire_employee_count": 3201,
+      "original_hire_percent_of_calculable": 6.04280319,
+      "latest_hire_rehire_percent_of_calculable": 6.39649901
+    },
+    {
+      "label": "3–<5 years",
+      "source_band_key": "y3_to_lt5",
+      "original_hire_employee_count": 8502,
+      "latest_hire_rehire_employee_count": 8577,
+      "original_hire_percent_of_calculable": 16.98938913,
+      "latest_hire_rehire_percent_of_calculable": 17.13926024
+    },
+    {
+      "label": "5–<10 years",
+      "source_band_key": "y5_to_lt10",
+      "original_hire_employee_count": 14595,
+      "latest_hire_rehire_employee_count": 14314,
+      "original_hire_percent_of_calculable": 29.16491817,
+      "latest_hire_rehire_percent_of_calculable": 28.60340108
+    },
+    {
+      "label": "10+ years",
+      "source_band_key": "y10_plus",
+      "original_hire_employee_count": 12160,
+      "latest_hire_rehire_employee_count": 10995,
+      "original_hire_percent_of_calculable": 24.29910277,
+      "latest_hire_rehire_percent_of_calculable": 21.97110485
+    }
+  ],
+  "metrics": {
+    "impossible_date_order_count": 0,
+    "latest_hire_rehire_calculable_employee_count": 50043,
+    "latest_hire_rehire_future_date_count": 0,
+    "latest_hire_rehire_null_count": 0,
+    "original_hire_calculable_employee_count": 50043,
+    "original_hire_future_date_count": 0,
+    "original_hire_null_count": 0,
+    "population_source_row_count": 50043,
+    "target_conflicting_employee_count": 0,
+    "target_duplicate_employee_count": 0,
+    "target_duplicate_row_excess_count": 0,
+    "target_missing_employee_id_row_count": 0,
+    "target_source_row_count": 50043,
+    "target_unique_employee_count": 50043,
+    "published_band_count": 6,
+    "minimum_published_original_hire_band_count": 3024,
+    "minimum_published_latest_hire_rehire_band_count": 3201,
+    "minimum_cohort": 30
+  },
+  "validations": {
+    "employee_snapshot_grain": {
+      "outcome": "pass",
+      "rule": "No missing employee IDs, duplicate rows, or conflicting employee-snapshot fields."
+    },
+    "dates": {
+      "outcome": "pass",
+      "rule": "No future original-hire or latest-hire/rehire dates in the fixed snapshot."
+    },
+    "stored_date_order": {
+      "outcome": "pass",
+      "rule": "When both values are populated, original_hire_date is not later than max_hire_rehire_date."
+    },
+    "population_reconciliation": {
+      "outcome": "pass",
+      "rule": "Audit source rows, unique employees, each coverage pair, and profile denominators reconcile."
+    },
+    "distribution_reconciliation": {
+      "outcome": "pass",
+      "rule": "Each field's six bands sum exactly to its calculable denominator and 100%."
+    },
+    "privacy": {
+      "outcome": "pass",
+      "rule": "Each visible band in both distributions has n >= 30; no identities, employee rows, raw dates, or raw query rows are retained."
+    }
+  },
+  "provenance": {
+    "audit_sql": "queries/audits/company_tenure_stored_date_integrity_20260823.sql",
+    "audit_sql_sha256": "dfd8733853454584b00ec5aac4cf30cc4d0078ca00139dbbd969f8e29c6d8122",
+    "audit_result_sha256": "24ee61d71fe29f8b25d82a8b25a6bce8fdb148f39397a68c329b4f39abc7dc21",
+    "profile_sql": "queries/profiles/company_tenure_stored_date_distribution_20260823.sql",
+    "profile_sql_sha256": "8168566f359a5722e99fdec3187155bd352295829c4c5870693b86cb45075691",
+    "profile_result_sha256": "7bcc3a9f1d1930492efaab0e5b947d0e446269c81268a911a6b2f05e957b30aa",
+    "raw_aggregate_rows_persisted": false
+  },
+  "privacy_checks": {
+    "identifiers_persisted": false,
+    "employee_rows_persisted": false,
+    "raw_dates_persisted": false,
+    "raw_aggregate_rows_persisted": false,
+    "all_displayed_bands_meet_minimum": true,
+    "minimum_cohort": 30
+  },
+  "acceptance_rule": "El snapshot fijo 2026-08-23 de empleados regulares activos debe ser único y sin conflictos; no puede haber fechas futuras ni original_hire_date posterior a max_hire_rehire_date; ambos perfiles deben reconciliar cobertura y denominadores con la población auditada; cada banda compartida debe sumar su denominador y cumplir n >= 30. El resultado sólo describe los dos campos almacenados y no selecciona una definición HRIS de Company tenure.",
+  "outcome": "pass"
+}

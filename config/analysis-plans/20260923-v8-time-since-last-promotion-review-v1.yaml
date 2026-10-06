@@ -1,0 +1,56 @@
+schema_version: 1
+language: es
+variable: Time since last promotion
+semantic_type: derived_feature
+deliverable_mode: internal_analysis
+intended_use: >-
+  Actualizar una visual exploratoria del deck V8. La visual describe la
+  distribución de la última promoción registrada y caracteriza, de forma
+  agregada, a quienes no tienen una promoción registrada en su episodio actual.
+score_v4_change: none
+population: >-
+  Empleados Regular activos (worker_type='Employee', employee_type='Regular',
+  active_status=1) al snapshot mensual 2026-08-23.
+grain: Empleado Regular activo distinto en un snapshot mensual.
+knowledge_boundary: >-
+  2026-08-23 para las características; las salidas VOLUNTARY se observan
+  solamente después del snapshot, en (2025-08-24, 2026-08-23] cuando se
+  describe attrition anual histórico comparable.
+definition: >-
+  La última promoción registrada es la máxima promotion_date distinta con
+  is_promo=1, conocida al cierre del snapshot y no anterior a
+  max_hire_rehire_date. Ausencia de un evento no equivale a nunca promovido.
+validation_focus:
+  - Confirmar metadatos y tipos de flag, fecha, episodio, rol y nivel.
+  - Confirmar unicidad empleado-snapshot y consistencia flag/fecha.
+  - Separar casos sin promoción registrada de historia anterior al inicio observado.
+  - Para los casos sin promoción registrada, comparar nivel y antigüedad de rol
+    sin exponer cargos, fechas individuales ni identificadores.
+  - Comprobar la relación agregada entre antigüedad de rol, inicio de episodio y
+    fecha de ingreso/rehire sin asumir que son equivalentes.
+validation_story:
+  - question: >-
+      ¿Las columnas disponibles permiten reconstruir la última promoción
+      registrada del episodio vigente y describir de forma segura los casos sin
+      evento registrado?
+    why: >-
+      Un nulo en promotion_date no prueba ausencia histórica de promoción y no
+      debe transformarse en una duración o en una afirmación de "never promoted".
+    method: >-
+      Preflight de metadatos seguido de auditoría agregada de unicidad,
+      reconciliación flag/fecha, límites temporales, episodio y distribución
+      agrupada por nivel y antigüedad de rol.
+    sql:
+      - queries/audits/v8_time_since_last_promotion_metadata_preflight_20260923.sql
+      - queries/audits/v8_time_since_last_promotion_review_20260923.sql
+    acceptance_rule: >-
+      Todos los campos requeridos existen con tipos compatibles; no hay
+      empleados duplicados o conflictos de flag/fecha en el snapshot objetivo;
+      no se seleccionan eventos futuros ni anteriores al episodio vigente; la
+      caracterización actual tiene fechas de rol utilizables; y los grupos
+      visibles suman el denominador, no incluyen identificadores y tienen n>=30
+      salvo que una autorización interna explícita documente otra excepción.
+    evidence_role: defining
+    outcome_if_failed: >-
+      Mantener la separación de estados no temporales, no publicar una
+      caracterización no reconciliada y no elevar ningún score V4.

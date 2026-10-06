@@ -1,0 +1,130 @@
+version: 4
+generated_from: config/critical_tech_job_families_run_request_20260907.yaml
+generated_at: '2026-09-07'
+analysis_catalog: critical_tech_job_families_analysis_v4_20260907.yaml
+variables:
+- category: Role / job
+  variable: Critical Tech job families
+  notes: Población aprobada para el MVP de People Analytics de attrition.
+  definition: Mapping que identifica las job families incluidas en Critical Tech y su segmento operativo.
+  source:
+    type: Database
+    table: hrda.critical_tech
+    columns:
+    - extended_job_family
+    - seg
+    status: confirmed_accessible
+  profile:
+    mode: aggregate_sql
+    aggregate_sql_file: ../queries/profiles/critical_tech_mapping_coverage_20260907.sql
+  level_data: Employee snapshot with grouped mapping
+  measurement:
+    type: snapshot
+    date_column: fis_mo_end_dt
+    fiscal_year_column: fiscal_year
+    employee_id_column: employee_id
+    observable_columns:
+    - job_family
+    observable_mode: all
+  population:
+    mode: default
+  numerator_definition: Empleados regulares activos cuyo job_family normalizado coincide exactamente con extended_job_family.
+  report:
+    related_columns:
+    - job_family
+    - job_family_group
+    - job_family_short
+    - seg
+    column_descriptions:
+      extended_job_family: Family incluida en el catálogo actual de Critical Tech.
+      job_family: Family ocupacional registrada en el snapshot mensual.
+      seg: Segmento operativo asociado con la family del catálogo Critical Tech.
+      job_family_group: Agrupación ocupacional relacionada, usada sólo como contexto.
+    comparison_pairs:
+    - left: extended_job_family
+      right: job_family
+    - left: extended_job_family
+      right: seg
+  evidence:
+    definition: needs_alignment
+    consistency: normalization_needed
+    join: mapping_or_validation
+    effort: moderate_transformation
+  rationale:
+    definition:
+      why: La tabla define la población operativa, pero una family no coincide todavía con job_family y la vigencia histórica requiere reconciliación.
+      evidence: La auditoría de mapping compara las keys del catálogo con el dominio de job_family y reporta contradicciones, vacíos y unmapped values.
+      recommended_action: Resolver la family sin correspondencia y aprobar si el mapping actual se utilizará como scope histórico del entrenamiento.
+    consistency:
+      why: La tabla actual no contiene fechas de vigencia por family y el archive usa un grain distinto.
+      evidence: La auditoría temporal reporta fechas del archive, pero no demuestra todavía una reconciliación family-a-family.
+      recommended_action: Reconciliar extended_job_family con tech y definir la regla de vigencia antes de afirmar membership histórico.
+    join:
+      why: El join al workforce snapshot depende de normalización exacta y de una única relación family-segment.
+      evidence: La auditoría comprueba match rate, contradicciones, duplicados y mapping de detalle a segmento.
+      recommended_action: Excluir del scope primario las keys no reconciliadas y monitorear nuevos unmapped values.
+    effort:
+      why: El filtro requiere un join y auditorías de mapping, además del tratamiento de la historia del catálogo.
+      evidence: No es una simple proyección del snapshot mensual porque la población depende de una tabla auxiliar y de reglas de vigencia.
+      recommended_action: Mantener el mapping como artefacto versionado y ejecutar el preflight antes de cada refresh del modelo.
+  blocker: tbd
+  verification:
+    semantic_type: grouped_mapping
+    source:
+      method: schema_access_check
+      evidence: Se comprobaron las tablas y columnas requeridas en information_schema.
+      result: La accesibilidad de las fuentes se calcula desde la consulta guardada.
+      as_of_date: '2026-09-07'
+      query_reference: queries/audits/critical_tech_source_access_20260907.sql
+      acceptance_rule: Las siete columnas requeridas deben estar presentes.
+      outcome: pending
+    definition:
+      method: authoritative_definition_and_data_audit
+      evidence: Se comparan las keys de critical_tech con el dominio histórico de job_family y se cuantifican mappings sin correspondencia.
+      result: Se completará con las métricas congeladas por el runner.
+      as_of_date: '2026-09-07'
+      query_reference: queries/audits/critical_tech_mapping_definition_join_20260907.sql
+      acceptance_rule: No debe existir unmapped key, contradicción o vacío para habilitar score 2.
+      outcome: pending
+      metrics:
+        detailed_values_checked: null
+        comparable_count: null
+        mapped_values_count: null
+        contradiction_count: null
+        unmapped_count: null
+        mapping_stability_percent: null
+        match_rate_percent: null
+    consistency:
+      method: longitudinal_aggregate_audit
+      evidence: Se revisa la estructura temporal del archive y se separa la evidencia de vigencia de la evidencia del mapping actual.
+      result: La vigencia histórica quedará pendiente hasta reconciliar los grains de las dos tablas.
+      as_of_date: '2026-09-07'
+      query_reference: queries/audits/critical_tech_temporal_reconciliation_20260907.sql
+      acceptance_rule: La membership histórica sólo pasa cuando la reconciliación family-a-family y sus fechas son reproducibles.
+      outcome: pending
+      metrics:
+        observations_checked: null
+        months_checked: null
+        anomaly_count: null
+    join:
+      method: aggregate_join_reconciliation
+      evidence: El join exacto se cuantifica en el audit de mapping y en la cobertura mensual de la población.
+      result: Se completará con match, unmatched y contradicciones observadas.
+      as_of_date: '2026-09-07'
+      query_reference: queries/audits/critical_tech_mapping_definition_join_20260907.sql
+      acceptance_rule: Cada key del catálogo debe coincidir con una job_family del snapshot y cada family debe tener un solo segmento.
+      outcome: pending
+      metrics:
+        eligible_count: null
+        matched_count: null
+        unmatched_count: null
+        duplicate_count: null
+        multi_match_count: null
+    effort:
+      method: lineage_complexity_audit
+      evidence: La ruta se limita a un mapping agregado y un join temporal; no requiere scraping ni identidad externa.
+      result: Se completará con la complejidad observada y las dependencias del archive.
+      as_of_date: '2026-09-07'
+      query_reference: queries/audits/critical_tech_mapping_definition_join_20260907.sql
+      acceptance_rule: El mapping debe ser reproducible con SQL guardado y sin pasos manuales no versionados.
+      outcome: pending

@@ -1,0 +1,229 @@
+{
+  "artifact": "internal_analysis",
+  "evidence_type": "aggregate-only QVoice heartbeat item/sign attrition trailing 12 months through August 2026",
+  "generated_on": "2026-09-22",
+  "outcome": "pass",
+  "minimum_shared_cohort": 30,
+  "source": {
+    "wave": "Jan-2026",
+    "survey_launch_date": "2026-01-07",
+    "workbook": "data/QVoice/Jan 2026 Qvoice_raw data.xlsx",
+    "sheet": "Raw data",
+    "structure": "data/QVoice/survey_structure.xlsx"
+  },
+  "outcome_contract": {
+    "baseline_snapshot": "2025-08-24",
+    "august_cutoff_date": "2026-08-23",
+    "window": "(2025-08-24, 2026-08-23]",
+    "label": "Trailing 12-month voluntary attrition through August 2026",
+    "target": "At least one term_type exactly VOLUNTARY after the August 2025 baseline snapshot and on or before the August 2026 cutoff.",
+    "population": "Each displayed item/sign segment is matched to worker_type='Employee'; employee_type='Regular'; active_status=1 at the August 2025 baseline snapshot.",
+    "grain": "Distinct employee in each item/sign segment; employees may appear in multiple item segments because items are separate dimensions."
+  },
+  "definition": {
+    "heartbeat_rule": "At least 38 of 53 valid 1-5 answers; +1 means item > personal mean and -1 means item < personal mean.",
+    "segment_rule": "Each displayed bar is the item-specific +1 or -1 group used by the distribution bar.",
+    "attrition_formula": "Distinct voluntary exits in the trailing window divided by the matched active-regular baseline employees in that same item/sign group.",
+    "overlap": "Item/sign groups are not mutually exclusive across questions; rates are calculated independently per bar."
+  },
+  "slide": {
+    "number": 24,
+    "technical_stage": 26,
+    "group": "Heartbeat item/sign segments",
+    "reference_cohort": {
+      "source_employee_count": 37605,
+      "matched_employee_count": 36543,
+      "unmatched_employee_count": 1062,
+      "voluntary_exit_count": 1179,
+      "trailing_12m_voluntary_attrition_rate_percent": 3.2263
+    },
+    "segments": [
+      {
+        "question_id": "Q38",
+        "question_label": "Respect",
+        "direction": 1,
+        "direction_label": "+1 · above personal mean",
+        "signal_percent": 74.5761,
+        "valid_employee_count": 37449,
+        "favorable_percent": 91.5058,
+        "source_employee_count": 27928,
+        "matched_employee_count": 27188,
+        "unmatched_employee_count": 740,
+        "voluntary_exit_count": 844,
+        "trailing_12m_voluntary_attrition_rate_percent": 3.1043
+      },
+      {
+        "question_id": "Q37",
+        "question_label": "Team Dynamics",
+        "direction": 1,
+        "direction_label": "+1 · above personal mean",
+        "signal_percent": 72.2854,
+        "valid_employee_count": 37482,
+        "favorable_percent": 92.1883,
+        "source_employee_count": 27094,
+        "matched_employee_count": 26389,
+        "unmatched_employee_count": 705,
+        "voluntary_exit_count": 876,
+        "trailing_12m_voluntary_attrition_rate_percent": 3.3196
+      },
+      {
+        "question_id": "Q32",
+        "question_label": "Manager Effectiveness",
+        "direction": 1,
+        "direction_label": "+1 · above personal mean",
+        "signal_percent": 71.1845,
+        "valid_employee_count": 37164,
+        "favorable_percent": 89.2557,
+        "source_employee_count": 26455,
+        "matched_employee_count": 25746,
+        "unmatched_employee_count": 709,
+        "voluntary_exit_count": 808,
+        "trailing_12m_voluntary_attrition_rate_percent": 3.1384
+      },
+      {
+        "question_id": "Q30",
+        "question_label": "Manager Effectiveness",
+        "direction": 1,
+        "direction_label": "+1 · above personal mean",
+        "signal_percent": 68.9745,
+        "valid_employee_count": 37395,
+        "favorable_percent": 87.6721,
+        "source_employee_count": 25793,
+        "matched_employee_count": 25114,
+        "unmatched_employee_count": 679,
+        "voluntary_exit_count": 767,
+        "trailing_12m_voluntary_attrition_rate_percent": 3.0541
+      },
+      {
+        "question_id": "Q33",
+        "question_label": "Manager Effectiveness",
+        "direction": 1,
+        "direction_label": "+1 · above personal mean",
+        "signal_percent": 68.1869,
+        "valid_employee_count": 37208,
+        "favorable_percent": 86.6803,
+        "source_employee_count": 25371,
+        "matched_employee_count": 24675,
+        "unmatched_employee_count": 696,
+        "voluntary_exit_count": 763,
+        "trailing_12m_voluntary_attrition_rate_percent": 3.0922
+      },
+      {
+        "question_id": "Q53",
+        "question_label": "Survey Action Planning",
+        "direction": -1,
+        "direction_label": "−1 · below personal mean",
+        "signal_percent": 68.9483,
+        "valid_employee_count": 34172,
+        "favorable_percent": 55.086,
+        "source_employee_count": 23561,
+        "matched_employee_count": 23225,
+        "unmatched_employee_count": 336,
+        "voluntary_exit_count": 750,
+        "trailing_12m_voluntary_attrition_rate_percent": 3.2293
+      },
+      {
+        "question_id": "Q10",
+        "question_label": "Wellbeing",
+        "direction": -1,
+        "direction_label": "−1 · below personal mean",
+        "signal_percent": 66.6427,
+        "valid_employee_count": 36124,
+        "favorable_percent": 53.8146,
+        "source_employee_count": 24074,
+        "matched_employee_count": 23455,
+        "unmatched_employee_count": 619,
+        "voluntary_exit_count": 726,
+        "trailing_12m_voluntary_attrition_rate_percent": 3.0953
+      },
+      {
+        "question_id": "Q11",
+        "question_label": "Wellbeing",
+        "direction": -1,
+        "direction_label": "−1 · below personal mean",
+        "signal_percent": 62.0197,
+        "valid_employee_count": 37372,
+        "favorable_percent": 65.5972,
+        "source_employee_count": 23178,
+        "matched_employee_count": 22546,
+        "unmatched_employee_count": 632,
+        "voluntary_exit_count": 688,
+        "trailing_12m_voluntary_attrition_rate_percent": 3.0515
+      },
+      {
+        "question_id": "Q47",
+        "question_label": "Work/Life Balance",
+        "direction": -1,
+        "direction_label": "−1 · below personal mean",
+        "signal_percent": 55.6917,
+        "valid_employee_count": 36079,
+        "favorable_percent": 65.1709,
+        "source_employee_count": 20093,
+        "matched_employee_count": 19596,
+        "unmatched_employee_count": 497,
+        "voluntary_exit_count": 612,
+        "trailing_12m_voluntary_attrition_rate_percent": 3.1231
+      },
+      {
+        "question_id": "Q27",
+        "question_label": "Work Processes",
+        "direction": -1,
+        "direction_label": "−1 · below personal mean",
+        "signal_percent": 55.09,
+        "valid_employee_count": 37328,
+        "favorable_percent": 68.5089,
+        "source_employee_count": 20564,
+        "matched_employee_count": 20054,
+        "unmatched_employee_count": 510,
+        "voluntary_exit_count": 660,
+        "trailing_12m_voluntary_attrition_rate_percent": 3.2911
+      }
+    ]
+  },
+  "validation": {
+    "outcome": "pass",
+    "window_row": {
+      "window_start": "2025-08-24",
+      "august_cutoff_date": "2026-08-23",
+      "baseline_snapshot": "2025-08-24",
+      "baseline_distinct_employee_count": 45003,
+      "duplicate_baseline_employee_count": 0,
+      "voluntary_exit_count": 2484,
+      "multiple_voluntary_event_date_count": 2,
+      "trailing_12m_voluntary_attrition_rate_percent": "5.5196"
+    },
+    "source_quality": {
+      "raw_rows": 42203,
+      "raw_distinct_usable_employee_keys": 42203,
+      "duplicate_key_rows": 0,
+      "duplicate_conflicting_employee_keys": 0,
+      "missing_key_rows": 0,
+      "invalid_key_rows": 0,
+      "invalid_scale_cells": 0,
+      "missing_scale_cells": 128513
+    },
+    "segment_count": 10,
+    "all_displayed_segments_have_n_at_least": 30,
+    "all_rates_reconcile_to_exits_and_matched_cohort": true,
+    "runtime_join_sql_persisted": false,
+    "employee_keys_persisted": false,
+    "individual_rows_persisted": false,
+    "runtime_aggregate_rows": 11
+  },
+  "provenance": {
+    "window_audit": "queries/audits/qvoice_heartbeat_item_august_trailing_12m_window_audit_20260921.sql",
+    "window_audit_sha256": "36201365dda3e7c91ce8759bf6b13f3140cfb4ff030dbfefd2aa9d799d2d44ad",
+    "display_evidence": "output/distribution/json/qvoice-heartbeat-evidence-20260911.json",
+    "display_evidence_sha256": "3c71922b025a2eccefde272d92b36124bffe2a9e8ecff34e76b7307b8a81e737",
+    "runtime_template": "queries/audits/qvoice_heartbeat_item_august_trailing_12m_attrition_runtime_template_20260921.sql",
+    "runtime_template_sha256": "a3661c32929799f5e96825ff223cc39bb7e3f534840482fce9d0f8dc40b6810b",
+    "source_file": "data/QVoice/Jan 2026 Qvoice_raw data.xlsx",
+    "source_file_sha256": "7ea357091c07b42da483576a1d3c357ff836179f05316b7ad6d51248940e557b",
+    "aggregate_result_sha256": "81ba5ce26c13b3c64983b190afe4533163e5b09b1e176fc41f93d00c44f94937"
+  },
+  "privacy": {
+    "identifiers_persisted": false,
+    "individual_rows_persisted": false,
+    "minimum_published_cohort": 30
+  }
+}

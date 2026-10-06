@@ -1,0 +1,67 @@
+schema_version: 1
+plan_version: 4
+language: es
+created_before_execution: true
+deliverable_mode: presentation
+variable: More than 1 employee leaves in a year
+plan_revision_reason: >-
+  La reconciliación ejecutada encontró 7,462 salidas Voluntary con coincidencia
+  exacta entre fuentes; 15 sólo en el historial mensual y 2,060 sólo en
+  all_terminations. No se adopta all_terminations como sustituto de la fuente
+  mensual. Para evitar tanto la expansión de eventos repetidos como la inclusión
+  de eventos no reconciliados, el estudio conserva únicamente claves de evento
+  employee_id × term_date × term_type que existen en ambas fuentes. La cobertura
+  de eventos Voluntary mensuales concordantes es 99.8%; los no concordantes se
+  excluyen y se registran como limitación.
+concept: >-
+  Comparación descriptiva agregada de incidencia acumulada retrospectiva de
+  salida Voluntary tras una salida inicial única del equipo, frente a equipos
+  comparables sin salida reciente.
+intended_use: >-
+  Evidencia contextual para revisar una posible secuencia de attrition. No
+  demuestra contagio ni causalidad, no evalúa managers, no predice personas y
+  no modifica por sí misma la feature histórica.
+semantic_type: derived_feature
+study_type: descriptive_post_event_cohort_comparison
+analysis_window: Las 24 cohortes índice completas más recientes disponibles al ejecutar la consulta.
+event_source: >-
+  Intersección reconciliada de hrda.post_hire_monthly_worker_dtls y
+  hrda.all_terminations en employee_id, term_date y term_type normalizado.
+knowledge_boundary: El evento índice se conoce en t; los seis cierres posteriores son outcomes retrospectivos, no features de t.
+population: worker_type='Employee', employee_type='Regular', active_status=1 y manager_employee_id no nulo en t.
+grain: Integrante de roster índice × episodio de equipo × intervalo de seguimiento.
+definitions:
+  index_event: Una salida Voluntary reconciliada única en (t-6, t], ocurrida en el intervalo que termina en t.
+  roster: Personas activas en t bajo el manager índice, seguidas sólo mientras lo mantengan.
+  reference: Equipo sin salida Voluntary reconciliada en (t-6, t], mismo cierre y banda de tamaño.
+  outcome: Primera salida Voluntary reconciliada entre 1 y 6 meses, atribuida al manager índice.
+  censoring: Cambio de manager observado, salida reconciliada no Voluntary o pérdida de observación.
+  estimand: Incidencia acumulada Kaplan–Meier a partir de hazards mensuales estandarizados por cierre × banda.
+publication_rule: >-
+  Referencias internas con n inicial y en riesgo >=30; puntos de curvas visibles
+  con n agregado en riesgo >=30. No se exponen estratos internos ni identidades.
+validation_story:
+  - id: event_reconciliation
+    question: ¿El evento utilizado concuerda entre las fuentes mensual y de terminaciones?
+    method: Reconciliar claves employee_id × term_date × term_type normalizado y usar sólo la intersección.
+    sql_reference: queries/audits/team_post_exit_attrition_event_source_reconciliation_20260910.sql
+    acceptance_rule: Cobertura de coincidencia de eventos Voluntary mensuales >=99%, sin duplicados en all_terminations; lo no concordante se excluye.
+  - id: cohort_calendar_and_membership
+    question: ¿El índice, roster, comparador y seguimiento tienen calendario y manager histórico válidos?
+    method: Exigir 12 brechas de 20–45 días, evento único, manager previo único y comparador sin salida reciente.
+    sql_reference: queries/audits/team_post_exit_attrition_interval_20260910.sql
+    acceptance_rule: Todo episodio publicado tiene seis intervalos previos y seis posteriores completos.
+  - id: censoring_and_privacy
+    question: ¿La curva trata la pérdida de seguimiento como censura y protege cohortes pequeñas?
+    method: Auditar n en riesgo, eventos, censuras, límites 0–100 y supresión de estratos.
+    sql_reference: queries/audits/team_post_exit_attrition_interval_20260910.sql
+    acceptance_rule: Cada punto visible tiene n agregado >=30 e incidencia dentro de 0–100.
+output_contract:
+  scopes: [all_teams, teams_6_plus]
+  series: [Equipo tras una salida inicial única, Equipos sin salida reciente ajustados]
+  prohibited_claims: [causalidad, contagio demostrado, ranking de managers, predicción individual]
+  limitation: La evidencia excluye los eventos no concordantes entre ambas fuentes y debe actualizarse si cambia la reconciliación.
+acceptance_rules_frozen: true
+planned_sql:
+  - queries/audits/team_post_exit_attrition_event_source_reconciliation_20260910.sql
+  - queries/audits/team_post_exit_attrition_interval_20260910.sql

@@ -1,0 +1,105 @@
+{
+  "policy_id": "v8-comparable-and-within-panel-attrition-colors-20260929",
+  "version": 3,
+  "deliverable_mode": "internal_analysis",
+  "purpose": "Classify visible attrition-rate pills against a pooled comparable cohort when available; otherwise rank published numeric rates within the same chart panel.",
+  "calculation": {
+    "reference_formula": "100 * voluntary_exit_count / eligible_baseline_count",
+    "rate_precision": "Use the evidence value before reader-facing rounding.",
+    "relative_materiality": 0.2,
+    "absolute_materiality_percentage_points": 0.5,
+    "zero_reference_rule": "Zero-rate categories are blue; a nonzero category is orange only at or above 0.5 percentage points. Green is not applicable below a zero reference.",
+    "fallback_within_panel_rule": "When no pooled comparable reference is validated but a chart panel already publishes numeric attrition rates, its lowest rate is green, its highest rate is orange, and intervening rates are blue. Rates that are not estimable or have a baseline cohort below 30 remain gray.",
+    "fallback_color_scope": "Within one chart panel only; fallback colors are not comparable across panels or slides."
+  },
+  "display": {
+    "rate_decimal_places": 1,
+    "positive_value_below_display_precision": "<0.1%",
+    "footer_prefix": "Color reference(s):"
+  },
+  "states": {
+    "below_reference": "attr-low",
+    "within_reference": "attr-mid",
+    "above_reference": "attr-high",
+    "not_comparable": "v8-reference-unavailable"
+  },
+  "reference_sources": {
+    "six_month_24_snapshot": {
+      "baseline_employee_snapshots": 1043051,
+      "voluntary_exits": 29294,
+      "rate_percent": 2.8085,
+      "outcome_window": "Six months after each of the latest 24 complete monthly snapshots",
+      "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v3.six-month-attrition-evidence-20260914.json"
+    },
+    "annual_24_snapshot": {
+      "baseline_employee_snapshots": 1013112,
+      "voluntary_exits": 55570,
+      "rate_percent": 5.4850,
+      "outcome_window": "Twelve months after each of the latest 24 complete monthly snapshots",
+      "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v7.nav28-39-direct-annual-attrition-evidence-20260917.json"
+    },
+    "annual_august_2025": {
+      "baseline_employee_count": 45003,
+      "voluntary_exits": 2484,
+      "rate_percent": 5.5196,
+      "outcome_window": "(2025-08-24, 2026-08-23]",
+      "evidence_path": "output/distribution/json/layers-from-ceo-annual-attrition-evidence-20260921.json"
+    },
+    "acquisition_overall_annual": {
+      "baseline_employee_count": 45002,
+      "voluntary_exits": 2484,
+      "rate_percent": 5.5198,
+      "outcome_window": "(2025-08-24, 2026-08-23]",
+      "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v8.acquisition-entry-evidence-20260929.json"
+    },
+    "acquisition_registered_annual": {
+      "baseline_employee_count": 6148,
+      "voluntary_exits": 193,
+      "rate_percent": 3.1392,
+      "outcome_window": "(2025-08-24, 2026-08-23]",
+      "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v8.acquisition-entry-evidence-20260929.json"
+    }
+  },
+  "stage_default_reference": {
+    "slide-3": "annual_august_2025",
+    "slide-6": "six_month_24_snapshot",
+    "slide-7": "six_month_24_snapshot",
+    "slide-11": "annual_august_2025",
+    "slide-12": "six_month_24_snapshot",
+    "slide-13": "six_month_24_snapshot",
+    "slide-14": "six_month_24_snapshot",
+    "slide-17": "six_month_24_snapshot",
+    "slide-29": "annual_24_snapshot",
+    "slide-31": "annual_24_snapshot",
+    "slide-35": "annual_24_snapshot",
+    "slide-36": "annual_24_snapshot",
+    "slide-37": "annual_august_2025",
+    "slide-38": "annual_24_snapshot",
+    "slide-39": "annual_24_snapshot",
+    "slide-43": "annual_august_2025",
+    "slide-50": "annual_august_2025",
+    "slide-acquisition": "acquisition_overall_annual"
+  },
+  "mixed_or_derived_stages": [
+    "slide-5",
+    "slide-15",
+    "slide-16",
+    "slide-19",
+    "slide-20",
+    "slide-21",
+    "slide-23",
+    "slide-24",
+    "slide-25",
+    "slide-26",
+    "slide-32",
+    "slide-34",
+    "slide-40",
+    "slide-42",
+    "slide-44",
+    "slide-45",
+    "slide-46",
+    "slide-47",
+    "slide-48",
+    "slide-49"
+  ]
+}

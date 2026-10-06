@@ -1,0 +1,395 @@
+{
+  "artifact": "presentation",
+  "evidence_type": "aggregate-only QVoice heartbeat relative-sign attrition after the Jan-2026 survey through fiscal August 2026",
+  "generated_on": "2026-09-23",
+  "outcome": "pass",
+  "minimum_shared_cohort": 30,
+  "source": {
+    "wave": "Jan-2026",
+    "survey_launch_date": "2026-01-07",
+    "workbook": "data/QVoice/Jan 2026 Qvoice_raw data.xlsx",
+    "sheet": "Raw data",
+    "structure": "data/QVoice/survey_structure.xlsx"
+  },
+  "outcome_contract": {
+    "baseline_snapshot": "2025-12-28",
+    "survey_launch_date": "2026-01-07",
+    "august_cutoff_date": "2026-08-23",
+    "window": "(2026-01-07, 2026-08-23]",
+    "label": "Post-survey voluntary attrition YTD through fiscal August 2026; not annualized",
+    "target": "At least one term_type exactly VOLUNTARY after the Jan-2026 QVoice launch and on or before the fiscal-August cutoff.",
+    "population": "Each displayed response-sign segment is matched to worker_type='Employee'; employee_type='Regular'; active_status=1 at the 2025-12-28 pre-wave snapshot.",
+    "grain": "Distinct employee in each question/sign segment; a person can appear in more than one question but exactly one sign within a question."
+  },
+  "definition": {
+    "heartbeat_rule": "At least 38 of 53 valid 1-5 answers; +1 means item > personal mean, 0 means item = personal mean, and -1 means item < personal mean.",
+    "ranking_rule": "Three items with the largest +1 share and three items with the largest -1 share; ties use question_id.",
+    "segment_rule": "Every displayed question contains its mutually exclusive +1, 0, and -1 response-sign groups.",
+    "attrition_formula": "Distinct voluntary exits after the survey launch through 23-Aug-2026 divided by matched active-Regular employees in that same question/sign group.",
+    "overlap": "Question/sign groups do not overlap within a question; employees can appear in multiple questions, so rates are calculated independently per row."
+  },
+  "slide": {
+    "number": 24,
+    "technical_stage": 26,
+    "group": "Heartbeat top-three relative-sign questions",
+    "panels": [
+      {
+        "ranking_sign": 1,
+        "ranking_symbol": "+1",
+        "ranking_label": "above personal mean",
+        "questions": [
+          {
+            "rank": 1,
+            "question_id": "Q38",
+            "question_label": "Respect",
+            "valid_response_count": 37449,
+            "ranking_sign": 1,
+            "ranking_signal_percent": 74.5761,
+            "segments": [
+              {
+                "sign": 1,
+                "sign_symbol": "+1",
+                "sign_label": "above personal mean",
+                "source_workbook_response_count": 29330,
+                "matched_response_count": 27928,
+                "share_of_valid_responses_percent": 74.5761,
+                "source_employee_count": 29330,
+                "matched_employee_count": 27928,
+                "unmatched_employee_count": 1402,
+                "voluntary_exit_count": 866,
+                "ytd_voluntary_attrition_rate_percent": 3.1008
+              },
+              {
+                "sign": 0,
+                "sign_symbol": "0",
+                "sign_label": "equal to personal mean",
+                "source_workbook_response_count": 4155,
+                "matched_response_count": 3022,
+                "share_of_valid_responses_percent": 8.0696,
+                "source_employee_count": 4155,
+                "matched_employee_count": 3022,
+                "unmatched_employee_count": 1133,
+                "voluntary_exit_count": 99,
+                "ytd_voluntary_attrition_rate_percent": 3.276
+              },
+              {
+                "sign": -1,
+                "sign_symbol": "-1",
+                "sign_label": "below personal mean",
+                "source_workbook_response_count": 6906,
+                "matched_response_count": 6499,
+                "share_of_valid_responses_percent": 17.3543,
+                "source_employee_count": 6906,
+                "matched_employee_count": 6499,
+                "unmatched_employee_count": 407,
+                "voluntary_exit_count": 242,
+                "ytd_voluntary_attrition_rate_percent": 3.7236
+              }
+            ]
+          },
+          {
+            "rank": 2,
+            "question_id": "Q37",
+            "question_label": "Team Dynamics",
+            "valid_response_count": 37482,
+            "ranking_sign": 1,
+            "ranking_signal_percent": 72.2854,
+            "segments": [
+              {
+                "sign": 1,
+                "sign_symbol": "+1",
+                "sign_label": "above personal mean",
+                "source_workbook_response_count": 28553,
+                "matched_response_count": 27094,
+                "share_of_valid_responses_percent": 72.2854,
+                "source_employee_count": 28553,
+                "matched_employee_count": 27094,
+                "unmatched_employee_count": 1459,
+                "voluntary_exit_count": 894,
+                "ytd_voluntary_attrition_rate_percent": 3.2996
+              },
+              {
+                "sign": 0,
+                "sign_symbol": "0",
+                "sign_label": "equal to personal mean",
+                "source_workbook_response_count": 4180,
+                "matched_response_count": 3051,
+                "share_of_valid_responses_percent": 8.1399,
+                "source_employee_count": 4180,
+                "matched_employee_count": 3051,
+                "unmatched_employee_count": 1129,
+                "voluntary_exit_count": 103,
+                "ytd_voluntary_attrition_rate_percent": 3.3759
+              },
+              {
+                "sign": -1,
+                "sign_symbol": "-1",
+                "sign_label": "below personal mean",
+                "source_workbook_response_count": 7692,
+                "matched_response_count": 7337,
+                "share_of_valid_responses_percent": 19.5747,
+                "source_employee_count": 7692,
+                "matched_employee_count": 7337,
+                "unmatched_employee_count": 355,
+                "voluntary_exit_count": 212,
+                "ytd_voluntary_attrition_rate_percent": 2.8895
+              }
+            ]
+          },
+          {
+            "rank": 3,
+            "question_id": "Q32",
+            "question_label": "Manager Effectiveness",
+            "valid_response_count": 37164,
+            "ranking_sign": 1,
+            "ranking_signal_percent": 71.1845,
+            "segments": [
+              {
+                "sign": 1,
+                "sign_symbol": "+1",
+                "sign_label": "above personal mean",
+                "source_workbook_response_count": 27870,
+                "matched_response_count": 26455,
+                "share_of_valid_responses_percent": 71.1845,
+                "source_employee_count": 27870,
+                "matched_employee_count": 26455,
+                "unmatched_employee_count": 1415,
+                "voluntary_exit_count": 826,
+                "ytd_voluntary_attrition_rate_percent": 3.1223
+              },
+              {
+                "sign": 0,
+                "sign_symbol": "0",
+                "sign_label": "equal to personal mean",
+                "source_workbook_response_count": 4181,
+                "matched_response_count": 3051,
+                "share_of_valid_responses_percent": 8.2096,
+                "source_employee_count": 4181,
+                "matched_employee_count": 3051,
+                "unmatched_employee_count": 1130,
+                "voluntary_exit_count": 104,
+                "ytd_voluntary_attrition_rate_percent": 3.4087
+              },
+              {
+                "sign": -1,
+                "sign_symbol": "-1",
+                "sign_label": "below personal mean",
+                "source_workbook_response_count": 8058,
+                "matched_response_count": 7658,
+                "share_of_valid_responses_percent": 20.606,
+                "source_employee_count": 8058,
+                "matched_employee_count": 7658,
+                "unmatched_employee_count": 400,
+                "voluntary_exit_count": 263,
+                "ytd_voluntary_attrition_rate_percent": 3.4343
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "ranking_sign": -1,
+        "ranking_symbol": "-1",
+        "ranking_label": "below personal mean",
+        "questions": [
+          {
+            "rank": 1,
+            "question_id": "Q53",
+            "question_label": "Survey Action Planning",
+            "valid_response_count": 34172,
+            "ranking_sign": -1,
+            "ranking_signal_percent": 68.9483,
+            "segments": [
+              {
+                "sign": 1,
+                "sign_symbol": "+1",
+                "sign_label": "above personal mean",
+                "source_workbook_response_count": 8408,
+                "matched_response_count": 7756,
+                "share_of_valid_responses_percent": 22.6969,
+                "source_employee_count": 8408,
+                "matched_employee_count": 7756,
+                "unmatched_employee_count": 652,
+                "voluntary_exit_count": 248,
+                "ytd_voluntary_attrition_rate_percent": 3.1975
+              },
+              {
+                "sign": 0,
+                "sign_symbol": "0",
+                "sign_label": "equal to personal mean",
+                "source_workbook_response_count": 3972,
+                "matched_response_count": 2855,
+                "share_of_valid_responses_percent": 8.3548,
+                "source_employee_count": 3972,
+                "matched_employee_count": 2855,
+                "unmatched_employee_count": 1117,
+                "voluntary_exit_count": 97,
+                "ytd_voluntary_attrition_rate_percent": 3.3975
+              },
+              {
+                "sign": -1,
+                "sign_symbol": "-1",
+                "sign_label": "below personal mean",
+                "source_workbook_response_count": 24613,
+                "matched_response_count": 23561,
+                "share_of_valid_responses_percent": 68.9483,
+                "source_employee_count": 24613,
+                "matched_employee_count": 23561,
+                "unmatched_employee_count": 1052,
+                "voluntary_exit_count": 759,
+                "ytd_voluntary_attrition_rate_percent": 3.2214
+              }
+            ]
+          },
+          {
+            "rank": 2,
+            "question_id": "Q10",
+            "question_label": "Wellbeing",
+            "valid_response_count": 36124,
+            "ranking_sign": -1,
+            "ranking_signal_percent": 66.6427,
+            "segments": [
+              {
+                "sign": 1,
+                "sign_symbol": "+1",
+                "sign_label": "above personal mean",
+                "source_workbook_response_count": 10158,
+                "matched_response_count": 9619,
+                "share_of_valid_responses_percent": 26.6277,
+                "source_employee_count": 10158,
+                "matched_employee_count": 9619,
+                "unmatched_employee_count": 539,
+                "voluntary_exit_count": 350,
+                "ytd_voluntary_attrition_rate_percent": 3.6386
+              },
+              {
+                "sign": 0,
+                "sign_symbol": "0",
+                "sign_label": "equal to personal mean",
+                "source_workbook_response_count": 2783,
+                "matched_response_count": 2431,
+                "share_of_valid_responses_percent": 6.7296,
+                "source_employee_count": 2783,
+                "matched_employee_count": 2431,
+                "unmatched_employee_count": 352,
+                "voluntary_exit_count": 87,
+                "ytd_voluntary_attrition_rate_percent": 3.5788
+              },
+              {
+                "sign": -1,
+                "sign_symbol": "-1",
+                "sign_label": "below personal mean",
+                "source_workbook_response_count": 24935,
+                "matched_response_count": 24074,
+                "share_of_valid_responses_percent": 66.6427,
+                "source_employee_count": 24935,
+                "matched_employee_count": 24074,
+                "unmatched_employee_count": 861,
+                "voluntary_exit_count": 742,
+                "ytd_voluntary_attrition_rate_percent": 3.0822
+              }
+            ]
+          },
+          {
+            "rank": 3,
+            "question_id": "Q11",
+            "question_label": "Wellbeing",
+            "valid_response_count": 37372,
+            "ranking_sign": -1,
+            "ranking_signal_percent": 62.0197,
+            "segments": [
+              {
+                "sign": 1,
+                "sign_symbol": "+1",
+                "sign_label": "above personal mean",
+                "source_workbook_response_count": 11885,
+                "matched_response_count": 11159,
+                "share_of_valid_responses_percent": 29.8593,
+                "source_employee_count": 11885,
+                "matched_employee_count": 11159,
+                "unmatched_employee_count": 726,
+                "voluntary_exit_count": 399,
+                "ytd_voluntary_attrition_rate_percent": 3.5756
+              },
+              {
+                "sign": 0,
+                "sign_symbol": "0",
+                "sign_label": "equal to personal mean",
+                "source_workbook_response_count": 4164,
+                "matched_response_count": 3035,
+                "share_of_valid_responses_percent": 8.1211,
+                "source_employee_count": 4164,
+                "matched_employee_count": 3035,
+                "unmatched_employee_count": 1129,
+                "voluntary_exit_count": 100,
+                "ytd_voluntary_attrition_rate_percent": 3.2949
+              },
+              {
+                "sign": -1,
+                "sign_symbol": "-1",
+                "sign_label": "below personal mean",
+                "source_workbook_response_count": 24262,
+                "matched_response_count": 23178,
+                "share_of_valid_responses_percent": 62.0197,
+                "source_employee_count": 24262,
+                "matched_employee_count": 23178,
+                "unmatched_employee_count": 1084,
+                "voluntary_exit_count": 706,
+                "ytd_voluntary_attrition_rate_percent": 3.046
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "validation": {
+    "outcome": "pass",
+    "window_row": {
+      "survey_launch_date": "2026-01-07",
+      "baseline_snapshot": "2025-12-28",
+      "august_cutoff_date": "2026-08-23",
+      "baseline_distinct_employee_count": 47134,
+      "duplicate_baseline_employee_count": 0,
+      "ytd_voluntary_exit_count": 1846,
+      "multiple_ytd_voluntary_event_date_count": 1,
+      "ytd_voluntary_attrition_rate_percent": "3.9165"
+    },
+    "source_quality": {
+      "raw_rows": 42203,
+      "raw_distinct_usable_employee_keys": 42203,
+      "duplicate_key_rows": 0,
+      "duplicate_conflicting_employee_keys": 0,
+      "missing_key_rows": 0,
+      "invalid_key_rows": 0,
+      "invalid_scale_cells": 0,
+      "missing_scale_cells": 128513
+    },
+    "panel_count": 2,
+    "questions_displayed": 6,
+    "segments_displayed": 18,
+    "all_displayed_segments_have_n_at_least": 30,
+    "all_question_sign_shares_reconcile_to_100_percent": true,
+    "all_rates_reconcile_to_exits_and_matched_cohort": true,
+    "runtime_join_sql_persisted": false,
+    "employee_keys_persisted": false,
+    "individual_rows_persisted": false,
+    "runtime_aggregate_rows": 18
+  },
+  "provenance": {
+    "window_audit": "queries/audits/qvoice_heartbeat_relative_sign_ytd_window_audit_20260923.sql",
+    "window_audit_sha256": "3cabf986e5578760876b5515f65083a48062b34eba1f69a8d2b5fac231a786e2",
+    "display_evidence": "output/distribution/json/qvoice-heartbeat-evidence-20260911.json",
+    "display_evidence_sha256": "3c71922b025a2eccefde272d92b36124bffe2a9e8ecff34e76b7307b8a81e737",
+    "runtime_template": "queries/audits/qvoice_heartbeat_relative_sign_ytd_attrition_runtime_template_20260923.sql",
+    "runtime_template_sha256": "262d7782cce4e672d607b3ec8454b6315d33e78ac124b31f7fea125bf71dbe46",
+    "source_file": "data/QVoice/Jan 2026 Qvoice_raw data.xlsx",
+    "source_file_sha256": "7ea357091c07b42da483576a1d3c357ff836179f05316b7ad6d51248940e557b",
+    "aggregate_result_sha256": "3f36ba32c9e7fbf9b20c6f18309f4c0954856a00e0d9623bdfd81b9d495d946b"
+  },
+  "privacy": {
+    "identifiers_persisted": false,
+    "individual_rows_persisted": false,
+    "minimum_published_cohort": 30
+  }
+}

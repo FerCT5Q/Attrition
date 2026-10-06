@@ -1,0 +1,34 @@
+{
+  "deliverable_classification": "presentation",
+  "scope": "Aclaración descriptiva de la categoría Misc de la v9; no es un assessment y no cambia scores.",
+  "execution_date": "2026-10-05",
+  "semantic_type": "grouped_mapping",
+  "population": "Employee/Regular activos, no RF360, Engineering en cada snapshot.",
+  "knowledge_window": "2021-07-01 a 2026-07-26; comparación separada de la foto 2026-07-26.",
+  "grain": "Empleado-snapshot internamente; sólo resúmenes y categorías con cohortes permitidas en la salida.",
+  "method": "Cruce agregado del campo level_grouped con job_level_primary_position en la misma fila, mediante el helper read-only.",
+  "acceptance_rule": "Metadata de los nueve campos presente; foto de la v9 reconciliada con 37,221 personas; sin truncamiento y ningún detalle publicado con cohorte inferior a 30.",
+  "outcome": "pass",
+  "outcome_scope": "Sólo ejecución, reconciliación de población y política de publicación. La definición de negocio de Misc sigue sin confirmarse.",
+  "findings": [
+    "En el modelo congelado aparece level_grouped=Misc; la presentación lo describió como otros/other.",
+    "Ninguna persona de la foto de la v9 del 26-jul-2026 está clasificada como Misc.",
+    "Misc aparece en la historia en una cohorte de 1 a 29 empleados distintos; no se publican el conteo exacto ni categorías detalladas.",
+    "El resultado no permite atribuir a Misc tipos concretos de puestos ni validar un mapping oficial."
+  ],
+  "query_hashes": [
+    {
+      "Path": "C:\\Dev\\Python\\Attrition\\queries\\audits\\engineering_level_misc_metadata_20261005.sql",
+      "Hash": "2A007D13A3A93C5C432030ECA3ACCA73D5941114A35C680D177C7FA9F3F329CD"
+    },
+    {
+      "Path": "C:\\Dev\\Python\\Attrition\\queries\\audits\\engineering_level_misc_detail_20261005.sql",
+      "Hash": "0C906F7E974A59B21FC53BB0A56673E991E5F7C8D66F6698CF363A96804325E0"
+    }
+  ],
+  "evidence_files": [
+    "metadata.json",
+    "aggregate-results.json"
+  ],
+  "presentations_modified": false
+}

@@ -1,0 +1,26 @@
+{
+  "artifact_type": "aggregate_join_validation",
+  "generated_on": "2026-09-22",
+  "deliverable_mode": "presentation",
+  "purpose": "Validar el join empleado-manager y la comparación de office_site en el snapshot del 23 de agosto de 2026.",
+  "query": "queries/audits/v7_manager_proximity_same_snapshot_join_validation_20260922.sql",
+  "query_sha256": "4c73677e14ac005b04df4a44a7f7e97e4204d2b9168fcbfeaa7bedb43c61f4ee",
+  "population": "Employee / Regular / active_status=1 en fis_mo_end_dt=2026-08-23.",
+  "grain": "Una fila agregada por empleado y una fila agregada por manager dentro del mismo snapshot; después, una relación empleado-manager por join de manager_employee_id.",
+  "acceptance_rule": "El snapshot debe reconciliar a una fila agregada por empleado, no tener duplicados ni conflictos de manager, y el join debe producir categorías agregadas reproducibles.",
+  "metrics": {
+    "grouped_employee_count": 50043,
+    "employee_source_duplicate_count": 0,
+    "employee_conflicting_manager_id_count": 0,
+    "matched_manager_pair_count": 49848,
+    "site_comparable_pair_count": 46614,
+    "same_office_site_count": 43747,
+    "same_office_site_percent_of_site_comparable": 93.8495,
+    "different_office_site_count": 2867,
+    "same_site_different_city_count": 1987,
+    "same_site_different_city_percent_of_same_site": 4.542,
+    "same_site_and_city_count": 41760,
+    "same_site_and_city_percent_of_site_comparable": 89.5868
+  },
+  "outcome": "pass"
+}

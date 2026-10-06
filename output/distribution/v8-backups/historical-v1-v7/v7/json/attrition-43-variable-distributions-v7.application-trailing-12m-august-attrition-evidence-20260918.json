@@ -1,0 +1,451 @@
+{
+  "schema_version": 1,
+  "artifact": "application_intensity_trailing_12m_august_attrition",
+  "artifact_classification": "internal_analysis",
+  "reporting_mode": "internal_analysis",
+  "generated_on": "2026-09-18",
+  "authorization": {
+    "authorization_id": "application-intensity-internal-collaboration-20260913",
+    "authorized_on": "2026-09-13",
+    "last_amended_on": "2026-09-18",
+    "status": "approved",
+    "reporting_mode": "internal_analysis",
+    "authorized_audience": "requester and Julia, both project developers",
+    "purpose": "Review the aggregate distribution of internal job applications and the descriptive trailing-12-month voluntary attrition observed through each August cutoff before deciding whether the source or feature definition should be advanced.",
+    "scope": {
+      "artifact": "application_intensity_by_fiscal_year",
+      "source": "hrda.job_applications_vw",
+      "buckets": [
+        "1",
+        "2",
+        "3",
+        "4+"
+      ],
+      "periods": [
+        "FY2022",
+        "FY2023",
+        "FY2024",
+        "FY2025",
+        "FY2026 YTD through 2026-09-10"
+      ],
+      "employee_snapshot_rolling_view": "retain its existing Unknown and time-safe coverage controls",
+      "trailing_12m_august_application_attrition": {
+        "artifact": "application_intensity_trailing_12m_august_attrition",
+        "periods": [
+          "August 2022",
+          "August 2023",
+          "August 2024",
+          "August 2025",
+          "August 2026"
+        ],
+        "display_rule": "The slide may show only August 2025 and August 2026; August 2022-2024 remain aggregate evidence only.",
+        "definition": "Distinct linked applicants are bucketed by unique requisitions in the 12 months ending at each August cutoff; the displayed rate is strict voluntary terminations after the first qualifying application and on or before that cutoff.",
+        "subthreshold_aggregate_buckets_authorized": true
+      }
+    },
+    "small_cell_exception": {
+      "allow_subthreshold_aggregate_buckets": true,
+      "minimum_displayed_count": 0,
+      "reason": "Explicit internal exploratory request for two named project developers; no operational or leadership distribution.",
+      "not_a_general_privacy_policy_change": true
+    },
+    "non_negotiable_controls": {
+      "aggregate_only": true,
+      "employee_rows_persisted": false,
+      "employee_ids_persisted": false,
+      "names_persisted": false,
+      "requisition_ids_or_titles_persisted": false,
+      "manager_access": false,
+      "redistribution": false,
+      "operational_use": false,
+      "score_v4_change": false,
+      "production_feature_approval": false
+    },
+    "interpretation": "FY2026 YTD remains a partial fiscal year and is not comparable with full fiscal years. The source is descriptive evidence only and is not approved as identical lineage to hrda.applications or as an individual feature."
+  },
+  "semantic_type": "derived_feature",
+  "definition": {
+    "population": "Distinct linked applicants with cand_applied=1, employee_id, req_id and application_date in the 12 months ending at the August cutoff.",
+    "application_bucket": "1, 2, 3, or 4+ unique requisitions per applicant in that same trailing window.",
+    "outcome": "Strict VOLUNTARY termination after the first qualifying application and on or before the August cutoff.",
+    "rate": "100 * voluntary_exit_count / distinct_applicant_count.",
+    "time_interpretation": "Observed trailing-12-month attrition ending at the August cutoff; it is not prospective follow-up after a fiscal-year endpoint."
+  },
+  "grain": "aggregate August cutoff x application bucket",
+  "visible_slide_cutoffs": [
+    2025,
+    2026
+  ],
+  "evidence_only_cutoffs": [
+    2022,
+    2023,
+    2024
+  ],
+  "provenance": {
+    "metadata_query": {
+      "path": "queries/audits/application_trailing_12m_august_attrition_metadata_20260918.sql",
+      "sha256": "4639018dd46a3c4e1f954bbc81c081faa038f300e36b5abbcfcb841a7b109c88",
+      "result_sha256": "33f373092f9c62879ce0e9f6e27c9f7d400e5654650590711a8ade52b0264ec0",
+      "columns": [
+        "table_name",
+        "required_columns_found",
+        "employee_id_columns",
+        "req_id_columns",
+        "application_date_columns",
+        "cand_applied_columns",
+        "term_date_columns",
+        "term_type_columns"
+      ],
+      "executed_on": "2026-09-18"
+    },
+    "main_query": {
+      "path": "queries/audits/application_trailing_12m_august_attrition_20260918.sql",
+      "sha256": "2cce2f03cf331fbb5ed3ebe8b1bb8eae1643d48171c063b1a4625a7efd2e792c",
+      "result_sha256": "f9b11eb98d9a96d1f80d5960f203aaebc81c4c7b2585e3af270dd0e3e4d54dd0",
+      "columns": [
+        "cutoff_year",
+        "august_cutoff_date",
+        "window_start_date",
+        "application_bucket",
+        "bucket_order",
+        "distinct_applicant_count",
+        "total_distinct_applicants",
+        "voluntary_exit_count",
+        "trailing_12m_voluntary_attrition_percent"
+      ],
+      "executed_on": "2026-09-18"
+    }
+  },
+  "privacy": {
+    "aggregate_only": true,
+    "employee_rows_persisted": false,
+    "employee_ids_persisted": false,
+    "names_persisted": false,
+    "requisition_ids_or_titles_persisted": false,
+    "small_cell_exception": true,
+    "minimum_displayed_count": 0
+  },
+  "metadata_rows": [
+    {
+      "table_name": "job_applications_vw",
+      "required_columns_found": 4,
+      "employee_id_columns": 1,
+      "req_id_columns": 1,
+      "application_date_columns": 1,
+      "cand_applied_columns": 1,
+      "term_date_columns": 0,
+      "term_type_columns": 0
+    },
+    {
+      "table_name": "post_hire_monthly_worker_dtls",
+      "required_columns_found": 3,
+      "employee_id_columns": 1,
+      "req_id_columns": 0,
+      "application_date_columns": 0,
+      "cand_applied_columns": 0,
+      "term_date_columns": 1,
+      "term_type_columns": 1
+    }
+  ],
+  "rows": [
+    {
+      "cutoff_year": 2022,
+      "august_cutoff_date": "2022-08-21",
+      "window_start_date": "2021-08-21",
+      "application_bucket": "1",
+      "bucket_order": 1,
+      "distinct_applicant_count": 812,
+      "total_distinct_applicants": 1029,
+      "voluntary_exit_count": 37,
+      "trailing_12m_voluntary_attrition_percent": 4.56
+    },
+    {
+      "cutoff_year": 2022,
+      "august_cutoff_date": "2022-08-21",
+      "window_start_date": "2021-08-21",
+      "application_bucket": "2",
+      "bucket_order": 2,
+      "distinct_applicant_count": 128,
+      "total_distinct_applicants": 1029,
+      "voluntary_exit_count": 6,
+      "trailing_12m_voluntary_attrition_percent": 4.69
+    },
+    {
+      "cutoff_year": 2022,
+      "august_cutoff_date": "2022-08-21",
+      "window_start_date": "2021-08-21",
+      "application_bucket": "3",
+      "bucket_order": 3,
+      "distinct_applicant_count": 48,
+      "total_distinct_applicants": 1029,
+      "voluntary_exit_count": 2,
+      "trailing_12m_voluntary_attrition_percent": 4.17
+    },
+    {
+      "cutoff_year": 2022,
+      "august_cutoff_date": "2022-08-21",
+      "window_start_date": "2021-08-21",
+      "application_bucket": "4+",
+      "bucket_order": 4,
+      "distinct_applicant_count": 41,
+      "total_distinct_applicants": 1029,
+      "voluntary_exit_count": 1,
+      "trailing_12m_voluntary_attrition_percent": 2.44
+    },
+    {
+      "cutoff_year": 2023,
+      "august_cutoff_date": "2023-08-20",
+      "window_start_date": "2022-08-20",
+      "application_bucket": "1",
+      "bucket_order": 1,
+      "distinct_applicant_count": 741,
+      "total_distinct_applicants": 915,
+      "voluntary_exit_count": 28,
+      "trailing_12m_voluntary_attrition_percent": 3.78
+    },
+    {
+      "cutoff_year": 2023,
+      "august_cutoff_date": "2023-08-20",
+      "window_start_date": "2022-08-20",
+      "application_bucket": "2",
+      "bucket_order": 2,
+      "distinct_applicant_count": 104,
+      "total_distinct_applicants": 915,
+      "voluntary_exit_count": 3,
+      "trailing_12m_voluntary_attrition_percent": 2.88
+    },
+    {
+      "cutoff_year": 2023,
+      "august_cutoff_date": "2023-08-20",
+      "window_start_date": "2022-08-20",
+      "application_bucket": "3",
+      "bucket_order": 3,
+      "distinct_applicant_count": 41,
+      "total_distinct_applicants": 915,
+      "voluntary_exit_count": 3,
+      "trailing_12m_voluntary_attrition_percent": 7.32
+    },
+    {
+      "cutoff_year": 2023,
+      "august_cutoff_date": "2023-08-20",
+      "window_start_date": "2022-08-20",
+      "application_bucket": "4+",
+      "bucket_order": 4,
+      "distinct_applicant_count": 29,
+      "total_distinct_applicants": 915,
+      "voluntary_exit_count": 4,
+      "trailing_12m_voluntary_attrition_percent": 13.79
+    },
+    {
+      "cutoff_year": 2024,
+      "august_cutoff_date": "2024-08-25",
+      "window_start_date": "2023-08-25",
+      "application_bucket": "1",
+      "bucket_order": 1,
+      "distinct_applicant_count": 1899,
+      "total_distinct_applicants": 3079,
+      "voluntary_exit_count": 67,
+      "trailing_12m_voluntary_attrition_percent": 3.53
+    },
+    {
+      "cutoff_year": 2024,
+      "august_cutoff_date": "2024-08-25",
+      "window_start_date": "2023-08-25",
+      "application_bucket": "2",
+      "bucket_order": 2,
+      "distinct_applicant_count": 564,
+      "total_distinct_applicants": 3079,
+      "voluntary_exit_count": 24,
+      "trailing_12m_voluntary_attrition_percent": 4.26
+    },
+    {
+      "cutoff_year": 2024,
+      "august_cutoff_date": "2024-08-25",
+      "window_start_date": "2023-08-25",
+      "application_bucket": "3",
+      "bucket_order": 3,
+      "distinct_applicant_count": 270,
+      "total_distinct_applicants": 3079,
+      "voluntary_exit_count": 11,
+      "trailing_12m_voluntary_attrition_percent": 4.07
+    },
+    {
+      "cutoff_year": 2024,
+      "august_cutoff_date": "2024-08-25",
+      "window_start_date": "2023-08-25",
+      "application_bucket": "4+",
+      "bucket_order": 4,
+      "distinct_applicant_count": 346,
+      "total_distinct_applicants": 3079,
+      "voluntary_exit_count": 22,
+      "trailing_12m_voluntary_attrition_percent": 6.36
+    },
+    {
+      "cutoff_year": 2025,
+      "august_cutoff_date": "2025-08-24",
+      "window_start_date": "2024-08-24",
+      "application_bucket": "1",
+      "bucket_order": 1,
+      "distinct_applicant_count": 1810,
+      "total_distinct_applicants": 1966,
+      "voluntary_exit_count": 17,
+      "trailing_12m_voluntary_attrition_percent": 0.94
+    },
+    {
+      "cutoff_year": 2025,
+      "august_cutoff_date": "2025-08-24",
+      "window_start_date": "2024-08-24",
+      "application_bucket": "2",
+      "bucket_order": 2,
+      "distinct_applicant_count": 147,
+      "total_distinct_applicants": 1966,
+      "voluntary_exit_count": 3,
+      "trailing_12m_voluntary_attrition_percent": 2.04
+    },
+    {
+      "cutoff_year": 2025,
+      "august_cutoff_date": "2025-08-24",
+      "window_start_date": "2024-08-24",
+      "application_bucket": "3",
+      "bucket_order": 3,
+      "distinct_applicant_count": 8,
+      "total_distinct_applicants": 1966,
+      "voluntary_exit_count": 0,
+      "trailing_12m_voluntary_attrition_percent": 0.0
+    },
+    {
+      "cutoff_year": 2025,
+      "august_cutoff_date": "2025-08-24",
+      "window_start_date": "2024-08-24",
+      "application_bucket": "4+",
+      "bucket_order": 4,
+      "distinct_applicant_count": 1,
+      "total_distinct_applicants": 1966,
+      "voluntary_exit_count": 0,
+      "trailing_12m_voluntary_attrition_percent": 0.0
+    },
+    {
+      "cutoff_year": 2026,
+      "august_cutoff_date": "2026-08-23",
+      "window_start_date": "2025-08-23",
+      "application_bucket": "1",
+      "bucket_order": 1,
+      "distinct_applicant_count": 1804,
+      "total_distinct_applicants": 2167,
+      "voluntary_exit_count": 19,
+      "trailing_12m_voluntary_attrition_percent": 1.05
+    },
+    {
+      "cutoff_year": 2026,
+      "august_cutoff_date": "2026-08-23",
+      "window_start_date": "2025-08-23",
+      "application_bucket": "2",
+      "bucket_order": 2,
+      "distinct_applicant_count": 344,
+      "total_distinct_applicants": 2167,
+      "voluntary_exit_count": 1,
+      "trailing_12m_voluntary_attrition_percent": 0.29
+    },
+    {
+      "cutoff_year": 2026,
+      "august_cutoff_date": "2026-08-23",
+      "window_start_date": "2025-08-23",
+      "application_bucket": "3",
+      "bucket_order": 3,
+      "distinct_applicant_count": 14,
+      "total_distinct_applicants": 2167,
+      "voluntary_exit_count": 2,
+      "trailing_12m_voluntary_attrition_percent": 14.29
+    },
+    {
+      "cutoff_year": 2026,
+      "august_cutoff_date": "2026-08-23",
+      "window_start_date": "2025-08-23",
+      "application_bucket": "4+",
+      "bucket_order": 4,
+      "distinct_applicant_count": 5,
+      "total_distinct_applicants": 2167,
+      "voluntary_exit_count": 0,
+      "trailing_12m_voluntary_attrition_percent": 0.0
+    }
+  ],
+  "validation": {
+    "outcome": "pass",
+    "acceptance_rule": "Exactly five August cutoffs (2022-2026) x four buckets are returned; bucket denominators reconcile to each cutoff total; voluntary exits are within their bucket denominator; every displayed rate reconciles to its aggregate numerator and denominator; only aggregate columns are persisted.",
+    "metrics": {
+      "years": 5,
+      "buckets_per_year": 4,
+      "aggregate_rows": 20,
+      "visible_slide_cutoffs": [
+        2025,
+        2026
+      ],
+      "cutoffs": [
+        {
+          "cutoff_year": 2022,
+          "august_cutoff_date": "2022-08-21",
+          "total_distinct_applicants": 1029,
+          "repeat_applicant_count": 217,
+          "repeat_applicant_percent": 21.09
+        },
+        {
+          "cutoff_year": 2023,
+          "august_cutoff_date": "2023-08-20",
+          "total_distinct_applicants": 915,
+          "repeat_applicant_count": 174,
+          "repeat_applicant_percent": 19.02
+        },
+        {
+          "cutoff_year": 2024,
+          "august_cutoff_date": "2024-08-25",
+          "total_distinct_applicants": 3079,
+          "repeat_applicant_count": 1180,
+          "repeat_applicant_percent": 38.32
+        },
+        {
+          "cutoff_year": 2025,
+          "august_cutoff_date": "2025-08-24",
+          "total_distinct_applicants": 1966,
+          "repeat_applicant_count": 156,
+          "repeat_applicant_percent": 7.93
+        },
+        {
+          "cutoff_year": 2026,
+          "august_cutoff_date": "2026-08-23",
+          "total_distinct_applicants": 2167,
+          "repeat_applicant_count": 363,
+          "repeat_applicant_percent": 16.75
+        }
+      ],
+      "subthreshold_aggregate_buckets": [
+        {
+          "cutoff_year": 2023,
+          "application_bucket": "4+",
+          "distinct_applicant_count": 29
+        },
+        {
+          "cutoff_year": 2025,
+          "application_bucket": "3",
+          "distinct_applicant_count": 8
+        },
+        {
+          "cutoff_year": 2025,
+          "application_bucket": "4+",
+          "distinct_applicant_count": 1
+        },
+        {
+          "cutoff_year": 2026,
+          "application_bucket": "3",
+          "distinct_applicant_count": 14
+        },
+        {
+          "cutoff_year": 2026,
+          "application_bucket": "4+",
+          "distinct_applicant_count": 5
+        }
+      ],
+      "subthreshold_aggregate_bucket_count": 5
+    }
+  },
+  "outcome": "pass"
+}

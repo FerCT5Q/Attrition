@@ -1,0 +1,129 @@
+schema_version: 1
+plan_version: 2
+plan_revision_reason: >-
+  La auditoria v1 mostro que is_termed no reconcilia completamente con
+  all_terminations y que manager_effective_date aparece posterior al snapshot en
+  numerosas filas. La ruta v2 deja esos campos mensuales como diagnostico y prueba
+  el evento canonico desde la tabla de terminaciones, con term_date como frontera
+  conservadora de conocimiento.
+language: es
+created_before_execution: true
+variable: Manager leaving
+concept: >-
+  Feature derivada que identifica empleados expuestos a la salida ya ocurrida del
+  manager que los supervisaba en el ultimo snapshot cerrado anterior al evento.
+intended_use: >-
+  Medir disrupcion potencial despues de la salida del manager sin usar fechas
+  futuras ni depender de campos mensuales que la evidencia v1 mostro inconsistentes.
+knowledge_date: >-
+  Primer cierre fiscal mensual igual o posterior a term_date en el calendario de
+  snapshots elegibles.
+population: >-
+  Filas con worker_type='Employee', employee_type='Regular' y active_status=1.
+grain: Empleado-snapshot mensual
+semantic_type: derived_feature
+source_reasoning: >-
+  La relacion empleado-manager se observa en la tabla mensual; el evento candidato
+  se toma de all_terminations y se reconcilia contra la tabla mensual especifica de
+  terminaciones antes de evaluar Consistency.
+plan_authorship:
+  mode: codex_explicit
+  revision_reason: >-
+    La evidencia v1 cambio la fuente candidata del evento y convirtio el self-join
+    del manager en evidencia supporting, no en requisito de la derivacion.
+  generated_story_fallback: false
+validation_story:
+  - id: source_access
+    criterion: source
+    evidence_role: defining
+    question: ¿Existen ambas fuentes y todos los campos requeridos para reconstruir la relacion y el evento?
+    why: Sin llaves y fechas no puede probarse la ruta temporal.
+    fields: [employee_id, manager_employee_id, fis_mo_end_dt, employeeid, term_date, term_type]
+    method: Auditoria de information_schema sobre las fuentes seleccionadas.
+    sql_reference: queries/audits/manager_leaving_source_access_20260820.sql
+    acceptance_rule: missing_items debe ser 0.
+    metric_checks:
+      - {metric: missing_items, aggregate: sum, operator: eq, threshold: 0}
+  - id: termination_source_consistency
+    criterion: consistency
+    evidence_role: defining
+    question: ¿Los eventos de all_terminations son unicos y reconcilian con la tabla mensual especifica de terminaciones?
+    why: La feature requiere una fuente de eventos estable aun cuando is_termed de la tabla general no sea suficiente.
+    fields: [employeeid, employee_id, term_date, term_type, is_termed]
+    method: Reconciliacion agregada por manager y term_date entre las dos fuentes de terminacion.
+    sql_reference: queries/audits/manager_leaving_termination_source_reconciliation_v2_20260820.sql
+    acceptance_rule: >-
+      Debe existir evidencia comparable y anomaly_count, invalid_count y
+      unexplained_change_count deben ser 0; cualquier diferencia queda pendiente y
+      limita Consistency.
+    metric_checks:
+      - {metric: observations_checked, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: matched_event_count, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: anomaly_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: invalid_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: unexplained_change_count, aggregate: sum, operator: eq, threshold: 0}
+  - id: termination_to_prior_team_join
+    criterion: join
+    evidence_role: defining
+    question: ¿Cada terminacion utilizable se atribuye de forma unica al equipo observado antes de la salida?
+    why: El evento debe relacionarse con el manager previo y no con su reemplazante.
+    fields: [manager_employee_id, employeeid, term_date, fis_mo_end_dt]
+    method: >-
+      Mapear term_date al primer cierre posterior, seleccionar el ultimo snapshot
+      dentro de los 45 dias previos y agregar una sola fila por empleado-snapshot.
+    sql_reference: queries/audits/manager_leaving_join_reconciliation_v2_20260820.sql
+    acceptance_rule: >-
+      Deben existir eventos y atribuciones; unmatched_count, duplicate_count,
+      multi_match_count, conflictos de snapshot, eventos duplicados, conflictos de
+      term_type, atribuciones sin match y uso futuro deben ser 0.
+    metric_checks:
+      - {metric: eligible_count, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: matched_count, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: manager_event_count, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: attributed_employee_event_count, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: unmatched_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: duplicate_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: multi_match_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: raw_employee_snapshot_duplicate_rows, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: conflicting_manager_snapshot_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: manager_event_knowledge_unmatched_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: manager_event_knowledge_multi_match_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: attribution_unmatched_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: attribution_multi_match_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: duplicate_manager_event_rows, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: manager_event_term_type_conflicts, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: future_event_usage_count, aggregate: sum, operator: eq, threshold: 0}
+  - id: same_snapshot_self_join_diagnostic
+    criterion: join
+    evidence_role: supporting
+    question: ¿Como se explican los managers que no aparecen en el mismo snapshot que sus reportes?
+    why: La evidencia v1 encontro 726 casos y deben describirse aunque la ruta v2 no requiera ese self-join.
+    fields: [manager_employee_id, employee_id, fis_mo_end_dt]
+    method: Buscar al manager en cualquier fecha y dentro de 45 dias del snapshot sin match.
+    sql_reference: queries/audits/manager_leaving_join_reconciliation_v2_20260820.sql
+    acceptance_rule: >-
+      Esta prueba es supporting y no eleva el score; debe cuantificar encontrados en
+      fechas adyacentes y nunca encontrados para documentar la limitacion.
+    metric_fields:
+      - same_snapshot_manager_unmatched_count
+      - unmatched_manager_found_any_history_count
+      - unmatched_manager_found_within_45_days_count
+      - unmatched_manager_never_found_count
+  - id: unresolved_exposure_window
+    criterion: definition
+    evidence_role: contextual
+    question: ¿Esta validacion decide cuantos meses permanece expuesto el empleado?
+    why: La ruta puede validarse sin convertir una ventana no aprobada en regla definitiva.
+    fields: [term_date, fis_mo_end_dt]
+    method: Mantener la validacion de llaves separada de la eleccion de 3, 6 o 12 meses.
+    sql_reference: queries/audits/manager_leaving_join_reconciliation_v2_20260820.sql
+    acceptance_rule: >-
+      Esta prueba no eleva Definition; la ventana y el alcance de tipos de salida
+      deben aprobarse por separado.
+    metric_fields: [manager_event_count, manager_event_with_prior_team_count]
+planned_sql:
+  - queries/audits/manager_leaving_source_access_20260820.sql
+  - queries/audits/manager_leaving_termination_source_reconciliation_v2_20260820.sql
+  - queries/audits/manager_leaving_join_reconciliation_v2_20260820.sql
+acceptance_rules_frozen: true
+

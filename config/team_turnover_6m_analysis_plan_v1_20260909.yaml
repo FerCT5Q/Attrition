@@ -1,0 +1,68 @@
+schema_version: 1
+plan_version: 1
+language: es
+created_before_execution: true
+variable: Team turnover
+concept: >-
+  Tasa de salidas voluntarias de reportes directos durante los seis meses
+  cerrados previos a cada snapshot mensual.
+intended_use: >-
+  Servir como componente común para identificar concentración reciente de
+  salidas y para calcular el exceso de attrition esperado bajo un manager.
+knowledge_date: >-
+  Cierre mensual t; sólo se incluyen eventos Voluntary con term_date en
+  (t - 6 meses, t] y conocidos a t.
+population: Empleados worker_type='Employee', employee_type='Regular' y active_status=1.
+grain: Manager-snapshot para el cálculo; empleado-snapshot para asignación.
+semantic_type: derived_feature
+source_reasoning: >-
+  manager_employee_id reconstruye los reportes directos. all_dir_reports y
+  reg_non_intern_dir_reports son conteos almacenados a contrastar, no una
+  definición asumida de manager.
+validation_story:
+  - id: manager_population_reconciliation
+    criterion: consistency
+    evidence_role: defining
+    question: >-
+      ¿La población de managers con al menos un reporte directo activo y regular
+      se puede reconstruir sin duplicar empleado-snapshot, y cómo concilia con
+      los conteos almacenados de reportes?
+    why: >-
+      La población de managers determina el denominador y no puede inferirse de
+      management_level ni de un supuesto flag.
+    fields: [employee_id, manager_employee_id, reg_non_intern_dir_reports, all_dir_reports, fis_mo_end_dt]
+    method: >-
+      Reconstruir equipos directos por snapshot y comparar agregadamente la
+      presencia y los conteos contra el registro contemporáneo del manager.
+    sql_reference: queries/audits/manager_population_direct_reports_reconciliation_20260909.sql
+    acceptance_rule: >-
+      Cada snapshot debe tener al menos 30 managers reconstruidos y cero filas
+      duplicadas en el grain empleado-snapshot; diferencias con conteos
+      almacenados se reportan y no sustituyen la relación directa.
+    metric_checks:
+      - {metric: reconstructed_manager_count, aggregate: min, operator: gte, threshold: 30}
+      - {metric: duplicate_employee_snapshot_rows, aggregate: sum, operator: eq, threshold: 0}
+  - id: six_month_turnover_definition
+    criterion: definition
+    evidence_role: defining
+    question: >-
+      ¿La ventana de seis snapshots, el numerador Voluntary y la atribución al
+      manager producen una tasa y una bandera reproducibles?
+    why: >-
+      Una salida debe pertenecer al manager histórico correcto y nunca utilizar
+      información posterior al corte de predicción.
+    fields: [employee_id, manager_employee_id, term_date, term_type, fis_mo_end_dt]
+    method: >-
+      Para cada snapshot con seis cierres completos, contar eventos Voluntary
+      distintos por empleado-fecha, atribuirlos al último manager previo a la
+      salida y reconciliar denominadores, buckets y serie mensual.
+    sql_reference: queries/audits/manager_team_turnover_6m_distribution_20260909.sql
+    acceptance_rule: >-
+      Debe haber exactamente seis snapshots por ventana, cero numeradores
+      mayores que su denominador y cero duplicados empleado-snapshot; los
+      eventos sin manager se cuantifican de forma explícita.
+    metric_checks:
+      - {metric: window_snapshot_count_min, aggregate: min, operator: eq, threshold: 6}
+      - {metric: window_snapshot_count_max, aggregate: max, operator: eq, threshold: 6}
+      - {metric: monthly_series_numerator_over_denominator, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: membership_duplicate_rows, aggregate: sum, operator: eq, threshold: 0}

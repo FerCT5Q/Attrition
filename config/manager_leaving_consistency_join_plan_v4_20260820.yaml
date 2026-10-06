@@ -1,0 +1,148 @@
+schema_version: 1
+plan_version: 4
+plan_revision_reason: >-
+  La auditoria v3 encontro 231 term_date anteriores a max_hire_rehire_date. Ese
+  campo representa el hire/rehire mas reciente y puede ser posterior a una
+  terminacion historica valida. El plan v4 exige confirmar historia mensual despues
+  del rehire y excluye esa comparacion de las anomalias del evento canonico.
+language: es
+created_before_execution: true
+variable: Manager leaving
+concept: >-
+  Feature derivada que identifica empleados expuestos a una terminacion ya ocurrida
+  del manager que los supervisaba en el ultimo snapshot cerrado anterior al evento.
+intended_use: >-
+  Medir disrupcion potencial despues de la salida del manager mediante una ruta
+  unica, agregada y segura en el tiempo.
+knowledge_date: Primer cierre fiscal mensual igual o posterior a term_date.
+population: Filas con worker_type='Employee', employee_type='Regular' y active_status=1.
+grain: Empleado-snapshot mensual
+semantic_type: derived_feature
+source_reasoning: >-
+  La relacion se toma del snapshot mensual y el evento canonico de
+  all_terminations. max_hire_rehire_date se usa solo para diagnosticar rehired
+  managers, no como inicio del episodio de una terminacion historica.
+plan_authorship:
+  mode: codex_explicit
+  revision_reason: >-
+    Se corrige la interpretacion de max_hire_rehire_date con una validacion agregada
+    especifica antes de concluir Consistency.
+  generated_story_fallback: false
+validation_story:
+  - id: source_access
+    criterion: source
+    evidence_role: defining
+    question: ¿Existen la relacion mensual y la fuente de terminaciones con todos los campos requeridos?
+    why: Sin llaves y fechas no puede construirse la feature.
+    fields: [employee_id, manager_employee_id, fis_mo_end_dt, employeeid, term_date, term_type]
+    method: Auditoria de information_schema.
+    sql_reference: queries/audits/manager_leaving_source_access_20260820.sql
+    acceptance_rule: missing_items debe ser 0.
+    metric_checks:
+      - {metric: missing_items, aggregate: sum, operator: eq, threshold: 0}
+  - id: selected_event_source_consistency
+    criterion: consistency
+    evidence_role: defining
+    question: ¿La fuente all_terminations tiene llaves de evento unicas, fechas validas y dominios estables durante la historia utilizable?
+    why: La feature necesita eventos reproducibles aunque la ventana final permanezca pendiente.
+    fields: [employeeid, term_date, term_type]
+    method: Auditoria longitudinal agregada de llaves, fechas y normalizacion del dominio.
+    sql_reference: queries/audits/manager_leaving_all_terminations_consistency_v4_20260820.sql
+    acceptance_rule: >-
+      Deben existir eventos y anomaly_count, invalid_count y
+      unexplained_change_count deben ser 0. Los term_type nulos se reportan para la
+      futura decision voluntaria, pero no invalidan la ruta de todas las salidas.
+    metric_checks:
+      - {metric: observations_checked, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: event_key_count, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: anomaly_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: invalid_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: unexplained_change_count, aggregate: sum, operator: eq, threshold: 0}
+  - id: rehire_episode_interpretation
+    criterion: consistency
+    evidence_role: supporting
+    question: ¿Los eventos anteriores a max_hire_rehire_date corresponden a historia previa de managers recontratados?
+    why: Una fecha de rehire posterior no invalida una terminacion historica previa.
+    fields: [employeeid, term_date, max_hire_rehire_date, is_rehire, fis_mo_end_dt]
+    method: Confirmar agregadamente historia mensual en o despues del rehire posterior.
+    sql_reference: queries/audits/manager_leaving_rehire_episode_diagnostic_v4_20260820.sql
+    acceptance_rule: >-
+      monthly_rehire_history_unconfirmed_count debe ser 0 para tratar estos casos
+      como episodios historicos explicados y no como fechas invalidas.
+    metric_checks:
+      - {metric: term_before_latest_hire_event_count, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: monthly_rehire_history_unconfirmed_count, aggregate: sum, operator: eq, threshold: 0}
+  - id: termination_to_prior_team_join
+    criterion: join
+    evidence_role: defining
+    question: ¿Cada terminacion utilizable se atribuye de forma unica al equipo observado antes de la salida?
+    why: El evento debe relacionarse con el manager previo y no con su reemplazante.
+    fields: [manager_employee_id, employeeid, term_date, fis_mo_end_dt]
+    method: Mapear el evento al primer cierre posterior, seleccionar el ultimo snapshot previo y agregar al grain final.
+    sql_reference: queries/audits/manager_leaving_join_reconciliation_v2_20260820.sql
+    acceptance_rule: >-
+      Deben existir eventos y atribuciones; todos los conteos de unmatched,
+      duplicados, multi-match, conflictos y uso futuro de la ruta definitoria deben ser 0.
+    metric_checks:
+      - {metric: eligible_count, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: matched_count, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: manager_event_count, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: attributed_employee_event_count, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: unmatched_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: duplicate_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: multi_match_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: raw_employee_snapshot_duplicate_rows, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: conflicting_manager_snapshot_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: manager_event_knowledge_unmatched_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: manager_event_knowledge_multi_match_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: attribution_unmatched_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: attribution_multi_match_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: duplicate_manager_event_rows, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: manager_event_term_type_conflicts, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: future_event_usage_count, aggregate: sum, operator: eq, threshold: 0}
+  - id: rejected_monthly_fields_context
+    criterion: consistency
+    evidence_role: contextual
+    question: ¿Por que is_termed, manager_effective_date y la tabla _term no se usan como evento canonico?
+    why: Las auditorias previas detectaron flags sin fecha, fechas efectivas futuras y cero eventos comparables en _term.
+    fields: [is_termed, manager_effective_date, term_date]
+    method: Conservar las auditorias v1-v3 como diagnostico y excluir esos campos de la ruta definitoria.
+    sql_reference: queries/audits/manager_leaving_term_table_semantics_v3_20260820.sql
+    acceptance_rule: Esta evidencia es contextual y documenta por que la ruta seleccionada cambia de fuente.
+    metric_fields: [term_table_rows_checked, positive_flag_rows, usable_event_rows]
+  - id: same_snapshot_self_join_context
+    criterion: join
+    evidence_role: supporting
+    question: ¿Los managers sin match exacto ocurren fuera de su historia observada o dentro de huecos mensuales?
+    why: Debemos explicar la limitacion aunque la ruta definitoria no requiera ese self-join.
+    fields: [manager_employee_id, employee_id, fis_mo_end_dt]
+    method: Clasificar cada falta respecto al primer y ultimo snapshot observado del manager.
+    sql_reference: queries/audits/manager_leaving_same_snapshot_unmatched_v3_20260820.sql
+    acceptance_rule: >-
+      Esta evidencia es supporting; debe reconciliar todos los casos en categorias
+      agregadas sin exponer IDs.
+    metric_fields:
+      - same_snapshot_manager_unmatched_count
+      - never_observed_count
+      - before_manager_history_count
+      - after_manager_history_count
+      - gap_inside_manager_history_count
+  - id: unresolved_exposure_window
+    criterion: definition
+    evidence_role: contextual
+    question: ¿Esta validacion decide cuantos meses permanece expuesto el empleado?
+    why: La ruta puede validarse sin convertir una ventana no aprobada en regla definitiva.
+    fields: [term_date, fis_mo_end_dt]
+    method: Separar la validacion tecnica de la eleccion de 3, 6 o 12 meses.
+    sql_reference: queries/audits/manager_leaving_join_reconciliation_v2_20260820.sql
+    acceptance_rule: Definition permanece en 1 hasta aprobar ventana y tipo de salida.
+    metric_fields: [manager_event_count, manager_event_with_prior_team_count]
+planned_sql:
+  - queries/audits/manager_leaving_source_access_20260820.sql
+  - queries/audits/manager_leaving_all_terminations_consistency_v4_20260820.sql
+  - queries/audits/manager_leaving_rehire_episode_diagnostic_v4_20260820.sql
+  - queries/audits/manager_leaving_join_reconciliation_v2_20260820.sql
+  - queries/audits/manager_leaving_term_table_semantics_v3_20260820.sql
+  - queries/audits/manager_leaving_same_snapshot_unmatched_v3_20260820.sql
+acceptance_rules_frozen: true
+

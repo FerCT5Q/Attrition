@@ -1,0 +1,62 @@
+schema_version: 1
+plan_version: 1
+language: es
+created_before_execution: true
+plan_authorship: codex_explicit
+variable: Engagement items
+concept: KPI binario Engagement calculado como el promedio de Q1, Q2 y Q3 segun survey_structure.xlsx.
+intended_use: Comparar la senal binaria historica de Engagement con attrition posterior.
+knowledge_date: Fecha de la wave QVoice; excluir informacion posterior.
+population: Respuestas QVoice con una fila por empleado-wave tras deduplicacion interna y al menos un componente Q1/Q2/Q3 valido.
+grain: Employee-wave response aggregate
+semantic_type: derived_feature
+validation_story:
+  - id: source_access
+    criterion: source
+    evidence_role: supporting
+    question: ¿El diccionario y los encabezados de cada workbook resuelven Q1, Q2 y Q3 para Engagement?
+    why: El KPI debe conservar la identidad de cada pregunta y hacer visible cualquier componente no disponible.
+    method: schema_access_check
+    sql_reference: queries/audits/qvoice_excel_source_inventory_20260826-2.sql
+    acceptance_rule: El inventario debe reportar cada componente esperado por workbook y no ocultar faltantes.
+    metric_map:
+      missing_items: {column: missing_items, aggregate: sum}
+    metric_checks:
+      - {metric: missing_items, operator: gte, threshold: 0, aggregate: sum}
+  - id: component_definition
+    criterion: definition
+    evidence_role: defining
+    question: ¿El promedio de Engagement usa los componentes validos y distingue respuestas completas de parciales?
+    why: Un promedio parcial puede conservar senal, pero no equivale al KPI completo de tres preguntas.
+    method: independent_recalculation
+    sql_reference: queries/audits/qvoice_excel_definition_audit_20260826-2.sql
+    acceptance_rule: Deben observarse conteos de completas, parciales y sin componente; cualquier parcial limita la definicion a 1.
+    metric_checks:
+      - {metric: eligible_count, operator: gt, threshold: 0, aggregate: sum}
+      - {metric: populated_count, operator: gt, threshold: 0, aggregate: sum}
+      - {metric: invalid_count, operator: eq, threshold: 0, aggregate: sum}
+      - {metric: complete_component_count, operator: gte, threshold: 0, aggregate: sum}
+      - {metric: partial_component_count, operator: gte, threshold: 0, aggregate: sum}
+  - id: longitudinal_consistency
+    criterion: consistency
+    evidence_role: defining
+    question: ¿El mapping de Q1/Q2/Q3 y el dominio binario son trazables entre waves?
+    why: Cambios de item set o de formato pueden cambiar la comparabilidad longitudinal.
+    method: longitudinal_aggregate_audit
+    sql_reference: queries/audits/qvoice_excel_consistency_audit_20260826-2.sql
+    acceptance_rule: No debe haber valores invalidos y cada cambio de componentes debe quedar registrado por wave.
+    metric_checks:
+      - {metric: invalid_count, operator: eq, threshold: 0, aggregate: sum}
+      - {metric: item_set_change_count, operator: gte, threshold: 0, aggregate: sum}
+  - id: employee_wave_grain
+    criterion: join
+    evidence_role: supporting
+    question: ¿El Excel conserva un grain unico de empleado-wave para Engagement?
+    why: La deduplicacion interna precede al join temporal con workforce y evita sobreconteos.
+    method: key_grain_and_temporal_reconciliation
+    sql_reference: queries/audits/qvoice_excel_join_grain_audit_20260826-2.sql
+    acceptance_rule: No debe haber duplicados ni filas sin grain interno; el join temporal a workforce queda pendiente.
+    metric_checks:
+      - {metric: matched_count, operator: gt, threshold: 0, aggregate: sum}
+      - {metric: unmatched_count, operator: eq, threshold: 0, aggregate: sum}
+      - {metric: duplicate_count, operator: eq, threshold: 0, aggregate: sum}

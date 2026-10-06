@@ -1,0 +1,34 @@
+schema_version: 1
+language: es
+unknown_policy: pause
+problem_context:
+  problem_statement: Evaluar si las señales de compensación relativa aportan información útil y gobernable para entender riesgo de attrition.
+  decision_or_use_case: Priorizar variables de compensación para un modelo longitudinal de attrition y para análisis de segmentos.
+  outcome: Attrition observado después del snapshot de predicción.
+  population: Empleados regulares activos en cada snapshot mensual.
+  unit_of_analysis: Empleado-snapshot.
+  time_horizon: Horizonte de outcome definido por el proyecto de modelado.
+  knowledge_boundary: Utilizar sólo información conocida al cierre del snapshot mensual.
+  constraints:
+    - No publicar compensación exacta ni cohorts menores al mínimo de privacidad.
+    - Evitar leakage y comparar únicamente poblaciones salariales compatibles.
+  portfolio_hypotheses:
+    - La posición frente al rango y la posición dentro de un grupo comparable representan conceptos relacionados, pero no equivalentes.
+  known_relationships:
+    - variables: [Comp ratio, Within team compensation range]
+      relationship: Within team compensation range depende de una definición válida y gobernada de Comp ratio.
+      why_relevant: Si el ratio base no se confirma, la variable relativa del equipo hereda esa limitación.
+variables:
+  - name: Comp ratio
+    intended_use: Medir posición relativa frente al rango salarial aplicable sin publicar compensación exacta.
+    population: Empleados regulares activos en el snapshot mensual.
+    knowledge_date: Cierre del snapshot mensual de predicción.
+    context_role: señal de compensación base
+    context_relevance: Establece la posición frente al rango salarial aplicable.
+  - name: Within team compensation range
+    intended_use: Comparar la posición relativa dentro de un equipo y grupo salarial comparables.
+    population: Empleados regulares activos con manager y grado observables.
+    knowledge_date: Cierre del snapshot mensual de predicción.
+    context_role: señal relativa derivada
+    context_relevance: Compara al empleado con un equipo y grupo salarial compatibles.
+decisions: {}

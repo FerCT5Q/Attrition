@@ -1,0 +1,27 @@
+{
+  "artifact": "engineering-playbook-tenure-confirmation",
+  "created_at_utc": "2026-10-03T17:45:05.180142+00:00",
+  "script": "tools\\engineering_playbook_tenure_confirmation.py",
+  "authorization": {
+    "path": "config\\attrition_model_in_memory_training_authorization_20261001.json",
+    "id": "attrition-model-in-memory-person-month-training-20261001"
+  },
+  "queries": {
+    "calendar": "queries\\profiles\\critical_tech_model_calendar_20260907.sql",
+    "person_month_frame": "queries\\profiles\\engineering_person_month_features_playbook_v2_20261003.sql"
+  },
+  "query_sha256": {
+    "calendar": "e31d37b1fd90573717ef6f672c3f08010767b2ed0514876fb0ffc61b665efaa8",
+    "person_month_frame": "5ca06841ca6d9ab63a4c9637bede3db90c7b9aa7388bcaec8dfde37d073245f7"
+  },
+  "incumbent_source": "output\\analysis\\engineering\\20261001\\hazard-adjustment-v2\\adjustment-results.json",
+  "incumbent_source_sha256": "c77cebb3f11e21240678a8c270ddd149b30c5b1d965be8109cbd0542229d5cd1",
+  "exploration_source": "output\\analysis\\engineering\\20261003\\playbook-priority-v1\\playbook-model-results.json",
+  "exploration_source_sha256": "e9150d0a06941a2ecf77048fba73af78441202e4821260b5ae58c331e253003d",
+  "result": "output\\analysis\\engineering\\20261003\\playbook-tenure-confirmation-v1\\confirmation-results.json",
+  "result_sha256": "9e9da0564f162a049d66a1fb82c17b88616e9e0d5679b3990fb42d19d61e6426",
+  "report": "output\\analysis\\engineering\\20261003\\playbook-tenure-confirmation-v1\\confirmation-report.md",
+  "report_sha256": "55c9b2704b7c3810b8d09a25fa974827e472344907947e5d7913480d7f1f297d",
+  "employee_level_rows_persisted": false,
+  "aggregate_training_frame_persisted": false
+}

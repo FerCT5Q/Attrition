@@ -1,0 +1,91 @@
+{
+  "artifact_type": "aggregate_segment_composition_attrition_evidence",
+  "version": 1,
+  "generated_on": "2026-09-22",
+  "deliverable_mode": "internal_analysis",
+  "artifact_classification": "internal_analysis",
+  "variable": "Distribucion exacta de compensation_grade en 0-2 capas reconstruidas al CEO",
+  "semantic_type": "jerarquia reconstruida y categoria almacenada directa",
+  "baseline_snapshot_date": "2025-08-24",
+  "outcome_cutoff_date": "2026-08-23",
+  "outcome_window": "(2025-08-24, 2026-08-23]",
+  "population": "Empleados regulares activos al snapshot base; cada persona pertenece a una cadena de manager reconstruida en el mismo snapshot hasta la raiz CEO aprobada.",
+  "grain": "snapshot base por empleado",
+  "cohort": {
+    "label": "0-2 capas reconstruidas al CEO",
+    "employee_count": 185,
+    "voluntary_exits": 19,
+    "annual_attrition_rate_percent": 10.27027027
+  },
+  "definition": "El segmento incluye profundidades reconstruidas 0, 1 y 2. Cada fila usa el valor exacto de compensation_grade almacenado al 2025-08-24. Si un empleado tuviera valor nulo, blanco o contradictorio en el mismo snapshot, se mostraria solo en el bucket agregado Unspecified or conflicting. Attrition es una terminacion strict VOLUNTARY del mismo cohorte base dentro de la ventana prospectiva de 12 meses.",
+  "exact_category_rule": {
+    "method": "Valor exacto normalizado en mayusculas del compensation_grade almacenado en el snapshot base; no se colapsa por primera letra.",
+    "suppression": "Ninguna por n bajo la autorizacion interna V7; cada fila mantiene n visible y las filas n<30 se marcan como exploratorias.",
+    "unmapped_or_conflicting_bucket": "Unspecified or conflicting"
+  },
+  "rows": [
+    {"label": "M30", "employee_count": 1, "cohort_share_percent": 0.54054054, "voluntary_exits": 0, "annual_attrition_rate_percent": 0.0, "publication_status": "internal_analysis_authorized"},
+    {"label": "M40", "employee_count": 9, "cohort_share_percent": 4.86486486, "voluntary_exits": 1, "annual_attrition_rate_percent": 11.11111111, "publication_status": "internal_analysis_authorized"},
+    {"label": "M50", "employee_count": 13, "cohort_share_percent": 7.02702703, "voluntary_exits": 1, "annual_attrition_rate_percent": 7.69230769, "publication_status": "internal_analysis_authorized"},
+    {"label": "M60", "employee_count": 24, "cohort_share_percent": 12.97297297, "voluntary_exits": 2, "annual_attrition_rate_percent": 8.33333333, "publication_status": "internal_analysis_authorized"},
+    {"label": "R80", "employee_count": 1, "cohort_share_percent": 0.54054054, "voluntary_exits": 0, "annual_attrition_rate_percent": 0.0, "publication_status": "internal_analysis_authorized"},
+    {"label": "S50", "employee_count": 9, "cohort_share_percent": 4.86486486, "voluntary_exits": 2, "annual_attrition_rate_percent": 22.22222222, "publication_status": "internal_analysis_authorized"},
+    {"label": "S60", "employee_count": 6, "cohort_share_percent": 3.24324324, "voluntary_exits": 0, "annual_attrition_rate_percent": 0.0, "publication_status": "internal_analysis_authorized"},
+    {"label": "S80", "employee_count": 1, "cohort_share_percent": 0.54054054, "voluntary_exits": 0, "annual_attrition_rate_percent": 0.0, "publication_status": "internal_analysis_authorized"},
+    {"label": "T80", "employee_count": 6, "cohort_share_percent": 3.24324324, "voluntary_exits": 0, "annual_attrition_rate_percent": 0.0, "publication_status": "internal_analysis_authorized"},
+    {"label": "V10", "employee_count": 62, "cohort_share_percent": 33.51351351, "voluntary_exits": 10, "annual_attrition_rate_percent": 16.12903226, "publication_status": "internal_analysis_authorized"},
+    {"label": "V30", "employee_count": 32, "cohort_share_percent": 17.29729730, "voluntary_exits": 1, "annual_attrition_rate_percent": 3.125, "publication_status": "internal_analysis_authorized"},
+    {"label": "V40", "employee_count": 7, "cohort_share_percent": 3.78378378, "voluntary_exits": 0, "annual_attrition_rate_percent": 0.0, "publication_status": "internal_analysis_authorized"},
+    {"label": "V70", "employee_count": 7, "cohort_share_percent": 3.78378378, "voluntary_exits": 2, "annual_attrition_rate_percent": 28.57142857, "publication_status": "internal_analysis_authorized"},
+    {"label": "V80", "employee_count": 1, "cohort_share_percent": 0.54054054, "voluntary_exits": 0, "annual_attrition_rate_percent": 0.0, "publication_status": "internal_analysis_authorized"},
+    {"label": "X30", "employee_count": 2, "cohort_share_percent": 1.08108108, "voluntary_exits": 0, "annual_attrition_rate_percent": 0.0, "publication_status": "internal_analysis_authorized"},
+    {"label": "X40", "employee_count": 1, "cohort_share_percent": 0.54054054, "voluntary_exits": 0, "annual_attrition_rate_percent": 0.0, "publication_status": "internal_analysis_authorized"},
+    {"label": "X45", "employee_count": 2, "cohort_share_percent": 1.08108108, "voluntary_exits": 0, "annual_attrition_rate_percent": 0.0, "publication_status": "internal_analysis_authorized"},
+    {"label": "X85", "employee_count": 1, "cohort_share_percent": 0.54054054, "voluntary_exits": 0, "annual_attrition_rate_percent": 0.0, "publication_status": "internal_analysis_authorized"}
+  ],
+  "acceptance_rule": "Las filas exactas deben reconciliar exactamente con el cohorte 0-2 de la evidencia de capas: 185 empleados y 19 salidas voluntarias. Cada tasa debe ser salidas voluntarias / empleados base y las participaciones deben sumar 100%. Los buckets bajo n=30 solo se muestran bajo la autorizacion interna V7, con n visible y etiqueta exploratoria.",
+  "validation": {
+    "question": "Cual es la distribucion exacta de compensation_grade de las 185 personas en 0-2 capas y como se distribuyen sus salidas voluntarias de 12 meses?",
+    "reason": "El analisis exploratorio con Julia requiere ver V10, V30 y todos los grades almacenados sin el colapso anterior por familia.",
+    "method": "Consulta agregada de solo lectura que reconstruye la cadena de managers al mismo snapshot, conserva el compensation_grade exacto normalizado y cuenta terminaciones VOLUNTARY en la ventana prospectiva de 12 meses.",
+    "execution_date": "2026-09-22",
+    "metrics": {
+      "cohort_employee_count": 185,
+      "cohort_voluntary_exits": 19,
+      "cohort_annual_attrition_rate_percent": 10.27027027,
+      "displayed_grade_count": 18,
+      "displayed_employee_count": 185,
+      "displayed_voluntary_exits": 19,
+      "displayed_share_percent": 100.0,
+      "subthreshold_grade_count": 16,
+      "minimum_displayed_grade_employee_count": 1
+    },
+    "result": "Los 18 grades exactos reconciliaron con 185 personas y 19 salidas. V10 representa 62 personas y 10 salidas; V30 representa 32 personas y 1 salida. Dieciseis grades tienen n<30 y se mantienen solo como exploracion interna con n visible.",
+    "conclusion": "La concentracion del cohorte se encuentra principalmente en V10 y V30. Las tasas de los grades pequenos son descriptivas y no deben compararse como evidencia estable ni interpretarse causalmente.",
+    "outcome": "pass"
+  },
+  "authorization": {
+    "path": "config/attrition_v7_internal_analysis_authorization_20260917.json",
+    "sha256": "6dd40fbb3a9eded9704c64d735e906697575351fa44c5ddfc423d2dca14536be",
+    "authorization_id": "attrition-v7-internal-aggregate-visibility-20260917",
+    "authorized_audience": "requester and Julia, both project developers",
+    "small_cell_exception_applied": true
+  },
+  "provenance": {
+    "audit_sql": "queries/audits/layers_from_ceo_0_2_exact_compensation_grade_distribution_20260922.sql",
+    "audit_sql_sha256": "268eeb29d9983847becb31354e5aabbf2111256b9be9d80ef3adff33b1d50602",
+    "execution_date": "2026-09-22",
+    "query_mode": "read_only_aggregate",
+    "raw_employee_rows_persisted": false,
+    "exact_compensation_values_persisted": false
+  },
+  "privacy_checks": {
+    "employee_identifiers_persisted": false,
+    "manager_identifiers_persisted": false,
+    "employee_rows_persisted": false,
+    "exact_compensation_values_persisted": false,
+    "all_rows_aggregate_only": true,
+    "subthreshold_rows_authorized_for_internal_analysis": true
+  },
+  "outcome": "pass"
+}

@@ -1,0 +1,390 @@
+{
+  "schema_version": 2,
+  "evidence_type": "ios_business_process_reason_ytd_attrition",
+  "executed_on": "2026-09-17",
+  "reporting_mode": "internal_analysis",
+  "deliverable_classification": "internal_analysis",
+  "authorization": {
+    "authorization_id": "attrition-v7-internal-aggregate-visibility-20260917",
+    "authorized_on": "2026-09-17",
+    "status": "approved",
+    "reporting_mode": "internal_analysis",
+    "authorized_audience": "requester and Julia, both project developers",
+    "purpose": "Review every aggregate percentage and count in Attrition V7, including buckets below the shared-output threshold, before deciding whether any variable should be used for attrition.",
+    "scope": {
+      "artifact": "output/distribution/attrition-43-variable-distributions-v7.html",
+      "slides": "all 50 slides",
+      "aggregate_buckets": "show every available category, count and percentage; do not suppress solely because n is below 30",
+      "historical_window": "retain the V7 source history and the previously documented Career goals history from 2024 onward; 2023 remains a mapping note"
+    },
+    "small_cell_exception": {
+      "allow_subthreshold_aggregate_buckets": true,
+      "minimum_displayed_count": 0,
+      "reason": "Explicit internal exploratory request for two named project developers; the audience can review aggregate percentages without employee-level detail.",
+      "not_a_general_privacy_policy_change": true
+    },
+    "non_negotiable_controls": {
+      "aggregate_only": true,
+      "employee_rows_persisted": false,
+      "employee_ids_persisted": false,
+      "names_persisted": false,
+      "emails_persisted": false,
+      "addresses_persisted": false,
+      "manager_access": false,
+      "redistribution": false,
+      "operational_use": false,
+      "score_v4_change": false,
+      "production_feature_approval": false,
+      "exact_compensation_values": false
+    },
+    "interpretation": "The exception changes only aggregate display suppression for this internal V7 artifact. It does not impute unavailable metrics, create employee-level records, change attrition definitions, or make a non-estimable rate estimable."
+  },
+  "query": {
+    "path": "queries/audits/ios_business_process_reason_ytd_attrition_20260917.sql",
+    "sha256": "4028d876bd78e71bcf688c37747c1cf3f741d6d57fbc012648fcf4debb79e86a",
+    "result_sha256": "1454dd3841a81d97124a4034fdf8af45e5a5434c962559ff1f61d94c36b07fff",
+    "columns": [
+      "calendar_year",
+      "cutoff_date",
+      "observed_monthly_snapshots",
+      "ytd_average_scoped_critical_tech_workforce",
+      "group_label",
+      "cohort_n",
+      "workforce_share_percent",
+      "post_event_voluntary_attrition_percent",
+      "publication_status"
+    ]
+  },
+  "population": "Empleados regulares activos con el último snapshot mensual activo dentro de los 45 días anteriores al evento IOS.",
+  "grain": "Empleado distinto × año calendario × motivo IOS; Total deduplicado por empleado-año.",
+  "comparison_window": "Enero al último snapshot mensual de agosto de cada año calendario.",
+  "cutoffs": {
+    "2024": {
+      "cutoff_date": "2024-08-25",
+      "observed_monthly_snapshots": 8,
+      "average_scoped_critical_tech_workforce": 5714
+    },
+    "2025": {
+      "cutoff_date": "2025-08-24",
+      "observed_monthly_snapshots": 8,
+      "average_scoped_critical_tech_workforce": 5751
+    },
+    "2026": {
+      "cutoff_date": "2026-08-23",
+      "observed_monthly_snapshots": 8,
+      "average_scoped_critical_tech_workforce": 5982
+    }
+  },
+  "definition": {
+    "movement": "Primer evento IOS elegible por empleado, motivo y año; los motivos pueden solaparse, por lo que sus filas no suman necesariamente al Total.",
+    "workforce_share": "n de la cohorte dividido entre el promedio de empleados regulares activos en los ocho snapshots mensuales YTD.",
+    "attrition": "Salida con term_type exactamente Voluntary después del primer evento y hasta el snapshot de agosto del mismo año; es attrition observado YTD, no un follow-up completo de doce meses."
+  },
+  "privacy": {
+    "aggregate_only": true,
+    "minimum_shared_cohort": 30,
+    "small_cell_exception": true,
+    "suppression": "No se suprimen conteos ni tasas agregadas bajo la autorización internal_analysis; una tasa con cohorte n=0 permanece Not estimable por denominador vacío.",
+    "prohibited": [
+      "employee rows",
+      "employee IDs",
+      "names",
+      "emails",
+      "addresses"
+    ]
+  },
+  "rows": [
+    {
+      "calendar_year": 2024,
+      "cutoff_date": "2024-08-25",
+      "observed_monthly_snapshots": 8,
+      "ytd_average_scoped_critical_tech_workforce": 5714,
+      "group_key": "total",
+      "group_label": "All eligible IOS movements",
+      "short_label": "All IOS movements",
+      "cohort_n": 587,
+      "workforce_share_percent": 10.3,
+      "post_event_voluntary_attrition_percent": 1.5,
+      "publication_status": "publish"
+    },
+    {
+      "calendar_year": 2024,
+      "cutoff_date": "2024-08-25",
+      "observed_monthly_snapshots": 8,
+      "ytd_average_scoped_critical_tech_workforce": 5714,
+      "group_key": "reorg_manager_change",
+      "group_label": "Transfer > Transfer > Reorg Department and/or Manager Change",
+      "short_label": "Reorg / manager change",
+      "cohort_n": 515,
+      "workforce_share_percent": 9.0,
+      "post_event_voluntary_attrition_percent": 1.7,
+      "publication_status": "publish"
+    },
+    {
+      "calendar_year": 2024,
+      "cutoff_date": "2024-08-25",
+      "observed_monthly_snapshots": 8,
+      "ytd_average_scoped_critical_tech_workforce": 5714,
+      "group_key": "lateral_ios",
+      "group_label": "Transfer > Transfer > Lateral IOS",
+      "short_label": "Lateral IOS",
+      "cohort_n": 40,
+      "workforce_share_percent": 0.7,
+      "post_event_voluntary_attrition_percent": 0.0,
+      "publication_status": "publish"
+    },
+    {
+      "calendar_year": 2024,
+      "cutoff_date": "2024-08-25",
+      "observed_monthly_snapshots": 8,
+      "ytd_average_scoped_critical_tech_workforce": 5714,
+      "group_key": "country_move",
+      "group_label": "Transfer > Transfer > Country-to-Country Location Change",
+      "short_label": "Country-to-country move",
+      "cohort_n": 34,
+      "workforce_share_percent": 0.6,
+      "post_event_voluntary_attrition_percent": 0.0,
+      "publication_status": "publish"
+    },
+    {
+      "calendar_year": 2024,
+      "cutoff_date": "2024-08-25",
+      "observed_monthly_snapshots": 8,
+      "ytd_average_scoped_critical_tech_workforce": 5714,
+      "group_key": "promo_ios",
+      "group_label": "Promotion > Transfer > Promo IOS",
+      "short_label": "Promo IOS",
+      "cohort_n": 3,
+      "workforce_share_percent": 0.1,
+      "post_event_voluntary_attrition_percent": 0.0,
+      "publication_status": "internal_analysis_exception"
+    },
+    {
+      "calendar_year": 2024,
+      "cutoff_date": "2024-08-25",
+      "observed_monthly_snapshots": 8,
+      "ytd_average_scoped_critical_tech_workforce": 5714,
+      "group_key": "immigration_parking",
+      "group_label": "Transfer > Transfer > Immigration Parking",
+      "short_label": "Immigration parking",
+      "cohort_n": 9,
+      "workforce_share_percent": 0.2,
+      "post_event_voluntary_attrition_percent": 0.0,
+      "publication_status": "internal_analysis_exception"
+    },
+    {
+      "calendar_year": 2024,
+      "cutoff_date": "2024-08-25",
+      "observed_monthly_snapshots": 8,
+      "ytd_average_scoped_critical_tech_workforce": 5714,
+      "group_key": "downlevel_ios",
+      "group_label": "Demotion > Transfer > Downlevel IOS",
+      "short_label": "Downlevel IOS",
+      "cohort_n": 1,
+      "workforce_share_percent": 0.0,
+      "post_event_voluntary_attrition_percent": 0.0,
+      "publication_status": "internal_analysis_exception"
+    },
+    {
+      "calendar_year": 2025,
+      "cutoff_date": "2025-08-24",
+      "observed_monthly_snapshots": 8,
+      "ytd_average_scoped_critical_tech_workforce": 5751,
+      "group_key": "total",
+      "group_label": "All eligible IOS movements",
+      "short_label": "All IOS movements",
+      "cohort_n": 568,
+      "workforce_share_percent": 9.9,
+      "post_event_voluntary_attrition_percent": 1.4,
+      "publication_status": "publish"
+    },
+    {
+      "calendar_year": 2025,
+      "cutoff_date": "2025-08-24",
+      "observed_monthly_snapshots": 8,
+      "ytd_average_scoped_critical_tech_workforce": 5751,
+      "group_key": "reorg_manager_change",
+      "group_label": "Transfer > Transfer > Reorg Department and/or Manager Change",
+      "short_label": "Reorg / manager change",
+      "cohort_n": 512,
+      "workforce_share_percent": 8.9,
+      "post_event_voluntary_attrition_percent": 1.2,
+      "publication_status": "publish"
+    },
+    {
+      "calendar_year": 2025,
+      "cutoff_date": "2025-08-24",
+      "observed_monthly_snapshots": 8,
+      "ytd_average_scoped_critical_tech_workforce": 5751,
+      "group_key": "lateral_ios",
+      "group_label": "Transfer > Transfer > Lateral IOS",
+      "short_label": "Lateral IOS",
+      "cohort_n": 42,
+      "workforce_share_percent": 0.7,
+      "post_event_voluntary_attrition_percent": 4.8,
+      "publication_status": "publish"
+    },
+    {
+      "calendar_year": 2025,
+      "cutoff_date": "2025-08-24",
+      "observed_monthly_snapshots": 8,
+      "ytd_average_scoped_critical_tech_workforce": 5751,
+      "group_key": "country_move",
+      "group_label": "Transfer > Transfer > Country-to-Country Location Change",
+      "short_label": "Country-to-country move",
+      "cohort_n": 18,
+      "workforce_share_percent": 0.3,
+      "post_event_voluntary_attrition_percent": 0.0,
+      "publication_status": "internal_analysis_exception"
+    },
+    {
+      "calendar_year": 2025,
+      "cutoff_date": "2025-08-24",
+      "observed_monthly_snapshots": 8,
+      "ytd_average_scoped_critical_tech_workforce": 5751,
+      "group_key": "promo_ios",
+      "group_label": "Promotion > Transfer > Promo IOS",
+      "short_label": "Promo IOS",
+      "cohort_n": 4,
+      "workforce_share_percent": 0.1,
+      "post_event_voluntary_attrition_percent": 0.0,
+      "publication_status": "internal_analysis_exception"
+    },
+    {
+      "calendar_year": 2025,
+      "cutoff_date": "2025-08-24",
+      "observed_monthly_snapshots": 8,
+      "ytd_average_scoped_critical_tech_workforce": 5751,
+      "group_key": "immigration_parking",
+      "group_label": "Transfer > Transfer > Immigration Parking",
+      "short_label": "Immigration parking",
+      "cohort_n": 6,
+      "workforce_share_percent": 0.1,
+      "post_event_voluntary_attrition_percent": 0.0,
+      "publication_status": "internal_analysis_exception"
+    },
+    {
+      "calendar_year": 2025,
+      "cutoff_date": "2025-08-24",
+      "observed_monthly_snapshots": 8,
+      "ytd_average_scoped_critical_tech_workforce": 5751,
+      "group_key": "downlevel_ios",
+      "group_label": "Demotion > Transfer > Downlevel IOS",
+      "short_label": "Downlevel IOS",
+      "cohort_n": 0,
+      "workforce_share_percent": 0.0,
+      "post_event_voluntary_attrition_percent": null,
+      "publication_status": "internal_analysis_exception"
+    },
+    {
+      "calendar_year": 2026,
+      "cutoff_date": "2026-08-23",
+      "observed_monthly_snapshots": 8,
+      "ytd_average_scoped_critical_tech_workforce": 5982,
+      "group_key": "total",
+      "group_label": "All eligible IOS movements",
+      "short_label": "All IOS movements",
+      "cohort_n": 681,
+      "workforce_share_percent": 11.4,
+      "post_event_voluntary_attrition_percent": 3.7,
+      "publication_status": "publish"
+    },
+    {
+      "calendar_year": 2026,
+      "cutoff_date": "2026-08-23",
+      "observed_monthly_snapshots": 8,
+      "ytd_average_scoped_critical_tech_workforce": 5982,
+      "group_key": "reorg_manager_change",
+      "group_label": "Transfer > Transfer > Reorg Department and/or Manager Change",
+      "short_label": "Reorg / manager change",
+      "cohort_n": 587,
+      "workforce_share_percent": 9.8,
+      "post_event_voluntary_attrition_percent": 4.3,
+      "publication_status": "publish"
+    },
+    {
+      "calendar_year": 2026,
+      "cutoff_date": "2026-08-23",
+      "observed_monthly_snapshots": 8,
+      "ytd_average_scoped_critical_tech_workforce": 5982,
+      "group_key": "lateral_ios",
+      "group_label": "Transfer > Transfer > Lateral IOS",
+      "short_label": "Lateral IOS",
+      "cohort_n": 82,
+      "workforce_share_percent": 1.4,
+      "post_event_voluntary_attrition_percent": 0.0,
+      "publication_status": "publish"
+    },
+    {
+      "calendar_year": 2026,
+      "cutoff_date": "2026-08-23",
+      "observed_monthly_snapshots": 8,
+      "ytd_average_scoped_critical_tech_workforce": 5982,
+      "group_key": "country_move",
+      "group_label": "Transfer > Transfer > Country-to-Country Location Change",
+      "short_label": "Country-to-country move",
+      "cohort_n": 28,
+      "workforce_share_percent": 0.5,
+      "post_event_voluntary_attrition_percent": 0.0,
+      "publication_status": "internal_analysis_exception"
+    },
+    {
+      "calendar_year": 2026,
+      "cutoff_date": "2026-08-23",
+      "observed_monthly_snapshots": 8,
+      "ytd_average_scoped_critical_tech_workforce": 5982,
+      "group_key": "promo_ios",
+      "group_label": "Promotion > Transfer > Promo IOS",
+      "short_label": "Promo IOS",
+      "cohort_n": 2,
+      "workforce_share_percent": 0.0,
+      "post_event_voluntary_attrition_percent": 0.0,
+      "publication_status": "internal_analysis_exception"
+    },
+    {
+      "calendar_year": 2026,
+      "cutoff_date": "2026-08-23",
+      "observed_monthly_snapshots": 8,
+      "ytd_average_scoped_critical_tech_workforce": 5982,
+      "group_key": "immigration_parking",
+      "group_label": "Transfer > Transfer > Immigration Parking",
+      "short_label": "Immigration parking",
+      "cohort_n": 17,
+      "workforce_share_percent": 0.3,
+      "post_event_voluntary_attrition_percent": 0.0,
+      "publication_status": "internal_analysis_exception"
+    },
+    {
+      "calendar_year": 2026,
+      "cutoff_date": "2026-08-23",
+      "observed_monthly_snapshots": 8,
+      "ytd_average_scoped_critical_tech_workforce": 5982,
+      "group_key": "downlevel_ios",
+      "group_label": "Demotion > Transfer > Downlevel IOS",
+      "short_label": "Downlevel IOS",
+      "cohort_n": 1,
+      "workforce_share_percent": 0.0,
+      "post_event_voluntary_attrition_percent": 0.0,
+      "publication_status": "internal_analysis_exception"
+    }
+  ],
+  "validation": {
+    "expected_years": [
+      2024,
+      2025,
+      2026
+    ],
+    "expected_groups": [
+      "All eligible IOS movements",
+      "Transfer > Transfer > Reorg Department and/or Manager Change",
+      "Transfer > Transfer > Lateral IOS",
+      "Transfer > Transfer > Country-to-Country Location Change",
+      "Promotion > Transfer > Promo IOS",
+      "Transfer > Transfer > Immigration Parking",
+      "Demotion > Transfer > Downlevel IOS"
+    ],
+    "rows": 21,
+    "all_available_aggregate_counts_retained": true,
+    "outcome": "pass"
+  }
+}

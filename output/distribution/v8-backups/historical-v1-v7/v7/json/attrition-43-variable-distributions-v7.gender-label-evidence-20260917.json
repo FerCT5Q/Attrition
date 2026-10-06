@@ -1,0 +1,52 @@
+{
+  "artifact_classification": "internal_analysis",
+  "reporting_mode": "internal_analysis",
+  "generated_on": "2026-09-17",
+  "variable": "gender",
+  "semantic_type": "direct_field",
+  "claim": "The V7 internal-analysis deck may show the stored gender labels in aggregate buckets that meet the minimum cohort rule.",
+  "population": "Active regular, non-RF360 employees across the six monthly snapshots ending 2026-08-23.",
+  "grain": "Stored gender label across de-duplicated employee-snapshot exposure.",
+  "query": {
+    "path": "queries/audits/gender_internal_label_domain_20260917.sql",
+    "sha256": "ac2f8da50fff952b1d553c1136565a3248d7e1ddfc6018f9dcf724a5adf8f090",
+    "executed_on": "2026-09-17",
+    "result_sha256": "e39c37c59bc0a9d5ad69cf0d3a16a0cdedcd5abd0d1187589405b2f739d950a7"
+  },
+  "acceptance_rule": "Every displayed stored label must be nonempty, have at least 30 distinct employees, and be observed in all six snapshots.",
+  "rows": [
+    {
+      "gender": "M",
+      "employee_count": 38251,
+      "employee_snapshot_count": 214636,
+      "snapshot_count": 6,
+      "first_snapshot_date": "2026-03-29",
+      "last_snapshot_date": "2026-08-23"
+    },
+    {
+      "gender": "F",
+      "employee_count": 10122,
+      "employee_snapshot_count": 56669,
+      "snapshot_count": 6,
+      "first_snapshot_date": "2026-03-29",
+      "last_snapshot_date": "2026-08-23"
+    },
+    {
+      "gender": "Unknown / other",
+      "employee_count": 1189,
+      "employee_snapshot_count": 2379,
+      "snapshot_count": 6,
+      "first_snapshot_date": "2026-03-29",
+      "last_snapshot_date": "2026-08-23"
+    }
+  ],
+  "display_mapping": {
+    "Category A": "F",
+    "Category B": "M"
+  },
+  "outcome": "pass",
+  "limitations": [
+    "The existing Gender slide retains its frozen distribution and attrition values; this evidence validates the stored-label disclosure only.",
+    "No employee rows, identifiers, names, or individual values are included."
+  ]
+}

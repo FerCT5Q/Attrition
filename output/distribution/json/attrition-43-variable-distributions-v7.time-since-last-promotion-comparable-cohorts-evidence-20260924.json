@@ -1,0 +1,186 @@
+{
+  "artifact_type": "aggregate_distribution_attrition_evidence",
+  "version": 1,
+  "artifact_classification": "internal_analysis",
+  "deliverable_mode": "internal_analysis",
+  "generated_on": "2026-09-24",
+  "purpose": "Rediseñar el slide 26 con dos distribuciones temporales independientes y comparables; no afirma que una ausencia de evento sea una ausencia histórica de promoción.",
+  "outcome_contract": {
+    "baseline_snapshot_date": "2025-08-24",
+    "outcome_window": "(2025-08-24, 2026-08-23]",
+    "target": "term_type='VOLUNTARY' con term_date dentro de la ventana fija.",
+    "population": "worker_type='Employee'; employee_type='Regular'; active_status=1; COALESCE(is_rf360_yes_no, 0)=0 al baseline.",
+    "grain": "Empleado distinto clasificado al snapshot baseline."
+  },
+  "definitions": {
+    "recorded_promotion": "Última promotion_date válida registrada desde max_hire_rehire_date, conocida al baseline.",
+    "no_recorded_promotion_proxy": "Sin promoción válida registrada desde el inicio del episodio, episodio iniciado dentro de historia observable y ROUND(time_in_role, 1) igual a la antigüedad calendario desde max_hire_rehire_date redondeada a una decimal.",
+    "limitation": "El proxy no demuestra un historial laboral completo ni debe leerse como 'never promoted'."
+  },
+  "authorization": {
+    "path": "config/attrition_v7_internal_analysis_authorization_20260917.json",
+    "sha256": "6dd40fbb3a9eded9704c64d735e906697575351fa44c5ddfc423d2dca14536be",
+    "authorization_id": "attrition-v7-internal-aggregate-visibility-20260917",
+    "authorized_audience": "requester and Julia, both project developers",
+    "small_cell_exception_applied": true,
+    "interpretation": "The exception allows aggregate visibility only. A row below n=30 remains descriptive and is not a stable attrition-rate estimate."
+  },
+  "recorded_promotion_distribution": [
+    {
+      "label": "0–<1 year",
+      "employee_count": 4736,
+      "distribution_percent": 24.80490232,
+      "voluntary_exits": 307,
+      "annual_attrition_rate_percent": 6.4823,
+      "publication_status": "publishable"
+    },
+    {
+      "label": "1–<2 years",
+      "employee_count": 4274,
+      "distribution_percent": 22.38516734,
+      "voluntary_exits": 248,
+      "annual_attrition_rate_percent": 5.8025,
+      "publication_status": "publishable"
+    },
+    {
+      "label": "2–<3 years",
+      "employee_count": 4466,
+      "distribution_percent": 23.39077149,
+      "voluntary_exits": 242,
+      "annual_attrition_rate_percent": 5.4187,
+      "publication_status": "publishable"
+    },
+    {
+      "label": "3–<5 years",
+      "employee_count": 5610,
+      "distribution_percent": 29.3824962,
+      "voluntary_exits": 216,
+      "annual_attrition_rate_percent": 3.8503,
+      "publication_status": "publishable"
+    },
+    {
+      "label": "5+ years",
+      "employee_count": 7,
+      "distribution_percent": 0.03666265,
+      "voluntary_exits": 0,
+      "annual_attrition_rate_percent": 0.0,
+      "publication_status": "internal_exploratory_small_cohort",
+      "display_note": "Authorized internal aggregate review only; descriptive result with n<30, not a stable attrition-rate estimate."
+    }
+  ],
+  "no_recorded_promotion_role_tenure_proxy_distribution": [
+    {
+      "label": "0–<1 year",
+      "employee_count": 5512,
+      "distribution_percent": 34.8596003,
+      "voluntary_exits": 305,
+      "annual_attrition_rate_percent": 5.5334,
+      "publication_status": "publishable"
+    },
+    {
+      "label": "1–<2 years",
+      "employee_count": 3281,
+      "distribution_percent": 20.75006324,
+      "voluntary_exits": 249,
+      "annual_attrition_rate_percent": 7.5891,
+      "publication_status": "publishable"
+    },
+    {
+      "label": "2–<3 years",
+      "employee_count": 2814,
+      "distribution_percent": 17.79661017,
+      "voluntary_exits": 221,
+      "annual_attrition_rate_percent": 7.8536,
+      "publication_status": "publishable"
+    },
+    {
+      "label": "3–<5 years",
+      "employee_count": 3415,
+      "distribution_percent": 21.59752087,
+      "voluntary_exits": 277,
+      "annual_attrition_rate_percent": 8.1113,
+      "publication_status": "publishable"
+    },
+    {
+      "label": "5+ years",
+      "employee_count": 790,
+      "distribution_percent": 4.99620541,
+      "voluntary_exits": 39,
+      "annual_attrition_rate_percent": 4.9367,
+      "publication_status": "publishable"
+    }
+  ],
+  "cohort_totals": {
+    "baseline_population": 41757,
+    "recorded_promotion": 19093,
+    "no_recorded_promotion_role_tenure_proxy": 15812,
+    "declared_exclusions": 6852
+  },
+  "declared_exclusions": [
+    {
+      "category": "excluded_history_before_observable",
+      "employee_count": 4681
+    },
+    {
+      "category": "excluded_role_tenure_not_aligned",
+      "employee_count": 2171
+    }
+  ],
+  "validation": {
+    "minimum_shared_cohort": 30,
+    "all_bands_meet_shared_minimum": false,
+    "internal_exploratory_small_cohort_rows": [
+      {
+        "cohort": "recorded_promotion",
+        "label": "5+ years",
+        "employee_count": 7
+      }
+    ],
+    "baseline_reconciliation": "pass",
+    "outcome_reconciliation": "pass",
+    "snapshot_uniqueness": "pass",
+    "valid_dates_and_nonnegative_time_in_role": "pass",
+    "valid_promotion_events_and_no_future_leakage": "pass",
+    "rf360_exclusion_applied": "pass",
+    "metrics": {
+      "baseline_conflicting_employee_snapshot_count": 0,
+      "baseline_duplicate_employee_snapshot_count": 0,
+      "baseline_employee_count": 41757,
+      "future_promotion_date_count": 0,
+      "invalid_episode_start_count": 0,
+      "invalid_promo_flag_count": 0,
+      "negative_time_in_role_count": 0,
+      "promo_flag_without_date_count": 0,
+      "promotion_date_after_event_snapshot_count": 0,
+      "promotion_date_without_promo_flag_count": 0,
+      "rf360_included_count": 0,
+      "baseline_population_count": 41757,
+      "baseline_voluntary_exits_direct": 2377,
+      "baseline_voluntary_exits_from_classified": 2377,
+      "declared_exclusions_total": 6852,
+      "excluded_history_before_observable_count": 4681,
+      "excluded_invalid_episode_start_count": 0,
+      "excluded_invalid_time_in_role_count": 0,
+      "excluded_role_tenure_not_aligned_count": 2171,
+      "no_recorded_promotion_proxy_band_total": 15812,
+      "no_recorded_promotion_proxy_count": 15812,
+      "pre_episode_event_excluded_count": 195,
+      "recorded_promotion_band_total": 19093,
+      "recorded_promotion_count": 19093,
+      "rf360_excluded_count": 3246
+    }
+  },
+  "outcome": "pass",
+  "query_provenance": {
+    "metadata_query": {
+      "path": "queries/audits/v7_time_since_last_promotion_comparable_cohorts_metadata_20260923.sql",
+      "sql_sha256": "88f88ded24a2e2f7174888c803c1c91297c23db217a9cdb3c8afc378f453cb05",
+      "result_sha256": "c08dba896cea7b2747ed0b7dfe32d883c15abb6477d7528245143b40dffe16e3"
+    },
+    "cohort_audit": {
+      "path": "queries/audits/v7_time_since_last_promotion_comparable_cohorts_20260923.sql",
+      "sql_sha256": "ceaf9f5121d33a531e2d0c695dc1895b9c6c49e604b5cdf6308260211b7c667c",
+      "result_sha256": "5fb53d69d9b764c2503c7400970df019df622edf2ae168c9a12401db558d9c89"
+    }
+  }
+}

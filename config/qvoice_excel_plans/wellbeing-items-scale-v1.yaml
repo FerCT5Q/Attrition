@@ -1,0 +1,60 @@
+schema_version: 1
+plan_version: 1
+language: es
+created_before_execution: true
+plan_authorship: codex_explicit
+variable: Wellbeing items-scale
+concept: KPI ordinal Wellbeing calculado como el promedio 1-5 de Q8, Q9, Q10 y Q11 segun survey_structure.xlsx.
+intended_use: Comparar la senal ordinal historica de Wellbeing con attrition posterior.
+knowledge_date: Fecha de la wave QVoice; excluir informacion posterior.
+population: Respuestas QVoice con una fila por empleado-wave tras deduplicacion interna y al menos un componente 1-5 de Q8/Q9/Q10/Q11 valido.
+grain: Employee-wave response aggregate
+semantic_type: derived_feature
+validation_story:
+  - id: source_access
+    criterion: source
+    evidence_role: supporting
+    question: ¿Los encabezados ordinales resuelven Q8, Q9, Q10 y Q11 en cada workbook?
+    why: La disponibilidad 1-5 puede diferir de la binaria y debe conservarse por wave.
+    method: schema_access_check
+    sql_reference: queries/audits/qvoice_excel_source_inventory_20260826-2.sql
+    acceptance_rule: Deben registrarse los cuatro componentes esperados y cualquier faltante.
+    metric_map:
+      missing_items: {column: missing_items, aggregate: sum}
+    metric_checks:
+      - {metric: missing_items, operator: gte, threshold: 0, aggregate: sum}
+  - id: component_definition
+    criterion: definition
+    evidence_role: defining
+    question: ¿El promedio 1-5 de Wellbeing usa valores validos y separa parciales?
+    why: La completitud del conjunto ordinal es necesaria para interpretar el KPI.
+    method: independent_recalculation
+    sql_reference: queries/audits/qvoice_excel_definition_audit_20260826-2.sql
+    acceptance_rule: La regla exige que los valores invalidos sean cero y que las respuestas completas, parciales y sin componente se cuantifiquen.
+    metric_checks:
+      - {metric: eligible_count, operator: gt, threshold: 0, aggregate: sum}
+      - {metric: populated_count, operator: gt, threshold: 0, aggregate: sum}
+      - {metric: invalid_count, operator: eq, threshold: 0, aggregate: sum}
+      - {metric: partial_component_count, operator: gte, threshold: 0, aggregate: sum}
+  - id: longitudinal_consistency
+    criterion: consistency
+    evidence_role: defining
+    question: ¿El dominio 1-5 y el conjunto ordinal Q8-Q11 son trazables longitudinalmente?
+    why: La historia corta o cambios de componentes pueden limitar la comparabilidad.
+    method: longitudinal_aggregate_audit
+    sql_reference: queries/audits/qvoice_excel_consistency_audit_20260826-2.sql
+    acceptance_rule: No debe haber invalidos y los cambios de item set deben quedar explicados.
+    metric_checks:
+      - {metric: invalid_count, operator: eq, threshold: 0, aggregate: sum}
+      - {metric: item_set_change_count, operator: gte, threshold: 0, aggregate: sum}
+  - id: employee_wave_grain
+    criterion: join
+    evidence_role: supporting
+    question: ¿La escala de Wellbeing conserva un grain unico de empleado-wave?
+    why: La unicidad interna evita sobreconteos antes de la reconciliacion temporal.
+    method: key_grain_and_temporal_reconciliation
+    sql_reference: queries/audits/qvoice_excel_join_grain_audit_20260826-2.sql
+    acceptance_rule: No debe haber duplicados; el join a workforce queda pendiente.
+    metric_checks:
+      - {metric: matched_count, operator: gt, threshold: 0, aggregate: sum}
+      - {metric: duplicate_count, operator: eq, threshold: 0, aggregate: sum}

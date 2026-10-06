@@ -1,0 +1,141 @@
+{
+  "artifact_type": "aggregate_segment_attrition_evidence",
+  "version": 8,
+  "artifact_classification": "internal_analysis",
+  "deliverable_mode": "internal_analysis",
+  "variable": "IOS movement reason in trailing 12 months",
+  "semantic_type": "derived_feature",
+  "execution_date": "2026-09-23",
+  "current_snapshot_date": "2026-08-23",
+  "baseline_snapshot_date": "2025-08-24",
+  "outcome_cutoff_date": "2026-08-23",
+  "population": "worker_type='Employee'; employee_type='Regular'; active_status=1",
+  "grain": "Distinct active Regular employee per snapshot and IOS reason; all-movements total is deduplicated by employee.",
+  "definition": {
+    "current_distribution": "At least one IOS record with a known business_process_reason in (2025-08-23, 2026-08-23] for the active Regular employee at the current snapshot.",
+    "annual_attrition": "The matching feature in (2024-08-24, 2025-08-24] for the active Regular baseline, followed for strict VOLUNTARY exits in (2025-08-24, 2026-08-23].",
+    "overlap": "Reason rows can overlap and must not be added. All eligible IOS movements is deduplicated by employee."
+  },
+  "metrics": {
+    "current_active_regular_employee_count": 50043,
+    "baseline_active_regular_employee_count": 45003,
+    "current_all_ios_movement_count": 9575,
+    "baseline_all_ios_movement_count": 9074,
+    "baseline_all_ios_voluntary_exit_count": 610,
+    "minimum_standard_cohort": 30
+  },
+  "rows": [
+    {
+      "display_order": 0,
+      "group_key": "total",
+      "group_label": "All eligible IOS movements",
+      "short_label": "All IOS movements",
+      "current_cohort_n": 9575,
+      "current_workforce_share_percent": 19.13,
+      "baseline_cohort_n": 9074,
+      "annual_voluntary_exit_n": 610,
+      "annual_voluntary_attrition_percent": 6.72,
+      "publication_status": "publish"
+    },
+    {
+      "display_order": 1,
+      "group_key": "reorg_manager_change",
+      "group_label": "Transfer > Transfer > Reorg Department and/or Manager Change",
+      "short_label": "Reorg / manager change",
+      "current_cohort_n": 8915,
+      "current_workforce_share_percent": 17.81,
+      "baseline_cohort_n": 8499,
+      "annual_voluntary_exit_n": 577,
+      "annual_voluntary_attrition_percent": 6.79,
+      "publication_status": "publish"
+    },
+    {
+      "display_order": 2,
+      "group_key": "lateral_ios",
+      "group_label": "Transfer > Transfer > Lateral IOS",
+      "short_label": "Lateral IOS",
+      "current_cohort_n": 773,
+      "current_workforce_share_percent": 1.54,
+      "baseline_cohort_n": 655,
+      "annual_voluntary_exit_n": 55,
+      "annual_voluntary_attrition_percent": 8.4,
+      "publication_status": "publish"
+    },
+    {
+      "display_order": 3,
+      "group_key": "country_move",
+      "group_label": "Transfer > Transfer > Country-to-Country Location Change",
+      "short_label": "Country-to-country move",
+      "current_cohort_n": 140,
+      "current_workforce_share_percent": 0.28,
+      "baseline_cohort_n": 160,
+      "annual_voluntary_exit_n": 3,
+      "annual_voluntary_attrition_percent": 1.88,
+      "publication_status": "publish"
+    },
+    {
+      "display_order": 4,
+      "group_key": "promo_ios",
+      "group_label": "Promotion > Transfer > Promo IOS",
+      "short_label": "Promo IOS",
+      "current_cohort_n": 87,
+      "current_workforce_share_percent": 0.17,
+      "baseline_cohort_n": 65,
+      "annual_voluntary_exit_n": 7,
+      "annual_voluntary_attrition_percent": 10.77,
+      "publication_status": "publish"
+    },
+    {
+      "display_order": 5,
+      "group_key": "immigration_parking",
+      "group_label": "Transfer > Transfer > Immigration Parking",
+      "short_label": "Immigration parking",
+      "current_cohort_n": 50,
+      "current_workforce_share_percent": 0.1,
+      "baseline_cohort_n": 37,
+      "annual_voluntary_exit_n": 2,
+      "annual_voluntary_attrition_percent": 5.41,
+      "publication_status": "publish"
+    },
+    {
+      "display_order": 6,
+      "group_key": "downlevel_ios",
+      "group_label": "Demotion > Transfer > Downlevel IOS",
+      "short_label": "Downlevel IOS",
+      "current_cohort_n": 8,
+      "current_workforce_share_percent": 0.02,
+      "baseline_cohort_n": 8,
+      "annual_voluntary_exit_n": 0,
+      "annual_voluntary_attrition_percent": 0.0,
+      "publication_status": "internal_analysis_exception"
+    }
+  ],
+  "validation": {
+    "outcome": "pass",
+    "acceptance_rule": "Seven unique aggregate rows reconcile to the two active-Regular snapshots; every annual exit count is within its baseline cohort and every published rate equals exits divided by that cohort.",
+    "reason_rows_overlap": true
+  },
+  "provenance": {
+    "metadata_sql": "queries/audits/v8_ios_movement_reason_trailing_12m_metadata_preflight_20260923.sql",
+    "metadata_sql_sha256": "ce740b07628952997edd5435c453a50a15c66b728ab7acf307d77420732c8dc7",
+    "main_sql": "queries/audits/v8_ios_movement_reason_trailing_12m_attrition_20260923.sql",
+    "main_sql_sha256": "3e69bb9fa01e1dcfc4948526e6b567865af0abcc1754e2784ca36d0bacdd1006",
+    "aggregate_result_sha256": "5aa6279ccd74df6a6af52dd0b7e9aea0432c8cd00f702743395b084129ab0feb",
+    "raw_aggregate_rows_persisted": false
+  },
+  "authorization": {
+    "path": "config/attrition_v8_internal_analysis_authorization_20260923.json",
+    "sha256": "41de775cf7152ce6588c5ba7348b8c2006a29bdfa4aa63bdd1c8cb02015b4249",
+    "authorization_id": "attrition-v8-internal-aggregate-visibility-20260923"
+  },
+  "privacy_checks": {
+    "employee_rows_persisted": false,
+    "employee_ids_persisted": false,
+    "names_persisted": false,
+    "exact_compensation_values_persisted": false,
+    "small_cell_exception_used": true
+  },
+  "score_v4_change": "none",
+  "limitation": "The source records IOS business-process reasons. It does not establish that an IOS movement caused attrition; the annual label follows the earlier baseline cohort and should not be read as a causal effect.",
+  "outcome": "pass"
+}

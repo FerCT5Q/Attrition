@@ -1,0 +1,70 @@
+schema_version: 1
+plan_version: 2
+plan_revision_reason: >-
+  La primera ejecución mostró que la aritmética de seis meses calendario puede
+  abarcar siete fechas fiscales irregulares y eliminar cierres recientes. La
+  ventana se precisa como seis cierres mensuales completos, delimitados por el
+  cierre inmediatamente anterior como frontera exclusiva.
+language: es
+created_before_execution: true
+variable: High turnover under this person
+concept: >-
+  Concentración de salidas voluntarias distintas de reportes directos bajo el
+  manager histórico correspondiente durante seis cierres mensuales completos.
+intended_use: >-
+  Asignar al empleado-snapshot una bandera descriptiva del contexto reciente
+  de su manager vigente, sin inferir causalidad ni evaluar al manager.
+knowledge_date: >-
+  En el snapshot t se usan sólo term_date posteriores al cierre que precede a
+  los seis cierres de ventana y menores o iguales a t.
+population: Empleados worker_type='Employee', employee_type='Regular' y active_status=1.
+grain: Manager-snapshot para el cálculo; empleado-snapshot para asignación.
+semantic_type: derived_feature
+source_reasoning: >-
+  El manager se define por al menos un reporte directo reconstruido mediante
+  manager_employee_id. La reconciliación actual mostró que
+  reg_non_intern_dir_reports > 0 identifica la población, pero su conteo no
+  coincide siempre con la membresía directa y no sustituye el join temporal.
+validation_story:
+  - id: six_closure_high_turnover_flag
+    criterion: definition
+    evidence_role: defining
+    question: >-
+      ¿La bandera de alta rotación reproduce, para cada manager-snapshot, dos
+      o más salidas Voluntary distintas en exactamente seis cierres mensuales?
+    why: >-
+      La irregularidad de las fechas fiscales exige controlar el número real de
+      cierres, no sólo restar seis meses de calendario.
+    fields: [employee_id, manager_employee_id, fis_mo_end_dt, term_date, term_type]
+    method: >-
+      Ordenar los cierres mensuales, usar los seis cierres terminados en t y el
+      cierre anterior como frontera exclusiva; atribuir las salidas al último
+      manager previo y formar los buckets 0, 1 y 2+.
+    sql_reference: queries/audits/high_turnover_under_manager_6m_distribution_20260909.sql
+    acceptance_rule: >-
+      Cada punto debe usar seis cierres; los buckets deben reconciliar al total
+      de manager-snapshots y empleado-snapshots; y ningún numerador mensual
+      puede exceder el denominador.
+    metric_checks:
+      - {metric: window_snapshot_count_min, aggregate: min, operator: eq, threshold: 6}
+      - {metric: window_snapshot_count_max, aggregate: max, operator: eq, threshold: 6}
+      - {metric: bucket_group_reconciliation_failures, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: bucket_employee_reconciliation_failures, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: monthly_numerator_over_denominator, aggregate: sum, operator: eq, threshold: 0}
+  - id: attribution_quality
+    criterion: join
+    evidence_role: defining
+    question: ¿Cada evento Voluntary entra una sola vez y puede atribuirse a un manager histórico?
+    why: >-
+      La pérdida o multiplicación de eventos cambia artificialmente la bandera
+      de los equipos y puede introducir leakage por cambios de manager.
+    fields: [employee_id, manager_employee_id, fis_mo_end_dt, term_date, term_type]
+    method: >-
+      Deduplicar por empleado-fecha, seleccionar el último manager no nulo no
+      posterior a term_date y cuantificar los eventos sin atribución.
+    sql_reference: queries/audits/high_turnover_under_manager_6m_distribution_20260909.sql
+    acceptance_rule: >-
+      Debe haber cero eventos duplicados después de deduplicación; los eventos
+      sin manager deben cuantificarse explícitamente y excluirse del numerador.
+    metric_checks:
+      - {metric: voluntary_event_duplicate_count, aggregate: sum, operator: eq, threshold: 0}

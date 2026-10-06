@@ -1,0 +1,62 @@
+schema_version: 1
+language: es
+unknown_policy: conservative
+problem_context:
+  problem_statement: >-
+    Evaluar una definición explícita de movilidad interna intensa para análisis
+    longitudinal de attrition sin usar información posterior al snapshot.
+  decision_or_use_case: >-
+    Comprobar si un flag de cuatro o más solicitudes internas únicas en seis
+    meses puede distribuirse de forma agregada y pasar a evaluación para el
+    modelo de attrition.
+  outcome: Attrition voluntario posterior al snapshot mensual.
+  population: Empleados regulares activos en cada snapshot mensual.
+  unit_of_analysis: Empleado-snapshot mensual.
+  time_horizon: Ventana retrospectiva de seis meses calendario; outcome antes del siguiente snapshot mensual.
+  knowledge_boundary: >-
+    Cierre del snapshot mensual. Sólo application_date menor o igual a ese
+    cierre puede contribuir a la feature.
+  constraints:
+    - Sólo consultas de Redshift read-only y resultados agregados.
+    - No exponer identidad, requisiciones, comportamiento individual ni texto libre.
+    - Publicar sólo cohortes de al menos 30.
+    - No tratar ausencia de evento como cero sin evidencia de cobertura del feed.
+  portfolio_hypotheses:
+    - >-
+      Un conteo de cuatro o más requisiciones únicas en seis meses puede
+      distinguir actividad intensa de una solicitud aislada.
+known_relationships:
+  - variables: [Applied to a job, More than 3 job applications]
+    relationship: >-
+      Ambas usan hrda.applications; la segunda agrega solicitudes únicas en
+      una ventana móvil de seis meses.
+    why_relevant: >-
+      La continuidad, deduplicación y semántica de cand_applied afectan ambas
+      variables y deben validarse a nivel de evento.
+variables:
+  - name: More than 3 job applications
+    intended_use: >-
+      Evaluar movilidad interna intensa como señal histórica para attrition,
+      sin usarla para decisiones individuales.
+    population: Empleados regulares activos en cada snapshot mensual.
+    knowledge_date: Cierre de cada snapshot mensual.
+    context_role: Applications / internal mobility
+    context_relevance: >-
+      Una acumulación de solicitudes internas puede señalar búsqueda activa de
+      movilidad, sujeto a validación de fuente y privacidad.
+decisions:
+  semantic:count_window_time_since:
+    status: decided
+    decision: >-
+      Para esta evaluación, usar seis meses calendario con ventana
+      (snapshot_date - 6 meses, snapshot_date], contar req_id único por
+      employee_id y emitir Flag=1 a partir de cuatro requisiciones.
+    source: Confirmado por el usuario el 2026-09-07.
+  semantic:flag_event:
+    status: conservative
+    decision: >-
+      Separar presencia del flag y observabilidad: publicar el positivo sólo
+      cuando el conteo cumple la regla; no clasificar a una persona sin eventos
+      vinculados como cero confirmado hasta validar la cobertura completa del
+      feed.
+    source: Política conservadora aplicada al requerimiento del usuario el 2026-09-07.

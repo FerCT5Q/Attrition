@@ -1,0 +1,1303 @@
+{
+  "schema_version": 3,
+  "reporting_mode": "presentation",
+  "generated_on": "2026-09-08",
+  "query_path": "queries/audits/more_than_1_employee_leaves_team_6m_20260908.sql",
+  "cutoff_date": "2026-08-23",
+  "window_months": 6,
+  "window_rule": "(snapshot - 6 months, snapshot]",
+  "evaluation_snapshot_count": 40,
+  "monthly_snapshots_per_window": 6,
+  "included_term_type": "Voluntary",
+  "definition": {
+    "team": "Empleados regulares activos en el snapshot t cuyo manager_employee_id no es nulo.",
+    "scopes": "all_teams incluye equipos con al menos 1 reporte; teams_gt_5 incluye equipos con al menos 6 reportes.",
+    "numerator": "Empleados distintos cuyo equipo tiene al menos 2 salidas Voluntary distintas dentro de (t - 6 meses, t].",
+    "denominator": "Empleados distintos con equipo directo observable en el snapshot t.",
+    "flag": "1 cuando el equipo tiene al menos 2 salidas voluntarias distintas en la ventana.",
+    "grain": "scope × attribution × monthly employee snapshot"
+  },
+  "attribution": {
+    "primary": "manager_at_evaluation",
+    "primary_rule": "Manager disponible en el snapshot de evaluación; la salida se asigna al último manager observado hasta t.",
+    "historical": "manager_at_exit",
+    "historical_rule": "Último manager no nulo observado para la persona que sale en un snapshot igual o anterior a term_date.",
+    "voluntary_events": 16823,
+    "events_with_manager_at_exit": 14975,
+    "unmatched_voluntary_events": 1848
+  },
+  "audit_metrics": {
+    "all_team_denominator_groups": 359088,
+    "evaluation_snapshots": 40,
+    "large_team_denominator_groups": 102055,
+    "membership_duplicate_rows": 0,
+    "monthly_series_numerator_over_denominator": 0,
+    "monthly_series_points": 160,
+    "voluntary_events": 16823,
+    "voluntary_events_unmatched_at_exit": 1848,
+    "voluntary_events_with_manager_at_exit": 14975,
+    "window_snapshot_count_max": 6,
+    "window_snapshot_count_min": 6
+  },
+  "scopes": [
+    {
+      "key": "all_teams",
+      "label": "Todos los equipos con al menos 1 reporte directo",
+      "total_team_snapshot_groups": 359088,
+      "total_employee_snapshots": 1669554,
+      "buckets": {
+        "manager_at_exit": [
+          {
+            "bucket": "0",
+            "team_snapshot_groups": 319542,
+            "employee_snapshots": 1414472,
+            "group_share_percent": 88.9871,
+            "employee_snapshot_share_percent": 84.7215
+          },
+          {
+            "bucket": "1",
+            "team_snapshot_groups": 34327,
+            "employee_snapshots": 195982,
+            "group_share_percent": 9.5595,
+            "employee_snapshot_share_percent": 11.7386
+          },
+          {
+            "bucket": "2+",
+            "team_snapshot_groups": 5219,
+            "employee_snapshots": 59100,
+            "group_share_percent": 1.4534,
+            "employee_snapshot_share_percent": 3.5399
+          }
+        ],
+        "manager_at_evaluation": [
+          {
+            "bucket": "0",
+            "team_snapshot_groups": 319538,
+            "employee_snapshots": 1414461,
+            "group_share_percent": 88.986,
+            "employee_snapshot_share_percent": 84.7209
+          },
+          {
+            "bucket": "1",
+            "team_snapshot_groups": 34320,
+            "employee_snapshots": 195874,
+            "group_share_percent": 9.5575,
+            "employee_snapshot_share_percent": 11.7321
+          },
+          {
+            "bucket": "2+",
+            "team_snapshot_groups": 5230,
+            "employee_snapshots": 59219,
+            "group_share_percent": 1.4565,
+            "employee_snapshot_share_percent": 3.547
+          }
+        ]
+      },
+      "monthly_series": {
+        "manager_at_exit": [
+          {
+            "snapshot_date": "2020-12-27",
+            "flagged_employees": 148,
+            "observable_employees": 31310,
+            "employee_percent": 0.472692,
+            "affected_teams": 21
+          },
+          {
+            "snapshot_date": "2021-03-28",
+            "flagged_employees": 365,
+            "observable_employees": 31920,
+            "employee_percent": 1.143484,
+            "affected_teams": 51
+          },
+          {
+            "snapshot_date": "2021-04-25",
+            "flagged_employees": 443,
+            "observable_employees": 32055,
+            "employee_percent": 1.382,
+            "affected_teams": 66
+          },
+          {
+            "snapshot_date": "2021-05-23",
+            "flagged_employees": 532,
+            "observable_employees": 32264,
+            "employee_percent": 1.648897,
+            "affected_teams": 81
+          },
+          {
+            "snapshot_date": "2021-06-27",
+            "flagged_employees": 612,
+            "observable_employees": 36585,
+            "employee_percent": 1.672817,
+            "affected_teams": 91
+          },
+          {
+            "snapshot_date": "2021-07-25",
+            "flagged_employees": 1036,
+            "observable_employees": 37054,
+            "employee_percent": 2.795919,
+            "affected_teams": 99
+          },
+          {
+            "snapshot_date": "2021-08-22",
+            "flagged_employees": 1268,
+            "observable_employees": 37300,
+            "employee_percent": 3.399464,
+            "affected_teams": 114
+          },
+          {
+            "snapshot_date": "2022-03-27",
+            "flagged_employees": 2146,
+            "observable_employees": 38551,
+            "employee_percent": 5.566652,
+            "affected_teams": 177
+          },
+          {
+            "snapshot_date": "2022-04-24",
+            "flagged_employees": 2384,
+            "observable_employees": 39624,
+            "employee_percent": 6.016556,
+            "affected_teams": 213
+          },
+          {
+            "snapshot_date": "2022-05-22",
+            "flagged_employees": 2700,
+            "observable_employees": 39983,
+            "employee_percent": 6.75287,
+            "affected_teams": 246
+          },
+          {
+            "snapshot_date": "2022-06-26",
+            "flagged_employees": 2605,
+            "observable_employees": 40467,
+            "employee_percent": 6.437344,
+            "affected_teams": 261
+          },
+          {
+            "snapshot_date": "2022-07-24",
+            "flagged_employees": 2929,
+            "observable_employees": 41346,
+            "employee_percent": 7.084119,
+            "affected_teams": 279
+          },
+          {
+            "snapshot_date": "2022-08-21",
+            "flagged_employees": 2844,
+            "observable_employees": 41732,
+            "employee_percent": 6.814914,
+            "affected_teams": 266
+          },
+          {
+            "snapshot_date": "2023-03-26",
+            "flagged_employees": 1501,
+            "observable_employees": 42727,
+            "employee_percent": 3.513001,
+            "affected_teams": 103
+          },
+          {
+            "snapshot_date": "2023-04-23",
+            "flagged_employees": 1547,
+            "observable_employees": 42731,
+            "employee_percent": 3.620322,
+            "affected_teams": 103
+          },
+          {
+            "snapshot_date": "2023-05-21",
+            "flagged_employees": 1453,
+            "observable_employees": 42828,
+            "employee_percent": 3.39264,
+            "affected_teams": 92
+          },
+          {
+            "snapshot_date": "2023-06-25",
+            "flagged_employees": 1480,
+            "observable_employees": 42565,
+            "employee_percent": 3.477035,
+            "affected_teams": 87
+          },
+          {
+            "snapshot_date": "2023-07-23",
+            "flagged_employees": 1522,
+            "observable_employees": 42749,
+            "employee_percent": 3.560317,
+            "affected_teams": 84
+          },
+          {
+            "snapshot_date": "2023-08-20",
+            "flagged_employees": 1142,
+            "observable_employees": 42665,
+            "employee_percent": 2.676667,
+            "affected_teams": 73
+          },
+          {
+            "snapshot_date": "2024-03-24",
+            "flagged_employees": 1309,
+            "observable_employees": 40454,
+            "employee_percent": 3.235774,
+            "affected_teams": 116
+          },
+          {
+            "snapshot_date": "2024-05-19",
+            "flagged_employees": 1477,
+            "observable_employees": 41073,
+            "employee_percent": 3.596036,
+            "affected_teams": 132
+          },
+          {
+            "snapshot_date": "2024-07-21",
+            "flagged_employees": 1448,
+            "observable_employees": 42032,
+            "employee_percent": 3.444994,
+            "affected_teams": 132
+          },
+          {
+            "snapshot_date": "2024-08-25",
+            "flagged_employees": 1507,
+            "observable_employees": 42166,
+            "employee_percent": 3.57397,
+            "affected_teams": 143
+          },
+          {
+            "snapshot_date": "2024-09-29",
+            "flagged_employees": 1463,
+            "observable_employees": 42190,
+            "employee_percent": 3.467646,
+            "affected_teams": 125
+          },
+          {
+            "snapshot_date": "2024-10-27",
+            "flagged_employees": 1512,
+            "observable_employees": 42413,
+            "employee_percent": 3.564945,
+            "affected_teams": 127
+          },
+          {
+            "snapshot_date": "2024-11-24",
+            "flagged_employees": 1402,
+            "observable_employees": 42305,
+            "employee_percent": 3.314029,
+            "affected_teams": 109
+          },
+          {
+            "snapshot_date": "2024-12-29",
+            "flagged_employees": 1350,
+            "observable_employees": 42341,
+            "employee_percent": 3.188399,
+            "affected_teams": 110
+          },
+          {
+            "snapshot_date": "2025-01-26",
+            "flagged_employees": 1203,
+            "observable_employees": 42484,
+            "employee_percent": 2.831654,
+            "affected_teams": 106
+          },
+          {
+            "snapshot_date": "2025-03-30",
+            "flagged_employees": 1170,
+            "observable_employees": 42735,
+            "employee_percent": 2.737803,
+            "affected_teams": 99
+          },
+          {
+            "snapshot_date": "2025-04-27",
+            "flagged_employees": 1254,
+            "observable_employees": 43012,
+            "employee_percent": 2.915465,
+            "affected_teams": 114
+          },
+          {
+            "snapshot_date": "2025-05-25",
+            "flagged_employees": 1503,
+            "observable_employees": 43298,
+            "employee_percent": 3.471292,
+            "affected_teams": 143
+          },
+          {
+            "snapshot_date": "2025-06-29",
+            "flagged_employees": 1477,
+            "observable_employees": 44033,
+            "employee_percent": 3.354302,
+            "affected_teams": 140
+          },
+          {
+            "snapshot_date": "2025-07-27",
+            "flagged_employees": 1471,
+            "observable_employees": 44817,
+            "employee_percent": 3.282237,
+            "affected_teams": 135
+          },
+          {
+            "snapshot_date": "2025-08-24",
+            "flagged_employees": 1347,
+            "observable_employees": 45002,
+            "employee_percent": 2.9932,
+            "affected_teams": 133
+          },
+          {
+            "snapshot_date": "2026-03-29",
+            "flagged_employees": 1228,
+            "observable_employees": 47849,
+            "employee_percent": 2.566407,
+            "affected_teams": 94
+          },
+          {
+            "snapshot_date": "2026-04-26",
+            "flagged_employees": 1320,
+            "observable_employees": 48043,
+            "employee_percent": 2.747539,
+            "affected_teams": 102
+          },
+          {
+            "snapshot_date": "2026-05-24",
+            "flagged_employees": 1591,
+            "observable_employees": 48333,
+            "employee_percent": 3.291747,
+            "affected_teams": 129
+          },
+          {
+            "snapshot_date": "2026-06-28",
+            "flagged_employees": 1859,
+            "observable_employees": 48825,
+            "employee_percent": 3.807476,
+            "affected_teams": 169
+          },
+          {
+            "snapshot_date": "2026-07-26",
+            "flagged_employees": 1742,
+            "observable_employees": 49651,
+            "employee_percent": 3.508489,
+            "affected_teams": 170
+          },
+          {
+            "snapshot_date": "2026-08-23",
+            "flagged_employees": 1810,
+            "observable_employees": 50042,
+            "employee_percent": 3.616962,
+            "affected_teams": 184
+          }
+        ],
+        "manager_at_evaluation": [
+          {
+            "snapshot_date": "2020-12-27",
+            "flagged_employees": 148,
+            "observable_employees": 31310,
+            "employee_percent": 0.472692,
+            "affected_teams": 21
+          },
+          {
+            "snapshot_date": "2021-03-28",
+            "flagged_employees": 378,
+            "observable_employees": 31920,
+            "employee_percent": 1.184211,
+            "affected_teams": 52
+          },
+          {
+            "snapshot_date": "2021-04-25",
+            "flagged_employees": 443,
+            "observable_employees": 32055,
+            "employee_percent": 1.382,
+            "affected_teams": 66
+          },
+          {
+            "snapshot_date": "2021-05-23",
+            "flagged_employees": 532,
+            "observable_employees": 32264,
+            "employee_percent": 1.648897,
+            "affected_teams": 81
+          },
+          {
+            "snapshot_date": "2021-06-27",
+            "flagged_employees": 612,
+            "observable_employees": 36585,
+            "employee_percent": 1.672817,
+            "affected_teams": 91
+          },
+          {
+            "snapshot_date": "2021-07-25",
+            "flagged_employees": 1036,
+            "observable_employees": 37054,
+            "employee_percent": 2.795919,
+            "affected_teams": 99
+          },
+          {
+            "snapshot_date": "2021-08-22",
+            "flagged_employees": 1268,
+            "observable_employees": 37300,
+            "employee_percent": 3.399464,
+            "affected_teams": 114
+          },
+          {
+            "snapshot_date": "2022-03-27",
+            "flagged_employees": 2154,
+            "observable_employees": 38551,
+            "employee_percent": 5.587404,
+            "affected_teams": 178
+          },
+          {
+            "snapshot_date": "2022-04-24",
+            "flagged_employees": 2388,
+            "observable_employees": 39624,
+            "employee_percent": 6.026651,
+            "affected_teams": 213
+          },
+          {
+            "snapshot_date": "2022-05-22",
+            "flagged_employees": 2690,
+            "observable_employees": 39983,
+            "employee_percent": 6.727859,
+            "affected_teams": 244
+          },
+          {
+            "snapshot_date": "2022-06-26",
+            "flagged_employees": 2601,
+            "observable_employees": 40467,
+            "employee_percent": 6.427459,
+            "affected_teams": 260
+          },
+          {
+            "snapshot_date": "2022-07-24",
+            "flagged_employees": 2928,
+            "observable_employees": 41346,
+            "employee_percent": 7.081701,
+            "affected_teams": 279
+          },
+          {
+            "snapshot_date": "2022-08-21",
+            "flagged_employees": 2843,
+            "observable_employees": 41732,
+            "employee_percent": 6.812518,
+            "affected_teams": 266
+          },
+          {
+            "snapshot_date": "2023-03-26",
+            "flagged_employees": 1501,
+            "observable_employees": 42727,
+            "employee_percent": 3.513001,
+            "affected_teams": 103
+          },
+          {
+            "snapshot_date": "2023-04-23",
+            "flagged_employees": 1547,
+            "observable_employees": 42731,
+            "employee_percent": 3.620322,
+            "affected_teams": 103
+          },
+          {
+            "snapshot_date": "2023-05-21",
+            "flagged_employees": 1453,
+            "observable_employees": 42828,
+            "employee_percent": 3.39264,
+            "affected_teams": 92
+          },
+          {
+            "snapshot_date": "2023-06-25",
+            "flagged_employees": 1480,
+            "observable_employees": 42565,
+            "employee_percent": 3.477035,
+            "affected_teams": 87
+          },
+          {
+            "snapshot_date": "2023-07-23",
+            "flagged_employees": 1522,
+            "observable_employees": 42749,
+            "employee_percent": 3.560317,
+            "affected_teams": 84
+          },
+          {
+            "snapshot_date": "2023-08-20",
+            "flagged_employees": 1146,
+            "observable_employees": 42665,
+            "employee_percent": 2.686042,
+            "affected_teams": 74
+          },
+          {
+            "snapshot_date": "2024-03-24",
+            "flagged_employees": 1317,
+            "observable_employees": 40454,
+            "employee_percent": 3.25555,
+            "affected_teams": 117
+          },
+          {
+            "snapshot_date": "2024-05-19",
+            "flagged_employees": 1477,
+            "observable_employees": 41073,
+            "employee_percent": 3.596036,
+            "affected_teams": 132
+          },
+          {
+            "snapshot_date": "2024-07-21",
+            "flagged_employees": 1448,
+            "observable_employees": 42032,
+            "employee_percent": 3.444994,
+            "affected_teams": 132
+          },
+          {
+            "snapshot_date": "2024-08-25",
+            "flagged_employees": 1507,
+            "observable_employees": 42166,
+            "employee_percent": 3.57397,
+            "affected_teams": 143
+          },
+          {
+            "snapshot_date": "2024-09-29",
+            "flagged_employees": 1463,
+            "observable_employees": 42190,
+            "employee_percent": 3.467646,
+            "affected_teams": 125
+          },
+          {
+            "snapshot_date": "2024-10-27",
+            "flagged_employees": 1512,
+            "observable_employees": 42413,
+            "employee_percent": 3.564945,
+            "affected_teams": 127
+          },
+          {
+            "snapshot_date": "2024-11-24",
+            "flagged_employees": 1402,
+            "observable_employees": 42305,
+            "employee_percent": 3.314029,
+            "affected_teams": 109
+          },
+          {
+            "snapshot_date": "2024-12-29",
+            "flagged_employees": 1350,
+            "observable_employees": 42341,
+            "employee_percent": 3.188399,
+            "affected_teams": 110
+          },
+          {
+            "snapshot_date": "2025-01-26",
+            "flagged_employees": 1203,
+            "observable_employees": 42484,
+            "employee_percent": 2.831654,
+            "affected_teams": 106
+          },
+          {
+            "snapshot_date": "2025-03-30",
+            "flagged_employees": 1177,
+            "observable_employees": 42735,
+            "employee_percent": 2.754183,
+            "affected_teams": 100
+          },
+          {
+            "snapshot_date": "2025-04-27",
+            "flagged_employees": 1261,
+            "observable_employees": 43012,
+            "employee_percent": 2.93174,
+            "affected_teams": 115
+          },
+          {
+            "snapshot_date": "2025-05-25",
+            "flagged_employees": 1510,
+            "observable_employees": 43298,
+            "employee_percent": 3.487459,
+            "affected_teams": 144
+          },
+          {
+            "snapshot_date": "2025-06-29",
+            "flagged_employees": 1481,
+            "observable_employees": 44033,
+            "employee_percent": 3.363387,
+            "affected_teams": 141
+          },
+          {
+            "snapshot_date": "2025-07-27",
+            "flagged_employees": 1471,
+            "observable_employees": 44817,
+            "employee_percent": 3.282237,
+            "affected_teams": 135
+          },
+          {
+            "snapshot_date": "2025-08-24",
+            "flagged_employees": 1347,
+            "observable_employees": 45002,
+            "employee_percent": 2.9932,
+            "affected_teams": 133
+          },
+          {
+            "snapshot_date": "2026-03-29",
+            "flagged_employees": 1249,
+            "observable_employees": 47849,
+            "employee_percent": 2.610295,
+            "affected_teams": 95
+          },
+          {
+            "snapshot_date": "2026-04-26",
+            "flagged_employees": 1341,
+            "observable_employees": 48043,
+            "employee_percent": 2.79125,
+            "affected_teams": 103
+          },
+          {
+            "snapshot_date": "2026-05-24",
+            "flagged_employees": 1591,
+            "observable_employees": 48333,
+            "employee_percent": 3.291747,
+            "affected_teams": 129
+          },
+          {
+            "snapshot_date": "2026-06-28",
+            "flagged_employees": 1878,
+            "observable_employees": 48825,
+            "employee_percent": 3.84639,
+            "affected_teams": 171
+          },
+          {
+            "snapshot_date": "2026-07-26",
+            "flagged_employees": 1748,
+            "observable_employees": 49651,
+            "employee_percent": 3.520574,
+            "affected_teams": 171
+          },
+          {
+            "snapshot_date": "2026-08-23",
+            "flagged_employees": 1816,
+            "observable_employees": 50042,
+            "employee_percent": 3.628952,
+            "affected_teams": 185
+          }
+        ]
+      },
+      "scenario_comparison": {
+        "groups_changed": 129,
+        "flags_changed": 25,
+        "employee_snapshots_flagged_exit": 59100,
+        "employee_snapshots_flagged_evaluation": 59219
+      }
+    },
+    {
+      "key": "teams_gt_5",
+      "label": "Equipos con más de 5 reportes directos",
+      "total_team_snapshot_groups": 102055,
+      "total_employee_snapshots": 857897,
+      "buckets": {
+        "manager_at_exit": [
+          {
+            "bucket": "0",
+            "team_snapshot_groups": 85112,
+            "employee_snapshots": 682471,
+            "group_share_percent": 83.3982,
+            "employee_snapshot_share_percent": 79.5516
+          },
+          {
+            "bucket": "1",
+            "team_snapshot_groups": 13848,
+            "employee_snapshots": 123917,
+            "group_share_percent": 13.5692,
+            "employee_snapshot_share_percent": 14.4443
+          },
+          {
+            "bucket": "2+",
+            "team_snapshot_groups": 3095,
+            "employee_snapshots": 51509,
+            "group_share_percent": 3.0327,
+            "employee_snapshot_share_percent": 6.0041
+          }
+        ],
+        "manager_at_evaluation": [
+          {
+            "bucket": "0",
+            "team_snapshot_groups": 85118,
+            "employee_snapshots": 682485,
+            "group_share_percent": 83.404,
+            "employee_snapshot_share_percent": 79.5533
+          },
+          {
+            "bucket": "1",
+            "team_snapshot_groups": 13831,
+            "employee_snapshots": 123782,
+            "group_share_percent": 13.5525,
+            "employee_snapshot_share_percent": 14.4285
+          },
+          {
+            "bucket": "2+",
+            "team_snapshot_groups": 3106,
+            "employee_snapshots": 51630,
+            "group_share_percent": 3.0435,
+            "employee_snapshot_share_percent": 6.0182
+          }
+        ]
+      },
+      "monthly_series": {
+        "manager_at_exit": [
+          {
+            "snapshot_date": "2020-12-27",
+            "flagged_employees": 110,
+            "observable_employees": 15514,
+            "employee_percent": 0.709037,
+            "affected_teams": 11
+          },
+          {
+            "snapshot_date": "2021-03-28",
+            "flagged_employees": 283,
+            "observable_employees": 15280,
+            "employee_percent": 1.852094,
+            "affected_teams": 29
+          },
+          {
+            "snapshot_date": "2021-04-25",
+            "flagged_employees": 329,
+            "observable_employees": 15243,
+            "employee_percent": 2.158368,
+            "affected_teams": 36
+          },
+          {
+            "snapshot_date": "2021-05-23",
+            "flagged_employees": 408,
+            "observable_employees": 15460,
+            "employee_percent": 2.639069,
+            "affected_teams": 46
+          },
+          {
+            "snapshot_date": "2021-06-27",
+            "flagged_employees": 454,
+            "observable_employees": 19490,
+            "employee_percent": 2.3294,
+            "affected_teams": 49
+          },
+          {
+            "snapshot_date": "2021-07-25",
+            "flagged_employees": 886,
+            "observable_employees": 19649,
+            "employee_percent": 4.509135,
+            "affected_teams": 58
+          },
+          {
+            "snapshot_date": "2021-08-22",
+            "flagged_employees": 1089,
+            "observable_employees": 19859,
+            "employee_percent": 5.48366,
+            "affected_teams": 64
+          },
+          {
+            "snapshot_date": "2022-03-27",
+            "flagged_employees": 1881,
+            "observable_employees": 20370,
+            "employee_percent": 9.234168,
+            "affected_teams": 103
+          },
+          {
+            "snapshot_date": "2022-04-24",
+            "flagged_employees": 2033,
+            "observable_employees": 21134,
+            "employee_percent": 9.61957,
+            "affected_teams": 117
+          },
+          {
+            "snapshot_date": "2022-05-22",
+            "flagged_employees": 2279,
+            "observable_employees": 21566,
+            "employee_percent": 10.56756,
+            "affected_teams": 132
+          },
+          {
+            "snapshot_date": "2022-06-26",
+            "flagged_employees": 2193,
+            "observable_employees": 21834,
+            "employee_percent": 10.043968,
+            "affected_teams": 148
+          },
+          {
+            "snapshot_date": "2022-07-24",
+            "flagged_employees": 2490,
+            "observable_employees": 22354,
+            "employee_percent": 11.138946,
+            "affected_teams": 165
+          },
+          {
+            "snapshot_date": "2022-08-21",
+            "flagged_employees": 2460,
+            "observable_employees": 22612,
+            "employee_percent": 10.879179,
+            "affected_teams": 163
+          },
+          {
+            "snapshot_date": "2023-03-26",
+            "flagged_employees": 1354,
+            "observable_employees": 22066,
+            "employee_percent": 6.136137,
+            "affected_teams": 59
+          },
+          {
+            "snapshot_date": "2023-04-23",
+            "flagged_employees": 1399,
+            "observable_employees": 21993,
+            "employee_percent": 6.361115,
+            "affected_teams": 58
+          },
+          {
+            "snapshot_date": "2023-05-21",
+            "flagged_employees": 1309,
+            "observable_employees": 22155,
+            "employee_percent": 5.908373,
+            "affected_teams": 48
+          },
+          {
+            "snapshot_date": "2023-06-25",
+            "flagged_employees": 1356,
+            "observable_employees": 22104,
+            "employee_percent": 6.134636,
+            "affected_teams": 51
+          },
+          {
+            "snapshot_date": "2023-07-23",
+            "flagged_employees": 1417,
+            "observable_employees": 22332,
+            "employee_percent": 6.345155,
+            "affected_teams": 55
+          },
+          {
+            "snapshot_date": "2023-08-20",
+            "flagged_employees": 1024,
+            "observable_employees": 22222,
+            "employee_percent": 4.608046,
+            "affected_teams": 42
+          },
+          {
+            "snapshot_date": "2024-03-24",
+            "flagged_employees": 1122,
+            "observable_employees": 19751,
+            "employee_percent": 5.680725,
+            "affected_teams": 62
+          },
+          {
+            "snapshot_date": "2024-05-19",
+            "flagged_employees": 1302,
+            "observable_employees": 20118,
+            "employee_percent": 6.471816,
+            "affected_teams": 82
+          },
+          {
+            "snapshot_date": "2024-07-21",
+            "flagged_employees": 1262,
+            "observable_employees": 20991,
+            "employee_percent": 6.0121,
+            "affected_teams": 81
+          },
+          {
+            "snapshot_date": "2024-08-25",
+            "flagged_employees": 1312,
+            "observable_employees": 20964,
+            "employee_percent": 6.258348,
+            "affected_teams": 85
+          },
+          {
+            "snapshot_date": "2024-09-29",
+            "flagged_employees": 1293,
+            "observable_employees": 21524,
+            "employee_percent": 6.007248,
+            "affected_teams": 76
+          },
+          {
+            "snapshot_date": "2024-10-27",
+            "flagged_employees": 1346,
+            "observable_employees": 21888,
+            "employee_percent": 6.149488,
+            "affected_teams": 78
+          },
+          {
+            "snapshot_date": "2024-11-24",
+            "flagged_employees": 1258,
+            "observable_employees": 21744,
+            "employee_percent": 5.785504,
+            "affected_teams": 68
+          },
+          {
+            "snapshot_date": "2024-12-29",
+            "flagged_employees": 1196,
+            "observable_employees": 21614,
+            "employee_percent": 5.533451,
+            "affected_teams": 65
+          },
+          {
+            "snapshot_date": "2025-01-26",
+            "flagged_employees": 1046,
+            "observable_employees": 21482,
+            "employee_percent": 4.869193,
+            "affected_teams": 60
+          },
+          {
+            "snapshot_date": "2025-03-30",
+            "flagged_employees": 1007,
+            "observable_employees": 21246,
+            "employee_percent": 4.739716,
+            "affected_teams": 51
+          },
+          {
+            "snapshot_date": "2025-04-27",
+            "flagged_employees": 1073,
+            "observable_employees": 21269,
+            "employee_percent": 5.044901,
+            "affected_teams": 62
+          },
+          {
+            "snapshot_date": "2025-05-25",
+            "flagged_employees": 1289,
+            "observable_employees": 21558,
+            "employee_percent": 5.979219,
+            "affected_teams": 83
+          },
+          {
+            "snapshot_date": "2025-06-29",
+            "flagged_employees": 1253,
+            "observable_employees": 21996,
+            "employee_percent": 5.69649,
+            "affected_teams": 80
+          },
+          {
+            "snapshot_date": "2025-07-27",
+            "flagged_employees": 1277,
+            "observable_employees": 22716,
+            "employee_percent": 5.621588,
+            "affected_teams": 82
+          },
+          {
+            "snapshot_date": "2025-08-24",
+            "flagged_employees": 1167,
+            "observable_employees": 22862,
+            "employee_percent": 5.10454,
+            "affected_teams": 83
+          },
+          {
+            "snapshot_date": "2026-03-29",
+            "flagged_employees": 1094,
+            "observable_employees": 24453,
+            "employee_percent": 4.473889,
+            "affected_teams": 58
+          },
+          {
+            "snapshot_date": "2026-04-26",
+            "flagged_employees": 1181,
+            "observable_employees": 24671,
+            "employee_percent": 4.786997,
+            "affected_teams": 64
+          },
+          {
+            "snapshot_date": "2026-05-24",
+            "flagged_employees": 1449,
+            "observable_employees": 24936,
+            "employee_percent": 5.810876,
+            "affected_teams": 89
+          },
+          {
+            "snapshot_date": "2026-06-28",
+            "flagged_employees": 1675,
+            "observable_employees": 25466,
+            "employee_percent": 6.577397,
+            "affected_teams": 115
+          },
+          {
+            "snapshot_date": "2026-07-26",
+            "flagged_employees": 1536,
+            "observable_employees": 26384,
+            "employee_percent": 5.82171,
+            "affected_teams": 110
+          },
+          {
+            "snapshot_date": "2026-08-23",
+            "flagged_employees": 1617,
+            "observable_employees": 27027,
+            "employee_percent": 5.982906,
+            "affected_teams": 127
+          }
+        ],
+        "manager_at_evaluation": [
+          {
+            "snapshot_date": "2020-12-27",
+            "flagged_employees": 110,
+            "observable_employees": 15514,
+            "employee_percent": 0.709037,
+            "affected_teams": 11
+          },
+          {
+            "snapshot_date": "2021-03-28",
+            "flagged_employees": 296,
+            "observable_employees": 15280,
+            "employee_percent": 1.937173,
+            "affected_teams": 30
+          },
+          {
+            "snapshot_date": "2021-04-25",
+            "flagged_employees": 329,
+            "observable_employees": 15243,
+            "employee_percent": 2.158368,
+            "affected_teams": 36
+          },
+          {
+            "snapshot_date": "2021-05-23",
+            "flagged_employees": 408,
+            "observable_employees": 15460,
+            "employee_percent": 2.639069,
+            "affected_teams": 46
+          },
+          {
+            "snapshot_date": "2021-06-27",
+            "flagged_employees": 454,
+            "observable_employees": 19490,
+            "employee_percent": 2.3294,
+            "affected_teams": 49
+          },
+          {
+            "snapshot_date": "2021-07-25",
+            "flagged_employees": 886,
+            "observable_employees": 19649,
+            "employee_percent": 4.509135,
+            "affected_teams": 58
+          },
+          {
+            "snapshot_date": "2021-08-22",
+            "flagged_employees": 1089,
+            "observable_employees": 19859,
+            "employee_percent": 5.48366,
+            "affected_teams": 64
+          },
+          {
+            "snapshot_date": "2022-03-27",
+            "flagged_employees": 1889,
+            "observable_employees": 20370,
+            "employee_percent": 9.273441,
+            "affected_teams": 104
+          },
+          {
+            "snapshot_date": "2022-04-24",
+            "flagged_employees": 2037,
+            "observable_employees": 21134,
+            "employee_percent": 9.638497,
+            "affected_teams": 117
+          },
+          {
+            "snapshot_date": "2022-05-22",
+            "flagged_employees": 2273,
+            "observable_employees": 21566,
+            "employee_percent": 10.539738,
+            "affected_teams": 131
+          },
+          {
+            "snapshot_date": "2022-06-26",
+            "flagged_employees": 2193,
+            "observable_employees": 21834,
+            "employee_percent": 10.043968,
+            "affected_teams": 148
+          },
+          {
+            "snapshot_date": "2022-07-24",
+            "flagged_employees": 2490,
+            "observable_employees": 22354,
+            "employee_percent": 11.138946,
+            "affected_teams": 165
+          },
+          {
+            "snapshot_date": "2022-08-21",
+            "flagged_employees": 2460,
+            "observable_employees": 22612,
+            "employee_percent": 10.879179,
+            "affected_teams": 163
+          },
+          {
+            "snapshot_date": "2023-03-26",
+            "flagged_employees": 1354,
+            "observable_employees": 22066,
+            "employee_percent": 6.136137,
+            "affected_teams": 59
+          },
+          {
+            "snapshot_date": "2023-04-23",
+            "flagged_employees": 1399,
+            "observable_employees": 21993,
+            "employee_percent": 6.361115,
+            "affected_teams": 58
+          },
+          {
+            "snapshot_date": "2023-05-21",
+            "flagged_employees": 1309,
+            "observable_employees": 22155,
+            "employee_percent": 5.908373,
+            "affected_teams": 48
+          },
+          {
+            "snapshot_date": "2023-06-25",
+            "flagged_employees": 1356,
+            "observable_employees": 22104,
+            "employee_percent": 6.134636,
+            "affected_teams": 51
+          },
+          {
+            "snapshot_date": "2023-07-23",
+            "flagged_employees": 1417,
+            "observable_employees": 22332,
+            "employee_percent": 6.345155,
+            "affected_teams": 55
+          },
+          {
+            "snapshot_date": "2023-08-20",
+            "flagged_employees": 1024,
+            "observable_employees": 22222,
+            "employee_percent": 4.608046,
+            "affected_teams": 42
+          },
+          {
+            "snapshot_date": "2024-03-24",
+            "flagged_employees": 1130,
+            "observable_employees": 19751,
+            "employee_percent": 5.721229,
+            "affected_teams": 63
+          },
+          {
+            "snapshot_date": "2024-05-19",
+            "flagged_employees": 1302,
+            "observable_employees": 20118,
+            "employee_percent": 6.471816,
+            "affected_teams": 82
+          },
+          {
+            "snapshot_date": "2024-07-21",
+            "flagged_employees": 1262,
+            "observable_employees": 20991,
+            "employee_percent": 6.0121,
+            "affected_teams": 81
+          },
+          {
+            "snapshot_date": "2024-08-25",
+            "flagged_employees": 1312,
+            "observable_employees": 20964,
+            "employee_percent": 6.258348,
+            "affected_teams": 85
+          },
+          {
+            "snapshot_date": "2024-09-29",
+            "flagged_employees": 1293,
+            "observable_employees": 21524,
+            "employee_percent": 6.007248,
+            "affected_teams": 76
+          },
+          {
+            "snapshot_date": "2024-10-27",
+            "flagged_employees": 1346,
+            "observable_employees": 21888,
+            "employee_percent": 6.149488,
+            "affected_teams": 78
+          },
+          {
+            "snapshot_date": "2024-11-24",
+            "flagged_employees": 1258,
+            "observable_employees": 21744,
+            "employee_percent": 5.785504,
+            "affected_teams": 68
+          },
+          {
+            "snapshot_date": "2024-12-29",
+            "flagged_employees": 1196,
+            "observable_employees": 21614,
+            "employee_percent": 5.533451,
+            "affected_teams": 65
+          },
+          {
+            "snapshot_date": "2025-01-26",
+            "flagged_employees": 1046,
+            "observable_employees": 21482,
+            "employee_percent": 4.869193,
+            "affected_teams": 60
+          },
+          {
+            "snapshot_date": "2025-03-30",
+            "flagged_employees": 1014,
+            "observable_employees": 21246,
+            "employee_percent": 4.772663,
+            "affected_teams": 52
+          },
+          {
+            "snapshot_date": "2025-04-27",
+            "flagged_employees": 1080,
+            "observable_employees": 21269,
+            "employee_percent": 5.077813,
+            "affected_teams": 63
+          },
+          {
+            "snapshot_date": "2025-05-25",
+            "flagged_employees": 1296,
+            "observable_employees": 21558,
+            "employee_percent": 6.011689,
+            "affected_teams": 84
+          },
+          {
+            "snapshot_date": "2025-06-29",
+            "flagged_employees": 1253,
+            "observable_employees": 21996,
+            "employee_percent": 5.69649,
+            "affected_teams": 80
+          },
+          {
+            "snapshot_date": "2025-07-27",
+            "flagged_employees": 1277,
+            "observable_employees": 22716,
+            "employee_percent": 5.621588,
+            "affected_teams": 82
+          },
+          {
+            "snapshot_date": "2025-08-24",
+            "flagged_employees": 1167,
+            "observable_employees": 22862,
+            "employee_percent": 5.10454,
+            "affected_teams": 83
+          },
+          {
+            "snapshot_date": "2026-03-29",
+            "flagged_employees": 1115,
+            "observable_employees": 24453,
+            "employee_percent": 4.559768,
+            "affected_teams": 59
+          },
+          {
+            "snapshot_date": "2026-04-26",
+            "flagged_employees": 1202,
+            "observable_employees": 24671,
+            "employee_percent": 4.872117,
+            "affected_teams": 65
+          },
+          {
+            "snapshot_date": "2026-05-24",
+            "flagged_employees": 1449,
+            "observable_employees": 24936,
+            "employee_percent": 5.810876,
+            "affected_teams": 89
+          },
+          {
+            "snapshot_date": "2026-06-28",
+            "flagged_employees": 1694,
+            "observable_employees": 25466,
+            "employee_percent": 6.652007,
+            "affected_teams": 117
+          },
+          {
+            "snapshot_date": "2026-07-26",
+            "flagged_employees": 1542,
+            "observable_employees": 26384,
+            "employee_percent": 5.844451,
+            "affected_teams": 111
+          },
+          {
+            "snapshot_date": "2026-08-23",
+            "flagged_employees": 1623,
+            "observable_employees": 27027,
+            "employee_percent": 6.005106,
+            "affected_teams": 128
+          }
+        ]
+      },
+      "scenario_comparison": {
+        "groups_changed": 79,
+        "flags_changed": 15,
+        "employee_snapshots_flagged_exit": 51509,
+        "employee_snapshots_flagged_evaluation": 51630
+      }
+    }
+  ],
+  "acceptance_rule": "Debe haber 40 snapshots evaluables, seis snapshots por ventana y 40 puntos mensuales por scope y atribución; flagged_employees <= observable_employees en todos los puntos; cada porcentaje debe reconciliar como flagged_employees / observable_employees × 100; sólo term_type=Voluntary entra al numerador; los buckets 0/1/2+ deben conservar su reconciliación agregada.",
+  "outcome": "pass",
+  "limitations": [
+    "La métrica mide exposición contextual de empleados cuyo equipo tuvo 2+ salidas y no es una etiqueta del manager ni una afirmación causal.",
+    "Las series son puntos independientes: no acumulan porcentajes ni empleados entre snapshots.",
+    "manager_at_evaluation representa la atribución disponible en el snapshot y manager_at_exit la atribución histórica del evento."
+  ]
+}

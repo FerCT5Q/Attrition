@@ -1,0 +1,82 @@
+{
+  "artifact_type": "aggregate_segment_attrition_evidence",
+  "version": 7,
+  "generated_on": "2026-09-18",
+  "deliverable_mode": "internal_analysis",
+  "purpose": "Etiquetas compactas de attrition voluntaria 2026 YTD para las tres categorias de sitio asignado y huso horario del manager.",
+  "outcome_contract": {
+    "population": "active regular employee-manager pairs with a unique stored office_site at the last monthly snapshot before 2026",
+    "grain": "employee_baseline_snapshot",
+    "baseline_snapshot": "2025-12-28",
+    "target": "term_type='VOLUNTARY' con term_date desde 2026-01-01 hasta el ultimo snapshot disponible",
+    "outcome_end_date": "2026-09-27",
+    "label": "2026 YTD voluntary attrition; not annualized",
+    "time_zone_rule": "same stored office_site first; otherwise IANA UTC-offset difference at 12:00 UTC on baseline date is <=4 hours or >4 hours"
+  },
+  "query": "queries/audits/v7_manager_timezone_2026_ytd_attrition_20260918.sql",
+  "query_sha256": "a5eee0bfa94b6c2be7215bfc0f27b9d8a2a191f418f18e6c2e5019482a165b6c",
+  "catalog_mapping": {
+    "catalog_office_count": 205,
+    "site_key_count": 293,
+    "city_country_key_count": 200,
+    "ambiguous_site_key_count": 1,
+    "ambiguous_city_country_key_count": 1,
+    "invalid_coordinate_count": 1,
+    "unresolved_timezone_count": 0,
+    "preflight_query": "queries/audits/v7_manager_timezone_2026_ytd_mapping-key-preflight_20260918.sql",
+    "preflight_query_sha256": "a7e783adfa15287c1b440aea825b75eec1b72d38d4a3b064ce11ddef2c1b5e9b",
+    "preflight_aggregate_key_rows": 357,
+    "offset_evaluation_baseline_snapshot": "2025-12-28",
+    "offset_evaluation_method": "Python zoneinfo using IANA geographic data at 12:00 UTC on the baseline date; the SQL receives only integer UTC offsets.",
+    "observed_site_key_count": 53,
+    "observed_city_country_key_count": 211,
+    "mapped_observed_site_key_count": 0,
+    "mapped_observed_city_country_key_count": 88
+  },
+  "diagnostics": {
+    "categorized_employee_manager_pair_count": 44806,
+    "duplicate_employee_source_count": 0,
+    "eligible_employee_manager_pair_count": 46879,
+    "location_conflict_count": 0,
+    "unmapped_employee_manager_pair_count": 2073
+  },
+  "rows": [
+    {
+      "row_type": "category",
+      "metric": "time_zone_proximity",
+      "category": "different_site_more_than_4_hours",
+      "baseline_snapshot_date": "2025-12-28",
+      "outcome_end_date": "2026-09-27",
+      "employee_count": 633,
+      "voluntary_exits": 23,
+      "ytd_voluntary_attrition_rate_percent": "3.6335",
+      "diagnostic_value": null,
+      "publication_status": "not_estimable_below_aggregate_threshold"
+    },
+    {
+      "row_type": "category",
+      "metric": "time_zone_proximity",
+      "category": "different_site_up_to_4_hours",
+      "baseline_snapshot_date": "2025-12-28",
+      "outcome_end_date": "2026-09-27",
+      "employee_count": 4316,
+      "voluntary_exits": 275,
+      "ytd_voluntary_attrition_rate_percent": "6.3716",
+      "diagnostic_value": null,
+      "publication_status": "publishable"
+    },
+    {
+      "row_type": "category",
+      "metric": "time_zone_proximity",
+      "category": "same_office_site",
+      "baseline_snapshot_date": "2025-12-28",
+      "outcome_end_date": "2026-09-27",
+      "employee_count": 39857,
+      "voluntary_exits": 1752,
+      "ytd_voluntary_attrition_rate_percent": "4.3957",
+      "diagnostic_value": null,
+      "publication_status": "publishable"
+    }
+  ],
+  "outcome": "pass"
+}

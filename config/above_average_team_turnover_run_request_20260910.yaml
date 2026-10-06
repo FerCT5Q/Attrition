@@ -1,0 +1,59 @@
+schema_version: 1
+language: es
+unknown_policy: conservative
+problem_context:
+  problem_statement: >-
+    Evaluar una candidata adicional de contexto de manager para investigación
+    longitudinal de attrition sin convertir resultados históricos en una
+    evaluación individual de managers.
+  decision_or_use_case: >-
+    Determinar si Above-average team turnover dispone de una derivación
+    time-safe, cobertura e historia suficientes para una exploración restringida
+    y si debe permanecer separada de las tres señales existentes de manager.
+  outcome: Attrition voluntario posterior al cierre mensual de predicción.
+  population: Empleados regulares activos con manager_employee_id al cierre mensual.
+  unit_of_analysis: Empleado-snapshot mensual; cálculo intermedio manager-snapshot.
+  knowledge_boundary: >-
+    En t sólo se usan los 18 intervalos cerrados anteriores y terminaciones con
+    term_date dentro de esos intervalos, nunca eventos posteriores a t.
+  constraints:
+    - Sólo SQL read-only y resultados agregados.
+    - Entregable presentation: n >= 30, sin identidades ni tasas individuales de managers.
+    - Señal asociativa y sensible; no usar para evaluación individual ni producción.
+  portfolio_hypotheses:
+    - >-
+      La señal relativa puede aportar contexto distinto de un conteo de salidas
+      o de un score ajustado, pero comparte dependencias de relación manager y
+      terminaciones.
+  known_relationships:
+    - variables: [High risk manager, High turnover under this person, Manager leaving]
+      relationship: >-
+        Las cuatro señales usan relaciones históricas manager-equipo, pero difieren
+        en ajuste, ventana, salida y propósito.
+      why_relevant: >-
+        La evidencia existente es sólo contexto; esta candidata requiere su propia
+        atribución, benchmark y reconciliación.
+variables:
+  - name: Above-average team turnover
+    intended_use: >-
+      Describir una señal binaria restringida de contexto de equipo para análisis
+      longitudinal de attrition, sin evaluar a managers.
+    population: >-
+      Empleados worker_type='Employee', employee_type='Regular' y active_status=1
+      con manager_employee_id en cada cierre mensual t.
+    knowledge_date: >-
+      Cierre mensual t; 18 intervalos cerrados anteriores (19 cierres) y sólo
+      term_date <= t.
+    context_role: Manager risk
+    context_relevance: >-
+      El reporte actual hereda el resultado de su manager vigente; no se exige
+      convivencia mínima si la historia de ese manager es elegible.
+decisions:
+  event_scope: term_type exactamente Voluntary; excluir Voluntary Exception, involuntarias y nulos.
+  attribution: La salida se atribuye al manager del empleado al inicio del intervalo mensual que contiene term_date.
+  history: Requerir 18 intervalos observables, promedio de equipo >=4 y >=2 salidas Voluntary distintas.
+  benchmark: >-
+    Promedio de tasas de managers elegibles ponderado por tamaño medio de equipo;
+    la tasa se expresa equivalente a seis meses.
+  flag: 1 si tasa >=1.4 veces benchmark; 0 sólo si el manager es elegible y queda por debajo; si no, Unknown.
+  governance: Señal asociativa sensible y restringida; no es una evaluación individual ni una feature productiva aprobada.

@@ -1,0 +1,103 @@
+{
+  "artifact_type": "aggregate_rehire_annual_attrition_evidence",
+  "version": 7,
+  "generated_on": "2026-09-20",
+  "deliverable_mode": "internal_analysis",
+  "artifact_classification": "internal_analysis",
+  "purpose": "Etiquetar la attrition voluntaria a 12 meses debajo de cada barra anual de Rehire (1) en la lámina 16.",
+  "definition": {
+    "concept": "Stored is_rehire flag",
+    "display_group": "Rehire (1)",
+    "population": "Active Regular Employees at each monthly snapshot",
+    "grain": "Deduplicated employee-snapshot exposure, grouped by fiscal year",
+    "outcome": "Strict VOLUNTARY termination in (snapshot_date, snapshot_date + 12 months]",
+    "minimum_cohort": 30
+  },
+  "source_era_rule": "FY2020 and FY2021 are labeled not comparable because the slide documents a source-definition break beginning 2022-10-23.",
+  "partial_year_rule": "FY2025 rate is published from mature monthly snapshots only and is marked with an asterisk in the visual.",
+  "not_estimable_rule": "FY2026 has no complete 12-month follow-up in the retained source window and renders as Not estimable.",
+  "query": "queries/audits/rehire_annual_voluntary_attrition_by_fiscal_year_20260917.sql",
+  "query_sha256": "bb9cc800efd376f1a8587fa277db922b3c411874b49fd0dc6c7b7aa1aeb80888",
+  "columns": [
+    "fiscal_year",
+    "all_employee_snapshot_count",
+    "first_mature_snapshot_date",
+    "last_mature_snapshot_date",
+    "employee_snapshot_count",
+    "distinct_employee_count",
+    "voluntary_exits",
+    "attrition_rate_percent",
+    "publication_status"
+  ],
+  "row_count": 6,
+  "rows": [
+    {
+      "fiscal_year": "2020",
+      "all_employee_snapshot_count": 88,
+      "first_mature_snapshot_date": "2020-07-26",
+      "last_mature_snapshot_date": "2020-09-27",
+      "employee_snapshot_count": 88,
+      "distinct_employee_count": 88,
+      "voluntary_exits": 5,
+      "attrition_rate_percent": null,
+      "publication_status": "not_comparable_source_era"
+    },
+    {
+      "fiscal_year": "2021",
+      "all_employee_snapshot_count": 285,
+      "first_mature_snapshot_date": "2020-10-25",
+      "last_mature_snapshot_date": "2021-09-26",
+      "employee_snapshot_count": 285,
+      "distinct_employee_count": 260,
+      "voluntary_exits": 28,
+      "attrition_rate_percent": null,
+      "publication_status": "not_comparable_source_era"
+    },
+    {
+      "fiscal_year": "2023",
+      "all_employee_snapshot_count": 54844,
+      "first_mature_snapshot_date": "2022-10-23",
+      "last_mature_snapshot_date": "2023-09-24",
+      "employee_snapshot_count": 54844,
+      "distinct_employee_count": 5393,
+      "voluntary_exits": 3290,
+      "attrition_rate_percent": "5.998833053752461",
+      "publication_status": "publishable"
+    },
+    {
+      "fiscal_year": "2024",
+      "all_employee_snapshot_count": 58687,
+      "first_mature_snapshot_date": "2023-10-22",
+      "last_mature_snapshot_date": "2024-09-29",
+      "employee_snapshot_count": 58687,
+      "distinct_employee_count": 5865,
+      "voluntary_exits": 4266,
+      "attrition_rate_percent": "7.269071514986283",
+      "publication_status": "publishable"
+    },
+    {
+      "fiscal_year": "2025",
+      "all_employee_snapshot_count": 64501,
+      "first_mature_snapshot_date": "2024-10-27",
+      "last_mature_snapshot_date": "2025-08-24",
+      "employee_snapshot_count": 58748,
+      "distinct_employee_count": 6158,
+      "voluntary_exits": 4719,
+      "attrition_rate_percent": "8.032613876217062",
+      "publication_status": "publishable_mature_partial_year"
+    },
+    {
+      "fiscal_year": "2026",
+      "all_employee_snapshot_count": 71580,
+      "first_mature_snapshot_date": null,
+      "last_mature_snapshot_date": null,
+      "employee_snapshot_count": 0,
+      "distinct_employee_count": 0,
+      "voluntary_exits": 0,
+      "attrition_rate_percent": null,
+      "publication_status": "not_estimable_incomplete_followup"
+    }
+  ],
+  "acceptance_rule": "Publish only years with >=30 employee-snapshot exposures and >=30 distinct employees; preserve source-era and incomplete-follow-up limitations instead of imputing a rate.",
+  "outcome": "pass"
+}

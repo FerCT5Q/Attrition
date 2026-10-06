@@ -1,0 +1,46 @@
+{
+  "variables": {
+    "Within team compensation range": {
+      "coverage": [
+        {"snapshot_date": "2024-01-01", "fiscal_year": "2024", "eligible_employees": 100, "observable_employees": 96, "event_employees": null},
+        {"snapshot_date": "2024-02-01", "fiscal_year": "2024", "eligible_employees": 100, "observable_employees": 96, "event_employees": null},
+        {"snapshot_date": "2024-03-01", "fiscal_year": "2024", "eligible_employees": 100, "observable_employees": 96, "event_employees": null},
+        {"snapshot_date": "2026-03-01", "fiscal_year": "2026", "eligible_employees": 100, "observable_employees": 96, "event_employees": null}
+      ],
+      "queries": {
+        "queries/audits/attrition_43_v4_source_availability_audit.sql": [
+          {"variable_name": "Within team compensation range", "required_items": 3, "missing_items": 0}
+        ]
+      }
+    },
+    "Comp ratio": {
+      "coverage": [
+        {"snapshot_date": "2024-01-01", "fiscal_year": "2024", "eligible_employees": 100, "observable_employees": 98, "event_employees": null},
+        {"snapshot_date": "2024-02-01", "fiscal_year": "2024", "eligible_employees": 100, "observable_employees": 98, "event_employees": null},
+        {"snapshot_date": "2024-03-01", "fiscal_year": "2024", "eligible_employees": 100, "observable_employees": 98, "event_employees": null},
+        {"snapshot_date": "2026-03-01", "fiscal_year": "2026", "eligible_employees": 100, "observable_employees": 98, "event_employees": null}
+      ],
+      "queries": {
+        "queries/audits/attrition_43_v4_source_availability_audit.sql": [
+          {"variable_name": "Comp ratio", "required_items": 1, "missing_items": 0}
+        ]
+      }
+    },
+    "Rehire": {
+      "coverage": [
+        {"snapshot_date": "2024-01-01", "fiscal_year": "2024", "eligible_employees": 100, "observable_employees": 99, "event_employees": 35},
+        {"snapshot_date": "2024-02-01", "fiscal_year": "2024", "eligible_employees": 100, "observable_employees": 99, "event_employees": 36},
+        {"snapshot_date": "2024-03-01", "fiscal_year": "2024", "eligible_employees": 100, "observable_employees": 99, "event_employees": 37},
+        {"snapshot_date": "2026-03-01", "fiscal_year": "2026", "eligible_employees": 100, "observable_employees": 99, "event_employees": 38}
+      ],
+      "queries": {
+        "queries/audits/attrition_43_v4_source_availability_audit.sql": [
+          {"variable_name": "Rehire", "required_items": 2, "missing_items": 0}
+        ],
+        "queries/audits/rehire_consistency_audit.sql": [
+          {"flagged_without_date_employees": 0, "date_without_flag_employees": 0, "future_rehire_date_employees": 0, "rehire_before_original_hire_employees": 0, "rehire_vs_max_hire_mismatch_employees": 0, "invalid_sequence_employees": 0, "months_checked": 4, "anomaly_count": 0}
+        ]
+      }
+    }
+  }
+}

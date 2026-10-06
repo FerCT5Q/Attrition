@@ -1,0 +1,78 @@
+variable: More than 3 job applications
+plan_version: 2
+plan_revision_reason: >-
+  La auditoría v1 encontró que la mayoría de filas cand_applied=1 no tiene
+  employee_id y que la métrica future_event_rows medía eventos disponibles
+  después del snapshot, no eventos incluidos en la feature. Se añade una
+  prueba de enlace y se corrige el control de leakage antes de continuar.
+created_before_execution: true
+semantic_type: derived_feature
+concept: >-
+  Flag candidato de movilidad interna intensa: cuatro o más requisiciones
+  internas únicas con cand_applied=1 en los seis meses calendario previos a
+  cada cierre mensual.
+intended_use: >-
+  Evaluar, sólo de forma agregada y bajo restricción de comportamiento laboral
+  sensible, si la señal tiene cobertura y definición suficientemente trazables
+  para una futura feature longitudinal de attrition.
+knowledge_date: Cierre de cada snapshot mensual; application_date no puede ser posterior.
+population: Empleados regulares activos en cada snapshot mensual.
+source_reasoning: >-
+  hrda.applications mezcla filas con y sin employee_id. Sólo los eventos con
+  employee_id, req_id y application_date válidos pueden entrar a la derivación;
+  la ausencia de vínculo no se convierte en un cero confirmado.
+validation_story:
+  - id: source_and_deduplication
+    criterion: source
+    evidence_role: defining
+    question: ¿La fuente contiene eventos fechados y requisiciones utilizables para el conteo propuesto?
+    why: Sin employee_id, req_id y application_date válidos no se puede derivar una feature reproducible.
+    method: Auditoría agregada de disponibilidad, nulos y filas deduplicadas para cand_applied=1.
+    sql_reference: queries/audits/more_than_three_job_applications_trailing_6m_source_dedup_20260907.sql
+    acceptance_rule: >-
+      Las columnas existen en el preflight y al menos un evento tiene
+      employee_id, req_id y application_date válidos con cand_applied=1.
+  - id: employee_linkage_scope
+    criterion: join
+    evidence_role: defining
+    question: ¿Qué fracción del feed cand_applied=1 se puede vincular realmente a empleados?
+    why: Las filas sin employee_id no pueden generar ni negar el flag de un empleado.
+    method: Comparar agregadamente filas con employee_id, eventos completos y eventos deduplicados.
+    sql_reference: queries/audits/more_than_three_job_applications_trailing_6m_employee_linkage_20260907.sql
+    acceptance_rule: >-
+      Sólo eventos con employee_id, req_id y application_date no nulos entran
+      al cálculo; la proporción no vinculada se informa como limitación.
+  - id: six_month_formula_and_boundaries
+    criterion: definition
+    evidence_role: defining
+    question: ¿El flag de seis meses se reproduce sin diferencias y excluye eventos futuros?
+    why: La definición requiere que umbral, deduplicación y fronteras temporales sean calculables al snapshot.
+    method: Comparar dos implementaciones agregadas del conteo y medir inclusión real de futuro.
+    sql_reference: queries/audits/more_than_three_job_applications_trailing_6m_boundary_recalculation_v2_20260907.sql
+    acceptance_rule: mismatch_count=0 y future_event_rows_included=0 en todos los años fiscales evaluados.
+  - id: snapshot_join_and_observability
+    criterion: join
+    evidence_role: defining
+    question: ¿El grain empleado-snapshot es único y qué proporción de la población puede vincularse al feed?
+    why: Un join duplicado infla el conteo; un no-match no prueba que no hubo solicitud.
+    method: Reconciliación agregada de filas de snapshot, claves únicas y vínculo al feed.
+    sql_reference: queries/audits/more_than_three_job_applications_trailing_6m_join_20260907.sql
+    acceptance_rule: snapshot_duplicate_rows=0; los no-matches se conservan como observabilidad desconocida, no como ceros.
+  - id: feed_freshness
+    criterion: history
+    evidence_role: defining
+    question: ¿El feed llega hasta el periodo más reciente de snapshots para interpretar la distribución actual?
+    why: Un feed detenido transforma falsamente la ausencia de eventos en un cero de la feature.
+    method: Comparar agregadamente fechas mínima y máxima del feed contra la población mensual.
+    sql_reference: queries/audits/more_than_three_job_applications_trailing_6m_feed_freshness_20260907.sql
+    acceptance_rule: last_application_date debe ser igual o posterior al último snapshot publicable; si no, limitar la distribución al periodo observado.
+  - id: six_month_distribution
+    criterion: coverage
+    evidence_role: supporting
+    question: ¿Qué proporción agregada cumple el flag en los snapshots con ventana observable?
+    why: La distribución permite evaluar prevalencia y cobertura sin exponer comportamiento individual.
+    method: Perfil agregado por snapshot del flag candidato y del denominador observable.
+    sql_reference: queries/profiles/more_than_three_job_applications_trailing_6m_20260907.sql
+    acceptance_rule: >-
+      Cada fila publicada debe tener cohorte observable de al menos 30 y
+      reportar por separado elegibles, observables y positivos.

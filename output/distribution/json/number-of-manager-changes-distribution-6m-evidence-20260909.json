@@ -1,0 +1,29 @@
+{
+  "artifact": "internal_analysis",
+  "outcome": "pass",
+  "variable": "Number of manager changes",
+  "source": "hrda.post_hire_monthly_worker_dtls",
+  "query_reference": "queries/profiles/number_of_manager_changes_distribution_6m_20260909.sql",
+  "as_of_date": "2026-09-09",
+  "snapshot_date": "2026-08-23",
+  "window_start_exclusive": "2026-02-23",
+  "window_months": 6,
+  "population": "worker_type='Employee' AND employee_type='Regular' AND active_status=1 at the latest stored monthly snapshot",
+  "grain": "Distinct employee snapshot",
+  "assumption": "For this exploratory visual, the retrospective window is the six months before the latest stored snapshot. A manager-change event is a distinct employee + manager_change_date key with manager_change=1 observed no later than the snapshot.",
+  "deduplication": "Repeated monthly observations of the same employee/event date count once.",
+  "eligible_employees": 50043,
+  "distinct_event_keys_in_window": 10317,
+  "repeated_event_observation_rows": 0,
+  "flagged_without_date_rows": 0,
+  "invalid_flag_rows": 0,
+  "publication_rule": "Publish absolute counts and percentages; every displayed bucket must have n >= 30; no identifiers or individual records.",
+  "buckets": [
+    {"label": "0", "employee_count": 41266, "employee_percent": 82.46108346821733},
+    {"label": "1", "employee_count": 7528, "employee_percent": 15.04306296584937},
+    {"label": "2", "employee_count": 1138, "employee_percent": 2.27404432188318},
+    {"label": "3+", "employee_count": 111, "employee_percent": 0.221809244050116}
+  ],
+  "identifiers_persisted": false,
+  "employee_rows_persisted": false
+}

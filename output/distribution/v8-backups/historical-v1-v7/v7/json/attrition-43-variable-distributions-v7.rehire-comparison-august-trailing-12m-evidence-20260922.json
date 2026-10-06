@@ -1,0 +1,88 @@
+{
+  "artifact_type": "aggregate_rehire_comparison_august_trailing_12m_attrition_evidence",
+  "version": 1,
+  "generated_on": "2026-09-22",
+  "deliverable_mode": "presentation",
+  "artifact_classification": "presentation",
+  "purpose": "Retener tres años históricos y comparar Rehire con el complemento Not a rehire usando attrition voluntaria trailing 12 meses.",
+  "definition": {
+    "concept": "Stored is_rehire flag",
+    "population": "Active Regular Employees at each fiscal-August closing snapshot",
+    "grain": "Deduplicated employee cohort at each baseline snapshot",
+    "outcome": "Strict VOLUNTARY termination in (baseline_snapshot_date, outcome_cutoff_date]",
+    "minimum_cohort": 30,
+    "complement_rule": "Not a rehire = baseline is_rehire is not 1, including null stored values"
+  },
+  "query": "queries/audits/v7_rehire_comparison_august_trailing_12m_attrition_20260922.sql",
+  "query_sha256": "FE2A3A12BE0336441AEAAC210A077B1F70F55BE31CFC4ACAF5CF58F7800B88D2",
+  "rows": [
+    {
+      "fiscal_year": "2024",
+      "baseline_snapshot_date": "2023-08-20",
+      "outcome_cutoff_date": "2024-08-25",
+      "rehire_group": "Rehire",
+      "baseline_employee_count": 4970,
+      "distinct_employee_count": 4970,
+      "voluntary_exit_count": 339,
+      "trailing_12m_voluntary_attrition_rate_percent": 6.8209,
+      "duplicate_employee_snapshot_count": 0
+    },
+    {
+      "fiscal_year": "2024",
+      "baseline_snapshot_date": "2023-08-20",
+      "outcome_cutoff_date": "2024-08-25",
+      "rehire_group": "Not a rehire",
+      "baseline_employee_count": 37696,
+      "distinct_employee_count": 37696,
+      "voluntary_exit_count": 1947,
+      "trailing_12m_voluntary_attrition_rate_percent": 5.165,
+      "duplicate_employee_snapshot_count": 0
+    },
+    {
+      "fiscal_year": "2025",
+      "baseline_snapshot_date": "2024-08-25",
+      "outcome_cutoff_date": "2025-08-24",
+      "rehire_group": "Rehire",
+      "baseline_employee_count": 5224,
+      "distinct_employee_count": 5224,
+      "voluntary_exit_count": 377,
+      "trailing_12m_voluntary_attrition_rate_percent": 7.2167,
+      "duplicate_employee_snapshot_count": 0
+    },
+    {
+      "fiscal_year": "2025",
+      "baseline_snapshot_date": "2024-08-25",
+      "outcome_cutoff_date": "2025-08-24",
+      "rehire_group": "Not a rehire",
+      "baseline_employee_count": 36943,
+      "distinct_employee_count": 36943,
+      "voluntary_exit_count": 1897,
+      "trailing_12m_voluntary_attrition_rate_percent": 5.1349,
+      "duplicate_employee_snapshot_count": 0
+    },
+    {
+      "fiscal_year": "2026",
+      "baseline_snapshot_date": "2025-08-24",
+      "outcome_cutoff_date": "2026-08-23",
+      "rehire_group": "Rehire",
+      "baseline_employee_count": 5747,
+      "distinct_employee_count": 5747,
+      "voluntary_exit_count": 461,
+      "trailing_12m_voluntary_attrition_rate_percent": 8.0216,
+      "duplicate_employee_snapshot_count": 0
+    },
+    {
+      "fiscal_year": "2026",
+      "baseline_snapshot_date": "2025-08-24",
+      "outcome_cutoff_date": "2026-08-23",
+      "rehire_group": "Not a rehire",
+      "baseline_employee_count": 39256,
+      "distinct_employee_count": 39256,
+      "voluntary_exit_count": 2023,
+      "trailing_12m_voluntary_attrition_rate_percent": 5.1534,
+      "duplicate_employee_snapshot_count": 0
+    }
+  ],
+  "acceptance_rule": "Each of the six displayed cohorts has n>=30, exactly one baseline row per employee, and voluntary exits / baseline cohort reconciles to the trailing-12-month rate.",
+  "outcome": "pass"
+}

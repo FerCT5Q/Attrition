@@ -1,0 +1,61 @@
+schema_version: 1
+plan_version: 2
+language: es
+created_before_execution: true
+deliverable_mode: presentation
+variable: More than 1 employee leaves in a year
+plan_revision_reason: >-
+  La primera ejecución de la consulta integral no devolvió resultado en cuatro
+  minutos. Para una lámina de distribución reproducible se fija la ventana a
+  las 60 cohortes índice completas más recientes (aproximadamente cinco años),
+  preservando los seis intervalos anteriores y los seis posteriores exigidos.
+  No cambia el evento, roster, comparador, censura ni estimando.
+concept: >-
+  Estudio longitudinal agregado de salidas secuenciales: incidencia acumulada
+  retrospectiva de salida Voluntary entre quienes permanecen en un equipo tras
+  una salida inicial única, frente a equipos sin salida reciente comparables.
+intended_use: >-
+  Evidencia contextual descriptiva para evaluar si una salida inicial precede
+  mayor attrition posterior; no prueba contagio, causalidad, desempeño de
+  managers ni riesgo individual, y no modifica la feature histórica por sí sola.
+semantic_type: derived_feature
+study_type: descriptive_post_event_cohort_comparison
+analysis_window: Las 60 cohortes índice completas más recientes disponibles al ejecutar la consulta.
+knowledge_boundary: >-
+  Sólo la salida índice existe al cierre t. Los seis cierres posteriores son
+  outcomes retrospectivos del estudio, no información para una predicción en t.
+population: >-
+  worker_type='Employee', employee_type='Regular', active_status=1 y
+  manager_employee_id no nulo en el cierre índice.
+grain: Integrante de roster índice × episodio de equipo × intervalo de seguimiento.
+definitions:
+  index_event: Una salida Voluntary única para el equipo en (t-6, t] y ocurrida en el intervalo que termina en t.
+  roster: Personas activas en t bajo el manager índice, seguidas sólo mientras mantengan ese manager.
+  reference: Equipo sin salida Voluntary en (t-6, t], mismo t y banda 1–5, 6–10, 11–20 o 21+.
+  outcome: Primera salida Voluntary a 1–6 meses, atribuida al manager índice en el momento del evento.
+  censoring: Cambio de manager observado, terminación no Voluntary o pérdida de observación.
+  estimand: 1 menos supervivencia Kaplan–Meier, con referencia estandarizada por cierre × banda de tamaño expuesta.
+validation_story:
+  - id: calendar_and_window
+    question: ¿Las cohortes tienen seis intervalos previos y seis seguimientos mensuales completos?
+    method: Comprobar 12 brechas consecutivas de 20–45 días y conservar sólo las 60 cohortes índice recientes que las cumplen.
+    sql_reference: queries/audits/team_post_exit_attrition_event_study_20260910.sql
+    acceptance_rule: Ningún episodio publicado carece de un intervalo requerido.
+  - id: attribution_and_control
+    question: ¿El evento y el comparador respetan pertenencia histórica y ventana de salida reciente?
+    method: Deduplicar por employee_id y term_date; usar el último manager único previo al evento y estratificar controles por snapshot y tamaño.
+    sql_reference: queries/audits/team_post_exit_attrition_event_study_20260910.sql
+    acceptance_rule: El índice tiene exactamente una salida Voluntary en su ventana y cada control tiene cero.
+  - id: censoring_and_publication
+    question: ¿La curva trata ausencias de seguimiento como censura y protege cohortes pequeñas?
+    method: Auditar eventos, censuras, riesgo y límites de incidencia por punto y estrato.
+    sql_reference: queries/audits/team_post_exit_attrition_event_study_20260910.sql
+    acceptance_rule: Sólo publicar estratos y puntos con n inicial y en riesgo >= 30, e incidencia dentro de 0–100.
+output_contract:
+  scopes: [all_teams, teams_6_plus]
+  series: [Equipo tras una salida inicial única, Equipos sin salida reciente ajustados]
+  prohibited_claims: [causalidad, contagio demostrado, ranking de managers, predicción individual]
+  suppression: Suprimir estratos o puntos con n < 30.
+acceptance_rules_frozen: true
+planned_sql:
+  - queries/audits/team_post_exit_attrition_event_study_20260910.sql

@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="deliverable-classification" content="presentation" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modelo de attrition voluntaria de Engineering: qué elegimos y por qué (v7)</title>
+  <style>
+    /* =====================================================================
+       UNIVERSAL PRESENTATION TEMPLATE — base-fullscreen.html
+       - No sticky navbar — content fills 1440x810 stage, scaled to viewport
+       - Right edge: side-collapsed THEME switcher
+       - Left edge:  side-collapsed SLIDE NAVIGATOR (for multi-slide decks)
+       - JS fitSlide() scales to fit any monitor; DPR Ctrl+zoom-safe
+       - Multi-slide: add additional .slide-stage blocks; add nav-pill per slide
+
+       SINGLE SLIDE usage:
+         - Keep one .slide-stage, one nav-pill. Nav tab hides gracefully.
+       MULTI-SLIDE DECK usage:
+         - Clone .slide-stage blocks, each with unique content.
+         - Add <button class="nav-pill" data-slide="N">N. Title</button> per slide.
+         - Keyboard arrows and nav tab handle navigation.
+       ===================================================================== */
+
+    /* 1. CSS VARIABLES & THEMES
+       ================================================================== */
+    :root {
+      --font-main: Aptos, "Segoe UI", system-ui, -apple-system, sans-serif;
+
+      --bg-body:      #f4f5f8;
+      --bg-surface:   #ffffff;
+      --bg-surface-2: #f6f8ff;
+      --bg-surface-3: #eef2ff;
+
+      --accent:       #2457ff;
+      --accent-2:     #3b82f6;
+      --accent-soft:  #e2e7ff;
+
+      --text-main:    #0f172a;
+      --text-muted:   #5b6478;
+      --text-invert:  #ffffff;
+
+      --border-subtle: rgba(15, 23, 42, 0.08);
+      --border-strong: rgba(36, 87, 255, 0.22);
+
+      --shadow-soft:   0 18px 44px rgba(2, 6, 23, 0.12);
+
+      --radius-card:   18px;
+      --radius-pill:   999px;
+
+      --donut-hole-bg: #ffffff;
+
+      --diamond-fill:   color-mix(in oklab, #f59e0b 18%, var(--bg-surface));
+      --diamond-stroke: #f59e0b;
+      --diamond-tx:     #92400e;
+      --exit-yes-bg:    color-mix(in oklab, #22c55e 12%, transparent);
+      --exit-yes-bd:    #16a34a;
+      --exit-yes-tx:    #14532d;
+      --exit-no-bg:     color-mix(in oklab, #ef4444 12%, transparent);
+      --exit-no-bd:     #dc2626;
+      --exit-no-tx:     #7f1d1d;
+      --conn-color:     var(--border-subtle);
+    }
+
+    body.theme-light-classic {
+      --bg-body:       #f4f5f8;
+      --bg-surface:    #ffffff;
+      --bg-surface-2:  #f6f8ff;
+      --bg-surface-3:  #eef2ff;
+      --text-main:     #0f172a;
+      --text-muted:    #5b6478;
+      --border-subtle: rgba(15, 23, 42, 0.08);
+      --border-strong: rgba(36, 87, 255, 0.22);
+      --donut-hole-bg: #ffffff;
+      --diamond-fill:  color-mix(in oklab, #f59e0b 18%, #ffffff);
+      --diamond-tx:    #92400e;
+    }
+
+    body.theme-light-soft {
+      --bg-body:       #eef2ff;
+      --bg-surface:    #f8faff;
+      --bg-surface-2:  #f0f4ff;
+      --bg-surface-3:  #e4ebff;
+      --text-main:     #1e2a4a;
+      --text-muted:    #4a5572;
+      --border-subtle: rgba(30, 42, 74, 0.09);
+      --border-strong: rgba(36, 87, 255, 0.20);
+      --donut-hole-bg: #f8faff;
+      --diamond-fill:  color-mix(in oklab, #f59e0b 18%, #f8faff);
+      --diamond-tx:    #78350f;
+    }
+
+    body.theme-dark-royal {
+      --bg-body:       #0d1b3e;
+      --bg-surface:    #162040;
+      --bg-surface-2:  #1a2650;
+      --bg-surface-3:  #1e2c5a;
+      --text-main:     #e8eeff;
+      --text-muted:    #8fa0cc;
+      --text-invert:   #ffffff;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(100, 149, 255, 0.28);
+      --accent:        #5b8cff;
+      --accent-2:      #7aabff;
+      --accent-soft:   rgba(91, 140, 255, 0.14);
+      --donut-hole-bg: #162040;
+      --diamond-fill:  color-mix(in oklab, #f59e0b 22%, #162040);
+      --diamond-tx:    #fde68a;
+      --exit-yes-tx:   #bbf7d0;
+      --exit-no-tx:    #fecaca;
+      --conn-color:    rgba(255,255,255,0.08);
+    }
+
+    body.theme-dark-carbon {
+      --bg-body:       #111318;
+      --bg-surface:    #1c1f26;
+      --bg-surface-2:  #22262f;
+      --bg-surface-3:  #282c36;
+      --text-main:     #e2e5ef;
+      --text-muted:    #7a8098;
+      --text-invert:   #ffffff;
+      --border-subtle: rgba(255, 255, 255, 0.07);
+      --border-strong: rgba(100, 149, 255, 0.22);
+      --accent:        #5b8cff;
+      --accent-2:      #7aabff;
+      --accent-soft:   rgba(91, 140, 255, 0.12);
+      --donut-hole-bg: #1c1f26;
+      --diamond-fill:  color-mix(in oklab, #f59e0b 20%, #1c1f26);
+      --diamond-tx:    #fde68a;
+      --exit-yes-tx:   #bbf7d0;
+      --exit-no-tx:    #fecaca;
+      --conn-color:    rgba(255,255,255,0.07);
+    }
+
+    /* 2. BASE RESET & BODY
+       ================================================================== */
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html {
+      height: 100%;
+      background: #000;
+    }
+
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: var(--font-main);
+      font-size: 16px;
+      color: var(--text-main);
+      /* Letterbox: dark tint of the active theme's bg-body */
+      background: color-mix(in oklab, var(--bg-body) 35%, #000);
+      transition: background 0.25s;
+    }
+
+    /* 3. SLIDE STAGE — fixed 1440×810, scaled via JS fitSlide()
+       Each .slide-stage is one slide. Add more for multi-slide decks.
+       ================================================================== */
+    .slide-stage {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1440px;
+      height: 810px;
+      transform-origin: top left;
+      background: var(--bg-body);
+      overflow: hidden;
+      padding: 14px 16px 10px;
+      display: grid;
+      gap: 6px;
+      /* Default grid: heading row auto-height + content fills remaining space.
+         Override grid-template-rows in content-specific styles as needed. */
+      grid-template-rows: auto 1fr;
+    }
+
+    /* 4. SLIDE HEADING
+       ================================================================== */
+    .slide-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4px 8px;
+      border-bottom: 3px solid var(--accent);
+      flex-shrink: 0;
+    }
+
+    .slide-title-text {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin: 0;
+      letter-spacing: -0.01em;
+    }
+
+    .slide-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin: 2px 0 0;
+    }
+
+    /* 5. CARD COMPONENT
+       ================================================================== */
+    .card {
+      background: color-mix(in oklab, var(--bg-surface) 92%, transparent);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-soft);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      overflow: hidden;
+      height: 100%;
+    }
+
+    .card-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 6px;
+      margin-bottom: 4px;
+    }
+
+    .card-compact {
+      padding: 7px 10px;
+      gap: 4px;
+      border-radius: 10px;
+    }
+
+    .card-compact .card-title {
+      font-size: 11px;
+      padding-bottom: 3px;
+      margin-bottom: 2px;
+    }
+
+    .card-full {
+      width: 100%;
+      flex: 1;
+    }
+
+    /* 6. BADGE & CHIP SYSTEM
+       Always use color-mix() — never hardcode light-theme hex.
+       ================================================================== */
+    .badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .badge-success  { background: color-mix(in oklab, #22c55e 15%, transparent); color: #16a34a; border: 1px solid color-mix(in oklab, #22c55e 30%, transparent); }
+    .badge-warning  { background: color-mix(in oklab, #f59e0b 15%, transparent); color: #d97706; border: 1px solid color-mix(in oklab, #f59e0b 30%, transparent); }
+    .badge-neutral  { background: color-mix(in oklab, var(--text-muted) 12%, transparent); color: var(--text-muted); border: 1px solid var(--border-subtle); }
+    .badge-info     { background: color-mix(in oklab, var(--accent) 12%, transparent); color: var(--accent); border: 1px solid color-mix(in oklab, var(--accent) 25%, transparent); }
+    .badge-wip      { background: color-mix(in oklab, #f97316 15%, transparent); color: #ea580c; border: 1px solid color-mix(in oklab, #f97316 30%, transparent); }
+    .badge-beta     { background: color-mix(in oklab, #22c55e 10%, transparent); color: #15803d; border: 1px dashed color-mix(in oklab, #22c55e 40%, transparent); }
+    .badge-coming-soon { background: color-mix(in oklab, #8b5cf6 12%, transparent); color: #7c3aed; border: 1px solid color-mix(in oklab, #8b5cf6 25%, transparent); }
+
+    .chip {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .chip-linux   { background: color-mix(in oklab, #f59e0b 15%, transparent); color: #92400e; }
+    .chip-rtos    { background: color-mix(in oklab, #3b82f6 12%, transparent); color: #1e40af; }
+    .chip-android { background: color-mix(in oklab, #22c55e 12%, transparent); color: #14532d; }
+    .chip-windows { background: color-mix(in oklab, #8b5cf6 12%, transparent); color: #4c1d95; }
+
+    .term-pill {
+      display: inline-block;
+      padding: 1px 7px;
+      border-radius: var(--radius-pill);
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.9em;
+      font-weight: 600;
+    }
+
+    /* 7. BULLET LIST
+       ================================================================== */
+    .bullet-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .bullet-list li {
+      padding-left: 16px;
+      position: relative;
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--text-main);
+    }
+
+    .bullet-list li::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 11px;
+    }
+
+    /* 8. LAYOUT CONTAINERS
+       ================================================================== */
+    .slide-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .grid-4col {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .vertical-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* 9. 4-COLUMN TRACKING GRID
+       ================================================================== */
+    .tracking-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr 0.9fr;
+      gap: 6px;
+      align-items: start;
+      overflow: hidden;
+    }
+
+    .col-header {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 5px 10px;
+      border-radius: 8px;
+      color: var(--text-invert);
+      text-align: center;
+    }
+
+    .col-opportunity { background: #2457ff; }
+    .col-state       { background: #7c3aed; }
+    .col-plan        { background: #0891b2; }
+    .col-eta         { background: #059669; }
+
+    .track-divider {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 2px 0;
+    }
+
+    .track-divider hr {
+      flex: 1;
+      border: none;
+      border-top: 1px solid var(--border-subtle);
+      margin: 0;
+    }
+
+    .track-divider span {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .track-card {
+      background: color-mix(in oklab, var(--bg-surface) 92%, transparent);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 7px 10px;
+      gap: 4px;
+      display: flex;
+      flex-direction: column;
+      font-size: 13px;
+      line-height: 1.4;
+      color: var(--text-main);
+    }
+
+    .track-card.col-opportunity { border-left: 4px solid #2457ff; }
+    .track-card.col-state       { border-left: 4px solid #7c3aed; }
+    .track-card.col-plan        { border-left: 4px solid #0891b2; }
+    .track-card.col-eta         { border-left: 4px solid #059669; }
+
+    .callout-imperative {
+      background: color-mix(in oklab, #22c55e 10%, var(--bg-surface));
+      border-left: 3px solid #22c55e;
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 12px;
+      color: var(--text-main);
+      line-height: 1.35;
+    }
+
+    .eta-bar-wrap {
+      width: 100%;
+      height: 4px;
+      background: var(--border-subtle);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .eta-bar {
+      height: 100%;
+      background: #059669;
+      border-radius: 2px;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      flex-shrink: 0;
+      animation: pulse-green 1.8s ease-in-out infinite;
+    }
+
+    @keyframes pulse-green {
+      0%, 100% { opacity: 1;   transform: scale(1);   }
+      50%       { opacity: 0.5; transform: scale(1.4); }
+    }
+
+    /* 10. ADOPTION GAUGE (conic-gradient donut)
+       ================================================================== */
+    .gauge-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .gauge {
+      position: relative;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      /* Angle calculation:
+         current_deg = (current_pct / 100) * 360
+         goal_deg    = (goal_pct / 100) * 360
+         conic-gradient: accent 0 current_deg, green current_deg goal_deg, muted goal_deg 360deg */
+      background: conic-gradient(
+        var(--accent)            0deg 151.2deg,
+        #10b981               151.2deg 288deg,
+        var(--border-subtle)  288deg   360deg
+      );
+    }
+
+    .gauge-hole {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px; height: 40px;
+      background: var(--bg-body);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gauge-pct { font-size: 11px; font-weight: 800; color: var(--text-main); line-height: 1; }
+    .gauge-sub { font-size: 9px; color: var(--text-muted); }
+
+    .gauge-meta { display: flex; flex-direction: column; gap: 3px; }
+
+    .gauge-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .gm-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .gm-current { background: var(--accent); }
+    .gm-goal    { background: #10b981; }
+
+    /* 11. SIDE CONTROLS — shared base for both theme tab (right) and nav tab (left)
+       ================================================================== */
+    .side-controls,
+    .nav-ctrl {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1000;
+      display: flex;
+      align-items: stretch;
+    }
+
+    /* RIGHT EDGE — THEME SWITCHER */
+    .side-controls {
+      right: 0;
+    }
+
+    .side-panel {
+      width: 0;
+      overflow: hidden;
+      transition: width 0.22s ease;
+      background: color-mix(in oklab, var(--bg-surface) 95%, transparent);
+      border: 1px solid var(--border-subtle);
+      border-right: none;
+      border-radius: 12px 0 0 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 0;
+      box-shadow: -4px 0 20px rgba(0, 0, 0, 0.14);
+      backdrop-filter: blur(8px);
+    }
+
+    .side-controls:hover .side-panel {
+      width: 136px;
+      padding: 12px 10px;
+    }
+
+    .side-tab {
+      width: 22px;
+      background: color-mix(in oklab, var(--bg-surface) 90%, transparent);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px 0 0 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      writing-mode: vertical-rl;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 14px 0;
+      transition: background 0.15s, color 0.15s;
+      user-select: none;
+      font-family: var(--font-main);
+    }
+
+    .side-controls:hover .side-tab {
+      background: color-mix(in oklab, var(--accent) 15%, var(--bg-surface));
+      color: var(--accent);
+    }
+
+    /* LEFT EDGE — SLIDE NAVIGATOR */
+    .nav-ctrl {
+      left: 0;
+    }
+
+    .nav-panel {
+      width: 0;
+      overflow: hidden;
+      transition: width 0.22s ease;
+      background: color-mix(in oklab, var(--bg-surface) 95%, transparent);
+      border: 1px solid var(--border-subtle);
+      border-left: none;
+      border-radius: 0 12px 12px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 0;
+      box-shadow: 4px 0 20px rgba(0, 0, 0, 0.14);
+      backdrop-filter: blur(8px);
+      order: 1; /* panel appears to the right of the tab */
+    }
+
+    .nav-ctrl:hover .nav-panel {
+      width: 164px;
+      padding: 12px 10px;
+    }
+
+    .nav-tab {
+      width: 22px;
+      background: color-mix(in oklab, var(--bg-surface) 90%, transparent);
+      border: 1px solid var(--border-subtle);
+      border-radius: 0 8px 8px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg); /* read bottom-to-top for left-edge orientation */
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 14px 0;
+      transition: background 0.15s, color 0.15s;
+      user-select: none;
+      font-family: var(--font-main);
+      order: 0; /* tab stays on the left */
+    }
+
+    .nav-ctrl:hover .nav-tab {
+      background: color-mix(in oklab, var(--accent) 15%, var(--bg-surface));
+      color: var(--accent);
+    }
+
+    /* Shared label + pill styles for both panels */
+    .side-label,
+    .nav-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      white-space: nowrap;
+      margin-bottom: 2px;
+      font-family: var(--font-main);
+    }
+
+    .side-pill,
+    .nav-pill {
+      appearance: none;
+      border: 1px solid var(--border-subtle);
+      background: color-mix(in oklab, var(--bg-surface) 88%, transparent);
+      color: var(--text-main);
+      padding: 6px 10px;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      font-family: var(--font-main);
+      cursor: pointer;
+      text-align: left;
+      white-space: nowrap;
+      width: 100%;
+      transition: border-color 0.12s, background 0.12s;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .side-pill:hover,
+    .nav-pill:hover {
+      border-color: var(--border-strong);
+    }
+
+    .side-pill.pill-active,
+    .nav-pill.pill-active {
+      background: linear-gradient(135deg,
+        color-mix(in oklab, var(--accent) 92%, #fff 8%),
+        var(--accent-2));
+      color: var(--text-invert);
+      border-color: transparent;
+    }
+
+    /* 12. CODE BLOCKS (always dark — theme-independent)
+       ================================================================== */
+    .code-block, .dir-tree {
+      font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+      font-size: 13px;
+      line-height: 2;
+      color: #c9d1d9;
+      background: #161b22;
+      border-radius: 10px;
+      padding: 16px 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    .dir-tree .dir { color: #79c0ff; font-weight: 600; }
+    .dir-tree .dim { color: #6e7681; }
+    .dir-tree .hl  { color: #7ee787; font-weight: 600; }
+
+    code {
+      font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+      font-size: 0.88em;
+      background: rgba(110, 118, 129, 0.15);
+      color: var(--text-main);
+      padding: 1px 6px;
+      border-radius: 5px;
+    }
+
+    /* 13. CONTENT-SPECIFIC STYLES — add below this line
+       ================================================================== */
+    .slide-stage { padding: 30px 44px 22px; gap: 16px; }
+    .slide-title-text { font-size: 30px; line-height: 1.2; max-width: 1340px; }
+    .slide-subtitle { font-size: 16px; margin-top: 6px; }
+    .src { font-size: 12.5px; color: var(--text-muted); align-self: end; line-height: 1.4; }
+    .stage-3rows { grid-template-rows: auto 1fr auto; }
+    .muted { color: var(--text-muted); }
+    .data-context { --ctx: color-mix(in oklab, var(--text-muted) 45%, var(--bg-surface)); --neg: color-mix(in oklab, #0f766e 70%, var(--bg-surface)); }
+    .card { height: auto; }
+    .side-head { font-size: 20px; font-weight: 700; }
+    .section-head { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted); }
+    .note-box { font-size: 16.5px; line-height: 1.45; padding: 12px 16px; border-left: 4px solid #d97706; background: color-mix(in oklab, #f59e0b 10%, var(--bg-surface)); border-radius: 6px; }
+
+    /* Portada */
+    .cover { display: flex; flex-direction: column; justify-content: center; gap: 26px; padding: 0 40px; }
+    .cover-kicker { font-size: 16px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+    .cover-title { font-size: 44px; font-weight: 800; line-height: 1.15; margin: 0; max-width: 1240px; }
+    .cover-chips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; max-width: 1240px; }
+    .cover-chip { border-left: 4px solid var(--accent); padding: 8px 16px; background: var(--bg-surface); border-radius: 10px; }
+    .cover-chip b { display: block; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted); }
+    .cover-chip span { font-size: 19px; font-weight: 600; }
+    .cover-note { font-size: 19px; color: var(--text-muted); max-width: 1180px; line-height: 1.45; }
+
+    /* Ficha del modelo */
+    .pipe { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    .pipe-step { position: relative; background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; box-shadow: var(--shadow-soft); }
+    .pipe-step:not(:last-child)::after { content: "→"; position: absolute; right: -17px; top: 38%; font-size: 24px; color: var(--accent); }
+    .pipe-step.key { border: 2px solid var(--accent); }
+    .pipe-num { font-size: 13px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: .06em; }
+    .pipe-head { font-size: 19px; font-weight: 700; line-height: 1.25; }
+    .pipe-body { font-size: 15.5px; line-height: 1.45; }
+    .formula { font-family: "Cambria Math", "Times New Roman", serif; font-size: 17px; white-space: nowrap; padding: 8px 10px; border-radius: 8px; background: var(--accent-soft); text-align: center; }
+    .spec { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px 26px; }
+    .spec div { border-top: 2px solid var(--border-strong); padding-top: 8px; }
+    .spec b { display: block; font-size: 13px; text-transform: uppercase; letter-spacing: .05em; color: var(--text-muted); margin-bottom: 4px; }
+    .spec span { font-size: 16px; line-height: 1.4; }
+
+    /* Barras divergentes horizontales */
+    .eff-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; align-items: stretch; }
+    .eff-col { display: flex; flex-direction: column; gap: 18px; }
+    .eff-card { padding: 18px 20px; gap: 10px; }
+    .eff-row { display: grid; grid-template-columns: 190px 1fr 64px; gap: 12px; align-items: center; height: 34px; }
+    .eff-card.wide .eff-row { grid-template-columns: 230px 1fr 64px; height: 44px; }
+    .eff-label { font-size: 15px; text-align: right; line-height: 1.15; }
+    .eff-row.ref .eff-label { color: var(--text-muted); font-style: italic; }
+    .eff-track { position: relative; height: 24px; }
+    .eff-zero { position: absolute; top: -6px; bottom: -6px; width: 2px; background: var(--text-muted); }
+    .eff-bar { position: absolute; top: 0; height: 100%; background: var(--accent); }
+    .eff-bar.neg { background: var(--neg); }
+    .eff-val { font-size: 15px; font-weight: 800; white-space: nowrap; }
+    .eff-val.neg { color: color-mix(in oklab, #0f9488 60%, var(--text-main)); }
+    .eff-row.ref .eff-val { color: var(--text-muted); font-weight: 600; }
+    .eff-foot { font-size: 13.5px; color: var(--text-muted); line-height: 1.4; }
+
+    /* Columnas divergentes (meses) */
+    .s4-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; }
+    .mbars { position: relative; display: grid; grid-template-columns: repeat(12, 1fr); gap: 10px; height: 400px; }
+    .mcol { position: relative; height: 100%; }
+    .mcol .bar { position: absolute; left: 8%; right: 8%; background: var(--ctx); }
+    .mcol.pos .bar { background: var(--accent); }
+    .mcol.neg .bar { background: var(--neg); }
+    .mcol .val { position: absolute; left: 0; right: 0; text-align: center; font-size: 15px; font-weight: 800; }
+    .mzero { position: absolute; left: 0; right: 0; border-top: 2px solid var(--text-muted); }
+    .mlabels { display: grid; grid-template-columns: repeat(12, 1fr); gap: 10px; text-align: center; font-size: 15px; color: var(--text-muted); margin-top: 6px; }
+    .big-num { font-size: 72px; font-weight: 800; color: var(--accent); line-height: 1; }
+    .side-body { font-size: 17px; line-height: 1.45; }
+
+    /* Ejemplo trabajado */
+    .ex-grid { display: grid; grid-template-columns: 1fr 1fr 0.8fr; gap: 20px; }
+    .ex-card { gap: 12px; }
+    .ex-tag { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted); }
+    .ex-card.hl .ex-tag { color: var(--accent); }
+    .ex-who { font-size: 17px; font-weight: 700; line-height: 1.3; min-height: 44px; }
+    .ex-bars { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; align-items: end; height: 230px; border-bottom: 2px solid var(--text-muted); }
+    .ex-bar { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 100%; }
+    .ex-bar i { width: 100%; background: var(--ctx); border-radius: 6px 6px 0 0; }
+    .ex-card.hl .ex-bar i { background: var(--accent); }
+    .ex-bar span { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+    .ex-months { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; text-align: center; font-size: 14px; color: var(--text-muted); }
+    .ex-total { display: flex; align-items: baseline; gap: 10px; border-top: 1px solid var(--border-subtle); padding-top: 10px; }
+    .ex-total b { font-size: 40px; color: var(--text-muted); }
+    .ex-card.hl .ex-total b { color: var(--accent); }
+    .ex-total span { font-size: 15px; line-height: 1.3; }
+    .steps-list { list-style: none; margin: 0; padding: 0; counter-reset: r; display: flex; flex-direction: column; gap: 14px; }
+    .steps-list li { counter-increment: r; font-size: 16.5px; line-height: 1.4; padding-left: 40px; position: relative; }
+    .steps-list li::before { content: counter(r); position: absolute; left: 0; top: -1px; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: var(--text-invert); font-weight: 800; display: grid; place-items: center; font-size: 15px; }
+
+    /* Comparativa */
+    .s6-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 24px; }
+    .question { font-size: 18px; font-weight: 600; line-height: 1.4; margin-bottom: 4px; }
+    .hbars { position: relative; display: flex; flex-direction: column; gap: 16px; }
+    .hrow { display: grid; grid-template-columns: 330px 1fr; align-items: center; gap: 14px; }
+    .hlabel { font-size: 16.5px; text-align: right; line-height: 1.2; }
+    .hrow.hl .hlabel { font-weight: 800; color: var(--accent); }
+    .htrack { position: relative; height: 40px; }
+    .hfill { height: 100%; border-radius: 0 8px 8px 0; background: var(--ctx); }
+    .hrow.hl .hfill { background: var(--accent); }
+    .hrow.hl2 .hfill { background: color-mix(in oklab, var(--accent) 55%, var(--bg-surface)); }
+    .hval { position: absolute; top: 50%; transform: translateY(-50%); font-size: 20px; font-weight: 800; padding-left: 10px; }
+    .hrow.hl .hval { color: var(--accent); }
+    .wins { width: 100%; border-collapse: collapse; font-size: 16px; }
+    .wins th, .wins td { padding: 9px 6px; border-bottom: 1px solid var(--border-subtle); text-align: center; }
+    .wins th { font-size: 13.5px; color: var(--text-muted); }
+    .wins td:first-child, .wins th:first-child { text-align: left; }
+    .wins td.win { font-weight: 800; color: var(--accent); }
+
+    /* Matriz */
+    .matrix { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 17px; }
+    .matrix th, .matrix td { padding: 13px 12px; border-bottom: 1px solid var(--border-subtle); text-align: center; }
+    .matrix th { font-size: 15.5px; color: var(--text-muted); font-weight: 700; }
+    .matrix th.rec, .matrix td.rec { background: var(--accent-soft); }
+    .matrix th.rec { color: var(--accent); border-radius: 12px 12px 0 0; }
+    .matrix td:first-child, .matrix th:first-child { text-align: left; width: 34%; }
+    .matrix td.num { font-weight: 800; font-size: 19px; }
+    .matrix td.rec.num { color: var(--accent); }
+    .mark { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: 15.5px; }
+    .mark i { font-style: normal; font-size: 19px; }
+    .m-yes { color: #15803d; } .m-part { color: #b45309; } .m-no { color: #b91c1c; }
+    body.theme-dark-royal .m-yes, body.theme-dark-carbon .m-yes { color: #4ade80; }
+    body.theme-dark-royal .m-part, body.theme-dark-carbon .m-part { color: #fbbf24; }
+    body.theme-dark-royal .m-no, body.theme-dark-carbon .m-no { color: #f87171; }
+
+    /* Calibración */
+    .s8-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 24px; }
+    .cal { display: grid; grid-template-columns: repeat(5, 1fr); gap: 22px; align-items: end; height: 330px; border-bottom: 2px solid var(--text-muted); padding: 0 6px; }
+    .cal-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; align-items: end; height: 100%; }
+    .cal-bar { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 100%; }
+    .cal-bar i { width: 100%; border-radius: 6px 6px 0 0; }
+    .cal-bar.obs i { background: var(--ctx); }
+    .cal-bar.pred i { background: var(--accent); }
+    .cal-bar span { font-size: 14.5px; font-weight: 800; margin-bottom: 4px; }
+    .cal-bar.pred span { color: var(--accent); }
+    .cal-labels { display: grid; grid-template-columns: repeat(5, 1fr); gap: 22px; text-align: center; font-size: 14.5px; color: var(--text-muted); padding: 0 6px; }
+    .legend { display: flex; gap: 22px; font-size: 15px; }
+    .legend span::before { content: ""; display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 6px; vertical-align: -2px; background: var(--ctx); }
+    .legend span.pred::before { background: var(--accent); }
+    .gaps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+    .gaps li { font-size: 16.5px; line-height: 1.4; padding-left: 24px; position: relative; }
+    .gaps li::before { content: "!"; position: absolute; left: 0; top: 2px; width: 17px; height: 17px; border-radius: 50%; background: #d97706; color: #fff; font-size: 12px; font-weight: 800; display: grid; place-items: center; }
+    .fix { font-size: 16.5px; font-weight: 600; line-height: 1.4; border-left: 4px solid var(--accent); padding: 8px 14px; background: var(--accent-soft); border-radius: 0 8px 8px 0; }
+
+    /* Próximos pasos */
+    .timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .tl-step { display: flex; flex-direction: column; gap: 10px; }
+    .tl-dot { display: flex; align-items: center; gap: 10px; }
+    .tl-dot b { width: 40px; height: 40px; border-radius: 50%; background: var(--accent); color: var(--text-invert); display: grid; place-items: center; font-size: 18px; flex-shrink: 0; }
+    .tl-dot hr { flex: 1; border: none; border-top: 3px solid var(--border-strong); margin: 0; }
+    .tl-head { font-size: 20px; font-weight: 700; }
+    .tl-body { font-size: 16.5px; line-height: 1.45; }
+    .decisions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .decision { font-size: 18px; font-weight: 600; line-height: 1.4; padding: 14px 18px; border-radius: 12px; border: 2px solid var(--accent); background: var(--accent-soft); }
+
+    /* Estabilidad de segmento */
+    .s2-grid { display: grid; grid-template-columns: 1fr 1.25fr; gap: 24px; }
+    .stack { display: flex; height: 46px; border-radius: 8px; overflow: hidden; }
+    .stack div { display: grid; place-items: center; font-weight: 800; font-size: 16px; }
+    .stack .keep { background: var(--ctx); }
+    .stack .chg { background: #d97706; color: #fff; }
+    .stack-legend { display: flex; justify-content: space-between; font-size: 15px; color: var(--text-muted); }
+    .mv-row { display: grid; grid-template-columns: 300px 1fr; gap: 14px; align-items: center; height: 38px; }
+    .mv-label { font-size: 15.5px; text-align: right; line-height: 1.2; }
+    .mv-label small { display: block; font-size: 12.5px; color: var(--text-muted); }
+    .mv-track { position: relative; height: 28px; }
+    .mv-fill { height: 100%; background: #d97706; border-radius: 0 6px 6px 0; }
+    .mv-val { position: absolute; top: 50%; transform: translateY(-50%); padding-left: 8px; font-size: 16px; font-weight: 800; }
+    .big-warn { font-size: 72px; font-weight: 800; color: #d97706; line-height: 1; }
+
+    /* Mapa de grupos */
+    .s4v3-grid { display: grid; grid-template-columns: 1.7fr 1fr; gap: 24px; }
+    .heat { width: 100%; border-collapse: separate; border-spacing: 6px; }
+    .heat th { font-size: 14.5px; color: var(--text-muted); font-weight: 700; padding: 2px 4px; }
+    .heat th.rowh { text-align: right; font-size: 15.5px; color: var(--text-main); font-weight: 600; white-space: nowrap; padding-right: 8px; }
+    .heat td { height: 56px; border-radius: 8px; text-align: center; line-height: 1.15; }
+    .heat td b { display: block; font-size: 21px; }
+    .heat td span { font-size: 12.5px; }
+    .heat td.empty { background: transparent; border: 1px dashed var(--border-subtle); color: var(--text-muted); font-size: 13px; }
+    .heat td.top { outline: 3px solid var(--text-main); outline-offset: -3px; }
+    .kpi { display: flex; flex-direction: column; gap: 4px; }
+    .kpi b { font-size: 54px; font-weight: 800; color: var(--accent); line-height: 1; }
+    .kpi span { font-size: 16px; line-height: 1.35; }
+
+    /* Estimado vs real por grupo */
+    .db-grid { display: grid; grid-template-columns: 1.75fr 1fr; gap: 24px; }
+    .db-head, .db-row { display: grid; grid-template-columns: 270px 1fr 130px; gap: 12px; align-items: center; }
+    .db-row { height: 21px; }
+    .db-head { font-size: 13px; color: var(--text-muted); font-weight: 700; }
+    .db-label { font-size: 14px; text-align: right; white-space: nowrap; }
+    .db-track { position: relative; height: 100%; }
+    .db-track::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; border-top: 1px solid var(--border-subtle); }
+    .db-line { position: absolute; top: calc(50% - 2px); height: 4px; background: var(--ctx); }
+    .db-row.gap .db-line { background: #d97706; }
+    .db-dot { position: absolute; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; }
+    .db-dot.pred { background: var(--accent); }
+    .db-dot.obs { background: var(--bg-surface); border: 3px solid var(--text-muted); }
+    .db-row.gap .db-dot.obs { border-color: #d97706; }
+    .db-val { font-size: 13.5px; white-space: nowrap; }
+    .db-row.gap .db-val { color: #b45309; font-weight: 700; }
+    body.theme-dark-royal .db-row.gap .db-val, body.theme-dark-carbon .db-row.gap .db-val { color: #fbbf24; }
+    .db-axis { position: relative; height: 18px; font-size: 12.5px; color: var(--text-muted); }
+    .db-axis span { position: absolute; transform: translateX(-50%); }
+    .legend span.gap::before { background: #d97706; }
+    .legend span.dot-pred::before { border-radius: 50%; background: var(--accent); }
+    .legend span.dot-obs::before { border-radius: 50%; background: transparent; border: 3px solid var(--text-muted); width: 9px; height: 9px; }
+
+    /* Curva de captura */
+    .cap-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 24px; }
+    .cap { display: grid; grid-template-columns: repeat(5, 1fr); gap: 28px; align-items: end; height: 330px; border-bottom: 2px solid var(--text-muted); padding: 0 10px; }
+    .cap-labels { display: grid; grid-template-columns: repeat(5, 1fr); gap: 28px; text-align: center; font-size: 15px; color: var(--text-muted); padding: 0 10px; line-height: 1.25; }
+    .cap-bar.rand i { background: var(--ctx); }
+    .cap-bar.model i { background: var(--accent); }
+    .cap-bar.model span { color: var(--accent); }
+    .cap-bar span { font-size: 17px; }
+    .legend span.model::before { background: var(--accent); }
+    .prec { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; align-items: baseline; border-top: 1px solid var(--border-subtle); padding-top: 12px; }
+    .prec b { font-size: 34px; color: var(--accent); }
+    .prec b.muted { color: var(--text-muted); }
+    .prec span { font-size: 15px; line-height: 1.3; }
+
+    .muted { color: var(--text-muted); }
+    .hlabel small { font-size: 13px; font-weight: 400; }
+
+    /* Portada */
+    .cover-kpi { display: flex; flex-direction: column; gap: 6px; padding: 14px 18px; }
+    .cover-kpi b { font-size: 34px; font-weight: 800; color: var(--accent); text-transform: none; letter-spacing: 0; line-height: 1.1; }
+    .cover-kpi span { font-size: 16.5px; font-weight: 500; line-height: 1.35; }
+
+    /* Agenda */
+    .agenda { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; align-self: center; }
+    .ag-item { display: flex; flex-direction: column; gap: 8px; padding: 20px 22px; }
+    .ag-num { font-size: 40px; font-weight: 800; color: var(--accent); line-height: 1; }
+    .ag-head { font-size: 21px; font-weight: 700; line-height: 1.25; }
+    .ag-slides { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted); }
+    .ag-body { font-size: 16px; line-height: 1.45; }
+
+    /* Literatura */
+    .lit-grid { display: grid; grid-template-columns: 1fr 1.45fr; gap: 24px; }
+    .funnel { display: flex; flex-direction: column; gap: 10px; }
+    .fn-step { display: grid; grid-template-columns: 78px 1fr; gap: 14px; align-items: center; padding: 10px 14px; border-radius: 10px; background: var(--bg-surface); border: 1px solid var(--border-subtle); }
+    .fn-step b { font-size: 34px; font-weight: 800; color: var(--accent); text-align: center; line-height: 1; }
+    .fn-step.final { border: 2px solid var(--accent); background: var(--accent-soft); }
+    .fn-step span { font-size: 15px; line-height: 1.35; }
+    .fn-step span strong { display: block; font-size: 16.5px; }
+    .fn-arrow { text-align: center; color: var(--accent); font-size: 18px; line-height: 1; margin: -4px 0; }
+    .th-row { display: grid; grid-template-columns: 290px 135px 1fr; gap: 14px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--border-subtle); }
+    .th-label { font-size: 16.5px; font-weight: 700; line-height: 1.25; }
+    .th-label small { display: block; font-size: 13.5px; font-weight: 400; color: var(--text-muted); line-height: 1.3; }
+    .th-track { position: relative; height: 26px; }
+    .th-fill { height: 100%; border-radius: 0 6px 6px 0; background: var(--accent); }
+    .th-use { font-size: 14.5px; line-height: 1.3; }
+    .th-n { position: absolute; top: 50%; transform: translateY(-50%); padding-left: 8px; font-size: 20px; font-weight: 800; }
+
+    /* Familias y criterios */
+    .fam-grid { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, .75fr); gap: 24px; }
+    .fam-grid > .card { min-width: 0; justify-content: center; gap: 14px; padding: 18px; }
+    .fam { width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 16px; line-height: 1.3; }
+    .fam th, .fam td { padding: 5px 7px; border-bottom: 1px solid var(--border-subtle); text-align: left; vertical-align: middle; }
+    .fam th { font-size: 13px; color: var(--text-muted); text-transform: uppercase; letter-spacing: .05em; }
+    .fam th:first-child { width: 31%; }
+    .fam th:nth-child(2), .fam td:nth-child(2) { width: 9%; text-align: center; }
+    .fam th:nth-child(3), .fam td:nth-child(3) { width: 15%; text-align: center; }
+    .fam th small { display: block; font-size: 12px; font-weight: 500; text-transform: none; letter-spacing: 0; margin-top: 3px; }
+    .fam td.precision-value { font-size: 21px; font-weight: 700; font-variant-numeric: tabular-nums; }
+    .fam td.precision-empty { color: var(--text-muted); }
+    .fam tr.chosen td { background: var(--accent-soft); font-weight: 700; }
+    .fam .mark { justify-content: center; font-size: 22px; line-height: 1; }
+    .crit { display: flex; flex-direction: column; gap: 16px; }
+    .crit div { display: grid; grid-template-columns: 34px 1fr; gap: 10px; font-size: 19px; line-height: 1.35; align-items: baseline; }
+    .crit b { color: var(--accent); }
+    .crit div.gate { font-weight: 700; }
+    .crit div.gate b { color: #b45309; }
+    .fam-grid .eff-foot { font-size: 14px; line-height: 1.35; }
+    body.theme-dark-royal .crit div.gate b, body.theme-dark-carbon .crit div.gate b { color: #fbbf24; }
+
+    /* Modelo */
+    .model-content { display: flex; flex-direction: column; gap: 20px; align-self: center; }
+    .signals-card { width: 100%; padding: 20px 24px; gap: 16px; }
+    .sig { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px 24px; }
+    .sig div { min-width: 0; border-left: 3px solid var(--accent); padding: 4px 12px; font-size: 17px; line-height: 1.35; }
+    .sig div b { display: block; font-size: 18px; margin-bottom: 4px; }
+    .sig div.combo { border-left-color: color-mix(in oklab, var(--accent) 50%, var(--bg-surface)); }
+    .model-progress { padding: 0 4px; font-size: 19px; line-height: 1.35; font-weight: 600; color: var(--text-main); }
+
+    /* Grupos */
+    .grp-grid { display: grid; grid-template-columns: 1.9fr 1fr; gap: 22px; }
+    .grp-head, .grp-row { display: grid; grid-template-columns: 300px 1fr 150px 150px; gap: 12px; align-items: center; }
+    .grp-head { font-size: 13px; color: var(--text-muted); font-weight: 700; }
+    .grp-row { height: 52px; border-bottom: 1px solid var(--border-subtle); }
+    .grp-label { font-size: 15.5px; font-weight: 700; line-height: 1.2; }
+    .grp-label small { display: block; font-weight: 400; font-size: 14px; }
+    .grp-track { position: relative; height: 26px; }
+    .grp-fill { height: 100%; border-radius: 0 6px 6px 0; background: var(--ctx); }
+    .grp-row.hi .grp-fill { background: var(--accent); }
+    .grp-val { position: absolute; top: 50%; transform: translateY(-50%); padding-left: 8px; font-size: 17px; font-weight: 800; }
+    .grp-people { font-size: 14.5px; line-height: 1.25; }
+    .grp-test { font-size: 14px; line-height: 1.25; }
+    .grp-test.over { color: #b45309; font-weight: 700; }
+    body.theme-dark-royal .grp-test.over, body.theme-dark-carbon .grp-test.over { color: #fbbf24; }
+
+    /* Árbol de grupos */
+    .tree-grid { display: grid; grid-template-columns: 2.5fr 1fr; gap: 22px; }
+    .tree { display: grid; grid-template-columns: 112px 150px 200px minmax(0, 1fr) 84px 118px; column-gap: 12px; align-items: stretch; }
+    .tree > div { display: flex; align-items: center; min-height: 50px; border-top: 1px solid var(--border-subtle); }
+    .tree > .tr-h { min-height: 0; border-top: none; padding-bottom: 8px; font-size: 13px; font-weight: 700; color: var(--text-muted); line-height: 1.25; align-items: flex-end; grid-row: 1; }
+    .tree > .first, .tree > .tr-tenure { border-top: 2px solid var(--text-muted); }
+    .tr-tenure { grid-column: 1; font-size: 17px; font-weight: 800; }
+    .tr-mid { grid-column: 2; font-size: 15.5px; font-weight: 700; padding-left: 10px; border-left: 3px solid var(--border-subtle); }
+    .tr-leaf { font-size: 15.5px; padding-left: 10px; border-left: 3px solid var(--border-subtle); }
+    .tr-leaf.hi { font-weight: 800; color: var(--accent); border-left-color: var(--accent); }
+    .tr-bar { grid-column: 4; }
+    .tr-track { position: relative; height: 24px; width: 100%; }
+    .tr-track i { display: block; height: 100%; border-radius: 0 6px 6px 0; background: var(--ctx); }
+    .tr-bar.hi .tr-track i { background: var(--accent); }
+    .tr-track b { position: absolute; top: 50%; transform: translateY(-50%); padding-left: 8px; font-size: 17px; font-weight: 800; }
+    .tr-bar.hi .tr-track b { color: var(--accent); }
+    .tr-people { grid-column: 5; flex-direction: column; justify-content: center; align-items: flex-start !important; font-size: 15px; line-height: 1.2; }
+    .tr-people small { font-size: 13px; color: var(--text-muted); }
+    .tr-test { grid-column: 6; font-size: 14.5px; }
+    .tr-test.over { color: #b45309; font-weight: 700; }
+    body.theme-dark-royal .tr-test.over, body.theme-dark-carbon .tr-test.over { color: #fbbf24; }
+
+    /* Qué tan bueno es */
+    .eval-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .eval-bars .hrow { grid-template-columns: 230px 1fr; }
+    .eval-bars .hlabel { font-size: 15.5px; }
+    .eval-cal.cal { height: 270px; gap: 16px; }
+    .eval-grid .cal-labels { gap: 16px; font-size: 13.5px; }
+
+    /* Próximos pasos */
+    .stage-next { grid-template-rows: auto 1fr auto; }
+    .next-grid { display: grid; grid-template-columns: 1fr 1.75fr 1fr; gap: 18px; min-height: 0; }
+    .next-card { justify-content: flex-start; gap: 12px; padding: 18px 20px; }
+    .next-card.key { border: 2px solid var(--accent); }
+    .next-num { font-size: 13px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: .06em; }
+    .next-head { font-size: 21px; font-weight: 700; line-height: 1.25; }
+    .next-card .side-body { font-size: 15.5px; }
+    .next-card .steps-list { gap: 12px; }
+    .next-card .steps-list li { font-size: 15.5px; }
+    .cands { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; }
+    .cand { display: grid; grid-template-columns: 92px 1fr; gap: 10px; align-items: start; border-left: 3px solid var(--accent); padding: 2px 0 2px 10px; }
+    .cand-tag { font-size: 12.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; color: var(--text-muted); padding-top: 2px; }
+    .cand b { display: block; font-size: 15.5px; line-height: 1.3; }
+    .cand small { display: block; font-size: 13.5px; line-height: 1.35; margin-top: 2px; }
+    .stage-next .decision { font-size: 16.5px; padding: 12px 16px; }
+
+
+  </style>
+</head>
+<!-- Default theme: change class to theme-light-soft / theme-dark-royal / theme-dark-carbon -->
+<body class="theme-light-classic">
+<div class="slide-stage  data-context" id="slide-1">
+<div class="cover" style="grid-row: 1 / -1;"><div class="cover-kicker">People Analytics · Engineering · salidas voluntarias a 6 meses · octubre 2026</div><h1 class="cover-title">Recomendamos un modelo que identifica los grupos de Engineering con más attrition, y que acertó al probarlo en 4 periodos pasados que no conocía</h1><div class="cover-chips"><div class="cover-chip cover-kpi"><b>3.2% vs 3%</b><span>cuánta attrition estimó contra la que hubo en el último periodo</span></div><div class="cover-chip cover-kpi"><b>4.7% vs 1.5%</b><span>attrition real del grupo de mayor riesgo contra la del de menor riesgo</span></div><div class="cover-chip cover-kpi"><b>8 grupos</b><span>identificados con datos que RH ya tiene: antigüedad, salidas en el equipo, nivel y personas a cargo; cada uno con más de 300 personas</span></div></div><div class="cover-note"><b>Cómo lo probamos:</b> le dimos la historia sólo hasta una fecha, estimó los 6 meses siguientes y lo comparamos con lo que pasó; lo repetimos 4 veces, con periodos de feb-2024 a ene-2026. Partimos de 43 trabajos de investigación y comparamos 4 tipos de modelo. Antes de usarlo falta afinar el grupo más alto y revisar que sea justo con todos los grupos.</div></div>
+</div>
+<div class="slide-stage stage-3rows data-context" id="slide-2">
+<div class="slide-heading"><div><h2 class="slide-title-text">De la literatura a un modelo listo para piloto, en cinco partes</h2><p class="slide-subtitle">Cada parte responde una pregunta de la decisión; las cifras vienen de los datos de Engineering, no de los papers</p></div></div><div class="agenda"><article class="card ag-item"><div class="ag-num">1</div><div class="ag-head">Cómo nos documentamos</div><div class="ag-slides">Diapositivas 3–4</div><div class="ag-body">43 trabajos, criterios de búsqueda y de 10 familias de modelos a una.</div></article><article class="card ag-item"><div class="ag-num">2</div><div class="ag-head">El modelo elegido</div><div class="ag-slides">Diapositiva 5</div><div class="ag-body">Cómo usa la historia mensual para estimar el riesgo a 6 meses.</div></article><article class="card ag-item"><div class="ag-num">3</div><div class="ag-head">Qué grupos encuentra</div><div class="ag-slides">Diapositiva 6</div><div class="ag-body">Los 8 grupos de Engineering, su riesgo a 6 meses y su tamaño.</div></article><article class="card ag-item"><div class="ag-num">4</div><div class="ag-head">Qué tan bueno es</div><div class="ag-slides">Diapositiva 7</div><div class="ag-body">Si ordena bien el riesgo y si le atina a cuántos se van, en 4 pruebas.</div></article><article class="card ag-item"><div class="ag-num">5</div><div class="ag-head">Próximos pasos</div><div class="ag-slides">Diapositiva 8</div><div class="ag-body">Modelo pendiente, variables nuevas, piloto y decisiones.</div></article></div><div class="src">Clasificación: presentación. Sólo resultados agregados por grupo.</div>
+</div>
+<div class="slide-stage stage-3rows data-context" id="slide-3">
+<div class="slide-heading"><div><h2 class="slide-title-text">Revisamos 43 trabajos de investigación: nos dijeron qué tipo de modelo usar y qué datos probar; los datos de Engineering decidieron la versión final</h2><p class="slide-subtitle">Dimos prioridad a trabajos con métodos reproducibles, datos longitudinales y salidas reales</p></div></div><div class="lit-grid"><article class="card" style="justify-content:center;gap:8px;padding:18px 20px;"><div class="funnel"><div class="fn-step"><b>9</b><span><strong>líneas de búsqueda</strong>Supervivencia, turnover, talento técnico, riesgos competitivos, ML, constructos de RH, causalidad, fairness y texto</span></div><div class="fn-arrow">▼</div><div class="fn-step"><b>32</b><span><strong>búsquedas registradas</strong>Crossref, OpenAlex, editoriales, JSTOR, arXiv, PubMed Central y repositorios; Scholar sólo para descubrir</span></div><div class="fn-arrow">▼</div><div class="fn-step"><b>5</b><span><strong>criterios de inclusión</strong>Estudia turnover o retención, método longitudinal, censura o riesgo temporal, constructos de RH, o gobierno</span></div><div class="fn-arrow">▼</div><div class="fn-step final"><b>43</b><span><strong>trabajos, de 1972 a 2026</strong>42 con ficha revisada y 1 sin texto accesible. Se excluyeron estudios sin método, duplicados y modelos sin validación</span></div></div></article><article class="card" style="justify-content:center;gap:4px;padding:18px 22px;"><div class="side-head" style="margin-bottom:4px;">Trabajos por tema y qué decidió cada tema</div><div class="th-row"><div class="th-label">Cómo medir el riesgo en el tiempo<small>Seguir a cada persona mes a mes, aunque todavía no se haya ido</small></div><div class="th-track"><div class="th-fill" style="width:16.72%"></div><div class="th-n" style="left:16.72%">5</div></div><div class="th-use">Eligió calcular el riesgo mes a mes</div></div><div class="th-row"><div class="th-label">Estudios de rotación en empresas<small>Las salidas llegan en olas y se miden con salidas reales</small></div><div class="th-track"><div class="th-fill" style="width:13.38%"></div><div class="th-n" style="left:13.38%">4</div></div><div class="th-use">Confirmaron que ese método funciona con datos de RH</div></div><div class="th-row"><div class="th-label">Modelos más complejos (machine learning)<small>Comparados con modelos simples en las mismas condiciones</small></div><div class="th-track"><div class="th-fill" style="width:20.07%"></div><div class="th-n" style="left:20.07%">6</div></div><div class="th-use">Ganan poco: los usamos sólo como punto de comparación</div></div><div class="th-row"><div class="th-label">Qué explica que alguien se vaya<small>Carrera, jefe y equipo, compromiso, arraigo</small></div><div class="th-track"><div class="th-fill" style="width:76.92%"></div><div class="th-n" style="left:76.92%">23</div></div><div class="th-use">Agrupó las variables de la lluvia de ideas y del playbook en bloques y dio el orden para probarlos</div></div><div class="th-row"><div class="th-label">Uso responsable<small>Privacidad de las personas y trato parejo</small></div><div class="th-track"><div class="th-fill" style="width:16.72%"></div><div class="th-n" style="left:16.72%">5</div></div><div class="th-use">Sólo resultados por grupo y revisar que sea justo con todos</div></div><div class="note-box" style="margin-top:10px;">No copiamos ningún modelo ni sus datos: revisamos cada trabajo y lo usamos para aportar ideas. Los modelos que probamos se construyeron y ajustaron con los datos de Qualcomm.</div></article></div>
+</div>
+<div class="slide-stage stage-3rows data-context" id="slide-4">
+<div class="slide-heading"><div><h2 class="slide-title-text">De 10 familias de modelos estadísticos, probamos 4 y elegimos el riesgo mes a mes</h2><p class="slide-subtitle">5 descartadas y 1 pendiente · criterios fijados el 30-sep-2026, antes de ver resultados · pruebas con datos de Engineering (diapositiva 7)</p></div></div><div class="fam-grid"><article class="card"><table class="fam" aria-label="Familias de modelos, desviación del total real y decisión de evaluación" aria-describedby="family-error-note"><thead><tr><th scope="col">Familia de modelos</th><th scope="col">Estado</th><th scope="col">Desviación<small>vs. total real · menor es mejor</small></th><th scope="col">Motivo</th></tr></thead><tbody><tr class="chosen"><td>Riesgo mes a mes (hazard discreto)</td><td><span class="mark m-yes" role="img" aria-label="Probada" title="Probada">✓</span></td><td class="precision-value" title="Desviación media del total real de salidas: 6.1%">6.1%</td><td>Usa cada mes (C1), menor desviación (C2) y mejor orden del riesgo (C3)</td></tr><tr><td>Regresión logística a 6 meses</td><td><span class="mark m-yes" role="img" aria-label="Probada" title="Probada">✓</span></td><td class="precision-value" title="Desviación media del total real de salidas: 14.5%">14.5%</td><td>Descarta meses recientes (C1, C7); más desviación (C2)</td></tr><tr><td>Gradient boosting (LightGBM)</td><td><span class="mark m-yes" role="img" aria-label="Probada" title="Probada">✓</span></td><td class="precision-value" title="Desviación media del total real de salidas: 10.2%">10.2%</td><td>Difícil de explicar (C5); más desviación (C2)</td></tr><tr><td>Promedio histórico</td><td><span class="mark m-yes" role="img" aria-label="Probada" title="Probada">✓</span></td><td class="precision-value" title="Desviación media del total real de salidas: 7.1%">7.1%</td><td>No distingue grupos de riesgo (C3)</td></tr><tr><td>Random survival forest</td><td><span class="mark m-part" role="img" aria-label="Pendiente" title="Pendiente">◐</span></td><td class="precision-empty" aria-label="Sin prueba" title="Sin prueba">—</td><td>Pendiente de prueba</td></tr><tr><td>Cox de riesgos proporcionales</td><td><span class="mark m-no" role="img" aria-label="Descartada" title="Descartada">✗</span></td><td class="precision-empty" aria-label="Sin prueba" title="Sin prueba">—</td><td>Menos adecuado para datos mensuales (C1)</td></tr><tr><td>Riesgos competitivos y multiestado</td><td><span class="mark m-no" role="img" aria-label="Descartada" title="Descartada">✗</span></td><td class="precision-empty" aria-label="Sin prueba" title="Sin prueba">—</td><td>Falta definir tipos de salida</td></tr><tr><td>Deep learning y texto</td><td><span class="mark m-no" role="img" aria-label="Descartada" title="Descartada">✗</span></td><td class="precision-empty" aria-label="Sin prueba" title="Sin prueba">—</td><td>Difícil de explicar (C5); sin texto libre (C6)</td></tr><tr><td>Causal y uplift</td><td><span class="mark m-no" role="img" aria-label="Descartada" title="Descartada">✗</span></td><td class="precision-empty" aria-label="Sin prueba" title="Sin prueba">—</td><td>Sin acciones de retención registradas</td></tr><tr><td>Ecuaciones estructurales y mediación</td><td><span class="mark m-no" role="img" aria-label="Descartada" title="Descartada">✗</span></td><td class="precision-empty" aria-label="Sin prueba" title="Sin prueba">—</td><td>Explica relaciones, no estima riesgo (C3)</td></tr></tbody></table><div class="eff-foot" id="family-error-note"><b>Desviación:</b> % de diferencia entre las salidas estimadas y las reales (promedio de 4 pruebas).</div></article><article class="card"><div class="side-head">Qué buscamos en el modelo</div><div class="crit"><div><b>C1</b><span>Aprovecha la historia mensual.</span></div><div><b>C2</b><span>Estima bien la attrition total y por grupo.</span></div><div><b>C3</b><span>Identifica los grupos de mayor riesgo.</span></div><div><b>C4</b><span>Funciona al probarlo en otras fechas.</span></div><div><b>C5</b><span>Es sencillo de entender.</span></div><div><b>C6</b><span>Protege la privacidad y permite revisar el trato justo.</span></div><div><b>C7</b><span>Funciona aun con datos incompletos.</span></div><div><b>C8</b><span>Es fácil de actualizar.</span></div><div><b>C9</b><span>Tiene respaldo en estudios de salidas reales.</span></div></div></article></div><div class="src">Desviación: comparación de los modelos base con datos de Engineering, 1-oct-2026.</div>
+</div>
+<div class="slide-stage stage-3rows data-context" id="slide-5">
+<div class="slide-heading"><div><h2 class="slide-title-text">El modelo: estima el riesgo de renunciar en cada mes con 6 señales y 2 combinaciones, y lo acumula a 6 meses</h2><p class="slide-subtitle">Riesgo mes a mes, también llamado hazard discreto · especificación final del 2-oct-2026</p></div></div><div class="model-content"><div class="pipe"><div class="pipe-step"><div class="pipe-num">1 · Datos</div><div class="pipe-head">Fotos mensuales de Engineering</div><div class="pipe-body">1,880,719 personas-mes, de jul-2021 a jul-2026. Para cada persona y mes: sus señales y si salió de forma voluntaria antes de la foto siguiente.</div></div><div class="pipe-step key"><div class="pipe-num">2 · Modelo</div><div class="pipe-head">Una regresión, como la logística</div><div class="pipe-body">Cada señal suma un coeficiente y la fórmula convierte la suma en un riesgo mensual entre 0 y 1.</div><div class=formula>h = 1 − exp(−exp(α + Σ βx))</div></div><div class="pipe-step"><div class="pipe-num">3 · Riesgo mensual</div><div class="pipe-head">Cambia con el calendario</div><div class="pipe-body">El mismo grupo tiene un riesgo distinto en mayo que en octubre: el mes del año es una señal.</div></div><div class="pipe-step"><div class="pipe-num">4 · Riesgo a 6 meses</div><div class="pipe-head">Se acumula mes a mes</div><div class="pipe-body">Se encadenan los 6 riesgos mensuales; la misma fórmula da el riesgo a 3 o 12 meses sin reentrenar.</div><div class=formula>R₆ = 1 − (1−h₁)(1−h₂)…(1−h₆)</div></div></div><article class="card signals-card"><div class="section-head">Las señales</div><div class="sig"><div><b>Nivel</b>7 grupos, de Associate a VP, y «otros»</div><div><b>Antigüedad en la empresa</b>menos de 1, 1 a 3, 3 a 7, 7+ años</div><div><b>Mes del año</b>la temporada de salidas</div><div><b>Cambios de manager</b>en los últimos 12 meses: 0, 1, 2+</div><div><b>Salidas del equipo</b>renuncias en 12 meses en el equipo del manager actual: 0, 1, 2+</div><div><b>Reportes directos</b>personas a cargo: 0, 1 a 5, 6+</div><div class=combo><b>Nivel × antigüedad</b>la antigüedad pesa distinto en cada nivel</div><div class=combo><b>Antigüedad × cambios de manager</b>cambiar de manager pesa distinto según la antigüedad</div></div></article><div class="model-progress">Seguimos evaluando e incorporando nuevas variables al modelo.</div></div><div class="src">Fuente: análisis de Engineering del 1 y 2-oct-2026. Sin segmento, job family ni atributos protegidos como señal.</div>
+</div>
+<div class="slide-stage stage-3rows data-context" id="slide-6">
+<div class="slide-heading"><div><h2 class="slide-title-text">El modelo divide Engineering en 8 grupos por antigüedad, salidas en el equipo, nivel y reportes; los 2 de mayor riesgo tuvieron renuncias recientes en su equipo</h2><p class="slide-subtitle">Cada persona cae en un solo grupo · % que se estima saldrá en 6 meses · foto del 26-jul-2026 · 37,221 personas</p></div></div><div class="tree-grid"><article class="card" style="justify-content:center;padding:14px 22px;"><div class="tree"><div class="tr-h" style="grid-column:1;">Antigüedad</div><div class="tr-h" style="grid-column:2 / span 2;">Se divide por</div><div class="tr-h">Riesgo estimado a 6 meses</div><div class="tr-h">Personas</div><div class="tr-h">Última prueba<br>estimado · real</div><div class="tr-tenure" style="grid-row:2 / span 2;">Menos de 1 año</div><div class="tr-leaf first" style="grid-row:2;grid-column:2 / span 2;">Con salidas en su equipo</div><div class="tr-bar first" style="grid-row:2;"><div class="tr-track"><i style="width:44.69%"></i><b style="left:44.69%">3.2%</b></div></div><div class="tr-people first" style="grid-row:2;">1,645<small>4.4%</small></div><div class="tr-test first" style="grid-row:2;">3.4% · 3.4%</div><div class="tr-leaf" style="grid-row:3;grid-column:2 / span 2;">Sin salidas en su equipo</div><div class="tr-bar" style="grid-row:3;"><div class="tr-track"><i style="width:28.04%"></i><b style="left:28.04%">2%</b></div></div><div class="tr-people" style="grid-row:3;">3,669<small>9.9%</small></div><div class="tr-test" style="grid-row:3;">2.1% · 2.5%</div><div class="tr-tenure" style="grid-row:4 / span 2;">1 a 7 años</div><div class="tr-leaf hi first" style="grid-row:4;grid-column:2 / span 2;">Con salidas en su equipo</div><div class="tr-bar hi first" style="grid-row:4;"><div class="tr-track"><i style="width:74.07%"></i><b style="left:74.07%">5.3%</b></div></div><div class="tr-people first" style="grid-row:4;">4,695<small>12.6%</small></div><div class="tr-test over first" style="grid-row:4;">5.9% · 4.7%</div><div class="tr-leaf" style="grid-row:5;grid-column:2 / span 2;">Sin salidas en su equipo</div><div class="tr-bar" style="grid-row:5;"><div class="tr-track"><i style="width:48.19%"></i><b style="left:48.19%">3.4%</b></div></div><div class="tr-people" style="grid-row:5;">13,191<small>35.4%</small></div><div class="tr-test" style="grid-row:5;">3.9% · 3.5%</div><div class="tr-tenure" style="grid-row:6 / span 4;">7+ años</div><div class="tr-mid" style="grid-row:6 / span 2;">Nivel Senior &amp; Lead</div><div class="tr-leaf hi first" style="grid-row:6;grid-column:3;">Con salidas en su equipo</div><div class="tr-bar hi first" style="grid-row:6;"><div class="tr-track"><i style="width:62.40%"></i><b style="left:62.40%">4.4%</b></div></div><div class="tr-people first" style="grid-row:6;">371<small>1%</small></div><div class="tr-test over first" style="grid-row:6;">4.8% · 3.7%</div><div class="tr-leaf" style="grid-row:7;grid-column:3;">Sin salidas en su equipo</div><div class="tr-bar" style="grid-row:7;"><div class="tr-track"><i style="width:39.92%"></i><b style="left:39.92%">2.8%</b></div></div><div class="tr-people" style="grid-row:7;">1,220<small>3.3%</small></div><div class="tr-test" style="grid-row:7;">3.1% · 3.6%</div><div class="tr-mid" style="grid-row:8 / span 2;">Otros niveles</div><div class="tr-leaf" style="grid-row:8;grid-column:3;">Sin reportes directos</div><div class="tr-bar" style="grid-row:8;"><div class="tr-track"><i style="width:27.57%"></i><b style="left:27.57%">2%</b></div></div><div class="tr-people" style="grid-row:8;">6,301<small>16.9%</small></div><div class="tr-test" style="grid-row:8;">2.1% · 2.2%</div><div class="tr-leaf" style="grid-row:9;grid-column:3;">Con reportes directos</div><div class="tr-bar" style="grid-row:9;"><div class="tr-track"><i style="width:18.12%"></i><b style="left:18.12%">1.3%</b></div></div><div class="tr-people" style="grid-row:9;">6,129<small>16.5%</small></div><div class="tr-test" style="grid-row:9;">1.5% · 1.5%</div></div></article><article class="card" style="justify-content:center;gap:16px;padding:22px;"><div class="kpi"><b>2.9%</b><span>riesgo promedio a 6 meses en Engineering</span></div><div class="kpi"><b>13.6%</b><span>de las personas está en los 2 grupos de mayor riesgo, resaltados en azul</span></div><div class="side-body" style="font-size:15.5px;">Salidas en el equipo = 1 o más renuncias en 12 meses en el equipo del manager actual. Con 2 o más, el riesgo mensual sube +88%.</div><div class="note-box">En naranja, grupos donde el estimado superó al real por 1 punto o más (diapositiva 7).</div></article></div><div class="src">Los grupos resumen el riesgo que estima el modelo con todas sus señales (explican 64% de su variación); dentro de cada grupo hay personas con más y menos riesgo. Grupos de 300+ personas y 30+ salidas en la última prueba. Fuente: análisis de Engineering del 1 y 2-oct-2026.</div>
+</div>
+<div class="slide-stage stage-3rows data-context" id="slide-7">
+<div class="slide-heading"><div><h2 class="slide-title-text">Qué tan bueno es: en el 10% de mayor riesgo están 20.1 de cada 100 salidas, el doble que al azar, y estimó entre 108% y 115% de las salidas reales</h2><p class="slide-subtitle">4 pruebas con datos que el modelo no vio, de feb-2024 a ene-2026 · cada una entrena sólo con la historia anterior · Engineering</p></div></div><div class="eval-grid"><article class="card" style="justify-content:center;gap:14px;padding:20px 24px;"><div class="next-num">1 · ¿Ordena bien quién tiene más riesgo?</div><div class="question">De cada 100 salidas reales en 6 meses, ¿cuántas estaban en el 10% de mayor riesgo?</div><div class="hbars eval-bars"><div class="hrow"><div class="hlabel">Al azar<br><small class="muted">sin modelo</small></div><div class="htrack"><div class="hfill" style="width:40.00%"></div><div class="hval" style="left:40.00%">10</div></div></div><div class="hrow"><div class="hlabel">Regresión logística a 6 meses<br><small class="muted">nivel, antigüedad y mes</small></div><div class="htrack"><div class="hfill" style="width:67.58%"></div><div class="hval" style="left:67.58%">16.9</div></div></div><div class="hrow"><div class="hlabel">Machine learning (LightGBM)<br><small class="muted">las 10 señales candidatas</small></div><div class="htrack"><div class="hfill" style="width:79.90%"></div><div class="hval" style="left:79.90%">20</div></div></div><div class="hrow hl"><div class="hlabel">Modelo elegido<br><small class="muted">53 coeficientes legibles</small></div><div class="htrack"><div class="hfill" style="width:80.56%"></div><div class="hval" style="left:80.56%">20.1</div></div></div></div><div class="side-body" style="font-size:15px;">En cada prueba: 21.5 · 21 · 21.4 · 16.7. Iguala al machine learning y se puede explicar coeficiente por coeficiente.</div></article><article class="card" style="justify-content:center;gap:12px;padding:20px 24px;"><div class="next-num">2 · ¿Le atina a cuántos se van?</div><div style="display:flex;align-items:center;"><div class="legend"><span>Real</span><span class="pred">Estimado</span></div><div class="muted" style="margin-left:auto;font-size:14.5px;">% que sale en 6 meses · última prueba</div></div><div class="cal eval-cal"><div class="cal-pair"><div class="cal-bar obs"><span>1.4%</span><i style="height:19.93%"></i></div><div class="cal-bar pred"><span>1.3%</span><i style="height:18.57%"></i></div></div><div class="cal-pair"><div class="cal-bar obs"><span>2.1%</span><i style="height:30.32%"></i></div><div class="cal-bar pred"><span>2.1%</span><i style="height:29.10%"></i></div></div><div class="cal-pair"><div class="cal-bar obs"><span>3.2%</span><i style="height:44.56%"></i></div><div class="cal-bar pred"><span>3%</span><i style="height:42.48%"></i></div></div><div class="cal-pair"><div class="cal-bar obs"><span>3.6%</span><i style="height:51.50%"></i></div><div class="cal-bar pred"><span>3.8%</span><i style="height:53.75%"></i></div></div><div class="cal-pair"><div class="cal-bar obs"><span>4.6%</span><i style="height:65.37%"></i></div><div class="cal-bar pred"><span>6%</span><i style="height:84.75%"></i></div></div></div><div class="cal-labels"><div>20% más bajo</div><div>2º</div><div>3º</div><div>4º</div><div>20% más alto</div></div><div class="side-body" style="font-size:15px;">El riesgo real sube en cada quinto. Los 4 primeros quedan a 0.2 puntos o menos; en el 20% más alto estima 6% y salió 4.6%: es la primera corrección pendiente.</div></article></div><div class="src">Quintos de personas ordenadas por riesgo estimado, con 30+ salidas cada uno. La logística usa las señales base; con las mismas señales el modelo elegido la superó en 4 de 4 pruebas. Fuente: análisis de Engineering del 1 y 2-oct-2026.</div>
+</div>
+<div class="slide-stage stage-next data-context" id="slide-8">
+<div class="slide-heading"><div><h2 class="slide-title-text">Próximos pasos: probar el modelo pendiente y nuevas variables de carrera, manager y encuesta en la misma población; después, el piloto</h2><p class="slide-subtitle">Cada prueba usa las mismas 4 fechas y la misma regla: algo nuevo entra sólo si mejora más de 2% al modelo actual · Engineering, mismas fotos mensuales</p></div></div><div class="next-grid"><article class="card next-card"><div class="next-num">1 · Modelo pendiente</div><div class="next-head">Random survival forest</div><div class="side-body">La única familia de modelos que quedó a medias: faltaba instalar su librería (scikit-survival).</div><div class="side-body">Mismas señales, mismas 4 pruebas y misma medida que el resto.</div><div class="eff-foot">LightGBM, también no lineal, empató con 20 de cada 100 salidas: esperamos una confirmación más que un cambio de modelo.</div></article><article class="card next-card key"><div class="next-num">2 · Variables nuevas · recomendamos empezar aquí</div><div class="cands"><div class="cand"><span class="cand-tag">Carrera</span><div><b>Tiempo desde la última promoción y tiempo en el nivel</b><small>Estancamiento: la literatura lo asocia con más salidas.</small></div></div><div class="cand"><span class="cand-tag">Carrera</span><div><b>Promovido o contratado en el nivel, recontratación, experiencia previa</b><small>Cómo entró la persona: hoy el modelo no lo sabe y es su punto débil con menos de 1 año.</small></div></div><div class="cand"><span class="cand-tag">Manager</span><div><b>Salida del propio manager y capas hasta el CEO</b><small>Completa el bloque que ya entró; capas sólo desde mar-2023.</small></div></div><div class="cand"><span class="cand-tag">Movilidad</span><div><b>Transferencia en el último año</b><small>Cambio de puesto o equipo dentro de la empresa.</small></div></div><div class="cand"><span class="cand-tag">Modalidad</span><div><b>Remoto, híbrido o en oficina</b><small>Sólo desde ago-2024: cabe en 2 de las 4 pruebas.</small></div></div><div class="cand"><span class="cand-tag">Encuesta</span><div><b>QVoice: intención de quedarse</b><small>La señal más fuerte en la literatura; antes hay que validar sus olas.</small></div></div></div><div class="eff-foot">Las 5 primeras tienen 11 o 12 de 16 puntos en el scorecard de datos; QVoice, 7 de 16.</div></article><article class="card next-card"><div class="next-num">3 · Antes del piloto</div><div class="next-head">Corregir y auditar</div><ul class="steps-list"><li>Ajustar la pendiente del 20% más alto y de Associate.</li><li>Auditar trato justo por grupo, en agregado.</li><li>Calcular intervalos de confianza por grupo.</li><li>Piloto en 1 o 2 grupos, con grupo de comparación.</li></ul></article></div><div style="display:flex;flex-direction:column;gap:10px;"><div class="section-head">Decisiones que necesitamos</div><div class="decisions"><div class="decision">Aprobar el modelo mes a mes de 53 coeficientes y los 8 grupos como base para Engineering.</div><div class="decision">Priorizar las variables de carrera y probar en paralelo el Random survival forest.</div><div class="decision">Definir si «Voluntary Exception» cuenta como salida y autorizar la validación de QVoice.</div></div></div>
+</div>
+
+  <!-- ================================================================
+       LEFT EDGE — SLIDE NAVIGATOR
+       Hover the left edge to reveal the slide list.
+       For a single-slide file, keep only one nav-pill (it still works).
+       Add one nav-pill per slide, matching data-slide to the 0-based index.
+       ================================================================ -->
+  <div class="nav-ctrl" id="slide-nav">
+    <div class="nav-tab">Diapositivas</div>
+    <div class="nav-panel">
+      <div class="nav-label">Navegación</div>
+      <button class="nav-pill pill-active" data-slide="0">1. Recomendación</button>
+      <button class="nav-pill" data-slide="1">2. Agenda</button>
+      <button class="nav-pill" data-slide="2">3. Cómo nos documentamos</button>
+      <button class="nav-pill" data-slide="3">4. De 10 familias de modelos a una</button>
+      <button class="nav-pill" data-slide="4">5. El modelo elegido</button>
+      <button class="nav-pill" data-slide="5">6. Los 8 grupos</button>
+      <button class="nav-pill" data-slide="6">7. Qué tan bueno es</button>
+      <button class="nav-pill" data-slide="7">8. Próximos pasos</button>
+    </div>
+  </div>
+
+
+  <!-- ================================================================
+       RIGHT EDGE — THEME SWITCHER
+       Hover the right edge of the screen to reveal theme pills.
+       ================================================================ -->
+  <div class="side-controls" id="theme-selector">
+    <div class="side-panel">
+      <div class="side-label">Tema</div>
+      <button class="side-pill pill-active" data-theme="theme-light-classic">Claro – Clásico</button>
+      <button class="side-pill" data-theme="theme-light-soft">Claro – Azul suave</button>
+      <button class="side-pill" data-theme="theme-dark-royal">Oscuro – Real</button>
+      <button class="side-pill" data-theme="theme-dark-carbon">Oscuro – Carbón</button>
+    </div>
+    <div class="side-tab">Tema</div>
+  </div>
+
+
+  <script>
+    /* =================================================================
+       THEME PERSISTENCE — localStorage key: "slide-studio-theme"
+       ================================================================= */
+    (function () {
+      var themePills = Array.from(document.querySelectorAll('#theme-selector [data-theme]'));
+
+      function applyTheme(themeClass, activeBtn) {
+        document.body.className = themeClass;
+        themePills.forEach(function (b) {
+          b.classList.toggle('pill-active', b === activeBtn);
+        });
+        try { localStorage.setItem('slide-studio-theme', themeClass); } catch (e) {}
+      }
+
+      themePills.forEach(function (btn) {
+        btn.addEventListener('click', function () { applyTheme(btn.dataset.theme, btn); });
+      });
+
+      var saved = null;
+      try { saved = localStorage.getItem('slide-studio-theme'); } catch (e) {}
+      var savedBtn = themePills.find(function (b) { return b.dataset.theme === saved; });
+      applyTheme(saved || document.body.className, savedBtn || themePills[0]);
+    })();
+
+
+    /* =================================================================
+       SLIDE NAVIGATION + fitSlide()
+
+       fitSlide() — scale 1440×810 stage to fill any viewport.
+       DPR-zoom guard: skip recalculation when Ctrl+/- changes devicePixelRatio
+       (browser zoom) vs an actual window resize.
+
+       showSlide(n) — hide all .slide-stage elements, show index n, re-fit.
+
+       Keyboard: ArrowRight/Down = next; ArrowLeft/Up = prev; Home/End = first/last.
+       ================================================================= */
+    (function () {
+      var SLIDE_W = 1440, SLIDE_H = 810;
+      var allStages = Array.from(document.querySelectorAll('.slide-stage'));
+      var navBtns   = Array.from(document.querySelectorAll('#slide-nav [data-slide]'));
+      var current   = 0;
+      var stage     = allStages[0];
+      var lastDPR   = window.devicePixelRatio;
+
+      function fitSlide() {
+        if (!stage) return;
+        var vw = window.innerWidth, vh = window.innerHeight;
+        var scale = Math.min(vw / SLIDE_W, vh / SLIDE_H);
+        stage.style.transform = 'scale(' + scale + ')';
+        stage.style.left = Math.max(0, (vw - SLIDE_W * scale) / 2) + 'px';
+        stage.style.top  = Math.max(0, (vh - SLIDE_H * scale) / 2) + 'px';
+      }
+
+      function showSlide(n) {
+        n = Math.max(0, Math.min(allStages.length - 1, n));
+        allStages.forEach(function (s, i) {
+          s.style.display = i === n ? '' : 'none';
+        });
+        navBtns.forEach(function (b, i) {
+          b.classList.toggle('pill-active', i === n);
+        });
+        stage   = allStages[n];
+        current = n;
+        fitSlide();
+      }
+
+      window.addEventListener('resize', function () {
+        var newDPR = window.devicePixelRatio;
+        if (newDPR !== lastDPR) { lastDPR = newDPR; return; } // Ctrl+zoom — skip
+        fitSlide();
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); showSlide(current + 1); }
+        if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   { e.preventDefault(); showSlide(current - 1); }
+        if (e.key === 'Home')                                  { e.preventDefault(); showSlide(0); }
+        if (e.key === 'End')                                   { e.preventDefault(); showSlide(allStages.length - 1); }
+      });
+
+      showSlide(0); // show first slide + initial fit
+    })();
+  </script>
+  <script>
+    (function () {
+      var buttons = Array.from(document.querySelectorAll('#slide-nav [data-slide]'));
+      buttons.forEach(function (button) {
+        button.addEventListener('click', function () {
+          var current = buttons.findIndex(function (item) { return item.classList.contains('pill-active'); });
+          var target = Number(button.dataset.slide);
+          var key = target > current ? 'ArrowRight' : 'ArrowLeft';
+          for (var step = 0; step < Math.abs(target - current); step++) {
+            document.dispatchEvent(new KeyboardEvent('keydown', { key: key }));
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

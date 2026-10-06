@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>V7 slide 26 render harness</title>
+  <style>html,body,iframe{width:1440px;height:810px;margin:0;padding:0;border:0;overflow:hidden;background:#fff}</style>
+</head>
+<body>
+  <iframe id="deck" src="../../attrition-43-variable-distributions-v7.html" title="V7 slide 26"></iframe>
+  <script>
+    const frame = document.getElementById('deck');
+    frame.addEventListener('load', () => {
+      const doc = frame.contentDocument;
+      const stages = Array.from(doc.querySelectorAll('.slide-stage'));
+      stages.forEach((stage, index) => {
+        stage.style.display = index === 25 ? '' : 'none';
+      });
+      const target = stages[25];
+      target.style.transform = 'scale(1)';
+      target.style.left = '0px';
+      target.style.top = '0px';
+    });
+  </script>
+</body>
+</html>

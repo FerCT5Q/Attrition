@@ -1,0 +1,268 @@
+{
+  "artifact_type": "aggregate_distribution_evidence",
+  "deliverable_mode": "internal_analysis",
+  "variable": "Promotion history by current compensation grade",
+  "semantic_type": "derived_feature",
+  "publication_status": "validated_descriptive_matrix",
+  "execution_date": "2026-09-10",
+  "snapshot_date": "2026-08-23",
+  "population": "worker_type='Employee'; employee_type='Regular'; active_status=1 at the 2026-08-23 monthly snapshot",
+  "grain": "Distinct active regular employee at one monthly snapshot, grouped by current compensation_grade",
+  "definition": {
+    "classification": "Current compensation grade is taken from the fixed employee snapshot. 0/1/2+ count valid recorded promotion events only inside the current employment episode.",
+    "valid_event_rule": "is_promo=1; event date present, not later than the cutoff or its source snapshot, and on or after the current episode start.",
+    "deduplication": "Only identical employee plus event-date pairs are counted once.",
+    "partial_history_rule": "Any episode that began before the observed promotion-history boundary is Partial promotion history, regardless of recorded events.",
+    "non_claims": "0 recorded promotions is not never promoted, first job, first promotion, or hired into grade."
+  },
+  "history_observability": {
+    "observed_promotion_history_start_date": "2016-10-23",
+    "interpretation": "Observed source-history boundary; it is not a claim that earlier promotion history is complete."
+  },
+  "category_labels": {
+    "zero_recorded_promotions": "0 recorded promotions",
+    "one_recorded_promotion": "1 recorded promotion",
+    "two_or_more_recorded_promotions": "2+ recorded promotions",
+    "partial_promotion_history": "Partial promotion history"
+  },
+  "percentage_rounding": {
+    "method": "largest remainder at 0.1 percentage point; category-order tie break",
+    "each_row_sums_to_percent": 100.0
+  },
+  "matrix": [
+    {
+      "grade": "M20",
+      "grade_scope": "individual",
+      "total_employee_count": 789,
+      "zero_recorded_promotions": 383,
+      "one_recorded_promotion": 120,
+      "two_or_more_recorded_promotions": 94,
+      "partial_promotion_history": 192,
+      "zero_recorded_promotions_percent": 48.6,
+      "one_recorded_promotion_percent": 15.2,
+      "two_or_more_recorded_promotions_percent": 11.9,
+      "partial_promotion_history_percent": 24.3
+    },
+    {
+      "grade": "M30",
+      "grade_scope": "individual",
+      "total_employee_count": 924,
+      "zero_recorded_promotions": 393,
+      "one_recorded_promotion": 173,
+      "two_or_more_recorded_promotions": 59,
+      "partial_promotion_history": 299,
+      "zero_recorded_promotions_percent": 42.5,
+      "one_recorded_promotion_percent": 18.7,
+      "two_or_more_recorded_promotions_percent": 6.4,
+      "partial_promotion_history_percent": 32.4
+    },
+    {
+      "grade": "M40",
+      "grade_scope": "individual",
+      "total_employee_count": 802,
+      "zero_recorded_promotions": 257,
+      "one_recorded_promotion": 175,
+      "two_or_more_recorded_promotions": 37,
+      "partial_promotion_history": 333,
+      "zero_recorded_promotions_percent": 32.1,
+      "one_recorded_promotion_percent": 21.8,
+      "two_or_more_recorded_promotions_percent": 4.6,
+      "partial_promotion_history_percent": 41.5
+    },
+    {
+      "grade": "P20",
+      "grade_scope": "individual",
+      "total_employee_count": 950,
+      "zero_recorded_promotions": 626,
+      "one_recorded_promotion": 206,
+      "two_or_more_recorded_promotions": 40,
+      "partial_promotion_history": 78,
+      "zero_recorded_promotions_percent": 65.9,
+      "one_recorded_promotion_percent": 21.7,
+      "two_or_more_recorded_promotions_percent": 4.2,
+      "partial_promotion_history_percent": 8.2
+    },
+    {
+      "grade": "P30",
+      "grade_scope": "individual",
+      "total_employee_count": 1447,
+      "zero_recorded_promotions": 772,
+      "one_recorded_promotion": 421,
+      "two_or_more_recorded_promotions": 95,
+      "partial_promotion_history": 159,
+      "zero_recorded_promotions_percent": 53.3,
+      "one_recorded_promotion_percent": 29.1,
+      "two_or_more_recorded_promotions_percent": 6.6,
+      "partial_promotion_history_percent": 11.0
+    },
+    {
+      "grade": "P40",
+      "grade_scope": "individual",
+      "total_employee_count": 1272,
+      "zero_recorded_promotions": 463,
+      "one_recorded_promotion": 319,
+      "two_or_more_recorded_promotions": 111,
+      "partial_promotion_history": 379,
+      "zero_recorded_promotions_percent": 36.4,
+      "one_recorded_promotion_percent": 25.1,
+      "two_or_more_recorded_promotions_percent": 8.7,
+      "partial_promotion_history_percent": 29.8
+    },
+    {
+      "grade": "R30",
+      "grade_scope": "individual",
+      "total_employee_count": 8874,
+      "zero_recorded_promotions": 4543,
+      "one_recorded_promotion": 3926,
+      "two_or_more_recorded_promotions": 363,
+      "partial_promotion_history": 42,
+      "zero_recorded_promotions_percent": 51.2,
+      "one_recorded_promotion_percent": 44.2,
+      "two_or_more_recorded_promotions_percent": 4.1,
+      "partial_promotion_history_percent": 0.5
+    },
+    {
+      "grade": "R35",
+      "grade_scope": "individual",
+      "total_employee_count": 3882,
+      "zero_recorded_promotions": 2438,
+      "one_recorded_promotion": 1260,
+      "two_or_more_recorded_promotions": 121,
+      "partial_promotion_history": 63,
+      "zero_recorded_promotions_percent": 62.8,
+      "one_recorded_promotion_percent": 32.5,
+      "two_or_more_recorded_promotions_percent": 3.1,
+      "partial_promotion_history_percent": 1.6
+    },
+    {
+      "grade": "R40",
+      "grade_scope": "individual",
+      "total_employee_count": 7027,
+      "zero_recorded_promotions": 1780,
+      "one_recorded_promotion": 3279,
+      "two_or_more_recorded_promotions": 772,
+      "partial_promotion_history": 1196,
+      "zero_recorded_promotions_percent": 25.3,
+      "one_recorded_promotion_percent": 46.7,
+      "two_or_more_recorded_promotions_percent": 11.0,
+      "partial_promotion_history_percent": 17.0
+    },
+    {
+      "grade": "R50",
+      "grade_scope": "individual",
+      "total_employee_count": 4480,
+      "zero_recorded_promotions": 1198,
+      "one_recorded_promotion": 798,
+      "two_or_more_recorded_promotions": 255,
+      "partial_promotion_history": 2229,
+      "zero_recorded_promotions_percent": 26.7,
+      "one_recorded_promotion_percent": 17.8,
+      "two_or_more_recorded_promotions_percent": 5.7,
+      "partial_promotion_history_percent": 49.8
+    },
+    {
+      "grade": "S40",
+      "grade_scope": "individual",
+      "total_employee_count": 416,
+      "zero_recorded_promotions": 102,
+      "one_recorded_promotion": 192,
+      "two_or_more_recorded_promotions": 42,
+      "partial_promotion_history": 80,
+      "zero_recorded_promotions_percent": 24.5,
+      "one_recorded_promotion_percent": 46.2,
+      "two_or_more_recorded_promotions_percent": 10.1,
+      "partial_promotion_history_percent": 19.2
+    },
+    {
+      "grade": "T40",
+      "grade_scope": "individual",
+      "total_employee_count": 619,
+      "zero_recorded_promotions": 148,
+      "one_recorded_promotion": 297,
+      "two_or_more_recorded_promotions": 39,
+      "partial_promotion_history": 135,
+      "zero_recorded_promotions_percent": 23.9,
+      "one_recorded_promotion_percent": 48.0,
+      "two_or_more_recorded_promotions_percent": 6.3,
+      "partial_promotion_history_percent": 21.8
+    },
+    {
+      "grade": "T50",
+      "grade_scope": "individual",
+      "total_employee_count": 2378,
+      "zero_recorded_promotions": 327,
+      "one_recorded_promotion": 448,
+      "two_or_more_recorded_promotions": 197,
+      "partial_promotion_history": 1406,
+      "zero_recorded_promotions_percent": 13.8,
+      "one_recorded_promotion_percent": 18.8,
+      "two_or_more_recorded_promotions_percent": 8.3,
+      "partial_promotion_history_percent": 59.1
+    },
+    {
+      "grade": "Other grades",
+      "grade_scope": "pooled",
+      "total_employee_count": 16183,
+      "zero_recorded_promotions": 9571,
+      "one_recorded_promotion": 1763,
+      "two_or_more_recorded_promotions": 173,
+      "partial_promotion_history": 4676,
+      "zero_recorded_promotions_percent": 59.1,
+      "one_recorded_promotion_percent": 10.9,
+      "two_or_more_recorded_promotions_percent": 1.1,
+      "partial_promotion_history_percent": 28.9
+    }
+  ],
+  "metrics": {
+    "active_regular_employee_count": 50043,
+    "observable_history_employee_count": 38776,
+    "partial_history_employee_count": 11267,
+    "valid_event_pair_count": 26554,
+    "employees_with_valid_event_count": 23180,
+    "current_episode_events_excluded_before_rehire_count": 311,
+    "identical_event_duplicate_pairs_deduplicated": 0,
+    "raw_current_grade_count": 45,
+    "individual_grade_count": 13,
+    "pooled_other_grade_count": 32,
+    "minimum_published_cell_count": 37,
+    "minimum_cohort": 30
+  },
+  "validation": {
+    "integrity": {
+      "outcome": "pass",
+      "acceptance_rule": "Target employee-snapshot, current grade, and episode are unique and complete; flags/dates are valid; no selected event predates its current episode."
+    },
+    "reconciliation": {
+      "outcome": "pass",
+      "acceptance_rule": "0/1/2+ exactly cover observable episodes, Partial promotion history exactly covers the historical remainder, and all rows/categories sum to the 50,043-person population."
+    },
+    "pooling": {
+      "outcome": "pass",
+      "acceptance_rule": "A grade is shown individually only if all four cells are n>=30; every other grade is included exactly once in Other grades."
+    },
+    "privacy": {
+      "outcome": "pass",
+      "acceptance_rule": "Internal-analysis artifact retains only aggregate counts; every visible matrix cell is n>=30; no employee rows, identities, individual dates, or exact compensation values are stored."
+    }
+  },
+  "provenance": {
+    "audit_sql": "queries/audits/promotion_history_by_compensation_grade_integrity_20260823.sql",
+    "audit_sql_sha256": "532e5e40db1261b91465f175bb962e0a73cb0a1457aafaa5f1f635c8bb77727c",
+    "audit_result_sha256": "4bd4237b22245a495c44f7ebcf60a5b30110198fbd7bbb9ce637b60c0c50f463",
+    "profile_sql": "queries/profiles/promotion_history_by_compensation_grade_20260823.sql",
+    "profile_sql_sha256": "7477ed43ea3a9c10cc6f23239909fa545353e4a608d0802b1d829c849d412855",
+    "profile_result_sha256": "e6baca9ac1171c6926dbbc0d127e40b2501c35794597d3743cd8e343243ce0e2",
+    "raw_aggregate_rows_persisted": false
+  },
+  "privacy_checks": {
+    "identifiers_persisted": false,
+    "employee_rows_persisted": false,
+    "individual_dates_persisted": false,
+    "exact_compensation_persisted": false,
+    "all_visible_cells_meet_minimum": true,
+    "minimum_cohort": 30
+  },
+  "score_v4_change": "none",
+  "limitation": "This descriptive matrix reports recorded promotion events in observed history. It does not establish a promotion policy, a causal relationship with attrition, a first promotion, or whether a person was hired into a grade.",
+  "outcome": "pass"
+}

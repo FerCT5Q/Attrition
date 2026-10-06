@@ -1,0 +1,165 @@
+{
+  "artifact_type": "promotion_track_trailing_12m_slide_evidence",
+  "version": 1,
+  "generated_on": "2026-09-18",
+  "deliverable_mode": "internal_analysis",
+  "purpose": "Actualizar la lamina 30 con compensation grades colapsados por letra y tasas agregadas de promocion y attrition.",
+  "analysis_plan": {
+    "path": "config/analysis-plans/20260918-promotion-track-trailing-12m-slide-v5.yaml",
+    "sha256": "56a76383ce9ccb90662228e5ed4f58075f5845e9f654a74d911345fed10f1091"
+  },
+  "query_provenance": {
+    "main": {
+      "path": "queries/audits/promotion_track_trailing_12m_20260918.sql",
+      "sql_sha256": "e51cefd161bed6b70657866daa0d1e1c7230f5eaf4f5e76fdc9fab51c7df0fc3",
+      "result_sha256": "68cbce5531bd6c6a2d57543fefeca1a3f3e9263cdea06789bc68e6df7e919c4a"
+    },
+    "exit_fallback_audit": {
+      "path": "queries/audits/promotion_track_unmatched_exit_nonnull_grade_20260918.sql",
+      "sql_sha256": "fda08956b383e2f63acded0ce51fae2cca39cc50163b797e1134fc3aec90162b",
+      "result_sha256": "fb564717e1a8dd2683e2868f12e027e3e77a2c59514d4659bc5ee1c92b03ed7a"
+    }
+  },
+  "definition": {
+    "track": "Primera letra de compensation_grade/grade cuando el codigo inicia con letra A-Z seguida de digito; por ejemplo M10, M20 y M30 se colapsan a M.",
+    "distribution": "Empleados Employee, Regular, activos y no RF360 en el snapshot 2026-08-23.",
+    "promotion_rate": "promotion_yes_no='Yes' dividido entre participantes elegibles del ciclo AR25; track tomado del grade del ciclo.",
+    "attrition_rate": "Exits strict VOLUNTARY en (2025-08-24, 2026-08-23] divididos entre el headcount mensual promedio del track en los doce snapshots."
+  },
+  "window": {
+    "snapshot_date": "2026-08-23",
+    "start_exclusive": "2025-08-24",
+    "end_inclusive": "2026-08-23",
+    "monthly_snapshot_count": 12,
+    "annual_review_cycle": "AR25",
+    "annual_review_population_snapshot": "2025-11-23"
+  },
+  "totals": {
+    "current_employee_count": 46878,
+    "promotion_participant_count": 40805,
+    "promoted_employee_count": 6116,
+    "overall_promotion_rate_percent": 14.988359269697341,
+    "average_monthly_headcount": 44357.916664000004,
+    "voluntary_event_count": 2604,
+    "assigned_voluntary_exit_count": 2603,
+    "exit_track_assignment_coverage_percent": 99.9615975422427,
+    "overall_attrition_rate_percent": 5.868174602781881
+  },
+  "privacy": {
+    "minimum_shared_cohort": 30,
+    "displayed_track_count": 6,
+    "suppressed_current_track_count": 1,
+    "suppressed_track_labels_and_counts_persisted": false,
+    "visible_distribution_coverage_percent": 99.98720081914757,
+    "employee_rows_or_identifiers_persisted": false
+  },
+  "exit_track_assignment": {
+    "minimum_accepted_coverage_percent": 99.5,
+    "coverage_percent": 99.9615975422427,
+    "method": "Ultimo snapshot activo previo dentro de 45 dias; fallback a un unico grade no nulo estable en las filas que registran el evento.",
+    "ambiguous_events_are_unassigned": true,
+    "unassigned_event_count": 1
+  },
+  "display_rows": [
+    {
+      "track": "R",
+      "current_employee_count": 31522,
+      "current_distribution_percent": 67.2426,
+      "promotion_participant_count": 26778,
+      "promoted_employee_count": 4572,
+      "promotion_rate_percent": 17.0737,
+      "average_monthly_headcount": 29450.166666,
+      "voluntary_exit_count": 1924,
+      "attrition_rate_percent": 6.5331
+    },
+    {
+      "track": "T",
+      "current_employee_count": 5791,
+      "current_distribution_percent": 12.3533,
+      "promotion_participant_count": 5419,
+      "promoted_employee_count": 536,
+      "promotion_rate_percent": 9.8911,
+      "average_monthly_headcount": 5631.916666,
+      "voluntary_exit_count": 202,
+      "attrition_rate_percent": 3.5867
+    },
+    {
+      "track": "P",
+      "current_employee_count": 4537,
+      "current_distribution_percent": 9.6783,
+      "promotion_participant_count": 4120,
+      "promoted_employee_count": 630,
+      "promotion_rate_percent": 15.2913,
+      "average_monthly_headcount": 4426.0,
+      "voluntary_exit_count": 251,
+      "attrition_rate_percent": 5.671
+    },
+    {
+      "track": "M",
+      "current_employee_count": 3784,
+      "current_distribution_percent": 8.072,
+      "promotion_participant_count": 3333,
+      "promoted_employee_count": 276,
+      "promotion_rate_percent": 8.2808,
+      "average_monthly_headcount": 3615.166666,
+      "voluntary_exit_count": 158,
+      "attrition_rate_percent": 4.3705
+    },
+    {
+      "track": "S",
+      "current_employee_count": 826,
+      "current_distribution_percent": 1.762,
+      "promotion_participant_count": 789,
+      "promoted_employee_count": 97,
+      "promotion_rate_percent": 12.294,
+      "average_monthly_headcount": 813.583333,
+      "voluntary_exit_count": 32,
+      "attrition_rate_percent": 3.9332
+    },
+    {
+      "track": "V",
+      "current_employee_count": 412,
+      "current_distribution_percent": 0.8789,
+      "promotion_participant_count": 363,
+      "promoted_employee_count": 5,
+      "promotion_rate_percent": 1.3774,
+      "average_monthly_headcount": 415.083333,
+      "voluntary_exit_count": 36,
+      "attrition_rate_percent": 8.673
+    }
+  ],
+  "diagnostics": {
+    "annual_review_conflicting_grade_count": "0",
+    "annual_review_conflicting_promotion_flag_count": "0",
+    "annual_review_duplicate_employee_count": "0",
+    "annual_review_invalid_promotion_flag_count": "0",
+    "annual_review_missing_grade_count": "0",
+    "annual_review_promoted_employee_count": "6116",
+    "annual_review_scope_eligible_count": "40805",
+    "annual_review_scope_excluded_count": "3621",
+    "annual_review_snapshot_unmatched_count": "0",
+    "annual_review_source_row_count": "44426",
+    "annual_review_unique_employee_count": "44426",
+    "baseline_snapshot_date": "2025-08-24",
+    "baseline_snapshot_exists": "1",
+    "current_conflicting_grade_count": "0",
+    "current_duplicate_employee_count": "0",
+    "current_invalid_grade_pattern_count": "0",
+    "current_missing_grade_count": "0",
+    "current_population_count": "46878",
+    "latest_snapshot_date": "2026-08-23",
+    "latest_snapshot_exists": "1",
+    "review_snapshot_date": "2025-11-23",
+    "track_count": "8",
+    "voluntary_event_count": "2604",
+    "voluntary_event_fallback_track_count": "7",
+    "voluntary_event_prior_track_count": "2596",
+    "voluntary_event_track_total": "2603",
+    "voluntary_event_unassigned_count": "1",
+    "window_conflicting_grade_count": "0",
+    "window_duplicate_employee_snapshot_count": "0",
+    "window_employee_snapshot_count": "532295",
+    "window_snapshot_count": "12"
+  },
+  "outcome": "pass"
+}

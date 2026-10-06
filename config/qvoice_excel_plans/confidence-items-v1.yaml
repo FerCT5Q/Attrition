@@ -1,0 +1,60 @@
+schema_version: 1
+plan_version: 1
+language: es
+created_before_execution: true
+plan_authorship: codex_explicit
+variable: Confidence items
+concept: KPI binario Confidence calculado como el promedio de Q13 y Q17 segun survey_structure.xlsx.
+intended_use: Comparar la senal binaria historica de Confidence con attrition posterior.
+knowledge_date: Fecha de la wave QVoice; excluir informacion posterior.
+population: Respuestas QVoice con una fila por empleado-wave tras deduplicacion interna y al menos un componente Q13/Q17 valido.
+grain: Employee-wave response aggregate
+semantic_type: derived_feature
+validation_story:
+  - id: source_access
+    criterion: source
+    evidence_role: supporting
+    question: ¿El diccionario resuelve Q13 y Q17 en forma binaria por workbook?
+    why: La ausencia de un componente cambia el significado del promedio y debe ser visible.
+    method: schema_access_check
+    sql_reference: queries/audits/qvoice_excel_source_inventory_20260826-2.sql
+    acceptance_rule: El inventario debe reportar el estado de ambos componentes por workbook.
+    metric_map:
+      missing_items: {column: missing_items, aggregate: sum}
+    metric_checks:
+      - {metric: missing_items, operator: gte, threshold: 0, aggregate: sum}
+  - id: component_definition
+    criterion: definition
+    evidence_role: defining
+    question: ¿El promedio binario de Confidence usa Q13/Q17 validos y separa respuestas parciales?
+    why: Un solo componente es una senal utilizable, pero no demuestra el KPI completo.
+    method: independent_recalculation
+    sql_reference: queries/audits/qvoice_excel_definition_audit_20260826-2.sql
+    acceptance_rule: Deben cuantificarse completas, parciales, sin componente e invalidos por wave.
+    metric_checks:
+      - {metric: eligible_count, operator: gt, threshold: 0, aggregate: sum}
+      - {metric: populated_count, operator: gt, threshold: 0, aggregate: sum}
+      - {metric: invalid_count, operator: eq, threshold: 0, aggregate: sum}
+      - {metric: partial_component_count, operator: gte, threshold: 0, aggregate: sum}
+  - id: longitudinal_consistency
+    criterion: consistency
+    evidence_role: defining
+    question: ¿El dominio binario y la disponibilidad de Q13/Q17 son trazables entre waves?
+    why: Confidence puede cambiar por cambios de cuestionario y no por cambios de respuestas.
+    method: longitudinal_aggregate_audit
+    sql_reference: queries/audits/qvoice_excel_consistency_audit_20260826-2.sql
+    acceptance_rule: No debe haber invalidos y toda variacion del mapping debe quedar registrada.
+    metric_checks:
+      - {metric: invalid_count, operator: eq, threshold: 0, aggregate: sum}
+      - {metric: item_set_change_count, operator: gte, threshold: 0, aggregate: sum}
+  - id: employee_wave_grain
+    criterion: join
+    evidence_role: supporting
+    question: ¿Confidence conserva un grain unico de empleado-wave?
+    why: La unicidad interna es requisito para un join temporal posterior.
+    method: key_grain_and_temporal_reconciliation
+    sql_reference: queries/audits/qvoice_excel_join_grain_audit_20260826-2.sql
+    acceptance_rule: No debe haber duplicados; el join externo queda pendiente.
+    metric_checks:
+      - {metric: matched_count, operator: gt, threshold: 0, aggregate: sum}
+      - {metric: duplicate_count, operator: eq, threshold: 0, aggregate: sum}

@@ -1,0 +1,242 @@
+{
+  "artifact": "internal_analysis",
+  "evidence_type": "aggregate-only comparable QVoice favorable average",
+  "generated_on": "2026-09-09",
+  "outcome": "pass",
+  "minimum_shared_cohort": 30,
+  "source_rule": "QVoice raw Excel workbooks only; Redshift is not used because it contains only the 2026 wave.",
+  "scope": "Respondentes con 33/33 ítems comparables válidos; no representa a toda la plantilla.",
+  "grain": "participant-wave derived aggregate",
+  "identifier_or_row_data_persisted": false,
+  "formula": {
+    "item_coding": {
+      "0": "desfavorable",
+      "1": "favorable",
+      "255": "faltante"
+    },
+    "individual_score": "100 × favorable_items / 33",
+    "annual_result": "Promedio aritmético de los puntajes individuales incluidos",
+    "inclusion_rule": "Exactamente 33 respuestas válidas 0/1 en los 33 ítems comunes.",
+    "no_official_completion_flag": "Response Type=EX en 2026 no se interpreta como completitud; 2024–2025 no aportan un flag usable."
+  },
+  "strict_item_contract": {
+    "binary_items_by_wave": {
+      "2024": 52,
+      "2025": 52,
+      "2026": 53
+    },
+    "strict_common_item_count": 33,
+    "header_matching_rule": "Coincidencia exacta de header_base tras retirar sólo el prefijo técnico de pregunta, el sufijo técnico binario y separadores terminales; conserva las palabras y la puntuación interna. No usa similitud, sinónimos ni mapeo semántico.",
+    "common_header_bases": [
+      "at qualcomm, i can challenge the traditional ways of doing things",
+      "i am able to balance my work and personal life to my satisfaction",
+      "i am comfortable voicing my ideas and opinions, even if they are different from others",
+      "i am treated with respect at work",
+      "i can freely raise ethical concerns without negative consequences",
+      "i can see a clear link between my work and my business function's objectives",
+      "i feel comfortable being myself at work",
+      "i feel encouraged to come up with new and better ways of doing things",
+      "i feel energized when i am working",
+      "i have a sense of belonging at qualcomm",
+      "i have confidence in qualcomm's senior leadership team to make the right decisions for this company",
+      "i have confidence in the future of qualcomm",
+      "i have enough energy after work to enjoy other activities (e.g. socializing, hobbies, exercise)",
+      "i rarely think about looking for a new job with another company",
+      "i receive meaningful recognition for my contributions",
+      "i see myself working at qualcomm in a few years",
+      "i understand how my rewards are determined (merit increase, bonus, stock)",
+      "i understand what it takes to advance in my career at qualcomm",
+      "i would recommend qualcomm as a great place to work",
+      "my job makes good use of my skills and abilities",
+      "my manager gives me timely feedback throughout the year that helps me improve my performance",
+      "my manager helps remove barriers to getting my work done",
+      "my manager supports my efforts to balance my work and personal life",
+      "my team looks for ways to change processes to improve productivity",
+      "my work gives me a sense of personal accomplishment",
+      "qualcomm does a good job of communicating the reasons behind important changes",
+      "qualcomm is making the changes necessary to compete effectively",
+      "qualcomm motivates me to go above and beyond in my work",
+      "the amount of stress in my job is manageable",
+      "the people i work with cooperate to get the job done",
+      "the work processes at qualcomm allow employees to be as productive as possible",
+      "there is effective collaboration between teams at qualcomm",
+      "there is open and honest communication at qualcomm"
+    ]
+  },
+  "waves": [
+    {
+      "year": 2024,
+      "source_file": "Jan 2024 Qvoice raw data.xlsx",
+      "sheet": "Raw data",
+      "participant_rows": 36806,
+      "source_rows_scanned": 36807,
+      "rows_without_participant_key": 1,
+      "duplicate_participant_rows": 0,
+      "duplicate_conflicting_rows": 0,
+      "response_type_summary": {},
+      "complete_comparable_participants": 27563,
+      "complete_comparable_percent": 74.8872,
+      "incomplete_comparable_participants": 9243,
+      "mean_favorable_percent": 77.3663,
+      "valid_binary_cells": 909579,
+      "missing_cells": 74390,
+      "sentinel_255_cells_treated_as_missing": 0,
+      "out_of_domain_non_sentinel_cells": 0,
+      "score_bands": [
+        {
+          "band": "<50",
+          "participant_count": 4147,
+          "percent_of_complete": 15.0455
+        },
+        {
+          "band": "50–69",
+          "participant_count": 4439,
+          "percent_of_complete": 16.1049
+        },
+        {
+          "band": "70–79",
+          "participant_count": 2890,
+          "percent_of_complete": 10.4851
+        },
+        {
+          "band": "80–89",
+          "participant_count": 4059,
+          "percent_of_complete": 14.7263
+        },
+        {
+          "band": "90–99",
+          "participant_count": 6177,
+          "percent_of_complete": 22.4105
+        },
+        {
+          "band": "100",
+          "participant_count": 5851,
+          "percent_of_complete": 21.2277
+        }
+      ],
+      "band_count_total": 27563
+    },
+    {
+      "year": 2025,
+      "source_file": "Jan 2025_Qvoice_raw data.xlsx",
+      "sheet": "Raw data",
+      "participant_rows": 37837,
+      "source_rows_scanned": 37837,
+      "rows_without_participant_key": 0,
+      "duplicate_participant_rows": 0,
+      "duplicate_conflicting_rows": 0,
+      "response_type_summary": {},
+      "complete_comparable_participants": 30342,
+      "complete_comparable_percent": 80.1913,
+      "incomplete_comparable_participants": 7495,
+      "mean_favorable_percent": 78.2771,
+      "valid_binary_cells": 1001286,
+      "missing_cells": 33544,
+      "sentinel_255_cells_treated_as_missing": 0,
+      "out_of_domain_non_sentinel_cells": 0,
+      "score_bands": [
+        {
+          "band": "<50",
+          "participant_count": 4366,
+          "percent_of_complete": 14.3893
+        },
+        {
+          "band": "50–69",
+          "participant_count": 4553,
+          "percent_of_complete": 15.0056
+        },
+        {
+          "band": "70–79",
+          "participant_count": 3147,
+          "percent_of_complete": 10.3718
+        },
+        {
+          "band": "80–89",
+          "participant_count": 4330,
+          "percent_of_complete": 14.2706
+        },
+        {
+          "band": "90–99",
+          "participant_count": 6564,
+          "percent_of_complete": 21.6334
+        },
+        {
+          "band": "100",
+          "participant_count": 7382,
+          "percent_of_complete": 24.3293
+        }
+      ],
+      "band_count_total": 30342
+    },
+    {
+      "year": 2026,
+      "source_file": "Jan 2026 Qvoice_raw data.xlsx",
+      "sheet": "Raw data",
+      "participant_rows": 42203,
+      "source_rows_scanned": 42203,
+      "rows_without_participant_key": 0,
+      "duplicate_participant_rows": 0,
+      "duplicate_conflicting_rows": 0,
+      "response_type_summary": {
+        "EX": 42203
+      },
+      "complete_comparable_participants": 33067,
+      "complete_comparable_percent": 78.3522,
+      "incomplete_comparable_participants": 9136,
+      "mean_favorable_percent": 79.378,
+      "valid_binary_cells": 1091211,
+      "missing_cells": 69935,
+      "sentinel_255_cells_treated_as_missing": 0,
+      "out_of_domain_non_sentinel_cells": 0,
+      "score_bands": [
+        {
+          "band": "<50",
+          "participant_count": 4402,
+          "percent_of_complete": 13.3124
+        },
+        {
+          "band": "50–69",
+          "participant_count": 4790,
+          "percent_of_complete": 14.4857
+        },
+        {
+          "band": "70–79",
+          "participant_count": 3304,
+          "percent_of_complete": 9.9918
+        },
+        {
+          "band": "80–89",
+          "participant_count": 4509,
+          "percent_of_complete": 13.636
+        },
+        {
+          "band": "90–99",
+          "participant_count": 7497,
+          "percent_of_complete": 22.6722
+        },
+        {
+          "band": "100",
+          "participant_count": 8565,
+          "percent_of_complete": 25.902
+        }
+      ],
+      "band_count_total": 33067
+    }
+  ],
+  "acceptance_rule": {
+    "expected_years": [
+      2024,
+      2025,
+      2026
+    ],
+    "strict_common_item_count": 33,
+    "participant_and_complete_counts": "Deben coincidir con el contrato congelado por wave.",
+    "mean_favorable_percent_tolerance": 5e-05,
+    "zero_duplicate_participant_rows": true,
+    "zero_duplicate_conflicting_rows": true,
+    "zero_out_of_domain_non_sentinel_cells": true,
+    "band_counts_equal_complete_participants": true,
+    "minimum_published_cohort": 30,
+    "no_identifier_or_row_persistence": true
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "artifact_type": "aggregate_rehire_fy2026_observed_attrition_evidence",
+  "version": 7,
+  "generated_on": "2026-09-20",
+  "deliverable_mode": "internal_analysis",
+  "artifact_classification": "internal_analysis",
+  "purpose": "Etiquetar la attrition voluntaria observada de FY2026 debajo de la barra Rehire (1) de FY2026 en la lámina 16.",
+  "definition": {
+    "concept": "Realized fiscal-year voluntary attrition for the Rehire (1) population",
+    "population": "Active Regular Employees with is_rehire = 1 at FY2026 monthly snapshots",
+    "denominator": "Average monthly active-Rehire headcount across the 12 FY2026 snapshots",
+    "numerator": "Distinct employee-term-date VOLUNTARY events during FY2026 whose employee had an earlier FY2026 active-Rehire snapshot",
+    "grain": "Employee-snapshot exposure for the denominator; employee-term-date for voluntary exits",
+    "not_equivalent_to": "The prospective 12-month attrition target used for FY2024 and FY2025 labels",
+    "minimum_cohort": 30
+  },
+  "query": "queries/audits/rehire_fy2026_observed_voluntary_attrition_20260920.sql",
+  "query_sha256": "f0b6089f4ff13b0576a24bd5d75aa16a21d3fd0b977f01c4cd006e9f2672394d",
+  "columns": [
+    "first_snapshot_date",
+    "last_snapshot_date",
+    "observed_snapshot_count",
+    "employee_snapshot_count",
+    "distinct_employee_count",
+    "average_monthly_rehire_headcount",
+    "voluntary_exit_count",
+    "observed_voluntary_attrition_rate_percent",
+    "publication_status"
+  ],
+  "row_count": 1,
+  "row": {
+    "first_snapshot_date": "2025-10-26",
+    "last_snapshot_date": "2026-09-27",
+    "observed_snapshot_count": 12,
+    "employee_snapshot_count": 71580,
+    "distinct_employee_count": 6934,
+    "average_monthly_rehire_headcount": 5965,
+    "voluntary_exit_count": 470,
+    "observed_voluntary_attrition_rate_percent": "7.879295892707460",
+    "publication_status": "publishable_observed_period_rate"
+  },
+  "acceptance_rule": "Publish only if FY2026 contains at least 12 observed monthly snapshots, at least 30 Rehire employee-snapshot exposures, and at least 30 distinct Rehire employees; label it observed, not prospective.",
+  "outcome": "pass"
+}

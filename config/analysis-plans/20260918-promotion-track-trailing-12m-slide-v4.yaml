@@ -1,0 +1,54 @@
+schema_version: 1
+language: es
+deliverable_mode: internal_analysis
+variable: Promotion story by compensation track
+concept: Distribucion por track en agosto de 2026, promocion oficial AR25 y attrition voluntaria trailing 12 months.
+knowledge_boundary: 2026-08-23
+window:
+  start_exclusive: 2025-08-24
+  end_inclusive: 2026-08-23
+population: Employee, Regular y no RF360; active_status=1 para distribucion y exposicion.
+grain:
+  distribution: employee at 2026-08-23
+  promotion: distinct eligible AR25 participant
+  attrition: distinct voluntary termination event and monthly employee exposure
+semantic_type:
+  compensation_track: grouped_mapping
+  promotion_rate: derived_feature
+  attrition_rate: derived_feature
+track_rule: Primera letra de un grade que inicia con letra A-Z seguida de digito; de otro modo Unknown.
+plan_revision_reason: >-
+  La validacion v3 demostro que los ocho exits sin snapshot activo previo
+  tampoco tienen un employee-snapshot no futuro dentro de 45 dias. Para no
+  usar un snapshot remoto ni informacion futura, el ultimo fallback permitido
+  sera un unico grade no nulo y parseable que permanezca identico en todas las
+  filas fuente que registran ese mismo evento. Los nulos no crean por si solos
+  una contradiccion. Un evento con dos grades no nulos distintos queda sin
+  asignar y se excluye del numerador por track.
+validation_story:
+  - id: fixed_august_window
+    evidence_role: defining
+    question: ¿La ventana fija contiene exactamente los doce snapshots posteriores a 2025-08-24 y termina en 2026-08-23?
+    method: Fechas literales y conteos agregados.
+    sql_reference: queries/audits/promotion_track_trailing_12m_20260918.sql
+    acceptance_rule: Ambos limites existen y window_snapshot_count=12.
+  - id: stable_nonnull_exit_grade
+    evidence_role: defining
+    question: ¿Los exits sin snapshot activo previo tienen como maximo un grade no nulo estable en las filas que registran el evento?
+    why: Permite ignorar copias nulas sin ocultar contradicciones entre grades reales.
+    method: Conteos agregados de variantes no nulas por employee-term event.
+    sql_reference: queries/audits/promotion_track_unmatched_exit_nonnull_grade_20260918.sql
+    acceptance_rule: Cero eventos con mas de un grade no nulo; fallback parseable para los ocho casos y cero sin track.
+  - id: official_promotion_rate
+    evidence_role: defining
+    question: ¿La tasa usa promotion_yes_no='Yes' sobre participantes AR25 elegibles?
+    method: Reconciliacion agregada de participantes, promovidos, flags y join poblacional.
+    sql_reference: queries/audits/promotion_track_trailing_12m_20260918.sql
+    acceptance_rule: Cero duplicados o flags contradictorios y promoted <= participants.
+  - id: grouped_mapping_reconciliation
+    evidence_role: defining
+    question: ¿Los agregados por track reconcilian con distribucion, participantes y exits asignados?
+    method: Diagnosticos y sumas agregadas por fuente.
+    sql_reference: queries/audits/promotion_track_trailing_12m_20260918.sql
+    acceptance_rule: Reconciliacion exacta y cero eventos sin track despues del fallback validado.
+prior_evidence_policy: V1-V3 documentan iteraciones; V4 y sus resultados ejecutados gobiernan la lamina.

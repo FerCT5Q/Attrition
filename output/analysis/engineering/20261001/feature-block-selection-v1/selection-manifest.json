@@ -1,0 +1,30 @@
+{
+  "artifact": "engineering-feature-block-selection",
+  "created_at_utc": "2026-10-02T04:13:29.941806+00:00",
+  "script": "tools\\engineering_feature_block_selection.py",
+  "authorization": {
+    "path": "config\\attrition_model_in_memory_training_authorization_20261001.json",
+    "id": "attrition-model-in-memory-person-month-training-20261001"
+  },
+  "queries": {
+    "calendar": "queries\\profiles\\critical_tech_model_calendar_20260907.sql",
+    "person_month_frame": "queries\\profiles\\engineering_person_month_features_20261001.sql"
+  },
+  "query_sha256": {
+    "calendar": "e31d37b1fd90573717ef6f672c3f08010767b2ed0514876fb0ffc61b665efaa8",
+    "person_month_frame": "48a27cfff1f197b938a4f2d4bb03baaf91f631a0ffae12c2f1259cb1d73b6847"
+  },
+  "audits": {
+    "queries\\audits\\engineering_candidate_feature_coverage_by_year_20261001.sql": "fc16718641ef820d17f206e6160514744076f74353ad521b5012a4f1de87b93a",
+    "queries\\audits\\engineering_candidate_feature_categories_20261001.sql": "8c5c93dc3911561f3ae3ff399675f4ff32d62fcd36493e95440d5e4081e0f3b1",
+    "queries\\audits\\engineering_promotion_history_by_year_20261001.sql": "913904c6dfeae573a0ffc84f00de4baf05df624dc59d0fd50a8b23ca6ed67b5e",
+    "queries\\audits\\engineering_event_flags_history_20261001.sql": "04ce775f6dc9fa736242985b2e851d5407b448cb25a72962494a4da3d505fee7",
+    "queries\\audits\\manager_change_flag_vs_date_engineering_20261001.sql": "3508e02d2881aa7331d3b335bb9f9d988457bc6965613c3be9e3770845edfd67"
+  },
+  "result": "output\\analysis\\engineering\\20261001\\feature-block-selection-v1\\selection-results.json",
+  "result_sha256": "d098a3732dcdebafc07c9ff3eff314771c3e7476c5485cd6dc5b3268029f3a19",
+  "report": "output\\analysis\\engineering\\20261001\\feature-block-selection-v1\\selection-report.md",
+  "report_sha256": "85c33cf62221f147b95af727901a43afe4cb39067ac4f01952232fcf601e9767",
+  "employee_level_rows_persisted": false,
+  "aggregate_training_frame_persisted": false
+}

@@ -1,0 +1,87 @@
+schema_version: 1
+language: es
+unknown_policy: conservative
+
+problem_context:
+  problem_statement: >-
+    Definir y validar dos señales longitudinales de contexto del manager para
+    un modelo de attrition: la concentración reciente de salidas voluntarias
+    del equipo y el riesgo ajustado del manager.
+  decision_or_use_case: >-
+    Generar distribuciones agregadas y features time-safe a nivel
+    manager-snapshot, asignables al empleado-snapshot, sin convertirlas en una
+    evaluación individual de managers.
+  outcome: >-
+    Attrition voluntario posterior al snapshot de predicción y anterior al
+    siguiente snapshot mensual.
+  population: Empleados regulares activos en cada snapshot mensual de predicción.
+  unit_of_analysis: Manager-snapshot para el cálculo; empleado-snapshot para el consumo.
+  time_horizon: Ventana retrospectiva cerrada de seis meses en cada snapshot mensual.
+  knowledge_boundary: >-
+    En el cierre t sólo se usan membresías, atributos y terminaciones con
+    term_date menor o igual a t. Nunca se usan salidas posteriores a t.
+  stakeholders:
+    - Equipo de People Analytics / Attrition
+  constraints:
+    - Sólo SQL read-only y resultados agregados con cohortes publicables de al menos 30.
+    - No publicar IDs, nombres ni etiquetas individuales de managers.
+    - La señal es asociativa y no prueba causalidad ni desempeño individual.
+  assumptions:
+    - La definición primaria de manager se reconstruye por relación directa, no por management_level.
+    - Un manager en t es una persona con al menos un reporte directo activo y regular en t.
+    - all_dir_reports y reg_non_intern_dir_reports se auditan como posibles controles almacenados, no como equivalentes asumidos.
+    - Sólo term_type = Voluntary entra al numerador hasta que se apruebe otro tratamiento de Voluntary Exception.
+  stakeholder_questions:
+    - ¿La población reconstruida de managers concilia con los conteos almacenados de reportes directos?
+    - ¿La atribución temporal de cada salida a su manager evita leakage y duplicación?
+    - ¿La ventana de seis meses produce una distribución agregada publicable y estable?
+    - ¿Qué ajuste por contexto distingue riesgo relativo de rotación bruta de equipo?
+
+variables:
+  - name: Team turnover
+    intended_use: >-
+      Calcular la tasa descriptiva de salidas voluntarias de reportes directos
+      durante los seis meses cerrados anteriores a cada snapshot, como
+      componente común de las dos señales de contexto del manager.
+    population: Empleados regulares activos en cada snapshot mensual de predicción.
+    knowledge_date: Cierre de cada snapshot mensual de predicción.
+    context_role: Manager-team turnover component
+    context_relevance: >-
+      Proporciona el numerador, la exposición y la atribución temporal comunes
+      para las señales de concentración y riesgo ajustado.
+  - name: High turnover under this person
+    intended_use: >-
+      Asignar al empleado una bandera descriptiva cuando su manager vigente
+      tiene dos o más salidas voluntarias distintas de reportes directos en
+      los seis meses cerrados previos al snapshot.
+    population: Empleados regulares activos en cada snapshot mensual de predicción.
+    knowledge_date: Cierre de cada snapshot mensual de predicción.
+    context_role: Manager-team turnover
+    context_relevance: >-
+      Representa concentración reciente de salidas del equipo; no atribuye
+      causalidad ni desempeño al manager.
+  - name: High risk manager
+    intended_use: >-
+      Asignar al empleado el score continuo de exceso de attrition voluntario
+      de su manager vigente en seis meses, ajustado por la composición del
+      equipo y con shrinkage para equipos pequeños.
+    population: Empleados regulares activos en cada snapshot mensual de predicción.
+    knowledge_date: Cierre de cada snapshot mensual de predicción.
+    context_role: Adjusted manager risk
+    context_relevance: >-
+      Distingue la rotación esperable por composición del equipo de un exceso
+      histórico asociado al entorno de liderazgo; es una señal analítica, no
+      una evaluación individual.
+
+decisions:
+  manager_population: active_regular_direct_reports_reconstructed_from_manager_employee_id
+  manager_population_validation_fields: [reg_non_intern_dir_reports, all_dir_reports]
+  lookback_window: 6_closed_months
+  event_scope: strict_voluntary_only
+  event_attribution_primary: manager_at_exit
+  event_attribution_sensitivity: manager_at_evaluation
+  high_turnover_flag: at_least_2_distinct_voluntary_exits_in_6_months
+  high_risk_score: observed_vs_expected_voluntary_attrition_in_6_months_with_shrinkage
+  high_risk_expected_controls: [snapshot_month, region, job_family, job_level_primary_position, tenure]
+  high_risk_flag_provisional: ratio_adjusted_gte_1_5_and_top_decile_and_present_3_of_6
+  insufficient_history: unknown_not_zero

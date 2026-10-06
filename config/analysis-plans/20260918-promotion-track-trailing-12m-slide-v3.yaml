@@ -1,0 +1,55 @@
+schema_version: 1
+language: es
+deliverable_mode: internal_analysis
+variable: Promotion story by compensation track
+concept: >-
+  Distribucion por compensation track en agosto de 2026, tasa oficial de
+  promocion AR25 y attrition voluntaria de los doce meses cerrados en agosto.
+knowledge_boundary: 2026-08-23
+window:
+  start_exclusive: 2025-08-24
+  end_inclusive: 2026-08-23
+population: Employee, Regular y no RF360; active_status=1 para distribucion y exposicion mensual.
+grain:
+  distribution: employee at the 2026-08-23 snapshot
+  promotion: AR25 participant
+  attrition: distinct employee termination event and monthly employee exposure
+semantic_type:
+  compensation_track: grouped_mapping
+  promotion_rate: derived_feature
+  attrition_rate: derived_feature
+track_rule: Primera letra de un grade normalizado que inicia con letra A-Z seguida de digito; de otro modo Unknown.
+plan_revision_reason: >-
+  La auditoria v2 encontro ocho exits sin snapshot activo previo: siete se
+  resolvian con el grade agregado de las filas que portan term_date, pero uno
+  parecia conflictivo porque la fuente replica el evento en multiples
+  snapshots historicos. Se requiere seleccionar primero el employee-snapshot
+  no futuro mas cercano al evento y validar ahi la unicidad del grade, en vez
+  de mezclar todos los snapshots que repiten el mismo term_date.
+validation_story:
+  - id: fixed_august_window
+    evidence_role: defining
+    question: ¿La ventana permanece fijada en (2025-08-24, 2026-08-23] con doce snapshots?
+    method: Reconciliacion agregada contra fechas literales.
+    sql_reference: queries/audits/promotion_track_trailing_12m_20260918.sql
+    acceptance_rule: Corte y baseline existen y window_snapshot_count=12.
+  - id: contemporaneous_exit_track
+    evidence_role: defining
+    question: ¿Cada exit sin snapshot activo previo tiene un grade unico y parseable en el employee-snapshot no futuro mas cercano?
+    why: El term_date puede repetirse en varias filas historicas con grades distintos; mezclar esas filas crea un conflicto artificial.
+    method: Comparar, de forma agregada, fallback por todas las filas contra fallback por el snapshot no futuro mas cercano.
+    sql_reference: queries/audits/promotion_track_unresolved_exit_snapshot_20260918.sql
+    acceptance_rule: El fallback contemporaneo deja cero exits sin track y cero conflictos de grade en el snapshot seleccionado.
+  - id: official_promotion_rate
+    evidence_role: defining
+    question: ¿La promocion usa promotion_yes_no de AR25 sobre participantes elegibles?
+    method: Reconciliacion agregada de participantes, promovidos, flags y join poblacional.
+    sql_reference: queries/audits/promotion_track_trailing_12m_20260918.sql
+    acceptance_rule: Cero duplicados y contradicciones; promovidos no exceden participantes.
+  - id: grouped_mapping_reconciliation
+    evidence_role: defining
+    question: ¿Distribucion, promocion y attrition reconcilian despues de colapsar grades por letra?
+    method: Totales y diagnosticos agregados por fuente y track.
+    sql_reference: queries/audits/promotion_track_trailing_12m_20260918.sql
+    acceptance_rule: Las sumas por track coinciden con sus poblaciones fuente y cada evento se asigna una sola vez.
+prior_evidence_policy: V1 y V2 son contexto de iteracion; V3 y sus consultas ejecutadas gobiernan el artefacto final.

@@ -1,0 +1,183 @@
+schema_version: 1
+plan_version: 3
+plan_revision_reason: >-
+  La auditoría v2 confirmó que la etiqueta Voluntary requiere normalización,
+  pero también reveló que el feed mensual repite el mismo evento en snapshots
+  posteriores. Esta revisión separa repetición de filas fuente, múltiples
+  fechas por persona y el evento seleccionado (una salida por persona) antes
+  de recalcular la distribución y el numerador anual.
+language: es
+created_before_execution: true
+acceptance_rules_frozen: true
+plan_authorship: codex_explicit
+variable: Ingreso por adquisición
+semantic_type: direct_field
+concept: >-
+  Presencia de un nombre de adquisición registrado en
+  hrda.post_hire_monthly_worker_dtls.acquisition. Un valor vacío no confirma
+  un ingreso sin adquisición.
+intended_use: >-
+  Mostrar de forma agregada distribución actual y attrition voluntaria anual
+  por presencia de adquisición registrada; no usar para decisiones individuales
+  ni atribuir causalidad.
+knowledge_date: >-
+  acquisition se toma al 2026-08-23 para la distribución y al 2025-08-24 para
+  la clasificación basal; sólo outcomes posteriores hasta 2026-08-23 entran en
+  la tasa.
+population: >-
+  Empleados activos Regular (worker_type='Employee', employee_type='Regular',
+  active_status=1) en el snapshot aplicable; RF360 se incluye.
+grain: >-
+  Empleado distinto por snapshot; para la tasa una salida Voluntary distinta
+  por persona de la cohorte basal.
+definition: >-
+  «Con adquisición registrada» equivale a NULLIF(TRIM(acquisition), '')
+  poblado. «Sin adquisición registrada» describe sólo ausencia de texto. Se
+  usan TRIM y mayúsculas para comparar espacios/casing, nunca para unir aliases.
+  El outcome es UPPER(TRIM(term_type))='VOLUNTARY' con term_date en
+  (2025-08-24, 2026-08-23], deduplicado al empleado.
+source_reasoning: >-
+  post_hire_monthly_worker_dtls es la fuente principal de snapshots, acquisition
+  y términos. new_hires, all_terminations y worker_details_ms_snapshot son
+  contrastes agregados; no sustituyen definición ni lineage del campo.
+validation_focus:
+  - Confirmar acceso y grain de la fuente.
+  - Medir calidad y cambios longitudinales de acquisition.
+  - Validar label y grain de salida antes de contar attrition.
+  - Reconciliar segmentos, Top 10 más Otras, cohortes y feeds.
+  - Suprimir tasas si cohorte o eventos son menores de 30.
+validation_story:
+  - id: source_access_and_snapshot_grain
+    criterion: source
+    evidence_role: defining
+    question: ¿La tabla mensual y los campos requeridos existen y son accesibles por la ruta read-only?
+    why: Sin tabla, clave y fecha no existe fuente reproducible.
+    fields: [employee_id, fis_mo_end_dt, acquisition, worker_type, employee_type, active_status]
+    population: Metadata de la fuente principal.
+    grain: Metadata y empleado-snapshot mensual.
+    temporal_boundary: Metadata al momento de la ejecución.
+    method: Auditoría agregada de information_schema.
+    sql_reference: queries/audits/acquisition_entry_source_access_20260929.sql
+    acceptance_rule: missing_items = 0.
+    observed_evidence: Pendiente antes de ejecutar SQL.
+    outcome_label: Pendiente.
+    interpretation: Confirma acceso técnico, no definición de negocio.
+    score_effect: Source puede alcanzar 2 sólo con evidencia congelada que cumpla.
+    limitation: No define vacíos, reingresos ni actualizaciones.
+    recommended_action: Conservar auditoría y obtener definición del owner.
+  - id: direct_field_domain_and_snapshot_uniqueness
+    criterion: consistency
+    evidence_role: defining
+    question: ¿Cada empleado tiene un registro no contradictorio por snapshot y el dominio admite sólo normalización de espacios y casing?
+    why: Duplicados o contradicciones podrían inflar categorías o escoger valores arbitrarios.
+    fields: [employee_id, fis_mo_end_dt, acquisition]
+    population: Activos Regular en los cortes y su historia observable.
+    grain: Empleado-snapshot y métricas agregadas por corte.
+    temporal_boundary: Historia hasta 2026-08-23; cortes 2025-08-24 y 2026-08-23.
+    method: Auditoría agregada de unicidad, blanks, dominio y transiciones.
+    sql_reference: queries/audits/acquisition_entry_semantic_audit_20260929.sql
+    acceptance_rule: Cuantificar contradicciones, variantes y cambios; no combinar aliases sin mapping aprobado.
+    observed_evidence: Pendiente antes de ejecutar SQL.
+    outcome_label: Pendiente.
+    interpretation: Describe calidad técnica, no origen de ingreso.
+    score_effect: Consistency queda máximo en 1 sin lineage y reglas aprobadas.
+    limitation: Los cambios observados no explican su causa de negocio.
+    recommended_action: Obtener mapping y reglas de vigencia.
+  - id: voluntary_label_normalization
+    criterion: join
+    evidence_role: defining
+    question: ¿La normalización UPPER(TRIM(term_type)) recupera exclusivamente VOLUNTARY después de que la comparación literal devolvió cero?
+    why: Casing o espacios no deben eliminar salidas ni admitir etiquetas distintas.
+    fields: [employee_id, employeeid, term_date, term_type]
+    population: Eventos Employee Regular y eventos equivalentes en all_terminations durante la ventana.
+    grain: Evento empleado-fecha, publicado como métrica agregada.
+    temporal_boundary: term_date en (2025-08-24, 2026-08-23].
+    method: Comparar etiquetas literal y normalizada sin devolver valores individuales.
+    sql_reference: queries/audits/acquisition_entry_termination_label_audit_20260929.sql
+    acceptance_rule: La forma normalizada debe recuperar Voluntary y la diferencia literal sólo puede corresponder a casing/espacios.
+    observed_evidence: Pendiente antes de ejecutar SQL.
+    outcome_label: Pendiente.
+    interpretation: Valida el tratamiento técnico del label, no acquisition.
+    score_effect: Join queda máximo en 1 hasta confirmar lineage y episodios.
+    limitation: No designa una fuente canónica de términos.
+    recommended_action: Documentar normalización y acordar lineage.
+  - id: voluntary_event_grain_and_deduplication
+    criterion: join
+    evidence_role: defining
+    question: ¿La tasa selecciona una sola salida Voluntary por persona pese a que el feed mensual repite eventos en snapshots posteriores?
+    why: Sumar filas repetidas elevaría artificialmente el numerador anual.
+    fields: [employee_id, employeeid, term_date, term_type, fis_mo_end_dt]
+    population: Cohorte activa Regular al 2025-08-24 y salidas posteriores.
+    grain: Persona basal; evento empleado-fecha internamente y una fecha mínima por persona para la tasa.
+    temporal_boundary: (2025-08-24, 2026-08-23].
+    method: Comparar filas fuente, claves empleado-fecha, personas con más de una fecha y evento mínimo seleccionado.
+    sql_reference: queries/audits/acquisition_entry_termination_event_grain_audit_20260929.sql
+    acceptance_rule: La tasa usa una persona una vez; se reportan repeticiones fuente y cualquier persona con múltiples fechas; no se permiten eventos seleccionados fuera de la cohorte.
+    observed_evidence: Pendiente antes de ejecutar SQL.
+    outcome_label: Pendiente.
+    interpretation: Prueba el grain de resultado, no la semántica de acquisition.
+    score_effect: Join queda máximo en 1 mientras la comparación de feeds y lineage sigan pendientes.
+    limitation: Repetición de filas fuente no permite inferir la causa de cambio del feed.
+    recommended_action: Mantener deduplicación por persona y escalar diferencias del feed al owner.
+  - id: historical_and_related_source_context
+    criterion: history
+    evidence_role: contextual
+    question: ¿Qué rango histórico y contraste agregado ofrecen acquisition, new_hires y el snapshot histórico?
+    why: Historia, cambios o discrepancias condicionan la lectura de cobertura.
+    fields: [acquisition, acquisition_org, acquisition_yn, snapshot_date]
+    population: Historial agregado y coincidencias internas de fuentes.
+    grain: Snapshot agregado y comparación agregada de empleado.
+    temporal_boundary: Campo principal hasta 2026-08-23; histórico legacy sólo como contexto.
+    method: Medir cobertura, transiciones, rangos y coincidencias normalizadas no ambiguas.
+    sql_reference: queries/audits/acquisition_entry_semantic_audit_20260929.sql
+    acceptance_rule: Rango, cambios y diferencias deben cuantificarse sin tratarlos como definición.
+    observed_evidence: Pendiente antes de ejecutar SQL.
+    outcome_label: Pendiente.
+    interpretation: Evidencia contextual que no puede elevar Definition, Consistency ni Join.
+    score_effect: Sin capacidad de aumentar un score; History se calcula desde coverage.
+    limitation: Las fuentes relacionadas pueden tener fecha efectiva o semántica distinta.
+    recommended_action: Confirmar owner y lineage de cada feed.
+  - id: cohort_distribution_and_attrition
+    criterion: join
+    evidence_role: defining
+    question: ¿Los segmentos, Top 10 más Otras y salidas deduplicadas reconcilian con ambas poblaciones?
+    why: La visual debe separar distribución actual y cohorte histórica sin reclasificación futura.
+    fields: [employee_id, fis_mo_end_dt, acquisition, term_date, term_type]
+    population: Activos Regular al 2026-08-23 y cohorte activa Regular al 2025-08-24.
+    grain: Empleado-snapshot basal y salida Voluntary única por empleado.
+    temporal_boundary: Distribución 2026-08-23; outcomes hasta 2026-08-23.
+    method: Consulta agregada con clasificación temporal, normalización conservadora, deduplicación y supresión n>=30.
+    sql_reference: queries/audits/acquisition_entry_distribution_attrition_20260929.sql
+    acceptance_rule: Dos segmentos y Top 10 más Otras reconcilian; salidas no exceden cohortes; se documenta 45,002/2,483 frente a 45,003/2,484 histórico; tasas requieren cohortes y eventos >=30.
+    observed_evidence: Pendiente antes de ejecutar SQL.
+    outcome_label: Pendiente.
+    interpretation: Reconciliación técnica de la visual, no definición de negocio.
+    score_effect: Join queda máximo en 1 mientras semántica y lineage sigan pendientes.
+    limitation: Coincidencias no prueban origen de ingreso gobernado.
+    recommended_action: Guardar evidencia y solicitar lineage formal.
+  - id: termination_source_context
+    criterion: definition
+    evidence_role: contextual
+    question: ¿Qué diferencias agregadas quedan entre la tabla principal y all_terminations para salidas de cohorte?
+    why: Un feed alterno puede revelar diferencias de numerador que no deben ocultarse.
+    fields: [employee_id, employeeid, term_date, term_type, acquisition_name]
+    population: Cohorte basal y salidas posteriores.
+    grain: Evento empleado-fecha, publicado sólo como conteos agregados.
+    temporal_boundary: (2025-08-24, 2026-08-23].
+    method: Intersección y diferencias agregadas; all_terminations no alimenta el slide.
+    sql_reference: queries/audits/acquisition_entry_distribution_attrition_20260929.sql
+    acceptance_rule: Cuantificar ambos feeds y sus diferencias sin usar la coincidencia para probar acquisition.
+    observed_evidence: Pendiente antes de ejecutar SQL.
+    outcome_label: Pendiente.
+    interpretation: Evidencia contextual que no puede elevar Definition.
+    score_effect: Sin capacidad de aumentar un score.
+    limitation: Coincidencia agregada no equivale a lineage formal.
+    recommended_action: Acordar fuente canónica y deduplicación.
+planned_sql:
+  - queries/audits/acquisition_entry_source_access_20260929.sql
+  - queries/audits/acquisition_entry_related_source_metadata_20260929.sql
+  - queries/profiles/acquisition_entry_coverage_20260929.sql
+  - queries/audits/acquisition_entry_semantic_audit_20260929.sql
+  - queries/audits/acquisition_entry_termination_label_audit_20260929.sql
+  - queries/audits/acquisition_entry_termination_event_grain_audit_20260929.sql
+  - queries/audits/acquisition_entry_distribution_attrition_20260929.sql

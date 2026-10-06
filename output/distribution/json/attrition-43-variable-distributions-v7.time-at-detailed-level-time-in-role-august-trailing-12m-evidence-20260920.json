@@ -1,0 +1,100 @@
+{
+  "artifact_type": "time_at_detailed_level_time_in_role_august_trailing_12m_slide_evidence",
+  "version": 3,
+  "generated_on": "2026-09-20",
+  "deliverable_mode": "presentation",
+  "purpose": "Mostrar la distribución vigente de Time at detailed level y Time in role, y publicar attrition voluntario de los últimos doce meses por cohorte de agosto.",
+  "display_contract": {
+    "population": "worker_type='Employee' AND employee_type='Regular' AND active_status=1 AND COALESCE(is_rf360_yes_no, 0)=0",
+    "grain": "employee_snapshot",
+    "minimum_shared_cohort": 30,
+    "display_snapshot_date": "2025-08-24",
+    "baseline_snapshot_date": "2025-08-24",
+    "outcome_cutoff_date": "2026-08-23",
+    "outcome_window": "(2025-08-24, 2026-08-23]"
+  },
+  "definitions": {
+    "time_at_detailed_level": "Antigüedad por aniversarios desde GREATEST(levelentrydate, max_hire_rehire_date), con job_level_primary_position poblado.",
+    "time_in_role": "Banda del campo almacenado time_in_role.",
+    "annual_attrition": "Salidas voluntarias distintas de la cohorte del baseline divididas entre empleados de la misma banda en el baseline."
+  },
+  "annual_attrition_contract": {
+    "target": "term_type='VOLUNTARY' con term_date en (baseline_snapshot_date, outcome_cutoff_date]",
+    "publication_decision": "Publicar attrition de 12 meses para ambas medidas; mantener las medidas explícitamente separadas.",
+    "rate_precision_display": "Una decimal porcentual; cálculo auditado a cuatro decimales."
+  },
+  "query_provenance": {
+    "attrition_sql": "queries/audits/qvoice_time_at_detailed_level_august_12m_attrition_20260920.sql",
+    "attrition_sql_sha256": "c5369cf05ed60a8b2ccff60082fb1a159f3d0b0070ab1335947a8164a8c004c4",
+    "time_in_role_sql": "queries/audits/qvoice_time_in_job_profile_time_in_role_august_12m_attrition_20260920.sql",
+    "time_in_role_sql_sha256": "2a5fdb36e4c5092d68e69265fe024bb1282bd97ccf515c34356610b5fafa9d7e",
+    "candidate_availability_sql": "queries/audits/qvoice_time_in_job_profile_candidate_date_availability_august_20260920.sql",
+    "distribution_sql": "queries/audits/qvoice_time_at_detailed_level_august_12m_attrition_20260920.sql",
+    "execution_date": "2026-09-20"
+  },
+  "diagnostics": {
+    "display_snapshot_date": "2025-08-24",
+    "display_employee_snapshot_count": 41757,
+    "display_duplicate_employee_snapshot_count": 0,
+    "display_conflicting_employee_snapshot_count": 0,
+    "display_invalid_or_missing_detailed_level_count": 0,
+    "display_invalid_or_missing_time_in_role_count": 0,
+    "baseline_snapshot_date": "2025-08-24",
+    "outcome_cutoff_date": "2026-08-23",
+    "baseline_employee_snapshot_count": 41757,
+    "baseline_duplicate_employee_snapshot_count": 0,
+    "baseline_conflicting_employee_snapshot_count": 0,
+    "baseline_invalid_or_missing_detailed_level_count": 0,
+    "baseline_invalid_or_missing_time_in_role_count": 0,
+    "baseline_total_voluntary_exits": 2377
+  },
+  "coverage": {
+    "time_at_detailed_level": {
+      "baseline_valid_employee_count": 41757,
+      "baseline_invalid_or_missing_employee_count": 0,
+      "annual_attrition_displayable": true,
+      "decision": "publishable_august_baseline_trailing_12m_cohort"
+    },
+    "time_in_role": {
+      "baseline_valid_employee_count": 41757,
+      "baseline_invalid_or_missing_employee_count": 0,
+      "annual_attrition_displayable": true,
+      "decision": "publishable_august_baseline_trailing_12m_cohort"
+    }
+  },
+  "display_rows": {
+    "time_at_detailed_level": [
+      {"category": "<1 year", "snapshot_date": "2025-08-24", "employee_count": 11390},
+      {"category": "1–<2 years", "snapshot_date": "2025-08-24", "employee_count": 8550},
+      {"category": "2–<3 years", "snapshot_date": "2025-08-24", "employee_count": 7863},
+      {"category": "3–<5 years", "snapshot_date": "2025-08-24", "employee_count": 8547},
+      {"category": "5–<10 years", "snapshot_date": "2025-08-24", "employee_count": 4470},
+      {"category": "10+ years", "snapshot_date": "2025-08-24", "employee_count": 937}
+    ],
+    "time_in_role": [
+      {"category": "<1 year", "snapshot_date": "2025-08-24", "employee_count": 11170},
+      {"category": "1–<2 years", "snapshot_date": "2025-08-24", "employee_count": 8733},
+      {"category": "2–<3 years", "snapshot_date": "2025-08-24", "employee_count": 7682},
+      {"category": "3–<5 years", "snapshot_date": "2025-08-24", "employee_count": 8742},
+      {"category": "5–<10 years", "snapshot_date": "2025-08-24", "employee_count": 4492},
+      {"category": "10+ years", "snapshot_date": "2025-08-24", "employee_count": 938}
+    ]
+  },
+  "annual_rows": [
+    {"metric": "time_at_detailed_level", "category": "<1 year", "baseline_snapshot_date": "2025-08-24", "outcome_cutoff_date": "2026-08-23", "employee_snapshot_count": 11390, "voluntary_exits": 673, "annual_attrition_rate_percent": "5.9087", "publication_status": "publishable"},
+    {"metric": "time_at_detailed_level", "category": "1–<2 years", "baseline_snapshot_date": "2025-08-24", "outcome_cutoff_date": "2026-08-23", "employee_snapshot_count": 8550, "voluntary_exits": 552, "annual_attrition_rate_percent": "6.4561", "publication_status": "publishable"},
+    {"metric": "time_at_detailed_level", "category": "2–<3 years", "baseline_snapshot_date": "2025-08-24", "outcome_cutoff_date": "2026-08-23", "employee_snapshot_count": 7863, "voluntary_exits": 485, "annual_attrition_rate_percent": "6.1681", "publication_status": "publishable"},
+    {"metric": "time_at_detailed_level", "category": "3–<5 years", "baseline_snapshot_date": "2025-08-24", "outcome_cutoff_date": "2026-08-23", "employee_snapshot_count": 8547, "voluntary_exits": 481, "annual_attrition_rate_percent": "5.6277", "publication_status": "publishable"},
+    {"metric": "time_at_detailed_level", "category": "5–<10 years", "baseline_snapshot_date": "2025-08-24", "outcome_cutoff_date": "2026-08-23", "employee_snapshot_count": 4470, "voluntary_exits": 151, "annual_attrition_rate_percent": "3.3781", "publication_status": "publishable"},
+    {"metric": "time_at_detailed_level", "category": "10+ years", "baseline_snapshot_date": "2025-08-24", "outcome_cutoff_date": "2026-08-23", "employee_snapshot_count": 937, "voluntary_exits": 35, "annual_attrition_rate_percent": "3.7353", "publication_status": "publishable"},
+    {"metric": "time_in_role", "category": "<1 year", "baseline_snapshot_date": "2025-08-24", "outcome_cutoff_date": "2026-08-23", "employee_snapshot_count": 11170, "voluntary_exits": 660, "annual_attrition_rate_percent": "5.9087", "publication_status": "publishable"},
+    {"metric": "time_in_role", "category": "1–<2 years", "baseline_snapshot_date": "2025-08-24", "outcome_cutoff_date": "2026-08-23", "employee_snapshot_count": 8733, "voluntary_exits": 560, "annual_attrition_rate_percent": "6.4125", "publication_status": "publishable"},
+    {"metric": "time_in_role", "category": "2–<3 years", "baseline_snapshot_date": "2025-08-24", "outcome_cutoff_date": "2026-08-23", "employee_snapshot_count": 7682, "voluntary_exits": 474, "annual_attrition_rate_percent": "6.1703", "publication_status": "publishable"},
+    {"metric": "time_in_role", "category": "3–<5 years", "baseline_snapshot_date": "2025-08-24", "outcome_cutoff_date": "2026-08-23", "employee_snapshot_count": 8742, "voluntary_exits": 494, "annual_attrition_rate_percent": "5.6509", "publication_status": "publishable"},
+    {"metric": "time_in_role", "category": "5–<10 years", "baseline_snapshot_date": "2025-08-24", "outcome_cutoff_date": "2026-08-23", "employee_snapshot_count": 4492, "voluntary_exits": 154, "annual_attrition_rate_percent": "3.4283", "publication_status": "publishable"},
+    {"metric": "time_in_role", "category": "10+ years", "baseline_snapshot_date": "2025-08-24", "outcome_cutoff_date": "2026-08-23", "employee_snapshot_count": 938, "voluntary_exits": 35, "annual_attrition_rate_percent": "3.7313", "publication_status": "publishable"}
+  ],
+  "outcome": "pass",
+  "annual_attrition_status": "publishable_time_at_detailed_level_and_time_in_role",
+  "annual_attrition_limitation": "Ambas medidas son descriptivas y exploratorias; la semántica oficial de HRIS y las reglas de reset requieren confirmación del propietario de HRIS. La tasa sí es temporalmente coherente: la banda se asigna al baseline y las salidas se siguen hasta el cutoff."
+}

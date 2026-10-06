@@ -1,0 +1,41 @@
+{
+  "authorization_id": "acquisition-attrition-internal-review-20261005",
+  "authorized_on": "2026-10-05",
+  "status": "approved",
+  "reporting_mode": "internal_analysis",
+  "authorized_audience": "requester and Julia, both project developers",
+  "authorization_source": "Petición explícita del usuario en esta conversación: calcular y mostrar la attrition faltante de la lámina 8 para revisión interna con Julia, incluyendo valores omitidos por privacidad.",
+  "prior_authorization": "config/attrition_v8_internal_analysis_authorization_20260923.json",
+  "purpose": "Revisar las tasas agregadas de attrition voluntaria por adquisición con los numeradores y denominadores originales de la lámina.",
+  "scope": {
+    "source_artifact": "output/distribution/attrition-43-variable-distributions-v8.html",
+    "output_artifact": "output/distribution/attrition-43-variable-distributions-v9.html",
+    "slide_number": 8,
+    "stage_id": "slide-acquisition",
+    "baseline_snapshot": "2025-08-24",
+    "outcome_window": "(2025-08-24, 2026-08-23]",
+    "aggregate_buckets": "Top 10 de adquisiciones y Otras; conteos de la cohorte, salidas voluntarias y tasas, incluso con menos de 30 salidas."
+  },
+  "small_cell_exception": {
+    "allow_subthreshold_aggregate_buckets": true,
+    "minimum_displayed_count": 0,
+    "minimum_rate_denominator": 1,
+    "allow_subthreshold_voluntary_event_rates": true,
+    "zero_denominator_policy": "Mostrar Sin cohorte al 24 ago 2025; una base cero no permite calcular attrition anual.",
+    "not_a_general_privacy_policy_change": true
+  },
+  "non_negotiable_controls": {
+    "aggregate_only": true,
+    "employee_rows_persisted": false,
+    "employee_ids_persisted": false,
+    "names_persisted": false,
+    "emails_persisted": false,
+    "addresses_persisted": false,
+    "exact_compensation_values": false,
+    "manager_access": false,
+    "redistribution": false,
+    "operational_use": false,
+    "score_v4_change": false,
+    "production_feature_approval": false
+  }
+}

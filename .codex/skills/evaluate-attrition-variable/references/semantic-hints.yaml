@@ -1,0 +1,85 @@
+version: 1
+language: es
+
+# Estos indicios generan hipotesis y preguntas de preflight. No prueban la
+# definicion de una variable, no sustituyen lineage y no elevan scores.
+cues:
+  - id: ratio_rate_percent
+    labels: [ratio, rate, porcentaje]
+    match_any: [ratio, rate, percent, porcentaje, tasa, "%"]
+    likely_semantic_types: [precomputed_metric, derived_feature]
+    required_topics:
+      - numerator
+      - denominator
+      - eligibility
+      - unit
+      - effective_date
+      - tolerance
+      - rounding
+    material_question: "Parece una división; ¿qué constituye el numerador y el denominador?"
+    why_it_matters: Cambia la fórmula, la población elegible, la reconciliación y el máximo score de Definition.
+    recommended_hypothesis: Tratarla como métrica precalculada hasta obtener lineage oficial y reconciliación agregada sobre la población objetivo.
+
+  - id: index_score_average
+    labels: [index, score, promedio]
+    match_any: [index, score, average, promedio, media, índice]
+    likely_semantic_types: [precomputed_metric, derived_feature, survey]
+    required_topics: [components, weights, normalization, versions, null_handling]
+    material_question: ¿Cuáles son los componentes, pesos, normalización, versión y tratamiento de nulos?
+    why_it_matters: Sin esos elementos no puede reproducirse ni compararse el valor a través del tiempo.
+    recommended_hypothesis: Limitar Definition a 1 hasta reconciliar el cálculo o lineage autoritativo.
+
+  - id: count_window_time_since
+    labels: [conteo, ventana, tiempo desde]
+    match_any: [count, number of, more than, within past, past year, time since, trailing, conteo, número, durante, últimos, desde]
+    likely_semantic_types: [derived_feature]
+    required_topics: [event, window, boundaries, deduplication, leakage]
+    material_question: ¿Qué evento cuenta, cuál es la ventana exacta y cómo se resuelven fronteras, duplicados y leakage?
+    why_it_matters: Cambia quién entra al numerador y si la feature puede conocerse al snapshot.
+    recommended_hypothesis: Usar una ventana cerrada en el snapshot, deduplicar al grain aprobado y excluir eventos futuros.
+
+  - id: group_category_level
+    labels: [grupo, categoría, nivel]
+    match_any: [group, category, level, grouped, family, grade, region, grupo, categoría, nivel, familia, grado]
+    likely_semantic_types: [grouped_mapping, direct_field]
+    required_topics: [detail_field, mapping, effective_date, contradictions]
+    material_question: ¿Cuál es el campo detallado, qué mapping produce el grupo y desde cuándo es vigente?
+    why_it_matters: Cardinalidad y nombres similares no demuestran que el mapping sea correcto o estable.
+    recommended_hypothesis: Auditar contradicciones detalle-grupo, valores sin mapping y cambios temporales.
+
+  - id: manager_team_layers
+    labels: [manager, equipo, jerarquía]
+    match_any: [manager, team, layer, ceo, hierarchy, span, equipo, jerarquía, capa]
+    likely_semantic_types: [hierarchy, derived_feature]
+    required_topics: [temporal_self_join, membership, roots, cycles, unresolved_chains]
+    material_question: ¿Cómo se define la membresía temporal, la raíz gobernada y el tratamiento de ciclos o cadenas no resueltas?
+    why_it_matters: Una jerarquía mal reconstruida altera equipo, profundidad, joins y privacidad.
+    recommended_hypothesis: Reconstruir por snapshot y validar por separado convergencia y semántica de la raíz.
+
+  - id: flag_event
+    labels: [flag, evento]
+    match_any: [flag, event, rehire, promotion, transfer, manager change, leaving, evento, cambio de manager, salida]
+    likely_semantic_types: [direct_field, derived_feature]
+    required_topics: [flag_date_reconciliation, observability, prevalence]
+    material_question: ¿Cómo se reconcilian el flag y la fecha, y qué campo demuestra observabilidad de un no-evento?
+    why_it_matters: Missingness del evento no equivale a no ocurrencia; coverage y prevalencia deben separarse.
+    recommended_hypothesis: Usar el flag observable para coverage y la condición de evento sólo para prevalencia.
+
+  - id: survey_external
+    labels: [encuesta, fuente externa]
+    match_any: [survey, qvoice, external, linkedin, draup, unemployment, encuesta, externo]
+    likely_semantic_types: [survey, external_source]
+    required_topics: [owner, access, waves, refresh, approved_join]
+    material_question: ¿Quién es el propietario, qué acceso está aprobado, qué waves existen y cuál es el join temporal autorizado?
+    why_it_matters: Sin acceso, refresh e integración aprobada no pueden confirmarse Source, History ni Join.
+    recommended_hypothesis: Mantener score máximo 1, o 0 si no hay ruta aprobada, hasta validar la fuente actual.
+
+publication_policies:
+  exact_value_suppressed_columns:
+    - compa_ratio
+    - annual_base_pay
+    - base_pay_rate
+    - total_base_pay_amount
+    - fte_annual_base_pay
+  continuous_sensitive_output: bands_or_percentiles_only
+  minimum_shared_cohort: 30

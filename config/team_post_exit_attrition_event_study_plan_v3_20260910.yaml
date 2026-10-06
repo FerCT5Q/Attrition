@@ -1,0 +1,66 @@
+schema_version: 1
+plan_version: 3
+language: es
+created_before_execution: true
+deliverable_mode: presentation
+variable: More than 1 employee leaves in a year
+plan_revision_reason: >-
+  La revisión de la regla de publicación distingue correctamente entre estratos
+  internos de estandarización y resultados visibles. Un estrato expuesto pequeño
+  no se publica ni se etiqueta; puede aportar su peso sólo si su referencia
+  agregada es publicable. La curva final visible sigue requiriendo n >= 30 en
+  cada punto. Para hacer el cálculo repetible en el clúster se fija además a
+  las 24 cohortes índice completas más recientes, aproximadamente dos años.
+concept: >-
+  Comparación descriptiva agregada de la incidencia acumulada retrospectiva de
+  salida Voluntary en quienes permanecen tras una salida inicial única del
+  equipo, frente a equipos sin salida reciente comparables.
+intended_use: >-
+  Mostrar una asociación de secuencia temporal para revisión de retención. No
+  prueba contagio, causalidad, desempeño de managers ni riesgo individual; no
+  modifica el score ni la definición time-safe de la variable histórica.
+semantic_type: derived_feature
+study_type: descriptive_post_event_cohort_comparison
+analysis_window: Las 24 cohortes índice completas más recientes disponibles al ejecutar la consulta.
+knowledge_boundary: >-
+  Sólo el evento índice se conoce en t. Los seis cierres posteriores son
+  outcomes retrospectivos del estudio y no pueden ser feature de t.
+population: >-
+  worker_type='Employee', employee_type='Regular', active_status=1 y
+  manager_employee_id no nulo al cierre índice.
+grain: Integrante de roster índice × episodio de equipo × intervalo de seguimiento.
+definitions:
+  index_event: Una terminación Voluntary única del equipo en (t-6, t], ocurrida en el intervalo que termina en t.
+  roster: Integrantes activos en t bajo el manager índice, seguidos sólo mientras lo conservan.
+  reference: Equipo sin salida Voluntary en (t-6, t], mismo cierre y banda 1–5, 6–10, 11–20 o 21+.
+  outcome: Primera terminación Voluntary a 1–6 meses cuyo manager atribuido sigue siendo el índice.
+  censoring: Cambio de manager observado, terminación no Voluntary o pérdida de observación.
+  estimand: 1 menos supervivencia Kaplan–Meier; referencia ponderada por la distribución expuesta de cierre × banda.
+publication_rule: >-
+  Cada estrato de referencia utilizado debe tener n inicial y en riesgo >= 30.
+  Los estratos expuestos son internos y no se muestran. Cada punto de cada curva
+  visible debe tener n agregado en riesgo >= 30; de lo contrario se suprime.
+validation_story:
+  - id: calendar
+    question: ¿Existen seis intervalos previos y seis seguimientos mensuales completos por índice?
+    method: Exigir 12 brechas consecutivas de 20–45 días para las 24 cohortes índice recientes.
+    sql_reference: queries/audits/team_post_exit_attrition_event_study_20260910.sql
+    acceptance_rule: Todos los episodios publicados cumplen calendario completo.
+  - id: event_roster_control
+    question: ¿El evento, roster y control respetan la relación histórica con manager y la ventana de seis meses?
+    method: Deduplicar eventos, atribuirlos al último manager único pre-evento y verificar uno/cero eventos en índice/control.
+    sql_reference: queries/audits/team_post_exit_attrition_event_study_20260910.sql
+    acceptance_rule: Todo índice tiene una salida Voluntary y todo control cero en (t-6, t].
+  - id: censoring_privacy
+    question: ¿Se aplica censura y se suprimen resultados no publicables?
+    method: Auditar eventos, censuras, n en riesgo, límites de incidencia y supresión de estratos.
+    sql_reference: queries/audits/team_post_exit_attrition_event_study_20260910.sql
+    acceptance_rule: Curvas publicadas con n agregado >=30 y 0 <= incidencia <=100, sin identidades.
+output_contract:
+  scopes: [all_teams, teams_6_plus]
+  series: [Equipo tras una salida inicial única, Equipos sin salida reciente ajustados]
+  prohibited_claims: [causalidad, contagio demostrado, ranking de managers, predicción individual]
+  suppression: Ocultar puntos de curva con n agregado < 30 y no exponer estratos internos.
+acceptance_rules_frozen: true
+planned_sql:
+  - queries/audits/team_post_exit_attrition_event_study_20260910.sql

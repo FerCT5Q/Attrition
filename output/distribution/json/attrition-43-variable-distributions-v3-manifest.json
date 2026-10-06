@@ -1,0 +1,744 @@
+{
+  "version": 3,
+  "generated_on": "2026-09-15",
+  "deliverable_mode": "internal_analysis",
+  "objective": "Documentar la distribución vigente y la asociación histórica de attrition voluntario a seis meses por cohortes; no predecir renuncias individuales.",
+  "source_deck": {
+    "path": "output/distribution/attrition-43-variable-distributions-v2.html",
+    "sha256": "edc2e0019debaace0a35f89a9137aa5ecd948647a619faa5497eab713ee885ec",
+    "source_manifest": "output/distribution/json/attrition-43-variable-distributions-v2-manifest.json",
+    "source_manifest_sha256": "c3aa76170b7178522593ee8f2c572edc76f2bcaf151395aaf47799f8b843eef8",
+    "preserved": true
+  },
+  "base_template": "C:\\Users\\fcarranz\\.codex\\skills\\html-slide-generator\\templates\\fullscreen\\base-fullscreen.html",
+  "six_month_evidence": {
+    "path": "output/distribution/json/attrition-43-variable-distributions-v3.six-month-attrition-evidence-20260914.json",
+    "sha256": "42198e7fb56146afca1aafb12b507ab24959079d72a03f4d618f43aae6a30760",
+    "query": "queries/profiles/attrition_v3_six_month_segment_rates_20260914.sql",
+    "query_sha256": "b5e7e538ae76a17e9ff5b90f9734e071acf30334fd6910ede18821c3f6e85d81",
+    "history": "latest 24 mature snapshots: 2024-03-24 through 2026-02-22",
+    "baseline_rate_percent": 2.8085,
+    "publication_rule": "Sólo se emiten categorías con >=30 empleados distintos, >=30 exposiciones empleado-snapshot y >=30 salidas Voluntary. Las categorías protegidas se usan exclusivamente en internal_analysis."
+  },
+  "visual_rules": {
+    "distribution_marker": "DISTRIBUCIÓN (azul)",
+    "attrition_marker": "ATTRITION · 6 MESES (naranja)",
+    "simple_layout": "Distribución y attrition lado a lado; contexto debajo.",
+    "dense_layout": "Cada lámina V2 con varios paneles recibe una sola compañera de attrition que conserva su grilla, columnas, jerarquía y tarjeta de contexto.",
+    "category_order": "Se preserva el orden de categorías visible en V2 cuando puede reconciliarse con la evidencia histórica.",
+    "secondary_metric": "Lift vs. baseline de la misma población; 1.00× equivale al baseline.",
+    "no_estimate": "No se calcula una tasa si la fuente, definición o join temporal no está aprobado."
+  },
+  "slide_count": 61,
+  "slides": [
+    {
+      "slide": 1,
+      "title": "Portada V3",
+      "section": "Portada y lectura",
+      "kind": "cover"
+    },
+    {
+      "slide": 2,
+      "title": "Guía de lectura",
+      "section": "Portada y lectura",
+      "kind": "agenda"
+    },
+    {
+      "slide": 3,
+      "title": "Applied to a job",
+      "section": "Movilidad y ubicación",
+      "kind": "no_estimate"
+    },
+    {
+      "slide": 4,
+      "title": "Applied to a job — employee-snapshot, trailing six months",
+      "section": "Movilidad y ubicación",
+      "kind": "no_estimate"
+    },
+    {
+      "slide": 5,
+      "title": "Transfer within past year",
+      "section": "Movilidad y ubicación",
+      "kind": "no_estimate"
+    },
+    {
+      "slide": 6,
+      "title": "Location",
+      "section": "Movilidad y ubicación",
+      "kind": "distribution"
+    },
+    {
+      "slide": 7,
+      "title": "Attrition · Location",
+      "section": "Movilidad y ubicación",
+      "kind": "attrition_companion"
+    },
+    {
+      "slide": 8,
+      "title": "Office site and city",
+      "section": "Movilidad y ubicación",
+      "kind": "distribution"
+    },
+    {
+      "slide": 9,
+      "title": "Attrition · Office site and city",
+      "section": "Movilidad y ubicación",
+      "kind": "attrition_companion"
+    },
+    {
+      "slide": 10,
+      "title": "Team turnover",
+      "section": "Movilidad y ubicación",
+      "kind": "v2_context"
+    },
+    {
+      "slide": 11,
+      "title": "¿Una salida inicial precede más salidas?",
+      "section": "Manager y señales avanzadas",
+      "kind": "existing_attrition_context"
+    },
+    {
+      "slide": 12,
+      "title": "Sensibilidad: equipos de 6+ personas",
+      "section": "Manager y señales avanzadas",
+      "kind": "existing_attrition_context"
+    },
+    {
+      "slide": 13,
+      "title": "Job family",
+      "section": "Estructura de la población",
+      "kind": "distribution"
+    },
+    {
+      "slide": 14,
+      "title": "Attrition · Job family",
+      "section": "Estructura de la población",
+      "kind": "attrition_companion"
+    },
+    {
+      "slide": 15,
+      "title": "Region",
+      "section": "Estructura de la población",
+      "kind": "distribution"
+    },
+    {
+      "slide": 16,
+      "title": "Attrition · Region",
+      "section": "Estructura de la población",
+      "kind": "attrition_companion"
+    },
+    {
+      "slide": 17,
+      "title": "Gender",
+      "section": "Estructura de la población",
+      "kind": "paired_distribution_attrition"
+    },
+    {
+      "slide": 18,
+      "title": "Remote / hybrid / in office status",
+      "section": "Manager y señales avanzadas",
+      "kind": "distribution"
+    },
+    {
+      "slide": 19,
+      "title": "Attrition · Remote / hybrid / in office status",
+      "section": "Manager y señales avanzadas",
+      "kind": "attrition_companion"
+    },
+    {
+      "slide": 20,
+      "title": "Engineering vs. non-engineering",
+      "section": "Estructura de la población",
+      "kind": "paired_distribution_attrition"
+    },
+    {
+      "slide": 21,
+      "title": "Rehire",
+      "section": "Estructura de la población",
+      "kind": "paired_distribution_attrition"
+    },
+    {
+      "slide": 22,
+      "title": "Years of experience prior to Qualcomm",
+      "section": "QVoice y fuentes externas",
+      "kind": "distribution"
+    },
+    {
+      "slide": 23,
+      "title": "Attrition · Years of experience prior to Qualcomm",
+      "section": "QVoice y fuentes externas",
+      "kind": "attrition_companion"
+    },
+    {
+      "slide": 24,
+      "title": "Annual voluntary attrition by prior experience",
+      "section": "Estructura de la población",
+      "kind": "existing_attrition_context"
+    },
+    {
+      "slide": 25,
+      "title": "Commute distance",
+      "section": "Estructura de la población",
+      "kind": "no_estimate"
+    },
+    {
+      "slide": 26,
+      "title": "RTO/hybrid comment in QVoice",
+      "section": "QVoice y fuentes externas",
+      "kind": "v2_context"
+    },
+    {
+      "slide": 27,
+      "title": "Retention concerns in QVoice comments",
+      "section": "QVoice y fuentes externas",
+      "kind": "v2_context"
+    },
+    {
+      "slide": 28,
+      "title": "Non-respondents",
+      "section": "QVoice y fuentes externas",
+      "kind": "no_estimate"
+    },
+    {
+      "slide": 29,
+      "title": "Intent to Stay items",
+      "section": "QVoice y fuentes externas",
+      "kind": "no_estimate"
+    },
+    {
+      "slide": 30,
+      "title": "Career goals item",
+      "section": "QVoice y fuentes externas",
+      "kind": "no_estimate"
+    },
+    {
+      "slide": 31,
+      "title": "Average of all QVoice items",
+      "section": "QVoice y fuentes externas",
+      "kind": "v2_context"
+    },
+    {
+      "slide": 32,
+      "title": "QVoice heartbeat",
+      "section": "QVoice y fuentes externas",
+      "kind": "no_estimate"
+    },
+    {
+      "slide": 33,
+      "title": "Standardized / normalized within region",
+      "section": "Estructura de la población",
+      "kind": "v2_context"
+    },
+    {
+      "slide": 34,
+      "title": "External pull factors",
+      "section": "QVoice y fuentes externas",
+      "kind": "no_estimate"
+    },
+    {
+      "slide": 35,
+      "title": "Time in current job profile vs. current detailed level",
+      "section": "Carrera y compensación",
+      "kind": "v2_context"
+    },
+    {
+      "slide": 36,
+      "title": "Attrition Voluntary anual por vía de entrada al grade y tenure",
+      "section": "Manager y señales avanzadas",
+      "kind": "v2_context"
+    },
+    {
+      "slide": 37,
+      "title": "Company tenure",
+      "section": "Carrera y compensación",
+      "kind": "distribution"
+    },
+    {
+      "slide": 38,
+      "title": "Attrition · Company tenure",
+      "section": "Carrera y compensación",
+      "kind": "attrition_companion"
+    },
+    {
+      "slide": 39,
+      "title": "Time since last promotion",
+      "section": "Carrera y compensación",
+      "kind": "v2_context"
+    },
+    {
+      "slide": 40,
+      "title": "Promotion history by current compensation grade",
+      "section": "Carrera y compensación",
+      "kind": "v2_context"
+    },
+    {
+      "slide": 41,
+      "title": "How employees reached their current compensation grade",
+      "section": "Carrera y compensación",
+      "kind": "v2_context"
+    },
+    {
+      "slide": 42,
+      "title": "Level",
+      "section": "Carrera y compensación",
+      "kind": "distribution"
+    },
+    {
+      "slide": 43,
+      "title": "Attrition · Level",
+      "section": "Carrera y compensación",
+      "kind": "attrition_companion"
+    },
+    {
+      "slide": 44,
+      "title": "Level grouped by grade family",
+      "section": "Carrera y compensación",
+      "kind": "v2_context"
+    },
+    {
+      "slide": 45,
+      "title": "Reconstructed manager layers to CEO",
+      "section": "Manager y señales avanzadas",
+      "kind": "v2_context"
+    },
+    {
+      "slide": 46,
+      "title": "Compensation grade",
+      "section": "Carrera y compensación",
+      "kind": "distribution"
+    },
+    {
+      "slide": 47,
+      "title": "Attrition · Compensation grade",
+      "section": "Carrera y compensación",
+      "kind": "attrition_companion"
+    },
+    {
+      "slide": 48,
+      "title": "Comp ratio",
+      "section": "Carrera y compensación",
+      "kind": "existing_attrition_context"
+    },
+    {
+      "slide": 49,
+      "title": "Within team compensation range",
+      "section": "Carrera y compensación",
+      "kind": "no_estimate"
+    },
+    {
+      "slide": 50,
+      "title": "Co-location with manager",
+      "section": "Movilidad y ubicación",
+      "kind": "no_estimate"
+    },
+    {
+      "slide": 51,
+      "title": "Residential distance from manager",
+      "section": "Manager y señales avanzadas",
+      "kind": "no_estimate"
+    },
+    {
+      "slide": 52,
+      "title": "Office-site relationship with manager",
+      "section": "Movilidad y ubicación",
+      "kind": "no_estimate"
+    },
+    {
+      "slide": 53,
+      "title": "High risk manager",
+      "section": "Manager y señales avanzadas",
+      "kind": "no_estimate"
+    },
+    {
+      "slide": 54,
+      "title": "High turnover under this person",
+      "section": "Manager y señales avanzadas",
+      "kind": "no_estimate"
+    },
+    {
+      "slide": 55,
+      "title": "Above-average team turnover",
+      "section": "Movilidad y ubicación",
+      "kind": "no_estimate"
+    },
+    {
+      "slide": 56,
+      "title": "Manager leaving",
+      "section": "Manager y señales avanzadas",
+      "kind": "no_estimate"
+    },
+    {
+      "slide": 57,
+      "title": "Manager change",
+      "section": "Manager y señales avanzadas",
+      "kind": "paired_distribution_attrition"
+    },
+    {
+      "slide": 58,
+      "title": "Number of manager changes",
+      "section": "Manager y señales avanzadas",
+      "kind": "no_estimate"
+    },
+    {
+      "slide": 59,
+      "title": "Talent index",
+      "section": "Manager y señales avanzadas",
+      "kind": "no_estimate"
+    },
+    {
+      "slide": 60,
+      "title": "Major inflection points",
+      "section": "Manager y señales avanzadas",
+      "kind": "no_estimate"
+    },
+    {
+      "slide": 61,
+      "title": "ET fields",
+      "section": "Manager y señales avanzadas",
+      "kind": "no_estimate"
+    }
+  ],
+  "attrition_companion_slides": [
+    "Attrition · Location",
+    "Attrition · Office site and city",
+    "Attrition · Job family",
+    "Attrition · Region",
+    "Attrition · Remote / hybrid / in office status",
+    "Attrition · Years of experience prior to Qualcomm",
+    "Attrition · Company tenure",
+    "Attrition · Level",
+    "Attrition · Compensation grade"
+  ],
+  "queue": [
+    {
+      "order": 1,
+      "name": "Applied to a job",
+      "slug": "applied-to-a-job",
+      "status": "no_estimable",
+      "decision": "Fuente de aplicaciones sin historia actual y join temporal V3 aprobado."
+    },
+    {
+      "order": 2,
+      "name": "More than 3 job applications",
+      "slug": "more-than-3-job-applications",
+      "status": "no_estimable",
+      "decision": "Fuente de aplicaciones sin historia actual y definición de conteo aprobada."
+    },
+    {
+      "order": 3,
+      "name": "Transfer within past year",
+      "slug": "transfer-within-past-year",
+      "status": "no_estimable",
+      "decision": "Falta la derivación aprobada de la ventana de 12 meses."
+    },
+    {
+      "order": 4,
+      "name": "Location",
+      "slug": "location",
+      "status": "estimable",
+      "decision": "Country, office_site y office_site·city con resultado agregado a seis meses."
+    },
+    {
+      "order": 5,
+      "name": "Within team compensation range",
+      "slug": "within-team-compensation-range",
+      "status": "no_estimable",
+      "decision": "Sin asignación employee-snapshot aprobada del indicador de grupo."
+    },
+    {
+      "order": 6,
+      "name": "Team turnover",
+      "slug": "team-turnover",
+      "status": "existing_context",
+      "decision": "V2 ya conserva una asociación histórica de equipo; no se sustituye su definición."
+    },
+    {
+      "order": 7,
+      "name": "More than 1 employee leaves in a year",
+      "slug": "more-than-1-employee-leaves-in-a-year",
+      "status": "existing_context",
+      "decision": "V2 ya conserva la evidencia contextual de equipos."
+    },
+    {
+      "order": 8,
+      "name": "Job family",
+      "slug": "job-family",
+      "status": "estimable",
+      "decision": "job_family_group y job_family con resultado agregado a seis meses."
+    },
+    {
+      "order": 9,
+      "name": "Region",
+      "slug": "region",
+      "status": "estimable",
+      "decision": "Region, split de display y Labor Market con resultado agregado a seis meses."
+    },
+    {
+      "order": 10,
+      "name": "Gender",
+      "slug": "gender",
+      "status": "estimable_internal_only",
+      "decision": "Categorías protegidas sólo en internal_analysis con controles de cohorte."
+    },
+    {
+      "order": 11,
+      "name": "Remote / hybrid / in office status",
+      "slug": "remote-hybrid-in-office-status",
+      "status": "estimable",
+      "decision": "Categorías almacenadas y vista binaria Onsite con resultado agregado a seis meses."
+    },
+    {
+      "order": 12,
+      "name": "Engineering vs. non-engineering",
+      "slug": "engineering-vs-non-engineering",
+      "status": "estimable",
+      "decision": "Clasificación almacenada con resultado agregado a seis meses."
+    },
+    {
+      "order": 13,
+      "name": "Rehire",
+      "slug": "rehire",
+      "status": "estimable",
+      "decision": "Estado rehire reciente; se mantiene la advertencia de cambio de era fuente."
+    },
+    {
+      "order": 14,
+      "name": "Years of experience prior to Qualcomm",
+      "slug": "years-of-experience-prior-to-qualcomm",
+      "status": "estimable",
+      "decision": "Bandas históricas derivadas de prior_qc_work_years."
+    },
+    {
+      "order": 15,
+      "name": "Commute distance",
+      "slug": "commute-distance",
+      "status": "no_estimable",
+      "decision": "Fuente residencial restringida; no se calcula tasa V3."
+    },
+    {
+      "order": 16,
+      "name": "RTO/hybrid comment in QVoice",
+      "slug": "rto-hybrid-comment-in-qvoice",
+      "status": "no_estimable",
+      "decision": "Sin join temporal a outcome aprobado."
+    },
+    {
+      "order": 17,
+      "name": "Any comment on QVoice",
+      "slug": "any-comment-on-qvoice",
+      "status": "no_estimable",
+      "decision": "Sin join temporal a outcome aprobado."
+    },
+    {
+      "order": 18,
+      "name": "Non-respondents",
+      "slug": "non-respondents",
+      "status": "no_estimable",
+      "decision": "Proxy sin roster/join temporal aprobado."
+    },
+    {
+      "order": 19,
+      "name": "Intent to Stay items",
+      "slug": "intent-to-stay-items",
+      "status": "no_estimable",
+      "decision": "Sin join temporal y escala comparada aprobada."
+    },
+    {
+      "order": 20,
+      "name": "Career goals item",
+      "slug": "career-goals-item",
+      "status": "no_estimable",
+      "decision": "Sin join temporal y escala comparada aprobada."
+    },
+    {
+      "order": 21,
+      "name": "Average of all QVoice items",
+      "slug": "average-of-all-qvoice-items",
+      "status": "no_estimable",
+      "decision": "Compuesto respondent-only sin join temporal aprobado."
+    },
+    {
+      "order": 22,
+      "name": "Standardized / normalized within region",
+      "slug": "standardized-normalized-within-region",
+      "status": "no_estimable",
+      "decision": "Compuesto respondent-only sin join temporal aprobado."
+    },
+    {
+      "order": 23,
+      "name": "Tech industry unemployment data",
+      "slug": "tech-industry-unemployment-data",
+      "status": "no_estimable",
+      "decision": "Fuente externa sin proveedor ni crosswalk aprobado."
+    },
+    {
+      "order": 24,
+      "name": "Draup data",
+      "slug": "draup-data",
+      "status": "no_estimable",
+      "decision": "Fuente externa sin contrato, historia o join aprobado."
+    },
+    {
+      "order": 25,
+      "name": "LinkedIn scraping",
+      "slug": "linkedin-scraping",
+      "status": "no_estimable",
+      "decision": "No se autoriza scraping ni identity matching."
+    },
+    {
+      "order": 26,
+      "name": "Position / time in level",
+      "slug": "position-time-in-level",
+      "status": "no_estimable",
+      "decision": "Falta definición temporal del clock de entrada."
+    },
+    {
+      "order": 27,
+      "name": "Company tenure",
+      "slug": "company-tenure",
+      "status": "estimable",
+      "decision": "Bandas de tenure desde max_hire_rehire_date, con alcance explícito."
+    },
+    {
+      "order": 28,
+      "name": "Time since last promotion",
+      "slug": "time-since-last-promotion",
+      "status": "no_estimable",
+      "decision": "No se reconstruye último evento de forma segura con el campo mostrado."
+    },
+    {
+      "order": 29,
+      "name": "Promoted vs. hired into level",
+      "slug": "promoted-vs-hired-into-level",
+      "status": "no_estimable",
+      "decision": "Faltan reglas temporales y de precedencia para la vía de entrada."
+    },
+    {
+      "order": 30,
+      "name": "Level",
+      "slug": "level",
+      "status": "estimable",
+      "decision": "level_grouped, management_level y job_level con resultado agregado a seis meses."
+    },
+    {
+      "order": 31,
+      "name": "Layers from CEO",
+      "slug": "layers-from-ceo",
+      "status": "no_estimable",
+      "decision": "La jerarquía mostrada requiere reconciliación con raíz gobernada."
+    },
+    {
+      "order": 32,
+      "name": "Compensation grade",
+      "slug": "compensation-grade",
+      "status": "estimable",
+      "decision": "Grados agregados con protección de cohortes; no se muestran valores de compensación."
+    },
+    {
+      "order": 33,
+      "name": "Comp ratio",
+      "slug": "comp-ratio",
+      "status": "existing_context",
+      "decision": "V2 ya contiene la comparación histórica a seis meses; V3 la distingue visualmente."
+    },
+    {
+      "order": 34,
+      "name": "Co-location with manager",
+      "slug": "co-location-with-manager",
+      "status": "no_estimable",
+      "decision": "Falta self-join temporal y política de normalización aprobada."
+    },
+    {
+      "order": 35,
+      "name": "Hours away from manager",
+      "slug": "hours-away-from-manager",
+      "status": "no_estimable",
+      "decision": "Sin fuente externa aprobada para horas o zona horaria."
+    },
+    {
+      "order": 36,
+      "name": "High risk manager",
+      "slug": "high-risk-manager",
+      "status": "no_estimable",
+      "decision": "No es una etiqueta gobernada para una tasa employee-snapshot."
+    },
+    {
+      "order": 37,
+      "name": "High turnover under this person",
+      "slug": "high-turnover-under-this-person",
+      "status": "no_estimable",
+      "decision": "Faltan umbral y definición temporal de equipo aprobados."
+    },
+    {
+      "order": 38,
+      "name": "Manager leaving",
+      "slug": "manager-leaving",
+      "status": "no_estimable",
+      "decision": "La exposición requiere atribución histórica específica que V3 no aproxima."
+    },
+    {
+      "order": 39,
+      "name": "Manager change",
+      "slug": "manager-change",
+      "status": "estimable",
+      "decision": "Flag de evento almacenado con resultado agregado a seis meses."
+    },
+    {
+      "order": 40,
+      "name": "Number of manager changes",
+      "slug": "number-of-manager-changes",
+      "status": "no_estimable",
+      "decision": "Faltan ventana, deduplicación y exclusiones de movilidad aprobadas."
+    },
+    {
+      "order": 41,
+      "name": "Talent index",
+      "slug": "talent-index",
+      "status": "no_estimable",
+      "decision": "Índice con riesgo de leakage; excluido de V3."
+    },
+    {
+      "order": 42,
+      "name": "Major inflection points",
+      "slug": "major-inflection-points",
+      "status": "no_estimable",
+      "decision": "No existe taxonomía o calendario de inflexiones gobernado."
+    },
+    {
+      "order": 43,
+      "name": "ET fields",
+      "slug": "et-fields",
+      "status": "no_estimable",
+      "decision": "Las referencias jerárquicas no definen la clasificación solicitada."
+    }
+  ],
+  "queue_completion": {
+    "total_candidates": 43,
+    "completed_review": 43,
+    "estimable": 12,
+    "existing_six_month_context": 3,
+    "no_estimate": 28,
+    "outcome": "complete"
+  },
+  "privacy": {
+    "minimum_distinct_employee_cohort": 30,
+    "minimum_employee_snapshot_exposure": 30,
+    "minimum_voluntary_events": 30,
+    "protected_categories": "Gender real labels allowed only in the declared internal_analysis artifact.",
+    "prohibited": [
+      "employee rows",
+      "IDs",
+      "names",
+      "emails",
+      "addresses",
+      "free text",
+      "exact compensation"
+    ]
+  },
+  "validation": {
+    "v2_unchanged_sha256": "edc2e0019debaace0a35f89a9137aa5ecd948647a619faa5497eab713ee885ec",
+    "stage_count_equals_navigation_count": true,
+    "queue_43_complete": true,
+    "outcome": "pass"
+  }
+}

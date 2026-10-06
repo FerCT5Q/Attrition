@@ -1,0 +1,75 @@
+{
+  "artifact": "presentation",
+  "outcome": "pass",
+  "variable": "Number of manager changes",
+  "semantic_type": "derived_feature",
+  "as_of_date": "2026-09-14",
+  "source": "hrda.post_hire_monthly_worker_dtls",
+  "query_reference": "queries/profiles/number_of_manager_changes_same_date_mobility_comparison_20260914.sql",
+  "sql_sha256": "892495BECAB64D6C169003AEBA648E2E6CF4337AB1BD89573D3626592C1DD4C3",
+  "snapshot_date": "2026-08-23",
+  "population": "worker_type='Employee' AND employee_type='Regular' AND active_status=1 at the monthly cutoff, with usable employee_id",
+  "grain": "Distinct employee snapshot; event keys are employee_id + effective date",
+  "baseline_definition": "Distinct manager_change_date event keys with manager_change=1, observed no later than the snapshot.",
+  "sensitivity_definition": "Baseline count excluding only events with a positive transfer or promotion event for the same employee on the identical effective date.",
+  "deduplication": "Repeated monthly observations of the same employee/event-date key count once per event type.",
+  "acceptance_rule": "Each distribution must reconcile to eligible employees; alternate counts cannot exceed baseline; annual baseline counts cannot fall below six-month counts; positive flags without dates and invalid count ordering must be zero; every published bucket must have n >= 30.",
+  "diagnostics": {
+    "eligible_employees": 50043,
+    "annual_count_less_than_six_month_count": 0,
+    "invalid_employee_count_order": 0,
+    "manager_flag_without_date_rows": 0,
+    "transfer_flag_without_date_rows": 0,
+    "promotion_flag_without_date_rows": 0
+  },
+  "windows": [
+    {
+      "window_months": 6,
+      "window_start_exclusive": "2026-02-23",
+      "baseline_event_keys": 10317,
+      "transfer_overlap_event_keys": 420,
+      "promotion_overlap_event_keys": 121,
+      "overlap_with_transfer_and_promotion_event_keys": 3,
+      "excluded_overlap_event_keys": 538,
+      "excluded_overlap_event_percent": 5.215663,
+      "baseline_buckets": [
+        {"label": "0", "employee_count": 41266, "employee_percent": 82.461083},
+        {"label": "1", "employee_count": 7528, "employee_percent": 15.043062},
+        {"label": "2", "employee_count": 1138, "employee_percent": 2.274044},
+        {"label": "3+", "employee_count": 111, "employee_percent": 0.221809}
+      ],
+      "excluding_same_date_transfer_or_promotion_buckets": [
+        {"label": "0", "employee_count": 41671, "employee_percent": 83.270387},
+        {"label": "1", "employee_count": 7237, "employee_percent": 14.461563},
+        {"label": "2", "employee_count": 1037, "employee_percent": 2.072217},
+        {"label": "3+", "employee_count": 98, "employee_percent": 0.195831}
+      ]
+    },
+    {
+      "window_months": 12,
+      "window_start_exclusive": "2025-08-23",
+      "baseline_event_keys": 17013,
+      "transfer_overlap_event_keys": 671,
+      "promotion_overlap_event_keys": 249,
+      "overlap_with_transfer_and_promotion_event_keys": 7,
+      "excluded_overlap_event_keys": 913,
+      "excluded_overlap_event_percent": 5.366484,
+      "baseline_buckets": [
+        {"label": "0", "employee_count": 36628, "employee_percent": 73.193053},
+        {"label": "1", "employee_count": 10801, "employee_percent": 21.583438},
+        {"label": "2", "employee_count": 2260, "employee_percent": 4.516116},
+        {"label": "3+", "employee_count": 354, "employee_percent": 0.707391}
+      ],
+      "excluding_same_date_transfer_or_promotion_buckets": [
+        {"label": "0", "employee_count": 37178, "employee_percent": 74.292108},
+        {"label": "1", "employee_count": 10529, "employee_percent": 21.039905},
+        {"label": "2", "employee_count": 2034, "employee_percent": 4.064504},
+        {"label": "3+", "employee_count": 302, "employee_percent": 0.603481}
+      ]
+    }
+  ],
+  "publication_rule": "Aggregate values only; every displayed bucket has n >= 30; no employee identifiers, names, or individual rows are persisted.",
+  "identifiers_persisted": false,
+  "employee_rows_persisted": false,
+  "interpretation": "The exact-date overlap is a minority of manager-change events. This sensitivity does not approve a new feature definition or establish whether formal mobility should be excluded, labeled separately, or modeled independently."
+}

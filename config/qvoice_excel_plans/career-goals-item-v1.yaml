@@ -1,0 +1,60 @@
+schema_version: 1
+plan_version: 1
+language: es
+created_before_execution: true
+plan_authorship: codex_explicit
+variable: Career goals item
+concept: Respuesta binaria de career goals por empleado-wave.
+intended_use: Evaluar la senal binaria de career goals frente a attrition posterior.
+knowledge_date: Fecha de la wave QVoice; excluir informacion posterior.
+population: Respuestas QVoice con una fila por empleado-wave tras deduplicacion interna.
+grain: Employee-wave response aggregate
+semantic_type: survey
+validation_story:
+  - id: source_access
+    criterion: source
+    evidence_role: supporting
+    question: ¿La fuente Excel contiene el item binario de career goals?
+    why: El item debe existir como columna estructurada antes de evaluar su historia.
+    method: schema_access_check
+    sql_reference: queries/audits/qvoice_excel_source_inventory_20260826-2.sql
+    acceptance_rule: El item binario debe existir en al menos un workbook y missing_items debe ser 0.
+    metric_map:
+      missing_items: {column: missing_items, aggregate: sum}
+    metric_checks:
+      - {metric: missing_items, operator: eq, threshold: 0, aggregate: sum}
+  - id: binary_definition
+    criterion: definition
+    evidence_role: defining
+    question: ¿El item de career goals tiene respuestas validas en el dominio 0/1?
+    why: El dominio binario y la ausencia del item deben distinguirse antes de asociarlo con attrition.
+    method: authoritative_definition_and_data_audit
+    sql_reference: queries/audits/qvoice_excel_definition_audit_20260826-2.sql
+    acceptance_rule: Debe haber una poblacion elegible y respuestas pobladas, sin valores invalidos fuera del dominio.
+    metric_checks:
+      - {metric: eligible_count, operator: gt, threshold: 0, aggregate: sum}
+      - {metric: populated_count, operator: gt, threshold: 0, aggregate: sum}
+      - {metric: invalid_count, operator: eq, threshold: 0, aggregate: sum}
+  - id: longitudinal_consistency
+    criterion: consistency
+    evidence_role: defining
+    question: ¿El wording y el dominio del item de career goals son comparables entre waves?
+    why: El mismo concepto aparece con wording distinto y puede no representar exactamente la misma medicion.
+    method: longitudinal_aggregate_audit
+    sql_reference: queries/audits/qvoice_excel_consistency_audit_20260826-2.sql
+    acceptance_rule: No debe haber valores invalidos ni cambios de item set sin una regla versionada.
+    metric_checks:
+      - {metric: invalid_count, operator: eq, threshold: 0, aggregate: sum}
+      - {metric: item_set_change_count, operator: eq, threshold: 0, aggregate: sum}
+  - id: employee_wave_grain
+    criterion: join
+    evidence_role: supporting
+    question: ¿El Excel conserva una fila interna por empleado-wave para career goals?
+    why: La unicidad interna es requisito previo para un join temporal posterior.
+    method: key_grain_and_temporal_reconciliation
+    sql_reference: queries/audits/qvoice_excel_join_grain_audit_20260826-2.sql
+    acceptance_rule: No debe haber duplicados ni unmatched internos; el workforce join queda pendiente.
+    metric_checks:
+      - {metric: matched_count, operator: gt, threshold: 0, aggregate: sum}
+      - {metric: unmatched_count, operator: eq, threshold: 0, aggregate: sum}
+      - {metric: duplicate_count, operator: eq, threshold: 0, aggregate: sum}

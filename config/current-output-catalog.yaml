@@ -1,0 +1,129 @@
+schema_version: 1
+language: es
+
+# Esta configuración define la vista navegable. No modifica los runs citados.
+master_scorecard:
+  run_id: attrition-43-monthly-fiscal-20260816
+  expected_variable_count: 43
+  workbook: assessment.xlsx
+  official_label: Scorecard oficial de 43 variables
+
+selection_policy:
+  required_manifest_status: validated
+  visible_review: latest_validated_by_manifest_timestamp
+  visible_review_is_not_score_replacement: true
+  score_recalculation: prohibited
+  description: >-
+    La revisión validada más reciente se muestra como evidencia navegable y no
+    sustituye automáticamente el score ni el workbook oficial de 43 variables.
+
+# Las siete variables ya incluidas en el scorecard se distinguen visualmente
+# con el prefijo qvoice-. Los stems estabilizan los nombres de carpeta de la
+# vista sin cambiar el nombre canónico de la variable ni sus artefactos fuente.
+qvoice:
+  base_variables:
+    - canonical_name: RTO/hybrid comment in Qvoice
+      folder_stem: qvoice-rto-hybrid-comment
+    - canonical_name: Any comment on Qvoice
+      folder_stem: qvoice-any-comment
+    - canonical_name: Non-respondents
+      folder_stem: qvoice-non-respondents
+    - canonical_name: Intent to Stay items
+      folder_stem: qvoice-intent-to-stay-items
+    - canonical_name: Career goals item
+      folder_stem: qvoice-career-goals-item
+    - canonical_name: Average of all Qvoice items
+      folder_stem: qvoice-average-of-all-items
+    - canonical_name: Standardized / normalized within region
+      folder_stem: qvoice-standardized-within-region
+  extensions:
+    - canonical_name: Intent to Stay items-scale
+      folder_stem: qvoice-intent-to-stay-items-scale
+    - canonical_name: Career goals item-scale
+      folder_stem: qvoice-career-goals-item-scale
+    - canonical_name: Average of all Qvoice items-scale
+      folder_stem: qvoice-average-of-all-items-scale
+    - canonical_name: Standardized / normalized within region-scale
+      folder_stem: qvoice-standardized-within-region-scale
+    - canonical_name: Engagement items
+      folder_stem: qvoice-engagement-items
+    - canonical_name: Engagement items-scale
+      folder_stem: qvoice-engagement-items-scale
+    - canonical_name: Workplace Connection items
+      folder_stem: qvoice-workplace-connection-items
+    - canonical_name: Workplace Connection items-scale
+      folder_stem: qvoice-workplace-connection-items-scale
+    - canonical_name: Wellbeing items
+      folder_stem: qvoice-wellbeing-items
+    - canonical_name: Wellbeing items-scale
+      folder_stem: qvoice-wellbeing-items-scale
+    - canonical_name: Confidence items
+      folder_stem: qvoice-confidence-items
+    - canonical_name: Confidence items-scale
+      folder_stem: qvoice-confidence-items-scale
+
+# Sólo estos runs validados forman el historial visible. Cada alcance es
+# descriptivo: no recalcula ni consolida el scorecard de 43 variables.
+review_runs:
+  - run_id: number-of-manager-changes-join-validation-20260820-3
+    scope: Validación de join y consistencia para Number of manager changes.
+    variables:
+      - Number of manager changes
+  - run_id: number-of-manager-changes-join-validation-20260820-4
+    scope: Iteración final de validación de join y consistencia para Number of manager changes.
+    variables:
+      - Number of manager changes
+  - run_id: talent-index-revalidation-final6-20260820
+    scope: Revalidación v4 de definición, cobertura, consistencia y ventana de Talent index.
+    variables:
+      - Talent index
+  - run_id: talent-index-current-state-final4-20260820
+    scope: Validación del estado actual y reconciliación de cobertura de Talent index.
+    variables:
+      - Talent index
+  - run_id: manager-leaving-consistency-join-validation-20260820-4
+    scope: Validación de consistencia y join para Manager leaving.
+    variables:
+      - Manager leaving
+  - run_id: manager-leaving-consistency-join-validation-20260820-5
+    scope: Iteración final de validación de consistencia y join para Manager leaving.
+    variables:
+      - Manager leaving
+  - run_id: high-risk-manager-revalidation-20260821-4
+    scope: Revalidación v4 de definición, cobertura y consistencia para High risk manager.
+    variables:
+      - High risk manager
+  - run_id: high-risk-manager-score-coverage-revalidation-20260821
+    scope: Revisión de score y cobertura para High risk manager.
+    variables:
+      - High risk manager
+  - run_id: qvoice-excel-v4-20260826-1
+    scope: Primera evaluación v4 de items y escalas QVoice extraídos de Excel.
+    variables:
+      - Intent to Stay items
+      - Intent to Stay items-scale
+      - Career goals item
+      - Career goals item-scale
+      - Average of all Qvoice items
+      - Average of all Qvoice items-scale
+      - Standardized / normalized within region
+      - Standardized / normalized within region-scale
+  - run_id: qvoice-excel-v4-20260826-2-final2
+    scope: "Run final v4 de QVoice: revalida los items ya cubiertos y añade ocho extensiones de escala/items."
+    variables:
+      - Intent to Stay items
+      - Intent to Stay items-scale
+      - Career goals item
+      - Career goals item-scale
+      - Average of all Qvoice items
+      - Average of all Qvoice items-scale
+      - Standardized / normalized within region
+      - Standardized / normalized within region-scale
+      - Engagement items
+      - Engagement items-scale
+      - Workplace Connection items
+      - Workplace Connection items-scale
+      - Wellbeing items
+      - Wellbeing items-scale
+      - Confidence items
+      - Confidence items-scale

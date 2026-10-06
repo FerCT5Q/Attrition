@@ -1,0 +1,190 @@
+version: 4
+variables:
+  - category: Talento
+    variable: Talent index
+    notes: >-
+      Revalidacion sobre empleados regulares activos. Se separa el valor almacenado
+      de los campos de terminacion y se usa una fecha tecnica conservadora para probar
+      cobertura y join, sin llamarla fecha oficial de publicacion.
+    definition: >-
+      Metrica precalculada por empleado y ciclo de talento. Para modelado mensual se
+      propone usar el ultimo talent_index tecnicamente disponible antes o en el
+      snapshot, excluyendo campos de terminacion y cualquier informacion futura.
+    source:
+      type: Database
+      table: hrda.master_talent_index
+      columns:
+        - empl_id
+        - talent_index
+        - cycle_number
+        - cycle_name
+        - last_modified_date
+        - airflow_execution_date
+        - perf
+        - stock
+        - bonus
+        - promo_index
+        - talent_quartile
+        - ar_eligibility
+      status: confirmed_accessible
+    profile:
+      mode: aggregate_sql
+      aggregate_sql_file: ../queries/profiles/talent_index_target_population_coverage.sql
+    level_data: Empleado-snapshot mensual; fuente empleado-ciclo
+    measurement:
+      type: derived
+      frequency_override: Mensual mediante join as-of tecnico desde ciclos de talento
+    population:
+      mode: custom
+      display: Empleados regulares activos en cada snapshot mensual de prediccion
+    numerator_definition: >-
+      Empleados-snapshot con talent_index no nulo en el ultimo registro cuya fecha
+      tecnica es anterior o igual al snapshot, despues de deduplicar y desempatar por
+      cycle_number descendente.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: mapping_or_validation
+      effort: moderate_transformation
+    rationale:
+      definition:
+        why: >-
+          La formula oficial, pesos, normalizacion, versiones, elegibilidad y reglas de
+          nulos no estan documentados ni reconciliados sobre la poblacion objetivo.
+        evidence: >-
+          La tabla contiene talent_index y componentes candidatos, pero es una BASE
+          TABLE sin lineage de formula disponible en el proyecto. La auditoria de
+          readiness solo mide si una reconciliacion futura es posible.
+        recommended_action: >-
+          Obtener del propietario la formula/version oficial y reconciliarla de forma
+          agregada contra talent_index con tolerancia predefinida.
+      consistency:
+        why: >-
+          La estructura puede auditarse, pero hay que resolver fechas tecnicas faltantes,
+          ciclos que comparten fecha y la regla de vigencia entre versiones.
+        evidence: >-
+          Se ejecutaran auditorias de llave empleado-ciclo-version, conflictos y timing;
+          la ausencia de una regla oficial de version impide considerar el campo limpio
+          y estandarizado en el tiempo.
+        recommended_action: >-
+          Publicar un calendario gobernado de ciclos y una regla unica de version antes
+          de promover Consistency a 2.
+      join:
+        why: >-
+          empl_id permite probar el match de empleado, pero la correspondencia
+          empleado-fecha requiere fecha oficial, elegibilidad y desempate gobernados.
+        evidence: >-
+          La reconciliacion cuantificara eligible, matched, unmatched, duplicados y
+          multi-match usando una regla tecnica conservadora; esa regla no sustituye la
+          fecha oficial de publicacion.
+        recommended_action: >-
+          Aprobar la fecha efectiva/publicacion por ciclo y su desempate; repetir el
+          join hasta obtener exactamente un match para cada empleado-snapshot elegible.
+      effort:
+        why: >-
+          La variable requiere deduplicacion, intervalos as-of, exclusion de ciclos sin
+          fecha, desempate de versiones y monitoreo de cobertura.
+        evidence: >-
+          La ruta es implementable en SQL, pero no es una proyeccion directa mientras
+          las reglas temporales y de elegibilidad sigan pendientes.
+        recommended_action: >-
+          Encapsular la logica en una vista o feature pipeline versionado despues de
+          aprobar el calendario y la elegibilidad.
+    verification:
+      semantic_type: precomputed_metric
+      source:
+        method: schema_access_check
+        evidence: >-
+          Se comprobara en information_schema la tabla y cada columna requerida para
+          la ruta read-only.
+        result: >-
+          La fuente solo se considerara confirmada si no falta ningun objeto requerido.
+        as_of_date: '2026-08-20'
+        query_reference: queries/audits/talent_index_source_access_audit.sql
+        acceptance_rule: missing_items debe ser igual a 0.
+        outcome: pending
+        metric_checks:
+          - metric: missing_items
+            aggregate: sum
+            operator: eq
+            threshold: 0
+    derivation_options:
+      - name: Join as-of tecnico conservador
+        status: testable
+        fields_and_tables: >-
+          hrda.master_talent_index: empl_id, talent_index, cycle_number,
+          last_modified_date, airflow_execution_date; hrda.post_hire_monthly_worker_dtls:
+          employee_id, fis_mo_end_dt, worker_type, employee_type, active_status.
+        formula: >-
+          Para cada empleado-snapshot, conservar registros con fecha tecnica menor o
+          igual al snapshot, seleccionar la fecha mas reciente y desempatar por
+          cycle_number descendente.
+        grain: Empleado-snapshot mensual
+        temporal_window: >-
+          Toda la historia hasta el snapshot, excluyendo ciclos sin fecha tecnica y
+          cualquier registro cargado despues del corte.
+        deduplication: >-
+          Colapsar la llave empleado-ciclo-fecha; si hay valores de talent_index en
+          conflicto, tratar el valor como no observable. Desempatar ciclos en la misma
+          fecha por cycle_number descendente y cuantificar esos casos.
+        nulls_and_edge_cases: >-
+          Un empleado sin registro time-safe o con talent_index nulo cuenta como no
+          observable. Los ciclos sin fecha tecnica no se asignan a snapshots.
+        leakage_controls: >-
+          No usar term_reason, vol_1_0, ar_beforeterm ni campos de terminacion. Exigir
+          fecha tecnica <= snapshot y conservar la auditoria post-outcome solo como
+          contexto de integracion.
+        snapshot_join: >-
+          Igualar empl_id con employee_id y aplicar intervalos de vigencia por fecha
+          tecnica. La fecha oficial de publicacion sigue pendiente.
+        sensitivity: >-
+          Mantener IDs dentro del join y publicar solo resultados agregados con cohortes
+          de al menos 30.
+        validations_needed: >-
+          Source, readiness de formula, cobertura mensual, consistencia estructural,
+          calendario de ciclos, join, historia y enriquecimiento post-outcome.
+        estimated_effort: Transformacion SQL moderada y gobernanza adicional de calendario.
+        decision_reason: >-
+          La ruta es reproducible como proxy tecnico y permite cuantificar cobertura,
+          pero no puede considerarse validada hasta aprobar publicacion, elegibilidad y
+          desempate de ciclos.
+    selected_derivation: Join as-of tecnico conservador
+    blocker: none
+    analysis:
+      language: es
+      semantic_type: precomputed_metric
+      definition: >-
+        Metrica precalculada por empleado-ciclo que solo puede usarse en attrition si
+        se selecciona una version conocida antes del snapshot.
+      numerator_definition: >-
+        Empleados-snapshot con un valor no nulo bajo la regla as-of tecnica conservadora.
+      intended_use: >-
+        Evaluar si Talent index aporta una senal de talento disponible antes del
+        snapshot para predecir attrition voluntario en el mes siguiente.
+      attrition_use: >-
+        Evaluar si Talent index aporta una senal de talento disponible antes del
+        snapshot para predecir attrition voluntario en el mes siguiente.
+      source_reasoning: >-
+        La fuente contiene una metrica almacenada por ciclo, pero su formula y calendario
+        oficial no estan disponibles; por eso se separan source, estructura, cobertura,
+        timing, join y contexto post-outcome.
+      prediction_cutoff: >-
+        Usar solo registros con fecha tecnica anterior o igual al cierre del snapshot;
+        esta regla es conservadora y queda limitada hasta obtener publicacion oficial.
+      population: Empleados regulares activos en cada snapshot mensual de prediccion
+      prior_evidence_policy: >-
+        Los resultados historicos y auditorias previas son contexto; todas las metricas
+        de scoring se vuelven a ejecutar para esta poblacion, grain y regla temporal.
+      validation_focus:
+        - Confirmar fuente y columnas requeridas.
+        - Medir factibilidad de reconciliar formula sin inferirla.
+        - Calcular cobertura y missingness sobre la poblacion mensual objetivo.
+        - Auditar llaves, versiones, fechas y consistencia longitudinal.
+        - Reconciliar el join de empleado y empleado-fecha.
+        - Separar enriquecimiento post-outcome de evidencia sobre la formula.
+      context_role: Talent
+      context_relevance: >-
+        El indice puede ser una senal valida si se gobiernan formula, elegibilidad y
+        fecha de conocimiento; la coexistencia con campos de salida no demuestra que
+        estos formen parte del calculo.
+      documentation_path: talent-index/README.md

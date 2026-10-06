@@ -1,0 +1,1441 @@
+{
+  "schema_version": 1,
+  "artifact_type": "aggregate_distribution_evidence",
+  "deliverable_mode": "presentation",
+  "variable": "Comp ratio",
+  "semantic_type": "precomputed_metric",
+  "publication_status": "validated_historical_association",
+  "generated_on": "2026-09-13",
+  "query_path": "queries/audits/comp_ratio_voluntary_attrition_history_20260913.sql",
+  "population": "Empleados regulares activos en cada snapshot mensual, con compa_ratio poblado.",
+  "grain": "Snapshot mensual de empleado; serie publicada por snapshot x grupo de compa_ratio.",
+  "knowledge_boundary": "Sólo datos disponibles al cierre de cada snapshot; seguimiento completo de seis meses.",
+  "outcome_definition": "Salida voluntaria estricta con term_date en (snapshot_date, snapshot_date + 6 meses].",
+  "grouping": {
+    "threshold": 0.8,
+    "low_group": "<0.8 (incl. 0)",
+    "high_group": ">=0.8",
+    "zero_in_low_group": true,
+    "formula_lineage_status": "pending"
+  },
+  "series": [
+    {
+      "snapshot_date": "2020-07-26",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 1502,
+      "voluntary_exit_snapshots": 36,
+      "voluntary_rate_percent": 2.3968,
+      "eligible_employee_snapshots": 30747,
+      "ratio_observed_employee_snapshots": 30747,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2020-07-26",
+      "group_label": ">=0.8",
+      "employee_snapshots": 29245,
+      "voluntary_exit_snapshots": 538,
+      "voluntary_rate_percent": 1.8396,
+      "eligible_employee_snapshots": 30747,
+      "ratio_observed_employee_snapshots": 30747,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2020-08-23",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 1504,
+      "voluntary_exit_snapshots": 33,
+      "voluntary_rate_percent": 2.1941,
+      "eligible_employee_snapshots": 30830,
+      "ratio_observed_employee_snapshots": 30830,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2020-08-23",
+      "group_label": ">=0.8",
+      "employee_snapshots": 29326,
+      "voluntary_exit_snapshots": 586,
+      "voluntary_rate_percent": 1.9982,
+      "eligible_employee_snapshots": 30830,
+      "ratio_observed_employee_snapshots": 30830,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2020-09-27",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 3152,
+      "voluntary_exit_snapshots": 63,
+      "voluntary_rate_percent": 1.9987,
+      "eligible_employee_snapshots": 30965,
+      "ratio_observed_employee_snapshots": 30965,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2020-09-27",
+      "group_label": ">=0.8",
+      "employee_snapshots": 27813,
+      "voluntary_exit_snapshots": 627,
+      "voluntary_rate_percent": 2.2543,
+      "eligible_employee_snapshots": 30965,
+      "ratio_observed_employee_snapshots": 30965,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2020-10-25",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 3163,
+      "voluntary_exit_snapshots": 73,
+      "voluntary_rate_percent": 2.3079,
+      "eligible_employee_snapshots": 31102,
+      "ratio_observed_employee_snapshots": 31102,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2020-10-25",
+      "group_label": ">=0.8",
+      "employee_snapshots": 27939,
+      "voluntary_exit_snapshots": 665,
+      "voluntary_rate_percent": 2.3802,
+      "eligible_employee_snapshots": 31102,
+      "ratio_observed_employee_snapshots": 31102,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2020-11-22",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 3174,
+      "voluntary_exit_snapshots": 80,
+      "voluntary_rate_percent": 2.5205,
+      "eligible_employee_snapshots": 31273,
+      "ratio_observed_employee_snapshots": 31273,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2020-11-22",
+      "group_label": ">=0.8",
+      "employee_snapshots": 28099,
+      "voluntary_exit_snapshots": 754,
+      "voluntary_rate_percent": 2.6834,
+      "eligible_employee_snapshots": 31273,
+      "ratio_observed_employee_snapshots": 31273,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2020-12-27",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 1364,
+      "voluntary_exit_snapshots": 28,
+      "voluntary_rate_percent": 2.0528,
+      "eligible_employee_snapshots": 31311,
+      "ratio_observed_employee_snapshots": 31311,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2020-12-27",
+      "group_label": ">=0.8",
+      "employee_snapshots": 29947,
+      "voluntary_exit_snapshots": 902,
+      "voluntary_rate_percent": 3.012,
+      "eligible_employee_snapshots": 31311,
+      "ratio_observed_employee_snapshots": 31311,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2021-01-24",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 1368,
+      "voluntary_exit_snapshots": 32,
+      "voluntary_rate_percent": 2.3392,
+      "eligible_employee_snapshots": 31430,
+      "ratio_observed_employee_snapshots": 31430,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2021-01-24",
+      "group_label": ">=0.8",
+      "employee_snapshots": 30062,
+      "voluntary_exit_snapshots": 948,
+      "voluntary_rate_percent": 3.1535,
+      "eligible_employee_snapshots": 31430,
+      "ratio_observed_employee_snapshots": 31430,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2021-02-21",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 1388,
+      "voluntary_exit_snapshots": 42,
+      "voluntary_rate_percent": 3.0259,
+      "eligible_employee_snapshots": 31527,
+      "ratio_observed_employee_snapshots": 31527,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2021-02-21",
+      "group_label": ">=0.8",
+      "employee_snapshots": 30139,
+      "voluntary_exit_snapshots": 1007,
+      "voluntary_rate_percent": 3.3412,
+      "eligible_employee_snapshots": 31527,
+      "ratio_observed_employee_snapshots": 31527,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2021-03-28",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 1396,
+      "voluntary_exit_snapshots": 52,
+      "voluntary_rate_percent": 3.7249,
+      "eligible_employee_snapshots": 31921,
+      "ratio_observed_employee_snapshots": 31921,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2021-03-28",
+      "group_label": ">=0.8",
+      "employee_snapshots": 30525,
+      "voluntary_exit_snapshots": 1064,
+      "voluntary_rate_percent": 3.4857,
+      "eligible_employee_snapshots": 31921,
+      "ratio_observed_employee_snapshots": 31921,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2021-04-25",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 1421,
+      "voluntary_exit_snapshots": 48,
+      "voluntary_rate_percent": 3.3779,
+      "eligible_employee_snapshots": 32056,
+      "ratio_observed_employee_snapshots": 32056,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2021-04-25",
+      "group_label": ">=0.8",
+      "employee_snapshots": 30635,
+      "voluntary_exit_snapshots": 1068,
+      "voluntary_rate_percent": 3.4862,
+      "eligible_employee_snapshots": 32056,
+      "ratio_observed_employee_snapshots": 32056,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2021-05-23",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 1460,
+      "voluntary_exit_snapshots": 51,
+      "voluntary_rate_percent": 3.4932,
+      "eligible_employee_snapshots": 32265,
+      "ratio_observed_employee_snapshots": 32265,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2021-05-23",
+      "group_label": ">=0.8",
+      "employee_snapshots": 30805,
+      "voluntary_exit_snapshots": 1014,
+      "voluntary_rate_percent": 3.2917,
+      "eligible_employee_snapshots": 32265,
+      "ratio_observed_employee_snapshots": 32265,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2021-06-27",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 3435,
+      "voluntary_exit_snapshots": 88,
+      "voluntary_rate_percent": 2.5619,
+      "eligible_employee_snapshots": 36609,
+      "ratio_observed_employee_snapshots": 36609,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2021-06-27",
+      "group_label": ">=0.8",
+      "employee_snapshots": 33174,
+      "voluntary_exit_snapshots": 1232,
+      "voluntary_rate_percent": 3.7138,
+      "eligible_employee_snapshots": 36609,
+      "ratio_observed_employee_snapshots": 36609,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2021-07-25",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 3542,
+      "voluntary_exit_snapshots": 94,
+      "voluntary_rate_percent": 2.6539,
+      "eligible_employee_snapshots": 37055,
+      "ratio_observed_employee_snapshots": 37055,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2021-07-25",
+      "group_label": ">=0.8",
+      "employee_snapshots": 33513,
+      "voluntary_exit_snapshots": 1287,
+      "voluntary_rate_percent": 3.8403,
+      "eligible_employee_snapshots": 37055,
+      "ratio_observed_employee_snapshots": 37055,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2021-08-22",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 3586,
+      "voluntary_exit_snapshots": 95,
+      "voluntary_rate_percent": 2.6492,
+      "eligible_employee_snapshots": 37301,
+      "ratio_observed_employee_snapshots": 37301,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2021-08-22",
+      "group_label": ">=0.8",
+      "employee_snapshots": 33715,
+      "voluntary_exit_snapshots": 1339,
+      "voluntary_rate_percent": 3.9715,
+      "eligible_employee_snapshots": 37301,
+      "ratio_observed_employee_snapshots": 37301,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2021-09-26",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 5338,
+      "voluntary_exit_snapshots": 179,
+      "voluntary_rate_percent": 3.3533,
+      "eligible_employee_snapshots": 37550,
+      "ratio_observed_employee_snapshots": 37550,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2021-09-26",
+      "group_label": ">=0.8",
+      "employee_snapshots": 32212,
+      "voluntary_exit_snapshots": 1352,
+      "voluntary_rate_percent": 4.1972,
+      "eligible_employee_snapshots": 37550,
+      "ratio_observed_employee_snapshots": 37550,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2021-10-24",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 5397,
+      "voluntary_exit_snapshots": 198,
+      "voluntary_rate_percent": 3.6687,
+      "eligible_employee_snapshots": 37859,
+      "ratio_observed_employee_snapshots": 37859,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2021-10-24",
+      "group_label": ">=0.8",
+      "employee_snapshots": 32462,
+      "voluntary_exit_snapshots": 1464,
+      "voluntary_rate_percent": 4.5099,
+      "eligible_employee_snapshots": 37859,
+      "ratio_observed_employee_snapshots": 37859,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2021-11-21",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 5412,
+      "voluntary_exit_snapshots": 213,
+      "voluntary_rate_percent": 3.9357,
+      "eligible_employee_snapshots": 38217,
+      "ratio_observed_employee_snapshots": 38217,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2021-11-21",
+      "group_label": ">=0.8",
+      "employee_snapshots": 32805,
+      "voluntary_exit_snapshots": 1591,
+      "voluntary_rate_percent": 4.8499,
+      "eligible_employee_snapshots": 38217,
+      "ratio_observed_employee_snapshots": 38217,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2021-12-26",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 3487,
+      "voluntary_exit_snapshots": 140,
+      "voluntary_rate_percent": 4.0149,
+      "eligible_employee_snapshots": 38223,
+      "ratio_observed_employee_snapshots": 38223,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2021-12-26",
+      "group_label": ">=0.8",
+      "employee_snapshots": 34736,
+      "voluntary_exit_snapshots": 1812,
+      "voluntary_rate_percent": 5.2165,
+      "eligible_employee_snapshots": 38223,
+      "ratio_observed_employee_snapshots": 38223,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2022-01-23",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 3498,
+      "voluntary_exit_snapshots": 147,
+      "voluntary_rate_percent": 4.2024,
+      "eligible_employee_snapshots": 38335,
+      "ratio_observed_employee_snapshots": 38335,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2022-01-23",
+      "group_label": ">=0.8",
+      "employee_snapshots": 34837,
+      "voluntary_exit_snapshots": 1865,
+      "voluntary_rate_percent": 5.3535,
+      "eligible_employee_snapshots": 38335,
+      "ratio_observed_employee_snapshots": 38335,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2022-02-20",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 3489,
+      "voluntary_exit_snapshots": 151,
+      "voluntary_rate_percent": 4.3279,
+      "eligible_employee_snapshots": 38427,
+      "ratio_observed_employee_snapshots": 38427,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2022-02-20",
+      "group_label": ">=0.8",
+      "employee_snapshots": 34938,
+      "voluntary_exit_snapshots": 1892,
+      "voluntary_rate_percent": 5.4153,
+      "eligible_employee_snapshots": 38427,
+      "ratio_observed_employee_snapshots": 38427,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2022-03-27",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 3428,
+      "voluntary_exit_snapshots": 156,
+      "voluntary_rate_percent": 4.5508,
+      "eligible_employee_snapshots": 38552,
+      "ratio_observed_employee_snapshots": 38552,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2022-03-27",
+      "group_label": ">=0.8",
+      "employee_snapshots": 35124,
+      "voluntary_exit_snapshots": 1818,
+      "voluntary_rate_percent": 5.1759,
+      "eligible_employee_snapshots": 38552,
+      "ratio_observed_employee_snapshots": 38552,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2022-04-24",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 4310,
+      "voluntary_exit_snapshots": 195,
+      "voluntary_rate_percent": 4.5244,
+      "eligible_employee_snapshots": 39625,
+      "ratio_observed_employee_snapshots": 39625,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2022-04-24",
+      "group_label": ">=0.8",
+      "employee_snapshots": 35315,
+      "voluntary_exit_snapshots": 1680,
+      "voluntary_rate_percent": 4.7572,
+      "eligible_employee_snapshots": 39625,
+      "ratio_observed_employee_snapshots": 39625,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2022-05-22",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 3672,
+      "voluntary_exit_snapshots": 145,
+      "voluntary_rate_percent": 3.9488,
+      "eligible_employee_snapshots": 39984,
+      "ratio_observed_employee_snapshots": 39984,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2022-05-22",
+      "group_label": ">=0.8",
+      "employee_snapshots": 36312,
+      "voluntary_exit_snapshots": 1580,
+      "voluntary_rate_percent": 4.3512,
+      "eligible_employee_snapshots": 39984,
+      "ratio_observed_employee_snapshots": 39984,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2022-06-26",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 3673,
+      "voluntary_exit_snapshots": 130,
+      "voluntary_rate_percent": 3.5393,
+      "eligible_employee_snapshots": 40468,
+      "ratio_observed_employee_snapshots": 40468,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2022-06-26",
+      "group_label": ">=0.8",
+      "employee_snapshots": 36795,
+      "voluntary_exit_snapshots": 1329,
+      "voluntary_rate_percent": 3.6119,
+      "eligible_employee_snapshots": 40468,
+      "ratio_observed_employee_snapshots": 40468,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2022-07-24",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 3505,
+      "voluntary_exit_snapshots": 108,
+      "voluntary_rate_percent": 3.0813,
+      "eligible_employee_snapshots": 41347,
+      "ratio_observed_employee_snapshots": 41347,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2022-07-24",
+      "group_label": ">=0.8",
+      "employee_snapshots": 37842,
+      "voluntary_exit_snapshots": 1210,
+      "voluntary_rate_percent": 3.1975,
+      "eligible_employee_snapshots": 41347,
+      "ratio_observed_employee_snapshots": 41347,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2022-08-21",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 5395,
+      "voluntary_exit_snapshots": 162,
+      "voluntary_rate_percent": 3.0028,
+      "eligible_employee_snapshots": 41733,
+      "ratio_observed_employee_snapshots": 41733,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2022-08-21",
+      "group_label": ">=0.8",
+      "employee_snapshots": 36338,
+      "voluntary_exit_snapshots": 1003,
+      "voluntary_rate_percent": 2.7602,
+      "eligible_employee_snapshots": 41733,
+      "ratio_observed_employee_snapshots": 41733,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2022-09-25",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 5396,
+      "voluntary_exit_snapshots": 131,
+      "voluntary_rate_percent": 2.4277,
+      "eligible_employee_snapshots": 42227,
+      "ratio_observed_employee_snapshots": 42227,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2022-09-25",
+      "group_label": ">=0.8",
+      "employee_snapshots": 36831,
+      "voluntary_exit_snapshots": 853,
+      "voluntary_rate_percent": 2.316,
+      "eligible_employee_snapshots": 42227,
+      "ratio_observed_employee_snapshots": 42227,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2022-10-23",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 5388,
+      "voluntary_exit_snapshots": 120,
+      "voluntary_rate_percent": 2.2272,
+      "eligible_employee_snapshots": 42620,
+      "ratio_observed_employee_snapshots": 42620,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2022-10-23",
+      "group_label": ">=0.8",
+      "employee_snapshots": 37232,
+      "voluntary_exit_snapshots": 823,
+      "voluntary_rate_percent": 2.2105,
+      "eligible_employee_snapshots": 42620,
+      "ratio_observed_employee_snapshots": 42620,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2022-11-20",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 5416,
+      "voluntary_exit_snapshots": 122,
+      "voluntary_rate_percent": 2.2526,
+      "eligible_employee_snapshots": 43028,
+      "ratio_observed_employee_snapshots": 43028,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2022-11-20",
+      "group_label": ">=0.8",
+      "employee_snapshots": 37612,
+      "voluntary_exit_snapshots": 822,
+      "voluntary_rate_percent": 2.1855,
+      "eligible_employee_snapshots": 43028,
+      "ratio_observed_employee_snapshots": 43028,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2022-12-25",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 2080,
+      "voluntary_exit_snapshots": 33,
+      "voluntary_rate_percent": 1.5865,
+      "eligible_employee_snapshots": 42922,
+      "ratio_observed_employee_snapshots": 42922,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2022-12-25",
+      "group_label": ">=0.8",
+      "employee_snapshots": 40842,
+      "voluntary_exit_snapshots": 871,
+      "voluntary_rate_percent": 2.1326,
+      "eligible_employee_snapshots": 42922,
+      "ratio_observed_employee_snapshots": 42922,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2023-01-22",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 1938,
+      "voluntary_exit_snapshots": 36,
+      "voluntary_rate_percent": 1.8576,
+      "eligible_employee_snapshots": 42798,
+      "ratio_observed_employee_snapshots": 42798,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2023-01-22",
+      "group_label": ">=0.8",
+      "employee_snapshots": 40860,
+      "voluntary_exit_snapshots": 874,
+      "voluntary_rate_percent": 2.139,
+      "eligible_employee_snapshots": 42798,
+      "ratio_observed_employee_snapshots": 42798,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2023-02-19",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 1911,
+      "voluntary_exit_snapshots": 32,
+      "voluntary_rate_percent": 1.6745,
+      "eligible_employee_snapshots": 42745,
+      "ratio_observed_employee_snapshots": 42745,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2023-02-19",
+      "group_label": ">=0.8",
+      "employee_snapshots": 40834,
+      "voluntary_exit_snapshots": 867,
+      "voluntary_rate_percent": 2.1232,
+      "eligible_employee_snapshots": 42745,
+      "ratio_observed_employee_snapshots": 42745,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2023-03-26",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 1902,
+      "voluntary_exit_snapshots": 31,
+      "voluntary_rate_percent": 1.6299,
+      "eligible_employee_snapshots": 42728,
+      "ratio_observed_employee_snapshots": 42728,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2023-03-26",
+      "group_label": ">=0.8",
+      "employee_snapshots": 40826,
+      "voluntary_exit_snapshots": 886,
+      "voluntary_rate_percent": 2.1702,
+      "eligible_employee_snapshots": 42728,
+      "ratio_observed_employee_snapshots": 42728,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2023-04-23",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 1883,
+      "voluntary_exit_snapshots": 31,
+      "voluntary_rate_percent": 1.6463,
+      "eligible_employee_snapshots": 42732,
+      "ratio_observed_employee_snapshots": 42732,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2023-04-23",
+      "group_label": ">=0.8",
+      "employee_snapshots": 40849,
+      "voluntary_exit_snapshots": 897,
+      "voluntary_rate_percent": 2.1959,
+      "eligible_employee_snapshots": 42732,
+      "ratio_observed_employee_snapshots": 42732,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2023-05-21",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 1886,
+      "voluntary_exit_snapshots": 30,
+      "voluntary_rate_percent": 1.5907,
+      "eligible_employee_snapshots": 42829,
+      "ratio_observed_employee_snapshots": 42829,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2023-05-21",
+      "group_label": ">=0.8",
+      "employee_snapshots": 40943,
+      "voluntary_exit_snapshots": 901,
+      "voluntary_rate_percent": 2.2006,
+      "eligible_employee_snapshots": 42829,
+      "ratio_observed_employee_snapshots": 42829,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2023-06-25",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 1881,
+      "voluntary_exit_snapshots": 33,
+      "voluntary_rate_percent": 1.7544,
+      "eligible_employee_snapshots": 42566,
+      "ratio_observed_employee_snapshots": 42566,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2023-06-25",
+      "group_label": ">=0.8",
+      "employee_snapshots": 40685,
+      "voluntary_exit_snapshots": 908,
+      "voluntary_rate_percent": 2.2318,
+      "eligible_employee_snapshots": 42566,
+      "ratio_observed_employee_snapshots": 42566,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2023-07-23",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 1869,
+      "voluntary_exit_snapshots": 30,
+      "voluntary_rate_percent": 1.6051,
+      "eligible_employee_snapshots": 42750,
+      "ratio_observed_employee_snapshots": 42750,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2023-07-23",
+      "group_label": ">=0.8",
+      "employee_snapshots": 40881,
+      "voluntary_exit_snapshots": 969,
+      "voluntary_rate_percent": 2.3703,
+      "eligible_employee_snapshots": 42750,
+      "ratio_observed_employee_snapshots": 42750,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2023-08-20",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 1879,
+      "voluntary_exit_snapshots": 30,
+      "voluntary_rate_percent": 1.5966,
+      "eligible_employee_snapshots": 42666,
+      "ratio_observed_employee_snapshots": 42666,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2023-08-20",
+      "group_label": ">=0.8",
+      "employee_snapshots": 40787,
+      "voluntary_exit_snapshots": 942,
+      "voluntary_rate_percent": 2.3096,
+      "eligible_employee_snapshots": 42666,
+      "ratio_observed_employee_snapshots": 42666,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2023-09-24",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 1879,
+      "voluntary_exit_snapshots": 27,
+      "voluntary_rate_percent": 1.4369,
+      "eligible_employee_snapshots": 42572,
+      "ratio_observed_employee_snapshots": 42572,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2023-09-24",
+      "group_label": ">=0.8",
+      "employee_snapshots": 40693,
+      "voluntary_exit_snapshots": 1076,
+      "voluntary_rate_percent": 2.6442,
+      "eligible_employee_snapshots": 42572,
+      "ratio_observed_employee_snapshots": 42572,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2023-10-22",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 1874,
+      "voluntary_exit_snapshots": 24,
+      "voluntary_rate_percent": 1.2807,
+      "eligible_employee_snapshots": 42479,
+      "ratio_observed_employee_snapshots": 42479,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2023-10-22",
+      "group_label": ">=0.8",
+      "employee_snapshots": 40605,
+      "voluntary_exit_snapshots": 1131,
+      "voluntary_rate_percent": 2.7854,
+      "eligible_employee_snapshots": 42479,
+      "ratio_observed_employee_snapshots": 42479,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2023-11-19",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 1847,
+      "voluntary_exit_snapshots": 21,
+      "voluntary_rate_percent": 1.137,
+      "eligible_employee_snapshots": 42204,
+      "ratio_observed_employee_snapshots": 42204,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2023-11-19",
+      "group_label": ">=0.8",
+      "employee_snapshots": 40357,
+      "voluntary_exit_snapshots": 1157,
+      "voluntary_rate_percent": 2.8669,
+      "eligible_employee_snapshots": 42204,
+      "ratio_observed_employee_snapshots": 42204,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2023-12-24",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 1624,
+      "voluntary_exit_snapshots": 15,
+      "voluntary_rate_percent": 0.9236,
+      "eligible_employee_snapshots": 40145,
+      "ratio_observed_employee_snapshots": 40145,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2023-12-24",
+      "group_label": ">=0.8",
+      "employee_snapshots": 38521,
+      "voluntary_exit_snapshots": 1265,
+      "voluntary_rate_percent": 3.2839,
+      "eligible_employee_snapshots": 40145,
+      "ratio_observed_employee_snapshots": 40145,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2024-01-21",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 1631,
+      "voluntary_exit_snapshots": 15,
+      "voluntary_rate_percent": 0.9197,
+      "eligible_employee_snapshots": 39973,
+      "ratio_observed_employee_snapshots": 39973,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2024-01-21",
+      "group_label": ">=0.8",
+      "employee_snapshots": 38342,
+      "voluntary_exit_snapshots": 1223,
+      "voluntary_rate_percent": 3.1897,
+      "eligible_employee_snapshots": 39973,
+      "ratio_observed_employee_snapshots": 39973,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2024-02-18",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 1612,
+      "voluntary_exit_snapshots": 15,
+      "voluntary_rate_percent": 0.9305,
+      "eligible_employee_snapshots": 40713,
+      "ratio_observed_employee_snapshots": 40713,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2024-02-18",
+      "group_label": ">=0.8",
+      "employee_snapshots": 39101,
+      "voluntary_exit_snapshots": 1216,
+      "voluntary_rate_percent": 3.1099,
+      "eligible_employee_snapshots": 40713,
+      "ratio_observed_employee_snapshots": 40713,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2024-03-24",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 1464,
+      "voluntary_exit_snapshots": 13,
+      "voluntary_rate_percent": 0.888,
+      "eligible_employee_snapshots": 40456,
+      "ratio_observed_employee_snapshots": 40456,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2024-03-24",
+      "group_label": ">=0.8",
+      "employee_snapshots": 38992,
+      "voluntary_exit_snapshots": 1185,
+      "voluntary_rate_percent": 3.0391,
+      "eligible_employee_snapshots": 40456,
+      "ratio_observed_employee_snapshots": 40456,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2024-04-21",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 1411,
+      "voluntary_exit_snapshots": 10,
+      "voluntary_rate_percent": 0.7087,
+      "eligible_employee_snapshots": 40815,
+      "ratio_observed_employee_snapshots": 40815,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2024-04-21",
+      "group_label": ">=0.8",
+      "employee_snapshots": 39404,
+      "voluntary_exit_snapshots": 1157,
+      "voluntary_rate_percent": 2.9363,
+      "eligible_employee_snapshots": 40815,
+      "ratio_observed_employee_snapshots": 40815,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2024-05-19",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 1407,
+      "voluntary_exit_snapshots": 8,
+      "voluntary_rate_percent": 0.5686,
+      "eligible_employee_snapshots": 41074,
+      "ratio_observed_employee_snapshots": 41074,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2024-05-19",
+      "group_label": ">=0.8",
+      "employee_snapshots": 39667,
+      "voluntary_exit_snapshots": 1146,
+      "voluntary_rate_percent": 2.8891,
+      "eligible_employee_snapshots": 41074,
+      "ratio_observed_employee_snapshots": 41074,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2024-06-23",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 1468,
+      "voluntary_exit_snapshots": 9,
+      "voluntary_rate_percent": 0.6131,
+      "eligible_employee_snapshots": 41175,
+      "ratio_observed_employee_snapshots": 41175,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2024-06-23",
+      "group_label": ">=0.8",
+      "employee_snapshots": 39707,
+      "voluntary_exit_snapshots": 1009,
+      "voluntary_rate_percent": 2.5411,
+      "eligible_employee_snapshots": 41175,
+      "ratio_observed_employee_snapshots": 41175,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2024-07-21",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 1453,
+      "voluntary_exit_snapshots": 11,
+      "voluntary_rate_percent": 0.7571,
+      "eligible_employee_snapshots": 42033,
+      "ratio_observed_employee_snapshots": 42033,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2024-07-21",
+      "group_label": ">=0.8",
+      "employee_snapshots": 40580,
+      "voluntary_exit_snapshots": 1007,
+      "voluntary_rate_percent": 2.4815,
+      "eligible_employee_snapshots": 42033,
+      "ratio_observed_employee_snapshots": 42033,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2024-08-25",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 1451,
+      "voluntary_exit_snapshots": 10,
+      "voluntary_rate_percent": 0.6892,
+      "eligible_employee_snapshots": 42167,
+      "ratio_observed_employee_snapshots": 42167,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2024-08-25",
+      "group_label": ">=0.8",
+      "employee_snapshots": 40716,
+      "voluntary_exit_snapshots": 978,
+      "voluntary_rate_percent": 2.402,
+      "eligible_employee_snapshots": 42167,
+      "ratio_observed_employee_snapshots": 42167,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2024-09-29",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 11641,
+      "voluntary_exit_snapshots": 320,
+      "voluntary_rate_percent": 2.7489,
+      "eligible_employee_snapshots": 42191,
+      "ratio_observed_employee_snapshots": 42191,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2024-09-29",
+      "group_label": ">=0.8",
+      "employee_snapshots": 30550,
+      "voluntary_exit_snapshots": 740,
+      "voluntary_rate_percent": 2.4223,
+      "eligible_employee_snapshots": 42191,
+      "ratio_observed_employee_snapshots": 42191,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2024-10-27",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 11644,
+      "voluntary_exit_snapshots": 340,
+      "voluntary_rate_percent": 2.92,
+      "eligible_employee_snapshots": 42414,
+      "ratio_observed_employee_snapshots": 42414,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2024-10-27",
+      "group_label": ">=0.8",
+      "employee_snapshots": 30770,
+      "voluntary_exit_snapshots": 804,
+      "voluntary_rate_percent": 2.6129,
+      "eligible_employee_snapshots": 42414,
+      "ratio_observed_employee_snapshots": 42414,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2024-11-24",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 11573,
+      "voluntary_exit_snapshots": 383,
+      "voluntary_rate_percent": 3.3094,
+      "eligible_employee_snapshots": 42306,
+      "ratio_observed_employee_snapshots": 42306,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2024-11-24",
+      "group_label": ">=0.8",
+      "employee_snapshots": 30733,
+      "voluntary_exit_snapshots": 879,
+      "voluntary_rate_percent": 2.8601,
+      "eligible_employee_snapshots": 42306,
+      "ratio_observed_employee_snapshots": 42306,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2024-12-29",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 3657,
+      "voluntary_exit_snapshots": 121,
+      "voluntary_rate_percent": 3.3087,
+      "eligible_employee_snapshots": 42342,
+      "ratio_observed_employee_snapshots": 42342,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2024-12-29",
+      "group_label": ">=0.8",
+      "employee_snapshots": 38685,
+      "voluntary_exit_snapshots": 1208,
+      "voluntary_rate_percent": 3.1227,
+      "eligible_employee_snapshots": 42342,
+      "ratio_observed_employee_snapshots": 42342,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2025-01-26",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 3639,
+      "voluntary_exit_snapshots": 127,
+      "voluntary_rate_percent": 3.49,
+      "eligible_employee_snapshots": 42485,
+      "ratio_observed_employee_snapshots": 42485,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2025-01-26",
+      "group_label": ">=0.8",
+      "employee_snapshots": 38846,
+      "voluntary_exit_snapshots": 1200,
+      "voluntary_rate_percent": 3.0891,
+      "eligible_employee_snapshots": 42485,
+      "ratio_observed_employee_snapshots": 42485,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2025-02-23",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 3625,
+      "voluntary_exit_snapshots": 136,
+      "voluntary_rate_percent": 3.7517,
+      "eligible_employee_snapshots": 42665,
+      "ratio_observed_employee_snapshots": 42665,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2025-02-23",
+      "group_label": ">=0.8",
+      "employee_snapshots": 39040,
+      "voluntary_exit_snapshots": 1216,
+      "voluntary_rate_percent": 3.1148,
+      "eligible_employee_snapshots": 42665,
+      "ratio_observed_employee_snapshots": 42665,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2025-03-30",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 3500,
+      "voluntary_exit_snapshots": 135,
+      "voluntary_rate_percent": 3.8571,
+      "eligible_employee_snapshots": 42736,
+      "ratio_observed_employee_snapshots": 42736,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2025-03-30",
+      "group_label": ">=0.8",
+      "employee_snapshots": 39236,
+      "voluntary_exit_snapshots": 1192,
+      "voluntary_rate_percent": 3.038,
+      "eligible_employee_snapshots": 42736,
+      "ratio_observed_employee_snapshots": 42736,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2025-04-27",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 3476,
+      "voluntary_exit_snapshots": 129,
+      "voluntary_rate_percent": 3.7112,
+      "eligible_employee_snapshots": 43013,
+      "ratio_observed_employee_snapshots": 43013,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2025-04-27",
+      "group_label": ">=0.8",
+      "employee_snapshots": 39537,
+      "voluntary_exit_snapshots": 1110,
+      "voluntary_rate_percent": 2.8075,
+      "eligible_employee_snapshots": 43013,
+      "ratio_observed_employee_snapshots": 43013,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2025-05-25",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 3444,
+      "voluntary_exit_snapshots": 117,
+      "voluntary_rate_percent": 3.3972,
+      "eligible_employee_snapshots": 43299,
+      "ratio_observed_employee_snapshots": 43299,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2025-05-25",
+      "group_label": ">=0.8",
+      "employee_snapshots": 39855,
+      "voluntary_exit_snapshots": 1013,
+      "voluntary_rate_percent": 2.5417,
+      "eligible_employee_snapshots": 43299,
+      "ratio_observed_employee_snapshots": 43299,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2025-06-29",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 3402,
+      "voluntary_exit_snapshots": 106,
+      "voluntary_rate_percent": 3.1158,
+      "eligible_employee_snapshots": 44034,
+      "ratio_observed_employee_snapshots": 44034,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2025-06-29",
+      "group_label": ">=0.8",
+      "employee_snapshots": 40632,
+      "voluntary_exit_snapshots": 969,
+      "voluntary_rate_percent": 2.3848,
+      "eligible_employee_snapshots": 44034,
+      "ratio_observed_employee_snapshots": 44034,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2025-07-27",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 3372,
+      "voluntary_exit_snapshots": 96,
+      "voluntary_rate_percent": 2.847,
+      "eligible_employee_snapshots": 44818,
+      "ratio_observed_employee_snapshots": 44818,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2025-07-27",
+      "group_label": ">=0.8",
+      "employee_snapshots": 41446,
+      "voluntary_exit_snapshots": 1044,
+      "voluntary_rate_percent": 2.5189,
+      "eligible_employee_snapshots": 44818,
+      "ratio_observed_employee_snapshots": 44818,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2025-08-24",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 3290,
+      "voluntary_exit_snapshots": 83,
+      "voluntary_rate_percent": 2.5228,
+      "eligible_employee_snapshots": 45003,
+      "ratio_observed_employee_snapshots": 45003,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2025-08-24",
+      "group_label": ">=0.8",
+      "employee_snapshots": 41713,
+      "voluntary_exit_snapshots": 1018,
+      "voluntary_rate_percent": 2.4405,
+      "eligible_employee_snapshots": 45003,
+      "ratio_observed_employee_snapshots": 45003,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2025-09-28",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 3297,
+      "voluntary_exit_snapshots": 78,
+      "voluntary_rate_percent": 2.3658,
+      "eligible_employee_snapshots": 45141,
+      "ratio_observed_employee_snapshots": 45141,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2025-09-28",
+      "group_label": ">=0.8",
+      "employee_snapshots": 41844,
+      "voluntary_exit_snapshots": 1043,
+      "voluntary_rate_percent": 2.4926,
+      "eligible_employee_snapshots": 45141,
+      "ratio_observed_employee_snapshots": 45141,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2025-10-26",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 3285,
+      "voluntary_exit_snapshots": 82,
+      "voluntary_rate_percent": 2.4962,
+      "eligible_employee_snapshots": 45255,
+      "ratio_observed_employee_snapshots": 45255,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2025-10-26",
+      "group_label": ">=0.8",
+      "employee_snapshots": 41970,
+      "voluntary_exit_snapshots": 1115,
+      "voluntary_rate_percent": 2.6567,
+      "eligible_employee_snapshots": 45255,
+      "ratio_observed_employee_snapshots": 45255,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2025-11-23",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 3432,
+      "voluntary_exit_snapshots": 90,
+      "voluntary_rate_percent": 2.6224,
+      "eligible_employee_snapshots": 45571,
+      "ratio_observed_employee_snapshots": 45571,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2025-11-23",
+      "group_label": ">=0.8",
+      "employee_snapshots": 42139,
+      "voluntary_exit_snapshots": 1221,
+      "voluntary_rate_percent": 2.8976,
+      "eligible_employee_snapshots": 45571,
+      "ratio_observed_employee_snapshots": 45571,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2025-12-28",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 2422,
+      "voluntary_exit_snapshots": 92,
+      "voluntary_rate_percent": 3.7985,
+      "eligible_employee_snapshots": 47134,
+      "ratio_observed_employee_snapshots": 47134,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2025-12-28",
+      "group_label": ">=0.8",
+      "employee_snapshots": 44712,
+      "voluntary_exit_snapshots": 1435,
+      "voluntary_rate_percent": 3.2094,
+      "eligible_employee_snapshots": 47134,
+      "ratio_observed_employee_snapshots": 47134,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2026-01-25",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 2271,
+      "voluntary_exit_snapshots": 96,
+      "voluntary_rate_percent": 4.2272,
+      "eligible_employee_snapshots": 47258,
+      "ratio_observed_employee_snapshots": 47258,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2026-01-25",
+      "group_label": ">=0.8",
+      "employee_snapshots": 44987,
+      "voluntary_exit_snapshots": 1421,
+      "voluntary_rate_percent": 3.1587,
+      "eligible_employee_snapshots": 47258,
+      "ratio_observed_employee_snapshots": 47258,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2026-02-22",
+      "group_label": "<0.8 (incl. 0)",
+      "employee_snapshots": 2250,
+      "voluntary_exit_snapshots": 102,
+      "voluntary_rate_percent": 4.5333,
+      "eligible_employee_snapshots": 47666,
+      "ratio_observed_employee_snapshots": 47666,
+      "ratio_missing_employee_snapshots": 0
+    },
+    {
+      "snapshot_date": "2026-02-22",
+      "group_label": ">=0.8",
+      "employee_snapshots": 45416,
+      "voluntary_exit_snapshots": 1472,
+      "voluntary_rate_percent": 3.2411,
+      "eligible_employee_snapshots": 47666,
+      "ratio_observed_employee_snapshots": 47666,
+      "ratio_missing_employee_snapshots": 0
+    }
+  ],
+  "audit_metrics": {
+    "ambiguous_termination_event_keys": 61,
+    "complete_snapshot_count": 68,
+    "conflicting_compa_ratio_employee_snapshots": 0,
+    "eligible_employee_snapshot_duplicate_rows": 0,
+    "eligible_employee_snapshot_rows": 2730460,
+    "published_series_points": 136,
+    "ratio_missing_employee_snapshots": 0,
+    "ratio_negative_employee_snapshots": 0,
+    "ratio_observed_employee_snapshots": 2730460,
+    "ratio_zero_employee_snapshots": 86537,
+    "series_group_reconciliation_failures": 0,
+    "series_points_below_n30": 0,
+    "strict_voluntary_event_keys": 16937,
+    "termination_event_keys": 25540,
+    "voluntary_exception_event_keys": 4263
+  },
+  "audit_dates": {
+    "complete_followup_first_snapshot_date": "2020-07-26",
+    "complete_followup_last_snapshot_date": "2026-02-22",
+    "source_first_snapshot_date": "2020-07-26",
+    "source_max_snapshot_date": "2026-09-27"
+  },
+  "pooled_comparison": {
+    "<0.8 (incl. 0)": {
+      "employee_snapshots": 217829,
+      "voluntary_exit_snapshots": 6209,
+      "voluntary_rate_percent": 2.8504
+    },
+    ">=0.8": {
+      "employee_snapshots": 2512631,
+      "voluntary_exit_snapshots": 75890,
+      "voluntary_rate_percent": 3.0203
+    },
+    "comparison": {
+      "absolute_difference_percentage_points": -0.1699,
+      "relative_rate_ratio": 0.9437,
+      "denominator_definition": "Pooled employee-snapshot rows across complete monthly snapshots; the same employee may contribute to multiple snapshots."
+    }
+  },
+  "acceptance_rule": "No duplicate employee-snapshot keys, no conflicting compa_ratio values, no missing or negative ratio values in the published population, every group-month n>=30, group totals reconcile to observed ratio rows, and all snapshots have six months of follow-up.",
+  "interpretation_limit": "Asociación descriptiva del valor almacenado; no confirma que compa_ratio represente bajo salario relativo, no demuestra causalidad y no produce predicciones individuales.",
+  "excluded_event_handling": "Ambiguous term-type keys and VOLUNTARY EXCEPTION keys are excluded from the strict VOLUNTARY outcome and retained only as aggregate diagnostics.",
+  "provenance": {
+    "query_sha256": "9168e49597f9040022b5653fb7c419fb6935e31e43caba2bfad1125bde641525",
+    "result_sha256": "62d43f886f5fc5b0635a857c7ccd02c231855b7dbc3d80270426dc00f23b6491",
+    "raw_aggregate_rows_persisted": false
+  },
+  "privacy_checks": {
+    "identifiers_persisted": false,
+    "employee_rows_persisted": false,
+    "exact_compensation_persisted": false,
+    "raw_compa_ratio_values_persisted": false,
+    "all_displayed_cohorts_meet_minimum": true,
+    "minimum_cohort": 30
+  },
+  "score_v4_change": "none",
+  "outcome": "pass"
+}

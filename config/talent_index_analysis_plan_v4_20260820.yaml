@@ -1,0 +1,180 @@
+schema_version: 1
+plan_version: 4
+plan_revision_reason: >-
+  El plan v2 incorporo el follow-up del dominio de talent_quartile. El intento v3
+  corrigio la redaccion del join, pero introdujo una codificacion incorrecta del signo
+  inicial de interrogacion. El plan v4 conserva SQL, metricas y umbrales, aclara la
+  regla del join y restaura preguntas validas en espanol.
+language: es
+created_before_execution: true
+variable: Talent index
+concept: >-
+  Metrica precalculada por empleado-ciclo; la feature mensual propuesta es el ultimo
+  valor tecnicamente disponible antes del snapshot, sin campos de terminacion.
+intended_use: >-
+  Evaluar una senal de talento para attrition voluntario del mes siguiente sin usar
+  informacion conocida despues del snapshot.
+knowledge_date: >-
+  Cierre del snapshot mensual; solo fechas tecnicas <= snapshot mientras se obtiene
+  el calendario oficial de publicacion.
+population: Empleados regulares activos en cada snapshot mensual de prediccion
+grain: Empleado-snapshot mensual; fuente empleado-ciclo
+semantic_type: precomputed_metric
+source_reasoning: >-
+  La tabla y el indice existen, pero formula, elegibilidad y vigencia oficial siguen
+  pendientes. El plan v2 tambien explica el dominio no esperado de talent_quartile.
+validation_story:
+  - id: source_access
+    criterion: source
+    evidence_role: defining
+    question: ¿Existen y son accesibles la tabla y todas las columnas necesarias?
+    why: Sin una ruta read-only confirmada no puede construirse ni auditarse la feature.
+    fields: [empl_id, talent_index, cycle_number, cycle_name, last_modified_date, airflow_execution_date]
+    method: Auditoria de information_schema para tabla y columnas requeridas.
+    sql_reference: queries/audits/talent_index_source_access_audit.sql
+    acceptance_rule: missing_items debe ser igual a 0.
+    metric_checks:
+      - {metric: missing_items, aggregate: sum, operator: eq, threshold: 0}
+
+  - id: definition_readiness
+    criterion: definition
+    evidence_role: supporting
+    question: ¿Hay filas comparables para reconciliar el indice cuando se obtenga la formula oficial?
+    why: Los componentes presentes permiten probar una formula futura, pero no revelan por si mismos pesos ni reglas.
+    fields: [talent_index, perf, stock, bonus, promo_index, talent_quartile, ar_eligibility]
+    method: Conteos agregados de valor almacenado y componentes candidatos.
+    sql_reference: queries/audits/talent_index_definition_readiness_audit.sql
+    acceptance_rule: >-
+      Deben existir indice y componentes poblados; aun si pasa, Definition permanece
+      en 1 hasta obtener lineage y reconciliacion oficial.
+    metric_checks:
+      - {metric: populated_talent_index_rows, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: rows_with_all_candidate_components, aggregate: sum, operator: gt, threshold: 0}
+
+  - id: target_coverage
+    criterion: coverage
+    evidence_role: defining
+    question: ¿Que porcentaje de empleados-snapshot activos tiene un Talent index conocido a tiempo?
+    why: La cobertura interna del source no responde la disponibilidad para la poblacion del modelo.
+    fields: [employee_id, fis_mo_end_dt, empl_id, talent_index, last_modified_date, airflow_execution_date]
+    method: Perfil mensual agregado con join as-of tecnico conservador.
+    sql_reference: queries/profiles/talent_index_target_population_coverage.sql
+    acceptance_rule: >-
+      Cada fecha debe tener al menos 30 elegibles; Coverage usa los tres snapshots mas
+      recientes con umbrales 95% y 70%.
+    metric_checks:
+      - {metric: eligible_employees, aggregate: min, operator: gte, threshold: 30}
+      - {metric: observable_employees, aggregate: max, operator: gt, threshold: 0}
+
+  - id: structural_consistency
+    criterion: consistency
+    evidence_role: defining
+    question: ¿La llave empleado-ciclo-version es unica y el valor almacenado carece de conflictos?
+    why: Duplicados o valores distintos en la misma llave vuelven ambiguo el valor para el modelo.
+    fields: [empl_id, cycle_number, last_modified_date, airflow_execution_date, talent_index]
+    method: Reconciliacion agregada de llaves faltantes, duplicados, conflictos y versiones.
+    sql_reference: queries/audits/talent_index_structural_consistency_audit.sql
+    acceptance_rule: >-
+      No debe haber llaves faltantes, duplicados, conflictos ni fechas faltantes para
+      considerar la estructura plenamente consistente.
+    metric_checks:
+      - {metric: rows_missing_employee_id, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: rows_missing_cycle_number, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: duplicate_key_groups, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: conflicting_index_key_groups, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: rows_missing_availability_date, aggregate: sum, operator: eq, threshold: 0}
+
+  - id: quartile_domain_followup
+    criterion: consistency
+    evidence_role: contextual
+    question: ¿Los valores de talent_quartile fuera de 1 a 4 son un sentinel documentado u otro dominio?
+    why: >-
+      El hallazgo no previsto puede ser una categoria valida o un problema; sin esta
+      prueba no debe etiquetarse automaticamente como error del Talent index.
+    fields: [talent_quartile, talent_index]
+    method: Conteos agregados por limites del dominio y alineacion con nulos del indice.
+    sql_reference: queries/audits/talent_index_quartile_domain_audit.sql
+    acceptance_rule: >-
+      outside_expected_domain_rows debe ser cero para sostener el rango 1..4; si es
+      positivo, se requiere documentar el sentinel o ampliar el dominio gobernado.
+    metric_checks:
+      - {metric: outside_expected_domain_rows, aggregate: sum, operator: eq, threshold: 0}
+
+  - id: cycle_timing
+    criterion: consistency
+    evidence_role: defining
+    question: ¿Cada ciclo tiene una fecha de conocimiento unica y util para el modelado historico?
+    why: Sin fecha de conocimiento no se sabe que valor estaba disponible en cada snapshot.
+    fields: [cycle_number, cycle_name, last_modified_date, airflow_execution_date, empl_id]
+    method: Resumen agregado por ciclo y conteo de empates empleado-fecha.
+    sql_reference: queries/audits/talent_index_cycle_timing_summary_audit.sql
+    acceptance_rule: No debe haber ciclos sin fecha tecnica ni empates sin una regla oficial.
+    metric_checks:
+      - {metric: cycles_without_any_technical_date, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: employee_availability_tie_groups, aggregate: sum, operator: eq, threshold: 0}
+
+  - id: employee_date_join
+    criterion: join
+    evidence_role: defining
+    question: ¿El join produce exactamente un Talent index por empleado-snapshot elegible?
+    why: El match de empleado no basta; se necesita una version unica conocida antes del snapshot.
+    fields: [employee_id, fis_mo_end_dt, empl_id, cycle_number, talent_index, last_modified_date, airflow_execution_date]
+    method: Reconciliacion de identidad y join as-of con eligible, matched, unmatched, duplicados y multi-match.
+    sql_reference: queries/audits/talent_index_join_reconciliation_audit.sql
+    acceptance_rule: >-
+      Se acepta solo cuando existe al menos una coincidencia y no quedan filas sin
+      correspondencia, duplicadas ni con mas de una coincidencia. Las metricas
+      matched_count, unmatched_count, duplicate_count y multi_match_count deben
+      cumplir esos limites bajo reglas gobernadas.
+    metric_checks:
+      - {metric: matched_count, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: unmatched_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: duplicate_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: multi_match_count, aggregate: sum, operator: eq, threshold: 0}
+
+  - id: usable_history
+    criterion: history
+    evidence_role: defining
+    question: ¿La profundidad historica representa valores realmente conocidos a tiempo?
+    why: Muchos meses de filas no son historia utilizable si los ciclos se cargaron retrospectivamente.
+    fields: [cycle_number, last_modified_date, airflow_execution_date]
+    method: Auditoria de ciclos sin fecha y fechas tecnicas compartidas.
+    sql_reference: queries/audits/talent_index_cycle_timing_summary_audit.sql
+    acceptance_rule: >-
+      History=2 requiere calendario oficial, ningun ciclo sin fecha y al menos 24 meses
+      utilizables; mientras falte calendario, el maximo es 1.
+    metric_checks:
+      - {metric: cycles_without_any_technical_date, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: cycles_sharing_a_technical_date, aggregate: sum, operator: eq, threshold: 0}
+
+  - id: implementation_effort
+    criterion: effort
+    evidence_role: supporting
+    question: ¿La feature es SQL directo o requiere reglas y transformacion moderadas?
+    why: El esfuerzo depende de excepciones temporales, deduplicacion y versionado.
+    fields: [empl_id, cycle_number, last_modified_date, airflow_execution_date, talent_index]
+    method: Usar metricas del join para identificar desempate, duplicados y fechas faltantes.
+    sql_reference: queries/audits/talent_index_join_reconciliation_audit.sql
+    acceptance_rule: Effort=2 solo si basta un join simple sin duplicados, empates ni fechas faltantes.
+    metric_checks:
+      - {metric: duplicate_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: multi_match_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: source_rows_without_technical_date, aggregate: sum, operator: eq, threshold: 0}
+
+  - id: post_outcome_context
+    criterion: definition
+    evidence_role: contextual
+    question: ¿La tabla contiene enriquecimiento posterior a la salida aunque eso no pruebe la formula?
+    why: Evita confundir coexistencia de term_reason con evidencia de que attrition calcula talent_index.
+    fields: [empl_id, talent_index, term_reason, last_modified_date, term_date]
+    method: Comparacion agregada de versiones antes y despues de terminacion, excluyendo rehires.
+    sql_reference: queries/audits/talent_index_post_outcome_context_audit.sql
+    acceptance_rule: >-
+      Un registro posterior confirma riesgo de integracion y exige filtro temporal;
+      nunca confirma componentes de la formula.
+    metric_fields:
+      - matched_terminated_employees
+      - post_term_employees
+      - post_term_employee_percent
+      - post_term_versions_with_term_reason
+      - cross_term_changed_employees

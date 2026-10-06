@@ -1,0 +1,148 @@
+schema_version: 1
+plan_version: 1
+language: es
+created_before_execution: true
+acceptance_rules_frozen: true
+plan_authorship: codex_explicit
+variable: Ingreso por adquisición
+semantic_type: direct_field
+concept: >-
+  Presencia de un nombre de adquisición registrado en
+  hrda.post_hire_monthly_worker_dtls.acquisition. El artefacto no infiere que
+  una ausencia de texto pruebe un ingreso orgánico o sin adquisición.
+intended_use: >-
+  Incorporar una visual descriptiva agregada de distribución actual y attrition
+  voluntaria anual por presencia de adquisición registrada, y desglosar las
+  principales adquisiciones sin usar la variable para decisiones individuales
+  ni para afirmar causalidad.
+knowledge_date: >-
+  acquisition se toma al cierre del snapshot aplicable: 2026-08-23 para la
+  distribución actual y 2025-08-24 para clasificar la cohorte seguida hasta
+  2026-08-23. Ningún valor posterior reclasifica la cohorte basal.
+population: >-
+  Empleados activos Regular (worker_type='Employee', employee_type='Regular',
+  active_status=1) en cada snapshot aplicable; RF360 está incluido.
+grain: >-
+  Empleado distinto por snapshot mensual; una salida VOLUNTARY distinta por
+  persona de la cohorte basal.
+definition: >-
+  La visual publica «Con adquisición registrada» cuando
+  NULLIF(TRIM(acquisition), '') está poblado y «Sin adquisición registrada»
+  cuando está vacío. El segundo estado describe sólo ausencia de registro. Los
+  nombres se agrupan con TRIM y mayúsculas únicamente para comparar espacios y
+  casing; no se unifican aliases sin un mapping documentado.
+source_reasoning: >-
+  hrda.post_hire_monthly_worker_dtls aporta acquisition en el mismo snapshot
+  que la población activa. new_hires.acquisition_org,
+  all_terminations.acquisition_name y worker_details_ms_snapshot.acquisition_yn
+  son contrastes contextuales de procedencia e historia: no sustituyen una
+  definición de negocio autorizada del campo principal.
+validation_focus:
+  - Confirmar acceso, columnas, tipo y grain de la fuente principal.
+  - Medir unicidad empleado-snapshot, blanks, dominio normalizado y variantes
+    de espacios o mayúsculas en los dos cortes de publicación.
+  - Medir cambios longitudinales y transiciones poblado/vacío sin interpretar
+    un cambio como una regla de negocio.
+  - Contrastar de forma agregada las fuentes de altas, terminaciones e historia
+    para detectar discrepancias o actualizaciones retrospectivas.
+  - Reconciliar los dos segmentos, Top 10 más Otras, cohortes, salidas
+    VOLUNTARY y la diferencia histórica 45,002 frente a 45,003.
+  - Suprimir tasas con cohorte basal o eventos Voluntary menores de 30.
+validation_story:
+  - id: source_access_and_snapshot_grain
+    criterion: source
+    evidence_role: defining
+    question: ¿La tabla mensual y los campos requeridos existen y son accesibles por la ruta read-only?
+    why: Sin la tabla, clave de empleado, fecha de snapshot y acquisition no hay
+      una fuente reproducible para describir el registro.
+    fields: [employee_id, fis_mo_end_dt, acquisition, worker_type, employee_type, active_status]
+    population: Metadata de la tabla fuente; la población de negocio se aplica en las consultas posteriores.
+    grain: Metadata y empleado-snapshot mensual.
+    temporal_boundary: Metadata vigente al ejecutar el assessment.
+    method: Consulta agregada de information_schema para todos los campos requeridos.
+    sql_reference: queries/audits/acquisition_entry_source_access_20260929.sql
+    acceptance_rule: missing_items = 0.
+    observed_evidence: Pendiente antes de ejecutar SQL.
+    outcome_label: Pendiente.
+    interpretation: El acceso técnico puede confirmar Source, pero no confirma qué significa acquisition.
+    score_effect: Source sólo puede alcanzar 2 si la consulta congelada cumple la regla.
+    limitation: La fuente no aporta por sí sola lineage de negocio para vacíos, reingresos o actualizaciones.
+    recommended_action: Conservar la auditoría y solicitar la definición del propietario de datos.
+  - id: direct_field_domain_and_snapshot_uniqueness
+    criterion: consistency
+    evidence_role: defining
+    question: ¿Cada empleado tiene un registro no contradictorio por snapshot y el dominio puede normalizarse sólo por espacios y casing?
+    why: Duplicados o valores contradictorios podrían inflar segmentos o convertir una selección arbitraria en una categoría.
+    fields: [employee_id, fis_mo_end_dt, acquisition]
+    population: Empleados activos Regular en 2025-08-24 y 2026-08-23, con historia activa Regular hasta el corte actual.
+    grain: Empleado-snapshot y métricas agregadas por snapshot.
+    temporal_boundary: Desde el inicio observable hasta 2026-08-23; cortes de publicación 2025-08-24 y 2026-08-23.
+    method: Auditoría agregada de unicidad, blancos, cardinalidad cruda/normalizada y transiciones consecutivas.
+    sql_reference: queries/audits/acquisition_entry_semantic_audit_20260929.sql
+    acceptance_rule: No debe haber claves empleado-snapshot contradictorias; los duplicados, variantes y cambios se cuantifican antes de publicar y cualquier alias se mantiene separado sin mapping aprobado.
+    observed_evidence: Pendiente antes de ejecutar SQL.
+    outcome_label: Pendiente.
+    interpretation: Una auditoría limpia puede apoyar Consistency, pero no vuelve los vacíos una definición de origen de ingreso.
+    score_effect: Consistency queda como máximo en 1 hasta disponer de reglas de normalización y lineage aprobados.
+    limitation: El historial observacional no define la semántica de una adquisición ni cómo se tratan reingresos.
+    recommended_action: Obtener mapping y reglas de vigencia del propietario antes de combinar aliases o elevar el score.
+  - id: historical_and_related_source_context
+    criterion: history
+    evidence_role: contextual
+    question: ¿Qué rango histórico observable tiene acquisition y qué contraste agregado ofrecen las fuentes de altas y el snapshot histórico?
+    why: Una fuente reciente, un feed detenido o discrepancias con fuentes relacionadas cambian la interpretación de cobertura y posibles actualizaciones retrospectivas.
+    fields: [acquisition, acquisition_org, acquisition_yn, snapshot_date, effective_date, hire_date_o_ea]
+    population: Historial agregado del campo principal y coincidencias por empleado internas a la consulta.
+    grain: Snapshot agregado y comparación agregada de empleado entre fuentes.
+    temporal_boundary: Historia principal hasta 2026-08-23; worker_details_ms_snapshot se reporta sólo como fuente histórica.
+    method: Medir rango de fechas, cobertura mensual, transiciones y concordancia normalizada únicamente para registros no vacíos no ambiguos.
+    sql_reference: queries/audits/acquisition_entry_semantic_audit_20260929.sql
+    acceptance_rule: El rango, las transiciones y las discrepancias deben quedar cuantificados; esta comparación no se usa para probar la definición del campo principal.
+    observed_evidence: Pendiente antes de ejecutar SQL.
+    outcome_label: Pendiente.
+    interpretation: Es evidencia contextual y no puede elevar Definition, Consistency ni Join.
+    score_effect: Sin capacidad de aumentar un score; History se calcula desde el perfil de cobertura del campo principal.
+    limitation: Las fuentes relacionadas pueden tener otra población, fecha efectiva o semántica.
+    recommended_action: Confirmar owner, lineage y reglas de episodios de empleo para cada fuente antes de usarla como reconciliación definitoria.
+  - id: cohort_distribution_and_voluntary_attrition
+    criterion: join
+    evidence_role: defining
+    question: ¿Los segmentos de distribución y las cohortes de attrition anual reconcilian con los snapshots y con una sola salida VOLUNTARY por persona?
+    why: La tasa exige clasificar al empleado en el baseline y observar sólo salidas posteriores; usar el valor actual o eventos duplicados sesgaría el resultado.
+    fields: [employee_id, fis_mo_end_dt, acquisition, term_date, term_type]
+    population: Empleados activos Regular en 2026-08-23 y cohorte activa Regular al 2025-08-24.
+    grain: Empleado-snapshot basal; salida Voluntary distinta por empleado en (2025-08-24, 2026-08-23].
+    temporal_boundary: Distribución al 2026-08-23; clasificación basal al 2025-08-24; sólo term_type='VOLUNTARY' y term_date dentro de la ventana abierta/cerrada indicada.
+    method: Consulta agregada que deduplica empleado-snapshot, une la cohorte sólo a salidas posteriores y separa Top 10 actual más Otras.
+    sql_reference: queries/audits/acquisition_entry_distribution_attrition_20260929.sql
+    acceptance_rule: Los dos segmentos suman la población actual y basal; Top 10 más Otras suma el grupo adquirido actual; ninguna salida excede su cohorte; las tasas se publican sólo con cohorte y eventos de al menos 30; el baseline actual se explica frente a 45,003 histórico.
+    observed_evidence: Pendiente antes de ejecutar SQL.
+    outcome_label: Pendiente.
+    interpretation: La reconciliación puede confirmar el join técnico de esta visual, no la definición de negocio de acquisition.
+    score_effect: Join queda como máximo en 1 mientras la comparación con fuentes relacionadas y la semántica de episodios continúen pendientes.
+    limitation: La coincidencia técnica de la cohorte no demuestra que acquisition represente el origen de ingreso gobernado.
+    recommended_action: Guardar la evidencia, investigar cualquier diferencia de extracción y pedir lineage formal antes de usar la variable en modelado.
+  - id: termination_source_context
+    criterion: definition
+    evidence_role: contextual
+    question: ¿Cómo reconcilian las salidas VOLUNTARY de la tabla principal con all_terminations dentro de la cohorte basal?
+    why: Una diferencia de feeds puede cambiar el numerador y debe ser visible, pero una coincidencia no define qué significa acquisition.
+    fields: [employee_id, employeeid, term_date, term_type, acquisition_name]
+    population: Cohorte activa Regular al 2025-08-24 y salidas posteriores en la ventana anual.
+    grain: Evento empleado-fecha, publicado únicamente como conteos agregados.
+    temporal_boundary: (2025-08-24, 2026-08-23].
+    method: Intersección y diferencias agregadas de eventos Voluntary de ambas fuentes tras restringir a la cohorte.
+    sql_reference: queries/audits/acquisition_entry_distribution_attrition_20260929.sql
+    acceptance_rule: La consulta cuantifica eventos de ambas fuentes y sus diferencias sin usar all_terminations como numerador del slide.
+    observed_evidence: Pendiente antes de ejecutar SQL.
+    outcome_label: Pendiente.
+    interpretation: Es contraste contextual; no puede elevar Definition ni sustituir el numerador de la tabla principal.
+    score_effect: Sin capacidad de aumentar un score.
+    limitation: Sin lineage oficial no puede elegirse una fuente canónica sólo por concordancia agregada.
+    recommended_action: Acordar con el owner la fuente de término, deduplicación y fecha de conocimiento.
+planned_sql:
+  - queries/audits/acquisition_entry_source_access_20260929.sql
+  - queries/audits/acquisition_entry_related_source_metadata_20260929.sql
+  - queries/profiles/acquisition_entry_coverage_20260929.sql
+  - queries/audits/acquisition_entry_semantic_audit_20260929.sql
+  - queries/audits/acquisition_entry_distribution_attrition_20260929.sql

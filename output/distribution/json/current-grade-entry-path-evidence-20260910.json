@@ -1,0 +1,278 @@
+{
+  "artifact_type": "aggregate_distribution_evidence",
+  "deliverable_mode": "internal_analysis",
+  "variable": "Entry path to current compensation grade",
+  "semantic_type": "derived_feature",
+  "publication_status": "validated_descriptive_matrix",
+  "execution_date": "2026-09-10",
+  "snapshot_date": "2026-08-23",
+  "population": "worker_type='Employee'; employee_type='Regular'; active_status=1 at the 2026-08-23 monthly snapshot",
+  "grain": "Distinct active regular employee at one monthly snapshot, grouped by current compensation_grade",
+  "definition": {
+    "classification": "The latest observed change into the current compensation grade is reconstructed from monthly snapshots inside the current employment episode.",
+    "promotion_confirmation_rule": "A valid is_promo=1 event has a nonfuture date after the prior snapshot and on or before the entry snapshot; its event snapshot has the current compensation grade.",
+    "observed_without_registered_promotion": "A change into the current grade is observed, but no event meets the promotion-confirmation rule.",
+    "not_observable": "No previous complete snapshot demonstrates a change into the current grade; this state is not a direct-hire label.",
+    "rejected_field": "compensation_grade_old is not used: the aggregate audit shows it does not reconcile to the observed prior snapshot.",
+    "non_claims": "Neither observed entry without a registered promotion nor entry not observable means hired into grade, and this is not a causal attrition finding."
+  },
+  "category_labels": {
+    "promotion_confirmed_into_current_grade": "Promotion confirmed into current grade",
+    "observed_entry_without_registered_promotion": "Observed entry without registered promotion",
+    "current_grade_entry_not_observable": "Current-grade entry not observable"
+  },
+  "percentage_rounding": {
+    "method": "largest remainder at 0.1 percentage point; category-order tie break",
+    "each_row_sums_to_percent": 100.0
+  },
+  "matrix": [
+    {
+      "grade": "M20",
+      "grade_scope": "individual",
+      "total_employee_count": 789,
+      "promotion_confirmed_into_current_grade": 336,
+      "observed_entry_without_registered_promotion": 49,
+      "current_grade_entry_not_observable": 404,
+      "promotion_confirmed_into_current_grade_percent": 42.6,
+      "observed_entry_without_registered_promotion_percent": 6.2,
+      "current_grade_entry_not_observable_percent": 51.2
+    },
+    {
+      "grade": "M30",
+      "grade_scope": "individual",
+      "total_employee_count": 924,
+      "promotion_confirmed_into_current_grade": 428,
+      "observed_entry_without_registered_promotion": 51,
+      "current_grade_entry_not_observable": 445,
+      "promotion_confirmed_into_current_grade_percent": 46.3,
+      "observed_entry_without_registered_promotion_percent": 5.5,
+      "current_grade_entry_not_observable_percent": 48.2
+    },
+    {
+      "grade": "M40",
+      "grade_scope": "individual",
+      "total_employee_count": 802,
+      "promotion_confirmed_into_current_grade": 385,
+      "observed_entry_without_registered_promotion": 77,
+      "current_grade_entry_not_observable": 340,
+      "promotion_confirmed_into_current_grade_percent": 48.0,
+      "observed_entry_without_registered_promotion_percent": 9.6,
+      "current_grade_entry_not_observable_percent": 42.4
+    },
+    {
+      "grade": "M50",
+      "grade_scope": "individual",
+      "total_employee_count": 820,
+      "promotion_confirmed_into_current_grade": 370,
+      "observed_entry_without_registered_promotion": 44,
+      "current_grade_entry_not_observable": 406,
+      "promotion_confirmed_into_current_grade_percent": 45.1,
+      "observed_entry_without_registered_promotion_percent": 5.4,
+      "current_grade_entry_not_observable_percent": 49.5
+    },
+    {
+      "grade": "P20",
+      "grade_scope": "individual",
+      "total_employee_count": 950,
+      "promotion_confirmed_into_current_grade": 293,
+      "observed_entry_without_registered_promotion": 56,
+      "current_grade_entry_not_observable": 601,
+      "promotion_confirmed_into_current_grade_percent": 30.8,
+      "observed_entry_without_registered_promotion_percent": 5.9,
+      "current_grade_entry_not_observable_percent": 63.3
+    },
+    {
+      "grade": "P40",
+      "grade_scope": "individual",
+      "total_employee_count": 1272,
+      "promotion_confirmed_into_current_grade": 604,
+      "observed_entry_without_registered_promotion": 215,
+      "current_grade_entry_not_observable": 453,
+      "promotion_confirmed_into_current_grade_percent": 47.5,
+      "observed_entry_without_registered_promotion_percent": 16.9,
+      "current_grade_entry_not_observable_percent": 35.6
+    },
+    {
+      "grade": "R20",
+      "grade_scope": "individual",
+      "total_employee_count": 5665,
+      "promotion_confirmed_into_current_grade": 631,
+      "observed_entry_without_registered_promotion": 321,
+      "current_grade_entry_not_observable": 4713,
+      "promotion_confirmed_into_current_grade_percent": 11.1,
+      "observed_entry_without_registered_promotion_percent": 5.7,
+      "current_grade_entry_not_observable_percent": 83.2
+    },
+    {
+      "grade": "R30",
+      "grade_scope": "individual",
+      "total_employee_count": 8874,
+      "promotion_confirmed_into_current_grade": 4210,
+      "observed_entry_without_registered_promotion": 47,
+      "current_grade_entry_not_observable": 4617,
+      "promotion_confirmed_into_current_grade_percent": 47.5,
+      "observed_entry_without_registered_promotion_percent": 0.5,
+      "current_grade_entry_not_observable_percent": 52.0
+    },
+    {
+      "grade": "R40",
+      "grade_scope": "individual",
+      "total_employee_count": 7027,
+      "promotion_confirmed_into_current_grade": 4731,
+      "observed_entry_without_registered_promotion": 38,
+      "current_grade_entry_not_observable": 2258,
+      "promotion_confirmed_into_current_grade_percent": 67.3,
+      "observed_entry_without_registered_promotion_percent": 0.6,
+      "current_grade_entry_not_observable_percent": 32.1
+    },
+    {
+      "grade": "R50",
+      "grade_scope": "individual",
+      "total_employee_count": 4480,
+      "promotion_confirmed_into_current_grade": 2450,
+      "observed_entry_without_registered_promotion": 293,
+      "current_grade_entry_not_observable": 1737,
+      "promotion_confirmed_into_current_grade_percent": 54.7,
+      "observed_entry_without_registered_promotion_percent": 6.5,
+      "current_grade_entry_not_observable_percent": 38.8
+    },
+    {
+      "grade": "R60",
+      "grade_scope": "individual",
+      "total_employee_count": 1171,
+      "promotion_confirmed_into_current_grade": 493,
+      "observed_entry_without_registered_promotion": 142,
+      "current_grade_entry_not_observable": 536,
+      "promotion_confirmed_into_current_grade_percent": 42.1,
+      "observed_entry_without_registered_promotion_percent": 12.1,
+      "current_grade_entry_not_observable_percent": 45.8
+    },
+    {
+      "grade": "T50",
+      "grade_scope": "individual",
+      "total_employee_count": 2378,
+      "promotion_confirmed_into_current_grade": 1039,
+      "observed_entry_without_registered_promotion": 976,
+      "current_grade_entry_not_observable": 363,
+      "promotion_confirmed_into_current_grade_percent": 43.7,
+      "observed_entry_without_registered_promotion_percent": 41.0,
+      "current_grade_entry_not_observable_percent": 15.3
+    },
+    {
+      "grade": "T60",
+      "grade_scope": "individual",
+      "total_employee_count": 1498,
+      "promotion_confirmed_into_current_grade": 914,
+      "observed_entry_without_registered_promotion": 289,
+      "current_grade_entry_not_observable": 295,
+      "promotion_confirmed_into_current_grade_percent": 61.0,
+      "observed_entry_without_registered_promotion_percent": 19.3,
+      "current_grade_entry_not_observable_percent": 19.7
+    },
+    {
+      "grade": "T70",
+      "grade_scope": "individual",
+      "total_employee_count": 853,
+      "promotion_confirmed_into_current_grade": 59,
+      "observed_entry_without_registered_promotion": 550,
+      "current_grade_entry_not_observable": 244,
+      "promotion_confirmed_into_current_grade_percent": 6.9,
+      "observed_entry_without_registered_promotion_percent": 64.5,
+      "current_grade_entry_not_observable_percent": 28.6
+    },
+    {
+      "grade": "T80",
+      "grade_scope": "individual",
+      "total_employee_count": 590,
+      "promotion_confirmed_into_current_grade": 357,
+      "observed_entry_without_registered_promotion": 41,
+      "current_grade_entry_not_observable": 192,
+      "promotion_confirmed_into_current_grade_percent": 60.5,
+      "observed_entry_without_registered_promotion_percent": 7.0,
+      "current_grade_entry_not_observable_percent": 32.5
+    },
+    {
+      "grade": "Other grades",
+      "grade_scope": "pooled",
+      "total_employee_count": 11950,
+      "promotion_confirmed_into_current_grade": 2369,
+      "observed_entry_without_registered_promotion": 4415,
+      "current_grade_entry_not_observable": 5166,
+      "promotion_confirmed_into_current_grade_percent": 19.8,
+      "observed_entry_without_registered_promotion_percent": 37.0,
+      "current_grade_entry_not_observable_percent": 43.2
+    }
+  ],
+  "metrics": {
+    "active_regular_employee_count": 50043,
+    "observed_current_grade_entry_count": 27273,
+    "promotion_confirmed_into_current_grade_count": 19669,
+    "observed_entry_without_registered_promotion_count": 7604,
+    "current_grade_entry_not_observable_count": 22770,
+    "valid_entry_promotion_pair_count": 19669,
+    "employees_with_valid_entry_promotion_count": 19669,
+    "raw_current_grade_count": 45,
+    "individual_grade_count": 15,
+    "pooled_other_grade_count": 30,
+    "minimum_published_cell_count": 38,
+    "minimum_cohort": 30,
+    "employees_with_multiple_observed_entries_count": 134,
+    "older_observed_entries_not_selected_count": 139,
+    "history_missing_grade_snapshot_count": 219947,
+    "history_snapshot_gap_over_45_days_count": 219947,
+    "old_grade_comparable_snapshot_count": 2418040,
+    "old_grade_matches_previous_snapshot_count": 2216645,
+    "old_grade_mismatch_previous_snapshot_count": 201395,
+    "old_grade_blank_with_previous_snapshot_count": 135
+  },
+  "validation": {
+    "integrity": {
+      "outcome": "pass",
+      "acceptance_rule": "Target and historical employee-snapshots are unique and conflict-free; target grade and episode are complete; promotion flags/dates are valid."
+    },
+    "entry_selection": {
+      "outcome": "pass",
+      "acceptance_rule": "When multiple entries to the same current grade are observed, only the latest one is selected; selection after a gap greater than 45 days is rejected."
+    },
+    "event_alignment": {
+      "outcome": "pass",
+      "acceptance_rule": "A confirming event is after the previous snapshot, on or before the entry snapshot, within the current episode, and recorded with the current grade."
+    },
+    "old_grade_rejected": {
+      "outcome": "pass",
+      "acceptance_rule": "The aggregate comparison records one or more compensation_grade_old mismatches to the prior observed snapshot; the field is excluded from the derivation."
+    },
+    "reconciliation": {
+      "outcome": "pass",
+      "acceptance_rule": "The three mutually exclusive states and all grade cells reconcile exactly to the active-regular denominator."
+    },
+    "pooling": {
+      "outcome": "pass",
+      "acceptance_rule": "An individual grade has n>=30 in each raw state; all other grades are reconciled once into Other grades."
+    },
+    "privacy": {
+      "outcome": "pass",
+      "acceptance_rule": "The internal-analysis artifact retains aggregate counts and rounded percentages only; every visible state cell is n>=30 and contains no identities, dates, employee rows, or exact compensation."
+    }
+  },
+  "provenance": {
+    "audit_sql": "queries/audits/current_grade_entry_path_integrity_20260823.sql",
+    "audit_sql_sha256": "3bbc145ae5d9290f6fea715397b68c390aacddc1ccc2581770809be06dc9e573",
+    "audit_result_sha256": "74a1781e61168adcf694f453211bd9c9186252dc0399cd6b07d9928f4d884c51",
+    "profile_sql": "queries/profiles/current_grade_entry_path_20260823.sql",
+    "profile_sql_sha256": "80005fefe59159b1cb9bf66d382cd145acff12f0c61ace65d1e63d1be48ef20f",
+    "profile_result_sha256": "993df7031a98e353422d3a3c09ab5b2cb14e7bd694073e7e70a97cd93e8a3028",
+    "raw_aggregate_rows_persisted": false
+  },
+  "privacy_checks": {
+    "identifiers_persisted": false,
+    "employee_rows_persisted": false,
+    "individual_dates_persisted": false,
+    "exact_compensation_persisted": false,
+    "all_visible_cells_meet_minimum": true,
+    "minimum_cohort": 30
+  },
+  "score_v4_change": "none",
+  "limitation": "This descriptive entry-path matrix does not identify direct hires, a promotion policy, employee intent, or a causal relationship with attrition.",
+  "outcome": "pass"
+}

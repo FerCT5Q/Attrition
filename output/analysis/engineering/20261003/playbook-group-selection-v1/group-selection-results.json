@@ -1,0 +1,3845 @@
+{
+  "artifact": "engineering-playbook-group-selection",
+  "created_at_utc": "2026-10-03T20:19:03.268544+00:00",
+  "knowledge_boundary": "2026-09-07",
+  "deliverable_classification": "presentation",
+  "authorization": {
+    "path": "config\\attrition_model_in_memory_training_authorization_20261001.json",
+    "id": "attrition-model-in-memory-person-month-training-20261001"
+  },
+  "model": {
+    "name": "B: A + promoción + recontratación",
+    "features": [
+      "level_grouped",
+      "tenure_playbook_band",
+      "calendar_month",
+      "manager_changes_12m",
+      "team_exits_12m",
+      "direct_reports_band",
+      "time_since_promotion_band",
+      "rehire",
+      "level_x_tenure",
+      "tenure_x_manager_changes"
+    ],
+    "summary": {
+      "pr_auc": 0.05371607,
+      "lift_at_10_percent": 2.10448331,
+      "lift_at_20_percent": 1.80681391,
+      "brier_score": 0.02912408,
+      "log_loss": 0.13204496,
+      "by_fold": {
+        "pr_auc": [
+          0.05994,
+          0.053077,
+          0.056932,
+          0.044916
+        ],
+        "lift_at_10_percent": [
+          2.335968,
+          2.131734,
+          2.162896,
+          1.787335
+        ],
+        "lift_at_20_percent": [
+          1.926259,
+          1.808272,
+          1.858509,
+          1.634217
+        ],
+        "brier_score": [
+          0.029106,
+          0.028941,
+          0.02948,
+          0.028969
+        ],
+        "log_loss": [
+          0.131575,
+          0.131467,
+          0.132828,
+          0.132309
+        ]
+      },
+      "calibration_ratio_by_fold": [
+        1.1136,
+        1.1138,
+        1.0608,
+        1.0359
+      ],
+      "mean_abs_log_calibration_ratio": 0.077417
+    }
+  },
+  "design": {
+    "rules": [
+      "candidatas: combinaciones de 2 y 3 variables con cortes gruesos fijos, y árbol de riesgo de profundidad 3 y 4 ajustado en la última foto de entrenamiento de cada periodo",
+      "grupos con < 300 personas por foto van a resto (nunca entra al top)",
+      "eficiencia = Gini de la curva de concentración de salidas observadas ordenando grupos por riesgo estimado / Gini del ranking individual del modelo, en cada uno de los 4 periodos de prueba",
+      "selección: entre combinaciones fijas a <= 2% de la mejor eficiencia media, menos variables, después menos grupos, después más estabilidad",
+      "el árbol sólo gana si supera a la mejor combinación fija por más de 2%",
+      "captura@25% y estabilidad son informativas"
+    ],
+    "variables": [
+      "antiguedad",
+      "salidas_equipo",
+      "reportes",
+      "nivel",
+      "cambios_manager",
+      "promocion",
+      "recontratacion"
+    ],
+    "level_groups": {
+      "1": "alto",
+      "2": "alto",
+      "3": "alto",
+      "5": "medio",
+      "6": "medio",
+      "7": "entrada",
+      "8": "entrada"
+    },
+    "level_values_seen": [
+      "1 - VP & Above",
+      "2 - Sr Dir",
+      "3 - Princ/Directors",
+      "5 - Sr Staff & /Mgr",
+      "6 - Staff & /Mgr",
+      "7 - Senior & Lead",
+      "8 - Assoc & Int/Eng",
+      "Misc"
+    ],
+    "tree_depths": [
+      3,
+      4
+    ],
+    "min_group_people": 300,
+    "min_published_events": 30,
+    "top": 5
+  },
+  "candidates": [
+    {
+      "name": "Antigüedad × Salidas en su equipo × Nivel",
+      "kind": "fixed",
+      "variables": [
+        "antiguedad",
+        "salidas_equipo",
+        "nivel"
+      ],
+      "mean_efficiency": 0.90855,
+      "mean_capture_groups": 0.39457,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 20.0,
+      "mean_rest_people_share": 0.05237,
+      "stability": {
+        "rank_correlation": 0.9956,
+        "top_overlap_with_last_fold": 0.9333
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.28206,
+          "gini_individual": 0.29815,
+          "efficiency": 0.94605,
+          "capture_groups": 0.42424,
+          "capture_individual": 0.45172,
+          "groups": 20,
+          "rest_people_share": 0.05325
+        },
+        {
+          "gini_groups": 0.25092,
+          "gini_individual": 0.27262,
+          "efficiency": 0.92042,
+          "capture_groups": 0.40109,
+          "capture_individual": 0.42708,
+          "groups": 20,
+          "rest_people_share": 0.05471
+        },
+        {
+          "gini_groups": 0.25491,
+          "gini_individual": 0.29285,
+          "efficiency": 0.87045,
+          "capture_groups": 0.39867,
+          "capture_individual": 0.43664,
+          "groups": 21,
+          "rest_people_share": 0.04184
+        },
+        {
+          "gini_groups": 0.21094,
+          "gini_individual": 0.23509,
+          "efficiency": 0.89729,
+          "capture_groups": 0.35428,
+          "capture_individual": 0.39081,
+          "groups": 19,
+          "rest_people_share": 0.05969
+        }
+      ]
+    },
+    {
+      "name": "Antigüedad × Salidas en su equipo × Cambios de manager",
+      "kind": "fixed",
+      "variables": [
+        "antiguedad",
+        "salidas_equipo",
+        "cambios_manager"
+      ],
+      "mean_efficiency": 0.88648,
+      "mean_capture_groups": 0.39182,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 22.5,
+      "mean_rest_people_share": 0.01155,
+      "stability": {
+        "rank_correlation": 0.9916,
+        "top_overlap_with_last_fold": 0.7333
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.2754,
+          "gini_individual": 0.29815,
+          "efficiency": 0.92369,
+          "capture_groups": 0.41194,
+          "capture_individual": 0.45172,
+          "groups": 23,
+          "rest_people_share": 0.00714
+        },
+        {
+          "gini_groups": 0.2416,
+          "gini_individual": 0.27262,
+          "efficiency": 0.8862,
+          "capture_groups": 0.40942,
+          "capture_individual": 0.42708,
+          "groups": 23,
+          "rest_people_share": 0.00796
+        },
+        {
+          "gini_groups": 0.24731,
+          "gini_individual": 0.29285,
+          "efficiency": 0.8445,
+          "capture_groups": 0.38812,
+          "capture_individual": 0.43664,
+          "groups": 22,
+          "rest_people_share": 0.01668
+        },
+        {
+          "gini_groups": 0.20958,
+          "gini_individual": 0.23509,
+          "efficiency": 0.89152,
+          "capture_groups": 0.3578,
+          "capture_individual": 0.39081,
+          "groups": 22,
+          "rest_people_share": 0.01441
+        }
+      ]
+    },
+    {
+      "name": "Antigüedad × Salidas en su equipo × Recontratación",
+      "kind": "fixed",
+      "variables": [
+        "antiguedad",
+        "salidas_equipo",
+        "recontratacion"
+      ],
+      "mean_efficiency": 0.87859,
+      "mean_capture_groups": 0.38198,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 17.5,
+      "mean_rest_people_share": 0.03515,
+      "stability": {
+        "rank_correlation": 0.9856,
+        "top_overlap_with_last_fold": 0.8667
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.26544,
+          "gini_individual": 0.29815,
+          "efficiency": 0.89029,
+          "capture_groups": 0.39648,
+          "capture_individual": 0.45172,
+          "groups": 17,
+          "rest_people_share": 0.03773
+        },
+        {
+          "gini_groups": 0.22733,
+          "gini_individual": 0.27262,
+          "efficiency": 0.83387,
+          "capture_groups": 0.37526,
+          "capture_individual": 0.42708,
+          "groups": 17,
+          "rest_people_share": 0.04231
+        },
+        {
+          "gini_groups": 0.24164,
+          "gini_individual": 0.29285,
+          "efficiency": 0.82511,
+          "capture_groups": 0.38327,
+          "capture_individual": 0.43664,
+          "groups": 18,
+          "rest_people_share": 0.0286
+        },
+        {
+          "gini_groups": 0.22688,
+          "gini_individual": 0.23509,
+          "efficiency": 0.96509,
+          "capture_groups": 0.3729,
+          "capture_individual": 0.39081,
+          "groups": 18,
+          "rest_people_share": 0.03197
+        }
+      ]
+    },
+    {
+      "name": "Antigüedad × Salidas en su equipo × Reportes",
+      "kind": "fixed",
+      "variables": [
+        "antiguedad",
+        "salidas_equipo",
+        "reportes"
+      ],
+      "mean_efficiency": 0.85866,
+      "mean_capture_groups": 0.39252,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 16.5,
+      "mean_rest_people_share": 0.02658,
+      "stability": {
+        "rank_correlation": 0.9881,
+        "top_overlap_with_last_fold": 0.8667
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.25956,
+          "gini_individual": 0.29815,
+          "efficiency": 0.87057,
+          "capture_groups": 0.4094,
+          "capture_individual": 0.45172,
+          "groups": 16,
+          "rest_people_share": 0.03346
+        },
+        {
+          "gini_groups": 0.23213,
+          "gini_individual": 0.27262,
+          "efficiency": 0.85146,
+          "capture_groups": 0.40021,
+          "capture_individual": 0.42708,
+          "groups": 16,
+          "rest_people_share": 0.03173
+        },
+        {
+          "gini_groups": 0.24218,
+          "gini_individual": 0.29285,
+          "efficiency": 0.82697,
+          "capture_groups": 0.39366,
+          "capture_individual": 0.43664,
+          "groups": 17,
+          "rest_people_share": 0.02127
+        },
+        {
+          "gini_groups": 0.2082,
+          "gini_individual": 0.23509,
+          "efficiency": 0.88564,
+          "capture_groups": 0.36683,
+          "capture_individual": 0.39081,
+          "groups": 17,
+          "rest_people_share": 0.01985
+        }
+      ]
+    },
+    {
+      "name": "Antigüedad × Nivel × Cambios de manager",
+      "kind": "fixed",
+      "variables": [
+        "antiguedad",
+        "nivel",
+        "cambios_manager"
+      ],
+      "mean_efficiency": 0.85302,
+      "mean_capture_groups": 0.3933,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 20.25,
+      "mean_rest_people_share": 0.04804,
+      "stability": {
+        "rank_correlation": 0.9886,
+        "top_overlap_with_last_fold": 1.0
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.25901,
+          "gini_individual": 0.29815,
+          "efficiency": 0.86871,
+          "capture_groups": 0.42222,
+          "capture_individual": 0.45172,
+          "groups": 20,
+          "rest_people_share": 0.05175
+        },
+        {
+          "gini_groups": 0.23293,
+          "gini_individual": 0.27262,
+          "efficiency": 0.85443,
+          "capture_groups": 0.38205,
+          "capture_individual": 0.42708,
+          "groups": 20,
+          "rest_people_share": 0.05084
+        },
+        {
+          "gini_groups": 0.24868,
+          "gini_individual": 0.29285,
+          "efficiency": 0.84918,
+          "capture_groups": 0.40195,
+          "capture_individual": 0.43664,
+          "groups": 21,
+          "rest_people_share": 0.03906
+        },
+        {
+          "gini_groups": 0.19741,
+          "gini_individual": 0.23509,
+          "efficiency": 0.83975,
+          "capture_groups": 0.36696,
+          "capture_individual": 0.39081,
+          "groups": 20,
+          "rest_people_share": 0.0505
+        }
+      ]
+    },
+    {
+      "name": "Árbol de riesgo, profundidad 4",
+      "kind": "tree",
+      "variables": [
+        "profundidad 4"
+      ],
+      "mean_efficiency": 0.84981,
+      "mean_capture_groups": 0.38807,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 14.25,
+      "mean_rest_people_share": 0.00449,
+      "stability": {
+        "rank_correlation": 0.9762,
+        "top_overlap_with_last_fold": 0.2667
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.27028,
+          "gini_individual": 0.29815,
+          "efficiency": 0.90653,
+          "capture_groups": 0.4132,
+          "capture_individual": 0.45172,
+          "groups": 15,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.22481,
+          "gini_individual": 0.27262,
+          "efficiency": 0.82461,
+          "capture_groups": 0.38149,
+          "capture_individual": 0.42708,
+          "groups": 14,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.23454,
+          "gini_individual": 0.29285,
+          "efficiency": 0.80087,
+          "capture_groups": 0.38771,
+          "capture_individual": 0.43664,
+          "groups": 14,
+          "rest_people_share": 0.00938
+        },
+        {
+          "gini_groups": 0.20387,
+          "gini_individual": 0.23509,
+          "efficiency": 0.86722,
+          "capture_groups": 0.36987,
+          "capture_individual": 0.39081,
+          "groups": 14,
+          "rest_people_share": 0.00857
+        }
+      ]
+    },
+    {
+      "name": "Antigüedad × Salidas en su equipo",
+      "kind": "fixed",
+      "variables": [
+        "antiguedad",
+        "salidas_equipo"
+      ],
+      "mean_efficiency": 0.84151,
+      "mean_capture_groups": 0.38456,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 12.0,
+      "mean_rest_people_share": 0.0,
+      "stability": {
+        "rank_correlation": 0.979,
+        "top_overlap_with_last_fold": 0.9333
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.26312,
+          "gini_individual": 0.29815,
+          "efficiency": 0.8825,
+          "capture_groups": 0.40509,
+          "capture_individual": 0.45172,
+          "groups": 12,
+          "rest_people_share": 1e-05
+        },
+        {
+          "gini_groups": 0.22936,
+          "gini_individual": 0.27262,
+          "efficiency": 0.84133,
+          "capture_groups": 0.39324,
+          "capture_individual": 0.42708,
+          "groups": 12,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.22389,
+          "gini_individual": 0.29285,
+          "efficiency": 0.7645,
+          "capture_groups": 0.37498,
+          "capture_individual": 0.43664,
+          "groups": 12,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.20634,
+          "gini_individual": 0.23509,
+          "efficiency": 0.87771,
+          "capture_groups": 0.36495,
+          "capture_individual": 0.39081,
+          "groups": 12,
+          "rest_people_share": 0.0
+        }
+      ]
+    },
+    {
+      "name": "Antigüedad × Cambios de manager × Recontratación",
+      "kind": "fixed",
+      "variables": [
+        "antiguedad",
+        "cambios_manager",
+        "recontratacion"
+      ],
+      "mean_efficiency": 0.84008,
+      "mean_capture_groups": 0.37398,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 18.5,
+      "mean_rest_people_share": 0.03128,
+      "stability": {
+        "rank_correlation": 0.9905,
+        "top_overlap_with_last_fold": 0.6667
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.25349,
+          "gini_individual": 0.29815,
+          "efficiency": 0.8502,
+          "capture_groups": 0.38771,
+          "capture_individual": 0.45172,
+          "groups": 18,
+          "rest_people_share": 0.03373
+        },
+        {
+          "gini_groups": 0.21608,
+          "gini_individual": 0.27262,
+          "efficiency": 0.7926,
+          "capture_groups": 0.36681,
+          "capture_individual": 0.42708,
+          "groups": 18,
+          "rest_people_share": 0.04079
+        },
+        {
+          "gini_groups": 0.24135,
+          "gini_individual": 0.29285,
+          "efficiency": 0.82413,
+          "capture_groups": 0.38068,
+          "capture_individual": 0.43664,
+          "groups": 19,
+          "rest_people_share": 0.02449
+        },
+        {
+          "gini_groups": 0.21002,
+          "gini_individual": 0.23509,
+          "efficiency": 0.89338,
+          "capture_groups": 0.36073,
+          "capture_individual": 0.39081,
+          "groups": 19,
+          "rest_people_share": 0.02611
+        }
+      ]
+    },
+    {
+      "name": "Antigüedad × Nivel × Recontratación",
+      "kind": "fixed",
+      "variables": [
+        "antiguedad",
+        "nivel",
+        "recontratacion"
+      ],
+      "mean_efficiency": 0.8382,
+      "mean_capture_groups": 0.38986,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 19.75,
+      "mean_rest_people_share": 0.026,
+      "stability": {
+        "rank_correlation": 0.9889,
+        "top_overlap_with_last_fold": 1.0
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.25911,
+          "gini_individual": 0.29815,
+          "efficiency": 0.86907,
+          "capture_groups": 0.42095,
+          "capture_individual": 0.45172,
+          "groups": 19,
+          "rest_people_share": 0.03055
+        },
+        {
+          "gini_groups": 0.21947,
+          "gini_individual": 0.27262,
+          "efficiency": 0.80503,
+          "capture_groups": 0.38158,
+          "capture_individual": 0.42708,
+          "groups": 20,
+          "rest_people_share": 0.02368
+        },
+        {
+          "gini_groups": 0.24609,
+          "gini_individual": 0.29285,
+          "efficiency": 0.84033,
+          "capture_groups": 0.39563,
+          "capture_individual": 0.43664,
+          "groups": 19,
+          "rest_people_share": 0.03084
+        },
+        {
+          "gini_groups": 0.19709,
+          "gini_individual": 0.23509,
+          "efficiency": 0.83835,
+          "capture_groups": 0.36129,
+          "capture_individual": 0.39081,
+          "groups": 21,
+          "rest_people_share": 0.01893
+        }
+      ]
+    },
+    {
+      "name": "Antigüedad × Salidas en su equipo × Última promoción",
+      "kind": "fixed",
+      "variables": [
+        "antiguedad",
+        "salidas_equipo",
+        "promocion"
+      ],
+      "mean_efficiency": 0.83044,
+      "mean_capture_groups": 0.37962,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 23.0,
+      "mean_rest_people_share": 0.02832,
+      "stability": {
+        "rank_correlation": 0.9859,
+        "top_overlap_with_last_fold": 0.8667
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.26104,
+          "gini_individual": 0.29815,
+          "efficiency": 0.87552,
+          "capture_groups": 0.40795,
+          "capture_individual": 0.45172,
+          "groups": 22,
+          "rest_people_share": 0.04624
+        },
+        {
+          "gini_groups": 0.23318,
+          "gini_individual": 0.27262,
+          "efficiency": 0.85531,
+          "capture_groups": 0.38707,
+          "capture_individual": 0.42708,
+          "groups": 24,
+          "rest_people_share": 0.01951
+        },
+        {
+          "gini_groups": 0.21981,
+          "gini_individual": 0.29285,
+          "efficiency": 0.75059,
+          "capture_groups": 0.36713,
+          "capture_individual": 0.43664,
+          "groups": 23,
+          "rest_people_share": 0.02528
+        },
+        {
+          "gini_groups": 0.19755,
+          "gini_individual": 0.23509,
+          "efficiency": 0.84034,
+          "capture_groups": 0.35631,
+          "capture_individual": 0.39081,
+          "groups": 23,
+          "rest_people_share": 0.02227
+        }
+      ]
+    },
+    {
+      "name": "Antigüedad × Nivel",
+      "kind": "fixed",
+      "variables": [
+        "antiguedad",
+        "nivel"
+      ],
+      "mean_efficiency": 0.81766,
+      "mean_capture_groups": 0.38346,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 12.75,
+      "mean_rest_people_share": 0.02032,
+      "stability": {
+        "rank_correlation": 0.986,
+        "top_overlap_with_last_fold": 0.8
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.25654,
+          "gini_individual": 0.29815,
+          "efficiency": 0.86043,
+          "capture_groups": 0.41699,
+          "capture_individual": 0.45172,
+          "groups": 12,
+          "rest_people_share": 0.02655
+        },
+        {
+          "gini_groups": 0.21691,
+          "gini_individual": 0.27262,
+          "efficiency": 0.79566,
+          "capture_groups": 0.38149,
+          "capture_individual": 0.42708,
+          "groups": 13,
+          "rest_people_share": 0.01705
+        },
+        {
+          "gini_groups": 0.23908,
+          "gini_individual": 0.29285,
+          "efficiency": 0.81639,
+          "capture_groups": 0.38812,
+          "capture_individual": 0.43664,
+          "groups": 12,
+          "rest_people_share": 0.02607
+        },
+        {
+          "gini_groups": 0.18764,
+          "gini_individual": 0.23509,
+          "efficiency": 0.79816,
+          "capture_groups": 0.34723,
+          "capture_individual": 0.39081,
+          "groups": 14,
+          "rest_people_share": 0.01163
+        }
+      ]
+    },
+    {
+      "name": "Antigüedad × Nivel × Última promoción",
+      "kind": "fixed",
+      "variables": [
+        "antiguedad",
+        "nivel",
+        "promocion"
+      ],
+      "mean_efficiency": 0.80939,
+      "mean_capture_groups": 0.388,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 23.5,
+      "mean_rest_people_share": 0.05346,
+      "stability": {
+        "rank_correlation": 0.9898,
+        "top_overlap_with_last_fold": 0.8667
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.25031,
+          "gini_individual": 0.29815,
+          "efficiency": 0.83956,
+          "capture_groups": 0.4198,
+          "capture_individual": 0.45172,
+          "groups": 23,
+          "rest_people_share": 0.06641
+        },
+        {
+          "gini_groups": 0.21849,
+          "gini_individual": 0.27262,
+          "efficiency": 0.80144,
+          "capture_groups": 0.38126,
+          "capture_individual": 0.42708,
+          "groups": 24,
+          "rest_people_share": 0.04905
+        },
+        {
+          "gini_groups": 0.23283,
+          "gini_individual": 0.29285,
+          "efficiency": 0.79502,
+          "capture_groups": 0.40108,
+          "capture_individual": 0.43664,
+          "groups": 23,
+          "rest_people_share": 0.05506
+        },
+        {
+          "gini_groups": 0.18843,
+          "gini_individual": 0.23509,
+          "efficiency": 0.80153,
+          "capture_groups": 0.34987,
+          "capture_individual": 0.39081,
+          "groups": 24,
+          "rest_people_share": 0.04333
+        }
+      ]
+    },
+    {
+      "name": "Antigüedad × Reportes × Cambios de manager",
+      "kind": "fixed",
+      "variables": [
+        "antiguedad",
+        "reportes",
+        "cambios_manager"
+      ],
+      "mean_efficiency": 0.80805,
+      "mean_capture_groups": 0.37888,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 17.0,
+      "mean_rest_people_share": 0.01978,
+      "stability": {
+        "rank_correlation": 0.9747,
+        "top_overlap_with_last_fold": 1.0
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.24521,
+          "gini_individual": 0.29815,
+          "efficiency": 0.82244,
+          "capture_groups": 0.40195,
+          "capture_individual": 0.45172,
+          "groups": 17,
+          "rest_people_share": 0.02214
+        },
+        {
+          "gini_groups": 0.21357,
+          "gini_individual": 0.27262,
+          "efficiency": 0.78341,
+          "capture_groups": 0.37469,
+          "capture_individual": 0.42708,
+          "groups": 17,
+          "rest_people_share": 0.02039
+        },
+        {
+          "gini_groups": 0.23213,
+          "gini_individual": 0.29285,
+          "efficiency": 0.79264,
+          "capture_groups": 0.37847,
+          "capture_individual": 0.43664,
+          "groups": 17,
+          "rest_people_share": 0.01899
+        },
+        {
+          "gini_groups": 0.196,
+          "gini_individual": 0.23509,
+          "efficiency": 0.83371,
+          "capture_groups": 0.3604,
+          "capture_individual": 0.39081,
+          "groups": 17,
+          "rest_people_share": 0.01759
+        }
+      ]
+    },
+    {
+      "name": "Antigüedad × Reportes × Nivel",
+      "kind": "fixed",
+      "variables": [
+        "antiguedad",
+        "reportes",
+        "nivel"
+      ],
+      "mean_efficiency": 0.80758,
+      "mean_capture_groups": 0.38267,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 15.25,
+      "mean_rest_people_share": 0.05,
+      "stability": {
+        "rank_correlation": 0.9902,
+        "top_overlap_with_last_fold": 0.8
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.24882,
+          "gini_individual": 0.29815,
+          "efficiency": 0.83455,
+          "capture_groups": 0.41551,
+          "capture_individual": 0.45172,
+          "groups": 15,
+          "rest_people_share": 0.05578
+        },
+        {
+          "gini_groups": 0.21476,
+          "gini_individual": 0.27262,
+          "efficiency": 0.78776,
+          "capture_groups": 0.38226,
+          "capture_individual": 0.42708,
+          "groups": 16,
+          "rest_people_share": 0.04507
+        },
+        {
+          "gini_groups": 0.23947,
+          "gini_individual": 0.29285,
+          "efficiency": 0.81772,
+          "capture_groups": 0.38614,
+          "capture_individual": 0.43664,
+          "groups": 16,
+          "rest_people_share": 0.04002
+        },
+        {
+          "gini_groups": 0.18579,
+          "gini_individual": 0.23509,
+          "efficiency": 0.79031,
+          "capture_groups": 0.34675,
+          "capture_individual": 0.39081,
+          "groups": 14,
+          "rest_people_share": 0.05912
+        }
+      ]
+    },
+    {
+      "name": "Antigüedad × Reportes × Recontratación",
+      "kind": "fixed",
+      "variables": [
+        "antiguedad",
+        "reportes",
+        "recontratacion"
+      ],
+      "mean_efficiency": 0.80425,
+      "mean_capture_groups": 0.37571,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 15.5,
+      "mean_rest_people_share": 0.01734,
+      "stability": {
+        "rank_correlation": 0.9782,
+        "top_overlap_with_last_fold": 0.9333
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.24347,
+          "gini_individual": 0.29815,
+          "efficiency": 0.8166,
+          "capture_groups": 0.40309,
+          "capture_individual": 0.45172,
+          "groups": 16,
+          "rest_people_share": 0.01369
+        },
+        {
+          "gini_groups": 0.20253,
+          "gini_individual": 0.27262,
+          "efficiency": 0.74291,
+          "capture_groups": 0.36871,
+          "capture_individual": 0.42708,
+          "groups": 16,
+          "rest_people_share": 0.0129
+        },
+        {
+          "gini_groups": 0.23556,
+          "gini_individual": 0.29285,
+          "efficiency": 0.80435,
+          "capture_groups": 0.37676,
+          "capture_individual": 0.43664,
+          "groups": 15,
+          "rest_people_share": 0.02108
+        },
+        {
+          "gini_groups": 0.20056,
+          "gini_individual": 0.23509,
+          "efficiency": 0.85314,
+          "capture_groups": 0.35429,
+          "capture_individual": 0.39081,
+          "groups": 15,
+          "rest_people_share": 0.02168
+        }
+      ]
+    },
+    {
+      "name": "Antigüedad × Cambios de manager",
+      "kind": "fixed",
+      "variables": [
+        "antiguedad",
+        "cambios_manager"
+      ],
+      "mean_efficiency": 0.79832,
+      "mean_capture_groups": 0.37167,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 12.0,
+      "mean_rest_people_share": 0.0,
+      "stability": {
+        "rank_correlation": 0.993,
+        "top_overlap_with_last_fold": 1.0
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.24646,
+          "gini_individual": 0.29815,
+          "efficiency": 0.82662,
+          "capture_groups": 0.39352,
+          "capture_individual": 0.45172,
+          "groups": 12,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.21404,
+          "gini_individual": 0.27262,
+          "efficiency": 0.78512,
+          "capture_groups": 0.37441,
+          "capture_individual": 0.42708,
+          "groups": 12,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.22257,
+          "gini_individual": 0.29285,
+          "efficiency": 0.76,
+          "capture_groups": 0.36716,
+          "capture_individual": 0.43664,
+          "groups": 12,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.19313,
+          "gini_individual": 0.23509,
+          "efficiency": 0.82154,
+          "capture_groups": 0.35158,
+          "capture_individual": 0.39081,
+          "groups": 12,
+          "rest_people_share": 0.0
+        }
+      ]
+    },
+    {
+      "name": "Antigüedad × Recontratación",
+      "kind": "fixed",
+      "variables": [
+        "antiguedad",
+        "recontratacion"
+      ],
+      "mean_efficiency": 0.79273,
+      "mean_capture_groups": 0.37027,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 11.0,
+      "mean_rest_people_share": 0.00399,
+      "stability": {
+        "rank_correlation": 0.9788,
+        "top_overlap_with_last_fold": 0.9333
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.24434,
+          "gini_individual": 0.29815,
+          "efficiency": 0.81954,
+          "capture_groups": 0.39623,
+          "capture_individual": 0.45172,
+          "groups": 11,
+          "rest_people_share": 0.00214
+        },
+        {
+          "gini_groups": 0.1971,
+          "gini_individual": 0.27262,
+          "efficiency": 0.72298,
+          "capture_groups": 0.36794,
+          "capture_individual": 0.42708,
+          "groups": 11,
+          "rest_people_share": 0.005
+        },
+        {
+          "gini_groups": 0.22516,
+          "gini_individual": 0.29285,
+          "efficiency": 0.76886,
+          "capture_groups": 0.36457,
+          "capture_individual": 0.43664,
+          "groups": 11,
+          "rest_people_share": 0.00317
+        },
+        {
+          "gini_groups": 0.20206,
+          "gini_individual": 0.23509,
+          "efficiency": 0.85952,
+          "capture_groups": 0.35232,
+          "capture_individual": 0.39081,
+          "groups": 11,
+          "rest_people_share": 0.00564
+        }
+      ]
+    },
+    {
+      "name": "Antigüedad × Cambios de manager × Última promoción",
+      "kind": "fixed",
+      "variables": [
+        "antiguedad",
+        "cambios_manager",
+        "promocion"
+      ],
+      "mean_efficiency": 0.7892,
+      "mean_capture_groups": 0.37632,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 24.0,
+      "mean_rest_people_share": 0.01839,
+      "stability": {
+        "rank_correlation": 0.9872,
+        "top_overlap_with_last_fold": 0.8
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.25402,
+          "gini_individual": 0.29815,
+          "efficiency": 0.85199,
+          "capture_groups": 0.42032,
+          "capture_individual": 0.45172,
+          "groups": 25,
+          "rest_people_share": 0.01648
+        },
+        {
+          "gini_groups": 0.21442,
+          "gini_individual": 0.27262,
+          "efficiency": 0.78652,
+          "capture_groups": 0.3771,
+          "capture_individual": 0.42708,
+          "groups": 25,
+          "rest_people_share": 0.01005
+        },
+        {
+          "gini_groups": 0.21626,
+          "gini_individual": 0.29285,
+          "efficiency": 0.73845,
+          "capture_groups": 0.36529,
+          "capture_individual": 0.43664,
+          "groups": 23,
+          "rest_people_share": 0.02585
+        },
+        {
+          "gini_groups": 0.18333,
+          "gini_individual": 0.23509,
+          "efficiency": 0.77985,
+          "capture_groups": 0.34256,
+          "capture_individual": 0.39081,
+          "groups": 23,
+          "rest_people_share": 0.02116
+        }
+      ]
+    },
+    {
+      "name": "Salidas en su equipo × Nivel × Última promoción",
+      "kind": "fixed",
+      "variables": [
+        "salidas_equipo",
+        "nivel",
+        "promocion"
+      ],
+      "mean_efficiency": 0.78705,
+      "mean_capture_groups": 0.3846,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 15.75,
+      "mean_rest_people_share": 0.01461,
+      "stability": {
+        "rank_correlation": 0.9877,
+        "top_overlap_with_last_fold": 1.0
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.24113,
+          "gini_individual": 0.29815,
+          "efficiency": 0.80875,
+          "capture_groups": 0.41537,
+          "capture_individual": 0.45172,
+          "groups": 16,
+          "rest_people_share": 0.01129
+        },
+        {
+          "gini_groups": 0.21458,
+          "gini_individual": 0.27262,
+          "efficiency": 0.78712,
+          "capture_groups": 0.37474,
+          "capture_individual": 0.42708,
+          "groups": 16,
+          "rest_people_share": 0.01252
+        },
+        {
+          "gini_groups": 0.23285,
+          "gini_individual": 0.29285,
+          "efficiency": 0.79509,
+          "capture_groups": 0.39169,
+          "capture_individual": 0.43664,
+          "groups": 15,
+          "rest_people_share": 0.02187
+        },
+        {
+          "gini_groups": 0.17802,
+          "gini_individual": 0.23509,
+          "efficiency": 0.75723,
+          "capture_groups": 0.3566,
+          "capture_individual": 0.39081,
+          "groups": 16,
+          "rest_people_share": 0.01275
+        }
+      ]
+    },
+    {
+      "name": "Antigüedad × Última promoción × Recontratación",
+      "kind": "fixed",
+      "variables": [
+        "antiguedad",
+        "promocion",
+        "recontratacion"
+      ],
+      "mean_efficiency": 0.77936,
+      "mean_capture_groups": 0.37285,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 20.75,
+      "mean_rest_people_share": 0.03497,
+      "stability": {
+        "rank_correlation": 0.9785,
+        "top_overlap_with_last_fold": 0.8
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.23905,
+          "gini_individual": 0.29815,
+          "efficiency": 0.80176,
+          "capture_groups": 0.4035,
+          "capture_individual": 0.45172,
+          "groups": 20,
+          "rest_people_share": 0.04449
+        },
+        {
+          "gini_groups": 0.19344,
+          "gini_individual": 0.27262,
+          "efficiency": 0.70957,
+          "capture_groups": 0.36276,
+          "capture_individual": 0.42708,
+          "groups": 21,
+          "rest_people_share": 0.03357
+        },
+        {
+          "gini_groups": 0.22026,
+          "gini_individual": 0.29285,
+          "efficiency": 0.75212,
+          "capture_groups": 0.37503,
+          "capture_individual": 0.43664,
+          "groups": 21,
+          "rest_people_share": 0.02976
+        },
+        {
+          "gini_groups": 0.20077,
+          "gini_individual": 0.23509,
+          "efficiency": 0.854,
+          "capture_groups": 0.35012,
+          "capture_individual": 0.39081,
+          "groups": 21,
+          "rest_people_share": 0.03206
+        }
+      ]
+    },
+    {
+      "name": "Antigüedad × Reportes",
+      "kind": "fixed",
+      "variables": [
+        "antiguedad",
+        "reportes"
+      ],
+      "mean_efficiency": 0.7601,
+      "mean_capture_groups": 0.37487,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 9.5,
+      "mean_rest_people_share": 0.01075,
+      "stability": {
+        "rank_correlation": 0.9823,
+        "top_overlap_with_last_fold": 1.0
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.23305,
+          "gini_individual": 0.29815,
+          "efficiency": 0.78165,
+          "capture_groups": 0.4025,
+          "capture_individual": 0.45172,
+          "groups": 10,
+          "rest_people_share": 0.00913
+        },
+        {
+          "gini_groups": 0.20007,
+          "gini_individual": 0.27262,
+          "efficiency": 0.73389,
+          "capture_groups": 0.36622,
+          "capture_individual": 0.42708,
+          "groups": 10,
+          "rest_people_share": 0.00545
+        },
+        {
+          "gini_groups": 0.21605,
+          "gini_individual": 0.29285,
+          "efficiency": 0.73774,
+          "capture_groups": 0.37575,
+          "capture_individual": 0.43664,
+          "groups": 9,
+          "rest_people_share": 0.01513
+        },
+        {
+          "gini_groups": 0.18504,
+          "gini_individual": 0.23509,
+          "efficiency": 0.78712,
+          "capture_groups": 0.35499,
+          "capture_individual": 0.39081,
+          "groups": 9,
+          "rest_people_share": 0.01329
+        }
+      ]
+    },
+    {
+      "name": "Salidas en su equipo × Nivel × Cambios de manager",
+      "kind": "fixed",
+      "variables": [
+        "salidas_equipo",
+        "nivel",
+        "cambios_manager"
+      ],
+      "mean_efficiency": 0.75648,
+      "mean_capture_groups": 0.36239,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 11.0,
+      "mean_rest_people_share": 0.00526,
+      "stability": {
+        "rank_correlation": 0.997,
+        "top_overlap_with_last_fold": 1.0
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.22746,
+          "gini_individual": 0.29815,
+          "efficiency": 0.76291,
+          "capture_groups": 0.37086,
+          "capture_individual": 0.45172,
+          "groups": 11,
+          "rest_people_share": 0.00618
+        },
+        {
+          "gini_groups": 0.223,
+          "gini_individual": 0.27262,
+          "efficiency": 0.81799,
+          "capture_groups": 0.37386,
+          "capture_individual": 0.42708,
+          "groups": 11,
+          "rest_people_share": 0.00559
+        },
+        {
+          "gini_groups": 0.22776,
+          "gini_individual": 0.29285,
+          "efficiency": 0.77771,
+          "capture_groups": 0.37331,
+          "capture_individual": 0.43664,
+          "groups": 11,
+          "rest_people_share": 0.00493
+        },
+        {
+          "gini_groups": 0.15687,
+          "gini_individual": 0.23509,
+          "efficiency": 0.66729,
+          "capture_groups": 0.33152,
+          "capture_individual": 0.39081,
+          "groups": 11,
+          "rest_people_share": 0.00433
+        }
+      ]
+    },
+    {
+      "name": "Antigüedad × Reportes × Última promoción",
+      "kind": "fixed",
+      "variables": [
+        "antiguedad",
+        "reportes",
+        "promocion"
+      ],
+      "mean_efficiency": 0.75594,
+      "mean_capture_groups": 0.37893,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 19.25,
+      "mean_rest_people_share": 0.03556,
+      "stability": {
+        "rank_correlation": 0.9895,
+        "top_overlap_with_last_fold": 1.0
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.23205,
+          "gini_individual": 0.29815,
+          "efficiency": 0.7783,
+          "capture_groups": 0.41393,
+          "capture_individual": 0.45172,
+          "groups": 19,
+          "rest_people_share": 0.04336
+        },
+        {
+          "gini_groups": 0.2017,
+          "gini_individual": 0.27262,
+          "efficiency": 0.73986,
+          "capture_groups": 0.36706,
+          "capture_individual": 0.42708,
+          "groups": 19,
+          "rest_people_share": 0.0364
+        },
+        {
+          "gini_groups": 0.21213,
+          "gini_individual": 0.29285,
+          "efficiency": 0.72434,
+          "capture_groups": 0.37861,
+          "capture_individual": 0.43664,
+          "groups": 19,
+          "rest_people_share": 0.03586
+        },
+        {
+          "gini_groups": 0.18367,
+          "gini_individual": 0.23509,
+          "efficiency": 0.78127,
+          "capture_groups": 0.35613,
+          "capture_individual": 0.39081,
+          "groups": 20,
+          "rest_people_share": 0.02664
+        }
+      ]
+    },
+    {
+      "name": "Árbol de riesgo, profundidad 3",
+      "kind": "tree",
+      "variables": [
+        "profundidad 3"
+      ],
+      "mean_efficiency": 0.74534,
+      "mean_capture_groups": 0.36622,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 7.75,
+      "mean_rest_people_share": 0.00214,
+      "stability": {
+        "rank_correlation": 0.9429,
+        "top_overlap_with_last_fold": 0.5333
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.23092,
+          "gini_individual": 0.29815,
+          "efficiency": 0.77452,
+          "capture_groups": 0.39053,
+          "capture_individual": 0.45172,
+          "groups": 8,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.19047,
+          "gini_individual": 0.27262,
+          "efficiency": 0.69868,
+          "capture_groups": 0.35271,
+          "capture_individual": 0.42708,
+          "groups": 8,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.2039,
+          "gini_individual": 0.29285,
+          "efficiency": 0.69627,
+          "capture_groups": 0.36188,
+          "capture_individual": 0.43664,
+          "groups": 8,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.19087,
+          "gini_individual": 0.23509,
+          "efficiency": 0.81191,
+          "capture_groups": 0.35975,
+          "capture_individual": 0.39081,
+          "groups": 7,
+          "rest_people_share": 0.00857
+        }
+      ]
+    },
+    {
+      "name": "Salidas en su equipo × Reportes × Nivel",
+      "kind": "fixed",
+      "variables": [
+        "salidas_equipo",
+        "reportes",
+        "nivel"
+      ],
+      "mean_efficiency": 0.74173,
+      "mean_capture_groups": 0.35795,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 9.0,
+      "mean_rest_people_share": 0.00789,
+      "stability": {
+        "rank_correlation": 0.9944,
+        "top_overlap_with_last_fold": 1.0
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.21921,
+          "gini_individual": 0.29815,
+          "efficiency": 0.73523,
+          "capture_groups": 0.36724,
+          "capture_individual": 0.45172,
+          "groups": 9,
+          "rest_people_share": 0.00756
+        },
+        {
+          "gini_groups": 0.20313,
+          "gini_individual": 0.27262,
+          "efficiency": 0.74512,
+          "capture_groups": 0.35832,
+          "capture_individual": 0.42708,
+          "groups": 9,
+          "rest_people_share": 0.00807
+        },
+        {
+          "gini_groups": 0.22363,
+          "gini_individual": 0.29285,
+          "efficiency": 0.76361,
+          "capture_groups": 0.36431,
+          "capture_individual": 0.43664,
+          "groups": 9,
+          "rest_people_share": 0.00768
+        },
+        {
+          "gini_groups": 0.16996,
+          "gini_individual": 0.23509,
+          "efficiency": 0.72296,
+          "capture_groups": 0.34192,
+          "capture_individual": 0.39081,
+          "groups": 9,
+          "rest_people_share": 0.00825
+        }
+      ]
+    },
+    {
+      "name": "Salidas en su equipo × Nivel × Recontratación",
+      "kind": "fixed",
+      "variables": [
+        "salidas_equipo",
+        "nivel",
+        "recontratacion"
+      ],
+      "mean_efficiency": 0.73881,
+      "mean_capture_groups": 0.36905,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 10.0,
+      "mean_rest_people_share": 0.01074,
+      "stability": {
+        "rank_correlation": 0.9879,
+        "top_overlap_with_last_fold": 1.0
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.22464,
+          "gini_individual": 0.29815,
+          "efficiency": 0.75346,
+          "capture_groups": 0.38266,
+          "capture_individual": 0.45172,
+          "groups": 10,
+          "rest_people_share": 0.01074
+        },
+        {
+          "gini_groups": 0.20061,
+          "gini_individual": 0.27262,
+          "efficiency": 0.73585,
+          "capture_groups": 0.35869,
+          "capture_individual": 0.42708,
+          "groups": 10,
+          "rest_people_share": 0.01074
+        },
+        {
+          "gini_groups": 0.22555,
+          "gini_individual": 0.29285,
+          "efficiency": 0.77019,
+          "capture_groups": 0.38023,
+          "capture_individual": 0.43664,
+          "groups": 10,
+          "rest_people_share": 0.01052
+        },
+        {
+          "gini_groups": 0.16356,
+          "gini_individual": 0.23509,
+          "efficiency": 0.69575,
+          "capture_groups": 0.35462,
+          "capture_individual": 0.39081,
+          "groups": 10,
+          "rest_people_share": 0.01096
+        }
+      ]
+    },
+    {
+      "name": "Antigüedad × Última promoción",
+      "kind": "fixed",
+      "variables": [
+        "antiguedad",
+        "promocion"
+      ],
+      "mean_efficiency": 0.7346,
+      "mean_capture_groups": 0.37491,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 13.25,
+      "mean_rest_people_share": 0.00326,
+      "stability": {
+        "rank_correlation": 0.9615,
+        "top_overlap_with_last_fold": 0.9333
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.2355,
+          "gini_individual": 0.29815,
+          "efficiency": 0.78987,
+          "capture_groups": 0.40953,
+          "capture_individual": 0.45172,
+          "groups": 14,
+          "rest_people_share": 0.00043
+        },
+        {
+          "gini_groups": 0.1973,
+          "gini_individual": 0.27262,
+          "efficiency": 0.72371,
+          "capture_groups": 0.36545,
+          "capture_individual": 0.42708,
+          "groups": 13,
+          "rest_people_share": 0.00548
+        },
+        {
+          "gini_groups": 0.19408,
+          "gini_individual": 0.29285,
+          "efficiency": 0.66271,
+          "capture_groups": 0.37209,
+          "capture_individual": 0.43664,
+          "groups": 13,
+          "rest_people_share": 0.00336
+        },
+        {
+          "gini_groups": 0.17916,
+          "gini_individual": 0.23509,
+          "efficiency": 0.7621,
+          "capture_groups": 0.35256,
+          "capture_individual": 0.39081,
+          "groups": 13,
+          "rest_people_share": 0.00377
+        }
+      ]
+    },
+    {
+      "name": "Salidas en su equipo × Nivel",
+      "kind": "fixed",
+      "variables": [
+        "salidas_equipo",
+        "nivel"
+      ],
+      "mean_efficiency": 0.70358,
+      "mean_capture_groups": 0.34992,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 6.0,
+      "mean_rest_people_share": 0.0,
+      "stability": {
+        "rank_correlation": 1.0,
+        "top_overlap_with_last_fold": 1.0
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.21789,
+          "gini_individual": 0.29815,
+          "efficiency": 0.73081,
+          "capture_groups": 0.36803,
+          "capture_individual": 0.45172,
+          "groups": 6,
+          "rest_people_share": 1e-05
+        },
+        {
+          "gini_groups": 0.20227,
+          "gini_individual": 0.27262,
+          "efficiency": 0.74193,
+          "capture_groups": 0.35757,
+          "capture_individual": 0.42708,
+          "groups": 6,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.2141,
+          "gini_individual": 0.29285,
+          "efficiency": 0.73107,
+          "capture_groups": 0.35702,
+          "capture_individual": 0.43664,
+          "groups": 6,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.14353,
+          "gini_individual": 0.23509,
+          "efficiency": 0.61053,
+          "capture_groups": 0.31707,
+          "capture_individual": 0.39081,
+          "groups": 6,
+          "rest_people_share": 0.0
+        }
+      ]
+    },
+    {
+      "name": "Nivel × Cambios de manager × Última promoción",
+      "kind": "fixed",
+      "variables": [
+        "nivel",
+        "cambios_manager",
+        "promocion"
+      ],
+      "mean_efficiency": 0.70245,
+      "mean_capture_groups": 0.3625,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 15.5,
+      "mean_rest_people_share": 0.01535,
+      "stability": {
+        "rank_correlation": 0.9849,
+        "top_overlap_with_last_fold": 0.8
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.22174,
+          "gini_individual": 0.29815,
+          "efficiency": 0.74371,
+          "capture_groups": 0.38718,
+          "capture_individual": 0.45172,
+          "groups": 16,
+          "rest_people_share": 0.01168
+        },
+        {
+          "gini_groups": 0.19387,
+          "gini_individual": 0.27262,
+          "efficiency": 0.71115,
+          "capture_groups": 0.36374,
+          "capture_individual": 0.42708,
+          "groups": 16,
+          "rest_people_share": 0.01108
+        },
+        {
+          "gini_groups": 0.21166,
+          "gini_individual": 0.29285,
+          "efficiency": 0.72273,
+          "capture_groups": 0.36126,
+          "capture_individual": 0.43664,
+          "groups": 15,
+          "rest_people_share": 0.02048
+        },
+        {
+          "gini_groups": 0.14863,
+          "gini_individual": 0.23509,
+          "efficiency": 0.63223,
+          "capture_groups": 0.33782,
+          "capture_individual": 0.39081,
+          "groups": 15,
+          "rest_people_share": 0.01817
+        }
+      ]
+    },
+    {
+      "name": "Reportes × Nivel × Última promoción",
+      "kind": "fixed",
+      "variables": [
+        "reportes",
+        "nivel",
+        "promocion"
+      ],
+      "mean_efficiency": 0.67524,
+      "mean_capture_groups": 0.35768,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 13.25,
+      "mean_rest_people_share": 0.01432,
+      "stability": {
+        "rank_correlation": 0.9799,
+        "top_overlap_with_last_fold": 1.0
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.20391,
+          "gini_individual": 0.29815,
+          "efficiency": 0.68392,
+          "capture_groups": 0.37444,
+          "capture_individual": 0.45172,
+          "groups": 13,
+          "rest_people_share": 0.01564
+        },
+        {
+          "gini_groups": 0.17392,
+          "gini_individual": 0.27262,
+          "efficiency": 0.63797,
+          "capture_groups": 0.33811,
+          "capture_individual": 0.42708,
+          "groups": 13,
+          "rest_people_share": 0.01676
+        },
+        {
+          "gini_groups": 0.21829,
+          "gini_individual": 0.29285,
+          "efficiency": 0.74537,
+          "capture_groups": 0.38073,
+          "capture_individual": 0.43664,
+          "groups": 13,
+          "rest_people_share": 0.01672
+        },
+        {
+          "gini_groups": 0.14898,
+          "gini_individual": 0.23509,
+          "efficiency": 0.6337,
+          "capture_groups": 0.33743,
+          "capture_individual": 0.39081,
+          "groups": 14,
+          "rest_people_share": 0.00818
+        }
+      ]
+    },
+    {
+      "name": "Nivel × Última promoción × Recontratación",
+      "kind": "fixed",
+      "variables": [
+        "nivel",
+        "promocion",
+        "recontratacion"
+      ],
+      "mean_efficiency": 0.66022,
+      "mean_capture_groups": 0.35331,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 14.5,
+      "mean_rest_people_share": 0.01761,
+      "stability": {
+        "rank_correlation": 0.9868,
+        "top_overlap_with_last_fold": 0.8667
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.20072,
+          "gini_individual": 0.29815,
+          "efficiency": 0.67321,
+          "capture_groups": 0.37012,
+          "capture_individual": 0.45172,
+          "groups": 13,
+          "rest_people_share": 0.03002
+        },
+        {
+          "gini_groups": 0.16743,
+          "gini_individual": 0.27262,
+          "efficiency": 0.61414,
+          "capture_groups": 0.3279,
+          "capture_individual": 0.42708,
+          "groups": 15,
+          "rest_people_share": 0.01329
+        },
+        {
+          "gini_groups": 0.21081,
+          "gini_individual": 0.29285,
+          "efficiency": 0.71985,
+          "capture_groups": 0.36621,
+          "capture_individual": 0.43664,
+          "groups": 15,
+          "rest_people_share": 0.01356
+        },
+        {
+          "gini_groups": 0.14897,
+          "gini_individual": 0.23509,
+          "efficiency": 0.63369,
+          "capture_groups": 0.349,
+          "capture_individual": 0.39081,
+          "groups": 15,
+          "rest_people_share": 0.01358
+        }
+      ]
+    },
+    {
+      "name": "Nivel × Última promoción",
+      "kind": "fixed",
+      "variables": [
+        "nivel",
+        "promocion"
+      ],
+      "mean_efficiency": 0.65827,
+      "mean_capture_groups": 0.35172,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 9.0,
+      "mean_rest_people_share": 0.0,
+      "stability": {
+        "rank_correlation": 0.9889,
+        "top_overlap_with_last_fold": 1.0
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.20901,
+          "gini_individual": 0.29815,
+          "efficiency": 0.70101,
+          "capture_groups": 0.37554,
+          "capture_individual": 0.45172,
+          "groups": 9,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.174,
+          "gini_individual": 0.27262,
+          "efficiency": 0.63825,
+          "capture_groups": 0.33762,
+          "capture_individual": 0.42708,
+          "groups": 9,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.20083,
+          "gini_individual": 0.29285,
+          "efficiency": 0.68575,
+          "capture_groups": 0.35569,
+          "capture_individual": 0.43664,
+          "groups": 9,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.14295,
+          "gini_individual": 0.23509,
+          "efficiency": 0.60809,
+          "capture_groups": 0.33803,
+          "capture_individual": 0.39081,
+          "groups": 9,
+          "rest_people_share": 0.0
+        }
+      ]
+    },
+    {
+      "name": "Nivel × Cambios de manager × Recontratación",
+      "kind": "fixed",
+      "variables": [
+        "nivel",
+        "cambios_manager",
+        "recontratacion"
+      ],
+      "mean_efficiency": 0.65088,
+      "mean_capture_groups": 0.35203,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 9.75,
+      "mean_rest_people_share": 0.01398,
+      "stability": {
+        "rank_correlation": 0.9919,
+        "top_overlap_with_last_fold": 1.0
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.19741,
+          "gini_individual": 0.29815,
+          "efficiency": 0.66211,
+          "capture_groups": 0.35271,
+          "capture_individual": 0.45172,
+          "groups": 9,
+          "rest_people_share": 0.02252
+        },
+        {
+          "gini_groups": 0.17874,
+          "gini_individual": 0.27262,
+          "efficiency": 0.65565,
+          "capture_groups": 0.35236,
+          "capture_individual": 0.42708,
+          "groups": 10,
+          "rest_people_share": 0.01161
+        },
+        {
+          "gini_groups": 0.21321,
+          "gini_individual": 0.29285,
+          "efficiency": 0.72803,
+          "capture_groups": 0.373,
+          "capture_individual": 0.43664,
+          "groups": 10,
+          "rest_people_share": 0.01098
+        },
+        {
+          "gini_groups": 0.13112,
+          "gini_individual": 0.23509,
+          "efficiency": 0.55775,
+          "capture_groups": 0.33006,
+          "capture_individual": 0.39081,
+          "groups": 10,
+          "rest_people_share": 0.0108
+        }
+      ]
+    },
+    {
+      "name": "Salidas en su equipo × Reportes × Cambios de manager",
+      "kind": "fixed",
+      "variables": [
+        "salidas_equipo",
+        "reportes",
+        "cambios_manager"
+      ],
+      "mean_efficiency": 0.64563,
+      "mean_capture_groups": 0.35894,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 8.0,
+      "mean_rest_people_share": 0.0,
+      "stability": {
+        "rank_correlation": 0.9921,
+        "top_overlap_with_last_fold": 1.0
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.17312,
+          "gini_individual": 0.29815,
+          "efficiency": 0.58066,
+          "capture_groups": 0.36218,
+          "capture_individual": 0.45172,
+          "groups": 8,
+          "rest_people_share": 1e-05
+        },
+        {
+          "gini_groups": 0.18156,
+          "gini_individual": 0.27262,
+          "efficiency": 0.66599,
+          "capture_groups": 0.3669,
+          "capture_individual": 0.42708,
+          "groups": 8,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.19608,
+          "gini_individual": 0.29285,
+          "efficiency": 0.66956,
+          "capture_groups": 0.3654,
+          "capture_individual": 0.43664,
+          "groups": 8,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.15665,
+          "gini_individual": 0.23509,
+          "efficiency": 0.66633,
+          "capture_groups": 0.34128,
+          "capture_individual": 0.39081,
+          "groups": 8,
+          "rest_people_share": 0.0
+        }
+      ]
+    },
+    {
+      "name": "Salidas en su equipo × Reportes × Última promoción",
+      "kind": "fixed",
+      "variables": [
+        "salidas_equipo",
+        "reportes",
+        "promocion"
+      ],
+      "mean_efficiency": 0.63672,
+      "mean_capture_groups": 0.3613,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 12.0,
+      "mean_rest_people_share": 0.0,
+      "stability": {
+        "rank_correlation": 0.9953,
+        "top_overlap_with_last_fold": 1.0
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.18672,
+          "gini_individual": 0.29815,
+          "efficiency": 0.62627,
+          "capture_groups": 0.37493,
+          "capture_individual": 0.45172,
+          "groups": 12,
+          "rest_people_share": 1e-05
+        },
+        {
+          "gini_groups": 0.17281,
+          "gini_individual": 0.27262,
+          "efficiency": 0.63388,
+          "capture_groups": 0.3599,
+          "capture_individual": 0.42708,
+          "groups": 12,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.18632,
+          "gini_individual": 0.29285,
+          "efficiency": 0.63622,
+          "capture_groups": 0.36623,
+          "capture_individual": 0.43664,
+          "groups": 12,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.15292,
+          "gini_individual": 0.23509,
+          "efficiency": 0.6505,
+          "capture_groups": 0.34415,
+          "capture_individual": 0.39081,
+          "groups": 12,
+          "rest_people_share": 0.0
+        }
+      ]
+    },
+    {
+      "name": "Salidas en su equipo × Reportes × Recontratación",
+      "kind": "fixed",
+      "variables": [
+        "salidas_equipo",
+        "reportes",
+        "recontratacion"
+      ],
+      "mean_efficiency": 0.63416,
+      "mean_capture_groups": 0.36725,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 7.0,
+      "mean_rest_people_share": 0.00413,
+      "stability": {
+        "rank_correlation": 1.0,
+        "top_overlap_with_last_fold": 1.0
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.17226,
+          "gini_individual": 0.29815,
+          "efficiency": 0.57777,
+          "capture_groups": 0.37101,
+          "capture_individual": 0.45172,
+          "groups": 7,
+          "rest_people_share": 0.00383
+        },
+        {
+          "gini_groups": 0.16431,
+          "gini_individual": 0.27262,
+          "efficiency": 0.60269,
+          "capture_groups": 0.3632,
+          "capture_individual": 0.42708,
+          "groups": 7,
+          "rest_people_share": 0.00416
+        },
+        {
+          "gini_groups": 0.19032,
+          "gini_individual": 0.29285,
+          "efficiency": 0.64988,
+          "capture_groups": 0.37411,
+          "capture_individual": 0.43664,
+          "groups": 7,
+          "rest_people_share": 0.00419
+        },
+        {
+          "gini_groups": 0.16604,
+          "gini_individual": 0.23509,
+          "efficiency": 0.7063,
+          "capture_groups": 0.36067,
+          "capture_individual": 0.39081,
+          "groups": 7,
+          "rest_people_share": 0.00436
+        }
+      ]
+    },
+    {
+      "name": "Reportes × Nivel × Cambios de manager",
+      "kind": "fixed",
+      "variables": [
+        "reportes",
+        "nivel",
+        "cambios_manager"
+      ],
+      "mean_efficiency": 0.62471,
+      "mean_capture_groups": 0.33267,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 9.0,
+      "mean_rest_people_share": 0.00845,
+      "stability": {
+        "rank_correlation": 0.9944,
+        "top_overlap_with_last_fold": 1.0
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.18056,
+          "gini_individual": 0.29815,
+          "efficiency": 0.60561,
+          "capture_groups": 0.32933,
+          "capture_individual": 0.45172,
+          "groups": 9,
+          "rest_people_share": 0.00941
+        },
+        {
+          "gini_groups": 0.1801,
+          "gini_individual": 0.27262,
+          "efficiency": 0.66063,
+          "capture_groups": 0.34536,
+          "capture_individual": 0.42708,
+          "groups": 9,
+          "rest_people_share": 0.00877
+        },
+        {
+          "gini_groups": 0.19821,
+          "gini_individual": 0.29285,
+          "efficiency": 0.67683,
+          "capture_groups": 0.3469,
+          "capture_individual": 0.43664,
+          "groups": 9,
+          "rest_people_share": 0.00783
+        },
+        {
+          "gini_groups": 0.13065,
+          "gini_individual": 0.23509,
+          "efficiency": 0.55577,
+          "capture_groups": 0.30911,
+          "capture_individual": 0.39081,
+          "groups": 9,
+          "rest_people_share": 0.00777
+        }
+      ]
+    },
+    {
+      "name": "Nivel × Cambios de manager",
+      "kind": "fixed",
+      "variables": [
+        "nivel",
+        "cambios_manager"
+      ],
+      "mean_efficiency": 0.61935,
+      "mean_capture_groups": 0.33309,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 6.0,
+      "mean_rest_people_share": 0.0,
+      "stability": {
+        "rank_correlation": 1.0,
+        "top_overlap_with_last_fold": 1.0
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.18483,
+          "gini_individual": 0.29815,
+          "efficiency": 0.61993,
+          "capture_groups": 0.32959,
+          "capture_individual": 0.45172,
+          "groups": 6,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.18155,
+          "gini_individual": 0.27262,
+          "efficiency": 0.66593,
+          "capture_groups": 0.34531,
+          "capture_individual": 0.42708,
+          "groups": 6,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.19562,
+          "gini_individual": 0.29285,
+          "efficiency": 0.66796,
+          "capture_groups": 0.34751,
+          "capture_individual": 0.43664,
+          "groups": 6,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.12309,
+          "gini_individual": 0.23509,
+          "efficiency": 0.5236,
+          "capture_groups": 0.30995,
+          "capture_individual": 0.39081,
+          "groups": 6,
+          "rest_people_share": 0.0
+        }
+      ]
+    },
+    {
+      "name": "Reportes × Nivel × Recontratación",
+      "kind": "fixed",
+      "variables": [
+        "reportes",
+        "nivel",
+        "recontratacion"
+      ],
+      "mean_efficiency": 0.61648,
+      "mean_capture_groups": 0.3382,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 7.5,
+      "mean_rest_people_share": 0.01983,
+      "stability": {
+        "rank_correlation": 1.0,
+        "top_overlap_with_last_fold": 1.0
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.18683,
+          "gini_individual": 0.29815,
+          "efficiency": 0.62664,
+          "capture_groups": 0.34784,
+          "capture_individual": 0.45172,
+          "groups": 7,
+          "rest_people_share": 0.02399
+        },
+        {
+          "gini_groups": 0.1573,
+          "gini_individual": 0.27262,
+          "efficiency": 0.57699,
+          "capture_groups": 0.32553,
+          "capture_individual": 0.42708,
+          "groups": 7,
+          "rest_people_share": 0.02407
+        },
+        {
+          "gini_groups": 0.20381,
+          "gini_individual": 0.29285,
+          "efficiency": 0.69595,
+          "capture_groups": 0.35937,
+          "capture_individual": 0.43664,
+          "groups": 7,
+          "rest_people_share": 0.02426
+        },
+        {
+          "gini_groups": 0.13314,
+          "gini_individual": 0.23509,
+          "efficiency": 0.56635,
+          "capture_groups": 0.32004,
+          "capture_individual": 0.39081,
+          "groups": 9,
+          "rest_people_share": 0.00699
+        }
+      ]
+    },
+    {
+      "name": "Nivel × Recontratación",
+      "kind": "fixed",
+      "variables": [
+        "nivel",
+        "recontratacion"
+      ],
+      "mean_efficiency": 0.59512,
+      "mean_capture_groups": 0.33813,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 6.0,
+      "mean_rest_people_share": 0.0,
+      "stability": {
+        "rank_correlation": 0.9619,
+        "top_overlap_with_last_fold": 0.9333
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.18726,
+          "gini_individual": 0.29815,
+          "efficiency": 0.62809,
+          "capture_groups": 0.34807,
+          "capture_individual": 0.45172,
+          "groups": 6,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.15413,
+          "gini_individual": 0.27262,
+          "efficiency": 0.56538,
+          "capture_groups": 0.32501,
+          "capture_individual": 0.42708,
+          "groups": 6,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.1991,
+          "gini_individual": 0.29285,
+          "efficiency": 0.67985,
+          "capture_groups": 0.35907,
+          "capture_individual": 0.43664,
+          "groups": 6,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.11923,
+          "gini_individual": 0.23509,
+          "efficiency": 0.50716,
+          "capture_groups": 0.32035,
+          "capture_individual": 0.39081,
+          "groups": 6,
+          "rest_people_share": 0.0
+        }
+      ]
+    },
+    {
+      "name": "Salidas en su equipo × Cambios de manager × Recontratación",
+      "kind": "fixed",
+      "variables": [
+        "salidas_equipo",
+        "cambios_manager",
+        "recontratacion"
+      ],
+      "mean_efficiency": 0.58632,
+      "mean_capture_groups": 0.35991,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 8.0,
+      "mean_rest_people_share": 0.0,
+      "stability": {
+        "rank_correlation": 0.9841,
+        "top_overlap_with_last_fold": 1.0
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.1611,
+          "gini_individual": 0.29815,
+          "efficiency": 0.54033,
+          "capture_groups": 0.36703,
+          "capture_individual": 0.45172,
+          "groups": 8,
+          "rest_people_share": 1e-05
+        },
+        {
+          "gini_groups": 0.1637,
+          "gini_individual": 0.27262,
+          "efficiency": 0.60047,
+          "capture_groups": 0.36485,
+          "capture_individual": 0.42708,
+          "groups": 8,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.168,
+          "gini_individual": 0.29285,
+          "efficiency": 0.57366,
+          "capture_groups": 0.36161,
+          "capture_individual": 0.43664,
+          "groups": 8,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.1483,
+          "gini_individual": 0.23509,
+          "efficiency": 0.63083,
+          "capture_groups": 0.34614,
+          "capture_individual": 0.39081,
+          "groups": 8,
+          "rest_people_share": 0.0
+        }
+      ]
+    },
+    {
+      "name": "Reportes × Nivel",
+      "kind": "fixed",
+      "variables": [
+        "reportes",
+        "nivel"
+      ],
+      "mean_efficiency": 0.57666,
+      "mean_capture_groups": 0.32147,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 5.0,
+      "mean_rest_people_share": 0.00217,
+      "stability": {
+        "rank_correlation": 1.0,
+        "top_overlap_with_last_fold": 1.0
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.17472,
+          "gini_individual": 0.29815,
+          "efficiency": 0.58601,
+          "capture_groups": 0.33167,
+          "capture_individual": 0.45172,
+          "groups": 5,
+          "rest_people_share": 0.00194
+        },
+        {
+          "gini_groups": 0.15746,
+          "gini_individual": 0.27262,
+          "efficiency": 0.57757,
+          "capture_groups": 0.32265,
+          "capture_individual": 0.42708,
+          "groups": 5,
+          "rest_people_share": 0.00227
+        },
+        {
+          "gini_groups": 0.18343,
+          "gini_individual": 0.29285,
+          "efficiency": 0.62637,
+          "capture_groups": 0.333,
+          "capture_individual": 0.43664,
+          "groups": 5,
+          "rest_people_share": 0.00201
+        },
+        {
+          "gini_groups": 0.12146,
+          "gini_individual": 0.23509,
+          "efficiency": 0.51667,
+          "capture_groups": 0.29855,
+          "capture_individual": 0.39081,
+          "groups": 5,
+          "rest_people_share": 0.00247
+        }
+      ]
+    },
+    {
+      "name": "Salidas en su equipo × Reportes",
+      "kind": "fixed",
+      "variables": [
+        "salidas_equipo",
+        "reportes"
+      ],
+      "mean_efficiency": 0.56336,
+      "mean_capture_groups": 0.34801,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 4.0,
+      "mean_rest_people_share": 0.0,
+      "stability": {
+        "rank_correlation": 1.0,
+        "top_overlap_with_last_fold": 0.8
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.15734,
+          "gini_individual": 0.29815,
+          "efficiency": 0.52771,
+          "capture_groups": 0.35168,
+          "capture_individual": 0.45172,
+          "groups": 4,
+          "rest_people_share": 1e-05
+        },
+        {
+          "gini_groups": 0.15571,
+          "gini_individual": 0.27262,
+          "efficiency": 0.57115,
+          "capture_groups": 0.35534,
+          "capture_individual": 0.42708,
+          "groups": 4,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.16494,
+          "gini_individual": 0.29285,
+          "efficiency": 0.56323,
+          "capture_groups": 0.35027,
+          "capture_individual": 0.43664,
+          "groups": 4,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.13902,
+          "gini_individual": 0.23509,
+          "efficiency": 0.59135,
+          "capture_groups": 0.33476,
+          "capture_individual": 0.39081,
+          "groups": 4,
+          "rest_people_share": 0.0
+        }
+      ]
+    },
+    {
+      "name": "Salidas en su equipo × Cambios de manager × Última promoción",
+      "kind": "fixed",
+      "variables": [
+        "salidas_equipo",
+        "cambios_manager",
+        "promocion"
+      ],
+      "mean_efficiency": 0.56056,
+      "mean_capture_groups": 0.36149,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 11.75,
+      "mean_rest_people_share": 0.0021,
+      "stability": {
+        "rank_correlation": 0.9706,
+        "top_overlap_with_last_fold": 0.8667
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.15675,
+          "gini_individual": 0.29815,
+          "efficiency": 0.52573,
+          "capture_groups": 0.3664,
+          "capture_individual": 0.45172,
+          "groups": 11,
+          "rest_people_share": 0.0084
+        },
+        {
+          "gini_groups": 0.16991,
+          "gini_individual": 0.27262,
+          "efficiency": 0.62325,
+          "capture_groups": 0.37053,
+          "capture_individual": 0.42708,
+          "groups": 12,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.15979,
+          "gini_individual": 0.29285,
+          "efficiency": 0.54562,
+          "capture_groups": 0.36573,
+          "capture_individual": 0.43664,
+          "groups": 12,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.12874,
+          "gini_individual": 0.23509,
+          "efficiency": 0.54764,
+          "capture_groups": 0.3433,
+          "capture_individual": 0.39081,
+          "groups": 12,
+          "rest_people_share": 0.0
+        }
+      ]
+    },
+    {
+      "name": "Salidas en su equipo × Última promoción × Recontratación",
+      "kind": "fixed",
+      "variables": [
+        "salidas_equipo",
+        "promocion",
+        "recontratacion"
+      ],
+      "mean_efficiency": 0.543,
+      "mean_capture_groups": 0.36493,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 11.0,
+      "mean_rest_people_share": 0.00621,
+      "stability": {
+        "rank_correlation": 0.9879,
+        "top_overlap_with_last_fold": 1.0
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.15327,
+          "gini_individual": 0.29815,
+          "efficiency": 0.51405,
+          "capture_groups": 0.36516,
+          "capture_individual": 0.45172,
+          "groups": 11,
+          "rest_people_share": 0.00472
+        },
+        {
+          "gini_groups": 0.14751,
+          "gini_individual": 0.27262,
+          "efficiency": 0.54108,
+          "capture_groups": 0.36308,
+          "capture_individual": 0.42708,
+          "groups": 11,
+          "rest_people_share": 0.00555
+        },
+        {
+          "gini_groups": 0.14959,
+          "gini_individual": 0.29285,
+          "efficiency": 0.5108,
+          "capture_groups": 0.37544,
+          "capture_individual": 0.43664,
+          "groups": 11,
+          "rest_people_share": 0.00686
+        },
+        {
+          "gini_groups": 0.14248,
+          "gini_individual": 0.23509,
+          "efficiency": 0.60608,
+          "capture_groups": 0.35605,
+          "capture_individual": 0.39081,
+          "groups": 11,
+          "rest_people_share": 0.00772
+        }
+      ]
+    },
+    {
+      "name": "Reportes × Cambios de manager × Recontratación",
+      "kind": "fixed",
+      "variables": [
+        "reportes",
+        "cambios_manager",
+        "recontratacion"
+      ],
+      "mean_efficiency": 0.53839,
+      "mean_capture_groups": 0.33624,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 7.0,
+      "mean_rest_people_share": 0.00384,
+      "stability": {
+        "rank_correlation": 1.0,
+        "top_overlap_with_last_fold": 1.0
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.13493,
+          "gini_individual": 0.29815,
+          "efficiency": 0.45255,
+          "capture_groups": 0.32786,
+          "capture_individual": 0.45172,
+          "groups": 7,
+          "rest_people_share": 0.0044
+        },
+        {
+          "gini_groups": 0.13807,
+          "gini_individual": 0.27262,
+          "efficiency": 0.50647,
+          "capture_groups": 0.33122,
+          "capture_individual": 0.42708,
+          "groups": 7,
+          "rest_people_share": 0.00376
+        },
+        {
+          "gini_groups": 0.17147,
+          "gini_individual": 0.29285,
+          "efficiency": 0.58551,
+          "capture_groups": 0.34995,
+          "capture_individual": 0.43664,
+          "groups": 7,
+          "rest_people_share": 0.00361
+        },
+        {
+          "gini_groups": 0.14318,
+          "gini_individual": 0.23509,
+          "efficiency": 0.60904,
+          "capture_groups": 0.33591,
+          "capture_individual": 0.39081,
+          "groups": 7,
+          "rest_people_share": 0.00359
+        }
+      ]
+    },
+    {
+      "name": "Reportes × Cambios de manager × Última promoción",
+      "kind": "fixed",
+      "variables": [
+        "reportes",
+        "cambios_manager",
+        "promocion"
+      ],
+      "mean_efficiency": 0.53422,
+      "mean_capture_groups": 0.33215,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 11.75,
+      "mean_rest_people_share": 0.00241,
+      "stability": {
+        "rank_correlation": 0.9876,
+        "top_overlap_with_last_fold": 1.0
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.14911,
+          "gini_individual": 0.29815,
+          "efficiency": 0.50011,
+          "capture_groups": 0.34722,
+          "capture_individual": 0.45172,
+          "groups": 11,
+          "rest_people_share": 0.00965
+        },
+        {
+          "gini_groups": 0.14005,
+          "gini_individual": 0.27262,
+          "efficiency": 0.5137,
+          "capture_groups": 0.31281,
+          "capture_individual": 0.42708,
+          "groups": 12,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.16848,
+          "gini_individual": 0.29285,
+          "efficiency": 0.57529,
+          "capture_groups": 0.3498,
+          "capture_individual": 0.43664,
+          "groups": 12,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.12877,
+          "gini_individual": 0.23509,
+          "efficiency": 0.54776,
+          "capture_groups": 0.31876,
+          "capture_individual": 0.39081,
+          "groups": 12,
+          "rest_people_share": 0.0
+        }
+      ]
+    },
+    {
+      "name": "Salidas en su equipo × Cambios de manager",
+      "kind": "fixed",
+      "variables": [
+        "salidas_equipo",
+        "cambios_manager"
+      ],
+      "mean_efficiency": 0.50358,
+      "mean_capture_groups": 0.35303,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 4.0,
+      "mean_rest_people_share": 0.0,
+      "stability": {
+        "rank_correlation": 1.0,
+        "top_overlap_with_last_fold": 0.8
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.14091,
+          "gini_individual": 0.29815,
+          "efficiency": 0.47262,
+          "capture_groups": 0.36086,
+          "capture_individual": 0.45172,
+          "groups": 4,
+          "rest_people_share": 1e-05
+        },
+        {
+          "gini_groups": 0.15516,
+          "gini_individual": 0.27262,
+          "efficiency": 0.56913,
+          "capture_groups": 0.36444,
+          "capture_individual": 0.42708,
+          "groups": 4,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.14382,
+          "gini_individual": 0.29285,
+          "efficiency": 0.4911,
+          "capture_groups": 0.3491,
+          "capture_individual": 0.43664,
+          "groups": 4,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.11318,
+          "gini_individual": 0.23509,
+          "efficiency": 0.48146,
+          "capture_groups": 0.33771,
+          "capture_individual": 0.39081,
+          "groups": 4,
+          "rest_people_share": 0.0
+        }
+      ]
+    },
+    {
+      "name": "Reportes × Última promoción × Recontratación",
+      "kind": "fixed",
+      "variables": [
+        "reportes",
+        "promocion",
+        "recontratacion"
+      ],
+      "mean_efficiency": 0.49001,
+      "mean_capture_groups": 0.32059,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 9.0,
+      "mean_rest_people_share": 0.01793,
+      "stability": {
+        "rank_correlation": 0.9833,
+        "top_overlap_with_last_fold": 1.0
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.13349,
+          "gini_individual": 0.29815,
+          "efficiency": 0.44772,
+          "capture_groups": 0.33222,
+          "capture_individual": 0.45172,
+          "groups": 9,
+          "rest_people_share": 0.01784
+        },
+        {
+          "gini_groups": 0.1136,
+          "gini_individual": 0.27262,
+          "efficiency": 0.41671,
+          "capture_groups": 0.2945,
+          "capture_individual": 0.42708,
+          "groups": 9,
+          "rest_people_share": 0.01754
+        },
+        {
+          "gini_groups": 0.15325,
+          "gini_individual": 0.29285,
+          "efficiency": 0.52329,
+          "capture_groups": 0.33012,
+          "capture_individual": 0.43664,
+          "groups": 9,
+          "rest_people_share": 0.01812
+        },
+        {
+          "gini_groups": 0.13454,
+          "gini_individual": 0.23509,
+          "efficiency": 0.57231,
+          "capture_groups": 0.32554,
+          "capture_individual": 0.39081,
+          "groups": 9,
+          "rest_people_share": 0.01824
+        }
+      ]
+    },
+    {
+      "name": "Salidas en su equipo × Recontratación",
+      "kind": "fixed",
+      "variables": [
+        "salidas_equipo",
+        "recontratacion"
+      ],
+      "mean_efficiency": 0.48885,
+      "mean_capture_groups": 0.35487,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 4.0,
+      "mean_rest_people_share": 0.0,
+      "stability": {
+        "rank_correlation": 1.0,
+        "top_overlap_with_last_fold": 0.8
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.13773,
+          "gini_individual": 0.29815,
+          "efficiency": 0.46194,
+          "capture_groups": 0.36396,
+          "capture_individual": 0.45172,
+          "groups": 4,
+          "rest_people_share": 1e-05
+        },
+        {
+          "gini_groups": 0.13273,
+          "gini_individual": 0.27262,
+          "efficiency": 0.48688,
+          "capture_groups": 0.36432,
+          "capture_individual": 0.42708,
+          "groups": 4,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.134,
+          "gini_individual": 0.29285,
+          "efficiency": 0.45758,
+          "capture_groups": 0.35033,
+          "capture_individual": 0.43664,
+          "groups": 4,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.12906,
+          "gini_individual": 0.23509,
+          "efficiency": 0.54901,
+          "capture_groups": 0.34088,
+          "capture_individual": 0.39081,
+          "groups": 4,
+          "rest_people_share": 0.0
+        }
+      ]
+    },
+    {
+      "name": "Salidas en su equipo × Última promoción",
+      "kind": "fixed",
+      "variables": [
+        "salidas_equipo",
+        "promocion"
+      ],
+      "mean_efficiency": 0.48186,
+      "mean_capture_groups": 0.3497,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 6.0,
+      "mean_rest_people_share": 0.0,
+      "stability": {
+        "rank_correlation": 0.981,
+        "top_overlap_with_last_fold": 1.0
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.14338,
+          "gini_individual": 0.29815,
+          "efficiency": 0.48091,
+          "capture_groups": 0.34989,
+          "capture_individual": 0.45172,
+          "groups": 6,
+          "rest_people_share": 1e-05
+        },
+        {
+          "gini_groups": 0.14177,
+          "gini_individual": 0.27262,
+          "efficiency": 0.52002,
+          "capture_groups": 0.3637,
+          "capture_individual": 0.42708,
+          "groups": 6,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.13175,
+          "gini_individual": 0.29285,
+          "efficiency": 0.44989,
+          "capture_groups": 0.3479,
+          "capture_individual": 0.43664,
+          "groups": 6,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.11204,
+          "gini_individual": 0.23509,
+          "efficiency": 0.47661,
+          "capture_groups": 0.33732,
+          "capture_individual": 0.39081,
+          "groups": 6,
+          "rest_people_share": 0.0
+        }
+      ]
+    },
+    {
+      "name": "Reportes × Cambios de manager",
+      "kind": "fixed",
+      "variables": [
+        "reportes",
+        "cambios_manager"
+      ],
+      "mean_efficiency": 0.45279,
+      "mean_capture_groups": 0.31827,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 4.0,
+      "mean_rest_people_share": 0.0,
+      "stability": {
+        "rank_correlation": 1.0,
+        "top_overlap_with_last_fold": 0.8
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.1106,
+          "gini_individual": 0.29815,
+          "efficiency": 0.37095,
+          "capture_groups": 0.30262,
+          "capture_individual": 0.45172,
+          "groups": 4,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.13539,
+          "gini_individual": 0.27262,
+          "efficiency": 0.49662,
+          "capture_groups": 0.33789,
+          "capture_individual": 0.42708,
+          "groups": 4,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.14133,
+          "gini_individual": 0.29285,
+          "efficiency": 0.48261,
+          "capture_groups": 0.32849,
+          "capture_individual": 0.43664,
+          "groups": 4,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.10837,
+          "gini_individual": 0.23509,
+          "efficiency": 0.46099,
+          "capture_groups": 0.30406,
+          "capture_individual": 0.39081,
+          "groups": 4,
+          "rest_people_share": 0.0
+        }
+      ]
+    },
+    {
+      "name": "Reportes × Última promoción",
+      "kind": "fixed",
+      "variables": [
+        "reportes",
+        "promocion"
+      ],
+      "mean_efficiency": 0.451,
+      "mean_capture_groups": 0.31818,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 6.0,
+      "mean_rest_people_share": 0.0,
+      "stability": {
+        "rank_correlation": 1.0,
+        "top_overlap_with_last_fold": 1.0
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.13801,
+          "gini_individual": 0.29815,
+          "efficiency": 0.46287,
+          "capture_groups": 0.34184,
+          "capture_individual": 0.45172,
+          "groups": 6,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.11201,
+          "gini_individual": 0.27262,
+          "efficiency": 0.41088,
+          "capture_groups": 0.29673,
+          "capture_individual": 0.42708,
+          "groups": 6,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.13874,
+          "gini_individual": 0.29285,
+          "efficiency": 0.47374,
+          "capture_groups": 0.32926,
+          "capture_individual": 0.43664,
+          "groups": 6,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.10731,
+          "gini_individual": 0.23509,
+          "efficiency": 0.45649,
+          "capture_groups": 0.3049,
+          "capture_individual": 0.39081,
+          "groups": 6,
+          "rest_people_share": 0.0
+        }
+      ]
+    },
+    {
+      "name": "Reportes × Recontratación",
+      "kind": "fixed",
+      "variables": [
+        "reportes",
+        "recontratacion"
+      ],
+      "mean_efficiency": 0.44213,
+      "mean_capture_groups": 0.31216,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 4.0,
+      "mean_rest_people_share": 0.0,
+      "stability": {
+        "rank_correlation": 1.0,
+        "top_overlap_with_last_fold": 0.8
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.11303,
+          "gini_individual": 0.29815,
+          "efficiency": 0.37911,
+          "capture_groups": 0.30643,
+          "capture_individual": 0.45172,
+          "groups": 4,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.09706,
+          "gini_individual": 0.27262,
+          "efficiency": 0.35603,
+          "capture_groups": 0.29262,
+          "capture_individual": 0.42708,
+          "groups": 4,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.14514,
+          "gini_individual": 0.29285,
+          "efficiency": 0.49562,
+          "capture_groups": 0.32768,
+          "capture_individual": 0.43664,
+          "groups": 4,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.12642,
+          "gini_individual": 0.23509,
+          "efficiency": 0.53775,
+          "capture_groups": 0.32189,
+          "capture_individual": 0.39081,
+          "groups": 4,
+          "rest_people_share": 0.0
+        }
+      ]
+    },
+    {
+      "name": "Cambios de manager × Última promoción × Recontratación",
+      "kind": "fixed",
+      "variables": [
+        "cambios_manager",
+        "promocion",
+        "recontratacion"
+      ],
+      "mean_efficiency": 0.39275,
+      "mean_capture_groups": 0.32258,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 11.0,
+      "mean_rest_people_share": 0.00629,
+      "stability": {
+        "rank_correlation": 0.9848,
+        "top_overlap_with_last_fold": 1.0
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.09136,
+          "gini_individual": 0.29815,
+          "efficiency": 0.30644,
+          "capture_groups": 0.30937,
+          "capture_individual": 0.45172,
+          "groups": 11,
+          "rest_people_share": 0.00465
+        },
+        {
+          "gini_groups": 0.11306,
+          "gini_individual": 0.27262,
+          "efficiency": 0.41472,
+          "capture_groups": 0.31947,
+          "capture_individual": 0.42708,
+          "groups": 11,
+          "rest_people_share": 0.00585
+        },
+        {
+          "gini_groups": 0.12232,
+          "gini_individual": 0.29285,
+          "efficiency": 0.4177,
+          "capture_groups": 0.33596,
+          "capture_individual": 0.43664,
+          "groups": 11,
+          "rest_people_share": 0.00751
+        },
+        {
+          "gini_groups": 0.10159,
+          "gini_individual": 0.23509,
+          "efficiency": 0.43215,
+          "capture_groups": 0.32551,
+          "capture_individual": 0.39081,
+          "groups": 11,
+          "rest_people_share": 0.00716
+        }
+      ]
+    },
+    {
+      "name": "Cambios de manager × Recontratación",
+      "kind": "fixed",
+      "variables": [
+        "cambios_manager",
+        "recontratacion"
+      ],
+      "mean_efficiency": 0.35954,
+      "mean_capture_groups": 0.32072,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 4.0,
+      "mean_rest_people_share": 0.0,
+      "stability": {
+        "rank_correlation": 1.0,
+        "top_overlap_with_last_fold": 0.8
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.08655,
+          "gini_individual": 0.29815,
+          "efficiency": 0.2903,
+          "capture_groups": 0.31532,
+          "capture_individual": 0.45172,
+          "groups": 4,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.09698,
+          "gini_individual": 0.27262,
+          "efficiency": 0.35573,
+          "capture_groups": 0.31343,
+          "capture_individual": 0.42708,
+          "groups": 4,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.10989,
+          "gini_individual": 0.29285,
+          "efficiency": 0.37523,
+          "capture_groups": 0.32912,
+          "capture_individual": 0.43664,
+          "groups": 4,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.09801,
+          "gini_individual": 0.23509,
+          "efficiency": 0.41691,
+          "capture_groups": 0.32501,
+          "capture_individual": 0.39081,
+          "groups": 4,
+          "rest_people_share": 0.0
+        }
+      ]
+    },
+    {
+      "name": "Cambios de manager × Última promoción",
+      "kind": "fixed",
+      "variables": [
+        "cambios_manager",
+        "promocion"
+      ],
+      "mean_efficiency": 0.32703,
+      "mean_capture_groups": 0.30383,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 6.0,
+      "mean_rest_people_share": 0.0,
+      "stability": {
+        "rank_correlation": 0.8857,
+        "top_overlap_with_last_fold": 1.0
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.07413,
+          "gini_individual": 0.29815,
+          "efficiency": 0.24863,
+          "capture_groups": 0.28642,
+          "capture_individual": 0.45172,
+          "groups": 6,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.11156,
+          "gini_individual": 0.27262,
+          "efficiency": 0.40921,
+          "capture_groups": 0.32767,
+          "capture_individual": 0.42708,
+          "groups": 6,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.09948,
+          "gini_individual": 0.29285,
+          "efficiency": 0.33968,
+          "capture_groups": 0.3046,
+          "capture_individual": 0.43664,
+          "groups": 6,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.07302,
+          "gini_individual": 0.23509,
+          "efficiency": 0.31059,
+          "capture_groups": 0.29664,
+          "capture_individual": 0.39081,
+          "groups": 6,
+          "rest_people_share": 0.0
+        }
+      ]
+    },
+    {
+      "name": "Última promoción × Recontratación",
+      "kind": "fixed",
+      "variables": [
+        "promocion",
+        "recontratacion"
+      ],
+      "mean_efficiency": 0.26473,
+      "mean_capture_groups": 0.29563,
+      "mean_capture_individual": 0.42656,
+      "mean_groups": 6.0,
+      "mean_rest_people_share": 0.0,
+      "stability": {
+        "rank_correlation": 0.981,
+        "top_overlap_with_last_fold": 1.0
+      },
+      "by_fold": [
+        {
+          "gini_groups": 0.07384,
+          "gini_individual": 0.29815,
+          "efficiency": 0.24765,
+          "capture_groups": 0.30351,
+          "capture_individual": 0.45172,
+          "groups": 6,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.06014,
+          "gini_individual": 0.27262,
+          "efficiency": 0.2206,
+          "capture_groups": 0.27844,
+          "capture_individual": 0.42708,
+          "groups": 6,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.07248,
+          "gini_individual": 0.29285,
+          "efficiency": 0.24749,
+          "capture_groups": 0.30246,
+          "capture_individual": 0.43664,
+          "groups": 6,
+          "rest_people_share": 0.0
+        },
+        {
+          "gini_groups": 0.08068,
+          "gini_individual": 0.23509,
+          "efficiency": 0.3432,
+          "capture_groups": 0.2981,
+          "capture_individual": 0.39081,
+          "groups": 6,
+          "rest_people_share": 0.0
+        }
+      ]
+    }
+  ],
+  "selection": {
+    "winner": "Antigüedad × Salidas en su equipo × Nivel",
+    "reason": "menos variables, después menos grupos y después más estabilidad entre las combinaciones a <= tolerancia de la mejor",
+    "best_fixed_efficiency": 0.90855,
+    "within_tolerance": [
+      "Antigüedad × Salidas en su equipo × Nivel"
+    ]
+  },
+  "winner": {
+    "name": "Antigüedad × Salidas en su equipo × Nivel",
+    "kind": "fixed",
+    "variables": [
+      "antiguedad",
+      "salidas_equipo",
+      "nivel"
+    ],
+    "mean_efficiency": 0.90855,
+    "mean_capture_groups": 0.39457,
+    "mean_capture_individual": 0.42656,
+    "mean_groups": 20.0,
+    "mean_rest_people_share": 0.05237,
+    "stability": {
+      "rank_correlation": 0.9956,
+      "top_overlap_with_last_fold": 0.9333
+    }
+  },
+  "final": {
+    "snapshot": "2026-07-26",
+    "people": 37221,
+    "mean_predicted_6m_percent": 2.795,
+    "groups_eligible": 22,
+    "people_in_rest": 1406,
+    "top": [
+      {
+        "group": "3-5 años · con salidas · entrada",
+        "people": 1310,
+        "people_share_percent": 3.52,
+        "predicted_6m_percent": 6.179,
+        "lift_vs_mean": 2.211,
+        "expected_exits_share_percent": 7.78,
+        "parts": {
+          "antiguedad": "3-5 años",
+          "salidas_equipo": "con salidas",
+          "nivel": "entrada"
+        },
+        "last_fold_predicted_percent": 6.945,
+        "last_fold_events": 462,
+        "last_fold_observed_percent": 5.497,
+        "last_fold_observed_exits_share_percent": 7.59
+      },
+      {
+        "group": "2-3 años · con salidas · entrada",
+        "people": 572,
+        "people_share_percent": 1.54,
+        "predicted_6m_percent": 5.683,
+        "lift_vs_mean": 2.033,
+        "expected_exits_share_percent": 3.12,
+        "parts": {
+          "antiguedad": "2-3 años",
+          "salidas_equipo": "con salidas",
+          "nivel": "entrada"
+        },
+        "last_fold_predicted_percent": 6.458,
+        "last_fold_events": 150,
+        "last_fold_observed_percent": 4.8,
+        "last_fold_observed_exits_share_percent": 2.46
+      },
+      {
+        "group": "5-10 años · con salidas · entrada",
+        "people": 1028,
+        "people_share_percent": 2.76,
+        "predicted_6m_percent": 4.939,
+        "lift_vs_mean": 1.767,
+        "expected_exits_share_percent": 4.88,
+        "parts": {
+          "antiguedad": "5-10 años",
+          "salidas_equipo": "con salidas",
+          "nivel": "entrada"
+        },
+        "last_fold_predicted_percent": 5.353,
+        "last_fold_events": 216,
+        "last_fold_observed_percent": 3.839,
+        "last_fold_observed_exits_share_percent": 3.55
+      },
+      {
+        "group": "3-5 años · con salidas · medio",
+        "people": 478,
+        "people_share_percent": 1.28,
+        "predicted_6m_percent": 4.451,
+        "lift_vs_mean": 1.592,
+        "expected_exits_share_percent": 2.05,
+        "parts": {
+          "antiguedad": "3-5 años",
+          "salidas_equipo": "con salidas",
+          "nivel": "medio"
+        },
+        "last_fold_predicted_percent": 4.713,
+        "last_fold_events": 143,
+        "last_fold_observed_percent": 5.435,
+        "last_fold_observed_exits_share_percent": 2.35
+      },
+      {
+        "group": "3-5 años · sin salidas · entrada",
+        "people": 3807,
+        "people_share_percent": 10.23,
+        "predicted_6m_percent": 4.059,
+        "lift_vs_mean": 1.452,
+        "expected_exits_share_percent": 14.85,
+        "parts": {
+          "antiguedad": "3-5 años",
+          "salidas_equipo": "sin salidas",
+          "nivel": "entrada"
+        },
+        "last_fold_predicted_percent": 4.609,
+        "last_fold_events": 933,
+        "last_fold_observed_percent": 3.939,
+        "last_fold_observed_exits_share_percent": 15.33
+      }
+    ],
+    "top_people_share_percent": 19.33,
+    "top_expected_exits_share_percent": 32.68,
+    "individual_expected_exits_share_at_same_people_percent": 35.85,
+    "top_last_fold_observed_exits_share_percent": 31.28,
+    "individual_last_fold_observed_exits_share_at_same_people_percent": 31.89,
+    "all_groups": [
+      {
+        "group": "3-5 años · con salidas · entrada",
+        "people": 1310,
+        "people_share_percent": 3.52,
+        "predicted_6m_percent": 6.179,
+        "lift_vs_mean": 2.211,
+        "expected_exits_share_percent": 7.78,
+        "parts": {
+          "antiguedad": "3-5 años",
+          "salidas_equipo": "con salidas",
+          "nivel": "entrada"
+        },
+        "last_fold_predicted_percent": 6.945,
+        "last_fold_events": 462,
+        "last_fold_observed_percent": 5.497,
+        "last_fold_observed_exits_share_percent": 7.59
+      },
+      {
+        "group": "2-3 años · con salidas · entrada",
+        "people": 572,
+        "people_share_percent": 1.54,
+        "predicted_6m_percent": 5.683,
+        "lift_vs_mean": 2.033,
+        "expected_exits_share_percent": 3.12,
+        "parts": {
+          "antiguedad": "2-3 años",
+          "salidas_equipo": "con salidas",
+          "nivel": "entrada"
+        },
+        "last_fold_predicted_percent": 6.458,
+        "last_fold_events": 150,
+        "last_fold_observed_percent": 4.8,
+        "last_fold_observed_exits_share_percent": 2.46
+      },
+      {
+        "group": "5-10 años · con salidas · entrada",
+        "people": 1028,
+        "people_share_percent": 2.76,
+        "predicted_6m_percent": 4.939,
+        "lift_vs_mean": 1.767,
+        "expected_exits_share_percent": 4.88,
+        "parts": {
+          "antiguedad": "5-10 años",
+          "salidas_equipo": "con salidas",
+          "nivel": "entrada"
+        },
+        "last_fold_predicted_percent": 5.353,
+        "last_fold_events": 216,
+        "last_fold_observed_percent": 3.839,
+        "last_fold_observed_exits_share_percent": 3.55
+      },
+      {
+        "group": "3-5 años · con salidas · medio",
+        "people": 478,
+        "people_share_percent": 1.28,
+        "predicted_6m_percent": 4.451,
+        "lift_vs_mean": 1.592,
+        "expected_exits_share_percent": 2.05,
+        "parts": {
+          "antiguedad": "3-5 años",
+          "salidas_equipo": "con salidas",
+          "nivel": "medio"
+        },
+        "last_fold_predicted_percent": 4.713,
+        "last_fold_events": 143,
+        "last_fold_observed_percent": 5.435,
+        "last_fold_observed_exits_share_percent": 2.35
+      },
+      {
+        "group": "3-5 años · sin salidas · entrada",
+        "people": 3807,
+        "people_share_percent": 10.23,
+        "predicted_6m_percent": 4.059,
+        "lift_vs_mean": 1.452,
+        "expected_exits_share_percent": 14.85,
+        "parts": {
+          "antiguedad": "3-5 años",
+          "salidas_equipo": "sin salidas",
+          "nivel": "entrada"
+        },
+        "last_fold_predicted_percent": 4.609,
+        "last_fold_events": 933,
+        "last_fold_observed_percent": 3.939,
+        "last_fold_observed_exits_share_percent": 15.33
+      },
+      {
+        "group": "<1 año · con salidas · medio",
+        "people": 337,
+        "people_share_percent": 0.91,
+        "predicted_6m_percent": 3.922,
+        "lift_vs_mean": 1.403,
+        "expected_exits_share_percent": 1.27,
+        "parts": {
+          "antiguedad": "<1 año",
+          "salidas_equipo": "con salidas",
+          "nivel": "medio"
+        },
+        "last_fold_predicted_percent": 3.639,
+        "last_fold_events": 50,
+        "last_fold_observed_percent": 4.234,
+        "last_fold_observed_exits_share_percent": 0.82
+      },
+      {
+        "group": "2-3 años · sin salidas · entrada",
+        "people": 1397,
+        "people_share_percent": 3.75,
+        "predicted_6m_percent": 3.757,
+        "lift_vs_mean": 1.344,
+        "expected_exits_share_percent": 5.05,
+        "parts": {
+          "antiguedad": "2-3 años",
+          "salidas_equipo": "sin salidas",
+          "nivel": "entrada"
+        },
+        "last_fold_predicted_percent": 4.212,
+        "last_fold_events": 278,
+        "last_fold_observed_percent": 3.654,
+        "last_fold_observed_exits_share_percent": 4.57
+      },
+      {
+        "group": "1-2 años · con salidas · entrada",
+        "people": 849,
+        "people_share_percent": 2.28,
+        "predicted_6m_percent": 3.737,
+        "lift_vs_mean": 1.337,
+        "expected_exits_share_percent": 3.05,
+        "parts": {
+          "antiguedad": "1-2 años",
+          "salidas_equipo": "con salidas",
+          "nivel": "entrada"
+        },
+        "last_fold_predicted_percent": 4.213,
+        "last_fold_events": 153,
+        "last_fold_observed_percent": 3.342,
+        "last_fold_observed_exits_share_percent": 2.51
+      },
+      {
+        "group": "5-10 años · con salidas · medio",
+        "people": 1108,
+        "people_share_percent": 2.98,
+        "predicted_6m_percent": 3.286,
+        "lift_vs_mean": 1.176,
+        "expected_exits_share_percent": 3.5,
+        "parts": {
+          "antiguedad": "5-10 años",
+          "salidas_equipo": "con salidas",
+          "nivel": "medio"
+        },
+        "last_fold_predicted_percent": 3.53,
+        "last_fold_events": 328,
+        "last_fold_observed_percent": 5.003,
+        "last_fold_observed_exits_share_percent": 5.39
+      },
+      {
+        "group": "5-10 años · sin salidas · entrada",
+        "people": 3215,
+        "people_share_percent": 8.64,
+        "predicted_6m_percent": 3.205,
+        "lift_vs_mean": 1.147,
+        "expected_exits_share_percent": 9.9,
+        "parts": {
+          "antiguedad": "5-10 años",
+          "salidas_equipo": "sin salidas",
+          "nivel": "entrada"
+        },
+        "last_fold_predicted_percent": 3.511,
+        "last_fold_events": 587,
+        "last_fold_observed_percent": 3.592,
+        "last_fold_observed_exits_share_percent": 9.64
+      },
+      {
+        "group": "<1 año · con salidas · entrada",
+        "people": 1179,
+        "people_share_percent": 3.17,
+        "predicted_6m_percent": 3.052,
+        "lift_vs_mean": 1.092,
+        "expected_exits_share_percent": 3.46,
+        "parts": {
+          "antiguedad": "<1 año",
+          "salidas_equipo": "con salidas",
+          "nivel": "entrada"
+        },
+        "last_fold_predicted_percent": 3.318,
+        "last_fold_events": 170,
+        "last_fold_observed_percent": 2.929,
+        "last_fold_observed_exits_share_percent": 2.79
+      },
+      {
+        "group": "3-5 años · sin salidas · medio",
+        "people": 1319,
+        "people_share_percent": 3.54,
+        "predicted_6m_percent": 2.883,
+        "lift_vs_mean": 1.032,
+        "expected_exits_share_percent": 3.66,
+        "parts": {
+          "antiguedad": "3-5 años",
+          "salidas_equipo": "sin salidas",
+          "nivel": "medio"
+        },
+        "last_fold_predicted_percent": 3.143,
+        "last_fold_events": 270,
+        "last_fold_observed_percent": 3.321,
+        "last_fold_observed_exits_share_percent": 4.43
+      },
+      {
+        "group": "1-2 años · sin salidas · medio",
+        "people": 421,
+        "people_share_percent": 1.13,
+        "predicted_6m_percent": 2.635,
+        "lift_vs_mean": 0.943,
+        "expected_exits_share_percent": 1.07,
+        "parts": {
+          "antiguedad": "1-2 años",
+          "salidas_equipo": "sin salidas",
+          "nivel": "medio"
+        },
+        "last_fold_predicted_percent": 2.818,
+        "last_fold_events": 69,
+        "last_fold_observed_percent": 4.307,
+        "last_fold_observed_exits_share_percent": 1.13
+      },
+      {
+        "group": "<1 año · sin salidas · medio",
+        "people": 733,
+        "people_share_percent": 1.97,
+        "predicted_6m_percent": 2.581,
+        "lift_vs_mean": 0.923,
+        "expected_exits_share_percent": 1.82,
+        "parts": {
+          "antiguedad": "<1 año",
+          "salidas_equipo": "sin salidas",
+          "nivel": "medio"
+        },
+        "last_fold_predicted_percent": 2.3,
+        "last_fold_events": 83,
+        "last_fold_observed_percent": 2.942,
+        "last_fold_observed_exits_share_percent": 1.36
+      },
+      {
+        "group": "1-2 años · sin salidas · entrada",
+        "people": 2366,
+        "people_share_percent": 6.36,
+        "predicted_6m_percent": 2.463,
+        "lift_vs_mean": 0.881,
+        "expected_exits_share_percent": 5.6,
+        "parts": {
+          "antiguedad": "1-2 años",
+          "salidas_equipo": "sin salidas",
+          "nivel": "entrada"
+        },
+        "last_fold_predicted_percent": 2.74,
+        "last_fold_events": 307,
+        "last_fold_observed_percent": 2.885,
+        "last_fold_observed_exits_share_percent": 5.04
+      },
+      {
+        "group": "5-10 años · sin salidas · medio",
+        "people": 3886,
+        "people_share_percent": 10.44,
+        "predicted_6m_percent": 2.177,
+        "lift_vs_mean": 0.779,
+        "expected_exits_share_percent": 8.13,
+        "parts": {
+          "antiguedad": "5-10 años",
+          "salidas_equipo": "sin salidas",
+          "nivel": "medio"
+        },
+        "last_fold_predicted_percent": 2.365,
+        "last_fold_events": 490,
+        "last_fold_observed_percent": 2.197,
+        "last_fold_observed_exits_share_percent": 8.05
+      },
+      {
+        "group": "10+ años · con salidas · medio",
+        "people": 889,
+        "people_share_percent": 2.39,
+        "predicted_6m_percent": 2.087,
+        "lift_vs_mean": 0.747,
+        "expected_exits_share_percent": 1.78,
+        "parts": {
+          "antiguedad": "10+ años",
+          "salidas_equipo": "con salidas",
+          "nivel": "medio"
+        },
+        "last_fold_predicted_percent": 2.215,
+        "last_fold_events": 143,
+        "last_fold_observed_percent": 2.924,
+        "last_fold_observed_exits_share_percent": 2.35
+      },
+      {
+        "group": "5-10 años · sin salidas · alto",
+        "people": 305,
+        "people_share_percent": 0.82,
+        "predicted_6m_percent": 1.944,
+        "lift_vs_mean": 0.696,
+        "expected_exits_share_percent": 0.57,
+        "parts": {
+          "antiguedad": "5-10 años",
+          "salidas_equipo": "sin salidas",
+          "nivel": "alto"
+        },
+        "last_fold_predicted_percent": 2.036
+      },
+      {
+        "group": "<1 año · sin salidas · entrada",
+        "people": 2756,
+        "people_share_percent": 7.4,
+        "predicted_6m_percent": 1.925,
+        "lift_vs_mean": 0.689,
+        "expected_exits_share_percent": 5.1,
+        "parts": {
+          "antiguedad": "<1 año",
+          "salidas_equipo": "sin salidas",
+          "nivel": "entrada"
+        },
+        "last_fold_predicted_percent": 2.149,
+        "last_fold_events": 316,
+        "last_fold_observed_percent": 2.294,
+        "last_fold_observed_exits_share_percent": 5.19
+      },
+      {
+        "group": "10+ años · con salidas · alto",
+        "people": 654,
+        "people_share_percent": 1.76,
+        "predicted_6m_percent": 1.575,
+        "lift_vs_mean": 0.564,
+        "expected_exits_share_percent": 0.99,
+        "parts": {
+          "antiguedad": "10+ años",
+          "salidas_equipo": "con salidas",
+          "nivel": "alto"
+        },
+        "last_fold_predicted_percent": 1.815,
+        "last_fold_events": 34,
+        "last_fold_observed_percent": 1.18,
+        "last_fold_observed_exits_share_percent": 0.56
+      },
+      {
+        "group": "10+ años · sin salidas · medio",
+        "people": 4376,
+        "people_share_percent": 11.76,
+        "predicted_6m_percent": 1.345,
+        "lift_vs_mean": 0.481,
+        "expected_exits_share_percent": 5.66,
+        "parts": {
+          "antiguedad": "10+ años",
+          "salidas_equipo": "sin salidas",
+          "nivel": "medio"
+        },
+        "last_fold_predicted_percent": 1.466,
+        "last_fold_events": 323,
+        "last_fold_observed_percent": 1.339,
+        "last_fold_observed_exits_share_percent": 5.31
+      },
+      {
+        "group": "10+ años · sin salidas · alto",
+        "people": 2830,
+        "people_share_percent": 7.6,
+        "predicted_6m_percent": 1.05,
+        "lift_vs_mean": 0.376,
+        "expected_exits_share_percent": 2.86,
+        "parts": {
+          "antiguedad": "10+ años",
+          "salidas_equipo": "sin salidas",
+          "nivel": "alto"
+        },
+        "last_fold_predicted_percent": 1.147,
+        "last_fold_events": 238,
+        "last_fold_observed_percent": 1.393,
+        "last_fold_observed_exits_share_percent": 3.91
+      }
+    ]
+  },
+  "privacy": {
+    "employee_level_rows_persisted": false,
+    "employee_ids_selected": false,
+    "aggregate_training_frame_persisted": false,
+    "individual_scores_published": false
+  }
+}

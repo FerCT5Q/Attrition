@@ -1,0 +1,47 @@
+schema_version: 1
+
+# Adaptador del proyecto de RH. El motor conserva protecciones base para datos
+# sensibles de RH, pero no contiene el catálogo, esquemas, fórmulas ni rutas de
+# conexión de Attrition. Otro proyecto de RH puede sustituir este archivo y sus
+# specs compatibles.
+catalog_spec: attrition_candidate_variables_v4_reassessment_20260814.yaml
+rules: ../.codex/skills/evaluate-attrition-variable/references/scoring-rules.yaml
+semantic_hint_registry: ../.codex/skills/evaluate-attrition-variable/references/semantic-hints.yaml
+query_helper: ../.codex/skills/attrition-redshift-db/scripts/run_readonly_query.py
+output_root: ../output/assessments
+audit_sql_root: ../queries/audits
+profile_sql_root: ../queries/profiles
+
+documentation:
+  enabled: true
+  root: ../docs/variables
+
+# El HTML visual v2 es el reporte principal publicado por el workflow. El
+# notebook y su HTML se conservan como soporte auditable, pero no sustituyen
+# la explicación orientada a decisión. Otros proyectos pueden reemplazar estos
+# adaptadores o desactivar esta sección sin modificar el motor del skill.
+reporting:
+  # Para informes compartibles y solicitudes ambiguas. Un análisis exploratorio
+  # interno debe pedir --reporting-mode internal_analysis de forma explícita.
+  default_deliverable_mode: presentation
+  visual_html_v2:
+    enabled: true
+    renderer:
+      script: ../tools/presentations/render_variable_assessment_v2.py
+      args: [--force]
+      timeout_seconds: 300
+    metrics_builder:
+      script: ../tools/presentations/build_sensitive_report_metrics.py
+      args: [--refresh-gender, --force]
+      only_when_blocker: sensitive_restricted
+      timeout_seconds: 300
+    dynamic_slide_count: true
+    minimum_slides: 10
+    required_markers:
+      - assessment-v2-metadata
+      - Scorecard de ocho criterios
+    forbidden_tokens: [value_label, query_results]
+
+metadata:
+  default_schema: hrda
+  search_schemas: [hrda]

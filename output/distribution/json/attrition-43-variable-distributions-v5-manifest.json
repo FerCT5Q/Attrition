@@ -1,0 +1,291 @@
+{
+  "version": 5,
+  "generated_on": "2026-09-17",
+  "deliverable_mode": "presentation",
+  "objective": "Crear una versión visual V5 de la presentación: retirar los paneles narrativos derechos, ampliar los gráficos, resumir cada lámina en un subtítulo breve y mostrar las métricas con porcentajes y tasas a un decimal y conteos enteros. También se omiten las láminas de fuentes externas no habilitadas y de gráficas vacías, sin cambiar la evidencia agregada ni generar predicciones individuales.",
+  "source_deck": {
+    "path": "output/distribution/attrition-43-variable-distributions-v2.html",
+    "sha256": "e3710d0dfa8b00cb1e1f98e73e058ec8bed6ccf2136511b3356c2080b2f8029b",
+    "preserved": true
+  },
+  "v3_preserved": {
+    "path": "output/distribution/attrition-43-variable-distributions-v3.html",
+    "sha256": "1d640ea578799e98b9aa080404075b6472c959c17e3191c62a3c4af38ed0be72"
+  },
+  "v4_reference": {
+    "path": "output/distribution/attrition-43-variable-distributions-v4.html",
+    "sha256": "9b04a733557922273c59f0e573135a7862980a1139438c7d5b59b028dc2db686",
+    "preserved": true
+  },
+  "base_template": "C:\\Users\\fcarranz\\.codex\\skills\\html-slide-generator\\templates\\fullscreen\\base-fullscreen.html",
+  "six_month_evidence": {
+    "path": "output/distribution/json/attrition-43-variable-distributions-v3.six-month-attrition-evidence-20260914.json",
+    "sha256": "42198e7fb56146afca1aafb12b507ab24959079d72a03f4d618f43aae6a30760",
+    "query": "queries/profiles/attrition_v3_six_month_segment_rates_20260914.sql",
+    "history": "24 snapshots maduros: 2024-03-24 a 2026-02-22",
+    "outcome": "pass",
+    "publication_rule": "Sólo se emiten categorías con >=30 empleados distintos, >=30 exposiciones empleado-snapshot y >=30 salidas Voluntary. Las categorías protegidas se usan exclusivamente en internal_analysis."
+  },
+  "commute_distance_attrition": {
+    "path": "output/distribution/json/commute-distance-onsite-six-month-attrition-evidence-20260917.json",
+    "sha256": "a04edf3638094098b5893b342eb4cc5897d294066b7479c70b5e59465eea55df",
+    "deliverable_mode": "presentation",
+    "slide_id": "slide-19",
+    "visual": "Gráfica dedicada de línea con 31 bandas de 1 km y baseline punteado; no es un overlay de la distribución V2.",
+    "population": "Employee-snapshots de empleados regulares activos con work_arrangement=ONSITE y distancia calculable.",
+    "history": "24 snapshots mensuales: 2024-03-24 a 2026-02-22",
+    "distance_coverage_percent": 87.1,
+    "baseline": {
+      "employee_snapshot_count": 675101,
+      "voluntary_exits": 20010,
+      "attrition_rate_percent": 2.96
+    },
+    "published_bands": 31,
+    "publication_rule": "24 snapshots exactos; cero conflictos de ubicación; el perfil hash reconcilia exposición y exits con el audit; cobertura de distancia calculable >=70% de Onsite; cada banda publicada tiene >=30 employee-snapshots y >=30 salidas Voluntary.",
+    "query_provenance": {
+      "profile": "queries/profiles/commute_distance_onsite_six_month_attrition_hash_profile_20260917.sql",
+      "country_partitions": "queries/profiles/commute_distance_onsite_six_month_attrition_country_partitions_20260917.sql",
+      "audit": "queries/audits/commute_distance_onsite_six_month_attrition_audit_20260917.sql"
+    },
+    "limitations": "Proxy geográfico por centroides; no mide ruta, tiempo de traslado ni commute observado. La asociación es descriptiva, no causal ni predictiva a nivel individual."
+  },
+  "visual_rule": {
+    "layout": "Se eliminan los 46 paneles narrativos derechos de las laminas conservadas y el contenido visual ocupa todo el ancho disponible.",
+    "subtitle": "Cada lámina usa un resumen breve y no técnico que explica qué muestra el visual.",
+    "numeric_format": "Los porcentajes y las tasas visibles se muestran con un decimal; los conteos se muestran como enteros. Fechas, años, categorías e identificadores conservan su formato natural.",
+    "distribution": "Se conserva el valor de distribución y las barras azules.",
+    "attrition": "Se conserva la tasa porcentual naranja a la derecha.",
+    "vertical_or_annual": "Las tasas aprobadas por flag se muestran como resumen naranja, sin atribuirlas erróneamente a barras anuales.",
+    "commute_distance": "La lámina 19 reemplaza la comparación de distribución V2 por tasas de attrition Voluntary de seis meses en bandas Onsite de 1 km, con baseline punteado.",
+    "unavailable": "— indica que no existe tasa publicable o reconciliable; no equivale a cero.",
+    "unavailable_marker": "Las visualizaciones sin join temporal o definición aprobada muestran una marca neutral de no estimable, sin inventar tasas.",
+    "excluded": "Se retiran las láminas de fuentes externas no habilitadas y de gráficas vacías. No hay nuevas láminas, lift, causalidad ni predicciones individuales."
+  },
+  "excluded_slides": [
+    {
+      "slide_id": "slide-28",
+      "title": "External pull factors",
+      "reason": "External sources are not enabled."
+    },
+    {
+      "slide_id": "slide-30",
+      "title": "Attrition Voluntary anual por vía de entrada al grade y tenure",
+      "reason": "The charts are empty because the required history is unavailable."
+    }
+  ],
+  "panel_audits": [
+    {
+      "slide_title": "Location",
+      "slide_id": "slide-6",
+      "chart_card_index": 0,
+      "metric": "country",
+      "rows": 21,
+      "rate_rows": 18,
+      "suppressed_or_unmatched_rows": 3
+    },
+    {
+      "slide_title": "Office site and city",
+      "slide_id": "slide-7",
+      "chart_card_index": 0,
+      "metric": "office_site",
+      "rows": 22,
+      "rate_rows": 20,
+      "suppressed_or_unmatched_rows": 2
+    },
+    {
+      "slide_title": "Office site and city",
+      "slide_id": "slide-7",
+      "chart_card_index": 1,
+      "metric": "office_site_city",
+      "rows": 22,
+      "rate_rows": 19,
+      "suppressed_or_unmatched_rows": 3
+    },
+    {
+      "slide_title": "Job family",
+      "slide_id": "slide-11",
+      "chart_card_index": 0,
+      "metric": "job_family",
+      "rows": 21,
+      "rate_rows": 20,
+      "suppressed_or_unmatched_rows": 1
+    },
+    {
+      "slide_title": "Job family",
+      "slide_id": "slide-11",
+      "chart_card_index": 1,
+      "metric": "job_family",
+      "rows": 21,
+      "rate_rows": 20,
+      "suppressed_or_unmatched_rows": 1
+    },
+    {
+      "slide_title": "Region",
+      "slide_id": "slide-12",
+      "chart_card_index": 0,
+      "metric": "region",
+      "rows": 4,
+      "rate_rows": 4,
+      "suppressed_or_unmatched_rows": 0
+    },
+    {
+      "slide_title": "Region",
+      "slide_id": "slide-12",
+      "chart_card_index": 1,
+      "metric": "region_country_split",
+      "rows": 6,
+      "rate_rows": 6,
+      "suppressed_or_unmatched_rows": 0
+    },
+    {
+      "slide_title": "Region",
+      "slide_id": "slide-12",
+      "chart_card_index": 2,
+      "metric": "labor_market",
+      "rows": 21,
+      "rate_rows": 19,
+      "suppressed_or_unmatched_rows": 2
+    },
+    {
+      "slide_title": "Gender",
+      "slide_id": "slide-13",
+      "chart_card_index": 0,
+      "metric": "gender",
+      "rows": 2,
+      "rate_rows": 2,
+      "suppressed_or_unmatched_rows": 0
+    },
+    {
+      "slide_title": "Remote / hybrid / in office status",
+      "slide_id": "slide-14",
+      "chart_card_index": 0,
+      "metric": "work_arrangement",
+      "rows": 12,
+      "rate_rows": 8,
+      "suppressed_or_unmatched_rows": 4
+    },
+    {
+      "slide_title": "Remote / hybrid / in office status",
+      "slide_id": "slide-14",
+      "chart_card_index": 1,
+      "metric": "work_arrangement_binary",
+      "rows": 2,
+      "rate_rows": 2,
+      "suppressed_or_unmatched_rows": 0
+    },
+    {
+      "slide_title": "Engineering vs. non-engineering",
+      "slide_id": "slide-15",
+      "chart_card_index": 0,
+      "metric": "engineering",
+      "rows": 2,
+      "rate_rows": 2,
+      "suppressed_or_unmatched_rows": 0
+    },
+    {
+      "slide_title": "Years of experience prior to Qualcomm",
+      "slide_id": "slide-17",
+      "chart_card_index": 0,
+      "metric": "prior_experience_years",
+      "rows": 33,
+      "rate_rows": 30,
+      "suppressed_or_unmatched_rows": 3
+    },
+    {
+      "slide_title": "Company tenure",
+      "slide_id": "slide-31",
+      "chart_card_index": 1,
+      "metric": "company_tenure",
+      "rows": 6,
+      "rate_rows": 3,
+      "suppressed_or_unmatched_rows": 3
+    },
+    {
+      "slide_title": "Level",
+      "slide_id": "slide-35",
+      "chart_card_index": 0,
+      "metric": "level_grouped",
+      "rows": 9,
+      "rate_rows": 9,
+      "suppressed_or_unmatched_rows": 0
+    },
+    {
+      "slide_title": "Level",
+      "slide_id": "slide-35",
+      "chart_card_index": 1,
+      "metric": "management_level",
+      "rows": 5,
+      "rate_rows": 5,
+      "suppressed_or_unmatched_rows": 0
+    },
+    {
+      "slide_title": "Level",
+      "slide_id": "slide-35",
+      "chart_card_index": 2,
+      "metric": "job_level",
+      "rows": 11,
+      "rate_rows": 10,
+      "suppressed_or_unmatched_rows": 1
+    },
+    {
+      "slide_title": "Compensation grade",
+      "slide_id": "slide-38",
+      "chart_card_index": 0,
+      "metric": "compensation_grade",
+      "rows": 37,
+      "rate_rows": 33,
+      "suppressed_or_unmatched_rows": 4
+    },
+    {
+      "slide_title": "Comp ratio",
+      "slide_id": "slide-39",
+      "chart_card_index": 0,
+      "metric": "comp_ratio_band",
+      "rows": 7,
+      "rate_rows": 7,
+      "suppressed_or_unmatched_rows": 0
+    }
+  ],
+  "summary": {
+    "slides": 50,
+    "modified_slides": 18,
+    "slides_with_publishable_attrition": 15,
+    "slides_marked_no_estimate": 3,
+    "modified_horizontal_panels": 19,
+    "inline_rows": 264,
+    "inline_rates": 241,
+    "summary_rates": 4,
+    "inline_dashes": 27,
+    "dedicated_attrition_charts": 1,
+    "dedicated_commute_distance_bands": 31,
+    "removed_right_panels": 46
+  },
+  "privacy": {
+    "minimum_distinct_employee_cohort": 30,
+    "minimum_employee_snapshot_exposure": 30,
+    "minimum_voluntary_events": 30,
+    "prohibited": [
+      "employee rows",
+      "IDs",
+      "names",
+      "emails",
+      "addresses",
+      "free text",
+      "exact compensation"
+    ]
+  },
+  "validation": {
+    "v2_unchanged_sha256": "e3710d0dfa8b00cb1e1f98e73e058ec8bed6ccf2136511b3356c2080b2f8029b",
+    "v3_unchanged_sha256": "1d640ea578799e98b9aa080404075b6472c959c17e3191c62a3c4af38ed0be72",
+    "v4_unchanged_sha256": "9b04a733557922273c59f0e573135a7862980a1139438c7d5b59b028dc2db686",
+    "stage_count": 50,
+    "new_slides": 0,
+    "removed_slides": 2,
+    "removed_right_panels": 46,
+    "percentage_decimals": 1,
+    "count_decimals": 0,
+    "commute_distance_band_count": 31,
+    "commute_distance_outcome": "pass",
+    "outcome": "pass"
+  }
+}

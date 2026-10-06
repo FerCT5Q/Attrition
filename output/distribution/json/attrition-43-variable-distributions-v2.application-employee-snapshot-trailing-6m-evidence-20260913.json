@@ -1,0 +1,504 @@
+{
+  "schema_version": 1,
+  "artifact": "application_employee_snapshot_trailing_6m_distribution",
+  "generated_on": "2026-09-13",
+  "reporting_mode": "internal_analysis",
+  "authorization": {
+    "authorization_id": "application-intensity-internal-collaboration-20260913",
+    "authorized_on": "2026-09-13",
+    "status": "approved",
+    "reporting_mode": "internal_analysis",
+    "authorized_audience": "requester and Julia, both project developers",
+    "purpose": "Review the aggregate distribution of internal job applications together before deciding whether the source or feature definition should be advanced.",
+    "scope": {
+      "artifact": "application_intensity_by_fiscal_year",
+      "source": "hrda.job_applications_vw",
+      "buckets": [
+        "1",
+        "2",
+        "3",
+        "4+"
+      ],
+      "periods": [
+        "FY2022",
+        "FY2023",
+        "FY2024",
+        "FY2025",
+        "FY2026 YTD through 2026-09-10"
+      ],
+      "employee_snapshot_rolling_view": "retain its existing Unknown and time-safe coverage controls"
+    },
+    "small_cell_exception": {
+      "allow_subthreshold_aggregate_buckets": true,
+      "minimum_displayed_count": 0,
+      "reason": "Explicit internal exploratory request for two named project developers; no operational or leadership distribution.",
+      "not_a_general_privacy_policy_change": true
+    },
+    "non_negotiable_controls": {
+      "aggregate_only": true,
+      "employee_rows_persisted": false,
+      "employee_ids_persisted": false,
+      "names_persisted": false,
+      "requisition_ids_or_titles_persisted": false,
+      "manager_access": false,
+      "redistribution": false,
+      "operational_use": false,
+      "score_v4_change": false,
+      "production_feature_approval": false
+    },
+    "interpretation": "FY2026 YTD remains a partial fiscal year and is not comparable with full fiscal years. The source is descriptive evidence only and is not approved as identical lineage to hrda.applications or as an individual feature."
+  },
+  "analysis_cutoff": "2026-09-10",
+  "source_cutoff_note": "The view currently contains later rows, but this evidence and deck are frozen through 2026-09-10.",
+  "population": "Regular active employees in each monthly snapshot: worker_type='Employee', employee_type='Regular', active_status=1.",
+  "grain": "Employee-snapshot monthly",
+  "window": "(snapshot_date - 6 months, snapshot_date]",
+  "source": {
+    "table": "hrda.job_applications_vw",
+    "filters": [
+      "cand_applied = 1",
+      "employee_id IS NOT NULL",
+      "req_id IS NOT NULL",
+      "application_date IS NOT NULL",
+      "application_date <= 2026-09-10"
+    ],
+    "deduplication": "unique employee_id + req_id within each employee-snapshot window; source event keys are first collapsed by employee_id + req_id + application_date"
+  },
+  "classification": {
+    "0": "zero unique requisitions and at least one qualified source event is observable by the snapshot",
+    "1": "exactly one unique requisition in the closed six-month window",
+    "2+": "two or more unique requisitions in the closed six-month window",
+    "Unknown": "the qualified source feed is not observable for the employee by the snapshot, so zero cannot be distinguished from missing coverage"
+  },
+  "publication_rules": {
+    "minimum_shared_cohort": 30,
+    "required_categories_for_complete_distribution": [
+      "0",
+      "1",
+      "2+",
+      "Unknown"
+    ],
+    "suppress_bucket_below_n30": true,
+    "no_zero_imputation": true
+  },
+  "evidence": {
+    "metadata": {
+      "query_reference": "queries/audits/application_job_applications_vw_metadata_20260913.sql",
+      "executed_on": "2026-09-13",
+      "sql_sha256": "a75915892a2d8ea98114a390a594171af1e760c7d5baa8337823bb4c62255465",
+      "result_sha256": "6dd6cc01945b9864d6b6b5ff73d7e6ef1bf78220241c724dab92fb068b94ba26",
+      "acceptance_rule": "The four required source columns exist exactly once.",
+      "outcome": "pass",
+      "metrics": {
+        "required_columns_found": 4,
+        "employee_id_columns": 1,
+        "req_id_columns": 1,
+        "application_date_columns": 1,
+        "cand_applied_columns": 1
+      }
+    },
+    "event_quality": {
+      "query_reference": "queries/audits/application_job_applications_vw_event_quality_20260913.sql",
+      "executed_on": "2026-09-13",
+      "sql_sha256": "d3885192acd191bf333b38914e7cd10db1a9345635062bbe0434ba7708c91489",
+      "result_sha256": "c12a7d3296d8240583e115e1aa51ce33706ad2b149ee8b9fe12d09d91cba184a",
+      "acceptance_rule": "The source contains qualified events and the event-key grain is explicitly deduplicated.",
+      "outcome": "pass",
+      "metrics": {
+        "cand_applied_rows": 1529930,
+        "null_employee_id_rows": 1454937,
+        "null_req_id_rows": 0,
+        "null_application_date_rows": 0,
+        "qualified_rows": 74993,
+        "qualified_unique_event_keys": 14428,
+        "duplicate_event_rows": 60565,
+        "first_application_date": "2020-07-13",
+        "last_application_date": "2026-09-10",
+        "distinct_employees_with_cand_applied": 8496,
+        "qualified_distinct_employees": 8496,
+        "qualified_distinct_requisitions": 6277,
+        "qualified_distinct_dates": 1784
+      }
+    },
+    "employee_snapshot_join": {
+      "query_reference": "queries/audits/application_employee_snapshot_trailing_6m_join_20260913.sql",
+      "executed_on": "2026-09-13",
+      "sql_sha256": "ae99d84c7ff014025b29cc2d64bdc3cc5608633e2acaebd96038fe3449ed24ac",
+      "result_sha256": "e3c16075b259cb9859dd64d45df142a6fdacd786ba7fbe4f5985ffed68fb94ce",
+      "acceptance_rule": "snapshot_duplicate_rows=0; matched, unmatched and future-only linkage remain separate diagnostics.",
+      "outcome": "pass",
+      "metrics": {
+        "snapshot_duplicate_rows": 0,
+        "eligible_employee_snapshots": 2836981,
+        "matched_time_safe_snapshots": 132604,
+        "unmatched_snapshots": 2617322,
+        "future_only_snapshots": 87055,
+        "multi_event_linked_snapshots": 45242,
+        "matched_distinct_employees": 6381,
+        "unmatched_distinct_employees": 66677,
+        "first_snapshot_date": "2021-01-24",
+        "last_snapshot_date": "2026-08-23",
+        "snapshot_dates_checked": 68,
+        "time_safe_coverage_percent": 4.6741
+      }
+    },
+    "temporal_and_deduplication": {
+      "query_reference": "queries/audits/application_employee_snapshot_trailing_6m_temporal_20260913.sql",
+      "executed_on": "2026-09-13",
+      "sql_sha256": "f8e283854d4edcb40639fb382cc891d430f590de68800ccd5cfc6f6926dedb63",
+      "result_sha256": "6877108146d6d10ae8e974f91ca2d8b1ca02b64e487dd1ffee7eec3aa2a6d5a6",
+      "acceptance_rule": "future_event_keys_included=0, duplicate_snapshot_rows=0 and independent window-count reconciliation mismatch=0.",
+      "outcome": "pass",
+      "metrics": {
+        "duplicate_snapshot_rows": 0,
+        "eligible_employee_snapshots": 2836981,
+        "future_event_keys_included": 0,
+        "count_reconciliation_mismatch_snapshots": 0,
+        "zero_count_snapshots": 2812572,
+        "one_count_snapshots": 19433,
+        "two_plus_count_snapshots": 4976,
+        "first_snapshot_date": "2021-01-24",
+        "last_snapshot_date": "2026-08-23",
+        "snapshot_dates_checked": 68
+      }
+    },
+    "fiscal_reconciliation": {
+      "query_reference": "queries/audits/application_employee_snapshot_trailing_6m_fiscal_reconciliation_20260913.sql",
+      "executed_on": "2026-09-13",
+      "sql_sha256": "952f3da275a2d43d44ba2f95a7ba003404b5d7da8bfc0bd3eb6e4d78710bcbf4",
+      "result_sha256": "7bb0948f014c44c9e9e50a0a8d2ec8162b816b2d10c068d48a1a81e3ebcb6b32",
+      "acceptance_rule": "Every qualified event maps to exactly one fiscal year and annual totals reconcile; this is contextual to the rolling view.",
+      "outcome": "pass",
+      "metrics": {
+        "qualified_event_keys": 14428,
+        "exactly_mapped_event_keys": 14428,
+        "unmapped_event_keys": 0,
+        "multi_mapped_event_keys": 0,
+        "fiscal_years_checked": 7,
+        "fiscal_years_reconciled": 7,
+        "fiscal_year_total_mismatches": 0,
+        "publishable_fiscal_years": 3,
+        "suppressed_fiscal_years": 4,
+        "minimum_bucket_count_observed": 0
+      }
+    },
+    "historical_source_reconciliation": {
+      "reference_artifact": "output/distribution/json/attrition-43-variable-distributions-v2.application-intensity-evidence-20260910.json",
+      "query_reference": "queries/audits/applied_to_a_job_source_reconciliation_20260910.sql",
+      "executed_on": "2026-09-10",
+      "acceptance_rule": "Both directional exact-key match rates must be >= 95%.",
+      "outcome": "warning",
+      "metrics": {
+        "old_event_keys": 9903,
+        "new_event_keys": 10839,
+        "matched_event_keys": 9903,
+        "old_only_event_keys": 0,
+        "new_only_event_keys": 936,
+        "old_to_new_match_rate_percent": 100.0,
+        "new_to_old_match_rate_percent": 91.3645
+      }
+    },
+    "current_source_reconciliation": {
+      "query_reference": "queries/audits/applied_to_a_job_source_reconciliation_20260913.sql",
+      "executed_on": "2026-09-13",
+      "sql_sha256": "660255c7d7fabc7814d482c288944617ee98938de11ce6f82b72c674e39fccd1",
+      "result_sha256": "79fa2f85ff1428f7893aa8305976e3fe3370817077d4b234d10c56acbd84a07d",
+      "acceptance_rule": "Preserve current source drift relative to the frozen 2026-09-10 reconciliation.",
+      "outcome": "warning",
+      "metrics": {
+        "common_window_start": "2019-06-17",
+        "common_window_end": "2025-02-11",
+        "old_event_keys": 9903,
+        "new_event_keys": 10840,
+        "matched_event_keys": 9903,
+        "old_only_event_keys": 0,
+        "new_only_event_keys": 937,
+        "old_to_new_match_rate_percent": 100,
+        "new_to_old_match_rate_percent": 91.3561
+      }
+    },
+    "publication_gate": {
+      "query_reference": "queries/audits/application_employee_snapshot_trailing_6m_publishability_20260913.sql",
+      "executed_on": "2026-09-13",
+      "sql_sha256": "2c6156122a37f2605185124788a0977d31efb6bf143490269cc32fe99c6c99a3",
+      "result_sha256": "1a8e2d43ed67b5e98b3aaccb63feb9c2f9d64a11928850c6a16748b5a4739ee1",
+      "acceptance_rule": "A complete distribution is published only when all four categories have n>=30 and reconcile to the employee-snapshot denominator.",
+      "outcome": "pass",
+      "metrics": {
+        "snapshot_dates_checked_total": 68,
+        "trend_snapshot_count": 12,
+        "trend_publishable_snapshot_count": 1,
+        "trend_suppressed_snapshot_count": 11,
+        "latest_available_snapshot": "2026-08-23",
+        "latest_available_publication_status": "suppressed_below_n30_or_reconciliation",
+        "latest_publishable_snapshot": "2026-07-26"
+      }
+    },
+    "employee_snapshot_profile": {
+      "query_reference": "queries/profiles/application_employee_snapshot_trailing_6m_distribution_20260913.sql",
+      "executed_on": "2026-09-13",
+      "sql_sha256": "eb40167666baf679be30b1fb0cb1fb11e1698b50c1e964c4e76c31efeb0cd56b",
+      "result_sha256": "2e6183aaa58439b7632771c62342b32b33016916a7da2defb778cff7504f1e15",
+      "acceptance_rule": "The published latest distribution has exactly 0/1/2+/Unknown, all buckets n>=30, and their counts sum to the eligible denominator; trend rows expose only aggregate percentages and safe categories.",
+      "outcome": "pass",
+      "metrics": {
+        "latest_publishable_snapshot": "2026-07-26",
+        "latest_distribution_rows": 4,
+        "latest_distribution_minimum_bucket_n": 30,
+        "latest_distribution_denominator": 49652,
+        "trend_snapshot_count": 12
+      }
+    }
+  },
+  "latest_distribution": [
+    {
+      "application_bucket": "0",
+      "employee_snapshots": 3935,
+      "eligible_employee_snapshots": 49652,
+      "percent_of_eligible_snapshots": 7.9252
+    },
+    {
+      "application_bucket": "1",
+      "employee_snapshots": 843,
+      "eligible_employee_snapshots": 49652,
+      "percent_of_eligible_snapshots": 1.6978
+    },
+    {
+      "application_bucket": "2+",
+      "employee_snapshots": 30,
+      "eligible_employee_snapshots": 49652,
+      "percent_of_eligible_snapshots": 0.0604
+    },
+    {
+      "application_bucket": "Unknown",
+      "employee_snapshots": 44844,
+      "eligible_employee_snapshots": 49652,
+      "percent_of_eligible_snapshots": 90.3166
+    }
+  ],
+  "latest_available_snapshot": "2026-08-23",
+  "latest_available_status": "suppressed_below_n30_or_reconciliation",
+  "latest_publishable_snapshot": "2026-07-26",
+  "trend": [
+    {
+      "snapshot_date": "2025-09-28",
+      "fiscal_year": "2025",
+      "eligible_employee_snapshots": 45141,
+      "observed_employee_snapshots": 3790,
+      "unknown_employee_snapshots": 41351,
+      "coverage_percent": 8.3959,
+      "unknown_percent": 91.6041,
+      "publication_status": "suppressed_below_n30_or_reconciliation",
+      "zero_percent": 7.5563,
+      "one_percent": 0.8285,
+      "two_plus_publication_status": "suppressed_below_n30"
+    },
+    {
+      "snapshot_date": "2025-10-26",
+      "fiscal_year": "2026",
+      "eligible_employee_snapshots": 45255,
+      "observed_employee_snapshots": 3811,
+      "unknown_employee_snapshots": 41444,
+      "coverage_percent": 8.4212,
+      "unknown_percent": 91.5788,
+      "publication_status": "suppressed_below_n30_or_reconciliation",
+      "zero_percent": 7.6367,
+      "one_percent": 0.7756,
+      "two_plus_publication_status": "suppressed_below_n30"
+    },
+    {
+      "snapshot_date": "2025-11-23",
+      "fiscal_year": "2026",
+      "eligible_employee_snapshots": 45571,
+      "observed_employee_snapshots": 3851,
+      "unknown_employee_snapshots": 41720,
+      "coverage_percent": 8.4505,
+      "unknown_percent": 91.5495,
+      "publication_status": "suppressed_below_n30_or_reconciliation",
+      "zero_percent": 7.6869,
+      "one_percent": 0.7483,
+      "two_plus_publication_status": "suppressed_below_n30"
+    },
+    {
+      "snapshot_date": "2025-12-28",
+      "fiscal_year": "2026",
+      "eligible_employee_snapshots": 47134,
+      "observed_employee_snapshots": 3906,
+      "unknown_employee_snapshots": 43228,
+      "coverage_percent": 8.287,
+      "unknown_percent": 91.713,
+      "publication_status": "suppressed_below_n30_or_reconciliation",
+      "zero_percent": 7.763,
+      "one_percent": 0.4986,
+      "two_plus_publication_status": "suppressed_below_n30"
+    },
+    {
+      "snapshot_date": "2026-01-25",
+      "fiscal_year": "2026",
+      "eligible_employee_snapshots": 47258,
+      "observed_employee_snapshots": 3939,
+      "unknown_employee_snapshots": 43319,
+      "coverage_percent": 8.3351,
+      "unknown_percent": 91.6649,
+      "publication_status": "suppressed_below_n30_or_reconciliation",
+      "zero_percent": 7.8019,
+      "one_percent": 0.51,
+      "two_plus_publication_status": "suppressed_below_n30"
+    },
+    {
+      "snapshot_date": "2026-02-22",
+      "fiscal_year": "2026",
+      "eligible_employee_snapshots": 47666,
+      "observed_employee_snapshots": 4000,
+      "unknown_employee_snapshots": 43666,
+      "coverage_percent": 8.3917,
+      "unknown_percent": 91.6083,
+      "publication_status": "suppressed_below_n30_or_reconciliation",
+      "zero_percent": 7.7561,
+      "one_percent": 0.6042,
+      "two_plus_publication_status": "suppressed_below_n30"
+    },
+    {
+      "snapshot_date": "2026-03-29",
+      "fiscal_year": "2026",
+      "eligible_employee_snapshots": 47850,
+      "observed_employee_snapshots": 4037,
+      "unknown_employee_snapshots": 43813,
+      "coverage_percent": 8.4368,
+      "unknown_percent": 91.5632,
+      "publication_status": "suppressed_below_n30_or_reconciliation",
+      "zero_percent": 7.6991,
+      "one_percent": 0.7043,
+      "two_plus_publication_status": "suppressed_below_n30"
+    },
+    {
+      "snapshot_date": "2026-04-26",
+      "fiscal_year": "2026",
+      "eligible_employee_snapshots": 48044,
+      "observed_employee_snapshots": 4083,
+      "unknown_employee_snapshots": 43961,
+      "coverage_percent": 8.4985,
+      "unknown_percent": 91.5015,
+      "publication_status": "suppressed_below_n30_or_reconciliation",
+      "zero_percent": 7.695,
+      "one_percent": 0.766,
+      "two_plus_publication_status": "suppressed_below_n30"
+    },
+    {
+      "snapshot_date": "2026-05-24",
+      "fiscal_year": "2026",
+      "eligible_employee_snapshots": 48334,
+      "observed_employee_snapshots": 4124,
+      "unknown_employee_snapshots": 44210,
+      "coverage_percent": 8.5323,
+      "unknown_percent": 91.4677,
+      "publication_status": "suppressed_below_n30_or_reconciliation",
+      "zero_percent": 7.7689,
+      "one_percent": 0.7241,
+      "two_plus_publication_status": "suppressed_below_n30"
+    },
+    {
+      "snapshot_date": "2026-06-28",
+      "fiscal_year": "2026",
+      "eligible_employee_snapshots": 48826,
+      "observed_employee_snapshots": 4366,
+      "unknown_employee_snapshots": 44460,
+      "coverage_percent": 8.942,
+      "unknown_percent": 91.058,
+      "publication_status": "suppressed_below_n30_or_reconciliation",
+      "zero_percent": 7.8749,
+      "one_percent": 1.0322,
+      "two_plus_publication_status": "suppressed_below_n30"
+    },
+    {
+      "snapshot_date": "2026-07-26",
+      "fiscal_year": "2026",
+      "eligible_employee_snapshots": 49652,
+      "observed_employee_snapshots": 4808,
+      "unknown_employee_snapshots": 44844,
+      "coverage_percent": 9.6834,
+      "unknown_percent": 90.3166,
+      "publication_status": "publishable",
+      "zero_percent": 7.9252,
+      "one_percent": 1.6978,
+      "two_plus_percent": 0.0604,
+      "two_plus_publication_status": "published"
+    },
+    {
+      "snapshot_date": "2026-08-23",
+      "fiscal_year": "2026",
+      "eligible_employee_snapshots": 50043,
+      "observed_employee_snapshots": 4883,
+      "unknown_employee_snapshots": 45160,
+      "coverage_percent": 9.7576,
+      "unknown_percent": 90.2424,
+      "publication_status": "suppressed_below_n30_or_reconciliation",
+      "zero_percent": 8.099,
+      "one_percent": 1.6186,
+      "two_plus_publication_status": "suppressed_below_n30"
+    }
+  ],
+  "limitations": [
+    "Unknown is retained when the source cannot distinguish zero applications from missing coverage; it is not converted to zero.",
+    "The most recent source-backed snapshot is not fully publishable because its 2+ bucket is below n=30; the complete distribution uses the latest publishable snapshot.",
+    "This is descriptive exploratory evidence and not an approved production feature or individual prediction.",
+    "The broadened view is not assumed to have identical lineage or business scope with hrda.applications."
+  ],
+  "provenance": {
+    "metadata": {
+      "query_reference": "queries/audits/application_job_applications_vw_metadata_20260913.sql",
+      "executed_on": "2026-09-13",
+      "sql_sha256": "a75915892a2d8ea98114a390a594171af1e760c7d5baa8337823bb4c62255465",
+      "result_sha256": "6dd6cc01945b9864d6b6b5ff73d7e6ef1bf78220241c724dab92fb068b94ba26"
+    },
+    "event_quality": {
+      "query_reference": "queries/audits/application_job_applications_vw_event_quality_20260913.sql",
+      "executed_on": "2026-09-13",
+      "sql_sha256": "d3885192acd191bf333b38914e7cd10db1a9345635062bbe0434ba7708c91489",
+      "result_sha256": "c12a7d3296d8240583e115e1aa51ce33706ad2b149ee8b9fe12d09d91cba184a"
+    },
+    "employee_snapshot_join": {
+      "query_reference": "queries/audits/application_employee_snapshot_trailing_6m_join_20260913.sql",
+      "executed_on": "2026-09-13",
+      "sql_sha256": "ae99d84c7ff014025b29cc2d64bdc3cc5608633e2acaebd96038fe3449ed24ac",
+      "result_sha256": "e3c16075b259cb9859dd64d45df142a6fdacd786ba7fbe4f5985ffed68fb94ce"
+    },
+    "employee_snapshot_temporal": {
+      "query_reference": "queries/audits/application_employee_snapshot_trailing_6m_temporal_20260913.sql",
+      "executed_on": "2026-09-13",
+      "sql_sha256": "f8e283854d4edcb40639fb382cc891d430f590de68800ccd5cfc6f6926dedb63",
+      "result_sha256": "6877108146d6d10ae8e974f91ca2d8b1ca02b64e487dd1ffee7eec3aa2a6d5a6"
+    },
+    "employee_snapshot_publishability": {
+      "query_reference": "queries/audits/application_employee_snapshot_trailing_6m_publishability_20260913.sql",
+      "executed_on": "2026-09-13",
+      "sql_sha256": "2c6156122a37f2605185124788a0977d31efb6bf143490269cc32fe99c6c99a3",
+      "result_sha256": "1a8e2d43ed67b5e98b3aaccb63feb9c2f9d64a11928850c6a16748b5a4739ee1"
+    },
+    "employee_snapshot_profile": {
+      "query_reference": "queries/profiles/application_employee_snapshot_trailing_6m_distribution_20260913.sql",
+      "executed_on": "2026-09-13",
+      "sql_sha256": "eb40167666baf679be30b1fb0cb1fb11e1698b50c1e964c4e76c31efeb0cd56b",
+      "result_sha256": "2e6183aaa58439b7632771c62342b32b33016916a7da2defb778cff7504f1e15"
+    },
+    "fiscal_reconciliation": {
+      "query_reference": "queries/audits/application_employee_snapshot_trailing_6m_fiscal_reconciliation_20260913.sql",
+      "executed_on": "2026-09-13",
+      "sql_sha256": "952f3da275a2d43d44ba2f95a7ba003404b5d7da8bfc0bd3eb6e4d78710bcbf4",
+      "result_sha256": "7bb0948f014c44c9e9e50a0a8d2ec8162b816b2d10c068d48a1a81e3ebcb6b32"
+    }
+  },
+  "historical_reference": {
+    "artifact": "output/distribution/json/attrition-43-variable-distributions-v2.application-intensity-evidence-20260910.json",
+    "generated_on": "2026-09-10",
+    "metrics": {
+      "old_event_keys": 9903,
+      "new_event_keys": 10839,
+      "matched_event_keys": 9903,
+      "old_only_event_keys": 0,
+      "new_only_event_keys": 936,
+      "old_to_new_match_rate_percent": 100.0,
+      "new_to_old_match_rate_percent": 91.3645
+    }
+  }
+}

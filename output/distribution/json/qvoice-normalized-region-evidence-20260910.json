@@ -1,0 +1,203 @@
+{
+  "artifact": "internal_analysis",
+  "evidence_type": "aggregate-only QVoice within-region standardized-score distribution",
+  "generated_on": "2026-09-10",
+  "outcome": "pass",
+  "minimum_shared_cohort": 30,
+  "source_rule": "QVoice raw Excel workbooks only; Redshift is not used because it lacks the 2024–2025 waves.",
+  "scope": "Respondents with 33/33 strictly comparable valid binary items and a nonblank stored Region; this is not a workforce denominator or an attrition join.",
+  "grain": "participant-wave derived aggregate",
+  "formula": {
+    "raw_score": "100 × favorable_items / 33",
+    "reference_cohort": "stored Region × survey wave, each n ≥ 30",
+    "standardization": "z = (raw_score − region-wave mean) / region-wave population standard deviation",
+    "inclusion_rule": "Exactly 33 valid 0/1 responses across the strict common-item contract; 255 is missing; Response Type is not a completion filter."
+  },
+  "strict_item_contract": {
+    "binary_items_by_wave": {
+      "2024": 52,
+      "2025": 52,
+      "2026": 53
+    },
+    "strict_common_item_count": 33,
+    "header_matching_rule": "Coincidencia exacta de header_base tras retirar sólo el prefijo técnico de pregunta, el sufijo técnico binario y separadores terminales; conserva las palabras y la puntuación interna. No usa similitud, sinónimos ni mapeo semántico.",
+    "common_header_bases_sha256": "9ada5b37f72e696356de4e535b6d2da448400a7fa6a468d8c2b70673cf912dc6"
+  },
+  "waves": [
+    {
+      "year": 2024,
+      "source_file": "Jan 2024 Qvoice raw data.xlsx",
+      "sheet": "Raw data",
+      "participant_rows": 36806,
+      "source_rows_scanned": 36807,
+      "rows_without_participant_key": 1,
+      "duplicate_participant_rows": 0,
+      "duplicate_conflicting_rows": 0,
+      "complete_comparable_participants": 27563,
+      "incomplete_comparable_participants": 9243,
+      "complete_comparable_participants_without_region": 0,
+      "out_of_domain_non_sentinel_cells": 0,
+      "region_wave_cohort_count": 5,
+      "minimum_region_wave_cohort_count": 2305,
+      "maximum_region_wave_cohort_count": 10805,
+      "zero_population_standard_deviation_cohort_count": 0,
+      "normalized_participants": 27563,
+      "weighted_z_score_mean": -0.0,
+      "weighted_population_z_score_standard_deviation": 1.0,
+      "z_score_bands": [
+        {
+          "band": "< −1.0",
+          "participant_count": 4687,
+          "percent_of_normalized": 17.00468
+        },
+        {
+          "band": "−1.0 to < −0.5",
+          "participant_count": 2114,
+          "percent_of_normalized": 7.669702
+        },
+        {
+          "band": "−0.5 to < 0.5",
+          "participant_count": 8701,
+          "percent_of_normalized": 31.567681
+        },
+        {
+          "band": "0.5 to < 1.0",
+          "participant_count": 10272,
+          "percent_of_normalized": 37.267351
+        },
+        {
+          "band": "≥ 1.0",
+          "participant_count": 1789,
+          "percent_of_normalized": 6.490586
+        }
+      ],
+      "z_score_band_count_total": 27563,
+      "minimum_z_score_band_count": 1789
+    },
+    {
+      "year": 2025,
+      "source_file": "Jan 2025_Qvoice_raw data.xlsx",
+      "sheet": "Raw data",
+      "participant_rows": 37837,
+      "source_rows_scanned": 37837,
+      "rows_without_participant_key": 0,
+      "duplicate_participant_rows": 0,
+      "duplicate_conflicting_rows": 0,
+      "complete_comparable_participants": 30342,
+      "incomplete_comparable_participants": 7495,
+      "complete_comparable_participants_without_region": 0,
+      "out_of_domain_non_sentinel_cells": 0,
+      "region_wave_cohort_count": 5,
+      "minimum_region_wave_cohort_count": 2344,
+      "maximum_region_wave_cohort_count": 12083,
+      "zero_population_standard_deviation_cohort_count": 0,
+      "normalized_participants": 30342,
+      "weighted_z_score_mean": -0.0,
+      "weighted_population_z_score_standard_deviation": 1.0,
+      "z_score_bands": [
+        {
+          "band": "< −1.0",
+          "participant_count": 4787,
+          "percent_of_normalized": 15.776811
+        },
+        {
+          "band": "−1.0 to < −0.5",
+          "participant_count": 2374,
+          "percent_of_normalized": 7.824138
+        },
+        {
+          "band": "−0.5 to < 0.5",
+          "participant_count": 9793,
+          "percent_of_normalized": 32.275394
+        },
+        {
+          "band": "0.5 to < 1.0",
+          "participant_count": 11205,
+          "percent_of_normalized": 36.929009
+        },
+        {
+          "band": "≥ 1.0",
+          "participant_count": 2183,
+          "percent_of_normalized": 7.194648
+        }
+      ],
+      "z_score_band_count_total": 30342,
+      "minimum_z_score_band_count": 2183
+    },
+    {
+      "year": 2026,
+      "source_file": "Jan 2026 Qvoice_raw data.xlsx",
+      "sheet": "Raw data",
+      "participant_rows": 42203,
+      "source_rows_scanned": 42203,
+      "rows_without_participant_key": 0,
+      "duplicate_participant_rows": 0,
+      "duplicate_conflicting_rows": 0,
+      "complete_comparable_participants": 33067,
+      "incomplete_comparable_participants": 9136,
+      "complete_comparable_participants_without_region": 0,
+      "out_of_domain_non_sentinel_cells": 0,
+      "region_wave_cohort_count": 5,
+      "minimum_region_wave_cohort_count": 2657,
+      "maximum_region_wave_cohort_count": 13659,
+      "zero_population_standard_deviation_cohort_count": 0,
+      "normalized_participants": 33067,
+      "weighted_z_score_mean": 0.0,
+      "weighted_population_z_score_standard_deviation": 1.0,
+      "z_score_bands": [
+        {
+          "band": "< −1.0",
+          "participant_count": 5296,
+          "percent_of_normalized": 16.015968
+        },
+        {
+          "band": "−1.0 to < −0.5",
+          "participant_count": 2700,
+          "percent_of_normalized": 8.16524
+        },
+        {
+          "band": "−0.5 to < 0.5",
+          "participant_count": 10693,
+          "percent_of_normalized": 32.337376
+        },
+        {
+          "band": "0.5 to < 1.0",
+          "participant_count": 13760,
+          "percent_of_normalized": 41.612484
+        },
+        {
+          "band": "≥ 1.0",
+          "participant_count": 618,
+          "percent_of_normalized": 1.868932
+        }
+      ],
+      "z_score_band_count_total": 33067,
+      "minimum_z_score_band_count": 618
+    }
+  ],
+  "privacy_checks": {
+    "identifiers_persisted": false,
+    "employee_rows_persisted": false,
+    "response_values_persisted": false,
+    "region_labels_persisted": false,
+    "all_reference_and_display_cohorts_meet_minimum": true
+  },
+  "acceptance_rule": {
+    "expected_years": [
+      2024,
+      2025,
+      2026
+    ],
+    "strict_common_item_count": 33,
+    "region_wave_cohorts_per_wave": 5,
+    "minimum_reference_and_display_cohort": 30,
+    "zero_duplicate_participant_rows": true,
+    "zero_duplicate_conflicting_rows": true,
+    "zero_complete_participants_without_region": true,
+    "zero_out_of_domain_non_sentinel_cells": true,
+    "zero_zero_standard_deviation_cohorts": true,
+    "normalized_population_reconciles_to_33_of_33_population": true,
+    "weighted_z_mean_zero_and_population_standard_deviation_one": true,
+    "no_identifier_response_or_region_label_persistence": true
+  }
+}

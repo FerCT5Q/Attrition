@@ -1,0 +1,573 @@
+{
+  "artifact": "presentation",
+  "evidence_type": "aggregate-only QVoice favorable/no-favorable response distribution with time-safe voluntary attrition",
+  "generated_on": "2026-09-23",
+  "outcome": "pass",
+  "minimum_shared_cohort": 30,
+  "scope": "QVoice raw-workbook respondents in Jan-2024, Jan-2025, and Jan-2026 who have the displayed valid response and match the active Regular pre-wave workforce cohort.",
+  "mapping_contract": {
+    "method": "Deterministic exact header_base matching after removal of technical binary suffixes/prefixes; no fuzzy matching, synonym substitution, or row persistence.",
+    "intent_to_stay": {
+      "components": {
+        "Q4": "i see myself working at qualcomm in a few years",
+        "Q12": "i rarely think about looking for a new job with another company"
+      },
+      "display_components": [
+        {
+          "key": "Q4",
+          "short_label": "Q4 · See myself at Qualcomm in a few years",
+          "question": "I see myself working at Qualcomm in a few years"
+        },
+        {
+          "key": "Q12",
+          "short_label": "Q12 · Rarely think about looking for another job",
+          "question": "I rarely think about looking for a new job with another company"
+        }
+      ],
+      "display_rule": "Favorable requires both valid Q4 and Q12 binary components equal to 1. No favorable requires both components valid and at least one equal to 0. Partial component responses are omitted from this two-bar display.",
+      "status": "Operational display mapping; the broader business definition and partial-response treatment remain documented as pending, not score-2 claims."
+    },
+    "career_goals": {
+      "header_base_by_year": {
+        "2024": "overall, i feel that my career goals can be met at qualcomm",
+        "2025": "i feel that my career goals can be met at qualcomm",
+        "2026": "i feel that my career goals can be met at qualcomm"
+      },
+      "display_components": [
+        {
+          "key": "Career goals item",
+          "short_label": "Career goals can be met at Qualcomm",
+          "question": "I feel that my career goals can be met at Qualcomm"
+        }
+      ],
+      "display_rule": "Favorable is stored binary value 1; No favorable is stored binary value 0. Invalid, blank, and 255 sentinel values are omitted.",
+      "status": "The 2024 header starts with 'Overall'; 2025-2026 differ. The display is each-wave response mix and does not claim normalized cross-wave wording equivalence."
+    }
+  },
+  "outcome_contract": {
+    "2024_2025": "Annual voluntary attrition: matched active Regular employees at the pre-wave monthly snapshot; strict VOLUNTARY exits in (survey-month start, survey-month start + 12 months].",
+    "2026": "Voluntary attrition YTD for the same pre-wave cohort in (2026-01-07, 2026-09-27]; not annualized.",
+    "population": "worker_type='Employee'; employee_type='Regular'; active_status=1 at each pre-wave baseline snapshot.",
+    "grain": "Distinct QVoice respondent in a response group after a time-safe employee-date join."
+  },
+  "variables": {
+    "intent_to_stay": [
+      {
+        "year": 2024,
+        "wave": "Jan-2024",
+        "outcome_type": "annual_12m",
+        "baseline_snapshot": "2023-12-24",
+        "outcome_start": "2024-01-01",
+        "outcome_end": "2025-01-01",
+        "linked_response_cohort_count": 29468,
+        "groups": {
+          "Favorable": {
+            "source_employee_count": 18227,
+            "matched_employee_count": 16279,
+            "unmatched_employee_count": 1948,
+            "voluntary_exit_count": 436,
+            "voluntary_attrition_rate_percent": 2.6783,
+            "linked_response_share_percent": 55.243
+          },
+          "No favorable": {
+            "source_employee_count": 13592,
+            "matched_employee_count": 13189,
+            "unmatched_employee_count": 403,
+            "voluntary_exit_count": 1005,
+            "voluntary_attrition_rate_percent": 7.62,
+            "linked_response_share_percent": 44.757
+          }
+        },
+        "components": {
+          "Q4": {
+            "key": "Q4",
+            "short_label": "Q4 · See myself at Qualcomm in a few years",
+            "question": "I see myself working at Qualcomm in a few years",
+            "groups": {
+              "Favorable": {
+                "source_employee_count": 27377,
+                "matched_employee_count": 24263,
+                "unmatched_employee_count": 3114,
+                "voluntary_exit_count": 707,
+                "voluntary_attrition_rate_percent": 2.9139,
+                "linked_response_share_percent": 76.8985
+              },
+              "No favorable": {
+                "source_employee_count": 7613,
+                "matched_employee_count": 7289,
+                "unmatched_employee_count": 324,
+                "voluntary_exit_count": 817,
+                "voluntary_attrition_rate_percent": 11.2087,
+                "linked_response_share_percent": 23.1015
+              }
+            },
+            "linked_response_cohort_count": 31552
+          },
+          "Q12": {
+            "key": "Q12",
+            "short_label": "Q12 · Rarely think about looking for another job",
+            "question": "I rarely think about looking for a new job with another company",
+            "groups": {
+              "Favorable": {
+                "source_employee_count": 19139,
+                "matched_employee_count": 17132,
+                "unmatched_employee_count": 2007,
+                "voluntary_exit_count": 510,
+                "voluntary_attrition_rate_percent": 2.9769,
+                "linked_response_share_percent": 57.4899
+              },
+              "No favorable": {
+                "source_employee_count": 13021,
+                "matched_employee_count": 12668,
+                "unmatched_employee_count": 353,
+                "voluntary_exit_count": 965,
+                "voluntary_attrition_rate_percent": 7.6176,
+                "linked_response_share_percent": 42.5101
+              }
+            },
+            "linked_response_cohort_count": 29800
+          }
+        }
+      },
+      {
+        "year": 2025,
+        "wave": "Jan-2025",
+        "outcome_type": "annual_12m",
+        "baseline_snapshot": "2024-12-29",
+        "outcome_start": "2025-01-01",
+        "outcome_end": "2026-01-01",
+        "linked_response_cohort_count": 32075,
+        "groups": {
+          "Favorable": {
+            "source_employee_count": 20396,
+            "matched_employee_count": 18860,
+            "unmatched_employee_count": 1536,
+            "voluntary_exit_count": 484,
+            "voluntary_attrition_rate_percent": 2.5663,
+            "linked_response_share_percent": 58.7997
+          },
+          "No favorable": {
+            "source_employee_count": 13425,
+            "matched_employee_count": 13215,
+            "unmatched_employee_count": 210,
+            "voluntary_exit_count": 1022,
+            "voluntary_attrition_rate_percent": 7.7336,
+            "linked_response_share_percent": 41.2003
+          }
+        },
+        "components": {
+          "Q4": {
+            "key": "Q4",
+            "short_label": "Q4 · See myself at Qualcomm in a few years",
+            "question": "I see myself working at Qualcomm in a few years",
+            "groups": {
+              "Favorable": {
+                "source_employee_count": 29549,
+                "matched_employee_count": 26813,
+                "unmatched_employee_count": 2736,
+                "voluntary_exit_count": 762,
+                "voluntary_attrition_rate_percent": 2.8419,
+                "linked_response_share_percent": 78.3593
+              },
+              "No favorable": {
+                "source_employee_count": 7566,
+                "matched_employee_count": 7405,
+                "unmatched_employee_count": 161,
+                "voluntary_exit_count": 824,
+                "voluntary_attrition_rate_percent": 11.1276,
+                "linked_response_share_percent": 21.6407
+              }
+            },
+            "linked_response_cohort_count": 34218
+          },
+          "Q12": {
+            "key": "Q12",
+            "short_label": "Q12 · Rarely think about looking for another job",
+            "question": "I rarely think about looking for a new job with another company",
+            "groups": {
+              "Favorable": {
+                "source_employee_count": 21331,
+                "matched_employee_count": 19750,
+                "unmatched_employee_count": 1581,
+                "voluntary_exit_count": 571,
+                "voluntary_attrition_rate_percent": 2.8911,
+                "linked_response_share_percent": 61.0737
+              },
+              "No favorable": {
+                "source_employee_count": 12761,
+                "matched_employee_count": 12588,
+                "unmatched_employee_count": 173,
+                "voluntary_exit_count": 967,
+                "voluntary_attrition_rate_percent": 7.6819,
+                "linked_response_share_percent": 38.9263
+              }
+            },
+            "linked_response_cohort_count": 32338
+          }
+        }
+      },
+      {
+        "year": 2026,
+        "wave": "Jan-2026",
+        "outcome_type": "ytd",
+        "baseline_snapshot": "2025-12-28",
+        "outcome_start": "2026-01-07",
+        "outcome_end": "2026-09-27",
+        "linked_response_cohort_count": 35556,
+        "groups": {
+          "Favorable": {
+            "source_employee_count": 23278,
+            "matched_employee_count": 21747,
+            "unmatched_employee_count": 1531,
+            "voluntary_exit_count": 496,
+            "voluntary_attrition_rate_percent": 2.2808,
+            "linked_response_share_percent": 61.1627
+          },
+          "No favorable": {
+            "source_employee_count": 14037,
+            "matched_employee_count": 13809,
+            "unmatched_employee_count": 228,
+            "voluntary_exit_count": 851,
+            "voluntary_attrition_rate_percent": 6.1626,
+            "linked_response_share_percent": 38.8373
+          }
+        },
+        "components": {
+          "Q4": {
+            "key": "Q4",
+            "short_label": "Q4 · See myself at Qualcomm in a few years",
+            "question": "I see myself working at Qualcomm in a few years",
+            "groups": {
+              "Favorable": {
+                "source_employee_count": 32788,
+                "matched_employee_count": 29996,
+                "unmatched_employee_count": 2792,
+                "voluntary_exit_count": 733,
+                "voluntary_attrition_rate_percent": 2.4437,
+                "linked_response_share_percent": 79.5207
+              },
+              "No favorable": {
+                "source_employee_count": 7896,
+                "matched_employee_count": 7725,
+                "unmatched_employee_count": 171,
+                "voluntary_exit_count": 680,
+                "voluntary_attrition_rate_percent": 8.8026,
+                "linked_response_share_percent": 20.4793
+              }
+            },
+            "linked_response_cohort_count": 37721
+          },
+          "Q12": {
+            "key": "Q12",
+            "short_label": "Q12 · Rarely think about looking for another job",
+            "question": "I rarely think about looking for a new job with another company",
+            "groups": {
+              "Favorable": {
+                "source_employee_count": 24244,
+                "matched_employee_count": 22688,
+                "unmatched_employee_count": 1556,
+                "voluntary_exit_count": 565,
+                "voluntary_attrition_rate_percent": 2.4903,
+                "linked_response_share_percent": 63.3672
+              },
+              "No favorable": {
+                "source_employee_count": 13321,
+                "matched_employee_count": 13116,
+                "unmatched_employee_count": 205,
+                "voluntary_exit_count": 807,
+                "voluntary_attrition_rate_percent": 6.1528,
+                "linked_response_share_percent": 36.6328
+              }
+            },
+            "linked_response_cohort_count": 35804
+          }
+        }
+      }
+    ],
+    "career_goals": [
+      {
+        "year": 2024,
+        "wave": "Jan-2024",
+        "outcome_type": "annual_12m",
+        "baseline_snapshot": "2023-12-24",
+        "outcome_start": "2024-01-01",
+        "outcome_end": "2025-01-01",
+        "linked_response_cohort_count": 30219,
+        "groups": {
+          "Favorable": {
+            "source_employee_count": 24175,
+            "matched_employee_count": 22102,
+            "unmatched_employee_count": 2073,
+            "voluntary_exit_count": 754,
+            "voluntary_attrition_rate_percent": 3.4115,
+            "linked_response_share_percent": 73.1394
+          },
+          "No favorable": {
+            "source_employee_count": 8398,
+            "matched_employee_count": 8117,
+            "unmatched_employee_count": 281,
+            "voluntary_exit_count": 749,
+            "voluntary_attrition_rate_percent": 9.2275,
+            "linked_response_share_percent": 26.8606
+          }
+        },
+        "components": {
+          "Career goals item": {
+            "key": "Career goals item",
+            "short_label": "Career goals can be met at Qualcomm",
+            "question": "I feel that my career goals can be met at Qualcomm",
+            "groups": {
+              "Favorable": {
+                "source_employee_count": 24175,
+                "matched_employee_count": 22102,
+                "unmatched_employee_count": 2073,
+                "voluntary_exit_count": 754,
+                "voluntary_attrition_rate_percent": 3.4115,
+                "linked_response_share_percent": 73.1394
+              },
+              "No favorable": {
+                "source_employee_count": 8398,
+                "matched_employee_count": 8117,
+                "unmatched_employee_count": 281,
+                "voluntary_exit_count": 749,
+                "voluntary_attrition_rate_percent": 9.2275,
+                "linked_response_share_percent": 26.8606
+              }
+            },
+            "linked_response_cohort_count": 30219
+          }
+        }
+      },
+      {
+        "year": 2025,
+        "wave": "Jan-2025",
+        "outcome_type": "annual_12m",
+        "baseline_snapshot": "2024-12-29",
+        "outcome_start": "2025-01-01",
+        "outcome_end": "2026-01-01",
+        "linked_response_cohort_count": 33046,
+        "groups": {
+          "Favorable": {
+            "source_employee_count": 25944,
+            "matched_employee_count": 24338,
+            "unmatched_employee_count": 1606,
+            "voluntary_exit_count": 804,
+            "voluntary_attrition_rate_percent": 3.3035,
+            "linked_response_share_percent": 73.6489
+          },
+          "No favorable": {
+            "source_employee_count": 8860,
+            "matched_employee_count": 8708,
+            "unmatched_employee_count": 152,
+            "voluntary_exit_count": 784,
+            "voluntary_attrition_rate_percent": 9.0032,
+            "linked_response_share_percent": 26.3511
+          }
+        },
+        "components": {
+          "Career goals item": {
+            "key": "Career goals item",
+            "short_label": "Career goals can be met at Qualcomm",
+            "question": "I feel that my career goals can be met at Qualcomm",
+            "groups": {
+              "Favorable": {
+                "source_employee_count": 25944,
+                "matched_employee_count": 24338,
+                "unmatched_employee_count": 1606,
+                "voluntary_exit_count": 804,
+                "voluntary_attrition_rate_percent": 3.3035,
+                "linked_response_share_percent": 73.6489
+              },
+              "No favorable": {
+                "source_employee_count": 8860,
+                "matched_employee_count": 8708,
+                "unmatched_employee_count": 152,
+                "voluntary_exit_count": 784,
+                "voluntary_attrition_rate_percent": 9.0032,
+                "linked_response_share_percent": 26.3511
+              }
+            },
+            "linked_response_cohort_count": 33046
+          }
+        }
+      },
+      {
+        "year": 2026,
+        "wave": "Jan-2026",
+        "outcome_type": "ytd",
+        "baseline_snapshot": "2025-12-28",
+        "outcome_start": "2026-01-07",
+        "outcome_end": "2026-09-27",
+        "linked_response_cohort_count": 36065,
+        "groups": {
+          "Favorable": {
+            "source_employee_count": 28730,
+            "matched_employee_count": 27150,
+            "unmatched_employee_count": 1580,
+            "voluntary_exit_count": 750,
+            "voluntary_attrition_rate_percent": 2.7624,
+            "linked_response_share_percent": 75.2807
+          },
+          "No favorable": {
+            "source_employee_count": 9086,
+            "matched_employee_count": 8915,
+            "unmatched_employee_count": 171,
+            "voluntary_exit_count": 619,
+            "voluntary_attrition_rate_percent": 6.9434,
+            "linked_response_share_percent": 24.7193
+          }
+        },
+        "components": {
+          "Career goals item": {
+            "key": "Career goals item",
+            "short_label": "Career goals can be met at Qualcomm",
+            "question": "I feel that my career goals can be met at Qualcomm",
+            "groups": {
+              "Favorable": {
+                "source_employee_count": 28730,
+                "matched_employee_count": 27150,
+                "unmatched_employee_count": 1580,
+                "voluntary_exit_count": 750,
+                "voluntary_attrition_rate_percent": 2.7624,
+                "linked_response_share_percent": 75.2807
+              },
+              "No favorable": {
+                "source_employee_count": 9086,
+                "matched_employee_count": 8915,
+                "unmatched_employee_count": 171,
+                "voluntary_exit_count": 619,
+                "voluntary_attrition_rate_percent": 6.9434,
+                "linked_response_share_percent": 24.7193
+              }
+            },
+            "linked_response_cohort_count": 36065
+          }
+        }
+      }
+    ]
+  },
+  "window_audit": [
+    {
+      "survey_year": 2024,
+      "outcome_type": "annual_12m",
+      "baseline_snapshot": "2023-12-24",
+      "outcome_start": "2024-01-01",
+      "outcome_end": "2025-01-01 00:00:00",
+      "latest_snapshot_date": "2026-09-27",
+      "followup_complete": 1,
+      "baseline_distinct_employee_count": 40145,
+      "duplicate_baseline_employee_count": 0
+    },
+    {
+      "survey_year": 2025,
+      "outcome_type": "annual_12m",
+      "baseline_snapshot": "2024-12-29",
+      "outcome_start": "2025-01-01",
+      "outcome_end": "2026-01-01 00:00:00",
+      "latest_snapshot_date": "2026-09-27",
+      "followup_complete": 1,
+      "baseline_distinct_employee_count": 42342,
+      "duplicate_baseline_employee_count": 0
+    },
+    {
+      "survey_year": 2026,
+      "outcome_type": "ytd",
+      "baseline_snapshot": "2025-12-28",
+      "outcome_start": "2026-01-07",
+      "outcome_end": "2026-09-27 00:00:00",
+      "latest_snapshot_date": "2026-09-27",
+      "followup_complete": 1,
+      "baseline_distinct_employee_count": 47134,
+      "duplicate_baseline_employee_count": 0
+    }
+  ],
+  "validation": {
+    "outcome": "pass",
+    "header_mapping_exactly_once_per_wave": true,
+    "all_source_participant_keys_unique": true,
+    "all_display_groups_mutually_exclusive": true,
+    "linked_response_shares_sum_to_100_percent": true,
+    "component_groups_mutually_exclusive": true,
+    "component_response_shares_sum_to_100_percent": true,
+    "all_component_groups_n_at_least": 30,
+    "all_published_groups_n_at_least": 30,
+    "historical_waves_have_complete_12_month_followup": true,
+    "jan_2026_is_ytd_not_annualized": true,
+    "runtime_join_sql_persisted": false,
+    "reason_runtime_join_sql_not_persisted": "It contains participant identifiers only in process memory and returns aggregate counts.",
+    "source_quality_by_year": {
+      "2024": {
+        "career_not_valid_omitted": 4233,
+        "career_status_missing": 4233,
+        "career_status_valid": 32573,
+        "career_valid": 32573,
+        "distinct_usable_participant_count": 36806,
+        "duplicate_conflicting_rows": 0,
+        "duplicate_participant_rows": 0,
+        "intent_complete_valid": 31819,
+        "intent_partial_valid_omitted": 3512,
+        "intent_q12_status_missing": 4646,
+        "intent_q12_status_valid": 32160,
+        "intent_q4_status_missing": 1816,
+        "intent_q4_status_valid": 34990,
+        "intent_without_valid_component_omitted": 1475,
+        "invalid_key_rows": 0,
+        "missing_key_rows": 1,
+        "source_rows": 36807
+      },
+      "2025": {
+        "career_not_valid_omitted": 3033,
+        "career_status_missing": 3033,
+        "career_status_valid": 34804,
+        "career_valid": 34804,
+        "distinct_usable_participant_count": 37837,
+        "duplicate_conflicting_rows": 0,
+        "duplicate_participant_rows": 0,
+        "intent_complete_valid": 33821,
+        "intent_partial_valid_omitted": 3565,
+        "intent_q12_status_missing": 3745,
+        "intent_q12_status_valid": 34092,
+        "intent_q4_status_missing": 722,
+        "intent_q4_status_valid": 37115,
+        "intent_without_valid_component_omitted": 451,
+        "invalid_key_rows": 0,
+        "missing_key_rows": 0,
+        "source_rows": 37837
+      },
+      "2026": {
+        "career_not_valid_omitted": 4387,
+        "career_status_missing": 4387,
+        "career_status_valid": 37816,
+        "career_valid": 37816,
+        "distinct_usable_participant_count": 42203,
+        "duplicate_conflicting_rows": 0,
+        "duplicate_participant_rows": 0,
+        "intent_complete_valid": 37315,
+        "intent_partial_valid_omitted": 3619,
+        "intent_q12_status_missing": 4638,
+        "intent_q12_status_valid": 37565,
+        "intent_q4_status_missing": 1519,
+        "intent_q4_status_valid": 40684,
+        "intent_without_valid_component_omitted": 1269,
+        "invalid_key_rows": 0,
+        "missing_key_rows": 0,
+        "source_rows": 42203
+      }
+    }
+  },
+  "privacy": {
+    "employee_identifiers_persisted": false,
+    "employee_rows_persisted": false,
+    "individual_qvoice_values_persisted": false,
+    "runtime_join_sql_persisted": false
+  },
+  "provenance": {
+    "window_audit": "queries/audits/qvoice_favorable_unfavorable_attrition_window_audit_20260921.sql",
+    "window_audit_sha256": "09ebc84d1563ec131be7343fe0ba12f52b491f86e01a53d14437615f7bc6b99e",
+    "raw_workbooks": [
+      "Jan 2024 Qvoice raw data.xlsx",
+      "Jan 2025_Qvoice_raw data.xlsx",
+      "Jan 2026 Qvoice_raw data.xlsx"
+    ]
+  }
+}

@@ -1,0 +1,39 @@
+schema_version: 1
+language: es
+unknown_policy: conservative
+
+problem_context:
+  problem_statement: >-
+    Corregir la lámina de antigüedad para que compare únicamente el tiempo en
+    perfil de puesto y el campo almacenado time_in_role, con tasas de attrition
+    voluntario anuales calculadas de forma segura en el tiempo.
+  decision_or_use_case: >-
+    Presentar dos distribuciones de antigüedad fáciles de entender para revisar
+    su relación descriptiva con attrition; no se usarán para decisiones
+    individuales ni se afirmará una definición HRIS no confirmada.
+  outcome: Attrition voluntario posterior al snapshot mensual, en una ventana de 12 meses.
+  population: Empleados regulares activos.
+  unit_of_analysis: Empleado-snapshot mensual.
+  knowledge_boundary: Cada valor de antigüedad debe ser conocido al cierre del snapshot.
+  constraints:
+    - Sólo resultados agregados; no mostrar filas ni identificadores de empleados.
+    - Entregable presentation con cohortes visibles de al menos 30.
+    - No usar levelentrydate ni job_level_primary_position en la lámina revisada.
+  portfolio_hypotheses:
+    - time_in_job_profile_start_date permite calcular antigüedad desde el inicio de perfil registrado.
+    - time_in_role es un campo numérico almacenado que debe perfilarse por separado y no se asumirá equivalente al tiempo en perfil.
+
+variables:
+  - name: Position / time in level
+    intended_use: >-
+      Comparar descriptivamente las bandas de tiempo en perfil de puesto y
+      time_in_role con attrition voluntario anual, sin representar tiempo en
+      nivel detallado.
+    population: Empleados regulares activos en cada snapshot mensual histórico.
+    knowledge_date: Cierre de cada snapshot mensual.
+
+decisions:
+  visual_scope: >-
+    La lámina debe mostrar sólo Time in job profile y Time in role; se retira
+    Time at current detailed level.
+  deliverable_mode: presentation

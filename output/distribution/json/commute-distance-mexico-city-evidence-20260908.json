@@ -1,0 +1,56 @@
+{
+  "artifact": "internal_analysis",
+  "variable": "Commute distance",
+  "snapshot_date": "2026-09-27",
+  "population": "Regular active employees in Mexico City",
+  "grain": "Distinct employee snapshot",
+  "office_reference": {
+    "source_url": "https://www.qualcomm.com/company/facilities/offices",
+    "model_url": "https://www.qualcomm.com/company/facilities/offices.model.json",
+    "location": "Mexico City",
+    "postal_code": "11000",
+    "latitude": 19.4287845,
+    "longitude": -99.207451,
+    "retrieved_date": "2026-09-08"
+  },
+  "residential_reference": {
+    "source_url": "https://symerio.github.io/postal-codes-data/data/geonames/MX.txt",
+    "dataset": "GeoNames postal-code coordinates mirrored by symerio",
+    "retrieved_date": "2026-09-08",
+    "reference_sha256": "a44eece864730e3349f65fdf9b3095d1b231bef1c59a6b21b14b82484ecddcca",
+    "source_rows_read": 144655
+  },
+  "method": {
+    "distance": "Haversine distance between residential ZIP centroid and Qualcomm office coordinate",
+    "unit": "kilometers",
+    "interpretation": "Geographic approximation; not route distance, travel time, or actual commute",
+    "residential_zip_handling": "ZIP values are queried as MD5 hashes and never written to the artifact"
+  },
+  "distribution": [
+    {
+      "category": "0–<10 km",
+      "employee_count": 38
+    },
+    {
+      "category": "10+ km",
+      "employee_count": 51
+    }
+  ],
+  "metrics": {
+    "eligible_employees": 90,
+    "postal_observable_employees": 90,
+    "postal_missing_employees": 0,
+    "matched_centroid_employees": 89,
+    "unmatched_centroid_employees": 1,
+    "unmatched_postal_hashes": 1,
+    "centroid_coverage_percent": 98.8889,
+    "published_employee_count": 89,
+    "minimum_published_category": 38,
+    "query_result_sha256": "0d190d39980c3a211c95890dfcf94341ad22aa2b59f5c4fb6fe59641169d1351",
+    "minimum_cohort": 30,
+    "outcome": "pass"
+  },
+  "acceptance_rule": "La cobertura de centroides debe ser >=95%; las bandas publicadas suman la cohorte cubierta y cada banda tiene n>=30. Los empleados sin match no se imputan ni se publican como bucket.",
+  "query_reference": "queries/profiles/commute_distance_mexico_city_zip_hash_distribution_20260908.sql",
+  "coverage_audit_reference": "queries/audits/commute_distance_mexico_city_input_coverage_20260908.sql"
+}

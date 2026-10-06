@@ -1,0 +1,75 @@
+schema_version: 1
+language: es
+unknown_policy: conservative
+
+problem_context:
+  problem_statement: >-
+    Reevaluar High risk manager con la metodologia acordada y con todos los
+    insumos necesarios para distinguir managers cuya rotacion voluntaria
+    historica es persistentemente superior a la esperada.
+  decision_or_use_case: >-
+    Determinar si la variable tiene fuente, cobertura, historia, consistencia y
+    joins suficientes para incorporarse al modelo de attrition, sin confundir
+    disponibilidad de insumos con una formula estadistica ya calibrada.
+  outcome: >-
+    Attrition voluntario del empleado ocurrido despues del snapshot mensual de
+    prediccion y antes del siguiente snapshot.
+  population: Empleados regulares activos en cada snapshot mensual de prediccion.
+  unit_of_analysis: >-
+    Manager-snapshot para el calculo y empleado-snapshot para asignar la feature.
+  time_horizon: Un mes despues del cierre de cada snapshot mensual.
+  knowledge_boundary: >-
+    En cada snapshot solo se usan membresias, atributos y terminaciones conocidos
+    al cierre. Las salidas se atribuyen al ultimo manager observado antes de
+    term_date y nunca se usa attrition futuro.
+  stakeholders:
+    - Equipo de People Analytics / Attrition
+  constraints:
+    - Solo SQL read-only y resultados agregados con cohortes compartidas de al menos 30.
+    - No publicar IDs, nombres, categorias protegidas, compensacion ni texto libre.
+    - La senal es asociativa y no demuestra causalidad ni desempeno individual del manager.
+    - Cualquier uso individual requiere gobernanza, privacidad y fairness.
+  assumptions:
+    - La ventana inicial es de 12 meses cerrados.
+    - Se consideran Voluntary y Voluntary Exception como candidatos a attrition voluntario.
+    - El baseline controla como minimo mes, region, job family, nivel y tenure.
+    - El score aplica shrinkage y el flag exige ratio ajustado de 1.5, top 10 por ciento,
+      persistencia en 3 de 6 snapshots, 5 reportes distintos y 60 empleado-meses.
+    - Historia insuficiente produce Unknown y no cero.
+  stakeholder_questions:
+    - Estan disponibles todos los campos del equipo, terminacion y ajuste esperado?
+    - Que cobertura real queda despues de exigir historia y exposicion minima?
+    - El dominio de term_type permite identificar de forma estable las salidas voluntarias?
+    - Cada salida voluntaria elegible encuentra un solo manager previo y una fecha de conocimiento?
+    - Cada empleado-snapshot puede recibir exactamente un score de su manager vigente?
+    - Que partes de la formula siguen pendientes de calibracion o reconciliacion independiente?
+  success_criteria:
+    - Guardar y ejecutar SQL agregado especifico para esta variable.
+    - Medir cobertura de todos los insumos y cobertura estructural de la feature derivada.
+    - Exigir cero contradicciones materiales y cero uso de informacion futura en la ruta elegida.
+    - Emitir un assessment v4 nuevo sin sobrescribir resultados anteriores ni modificar los skills.
+
+variables:
+  - name: High risk manager
+    intended_use: >-
+      Asignar a cada empleado-snapshot una senal del riesgo historico ajustado de
+      su manager vigente, para modelar una posible influencia del entorno de liderazgo.
+    population: Empleados regulares activos en cada snapshot mensual.
+    knowledge_date: Cierre de cada snapshot mensual de prediccion.
+    context_role: Manager risk
+    context_relevance: >-
+      Una rotacion voluntaria persistentemente superior a la esperada bajo un
+      manager puede asociarse con mayor riesgo de salida de sus reportes.
+
+decisions:
+  feature_grain: manager_snapshot_then_employee_snapshot_assignment
+  lookback_window: 12_closed_months
+  event_scope_candidate: voluntary_and_voluntary_exception
+  expected_attrition_controls: [month, region, job_family, job_level_primary_position, tenure]
+  small_team_control: shrinkage_required
+  initial_flag_rule: ratio_1_5_top_10_percent_3_of_6
+  minimum_exposure: 5_distinct_reports_and_60_employee_months
+  insufficient_history: unknown
+  coverage_target: continuous_manager_risk_score
+  flag_eligibility_is_not_missingness: true
+  unresolved_policy: keep_definition_and_effort_conservative_until_calibrated

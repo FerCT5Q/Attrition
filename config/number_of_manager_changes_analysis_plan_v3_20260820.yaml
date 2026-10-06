@@ -1,0 +1,109 @@
+schema_version: 1
+plan_version: 3
+plan_revision_reason: >-
+  El runner rechazó la narrativa pública de dos reglas porque estaba dominada por
+  identificadores técnicos. Esta versión conserva las mismas consultas y umbrales,
+  pero explica completamente en español qué significa aprobar cada prueba.
+language: es
+created_before_execution: true
+variable: Number of manager changes
+concept: >-
+  Feature derivada de eventos de cambio de manager. El evento se identifica por
+  empleado y fecha efectiva, pero sólo queda disponible desde el primer snapshot
+  donde el flag de cambio es positivo.
+intended_use: >-
+  Medir cambios repetidos de manager sin duplicar eventos ni incorporarlos antes de
+  que fueran observables en la historia mensual.
+knowledge_date: Primer snapshot con manager_change positivo para el evento.
+population: >-
+  Filas con worker_type='Employee', employee_type='Regular' y active_status=1.
+grain: Empleado-snapshot mensual; evento canónico empleado-fecha efectiva.
+semantic_type: derived_feature
+source_reasoning: >-
+  manager_change_date identifica el evento y el snapshot positivo establece cuándo
+  se volvió observable. Ambas referencias temporales deben reconciliarse.
+validation_story:
+  - id: source_access
+    criterion: source
+    evidence_role: defining
+    question: ¿Existen todos los campos necesarios para la reconstrucción segura en el tiempo?
+    why: Sin empleado, periodos fiscales, población, flag y fecha efectiva no puede probarse la unión.
+    fields: [employee_id, fis_mo_beg_dt, fis_mo_end_dt, worker_type, employee_type, active_status, manager_change, manager_change_date]
+    method: Auditoría agregada del catálogo técnico de Redshift.
+    sql_reference: queries/audits/number_of_manager_changes_source_access_20260820.sql
+    acceptance_rule: La prueba se aprueba únicamente cuando no falta ninguna tabla ni columna requerida.
+    metric_checks:
+      - {metric: missing_items, aggregate: sum, operator: eq, threshold: 0}
+
+  - id: time_safe_event_availability
+    criterion: join
+    evidence_role: defining
+    question: ¿Cada evento tiene una primera observación válida y libre de información futura?
+    why: La feature no puede asignar el evento a snapshots anteriores a su primera observación.
+    fields: [manager_change, manager_change_date, fis_mo_beg_dt, fis_mo_end_dt]
+    method: >-
+      Construir el evento canónico, obtener el primer snapshot positivo y clasificar
+      cualquier observación sin fecha, inválida o posterior al corte.
+    sql_reference: queries/audits/number_of_manager_changes_join_reconciliation_v2_20260820.sql
+    acceptance_rule: >-
+      La prueba se aprueba sólo si no existe ningún flag positivo sin fecha, ninguna
+      fecha efectiva posterior al snapshot y ningún valor del flag fuera del dominio
+      permitido; las tres métricas de error deben ser iguales a cero.
+    metric_checks:
+      - {metric: flagged_without_date_rows, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: future_positive_flag_rows, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: invalid_flag_rows, aggregate: sum, operator: eq, threshold: 0}
+
+  - id: event_period_and_knowledge_join
+    criterion: join
+    evidence_role: defining
+    question: ¿El evento y su primera observación encuentran exactamente un snapshot del mismo empleado?
+    why: Se necesitan una fecha efectiva trazable y una fecha de conocimiento no ambigua.
+    fields: [employee_id, manager_change_date, fis_mo_beg_dt, fis_mo_end_dt]
+    method: >-
+      Reconciliar por separado la fecha efectiva con el periodo fiscal que la contiene
+      y la primera observación con la llave mensual del empleado.
+    sql_reference: queries/audits/number_of_manager_changes_join_reconciliation_v2_20260820.sql
+    acceptance_rule: >-
+      La prueba se aprueba sólo cuando todos los eventos encuentran exactamente una
+      correspondencia tanto por fecha efectiva como por fecha de conocimiento; no
+      puede quedar ningún evento sin correspondencia ni con correspondencias múltiples.
+    metric_checks:
+      - {metric: effective_unmatched_event_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: effective_multi_match_event_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: knowledge_unmatched_event_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: knowledge_multi_match_event_count, aggregate: sum, operator: eq, threshold: 0}
+
+  - id: time_safe_derived_output
+    criterion: join
+    evidence_role: defining
+    question: ¿La derivación devuelve exactamente una fila para cada empleado-snapshot elegible?
+    why: Éste es el contrato final para incorporar la feature al dataset de modelado sin leakage.
+    fields: [employee_id, fis_mo_end_dt, manager_change_date]
+    method: >-
+      Contar eventos sólo después de su primera observación positiva y reconciliar las
+      llaves mensuales del resultado con la población objetivo.
+    sql_reference: queries/audits/number_of_manager_changes_join_reconciliation_v2_20260820.sql
+    acceptance_rule: >-
+      La prueba se aprueba cuando todos los empleado-snapshot elegibles reciben una
+      sola fila derivada, la tasa de correspondencia es cien por ciento y no existen
+      pérdidas, duplicados ni correspondencias múltiples.
+    metric_checks:
+      - {metric: matched_count, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: unmatched_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: duplicate_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: multi_match_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: match_rate_percent, aggregate: min, operator: eq, threshold: 100}
+
+  - id: unresolved_window_boundary
+    criterion: definition
+    evidence_role: contextual
+    question: ¿Esta validación decide la longitud final de la ventana retrospectiva?
+    why: La unión puede confirmarse aunque la ventana del conteo siga pendiente.
+    fields: [manager_change_date, fis_mo_end_dt]
+    method: Mantener la prueba acumulada como contrato de unión y no como definición final.
+    sql_reference: queries/audits/number_of_manager_changes_join_reconciliation_v2_20260820.sql
+    acceptance_rule: >-
+      Esta prueba no eleva Definition: primero deben aprobarse la longitud de la
+      ventana, sus fronteras y una reconciliación independiente del conteo.
+    metric_fields: [eligible_event_count, late_observed_event_count, same_period_event_count]

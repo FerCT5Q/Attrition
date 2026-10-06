@@ -1,0 +1,1006 @@
+{
+  "artifact_type": "attrition_color_reference_audit",
+  "version": 3,
+  "artifact_classification": "internal_analysis",
+  "deliverable_mode": "internal_analysis",
+  "generated_at_utc": "2026-09-30T03:31:38.928911+00:00",
+  "purpose": "Document the comparable-cohort references and within-panel rank fallback used to classify V8 rate pills without exposing employee-level records.",
+  "policy": {
+    "path": "config/attrition_color_policy_v8.json",
+    "sha256": "d8339c38f56a51ddb91caba29b1d0d430d5f23811113d8d3e67303ac6580a2e0",
+    "policy_id": "v8-comparable-and-within-panel-attrition-colors-20260929",
+    "formula": "100 * voluntary_exit_count / eligible_baseline_count",
+    "relative_materiality": 0.2,
+    "absolute_materiality_percentage_points": 0.5,
+    "fallback_within_panel_rule": "When no pooled comparable reference is validated but a chart panel already publishes numeric attrition rates, its lowest rate is green, its highest rate is orange, and intervening rates are blue. Rates that are not estimable or have a baseline cohort below 30 remain gray.",
+    "fallback_color_scope": "Within one chart panel only; fallback colors are not comparable across panels or slides.",
+    "classification_precision": "Use the evidence value before reader-facing rounding.",
+    "display_decimal_places": 1
+  },
+  "policy_reference_sources": [
+    {
+      "id": "six_month_24_snapshot",
+      "voluntary_exits": 29294,
+      "eligible_baseline_count": 1043051,
+      "rate_percent": "2.8085",
+      "outcome_window": "Six months after each of the latest 24 complete monthly snapshots",
+      "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v3.six-month-attrition-evidence-20260914.json",
+      "evidence_sha256": "42198e7fb56146afca1aafb12b507ab24959079d72a03f4d618f43aae6a30760"
+    },
+    {
+      "id": "annual_24_snapshot",
+      "voluntary_exits": 55570,
+      "eligible_baseline_count": 1013112,
+      "rate_percent": "5.485",
+      "outcome_window": "Twelve months after each of the latest 24 complete monthly snapshots",
+      "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v7.nav28-39-direct-annual-attrition-evidence-20260917.json",
+      "evidence_sha256": "58a0ede028a41634ffa742a81d5e6f96b680b682ab68d2e870b0763119797eb0"
+    },
+    {
+      "id": "annual_august_2025",
+      "voluntary_exits": 2484,
+      "eligible_baseline_count": 45003,
+      "rate_percent": "5.5196",
+      "outcome_window": "(2025-08-24, 2026-08-23]",
+      "evidence_path": "output/distribution/json/layers-from-ceo-annual-attrition-evidence-20260921.json",
+      "evidence_sha256": "b4a0a730e5cc0ec5d9e6618be966649cd1e04eec90dfad83ac9e9da6e0179f78"
+    },
+    {
+      "id": "acquisition_overall_annual",
+      "voluntary_exits": 2484,
+      "eligible_baseline_count": 45002,
+      "rate_percent": "5.5198",
+      "outcome_window": "(2025-08-24, 2026-08-23]",
+      "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v8.acquisition-entry-evidence-20260929.json",
+      "evidence_sha256": "3246870731af9dcb46dea93342d0df2efbd5bd62900c7f2439f81b05f1a625d5"
+    },
+    {
+      "id": "acquisition_registered_annual",
+      "voluntary_exits": 193,
+      "eligible_baseline_count": 6148,
+      "rate_percent": "3.1392",
+      "outcome_window": "(2025-08-24, 2026-08-23]",
+      "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v8.acquisition-entry-evidence-20260929.json",
+      "evidence_sha256": "3246870731af9dcb46dea93342d0df2efbd5bd62900c7f2439f81b05f1a625d5"
+    }
+  ],
+  "stage_color_audit": {
+    "slide-12": {
+      "references": [
+        {
+          "id": "six_month_24_snapshot",
+          "label": null,
+          "rate_percent": "2.8085",
+          "voluntary_exits": 29294,
+          "eligible_baseline_count": 1043051,
+          "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v3.six-month-attrition-evidence-20260914.json"
+        }
+      ],
+      "pills": 29,
+      "validated_rate_pills": 29,
+      "status": "comparable"
+    },
+    "slide-14": {
+      "references": [
+        {
+          "id": "six_month_24_snapshot",
+          "label": null,
+          "rate_percent": "2.8085",
+          "voluntary_exits": 29294,
+          "eligible_baseline_count": 1043051,
+          "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v3.six-month-attrition-evidence-20260914.json"
+        }
+      ],
+      "pills": 3,
+      "validated_rate_pills": 3,
+      "status": "comparable"
+    },
+    "slide-15": {
+      "references": [
+        {
+          "id": "six_month_24_snapshot",
+          "label": "Engineering split",
+          "rate_percent": "2.808491626967425370379780087",
+          "voluntary_exits": 29294,
+          "eligible_baseline_count": 1043051,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v3.six-month-attrition-evidence-20260914.json",
+          "evidence_sha256": "42198e7fb56146afca1aafb12b507ab24959079d72a03f4d618f43aae6a30760"
+        },
+        {
+          "id": "cto-org-annual",
+          "label": "CTO / Corp Fxn & BU",
+          "rate_percent": "5.587040921058503279932170110",
+          "voluntary_exits": 2504,
+          "eligible_baseline_count": 44818,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/engineering-cto-org-split-annual-attrition-evidence-20260917.json",
+          "evidence_sha256": "63be79219940ad7e77601f2c4e7fa2a2cf5bf3e649af97a3264265df620a7cbc"
+        }
+      ],
+      "pills": 4,
+      "validated_rate_pills": 4,
+      "status": "comparable"
+    },
+    "slide-16": {
+      "references": [
+        {
+          "id": "rehire-fy2024",
+          "label": "FY2024",
+          "rate_percent": "5.357896217128392631134861482",
+          "voluntary_exits": 2286,
+          "eligible_baseline_count": 42666,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v7.rehire-comparison-august-trailing-12m-evidence-20260922.json",
+          "evidence_sha256": "f269f459fb00c8771e082b016f4d23a705e9be1477c8093b7297e9e514ecffc6"
+        },
+        {
+          "id": "rehire-fy2025",
+          "label": "FY2025",
+          "rate_percent": "5.392842744326131809234709607",
+          "voluntary_exits": 2274,
+          "eligible_baseline_count": 42167,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v7.rehire-comparison-august-trailing-12m-evidence-20260922.json",
+          "evidence_sha256": "f269f459fb00c8771e082b016f4d23a705e9be1477c8093b7297e9e514ecffc6"
+        },
+        {
+          "id": "rehire-fy2026",
+          "label": "FY2026",
+          "rate_percent": "5.519632024531697886807546164",
+          "voluntary_exits": 2484,
+          "eligible_baseline_count": 45003,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v7.rehire-comparison-august-trailing-12m-evidence-20260922.json",
+          "evidence_sha256": "f269f459fb00c8771e082b016f4d23a705e9be1477c8093b7297e9e514ecffc6"
+        }
+      ],
+      "pills": 6,
+      "validated_rate_pills": 6,
+      "status": "comparable"
+    },
+    "slide-17": {
+      "references": [
+        {
+          "id": "six_month_24_snapshot",
+          "label": null,
+          "rate_percent": "2.8085",
+          "voluntary_exits": 29294,
+          "eligible_baseline_count": 1043051,
+          "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v3.six-month-attrition-evidence-20260914.json"
+        }
+      ],
+      "pills": 30,
+      "validated_rate_pills": 30,
+      "status": "comparable"
+    },
+    "slide-19": {
+      "references": [
+        {
+          "id": "commute-all-eligible-six-month",
+          "label": "All eligible",
+          "rate_percent": "2.938914467949835416688030025",
+          "voluntary_exits": 25794,
+          "eligible_baseline_count": 877671,
+          "denominator_definition": "Matched-distance employee snapshots across 24 six-month outcome windows",
+          "evidence_path": "output/distribution/json/commute-distance-all-eligible-six-month-attrition-evidence-20260917.json",
+          "evidence_sha256": "1a0a6a193f1ebb11509594122dd48530ec4354c384f00066e04ea2df05d91917"
+        },
+        {
+          "id": "commute-onsite-six-month",
+          "label": "Onsite",
+          "rate_percent": "2.964000942081258952364164769",
+          "voluntary_exits": 20010,
+          "eligible_baseline_count": 675101,
+          "denominator_definition": "Matched-distance Onsite employee snapshots across 24 six-month outcome windows",
+          "evidence_path": "output/distribution/json/commute-distance-onsite-six-month-attrition-evidence-20260917.json",
+          "evidence_sha256": "a04edf3638094098b5893b342eb4cc5897d294066b7479c70b5e59465eea55df"
+        }
+      ],
+      "pills": 8,
+      "validated_rate_pills": 8,
+      "status": "comparable"
+    },
+    "slide-21": {
+      "references": [
+        {
+          "id": "qvoice-theme-union",
+          "label": "Any shown theme",
+          "rate_percent": "3.376477208778840742824985931",
+          "voluntary_exits": 240,
+          "eligible_baseline_count": 7108,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/qvoice-retention-theme-august-trailing-12m-attrition-evidence-20260922.json",
+          "evidence_sha256": "c636af0c2e46cf7b42da28f6566716a8448bd3caca33156ba90d5dbbff1ab97e"
+        }
+      ],
+      "pills": 5,
+      "validated_rate_pills": 5,
+      "status": "comparable"
+    },
+    "slide-23": {
+      "references": [
+        {
+          "id": "qvoice-intent-2024-driver",
+          "label": "2024 driver",
+          "rate_percent": "4.890050223971765983439663364",
+          "voluntary_exits": 1441,
+          "eligible_baseline_count": 29468,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/qvoice-favorable-unfavorable-question-attrition-evidence-20260923.json",
+          "evidence_sha256": "d9803920e82c780b63b8a9ef2f8af49d431909877cec8983356be31346c8fbc1"
+        },
+        {
+          "id": "qvoice-intent-2024-Q4",
+          "label": "2024 Q4",
+          "rate_percent": "4.830121703853955375253549696",
+          "voluntary_exits": 1524,
+          "eligible_baseline_count": 31552,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/qvoice-favorable-unfavorable-question-attrition-evidence-20260923.json",
+          "evidence_sha256": "d9803920e82c780b63b8a9ef2f8af49d431909877cec8983356be31346c8fbc1"
+        },
+        {
+          "id": "qvoice-intent-2024-Q12",
+          "label": "2024 Q12",
+          "rate_percent": "4.949664429530201342281879195",
+          "voluntary_exits": 1475,
+          "eligible_baseline_count": 29800,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/qvoice-favorable-unfavorable-question-attrition-evidence-20260923.json",
+          "evidence_sha256": "d9803920e82c780b63b8a9ef2f8af49d431909877cec8983356be31346c8fbc1"
+        },
+        {
+          "id": "qvoice-intent-2025-driver",
+          "label": "2025 driver",
+          "rate_percent": "4.695245518316445830085736555",
+          "voluntary_exits": 1506,
+          "eligible_baseline_count": 32075,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/qvoice-favorable-unfavorable-question-attrition-evidence-20260923.json",
+          "evidence_sha256": "d9803920e82c780b63b8a9ef2f8af49d431909877cec8983356be31346c8fbc1"
+        },
+        {
+          "id": "qvoice-intent-2025-Q4",
+          "label": "2025 Q4",
+          "rate_percent": "4.634987433514524519258869601",
+          "voluntary_exits": 1586,
+          "eligible_baseline_count": 34218,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/qvoice-favorable-unfavorable-question-attrition-evidence-20260923.json",
+          "evidence_sha256": "d9803920e82c780b63b8a9ef2f8af49d431909877cec8983356be31346c8fbc1"
+        },
+        {
+          "id": "qvoice-intent-2025-Q12",
+          "label": "2025 Q12",
+          "rate_percent": "4.756014595831529469973405900",
+          "voluntary_exits": 1538,
+          "eligible_baseline_count": 32338,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/qvoice-favorable-unfavorable-question-attrition-evidence-20260923.json",
+          "evidence_sha256": "d9803920e82c780b63b8a9ef2f8af49d431909877cec8983356be31346c8fbc1"
+        },
+        {
+          "id": "qvoice-intent-2026-driver",
+          "label": "2026 driver",
+          "rate_percent": "3.788390145123185960175497806",
+          "voluntary_exits": 1347,
+          "eligible_baseline_count": 35556,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/qvoice-favorable-unfavorable-question-attrition-evidence-20260923.json",
+          "evidence_sha256": "d9803920e82c780b63b8a9ef2f8af49d431909877cec8983356be31346c8fbc1"
+        },
+        {
+          "id": "qvoice-intent-2026-Q4",
+          "label": "2026 Q4",
+          "rate_percent": "3.745924021102303756528193844",
+          "voluntary_exits": 1413,
+          "eligible_baseline_count": 37721,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/qvoice-favorable-unfavorable-question-attrition-evidence-20260923.json",
+          "evidence_sha256": "d9803920e82c780b63b8a9ef2f8af49d431909877cec8983356be31346c8fbc1"
+        },
+        {
+          "id": "qvoice-intent-2026-Q12",
+          "label": "2026 Q12",
+          "rate_percent": "3.831974081108256060775332365",
+          "voluntary_exits": 1372,
+          "eligible_baseline_count": 35804,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/qvoice-favorable-unfavorable-question-attrition-evidence-20260923.json",
+          "evidence_sha256": "d9803920e82c780b63b8a9ef2f8af49d431909877cec8983356be31346c8fbc1"
+        }
+      ],
+      "pills": 18,
+      "validated_rate_pills": 18,
+      "status": "comparable",
+      "footer_text": "Color reference(s): pooled valid-response cohort for each item and wave (2024: 4.8–5.0% · 2025: 4.6–4.8% · 2026 YTD: 3.7–3.8%)."
+    },
+    "slide-24": {
+      "references": [
+        {
+          "id": "qvoice-career-2024",
+          "label": "2024",
+          "rate_percent": "4.973692048049240544028591284",
+          "voluntary_exits": 1503,
+          "eligible_baseline_count": 30219,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/qvoice-favorable-unfavorable-question-attrition-evidence-20260923.json",
+          "evidence_sha256": "d9803920e82c780b63b8a9ef2f8af49d431909877cec8983356be31346c8fbc1"
+        },
+        {
+          "id": "qvoice-career-2025",
+          "label": "2025",
+          "rate_percent": "4.805422744053743266961205592",
+          "voluntary_exits": 1588,
+          "eligible_baseline_count": 33046,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/qvoice-favorable-unfavorable-question-attrition-evidence-20260923.json",
+          "evidence_sha256": "d9803920e82c780b63b8a9ef2f8af49d431909877cec8983356be31346c8fbc1"
+        },
+        {
+          "id": "qvoice-career-2026",
+          "label": "2026",
+          "rate_percent": "3.795924026064051018993483987",
+          "voluntary_exits": 1369,
+          "eligible_baseline_count": 36065,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/qvoice-favorable-unfavorable-question-attrition-evidence-20260923.json",
+          "evidence_sha256": "d9803920e82c780b63b8a9ef2f8af49d431909877cec8983356be31346c8fbc1"
+        }
+      ],
+      "pills": 12,
+      "validated_rate_pills": 12,
+      "status": "comparable"
+    },
+    "slide-25": {
+      "references": [
+        {
+          "id": "qvoice-comparable-score-2026-ytd",
+          "label": "2026 YTD score cohort",
+          "rate_percent": "3.693335454111658978845236202",
+          "voluntary_exits": 1161,
+          "eligible_baseline_count": 31435,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/qvoice-2026-ytd-attrition-evidence-20260917.json",
+          "evidence_sha256": "82e7850f87512d11c99f38621fb2a2f6834802c91d0ac5d296975f29479cc1b6"
+        }
+      ],
+      "pills": 6,
+      "validated_rate_pills": 6,
+      "status": "comparable"
+    },
+    "slide-29": {
+      "references": [
+        {
+          "id": "tenure-time_at_detailed_level",
+          "label": "Detailed level",
+          "rate_percent": "5.692458749431233086668103552",
+          "voluntary_exits": 2377,
+          "eligible_baseline_count": 41757,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v7.time-at-detailed-level-time-in-role-august-trailing-12m-evidence-20260920.json",
+          "evidence_sha256": "df88c2b2b77c4a0e602483f43767492abbaa312ace45750625378015dad25604"
+        },
+        {
+          "id": "tenure-time_in_role",
+          "label": "Role tenure",
+          "rate_percent": "5.692458749431233086668103552",
+          "voluntary_exits": 2377,
+          "eligible_baseline_count": 41757,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v7.time-at-detailed-level-time-in-role-august-trailing-12m-evidence-20260920.json",
+          "evidence_sha256": "df88c2b2b77c4a0e602483f43767492abbaa312ace45750625378015dad25604"
+        }
+      ],
+      "pills": 12,
+      "validated_rate_pills": 12,
+      "status": "comparable"
+    },
+    "slide-31": {
+      "references": [
+        {
+          "id": "annual_24_snapshot",
+          "label": null,
+          "rate_percent": "5.485",
+          "voluntary_exits": 55570,
+          "eligible_baseline_count": 1013112,
+          "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v7.nav28-39-direct-annual-attrition-evidence-20260917.json"
+        }
+      ],
+      "pills": 12,
+      "validated_rate_pills": 12,
+      "status": "comparable"
+    },
+    "slide-32": {
+      "references": [
+        {
+          "id": "recorded-promotion",
+          "label": "Recorded promotion",
+          "rate_percent": "5.305609385638715759702508773",
+          "voluntary_exits": 1013,
+          "eligible_baseline_count": 19093,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v7.time-since-last-promotion-comparable-cohorts-evidence-20260924.json",
+          "evidence_sha256": "b2990585c7e8966ab6d08d35fc90930304fb3b5d432012ca127cf27f85bf6a1b"
+        },
+        {
+          "id": "no-recorded-promotion-proxy",
+          "label": "No recorded promotion proxy",
+          "rate_percent": "6.899822919301796104224639514",
+          "voluntary_exits": 1091,
+          "eligible_baseline_count": 15812,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v7.time-since-last-promotion-comparable-cohorts-evidence-20260924.json",
+          "evidence_sha256": "b2990585c7e8966ab6d08d35fc90930304fb3b5d432012ca127cf27f85bf6a1b"
+        }
+      ],
+      "pills": 10,
+      "validated_rate_pills": 9,
+      "status": "comparable"
+    },
+    "slide-34": {
+      "references": [
+        {
+          "id": "promotion-pay-tracks",
+          "label": "Pay tracks",
+          "rate_percent": "5.868968459062849577507945328",
+          "voluntary_exits": 2603,
+          "eligible_baseline_count": "44351.916664",
+          "denominator_definition": "Sum of 12-month average monthly headcount across the displayed pay tracks",
+          "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v7.promotion-track-trailing-12m-evidence-20260918.json",
+          "evidence_sha256": "38dd462ded0e07b96cce3239fab887f85e06044f04d7e1e48d40a3c934195399"
+        },
+        {
+          "id": "promotion-top-10-grades",
+          "label": "Top 10 grades",
+          "rate_percent": "6.182464779812103150098220061",
+          "voluntary_exits": 2147,
+          "eligible_baseline_count": "34727.249996",
+          "denominator_definition": "Sum of 12-month average monthly headcount across the displayed top-ten grades",
+          "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v7.promotion-grade-top10-trailing-12m-evidence-20260918.json",
+          "evidence_sha256": "85c64828458d1389ff5bb998af29c78dcc056ac196bcc6c8209d4fd6ecf2fc28"
+        }
+      ],
+      "pills": 16,
+      "validated_rate_pills": 16,
+      "status": "comparable"
+    },
+    "slide-37": {
+      "references": [
+        {
+          "id": "annual_august_2025",
+          "label": null,
+          "rate_percent": "5.5196",
+          "voluntary_exits": 2484,
+          "eligible_baseline_count": 45003,
+          "evidence_path": "output/distribution/json/layers-from-ceo-annual-attrition-evidence-20260921.json"
+        }
+      ],
+      "pills": 10,
+      "validated_rate_pills": 10,
+      "status": "comparable"
+    },
+    "slide-37-span-followup": {
+      "references": [
+        {
+          "id": "direct-team-span",
+          "label": "Direct-report cohort",
+          "rate_percent": "5.543509846435836108813733599",
+          "voluntary_exits": 2480,
+          "eligible_baseline_count": 44737,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/direct-team-span-annual-attrition-evidence-20260923.json",
+          "evidence_sha256": "e41f38349715d06b209be521ea7abc44d140159a5f71728fe1bd3f8b380dfcfd"
+        }
+      ],
+      "pills": 6,
+      "validated_rate_pills": 6,
+      "status": "comparable"
+    },
+    "slide-39": {
+      "references": [
+        {
+          "id": "annual_24_snapshot",
+          "label": null,
+          "rate_percent": "5.485",
+          "voluntary_exits": 55570,
+          "eligible_baseline_count": 1013112,
+          "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v7.nav28-39-direct-annual-attrition-evidence-20260917.json"
+        }
+      ],
+      "pills": 14,
+      "validated_rate_pills": 14,
+      "status": "comparable"
+    },
+    "slide-45": {
+      "references": [
+        {
+          "id": "recent-team-exits",
+          "label": "Observed direct reports",
+          "rate_percent": "5.692595076156719992336430693",
+          "voluntary_exits": 2377,
+          "eligible_baseline_count": 41756,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v7.nav38-plus-august-trailing-12m-evidence-20260921.json",
+          "evidence_sha256": "65c7cdf82c6046a2dc0cb65faa38889f59c7fc885095b8dd0809527705fee068"
+        }
+      ],
+      "pills": 3,
+      "validated_rate_pills": 3,
+      "status": "comparable"
+    },
+    "slide-47": {
+      "references": [
+        {
+          "id": "manager-leaving-exposure",
+          "label": "Exposure cohort",
+          "rate_percent": "5.692458749431233086668103552",
+          "voluntary_exits": 2377,
+          "eligible_baseline_count": 41757,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v7.nav38-plus-august-trailing-12m-evidence-20260921.json",
+          "evidence_sha256": "65c7cdf82c6046a2dc0cb65faa38889f59c7fc885095b8dd0809527705fee068"
+        }
+      ],
+      "pills": 4,
+      "validated_rate_pills": 2,
+      "status": "comparable"
+    },
+    "slide-3": {
+      "references": [
+        {
+          "id": "applications-aug-2025",
+          "label": "Aug 2025",
+          "rate_percent": "1.017293997965412004069175992",
+          "voluntary_exits": 20,
+          "eligible_baseline_count": 1966,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v7.application-trailing-12m-august-attrition-evidence-20260918.json",
+          "evidence_sha256": "2d3d442486af8e68d876d65739f987c27620c73a33c9320bdae365515e463e32"
+        },
+        {
+          "id": "applications-aug-2026",
+          "label": "Aug 2026",
+          "rate_percent": "1.015228426395939086294416244",
+          "voluntary_exits": 22,
+          "eligible_baseline_count": 2167,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v7.application-trailing-12m-august-attrition-evidence-20260918.json",
+          "evidence_sha256": "2d3d442486af8e68d876d65739f987c27620c73a33c9320bdae365515e463e32"
+        }
+      ],
+      "pills": 8,
+      "validated_rate_pills": 4,
+      "status": "comparable"
+    },
+    "slide-6": {
+      "references": [
+        {
+          "id": "six_month_24_snapshot",
+          "label": null,
+          "rate_percent": "2.8085",
+          "voluntary_exits": 29294,
+          "eligible_baseline_count": 1043051,
+          "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v3.six-month-attrition-evidence-20260914.json"
+        }
+      ],
+      "pills": 18,
+      "validated_rate_pills": 18,
+      "status": "comparable"
+    },
+    "slide-7": {
+      "references": [
+        {
+          "id": "six_month_24_snapshot",
+          "label": null,
+          "rate_percent": "2.8085",
+          "voluntary_exits": 29294,
+          "eligible_baseline_count": 1043051,
+          "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v3.six-month-attrition-evidence-20260914.json"
+        }
+      ],
+      "pills": 39,
+      "validated_rate_pills": 19,
+      "status": "comparable"
+    },
+    "slide-11": {
+      "references": [
+        {
+          "id": "annual_august_2025",
+          "label": null,
+          "rate_percent": "5.5196",
+          "voluntary_exits": 2484,
+          "eligible_baseline_count": 45003,
+          "evidence_path": "output/distribution/json/layers-from-ceo-annual-attrition-evidence-20260921.json"
+        }
+      ],
+      "pills": 21,
+      "validated_rate_pills": 20,
+      "status": "comparable"
+    },
+    "slide-13": {
+      "references": [
+        {
+          "id": "six_month_24_snapshot",
+          "label": null,
+          "rate_percent": "2.8085",
+          "voluntary_exits": 29294,
+          "eligible_baseline_count": 1043051,
+          "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v3.six-month-attrition-evidence-20260914.json"
+        }
+      ],
+      "pills": 2,
+      "validated_rate_pills": 2,
+      "status": "comparable"
+    },
+    "slide-20": {
+      "references": [],
+      "pills": 12,
+      "validated_rate_pills": 12,
+      "published_numeric_rate_pills": 12,
+      "status": "within_panel_rank",
+      "color_method": "Within each chart panel: lowest published numeric rate = green; highest = orange; rates between = blue.",
+      "color_method_id": "within-panel-rank",
+      "rank_groups": [
+        {
+          "label": "Mar 2023 survey wave",
+          "visible_rate_pills": 3,
+          "ranked_numeric_rate_pills": 3,
+          "minimum_published_rate_percent": "2.8",
+          "maximum_published_rate_percent": "4.0"
+        },
+        {
+          "label": "Jan 2024 survey wave",
+          "visible_rate_pills": 3,
+          "ranked_numeric_rate_pills": 3,
+          "minimum_published_rate_percent": "4.7",
+          "maximum_published_rate_percent": "5.7"
+        },
+        {
+          "label": "Jan 2025 survey wave",
+          "visible_rate_pills": 3,
+          "ranked_numeric_rate_pills": 3,
+          "minimum_published_rate_percent": "4.7",
+          "maximum_published_rate_percent": "5.1"
+        },
+        {
+          "label": "2026 YTD survey wave",
+          "visible_rate_pills": 3,
+          "ranked_numeric_rate_pills": 3,
+          "minimum_published_rate_percent": "2.6",
+          "maximum_published_rate_percent": "3.5"
+        }
+      ],
+      "uncolored_rate_pills": 0,
+      "uncolored_rule": "Gray when the published rate is not estimable, is exploratory, or declares a baseline cohort below 30 employees."
+    },
+    "slide-26": {
+      "references": [
+        {
+          "id": "heartbeat-Q38",
+          "label": "Q38",
+          "rate_percent": "3.223050014686640497743597960",
+          "voluntary_exits": 1207,
+          "eligible_baseline_count": 37449,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/qvoice-2026-august-post-survey-ytd-heartbeat-relative-sign-attrition-evidence-20260923.json",
+          "evidence_sha256": "fa8a7ccd7281d7cbe193309b0e7d6d5cdf64d201f3fd5d8e97a66ffe1c99c146"
+        },
+        {
+          "id": "heartbeat-Q37",
+          "label": "Q37",
+          "rate_percent": "3.225548263166319833520089643",
+          "voluntary_exits": 1209,
+          "eligible_baseline_count": 37482,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/qvoice-2026-august-post-survey-ytd-heartbeat-relative-sign-attrition-evidence-20260923.json",
+          "evidence_sha256": "fa8a7ccd7281d7cbe193309b0e7d6d5cdf64d201f3fd5d8e97a66ffe1c99c146"
+        },
+        {
+          "id": "heartbeat-Q32",
+          "label": "Q32",
+          "rate_percent": "3.210095791626305026369604994",
+          "voluntary_exits": 1193,
+          "eligible_baseline_count": 37164,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/qvoice-2026-august-post-survey-ytd-heartbeat-relative-sign-attrition-evidence-20260923.json",
+          "evidence_sha256": "fa8a7ccd7281d7cbe193309b0e7d6d5cdf64d201f3fd5d8e97a66ffe1c99c146"
+        },
+        {
+          "id": "heartbeat-Q53",
+          "label": "Q53",
+          "rate_percent": "3.230715205431347301884583870",
+          "voluntary_exits": 1104,
+          "eligible_baseline_count": 34172,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/qvoice-2026-august-post-survey-ytd-heartbeat-relative-sign-attrition-evidence-20260923.json",
+          "evidence_sha256": "fa8a7ccd7281d7cbe193309b0e7d6d5cdf64d201f3fd5d8e97a66ffe1c99c146"
+        },
+        {
+          "id": "heartbeat-Q10",
+          "label": "Q10",
+          "rate_percent": "3.263758166316022588860591297",
+          "voluntary_exits": 1179,
+          "eligible_baseline_count": 36124,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/qvoice-2026-august-post-survey-ytd-heartbeat-relative-sign-attrition-evidence-20260923.json",
+          "evidence_sha256": "fa8a7ccd7281d7cbe193309b0e7d6d5cdf64d201f3fd5d8e97a66ffe1c99c146"
+        },
+        {
+          "id": "heartbeat-Q11",
+          "label": "Q11",
+          "rate_percent": "3.224339077384137857219308573",
+          "voluntary_exits": 1205,
+          "eligible_baseline_count": 37372,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/qvoice-2026-august-post-survey-ytd-heartbeat-relative-sign-attrition-evidence-20260923.json",
+          "evidence_sha256": "fa8a7ccd7281d7cbe193309b0e7d6d5cdf64d201f3fd5d8e97a66ffe1c99c146"
+        }
+      ],
+      "pills": 18,
+      "validated_rate_pills": 18,
+      "status": "comparable"
+    },
+    "slide-35": {
+      "references": [
+        {
+          "id": "annual_24_snapshot",
+          "label": null,
+          "rate_percent": "5.485",
+          "voluntary_exits": 55570,
+          "eligible_baseline_count": 1013112,
+          "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v7.nav28-39-direct-annual-attrition-evidence-20260917.json"
+        }
+      ],
+      "pills": 25,
+      "validated_rate_pills": 24,
+      "status": "comparable"
+    },
+    "slide-37-followup": {
+      "references": [],
+      "pills": 18,
+      "validated_rate_pills": 2,
+      "published_numeric_rate_pills": 18,
+      "status": "within_panel_rank",
+      "color_method": "Within each chart panel: lowest published numeric rate = green; highest = orange; rates between = blue.",
+      "color_method_id": "within-panel-rank",
+      "rank_groups": [
+        {
+          "label": "Exact compensation-grade distribution",
+          "visible_rate_pills": 18,
+          "ranked_numeric_rate_pills": 2,
+          "minimum_published_rate_percent": "3.1",
+          "maximum_published_rate_percent": "16.1"
+        }
+      ],
+      "uncolored_rate_pills": 16,
+      "uncolored_rule": "Gray when the published rate is not estimable, is exploratory, or declares a baseline cohort below 30 employees."
+    },
+    "slide-38": {
+      "references": [
+        {
+          "id": "annual_24_snapshot",
+          "label": null,
+          "rate_percent": "5.485",
+          "voluntary_exits": 55570,
+          "eligible_baseline_count": 1013112,
+          "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v7.nav28-39-direct-annual-attrition-evidence-20260917.json"
+        }
+      ],
+      "pills": 37,
+      "validated_rate_pills": 36,
+      "status": "comparable"
+    },
+    "slide-40": {
+      "references": [],
+      "pills": 11,
+      "validated_rate_pills": 11,
+      "published_numeric_rate_pills": 11,
+      "status": "within_panel_rank",
+      "color_method": "Within each chart panel: lowest published numeric rate = green; highest = orange; rates between = blue.",
+      "color_method_id": "within-panel-rank",
+      "rank_groups": [
+        {
+          "label": "Managers by number of groups to review",
+          "visible_rate_pills": 5,
+          "ranked_numeric_rate_pills": 5,
+          "minimum_published_rate_percent": "4.4",
+          "maximum_published_rate_percent": "5.8"
+        },
+        {
+          "label": "Share of comparable groups to review",
+          "visible_rate_pills": 6,
+          "ranked_numeric_rate_pills": 6,
+          "minimum_published_rate_percent": "4.7",
+          "maximum_published_rate_percent": "6.0"
+        }
+      ],
+      "uncolored_rate_pills": 0,
+      "uncolored_rule": "Gray when the published rate is not estimable, is exploratory, or declares a baseline cohort below 30 employees."
+    },
+    "slide-42": {
+      "references": [],
+      "pills": 3,
+      "validated_rate_pills": 3,
+      "published_numeric_rate_pills": 3,
+      "status": "within_panel_rank",
+      "color_method": "Within each chart panel: lowest published numeric rate = green; highest = orange; rates between = blue.",
+      "color_method_id": "within-panel-rank",
+      "rank_groups": [
+        {
+          "label": "Assigned office-site relationship",
+          "visible_rate_pills": 3,
+          "ranked_numeric_rate_pills": 3,
+          "minimum_published_rate_percent": "4.1",
+          "maximum_published_rate_percent": "7.2"
+        }
+      ],
+      "uncolored_rate_pills": 0,
+      "uncolored_rule": "Gray when the published rate is not estimable, is exploratory, or declares a baseline cohort below 30 employees."
+    },
+    "slide-43": {
+      "references": [
+        {
+          "id": "office-site-relationship",
+          "label": "Office-site cohort",
+          "rate_percent": "5.692458749431233086668103552",
+          "voluntary_exits": 2377,
+          "eligible_baseline_count": 41757,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v7.nav38-plus-august-trailing-12m-evidence-20260921.json",
+          "evidence_sha256": "65c7cdf82c6046a2dc0cb65faa38889f59c7fc885095b8dd0809527705fee068"
+        }
+      ],
+      "pills": 3,
+      "validated_rate_pills": 3,
+      "status": "comparable"
+    },
+    "slide-44": {
+      "references": [
+        {
+          "id": "manager-observed-expected",
+          "label": "Observable manager cohort",
+          "rate_percent": "5.672324545563982183700493560",
+          "voluntary_exits": 2356,
+          "eligible_baseline_count": 41535,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v7.nav38-plus-august-trailing-12m-evidence-20260921.json",
+          "evidence_sha256": "65c7cdf82c6046a2dc0cb65faa38889f59c7fc885095b8dd0809527705fee068"
+        }
+      ],
+      "pills": 4,
+      "validated_rate_pills": 4,
+      "status": "comparable"
+    },
+    "slide-46": {
+      "references": [
+        {
+          "id": "above-average-team-turnover",
+          "label": "Team-context cohort",
+          "rate_percent": "5.692595076156719992336430693",
+          "voluntary_exits": 2377,
+          "eligible_baseline_count": 41756,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v7.nav38-plus-august-trailing-12m-evidence-20260921.json",
+          "evidence_sha256": "65c7cdf82c6046a2dc0cb65faa38889f59c7fc885095b8dd0809527705fee068"
+        }
+      ],
+      "pills": 3,
+      "validated_rate_pills": 3,
+      "status": "comparable"
+    },
+    "slide-49": {
+      "references": [
+        {
+          "id": "manager-changes-all observed manager changes · trailing 6 months",
+          "label": "Observed 6 mo",
+          "rate_percent": "5.692458749431233086668103552",
+          "voluntary_exits": 2377,
+          "eligible_baseline_count": 41757,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v7.nav38-plus-august-trailing-12m-evidence-20260921.json",
+          "evidence_sha256": "65c7cdf82c6046a2dc0cb65faa38889f59c7fc885095b8dd0809527705fee068"
+        },
+        {
+          "id": "manager-changes-all observed manager changes · trailing 12 months",
+          "label": "Observed 12 mo",
+          "rate_percent": "5.692458749431233086668103552",
+          "voluntary_exits": 2377,
+          "eligible_baseline_count": 41757,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v7.nav38-plus-august-trailing-12m-evidence-20260921.json",
+          "evidence_sha256": "65c7cdf82c6046a2dc0cb65faa38889f59c7fc885095b8dd0809527705fee068"
+        },
+        {
+          "id": "manager-changes-sensitivity: exclude same-date transfer/promotion · trailing 6 months",
+          "label": "Sensitivity 6 mo",
+          "rate_percent": "5.692458749431233086668103552",
+          "voluntary_exits": 2377,
+          "eligible_baseline_count": 41757,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v7.nav38-plus-august-trailing-12m-evidence-20260921.json",
+          "evidence_sha256": "65c7cdf82c6046a2dc0cb65faa38889f59c7fc885095b8dd0809527705fee068"
+        },
+        {
+          "id": "manager-changes-sensitivity: exclude same-date transfer/promotion · trailing 12 months",
+          "label": "Sensitivity 12 mo",
+          "rate_percent": "5.692458749431233086668103552",
+          "voluntary_exits": 2377,
+          "eligible_baseline_count": 41757,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v7.nav38-plus-august-trailing-12m-evidence-20260921.json",
+          "evidence_sha256": "65c7cdf82c6046a2dc0cb65faa38889f59c7fc885095b8dd0809527705fee068"
+        }
+      ],
+      "pills": 16,
+      "validated_rate_pills": 16,
+      "status": "comparable"
+    },
+    "slide-acquisition": {
+      "references": [
+        {
+          "id": "acquisition_overall_annual",
+          "label": "Overall workforce",
+          "rate_percent": "5.519754677569885782854095374",
+          "voluntary_exits": 2484,
+          "eligible_baseline_count": 45002,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v8.acquisition-entry-evidence-20260929.json",
+          "evidence_sha256": "3246870731af9dcb46dea93342d0df2efbd5bd62900c7f2439f81b05f1a625d5"
+        },
+        {
+          "id": "acquisition_registered_annual",
+          "label": "Acquisition recorded",
+          "rate_percent": "3.139232270657124268054651919",
+          "voluntary_exits": 193,
+          "eligible_baseline_count": 6148,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v8.acquisition-entry-evidence-20260929.json",
+          "evidence_sha256": "3246870731af9dcb46dea93342d0df2efbd5bd62900c7f2439f81b05f1a625d5"
+        }
+      ],
+      "pills": 4,
+      "validated_rate_pills": 4,
+      "status": "comparable",
+      "footer_text": "Color references: overall workforce 5.5% · recorded-acquisition cohort 3.1%. Green: below reference · Blue: within range · Orange: above reference."
+    },
+    "slide-5": {
+      "references": [
+        {
+          "id": "ios-trailing-12m",
+          "label": "All IOS movements",
+          "rate_percent": "6.722503857174344280361472339",
+          "voluntary_exits": 610,
+          "eligible_baseline_count": 9074,
+          "denominator_definition": "Eligible baseline employees",
+          "evidence_path": "output/distribution/json/attrition-43-variable-distributions-v8.ios-movement-reasons-trailing-12m-evidence-20260923.json",
+          "evidence_sha256": "fc5c2a42e3d1b992cbf757974a6f02b2becdef708ee8adb1366667e98bd1ea4d"
+        }
+      ],
+      "pills": 6,
+      "validated_rate_pills": 5,
+      "status": "comparable"
+    }
+  },
+  "class_counts": {
+    "below_reference": 145,
+    "within_reference": 184,
+    "above_reference": 105,
+    "not_comparable": 56
+  },
+  "validation": {
+    "all_recognized_rate_pills_marked_one_decimal": "pass",
+    "comparable_color_pills_use_aggregate_reference": "pass",
+    "within_panel_rank_pills_use_published_numeric_rates_only": "pass",
+    "unvalidated_or_exploratory_or_subthreshold_pills_fail_closed_to_gray": "pass",
+    "no_employee_rows_or_identifiers_persisted": "pass"
+  },
+  "privacy": {
+    "aggregate_only": true,
+    "employee_rows_persisted": false,
+    "employee_ids_persisted": false,
+    "exact_compensation_values_persisted": false
+  },
+  "outcome": "pass"
+}

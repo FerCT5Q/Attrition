@@ -1,0 +1,60 @@
+schema_version: 1
+plan_version: 1
+language: es
+created_before_execution: true
+plan_authorship: codex_explicit
+variable: Workplace Connection items-scale
+concept: KPI ordinal Workplace Connection calculado como el promedio 1-5 de Q5, Q6 y Q7 segun survey_structure.xlsx.
+intended_use: Comparar la senal ordinal historica de Workplace Connection con attrition posterior.
+knowledge_date: Fecha de la wave QVoice; excluir informacion posterior.
+population: Respuestas QVoice con una fila por empleado-wave tras deduplicacion interna y al menos un componente 1-5 de Q5/Q6/Q7 valido.
+grain: Employee-wave response aggregate
+semantic_type: derived_feature
+validation_story:
+  - id: source_access
+    criterion: source
+    evidence_role: supporting
+    question: ¿Los encabezados 1-5 resuelven Q5, Q6 y Q7 por workbook?
+    why: La forma ordinal puede no existir en las mismas waves que la forma binaria.
+    method: schema_access_check
+    sql_reference: queries/audits/qvoice_excel_source_inventory_20260826-2.sql
+    acceptance_rule: Debe registrarse el estado de cada componente ordinal esperado sin ocultar faltantes.
+    metric_map:
+      missing_items: {column: missing_items, aggregate: sum}
+    metric_checks:
+      - {metric: missing_items, operator: gte, threshold: 0, aggregate: sum}
+  - id: component_definition
+    criterion: definition
+    evidence_role: defining
+    question: ¿El promedio ordinal usa solo valores 1-5 validos y separa respuestas parciales?
+    why: La escala y el numero de componentes son parte del significado del KPI.
+    method: independent_recalculation
+    sql_reference: queries/audits/qvoice_excel_definition_audit_20260826-2.sql
+    acceptance_rule: Invalidos deben ser cero y completas/parciales/sin componente deben reportarse por wave.
+    metric_checks:
+      - {metric: eligible_count, operator: gt, threshold: 0, aggregate: sum}
+      - {metric: populated_count, operator: gt, threshold: 0, aggregate: sum}
+      - {metric: invalid_count, operator: eq, threshold: 0, aggregate: sum}
+      - {metric: partial_component_count, operator: gte, threshold: 0, aggregate: sum}
+  - id: longitudinal_consistency
+    criterion: consistency
+    evidence_role: defining
+    question: ¿El dominio ordinal y el item set de Q5/Q6/Q7 se mantienen trazables?
+    why: Cambios de escala, wording o componentes limitan la comparabilidad longitudinal.
+    method: longitudinal_aggregate_audit
+    sql_reference: queries/audits/qvoice_excel_consistency_audit_20260826-2.sql
+    acceptance_rule: No debe haber invalidos y toda variacion del item set debe quedar explicada por el mapping.
+    metric_checks:
+      - {metric: invalid_count, operator: eq, threshold: 0, aggregate: sum}
+      - {metric: item_set_change_count, operator: gte, threshold: 0, aggregate: sum}
+  - id: employee_wave_grain
+    criterion: join
+    evidence_role: supporting
+    question: ¿La forma ordinal conserva un grain unico de empleado-wave?
+    why: La unicidad evita sobreconteo antes de reconciliar a workforce.
+    method: key_grain_and_temporal_reconciliation
+    sql_reference: queries/audits/qvoice_excel_join_grain_audit_20260826-2.sql
+    acceptance_rule: No debe haber duplicados; el join temporal externo queda pendiente.
+    metric_checks:
+      - {metric: matched_count, operator: gt, threshold: 0, aggregate: sum}
+      - {metric: duplicate_count, operator: eq, threshold: 0, aggregate: sum}

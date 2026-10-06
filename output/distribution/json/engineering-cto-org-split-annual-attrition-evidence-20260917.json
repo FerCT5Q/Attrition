@@ -1,0 +1,80 @@
+{
+  "artifact_type": "aggregate_attrition_evidence",
+  "evidence_version": 1,
+  "deliverable_mode": "internal_analysis",
+  "variable": "División organizacional de Engineering: CTO vs. Corp Fxn & BU",
+  "semantic_type": "hierarchy",
+  "publication_status": "validated_internal_display",
+  "baseline_snapshot": "2025-07-27",
+  "outcome_window": {
+    "start_exclusive": "2025-07-27",
+    "end_inclusive": "2026-07-27",
+    "duration": "12 months"
+  },
+  "population": "worker_type='Employee'; employee_type='Regular'; active_status=1; no RF360 filter at the baseline snapshot",
+  "grain": "Distinct employee in the baseline snapshot",
+  "mapping_rule": {
+    "cto": "Jerarquía documentada de la rama A en el mismo snapshot más la membresía documentada por et_leader de la rama B, reconstruidas en el snapshot base; ambos anclajes permanecen internos al audit.",
+    "complement": "Corp Fxn & BU es el complemento de CTO dentro de la misma población elegible de referencia.",
+    "time_safety": "La membresía organizacional se congela en el snapshot base antes de observar los outcomes; el estado de salida no se usa para asignar la categoría."
+  },
+  "target": "Al menos una terminación estrictamente Voluntary para un empleado de la cohorte base con term_date en (2025-07-27, 2026-07-27]. Se excluyen Voluntary Exception y todos los demás tipos de terminación.",
+  "rows": [
+    {
+      "category": "CTO",
+      "eligible_employee_count": 31609,
+      "voluntary_exits": 1889,
+      "annual_attrition_rate_percent": 5.97614603
+    },
+    {
+      "category": "Corp Fxn & BU",
+      "eligible_employee_count": 13209,
+      "voluntary_exits": 615,
+      "annual_attrition_rate_percent": 4.65591642
+    }
+  ],
+  "metrics": {
+    "eligible_employee_count": 44818,
+    "category_total_count": 44818,
+    "category_reconciliation_difference": 0,
+    "categories_below_minimum_count": 0,
+    "minimum_category_count": 13209,
+    "duplicate_source_employee_count": 0,
+    "manager_conflict_employee_count": 0,
+    "et_leader_conflict_employee_count": 0,
+    "branch_a_root_present": 1,
+    "branch_b_active_present": 1,
+    "branch_a_cycle_count": 0,
+    "branch_a_depth_limit_count": 0,
+    "branch_a_duplicate_member_count": 0,
+    "branch_overlap_count": 0,
+    "total_voluntary_exit_count": 2504,
+    "voluntary_event_employee_count": 2722,
+    "voluntary_employee_multiple_term_date_count": 3
+  },
+  "acceptance_rule": "Las dos categorías mapeadas deben reconciliar contra la cohorte elegible; cada categoría debe tener al menos 30 empleados; ambos anclajes internos del mapping deben estar disponibles; y la cohorte base debe tener cero filas por empleado duplicado, conflicto de manager, conflicto de ET leader, ciclo de jerarquía, límite de profundidad, ruta duplicada o traslape entre ramas. El target cuenta al menos una salida por empleado de la cohorte base; por ello, múltiples fechas de salida fuera de la cohorte no duplican el numerador.",
+  "validation": {
+    "two_categories": true,
+    "population_reconciliation": true,
+    "category_minimum_cohort": true,
+    "zero_duplicate_employee_snapshot": true,
+    "zero_manager_conflicts": true,
+    "zero_et_leader_conflicts": true,
+    "both_mapping_anchors_available": true,
+    "zero_hierarchy_cycles": true,
+    "zero_hierarchy_depth_limit": true,
+    "zero_hierarchy_duplicate_paths": true,
+    "zero_cto_branch_overlap": true,
+    "outcome": "pass"
+  },
+  "provenance": {
+    "query_path": "queries/audits/engineering_cto_org_split_annual_attrition_20260917.sql",
+    "sql_sha256": "1acc6b57364e8f844c6d0cd094b05033fe5b52abf9b6fd154952f35b0520a950",
+    "result_sha256": "a0057e842f67a1ee8d95d1ee8311b10b4cb96c41df102e5fcd19e7dbd9727530",
+    "result_hash_method": "SHA-256 del payload JSON compacto UTF-8 que contiene las filas y métricas de validación en el orden declarado.",
+    "executed_on": "2026-09-17"
+  },
+  "publication_rule": "Sólo conteos, salidas y tasas agregadas. No se persisten ni muestran IDs de empleado, nombres, identidades de managers o filas de empleados. Cada cohorte mostrada supera n=30.",
+  "outcome": "pass",
+  "generated_on": "2026-09-17"
+}

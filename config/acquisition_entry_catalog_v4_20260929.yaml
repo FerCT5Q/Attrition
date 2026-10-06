@@ -1,0 +1,136 @@
+version: 4
+generated_from: Plan de incorporación de Ingreso por adquisición, 2026-09-29
+variables:
+  - category: Employment history
+    variable: Ingreso por adquisición
+    notes: >-
+      Candidato descriptivo para distinguir empleados con un nombre de adquisición
+      registrado en el snapshot. Un valor vacío no se interpreta como prueba de
+      ingreso sin adquisición.
+    definition: >-
+      Nombre de adquisición almacenado en
+      hrda.post_hire_monthly_worker_dtls.acquisition al cierre del snapshot.
+      Para la visual se muestran los estados operativos «Con adquisición
+      registrada» y «Sin adquisición registrada»; el segundo sólo describe la
+      ausencia de un registro no vacío, no el origen de ingreso de la persona.
+    source:
+      type: Database
+      table: hrda.post_hire_monthly_worker_dtls
+      columns: [acquisition]
+      status: confirmed_accessible
+    profile:
+      mode: aggregate_sql
+      aggregate_sql_file: ../queries/profiles/acquisition_entry_coverage_20260929.sql
+    level_data: Empleado-snapshot mensual
+    measurement:
+      type: snapshot
+      date_column: fis_mo_end_dt
+      fiscal_year_column: fiscal_year
+      employee_id_column: employee_id
+      observable_columns: [acquisition]
+      observable_mode: all
+    population:
+      mode: default
+    numerator_definition: >-
+      Empleados cuyo valor normalizado NULLIF(TRIM(acquisition), '') está
+      poblado en el snapshot; no se imputa ni se reclasifica un valor vacío.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: mapping_or_validation
+      effort: moderate_transformation
+    rationale:
+      definition:
+        why: >-
+          No existe una definición de negocio confirmada que explique qué
+          significan los vacíos, los reingresos o posibles actualizaciones
+          retrospectivas del campo.
+        evidence: >-
+          El nombre de la columna y las fuentes relacionadas sólo sustentan una
+          hipótesis; no prueban que un vacío signifique «sin adquisición».
+        recommended_action: >-
+          Confirmar con el propietario de datos la definición, los valores
+          vacíos, los reingresos y las reglas de vigencia del campo.
+      consistency:
+        why: >-
+          Se requiere normalizar espacios y mayúsculas, y aún falta medir los
+          cambios del valor por empleado a través del tiempo y las posibles
+          contradicciones con fuentes de altas y bajas.
+        evidence: >-
+          La validación planificada debe contar dominios normalizados, cambios
+          longitudinales y correspondencia agregada con acquisition_org y
+          acquisition_name.
+        recommended_action: >-
+          Ejecutar la auditoría longitudinal y documentar cualquier mapping o
+          actualización retrospectiva antes de usar aliases o interpretar valores.
+      join:
+        why: >-
+          La ruta temporal entre el snapshot principal y las fuentes de altas o
+          terminaciones aún debe reconciliarse al grain empleado-fecha.
+        evidence: >-
+          La propuesta usa employee_id internamente, pero todavía no cuantifica
+          matches, no-matches ni duplicados por snapshot o por salida.
+        recommended_action: >-
+          Ejecutar una reconciliación agregada de cohortes, eventos Voluntary y
+          fuentes relacionadas antes de considerar confiable el join temporal.
+      effort:
+        why: >-
+          La distribución simple es directa, pero la interpretación segura exige
+          normalización, controles temporales y tratamiento explícito de vacíos.
+        evidence: >-
+          El campo existe como texto almacenado; no hay mapping de aliases ni
+          lineage de negocio aprobado para convertirlo en un indicador de origen.
+        recommended_action: >-
+          Mantener la transformación mínima versionada y reducir el esfuerzo sólo
+          después de confirmar la definición y los casos límite.
+    blocker: none
+    verification:
+      semantic_type: direct_field
+      source:
+        method: schema_access_check
+        evidence: >-
+          La auditoría agregada de information_schema verificó los seis campos
+          necesarios en hrda.post_hire_monthly_worker_dtls mediante la ruta
+          read-only configurada.
+        result: >-
+          La ejecución del 2026-09-29 encontró 6 de 6 campos requeridos y 0
+          campos faltantes. El motor volverá a calcular este resultado desde
+          filas congeladas al publicar el assessment.
+        as_of_date: 2026-09-29
+        query_reference: queries/audits/acquisition_entry_source_access_20260929.sql
+        acceptance_rule: missing_items = 0.
+        outcome: pending
+    analysis:
+      language: es
+      semantic_type: direct_field
+      intended_use: >-
+        Describir de forma agregada la distribución y attrition voluntaria anual
+        de empleados con una adquisición registrada, como contexto para priorizar
+        una revisión de calidad; no se usa para decisiones individuales ni como
+        prueba causal.
+      definition: >-
+        Campo textual acquisition del snapshot mensual. La publicación distingue
+        únicamente presencia o ausencia de registro normalizado y conserva los
+        nombres almacenados sin unificar aliases no documentados.
+      numerator_definition: >-
+        COUNT(DISTINCT employee_id) con NULLIF(TRIM(acquisition), '') no nulo.
+      source_reasoning: >-
+        La tabla mensual principal expone acquisition al mismo grain que la
+        población activa. new_hires.acquisition_org, all_terminations.acquisition_name
+        y worker_details_ms_snapshot.acquisition_yn son fuentes relacionadas para
+        contrastar cobertura e historia, no sustitutos de la definición.
+      validation_focus:
+        - disponibilidad, tipo y grain de acquisition y fuentes relacionadas
+        - unicidad de empleado-snapshot y contradicciones de valores normalizados
+        - cambios longitudinales y actualización retrospectiva
+        - correspondencia agregada con altas, terminaciones y fuente histórica
+        - cohorte basal, ventana Voluntary y reconciliación de distribución
+        - supresión de cohortes o eventos menores de 30
+      prediction_cutoff: >-
+        El valor del segmento debe provenir del snapshot de clasificación: 2026-08-23
+        para distribución actual y 2025-08-24 para attrition anual comparable.
+      prior_evidence_policy: >-
+        La exploración previa del 29 de septiembre y los decks V7/V8 son contexto;
+        todas las métricas, reglas y scores se recalculan en esta ejecución.
+      documentation_path: acquisition-entry/README.md
+      depends_on: []

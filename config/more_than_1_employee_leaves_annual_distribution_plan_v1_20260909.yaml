@@ -1,0 +1,78 @@
+schema_version: 1
+plan_version: 1
+language: es
+created_before_execution: true
+deliverable_mode: internal_analysis
+variable: More than 1 employee leaves in a year
+concept: >-
+  Sensibilidad anual de la exposición de un empleado a un equipo con al menos
+  dos salidas voluntarias distintas en los doce meses cerrados previos a cada
+  snapshot mensual.
+intended_use: >-
+  Mantener la bandera semestral como la señal principal de concentración
+  reciente de salidas y añadir una comparación anual descriptiva que responda
+  al comentario de negocio sobre el comportamiento en un año.
+knowledge_date: >-
+  Cada cierre mensual t: sólo entran term_date <= t y ninguna asignación o
+  terminación posterior a t se usa para la atribución de evaluación.
+population: >-
+  Empleados worker_type='Employee', employee_type='Regular' y active_status=1
+  con equipo directo observable en cada snapshot de evaluación.
+grain: Scope × attribution × employee snapshot mensual
+semantic_type: derived_feature
+definition:
+  primary_window: '(t - 6 meses, t] — señal principal'
+  annual_window: '(t - 12 meses, t] — comparación suplementaria'
+  event_key: employee_id + term_date, con term_type normalizado exactamente a Voluntary
+  scopes:
+    - all_teams: equipos con al menos 1 reporte directo
+    - teams_gt_5: equipos con al menos 6 reportes directos
+  attribution:
+    manager_at_evaluation: último manager no nulo observado hasta t
+    manager_at_exit: último manager no nulo observado hasta term_date
+  flag: >-
+    1 cuando el equipo del empleado tiene al menos dos eventos Voluntary
+    distintos en la ventana; 0 en otro caso.
+  annual_view_role: >-
+    Comparación descriptiva en los slides 9 y 10; no reemplaza la ventana
+    semestral de la feature ni la convierte en definición anual del modelo.
+validation_story:
+  - id: annual_window_reconstruction
+    criterion: definition
+    evidence_role: supporting
+    question: >-
+      ¿Se puede reconstruir para cada snapshot mensual la exposición a equipos
+      con 2+ salidas Voluntary en los doce meses anteriores?
+    why: >-
+      La observación pide una lectura anual, pero debe conservar el mismo
+      denominador, deduplicación y límite temporal que la serie semestral.
+    fields: [employee_id, manager_employee_id, fis_mo_end_dt, term_date, term_type]
+    method: >-
+      Reconstruir equipos directos en t, deduplicar eventos employee_id +
+      term_date, contar sólo Voluntary en (t - 12 meses, t] y calcular
+      flagged_employees / observable_employees por scope y atribución.
+    sql_reference: queries/audits/more_than_1_employee_leaves_team_12m_20260909.sql
+    acceptance_rule: >-
+      Debe haber doce snapshots mensuales por ventana y 40 puntos por scope y
+      atribución; cada punto debe cumplir flagged_employees <=
+      observable_employees, los denominadores deben ser >=30 y la exposición
+      anual debe ser mayor o igual a la semestral anidada en el mismo punto.
+  - id: primary_window_preserved
+    criterion: definition
+    evidence_role: contextual
+    question: ¿La comparación anual reemplaza la señal semestral elegida?
+    why: La pregunta anual es complementaria, no una redefinición de la feature.
+    fields: [fis_mo_end_dt, term_date]
+    method: >-
+      Renderizar la serie semestral arriba y la anual abajo con etiquetas
+      explícitas de primary y supplementary comparison.
+    sql_reference: queries/audits/more_than_1_employee_leaves_team_12m_20260909.sql
+    acceptance_rule: >-
+      Los slides deben identificar seis meses como primary y doce meses como
+      annual comparison sin mezclar las dos ventanas en una sola serie.
+planned_sql:
+  - queries/audits/more_than_1_employee_leaves_team_12m_20260909.sql
+publication_controls:
+  - Modo internal_analysis; resultados agregados únicamente.
+  - No mostrar employee_id, manager_employee_id, nombres ni filas individuales.
+  - Cada punto publicado requiere al menos 30 empleados observables.

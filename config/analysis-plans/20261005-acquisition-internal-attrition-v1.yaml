@@ -1,0 +1,72 @@
+schema_version: 1
+plan_version: 1
+language: es
+created_before_execution: true
+acceptance_rules_frozen: true
+plan_authorship: codex_explicit
+deliverable_mode: internal_analysis
+scope: Recalcular y presentar tasas agregadas de la lámina 8; no es una nueva evaluación de scores.
+variable: Adquisición registrada y attrition voluntaria anual
+semantic_type: derived_feature
+concept: >-
+  Tasa de personas de cada categoría acquisition en la cohorte basal que
+  registraron una salida VOLUNTARY durante la ventana anual. acquisition es
+  un campo directo; esta revisión no confirma el origen de contratación.
+intended_use: Revisión descriptiva de segmentos con el solicitante y Julia.
+knowledge_date: 2025-08-24 para la categoría de la cohorte anual.
+population: >-
+  worker_type='Employee', employee_type='Regular' y active_status=1 al
+  snapshot; RF360 se incluye. La distribución actual corresponde al 2026-08-23.
+grain: Empleados distintos por snapshot; como máximo una salida voluntaria por persona basal.
+numerator: Empleados de la cohorte basal con term_type normalizado exactamente VOLUNTARY y term_date en (2025-08-24, 2026-08-23].
+denominator: Empleados regulares activos en la categoría acquisition al 2025-08-24.
+formula: 100 * voluntary_exit_count / baseline_employee_count
+null_policy: Una cohorte basal igual a cero produce tasa no estimable; cero salidas con base positiva produce 0%.
+source_reasoning: >-
+  La consulta original ya conserva los conteos agregados aun cuando suprime
+  las tasas menores al umbral de publicación. Se reutilizan exactamente esos
+  agregados ejecutados el 2026-09-29 para completar el mismo corte del deck,
+  después de verificar los hashes del SQL, resultado y ledger. Se calcula la
+  división de nuevo, sin consultar registros individuales ni refrescar el corte.
+source_run: acquisition-entry-v4-20260929-r4
+source_sql: queries/audits/acquisition_entry_distribution_attrition_20260929.sql
+source_results: output/assessments/acquisition-entry-v4-20260929-r4/vars/01-ingreso-por-adquisici-n/evidence/query-results.json
+source_ledger: output/assessments/acquisition-entry-v4-20260929-r4/vars/01-ingreso-por-adquisici-n/evidence-ledger.json
+authorization: config/acquisition_attrition_internal_analysis_authorization_20261005.json
+validation_story:
+  - id: frozen_source_provenance
+    question: ¿Los conteos proceden exactamente del SQL agregado ejecutado para la lámina?
+    why: Cambiar el corte impediría distinguir la corrección de privacidad de un cambio de datos.
+    method: Recalcular hashes normalizados del SQL y canónicos del resultado, y contrastarlos con ambos ledgers.
+    evidence_role: defining
+    sql_reference: queries/audits/acquisition_entry_distribution_attrition_20260929.sql
+    acceptance_rule: Todos los hashes y conteos de filas coinciden; el run fuente está validado.
+  - id: annual_rate_recalculation
+    question: ¿Qué tasa anual corresponde a cada par de salidas y empleados basales?
+    why: La tasa no debe depender del umbral de publicación ni del personal actual.
+    method: División Decimal y comprobación independiente con Fraction para todas las categorías con base positiva.
+    evidence_role: defining
+    sql_reference: queries/audits/acquisition_entry_distribution_attrition_20260929.sql
+    acceptance_rule: 0 <= salidas <= base; diferencia absoluta menor a 0.000000000001 puntos; base cero conserva tasa nula.
+  - id: partition_reconciliation
+    question: ¿Las categorías detalladas suman las mismas cohortes y salidas que el segmento con adquisición?
+    why: La fila Otras debe cerrar el total sin duplicaciones ni pérdidas.
+    method: Sumar Top 10 más Otras en snapshot actual, base y salidas; contrastar con el segmento agregado.
+    evidence_role: defining
+    sql_reference: queries/audits/acquisition_entry_distribution_attrition_20260929.sql
+    acceptance_rule: Las tres sumas coinciden exactamente; las dos categorías generales reconcilian con los totales.
+  - id: authorized_internal_display
+    question: ¿Las tasas con pocos eventos se muestran sólo dentro de la excepción interna autorizada?
+    why: La revisión interna debe conservar su autorización y distinguir supresión de falta de cohorte.
+    method: Verificar autorización, modo, numerador, denominador, etiquetas y precisión de la salida.
+    evidence_role: supporting
+    sql_reference: queries/audits/acquisition_entry_distribution_attrition_20260929.sql
+    acceptance_rule: Toda tasa estimable está visible; no hay tasas inventadas con base cero; se conservan identidad y valores individuales fuera de los artefactos.
+score_impact: Ninguno; la autorización y el recálculo no modifican scores ni aprueban uso productivo.
+visual_plan:
+  slide_number: 8
+  message: Comparar attrition anual por adquisición con todos los agregados autorizados.
+  layout: Conservar la composición y las barras del slide; completar tasas y añadir salidas/base en el detalle.
+  empty_state: Sin cohorte al 24 ago 2025.
+  numerical_policy: Enteros sin decimales; porcentajes no enteros con máximo un decimal.
+  output: output/distribution/attrition-43-variable-distributions-v9.html

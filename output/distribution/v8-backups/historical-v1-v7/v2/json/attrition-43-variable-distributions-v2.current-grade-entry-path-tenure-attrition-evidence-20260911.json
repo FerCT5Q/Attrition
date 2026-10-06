@@ -1,0 +1,663 @@
+{
+  "version": 2,
+  "variable": "Attrition Voluntary anual por via de entrada al grade y tenure",
+  "semantic_type": "derived_feature",
+  "reporting_mode": "presentation",
+  "publication_status": "not_publishable",
+  "generated_on": "2026-09-11",
+  "executed_on": "2026-09-11",
+  "cutoff_date": "2026-09-11",
+  "query": "queries/audits/current_grade_entry_path_tenure_attrition_20260911.sql",
+  "gap_query": "queries/audits/current_grade_entry_path_tenure_attrition_gap_20260911.sql",
+  "source_lineage_query": "queries/audits/current_grade_entry_path_tenure_source_lineage_20260911.sql",
+  "provenance": {
+    "query_sha256": "60a74df55795e6cdb077a576a0e93f451891500117e8ddf02263fb8d56c023aa",
+    "result_sha256": "f29b6a654f6302d7b5c8ac8c2c6c70d5e1f4f2665926eef7f54c3ac526866d70",
+    "gap_query_sha256": "9e09ce4c27edbb3c225f5edf4641ba26ce67250eecd06b16194c39ca6abe4344",
+    "gap_result_sha256": "a181440b9a2853076b88a23ff75fcf426861e2fd16694d8df0e4b3d841cde14d",
+    "source_lineage_query_sha256": "aa22a7077119acb7d91a4e0b40fbc59cfda8d099949ce04ced5d18847733f184",
+    "source_lineage_result_sha256": "9111f460a3ab3dae9f05a1736ecf26e2283c98c2ba03bbbc1e7ae0fc341de49b"
+  },
+  "population": "worker_type='Employee'; employee_type='Regular'; active_status=1 en snapshots mensuales FY2021-FY2025.",
+  "grain": "Empleado-snapshot mensual para headcount; evento Voluntary atribuido al ultimo snapshot activo valido anterior a term_date.",
+  "knowledge_boundary": "Solo informacion disponible antes de term_date; no se usa el snapshot de terminacion ni informacion posterior.",
+  "formula": "Salidas Voluntary atribuidas / promedio mensual de headcount activo de la banda x 100.",
+  "entry_path_definition": {
+    "promotion_confirmed_into_current_grade": "Ultima entrada observable al grade actual confirmada por is_promo=1 y promotion_date alineada temporalmente dentro del episodio vigente.",
+    "observed_entry_without_registered_promotion": "Ultima entrada observable al grade actual sin un evento que cumpla la confirmacion de promocion registrada.",
+    "current_grade_entry_not_observable": "No existe un cambio previo completo y observable al grade actual; se conserva como limitacion y no se grafica."
+  },
+  "tenure_definition": {
+    "adjusted_start": "GREATEST(time_in_job_profile_start_date, max_hire_rehire_date), limitado a snapshot_date.",
+    "promotion_confirmed_into_current_grade": {
+      "<1": "tenure_years <1",
+      "1–<2": "tenure_years 1–<2",
+      "2–<4": "tenure_years 2–<4",
+      "4–<5": "tenure_years 4–<5",
+      "≥5": "tenure_years ≥5"
+    },
+    "observed_entry_without_registered_promotion": {
+      "<2": "tenure_years <2",
+      "2–<3": "tenure_years 2–<3",
+      "3–<4": "tenure_years 3–<4",
+      "≥4": "tenure_years ≥4"
+    },
+    "bands_are_fixed": true
+  },
+  "calendar": [
+    {
+      "fiscal_year": 2021,
+      "snapshot_count": 12,
+      "fiscal_month_count": 12,
+      "min_fiscal_month": 1,
+      "max_fiscal_month": 12,
+      "first_period_begin": "2020-09-28",
+      "last_snapshot_date": "2021-09-26"
+    },
+    {
+      "fiscal_year": 2022,
+      "snapshot_count": 12,
+      "fiscal_month_count": 12,
+      "min_fiscal_month": 1,
+      "max_fiscal_month": 12,
+      "first_period_begin": "2021-09-27",
+      "last_snapshot_date": "2022-09-25"
+    },
+    {
+      "fiscal_year": 2023,
+      "snapshot_count": 12,
+      "fiscal_month_count": 12,
+      "min_fiscal_month": 1,
+      "max_fiscal_month": 12,
+      "first_period_begin": "2022-09-26",
+      "last_snapshot_date": "2023-09-24"
+    },
+    {
+      "fiscal_year": 2024,
+      "snapshot_count": 12,
+      "fiscal_month_count": 12,
+      "min_fiscal_month": 1,
+      "max_fiscal_month": 12,
+      "first_period_begin": "2023-09-25",
+      "last_snapshot_date": "2024-09-29"
+    },
+    {
+      "fiscal_year": 2025,
+      "snapshot_count": 12,
+      "fiscal_month_count": 12,
+      "min_fiscal_month": 1,
+      "max_fiscal_month": 12,
+      "first_period_begin": "2024-09-30",
+      "last_snapshot_date": "2025-09-28"
+    }
+  ],
+  "distribution": [
+    {
+      "fiscal_year": 2021,
+      "entry_path": "promotion_confirmed_into_current_grade",
+      "tenure_band": "<1",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2021,
+      "entry_path": "promotion_confirmed_into_current_grade",
+      "tenure_band": "1–<2",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2021,
+      "entry_path": "promotion_confirmed_into_current_grade",
+      "tenure_band": "2–<4",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2021,
+      "entry_path": "promotion_confirmed_into_current_grade",
+      "tenure_band": "4–<5",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2021,
+      "entry_path": "promotion_confirmed_into_current_grade",
+      "tenure_band": "≥5",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2022,
+      "entry_path": "promotion_confirmed_into_current_grade",
+      "tenure_band": "<1",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2022,
+      "entry_path": "promotion_confirmed_into_current_grade",
+      "tenure_band": "1–<2",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2022,
+      "entry_path": "promotion_confirmed_into_current_grade",
+      "tenure_band": "2–<4",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2022,
+      "entry_path": "promotion_confirmed_into_current_grade",
+      "tenure_band": "4–<5",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2022,
+      "entry_path": "promotion_confirmed_into_current_grade",
+      "tenure_band": "≥5",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2023,
+      "entry_path": "promotion_confirmed_into_current_grade",
+      "tenure_band": "<1",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2023,
+      "entry_path": "promotion_confirmed_into_current_grade",
+      "tenure_band": "1–<2",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2023,
+      "entry_path": "promotion_confirmed_into_current_grade",
+      "tenure_band": "2–<4",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2023,
+      "entry_path": "promotion_confirmed_into_current_grade",
+      "tenure_band": "4–<5",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2023,
+      "entry_path": "promotion_confirmed_into_current_grade",
+      "tenure_band": "≥5",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2024,
+      "entry_path": "promotion_confirmed_into_current_grade",
+      "tenure_band": "<1",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2024,
+      "entry_path": "promotion_confirmed_into_current_grade",
+      "tenure_band": "1–<2",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2024,
+      "entry_path": "promotion_confirmed_into_current_grade",
+      "tenure_band": "2–<4",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2024,
+      "entry_path": "promotion_confirmed_into_current_grade",
+      "tenure_band": "4–<5",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2024,
+      "entry_path": "promotion_confirmed_into_current_grade",
+      "tenure_band": "≥5",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2025,
+      "entry_path": "promotion_confirmed_into_current_grade",
+      "tenure_band": "<1",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2025,
+      "entry_path": "promotion_confirmed_into_current_grade",
+      "tenure_band": "1–<2",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2025,
+      "entry_path": "promotion_confirmed_into_current_grade",
+      "tenure_band": "2–<4",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2025,
+      "entry_path": "promotion_confirmed_into_current_grade",
+      "tenure_band": "4–<5",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2025,
+      "entry_path": "promotion_confirmed_into_current_grade",
+      "tenure_band": "≥5",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2021,
+      "entry_path": "observed_entry_without_registered_promotion",
+      "tenure_band": "<2",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2021,
+      "entry_path": "observed_entry_without_registered_promotion",
+      "tenure_band": "2–<3",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2021,
+      "entry_path": "observed_entry_without_registered_promotion",
+      "tenure_band": "3–<4",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2021,
+      "entry_path": "observed_entry_without_registered_promotion",
+      "tenure_band": "≥4",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2022,
+      "entry_path": "observed_entry_without_registered_promotion",
+      "tenure_band": "<2",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2022,
+      "entry_path": "observed_entry_without_registered_promotion",
+      "tenure_band": "2–<3",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2022,
+      "entry_path": "observed_entry_without_registered_promotion",
+      "tenure_band": "3–<4",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2022,
+      "entry_path": "observed_entry_without_registered_promotion",
+      "tenure_band": "≥4",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2023,
+      "entry_path": "observed_entry_without_registered_promotion",
+      "tenure_band": "<2",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2023,
+      "entry_path": "observed_entry_without_registered_promotion",
+      "tenure_band": "2–<3",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2023,
+      "entry_path": "observed_entry_without_registered_promotion",
+      "tenure_band": "3–<4",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2023,
+      "entry_path": "observed_entry_without_registered_promotion",
+      "tenure_band": "≥4",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2024,
+      "entry_path": "observed_entry_without_registered_promotion",
+      "tenure_band": "<2",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2024,
+      "entry_path": "observed_entry_without_registered_promotion",
+      "tenure_band": "2–<3",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2024,
+      "entry_path": "observed_entry_without_registered_promotion",
+      "tenure_band": "3–<4",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2024,
+      "entry_path": "observed_entry_without_registered_promotion",
+      "tenure_band": "≥4",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2025,
+      "entry_path": "observed_entry_without_registered_promotion",
+      "tenure_band": "<2",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2025,
+      "entry_path": "observed_entry_without_registered_promotion",
+      "tenure_band": "2–<3",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2025,
+      "entry_path": "observed_entry_without_registered_promotion",
+      "tenure_band": "3–<4",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    },
+    {
+      "fiscal_year": 2025,
+      "entry_path": "observed_entry_without_registered_promotion",
+      "tenure_band": "≥4",
+      "months_checked": 12,
+      "months_with_headcount": 0,
+      "privacy_eligible": false,
+      "suppression_reason": "La celda no cumple los doce snapshots y la cohorte minima publicada."
+    }
+  ],
+  "reconciliation": [
+    {
+      "fiscal_year": 2021,
+      "total_voluntary_events": 2222,
+      "attributed_voluntary_events": 0,
+      "unattributed_voluntary_events": 2222,
+      "sum_of_band_events": 0,
+      "sum_of_published_band_events": 0,
+      "no_prior_active_valid_snapshot_events": 274,
+      "selected_not_observable_path_events": 1837,
+      "selected_missing_tenure_events": 111,
+      "selected_invalid_tenure_band_events": null,
+      "attribution_coverage_percent": 0.0,
+      "selected_invalid_tenure_band_events_suppressed_below_n": 30
+    },
+    {
+      "fiscal_year": 2022,
+      "total_voluntary_events": 3634,
+      "attributed_voluntary_events": 0,
+      "unattributed_voluntary_events": 3634,
+      "sum_of_band_events": 0,
+      "sum_of_published_band_events": 0,
+      "no_prior_active_valid_snapshot_events": null,
+      "selected_not_observable_path_events": 3590,
+      "selected_missing_tenure_events": null,
+      "selected_invalid_tenure_band_events": null,
+      "attribution_coverage_percent": 0.0,
+      "no_prior_active_valid_snapshot_events_suppressed_below_n": 30,
+      "selected_missing_tenure_events_suppressed_below_n": 30,
+      "selected_invalid_tenure_band_events_suppressed_below_n": 30
+    },
+    {
+      "fiscal_year": 2023,
+      "total_voluntary_events": 1947,
+      "attributed_voluntary_events": 0,
+      "unattributed_voluntary_events": 1947,
+      "sum_of_band_events": 0,
+      "sum_of_published_band_events": 0,
+      "no_prior_active_valid_snapshot_events": null,
+      "selected_not_observable_path_events": 1575,
+      "selected_missing_tenure_events": 370,
+      "selected_invalid_tenure_band_events": null,
+      "attribution_coverage_percent": 0.0,
+      "no_prior_active_valid_snapshot_events_suppressed_below_n": 30,
+      "selected_invalid_tenure_band_events_suppressed_below_n": 30
+    },
+    {
+      "fiscal_year": 2024,
+      "total_voluntary_events": 2393,
+      "attributed_voluntary_events": 0,
+      "unattributed_voluntary_events": 2393,
+      "sum_of_band_events": 0,
+      "sum_of_published_band_events": 0,
+      "no_prior_active_valid_snapshot_events": null,
+      "selected_not_observable_path_events": 1524,
+      "selected_missing_tenure_events": 866,
+      "selected_invalid_tenure_band_events": null,
+      "attribution_coverage_percent": 0.0,
+      "no_prior_active_valid_snapshot_events_suppressed_below_n": 30,
+      "selected_invalid_tenure_band_events_suppressed_below_n": 30
+    },
+    {
+      "fiscal_year": 2025,
+      "total_voluntary_events": 2435,
+      "attributed_voluntary_events": 0,
+      "unattributed_voluntary_events": 2435,
+      "sum_of_band_events": 0,
+      "sum_of_published_band_events": 0,
+      "no_prior_active_valid_snapshot_events": null,
+      "selected_not_observable_path_events": 1347,
+      "selected_missing_tenure_events": 1085,
+      "selected_invalid_tenure_band_events": null,
+      "attribution_coverage_percent": 0.0,
+      "no_prior_active_valid_snapshot_events_suppressed_below_n": 30,
+      "selected_invalid_tenure_band_events_suppressed_below_n": 30
+    }
+  ],
+  "source_lineage_reconciliation": {
+    "main_source": "hrda.post_hire_monthly_worker_dtls",
+    "candidate_tables_checked": [
+      "phdwd_1348",
+      "phdwd_1351",
+      "phdwd_backup_20251029",
+      "phdwd_e_del_backup",
+      "phmwd_1348",
+      "phmwd_1351",
+      "phmwd_backup_20251029",
+      "phmwd_e_del_backup",
+      "post_hire_monthly_worker_dtls"
+    ],
+    "candidate_profile_start_rows_fy21_fy25": {
+      "phdwd_1348": 0,
+      "phdwd_1351": 0,
+      "phdwd_backup_20251029": 0,
+      "phdwd_e_del_backup": 0,
+      "phmwd_1348": 0,
+      "phmwd_1351": 0,
+      "phmwd_backup_20251029": 0,
+      "phmwd_e_del_backup": 0,
+      "post_hire_monthly_worker_dtls": 0
+    },
+    "fallback_with_governed_lineage_available": false,
+    "interpretation": "Las tablas antiguas tienen cero cobertura poblada del campo en FY2021-FY2025 y no se sustituyen sin lineage y reconciliacion aprobados."
+  },
+  "aggregate_metrics": {
+    "target_active_snapshot_count": 2405034,
+    "target_missing_profile_start_count": 2405034,
+    "target_promotion_path_count": 432656,
+    "target_observed_path_count": 133759,
+    "target_not_observable_path_count": 1838619,
+    "voluntary_events_fy21_fy25": 12631,
+    "attributed_voluntary_events_fy21_fy25": 0,
+    "unattributed_voluntary_events_fy21_fy25": 12631,
+    "gap_reason_totals": {
+      "no_prior_active_valid_snapshot": 303,
+      "selected_missing_tenure": 2455,
+      "selected_not_observable_path": 9873
+    },
+    "published_band_count": 0,
+    "expected_band_count": 9
+  },
+  "acceptance_rule": "Cinco anos fiscales completos con doce snapshots por ano; la via y el tenure deben pertenecer a un dominio fijo y exclusivo; cada tasa publicada requiere n distinto y minimo mensual >= 30; cada evento Voluntary reconcilia como atribuido o no atribuido; los eventos sin snapshot previo valido permanecen como warning.",
+  "acceptance": {
+    "calendar_complete": true,
+    "source_quality_clean": true,
+    "fixed_path_tenure_domain": true,
+    "bands_mutually_exclusive_and_fixed": true,
+    "profile_start_coverage": false,
+    "denominators_and_privacy": false,
+    "event_reconciliation": true,
+    "published_band_count": 0,
+    "expected_band_count": 9,
+    "minimum_shared_cohort": 30
+  },
+  "methods": {
+    "entry_path": "LAG por empleado y snapshot, dentro de max_hire_rehire_date; se conserva la ultima entrada al grade actual.",
+    "promotion_confirmation": "is_promo=1, promotion_date no futura, posterior al snapshot previo y no posterior al snapshot de entrada; el grade del snapshot del evento debe coincidir.",
+    "tenure": "DATEDIFF(day) / 365.25 desde la fecha ajustada; bandas separadas por via y sin reagrupar segun resultados.",
+    "event_attribution": "ROW_NUMBER por evento sobre snapshots activos validos anteriores a term_date, ordenados del mas reciente al mas antiguo.",
+    "privacy": "Las celdas que no cumplen la cohorte minima se suprimen; no se guardan filas, IDs ni valores individuales."
+  },
+  "validation": {
+    "calendar": "pass",
+    "source_quality": "pass",
+    "fixed_domain": "pass",
+    "profile_start_coverage": "warning",
+    "privacy": "warning",
+    "event_reconciliation": "pass",
+    "overall": "warning"
+  },
+  "warnings": [
+    "time_in_job_profile_start_date esta vacio en toda la poblacion activa FY2021-FY2025; por ello no hay tenure publicable en la ventana.",
+    "Los eventos Voluntary sin snapshot/path/tenure publicable no se reasignan y se conservan en la reconciliacion.",
+    "current_grade_entry_not_observable puede reflejar historia incompleta o promociones no registradas; no se interpreta como contratacion directa ni como new hire.",
+    "is_new_hire no se usa como clasificador principal de la via de entrada."
+  ],
+  "limitations": [
+    "Las tablas antiguas phdwd_* y phmwd_* fueron revisadas como candidatos tecnicos, pero no tienen cobertura poblada del campo en la ventana y no cuentan con lineage gobernado reconciliado.",
+    "La via observada sin promocion registrada puede incluir historia incompleta o promociones no registradas.",
+    "La asociacion es descriptiva; no demuestra causalidad, riesgo individual ni una politica de promociones."
+  ],
+  "outcome": "warning"
+}

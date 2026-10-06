@@ -1,0 +1,16 @@
+schema_version: 1
+language: es
+unknown_policy: pause
+problem_context:
+  problem_statement: Confirmar disponibilidad y contexto semántico de una métrica relativa de compensación para attrition.
+  decision_or_use_case: Determinar si Comp ratio puede avanzar a una evaluación profunda time-safe.
+  outcome: Attrition posterior al snapshot.
+  population: Empleados regulares activos en el snapshot mensual.
+  unit_of_analysis: Empleado-snapshot.
+  knowledge_boundary: Cierre del snapshot mensual.
+variables:
+  - name: Comp ratio
+    attrition_use: Medir posición relativa frente al rango salarial aplicable.
+    population: Empleados regulares activos en el snapshot mensual.
+    knowledge_date: Cierre del snapshot mensual.
+decisions: {}

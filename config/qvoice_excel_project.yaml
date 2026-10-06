@@ -1,0 +1,32 @@
+schema_version: 1
+catalog_spec: qvoice_excel_candidate_variables_v4_20260825.yaml
+rules: ../.codex/skills/evaluate-attrition-variable/references/scoring-rules.yaml
+semantic_hint_registry: ../.codex/skills/evaluate-attrition-variable/references/semantic-hints.yaml
+query_helper: ../.codex/skills/attrition-redshift-db/scripts/run_readonly_query.py
+output_root: ../output/assessments
+audit_sql_root: ../queries/audits
+profile_sql_root: ../queries/profiles
+
+documentation:
+  enabled: true
+  root: ../docs/variables/qvoice-excel
+
+# QVoice is evaluated from frozen aggregate Excel results. Keep the standard
+# visual report, but do not invoke the unrelated sensitive gender metrics builder.
+reporting:
+  visual_html_v2:
+    enabled: true
+    renderer:
+      script: ../tools/presentations/render_variable_assessment_v2.py
+      args: [--force]
+      timeout_seconds: 300
+    dynamic_slide_count: true
+    minimum_slides: 10
+    required_markers:
+      - assessment-v2-metadata
+      - Scorecard de ocho criterios
+    forbidden_tokens: [value_label, query_results]
+
+metadata:
+  default_schema: hrda
+  search_schemas: [hrda]

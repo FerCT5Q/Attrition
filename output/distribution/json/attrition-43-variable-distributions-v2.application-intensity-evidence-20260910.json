@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "artifact": "application_intensity_by_fiscal_year",
+  "generated_on": "2026-09-10",
+  "reporting_mode": "presentation",
+  "population": "Distinct applicants linked to a cand_applied=1 event with employee_id, req_id, and application_date populated; this is not the workforce population.",
+  "grain": "Distinct applicant-fiscal year",
+  "source": {
+    "table": "hrda.job_applications_vw",
+    "filters": [
+      "cand_applied = 1",
+      "employee_id IS NOT NULL",
+      "req_id IS NOT NULL",
+      "application_date IS NOT NULL"
+    ],
+    "deduplication": "employee_id + fiscal_year + req_id",
+    "source_first_application_date": "2020-07-13",
+    "source_last_application_date": "2026-09-10"
+  },
+  "publication_rules": {
+    "buckets": ["1", "2", "3", "4+"],
+    "minimum_shared_cohort": 30,
+    "exclude_partial_fiscal_years": true,
+    "exclude_non_publishable_year_if_any_bucket_below_minimum": true,
+    "no_zero_bucket": true,
+    "no_workforce_rate": true
+  },
+  "evidence": {
+    "fiscal_year_mapping": {
+      "query_reference": "queries/audits/application_intensity_job_applications_vw_fiscal_year_mapping_20260910.sql",
+      "executed_on": "2026-09-10",
+      "acceptance_rule": "Every candidate event key maps to exactly one fiscal year: unmapped_event_keys = 0 and multi_mapped_event_keys = 0.",
+      "outcome": "pass",
+      "metrics": {
+        "source_event_keys": 14422,
+        "exactly_mapped_event_keys": 14422,
+        "unmapped_event_keys": 0,
+        "multi_mapped_event_keys": 0,
+        "fiscal_years_in_calendar": 10
+      }
+    },
+    "historical_source_reconciliation": {
+      "query_reference": "queries/audits/applied_to_a_job_source_reconciliation_20260910.sql",
+      "executed_on": "2026-09-10",
+      "comparison_window": "2019-06-17 through 2025-02-11",
+      "acceptance_rule": "Both directional exact-key match rates must be >= 95%.",
+      "outcome": "warning",
+      "metrics": {
+        "old_event_keys": 9903,
+        "new_event_keys": 10839,
+        "matched_event_keys": 9903,
+        "old_only_event_keys": 0,
+        "new_only_event_keys": 936,
+        "old_to_new_match_rate_percent": 100.0,
+        "new_to_old_match_rate_percent": 91.3645
+      },
+      "interpretation": "The legacy event set is a strict subset of the current view in the common window. The additional view events require authoritative lineage before the sources can be declared semantically identical."
+    },
+    "application_intensity_distribution": {
+      "query_reference": "queries/profiles/application_intensity_job_applications_vw_distinct_applicant_fiscal_year_20260910.sql",
+      "executed_on": "2026-09-10",
+      "acceptance_rule": "Publish only fiscal years fully within observed source bounds where every 1/2/3/4+ bucket has n >= 30; bucket counts must equal annual distinct applicants and percentages must sum to 100% subject to rounding.",
+      "outcome": "pass",
+      "metrics": {
+        "published_fiscal_years": 3,
+        "published_rows": 12,
+        "minimum_published_bucket_n": 34
+      }
+    },
+    "publishability": {
+      "query_reference": "queries/audits/application_intensity_job_applications_vw_publishability_20260910.sql",
+      "executed_on": "2026-09-10",
+      "rule": "A fiscal year is publishable only when all four buckets have n >= 30.",
+      "results": {
+        "FY2022": "publishable",
+        "FY2023": "publishable",
+        "FY2024": "publishable",
+        "FY2025": "suppressed_below_n30; two buckets below minimum",
+        "FY2026": "partial fiscal year as of source cutoff; excluded"
+      }
+    }
+  },
+  "rows": [
+    {"fiscal_year": "2022", "fiscal_year_start": "2021-09-27", "fiscal_year_end": "2022-09-25", "application_bucket": "1", "bucket_order": 1, "distinct_applicants": 865, "annual_distinct_applicants": 1089, "percent_of_annual_applicants": 79.43, "mean_unique_requisitions_per_applicant": 1.41, "median_unique_requisitions_per_applicant": 1.0},
+    {"fiscal_year": "2022", "fiscal_year_start": "2021-09-27", "fiscal_year_end": "2022-09-25", "application_bucket": "2", "bucket_order": 2, "distinct_applicants": 130, "annual_distinct_applicants": 1089, "percent_of_annual_applicants": 11.94, "mean_unique_requisitions_per_applicant": 1.41, "median_unique_requisitions_per_applicant": 1.0},
+    {"fiscal_year": "2022", "fiscal_year_start": "2021-09-27", "fiscal_year_end": "2022-09-25", "application_bucket": "3", "bucket_order": 3, "distinct_applicants": 49, "annual_distinct_applicants": 1089, "percent_of_annual_applicants": 4.50, "mean_unique_requisitions_per_applicant": 1.41, "median_unique_requisitions_per_applicant": 1.0},
+    {"fiscal_year": "2022", "fiscal_year_start": "2021-09-27", "fiscal_year_end": "2022-09-25", "application_bucket": "4+", "bucket_order": 4, "distinct_applicants": 45, "annual_distinct_applicants": 1089, "percent_of_annual_applicants": 4.13, "mean_unique_requisitions_per_applicant": 1.41, "median_unique_requisitions_per_applicant": 1.0},
+    {"fiscal_year": "2023", "fiscal_year_start": "2022-09-26", "fiscal_year_end": "2023-09-24", "application_bucket": "1", "bucket_order": 1, "distinct_applicants": 783, "annual_distinct_applicants": 987, "percent_of_annual_applicants": 79.33, "mean_unique_requisitions_per_applicant": 1.41, "median_unique_requisitions_per_applicant": 1.0},
+    {"fiscal_year": "2023", "fiscal_year_start": "2022-09-26", "fiscal_year_end": "2023-09-24", "application_bucket": "2", "bucket_order": 2, "distinct_applicants": 120, "annual_distinct_applicants": 987, "percent_of_annual_applicants": 12.16, "mean_unique_requisitions_per_applicant": 1.41, "median_unique_requisitions_per_applicant": 1.0},
+    {"fiscal_year": "2023", "fiscal_year_start": "2022-09-26", "fiscal_year_end": "2023-09-24", "application_bucket": "3", "bucket_order": 3, "distinct_applicants": 50, "annual_distinct_applicants": 987, "percent_of_annual_applicants": 5.07, "mean_unique_requisitions_per_applicant": 1.41, "median_unique_requisitions_per_applicant": 1.0},
+    {"fiscal_year": "2023", "fiscal_year_start": "2022-09-26", "fiscal_year_end": "2023-09-24", "application_bucket": "4+", "bucket_order": 4, "distinct_applicants": 34, "annual_distinct_applicants": 987, "percent_of_annual_applicants": 3.44, "mean_unique_requisitions_per_applicant": 1.41, "median_unique_requisitions_per_applicant": 1.0},
+    {"fiscal_year": "2024", "fiscal_year_start": "2023-09-25", "fiscal_year_end": "2024-09-29", "application_bucket": "1", "bucket_order": 1, "distinct_applicants": 1908, "annual_distinct_applicants": 3052, "percent_of_annual_applicants": 62.52, "mean_unique_requisitions_per_applicant": 1.97, "median_unique_requisitions_per_applicant": 1.0},
+    {"fiscal_year": "2024", "fiscal_year_start": "2023-09-25", "fiscal_year_end": "2024-09-29", "application_bucket": "2", "bucket_order": 2, "distinct_applicants": 556, "annual_distinct_applicants": 3052, "percent_of_annual_applicants": 18.22, "mean_unique_requisitions_per_applicant": 1.97, "median_unique_requisitions_per_applicant": 1.0},
+    {"fiscal_year": "2024", "fiscal_year_start": "2023-09-25", "fiscal_year_end": "2024-09-29", "application_bucket": "3", "bucket_order": 3, "distinct_applicants": 249, "annual_distinct_applicants": 3052, "percent_of_annual_applicants": 8.16, "mean_unique_requisitions_per_applicant": 1.97, "median_unique_requisitions_per_applicant": 1.0},
+    {"fiscal_year": "2024", "fiscal_year_start": "2023-09-25", "fiscal_year_end": "2024-09-29", "application_bucket": "4+", "bucket_order": 4, "distinct_applicants": 339, "annual_distinct_applicants": 3052, "percent_of_annual_applicants": 11.11, "mean_unique_requisitions_per_applicant": 1.97, "median_unique_requisitions_per_applicant": 1.0}
+  ]
+}

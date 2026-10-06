@@ -1,0 +1,62 @@
+schema_version: 1
+language: es
+deliverable_mode: internal_analysis
+variable: Promotion story by compensation track
+concept: >-
+  Vista agregada que colapsa compensation_grade por la primera letra del
+  código y compara distribución, promociones y attrition en la ventana más
+  reciente disponible.
+intended_use: >-
+  Resumir en el slide 30 cómo se distribuye la población por track y qué tasas
+  de promoción y attrition se observaron en los 12 meses cerrados en el último
+  snapshot mensual de agosto.
+knowledge_boundary: 2026-08-23
+window:
+  start_exclusive: 2025-08-24
+  end_inclusive: 2026-08-23
+population: >-
+  Employee, Regular y no RF360. La distribución usa empleados activos en el
+  snapshot 2026-08-23; las tasas usan la población elegible definida para cada
+  fuente dentro de la misma ventana cerrada.
+grain:
+  distribution: Distinct employee at the 2026-08-23 monthly snapshot by compensation track.
+  promotion: Distinct Annual Review participant in the latest completed review cycle contained in the window, by time-safe compensation track.
+  attrition: Monthly active headcount exposure and distinct strict-Voluntary exits by time-safe compensation track.
+semantic_type:
+  compensation_track: grouped_mapping
+  promotion_rate: derived_feature
+  attrition_rate: derived_feature
+track_rule: >-
+  Normalizar compensation_grade y conservar sólo la primera letra A-Z. Por
+  ejemplo, M10, M20 y M30 pertenecen al track M. No se atribuye un significado
+  jerárquico u organizacional adicional a la letra.
+validation_story:
+  - id: source_and_window
+    evidence_role: defining
+    question: ¿El snapshot más reciente es 2026-08-23 y existen doce snapshots mensuales posteriores al baseline 2025-08-24?
+    why: Fija una sola ventana retrospectiva sin mezclar cohortes históricas.
+    method: Metadata y conteos agregados de fechas.
+    sql_reference: queries/audits/promotion_track_trailing_12m_20260918.sql
+    acceptance_rule: El corte debe ser 2026-08-23, el baseline debe ser 2025-08-24 y la ventana debe contener exactamente los 12 snapshots posteriores hasta agosto de 2026.
+  - id: track_mapping
+    evidence_role: defining
+    question: ¿Cada grade poblado se asigna determinísticamente a una letra y los casos no parseables quedan explícitos?
+    why: Evita mezclar o perder compensation grades al colapsar el sufijo numérico.
+    method: Auditoría agregada de cobertura, prefijos y reconciliación de conteos.
+    sql_reference: queries/audits/promotion_track_trailing_12m_20260918.sql
+    acceptance_rule: La suma de tracks debe reconciliar con la población elegible y ningún grade poblado puede desaparecer.
+  - id: promotion_rate
+    evidence_role: defining
+    question: ¿La tasa de promoción usa la fuente oficial y un denominador reproducible dentro de la ventana?
+    why: is_promo de Workday no sustituye la definición oficial de Annual Review.
+    method: Reconciliación agregada de participantes, promovidos y join temporal al track.
+    sql_reference: queries/audits/promotion_track_trailing_12m_20260918.sql
+    acceptance_rule: Promovidos no pueden exceder participantes; el join temporal debe ser único y los no emparejados deben quedar cuantificados.
+  - id: attrition_rate
+    evidence_role: defining
+    question: ¿Las salidas Voluntary y el headcount mensual usan la misma ventana y un track conocido antes de la salida?
+    why: Evita clasificar salidas con información futura o usar sólo sobrevivientes del snapshot final.
+    method: Conteos agregados de exposición mensual, salidas y reconciliación temporal.
+    sql_reference: queries/audits/promotion_track_trailing_12m_20260918.sql
+    acceptance_rule: Cada salida debe asignarse como máximo a un track; voluntary exits no pueden exceder la población expuesta.
+prior_evidence_policy: Contexto solamente; todas las cifras del slide se recalculan para esta ventana.

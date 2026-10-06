@@ -1,0 +1,32 @@
+version: 4
+concept: region_major_country_split_display
+reporting_mode: internal_analysis
+purpose: >
+  Add an explicitly display-only alternative beneath the stored Region
+  distribution: separate United States from Americas and China from APAC while
+  preserving the same active-regular employee snapshot population.
+definition:
+  type: grouped_display
+  source_table: hrda.post_hire_monthly_worker_dtls
+  snapshot: '2026-08-23'
+  population: Active regular employees at the named monthly snapshot.
+  grain: Distinct employee snapshot.
+  display_groups:
+    - India
+    - United States
+    - Americas excluding U.S.
+    - China
+    - APAC excluding China
+    - EMEA
+classification_rule: >
+  India and EMEA retain their stored Region groups. United States is identified
+  from country within AMERICAS, and China from country within APAC. The
+  remaining AMERICAS and APAC employees form their respective residual groups.
+acceptance_rule: >
+  The six display buckets reconcile to all eligible employees; every bucket has
+  n >= 30; one source row and one Region/Country value exist per employee
+  snapshot; no Region is unclassified; and United States/China do not occur
+  outside their expected stored Region.
+limitations:
+  - This is a presentation grouping, not a replacement definition for Region.
+  - Missing country values remain in their stored regional residual group.

@@ -1,0 +1,34 @@
+schema_version: 1
+language: es
+unknown_policy: conservative
+problem_context:
+  problem_statement: Evaluar conjuntamente señales de compensación relativa e historia laboral para un caso de uso longitudinal de attrition.
+  decision_or_use_case: Priorizar variables de RH que puedan utilizarse sin leakage y con evidencia reproducible.
+  outcome: Attrition posterior al snapshot mensual.
+  population: Empleados regulares activos.
+  unit_of_analysis: Empleado-snapshot.
+  knowledge_boundary: Cierre del snapshot mensual.
+  portfolio_hypotheses:
+    - Comp ratio es un concepto base para construir una posición relativa dentro del equipo.
+    - Rehire modifica la interpretación de tenure y experiencia previa en la compañía.
+  known_relationships:
+    - variables: [Comp ratio, Within team compensation range]
+      relationship: La posición dentro del equipo depende de la definición del comp ratio base.
+      why_relevant: Una definición no reconciliada del ratio limita la feature derivada.
+variables:
+  - name: Within team compensation range
+    attrition_use: Comparar posición relativa dentro del equipo.
+    population: Empleados regulares activos.
+    knowledge_date: Cierre del snapshot mensual.
+    context_role: feature derivada de comparación
+  - name: Comp ratio
+    attrition_use: Medir posición frente al rango salarial.
+    population: Empleados regulares activos.
+    knowledge_date: Cierre del snapshot mensual.
+    context_role: métrica base de compensación
+  - name: Rehire
+    attrition_use: Distinguir experiencia laboral previa.
+    population: Empleados regulares activos.
+    knowledge_date: Cierre del snapshot mensual.
+    context_role: contexto de historia laboral
+decisions: {}

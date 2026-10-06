@@ -1,0 +1,63 @@
+version: 3
+deliverable: internal_analysis
+objective: >-
+  Documentar la distribución vigente y la asociación histórica con attrition
+  voluntario a seis meses para las 43 variables candidatas, por cohortes y sin
+  scores individuales.
+outcome:
+  population: "worker_type='Employee' AND employee_type='Regular' AND active_status=1"
+  grain: employee_snapshot
+  definition: "term_type='VOLUNTARY' con term_date en (snapshot_date, snapshot_date + 6 meses]"
+  excluded_term_types: ["VOLUNTARY EXCEPTION", "NULL"]
+  monthly_history: latest_24_complete_snapshots
+  minimum_cohort: 30
+visual_rules:
+  category_order: inherit_v2_distribution
+  metric: "six_month_rate_percent + lift_vs_same_population_baseline"
+  simple_layout: "distribution_left__attrition_right__context_below"
+  dense_layout: "distribution_slide__immediate_attrition_companion"
+  no_estimate: "panel_no_estimable"
+candidates:
+  - {order: 1, name: "Applied to a job", slug: applied-to-a-job}
+  - {order: 2, name: "More than 3 job applications", slug: more-than-3-job-applications}
+  - {order: 3, name: "Transfer within past year", slug: transfer-within-past-year}
+  - {order: 4, name: "Location", slug: location}
+  - {order: 5, name: "Within team compensation range", slug: within-team-compensation-range}
+  - {order: 6, name: "Team turnover", slug: team-turnover}
+  - {order: 7, name: "More than 1 employee leaves in a year", slug: more-than-1-employee-leaves-in-a-year}
+  - {order: 8, name: "Job family", slug: job-family}
+  - {order: 9, name: "Region", slug: region}
+  - {order: 10, name: "Gender", slug: gender}
+  - {order: 11, name: "Remote / hybrid / in office status", slug: remote-hybrid-in-office-status}
+  - {order: 12, name: "Engineering vs. non-engineering", slug: engineering-vs-non-engineering}
+  - {order: 13, name: "Rehire", slug: rehire}
+  - {order: 14, name: "Years of experience prior to Qualcomm", slug: years-of-experience-prior-to-qualcomm}
+  - {order: 15, name: "Commute distance", slug: commute-distance}
+  - {order: 16, name: "RTO/hybrid comment in QVoice", slug: rto-hybrid-comment-in-qvoice}
+  - {order: 17, name: "Any comment on QVoice", slug: any-comment-on-qvoice}
+  - {order: 18, name: "Non-respondents", slug: non-respondents}
+  - {order: 19, name: "Intent to Stay items", slug: intent-to-stay-items}
+  - {order: 20, name: "Career goals item", slug: career-goals-item}
+  - {order: 21, name: "Average of all QVoice items", slug: average-of-all-qvoice-items}
+  - {order: 22, name: "Standardized / normalized within region", slug: standardized-normalized-within-region}
+  - {order: 23, name: "Tech industry unemployment data", slug: tech-industry-unemployment-data}
+  - {order: 24, name: "Draup data", slug: draup-data}
+  - {order: 25, name: "LinkedIn scraping", slug: linkedin-scraping}
+  - {order: 26, name: "Position / time in level", slug: position-time-in-level}
+  - {order: 27, name: "Company tenure", slug: company-tenure}
+  - {order: 28, name: "Time since last promotion", slug: time-since-last-promotion}
+  - {order: 29, name: "Promoted vs. hired into level", slug: promoted-vs-hired-into-level}
+  - {order: 30, name: "Level", slug: level}
+  - {order: 31, name: "Layers from CEO", slug: layers-from-ceo}
+  - {order: 32, name: "Compensation grade", slug: compensation-grade}
+  - {order: 33, name: "Comp ratio", slug: comp-ratio}
+  - {order: 34, name: "Co-location with manager", slug: co-location-with-manager}
+  - {order: 35, name: "Hours away from manager", slug: hours-away-from-manager}
+  - {order: 36, name: "High risk manager", slug: high-risk-manager}
+  - {order: 37, name: "High turnover under this person", slug: high-turnover-under-this-person}
+  - {order: 38, name: "Manager leaving", slug: manager-leaving}
+  - {order: 39, name: "Manager change", slug: manager-change}
+  - {order: 40, name: "Number of manager changes", slug: number-of-manager-changes}
+  - {order: 41, name: "Talent index", slug: talent-index}
+  - {order: 42, name: "Major inflection points", slug: major-inflection-points}
+  - {order: 43, name: "ET fields", slug: et-fields}

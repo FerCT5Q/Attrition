@@ -1,0 +1,366 @@
+{
+  "artifact": "internal_analysis",
+  "evidence_type": "aggregate-only QVoice raw open-text topic mentions",
+  "generated_on": "2026-09-09",
+  "outcome": "pass",
+  "minimum_cohort": 30,
+  "primary_source_rule": "Original open-ended fields only; 2026 EN columns are diagnostics and are not used in the trend.",
+  "grain": "distinct participant-wave case per theme",
+  "deduplication_rule": "Each participant contributes at most once per wave and theme, across all selected prompts.",
+  "comment_text_persisted": false,
+  "identifiers_persisted": false,
+  "keyword_taxonomy": {
+    "Remote / WFH": {
+      "description": "Remote work or working from home mentions.",
+      "patterns": [
+        "remote work",
+        "remote-working",
+        "working remotely",
+        "work remotely",
+        "work from home",
+        "working from home",
+        "wfh",
+        "telework",
+        "telecommute",
+        "home office",
+        "remote work",
+        "trabajo remoto",
+        "trabajo a distancia",
+        "trabajar desde casa",
+        "trabajo desde casa",
+        "desde casa",
+        "teletrabajo",
+        "modalidad remota",
+        "modalidad remoto"
+      ]
+    },
+    "Hybrid": {
+      "description": "Hybrid-work mentions and variants.",
+      "patterns": [
+        "hybrid work",
+        "hybrid-working",
+        "hybrid",
+        "trabajo híbrido",
+        "trabajo hibrido",
+        "modelo híbrido",
+        "modelo hibrido",
+        "esquema híbrido",
+        "esquema hibrido",
+        "modalidad híbrida",
+        "modalidad hibrida",
+        "híbrido",
+        "hibrido"
+      ]
+    },
+    "RTO / office attendance": {
+      "description": "Return-to-office or office-attendance mentions; home office is excluded from this theme.",
+      "patterns": [
+        "rto",
+        "return to office",
+        "return to the office",
+        "return back to office",
+        "back to office",
+        "go back to office",
+        "in office",
+        "in-office",
+        "in the office",
+        "onsite",
+        "on-site",
+        "office days",
+        "days in office",
+        "office attendance",
+        "presencial",
+        "trabajo presencial",
+        "volver a la oficina",
+        "regreso a la oficina",
+        "regresar a la oficina",
+        "ir a la oficina",
+        "días de oficina",
+        "dias de oficina",
+        "asistir a la oficina",
+        "presencialidad"
+      ]
+    }
+  },
+  "requirement_friction_rule": "Flag requirement/friction context only when a requirement/friction term co-occurs with an RTO / office attendance mention in an improvement-oriented prompt; this is context, not a complaint label.",
+  "friction_patterns": [
+    "mandatory",
+    "mandated",
+    "require",
+    "required",
+    "requirement",
+    "must",
+    "expected",
+    "policy",
+    "política",
+    "politica",
+    "obligatorio",
+    "obligada",
+    "obligación",
+    "obligacion",
+    "forced",
+    "forzado",
+    "commute",
+    "commuting",
+    "commute time",
+    "parking",
+    "inconvenient",
+    "inconvenience",
+    "difficult",
+    "difficulty",
+    "burden",
+    "flexibility",
+    "flexible",
+    "flexibilidad",
+    "not flexible",
+    "days per week",
+    "días por semana",
+    "dias por semana",
+    "prefer",
+    "prefiero",
+    "no quiero",
+    "should not"
+  ],
+  "waves": [
+    {
+      "wave": "Mar-2023",
+      "source_file": "March 2023 Pulse_raw data.xlsx",
+      "sheet": "Raw data",
+      "key_column": "EmployeeID",
+      "prompt_columns": {
+        "doing_well": "What is one thing Qualcomm is doing really well? Please describe something that you would like Qualcomm to continue doing.",
+        "can_improve": "What is one thing Qualcomm can do to improve? Please describe something that you would like Qualcomm to do to improve your experience.",
+        "processes_to_improve": null
+      },
+      "en_diagnostic": null,
+      "row_count": 7314,
+      "distinct_usable_participant_keys": 7314,
+      "respondent_wave_count": 3901,
+      "field_nonempty_rows": {
+        "doing_well": 3650,
+        "can_improve": 3510
+      },
+      "rows_with_any_comment": 3901,
+      "duplicate_participant_keys": 0,
+      "duplicate_participant_rows": 0,
+      "comments_without_key": 0,
+      "theme_counts": {
+        "Remote / WFH": 345,
+        "Hybrid": 189,
+        "RTO / office attendance": 326
+      },
+      "published_theme_counts": {
+        "Remote / WFH": 345,
+        "Hybrid": 189,
+        "RTO / office attendance": 326
+      },
+      "overlap_counts": {
+        "Remote / WFH + Hybrid": 57,
+        "Remote / WFH + RTO / office attendance": 113,
+        "Hybrid + RTO / office attendance": 70
+      },
+      "diagnostics": {
+        "improvement_rto_mentions": 287,
+        "requirement_friction_context": 167,
+        "minimum_cohort": 30,
+        "improvement_rto_publishable": true,
+        "requirement_friction_publishable": true
+      },
+      "suppression_status": {
+        "Remote / WFH": "published",
+        "Hybrid": "published",
+        "RTO / office attendance": "published"
+      }
+    },
+    {
+      "wave": "Jan-2024",
+      "source_file": "Jan 2024 Qvoice raw data.xlsx",
+      "sheet": "Raw data",
+      "key_column": "Participant's Unique Identifier",
+      "prompt_columns": {
+        "doing_well": "What is one thing Qualcomm is doing really well? Please describe something that you would like Qualcomm to continue doing.",
+        "can_improve": "What is one thing Qualcomm can do to improve? Please describe something that you would like Qualcomm to do to improve your experience.",
+        "processes_to_improve": null
+      },
+      "en_diagnostic": null,
+      "row_count": 36807,
+      "distinct_usable_participant_keys": 36806,
+      "respondent_wave_count": 20965,
+      "field_nonempty_rows": {
+        "doing_well": 19445,
+        "can_improve": 19318
+      },
+      "rows_with_any_comment": 20965,
+      "duplicate_participant_keys": 0,
+      "duplicate_participant_rows": 0,
+      "comments_without_key": 0,
+      "theme_counts": {
+        "Remote / WFH": 961,
+        "Hybrid": 287,
+        "RTO / office attendance": 559
+      },
+      "published_theme_counts": {
+        "Remote / WFH": 961,
+        "Hybrid": 287,
+        "RTO / office attendance": 559
+      },
+      "overlap_counts": {
+        "Remote / WFH + Hybrid": 87,
+        "Remote / WFH + RTO / office attendance": 171,
+        "Hybrid + RTO / office attendance": 77
+      },
+      "diagnostics": {
+        "improvement_rto_mentions": 487,
+        "requirement_friction_context": 284,
+        "minimum_cohort": 30,
+        "improvement_rto_publishable": true,
+        "requirement_friction_publishable": true
+      },
+      "suppression_status": {
+        "Remote / WFH": "published",
+        "Hybrid": "published",
+        "RTO / office attendance": "published"
+      }
+    },
+    {
+      "wave": "Jan-2025",
+      "source_file": "Jan 2025_Qvoice_raw data.xlsx",
+      "sheet": "Raw data",
+      "key_column": "EmpID",
+      "prompt_columns": {
+        "doing_well": "What is one thing Qualcomm is doing really well? Please describe something that you would like Qualcomm to continue doing.",
+        "can_improve": "What is one thing Qualcomm can do to improve? Please describe something that you would like Qualcomm to do to improve your experience.",
+        "processes_to_improve": "If desired, please describe 1-2 work processes that you would like to see improved or made more efficient."
+      },
+      "en_diagnostic": null,
+      "row_count": 37837,
+      "distinct_usable_participant_keys": 37837,
+      "respondent_wave_count": 20161,
+      "field_nonempty_rows": {
+        "doing_well": 17566,
+        "can_improve": 17474,
+        "processes_to_improve": 7090
+      },
+      "rows_with_any_comment": 20161,
+      "duplicate_participant_keys": 0,
+      "duplicate_participant_rows": 0,
+      "comments_without_key": 0,
+      "theme_counts": {
+        "Remote / WFH": 1404,
+        "Hybrid": 269,
+        "RTO / office attendance": 1480
+      },
+      "published_theme_counts": {
+        "Remote / WFH": 1404,
+        "Hybrid": 269,
+        "RTO / office attendance": 1480
+      },
+      "overlap_counts": {
+        "Remote / WFH + Hybrid": 83,
+        "Remote / WFH + RTO / office attendance": 371,
+        "Hybrid + RTO / office attendance": 90
+      },
+      "diagnostics": {
+        "improvement_rto_mentions": 1373,
+        "requirement_friction_context": 907,
+        "minimum_cohort": 30,
+        "improvement_rto_publishable": true,
+        "requirement_friction_publishable": true
+      },
+      "suppression_status": {
+        "Remote / WFH": "published",
+        "Hybrid": "published",
+        "RTO / office attendance": "published"
+      }
+    },
+    {
+      "wave": "Jan-2026",
+      "source_file": "Jan 2026 Qvoice_raw data.xlsx",
+      "sheet": "Raw data",
+      "key_column": "Emp ID",
+      "prompt_columns": {
+        "doing_well": "What is one thing Qualcomm is doing really well? Please describe something that you would like Qualcomm to continue doing. Note: If you do not want to provide any feedback, you may leave this blank.",
+        "can_improve": "What is one thing Qualcomm can do to improve? Please describe something that you would like Qualcomm to do to improve your experience. Note: If you do not want to provide any feedback, you may leave this blank.",
+        "processes_to_improve": "If desired, please describe 1-2 work processes that you would like to see improved or made more efficient. Note: If you do not want to provide any feedback, you may leave this blank."
+      },
+      "en_diagnostic": {
+        "columns_available": {
+          "processes_to_improve": "If desired, please describe 1-2 work processes that you would like to see i... EN",
+          "doing_well": "What is one thing Qualcomm is doing really well? Please describe something... EN",
+          "can_improve": "What is one thing Qualcomm can do to improve? Please describe something tha... EN"
+        },
+        "field_nonempty_rows": {
+          "processes_to_improve": 6536,
+          "doing_well": 11077,
+          "can_improve": 12192
+        },
+        "distinct_keyed_respondents": {
+          "processes_to_improve": 6536,
+          "doing_well": 11077,
+          "can_improve": 12192
+        },
+        "theme_counts": {
+          "Remote / WFH": 1420,
+          "Hybrid": 697,
+          "RTO / office attendance": 1183
+        },
+        "note": "Aggregate quality diagnostic only; EN columns are excluded from the primary trend."
+      },
+      "row_count": 42203,
+      "distinct_usable_participant_keys": 42203,
+      "respondent_wave_count": 15351,
+      "field_nonempty_rows": {
+        "processes_to_improve": 6536,
+        "doing_well": 11077,
+        "can_improve": 12192
+      },
+      "rows_with_any_comment": 15351,
+      "duplicate_participant_keys": 0,
+      "duplicate_participant_rows": 0,
+      "comments_without_key": 0,
+      "theme_counts": {
+        "Remote / WFH": 1376,
+        "Hybrid": 689,
+        "RTO / office attendance": 1168
+      },
+      "published_theme_counts": {
+        "Remote / WFH": 1376,
+        "Hybrid": 689,
+        "RTO / office attendance": 1168
+      },
+      "overlap_counts": {
+        "Remote / WFH + Hybrid": 193,
+        "Remote / WFH + RTO / office attendance": 291,
+        "Hybrid + RTO / office attendance": 210
+      },
+      "diagnostics": {
+        "improvement_rto_mentions": 1115,
+        "requirement_friction_context": 779,
+        "minimum_cohort": 30,
+        "improvement_rto_publishable": true,
+        "requirement_friction_publishable": true
+      },
+      "suppression_status": {
+        "Remote / WFH": "published",
+        "Hybrid": "published",
+        "RTO / office attendance": "published"
+      }
+    }
+  ],
+  "acceptance_rule": {
+    "expected_waves": [
+      "Mar-2023",
+      "Jan-2024",
+      "Jan-2025",
+      "Jan-2026"
+    ],
+    "required_prompt_roles": [
+      "doing_well",
+      "can_improve"
+    ],
+    "zero_duplicate_participant_rows": true,
+    "zero_comments_without_key": true,
+    "published_counts_minimum_n": 30,
+    "no_identifiers_or_free_text": true
+  }
+}

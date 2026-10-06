@@ -1,0 +1,98 @@
+{
+  "artifact": "presentation",
+  "query_path": "queries/profiles/co_location_manager_site_city_annual_through_20260823.sql",
+  "executed_on": "2026-09-09",
+  "deck_cutoff": "2026-08-23",
+  "population": "Active regular employees with an active regular manager in the same monthly snapshot.",
+  "grain": "Employee-manager snapshot",
+  "office_site_proxy": "Same normalized nonblank office_site for employee and manager.",
+  "office_site_city_proxy": "Same normalized nonblank office_site and city for employee and manager.",
+  "acceptance_rule": "Both annual rates must use an explicit comparable-pair denominator and the office_site + city rate must exclude pairs with different stored cities.",
+  "outcome": "pass",
+  "rows": [
+    {
+      "fiscal_year": "2020",
+      "snapshot_count": 3,
+      "eligible_employee_snapshots": 92542,
+      "site_comparable_employee_snapshots": 90765,
+      "same_office_site_employee_snapshots": 86391,
+      "same_office_site_percent_of_site_comparable": 95.181,
+      "site_city_comparable_employee_snapshots": 90765,
+      "same_office_site_and_city_employee_snapshots": 83994,
+      "same_office_site_and_city_percent_of_site_city_comparable": 92.5401,
+      "same_office_site_different_city_employee_snapshots": 2397
+    },
+    {
+      "fiscal_year": "2021",
+      "snapshot_count": 12,
+      "eligible_employee_snapshots": 401400,
+      "site_comparable_employee_snapshots": 386257,
+      "same_office_site_employee_snapshots": 367418,
+      "same_office_site_percent_of_site_comparable": 95.1227,
+      "site_city_comparable_employee_snapshots": 386257,
+      "same_office_site_and_city_employee_snapshots": 356938,
+      "same_office_site_and_city_percent_of_site_city_comparable": 92.4095,
+      "same_office_site_different_city_employee_snapshots": 10480
+    },
+    {
+      "fiscal_year": "2022",
+      "snapshot_count": 12,
+      "eligible_employee_snapshots": 474997,
+      "site_comparable_employee_snapshots": 457699,
+      "same_office_site_employee_snapshots": 432937,
+      "same_office_site_percent_of_site_comparable": 94.5899,
+      "site_city_comparable_employee_snapshots": 457699,
+      "same_office_site_and_city_employee_snapshots": 420895,
+      "same_office_site_and_city_percent_of_site_city_comparable": 91.9589,
+      "same_office_site_different_city_employee_snapshots": 12042
+    },
+    {
+      "fiscal_year": "2023",
+      "snapshot_count": 12,
+      "eligible_employee_snapshots": 512956,
+      "site_comparable_employee_snapshots": 491078,
+      "same_office_site_employee_snapshots": 462688,
+      "same_office_site_percent_of_site_comparable": 94.2188,
+      "site_city_comparable_employee_snapshots": 491078,
+      "same_office_site_and_city_employee_snapshots": 449657,
+      "same_office_site_and_city_percent_of_site_city_comparable": 91.5653,
+      "same_office_site_different_city_employee_snapshots": 13031
+    },
+    {
+      "fiscal_year": "2024",
+      "snapshot_count": 12,
+      "eligible_employee_snapshots": 495425,
+      "site_comparable_employee_snapshots": 473918,
+      "same_office_site_employee_snapshots": 445622,
+      "same_office_site_percent_of_site_comparable": 94.0293,
+      "site_city_comparable_employee_snapshots": 473918,
+      "same_office_site_and_city_employee_snapshots": 431330,
+      "same_office_site_and_city_percent_of_site_city_comparable": 91.0136,
+      "same_office_site_different_city_employee_snapshots": 14292
+    },
+    {
+      "fiscal_year": "2025",
+      "snapshot_count": 12,
+      "eligible_employee_snapshots": 520256,
+      "site_comparable_employee_snapshots": 487822,
+      "same_office_site_employee_snapshots": 460694,
+      "same_office_site_percent_of_site_comparable": 94.439,
+      "site_city_comparable_employee_snapshots": 487822,
+      "same_office_site_and_city_employee_snapshots": 444489,
+      "same_office_site_and_city_percent_of_site_city_comparable": 91.117,
+      "same_office_site_different_city_employee_snapshots": 16205
+    },
+    {
+      "fiscal_year": "2026",
+      "snapshot_count": 11,
+      "eligible_employee_snapshots": 525633,
+      "site_comparable_employee_snapshots": 488355,
+      "same_office_site_employee_snapshots": 459095,
+      "same_office_site_percent_of_site_comparable": 94.0085,
+      "site_city_comparable_employee_snapshots": 488355,
+      "same_office_site_and_city_employee_snapshots": 439972,
+      "same_office_site_and_city_percent_of_site_city_comparable": 90.0927,
+      "same_office_site_different_city_employee_snapshots": 19123
+    }
+  ]
+}

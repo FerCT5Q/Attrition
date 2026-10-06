@@ -1,0 +1,2291 @@
+{
+  "version": 2,
+  "generated_on": "2026-09-17",
+  "minimum_shared_cohort": 30,
+  "source_runs": [
+    "attrition-43-monthly-fiscal-20260816",
+    "qvoice-excel-v4-20260826-2-final2",
+    "high-risk-manager-score-coverage-revalidation-20260821",
+    "manager-leaving-consistency-join-validation-20260820-5",
+    "number-of-manager-changes-join-validation-20260820-4",
+    "talent-index-latest-recoverable-distribution-20260909",
+    "more-than-3-job-applications-trailing-6m-20260907-v4",
+    "team-post-exit-attrition-static-cohort-20260911",
+    "above-average-team-turnover-v4-20260910-r13",
+    "above-average-team-turnover-threshold-sensitivity-20260911",
+    "layers-from-ceo-snapshot-20260823",
+    "role-level-tenure-snapshot-20260823",
+    "time-since-last-promotion-20260823",
+    "promotion-history-by-compensation-grade-20260823",
+    "current-grade-entry-path-20260823",
+    "company-tenure-stored-fields-snapshot-20260823",
+    "commute-distance-onsite-20260911",
+    "prior-experience-annual-voluntary-attrition-20260911",
+    "engineering-cto-org-split-display-20260911",
+    "level-grouped-by-grade-family-display-20260911",
+    "current-grade-entry-path-tenure-attrition-20260911",
+    "qvoice-heartbeat-20260911",
+    "application-intensity-job-applications-vw-20260913",
+    "application-employee-snapshot-trailing-6m-20260913",
+    "comp-ratio-voluntary-attrition-history-20260913",
+    "co-location-manager-site-city-20260909",
+    "number-of-manager-changes-same-date-mobility-comparison-20260914",
+    "qvoice-career-goals-history-through-2024-20260917",
+    "qvoice-career-goals-history-from-2024-20260917"
+  ],
+  "new_aggregate_profiles": [
+    "queries/profiles/distribution_display_policy_latest_snapshot.sql",
+    "queries/profiles/distribution_v2_prior_experience_bands_20260907.sql",
+    "queries/profiles/distribution_v2_time_in_role_bands_20260907.sql",
+    "queries/profiles/distribution_v2_time_since_promotion_bands_20260907.sql",
+    "queries/profiles/more_than_three_job_applications_trailing_6m_20260907.sql",
+    "queries/profiles/distribution_v2_prior_experience_years_20260927.sql",
+    "queries/profiles/talent_index_latest_recoverable_distribution_20260823.sql",
+    "queries/profiles/stored_metrics_availability_latest_snapshot_20260908.sql",
+    "queries/profiles/stored_metrics_distribution_bands_latest_snapshot_20260908.sql",
+    "queries/profiles/number_of_manager_changes_distribution_6m_20260909.sql",
+    "queries/profiles/number_of_manager_changes_distribution_12m_20260909.sql",
+    "queries/audits/manager_leaving_voluntary_6m_distribution_20260909.sql",
+    "queries/profiles/office_site_city_distribution_20260908.sql",
+    "queries/profiles/co_location_manager_site_city_annual_through_20260823.sql",
+    "queries/profiles/job_family_daily_snapshot_top20_20260908.sql",
+    "queries/profiles/team_turnover_6m_scenarios_20260908.sql",
+    "queries/profiles/transfer_within_past_year_distribution_monthly_weekly_20260908.sql",
+    "queries/profiles/commute_distance_global_zip_hash_distribution_20260908.sql",
+    "queries/profiles/residential_manager_distance_postal_pair_hash_distribution_20260909.sql",
+    "queries/profiles/above_average_team_turnover_presentation_distribution_20260911_threshold_1_3.sql",
+    "queries/audits/compensation_grade_domain_validation_20260909.sql",
+    "queries/profiles/role_level_tenure_distribution_20260823.sql",
+    "queries/profiles/time_since_last_promotion_distribution_20260823.sql",
+    "queries/profiles/promotion_history_by_compensation_grade_20260823.sql",
+    "queries/profiles/current_grade_entry_path_20260823.sql",
+    "queries/profiles/company_tenure_stored_date_distribution_20260823.sql",
+    "queries/profiles/commute_distance_global_zip_hash_distribution_20260911_work_arrangement.sql",
+    "queries/profiles/qvoice_heartbeat_workforce_denominator_20260911.sql",
+    "queries/profiles/application_intensity_job_applications_vw_annual_with_ytd_20260913.sql",
+    "queries/profiles/application_employee_snapshot_trailing_6m_distribution_20260913.sql",
+    "queries/profiles/number_of_manager_changes_same_date_mobility_comparison_20260914.sql"
+  ],
+  "historical_aggregate_profiles": [
+    "queries/profiles/distribution_v2_company_tenure_bands_20260907.sql"
+  ],
+  "new_aggregate_audits": [
+    "queries/audits/job_family_snapshot_availability_20260908.sql",
+    "queries/audits/region_labor_market_global_display_20260909.sql",
+    "queries/audits/region_major_country_split_display_20260909.sql",
+    "queries/audits/team_turnover_voluntary_term_type_domain_20260908.sql",
+    "queries/audits/team_turnover_direct_team_membership_20260908.sql",
+    "queries/audits/team_turnover_manager_reference_resolution_20260908.sql",
+    "queries/audits/more_than_1_employee_leaves_team_6m_20260908.sql",
+    "queries/audits/more_than_1_employee_leaves_team_12m_20260909.sql",
+    "queries/audits/more_than_1_employee_leaves_annual_window_coverage_20260909.sql",
+    "queries/audits/team_post_exit_attrition_calendar_20260911.sql",
+    "queries/audits/team_post_exit_attrition_event_source_reconciliation_20260910.sql",
+    "queries/audits/team_post_exit_attrition_static_snapshot_20260911.sql",
+    "queries/audits/transfer_within_past_year_source_reconciliation_20260908.sql",
+    "queries/audits/transfer_within_past_year_profile_validation_20260908.sql",
+    "queries/audits/transfer_within_past_year_history_availability_20260908.sql",
+    "queries/audits/commute_distance_global_input_coverage_20260908.sql",
+    "queries/audits/commute_distance_global_postal_format_by_country_20260909.sql",
+    "queries/audits/residential_manager_distance_snapshot_reconciliation_20260909.sql",
+    "queries/audits/residential_manager_distance_country_mapping_20260910.sql",
+    "queries/audits/high_risk_manager_6m_score_distribution_20260909.sql",
+    "queries/audits/high_turnover_under_manager_6m_distribution_20260909.sql",
+    "queries/audits/above_average_team_turnover_18m_audit_20260911_threshold_1_3.sql",
+    "queries/audits/above_average_team_turnover_termination_reconciliation_20260910.sql",
+    "queries/audits/above_average_team_turnover_threshold_sensitivity_20260911.sql",
+    "queries/audits/manager_leaving_voluntary_6m_source_access_20260909.sql",
+    "queries/audits/co_location_manager_site_city_validation_20260909.sql",
+    "queries/audits/compensation_grade_domain_validation_20260909.sql",
+    "queries/audits/qvoice_nonrespondent_schema_20260909.sql",
+    "queries/audits/qvoice_nonrespondent_source_reconciliation_20260909.sql",
+    "queries/audits/qvoice_nonrespondent_workforce_denominator_20260909.sql",
+    "queries/audits/qvoice_nonrespondent_snapshot_candidates_20260909.sql",
+    "queries/audits/qvoice_nonrespondent_proxy_join_template_20260909.sql",
+    "queries/audits/layers_from_ceo_snapshot_20260823_distribution.sql",
+    "queries/audits/role_level_tenure_transition_audit_20260823.sql",
+    "queries/audits/time_since_last_promotion_event_integrity_20260823.sql",
+    "queries/audits/promotion_history_by_compensation_grade_integrity_20260823.sql",
+    "queries/audits/current_grade_entry_path_integrity_20260823.sql",
+    "queries/audits/company_tenure_stored_date_integrity_20260823.sql",
+    "queries/audits/commute_distance_global_input_coverage_20260911_work_arrangement.sql",
+    "queries/audits/commute_distance_work_arrangement_onsite_20260911.sql",
+    "queries/audits/prior_experience_annual_voluntary_attrition_20260911.sql",
+    "queries/audits/prior_experience_annual_voluntary_attrition_gap_20260911.sql",
+    "queries/audits/engineering_cto_org_split_display_20260911.sql",
+    "queries/audits/engineering_cto_display_denominator_reconciliation_20260911.sql",
+    "queries/audits/engineering_cto_branch_diagnostic_20260911.sql",
+    "queries/audits/engineering_cto_display_upper_category_reconciliation_20260911.sql",
+    "queries/audits/level_grouped_by_compensation_grade_family_20260911.sql",
+    "queries/audits/current_grade_entry_path_tenure_attrition_20260911.sql",
+    "queries/audits/current_grade_entry_path_tenure_attrition_gap_20260911.sql",
+    "queries/audits/current_grade_entry_path_tenure_source_lineage_20260911.sql",
+    "queries/audits/qvoice_heartbeat_workforce_reconciliation_20260911.sql",
+    "queries/audits/application_employee_snapshot_trailing_6m_fiscal_reconciliation_20260913.sql",
+    "queries/audits/applied_to_a_job_source_reconciliation_20260913.sql",
+    "queries/audits/application_employee_snapshot_trailing_6m_join_20260913.sql",
+    "queries/audits/application_employee_snapshot_trailing_6m_temporal_20260913.sql",
+    "queries/audits/application_employee_snapshot_trailing_6m_publishability_20260913.sql",
+    "queries/audits/application_job_applications_vw_metadata_20260913.sql",
+    "queries/audits/application_job_applications_vw_event_quality_20260913.sql",
+    "queries/audits/comp_ratio_voluntary_attrition_history_20260913.sql"
+  ],
+  "aggregate_evidence_builders": [
+    "tools/build_qvoice_comment_evidence.py",
+    "tools/build_qvoice_nonrespondent_proxy_evidence.py",
+    "tools/build_qvoice_comparable_favorable_evidence.py",
+    "tools/build_qvoice_normalized_region_evidence.py",
+    "tools/build_talent_index_distribution_evidence.py",
+    "tools/build_residential_manager_distance_evidence.py",
+    "tools/build_team_post_exit_attrition_evidence.py",
+    "tools/build_above_average_team_turnover_evidence_threshold_1_3.py",
+    "tools/build_above_average_team_turnover_threshold_sensitivity.py",
+    "tools/build_layers_from_ceo_distribution_evidence.py",
+    "tools/build_role_level_tenure_evidence.py",
+    "tools/build_time_since_last_promotion_distribution_evidence.py",
+    "tools/build_promotion_history_by_compensation_grade_evidence.py",
+    "tools/build_current_grade_entry_path_evidence.py",
+    "tools/build_company_tenure_evidence.py",
+    "tools/build_global_commute_distance_evidence.py",
+    "tools/build_prior_experience_annual_attrition.py",
+    "tools/build_engineering_cto_org_split_evidence.py",
+    "tools/build_level_grouped_by_grade_family_evidence.py",
+    "tools/build_current_grade_entry_path_tenure_attrition.py",
+    "tools/build_qvoice_heartbeat_evidence.py",
+    "tools/build_application_intensity_evidence_20260913.py",
+    "tools/build_comp_ratio_voluntary_attrition_evidence_20260913.py"
+  ],
+  "frozen_evidence": {
+    "talent_index_latest_recoverable_distribution": {
+      "evidence": "output/distribution/json/talent-index-latest-recoverable-distribution-evidence-20260909.json",
+      "query": "queries/profiles/talent_index_latest_recoverable_distribution_20260823.sql",
+      "query_sha256": "a56faae4034c07678cecb1deadad77330e0143e9563b15ecd66de3174edcf616",
+      "query_result_sha256": "fa6003cca4850c847080ef9c363eb971e38ab525445652cb8ab9b9f831c1b638",
+      "execution_date": "2026-09-09",
+      "snapshot": "2026-08-23",
+      "population": "worker_type='Employee'; employee_type='Regular'; active_status=1 at the 2026-08-23 monthly snapshot",
+      "grain": "Distinct active regular employee in the workforce snapshot; one selected stored cycle per employee",
+      "selection_rule": "Select the highest stored cycle_number per employee. Keep its talent_index only when every selected-cycle source row is non-null and all selected-cycle rows agree on exactly one value; do not use technical timestamps as an effective date and do not fall back to an older cycle.",
+      "distribution_rule": "Start with contiguous 10-point bands over 0–100. When a non-empty band is below n=30, deterministically select the first eligible adjacent-band width among 20, 50, then 100 points.",
+      "publication_rule": "Aggregate values only; every displayed band has n >= 30; no employee-level data or identities.",
+      "acceptance_rule": "Observable + not observable = eligible; join matched + unmatched = eligible; one selected output value per employee; zero selected conflicts, duplicate keys, and out-of-range values; bands sum to observable values and every published band has n >= 30.",
+      "metrics": {
+        "eligible_employees": 50043,
+        "observable_employees": 39647,
+        "not_observable_employees": 10396,
+        "median_stored_value": 56.4017,
+        "first_quartile": 22.6609,
+        "third_quartile": 67.467,
+        "out_of_range_employees": 0
+      },
+      "limitation": "Currently recoverable stored value for employees active on 23-Aug-2026; not proof the index was calculated or effective on that date.",
+      "outcome": "pass"
+    },
+    "residential_manager_distance": {
+      "evidence": "output/distribution/json/residential-manager-distance-evidence-20260909.json",
+      "builder": "tools/build_residential_manager_distance_evidence.py",
+      "profile_query": "queries/profiles/residential_manager_distance_postal_pair_hash_distribution_20260909.sql",
+      "audit_query": "queries/audits/residential_manager_distance_snapshot_reconciliation_20260909.sql",
+      "country_mapping_audit_query": "queries/audits/residential_manager_distance_country_mapping_20260910.sql",
+      "execution_date": "2026-09-10",
+      "snapshot": "2026-08-23",
+      "population": "Active regular employees with active same-snapshot manager matching",
+      "grain": "Aggregate employee-manager pair at one monthly snapshot",
+      "publication_status": "validated",
+      "method": {
+        "distance": "Haversine kilometers between employee and same-snapshot manager public postal-code centroids",
+        "unit": "kilometers",
+        "binning": "One-kilometer intervals through 30 km, dynamically coalesced with adjacent intervals until every displayed band has n >= 30; all remaining calculable pairs are 30+ km",
+        "postal_proxy_handling": "Employee and manager postal-code variants are one-way hashed in Redshift, matched locally in memory, and never persisted in this evidence",
+        "not_measured": [
+          "travel time",
+          "route distance",
+          "office distance",
+          "actual home address",
+          "commute burden"
+        ]
+      },
+      "query_sha256": {
+        "profile_sql": "10051345e7d2e678ded6dcefcd42bc01f7d91b65f9d4114d79928e72417dfc5b",
+        "profile_result": "7ffc5cbd5e7a55ae2e05aa8e0f43a69137114a83ff97cbdedbf006cfd75e1090",
+        "audit_sql": "cc93fd7c43427498a75cd899ede94d89065aa54777a07abc563d403973dbb52c",
+        "audit_result": "572e5588e251e902f25d65725ae04fcb78b11f77495b5ca08f8a08d477f8ab3f",
+        "country_mapping_audit_sql": "c2af0a6c45aa377c7b01e53bd06f27f8104be0f9db177b9e46f4e5a88ec99212",
+        "country_mapping_audit_result": "4789160515d90d5791f9a4db48a2bf9aaeec5aad8fb2b276dca0d5f7db6b02f7"
+      },
+      "reference_sha256": {
+        "AT": "ae4c3f71dd53e285e3db566a74b4925a492ad473db50d0f247cd057f3258dcf5",
+        "AU": "179bb86aaeec0776262ee4133fc4090638a5774c547c4cd72cce58e824623481",
+        "BE": "318f40205ad82ebb1e3d1a6020f5db11124aa57a3bb7eadcb6c285dbe4e5320e",
+        "BR": "2a09ab3a9d12d4571ac6af35135ad4bf94864169298956a30ff697436612f31b",
+        "CA": "746c5a48167776e8db3bb10eef33edfb9b5420bbc7e33faebc0d0b7a5fcc6d72",
+        "CH": "745ead818ba7d496ed7f09d825a55172051480be6c7ee49a68ff9f37e0b3d7d1",
+        "CN": "a55f44580b18c052d95f0d3caaab89513cefddae07b05d185ceca1acd9d55508",
+        "DE": "a6bece08947c97b526bdba8bf51b7767157f21f16d0a45bb10854df41a8ec120",
+        "ES": "a0ec88b01272a3024c178cc8cd942c45a2d4d1d01c1cb3206367de8f693019fb",
+        "FI": "f5cb3a7b315ddf596dc65129717725e8f83fcbf3707ba913bdd222c52d4b7168",
+        "FR": "b3ba20fabb7424121da36382f81bf311470fa290b0a9c866b96b45f3190c1a7c",
+        "GB": "a468f551000c792484949f6374768df85ca2fd4190ed7d03c4fc1013b24b5b04",
+        "ID": "33ef55dd9099ce589adb4e510fb3d78895d2faad228ca9cb9e1272535c0b9715",
+        "IE": "c13446c3a5a1d6ca969c417064a78344d94613b78cf027420cf47c22598b9da6",
+        "IN": "4fa1e8c00a543efff5496c74afb133b7b811b74811f3295fb054c7419c0238a2",
+        "IT": "11ffe787a104288deced0263d93c59a85430b0900bb80ab9e9f2e6930ccb3d46",
+        "JP": "727805185a92f12065e8b35aa6cc41604a8df4ae1a2eacd68d7cf448dd2ecfcf",
+        "KR": "b74f93c28e2c1038e641903fe75280acd055864cdbf0c4040c6e696e1e83443a",
+        "MX": "25c8923f452384f780c143eaff32bf9fd779e3f4853f0ef4031a0190c1a69d27",
+        "NL": "d2c8473a5cbdeaf2b8b4fe7532f650fb72b01e9a6a73eacd593552ec00d9df05",
+        "RO": "b0afac8ca4ab6468ccbbccba26e5c6e0599852eb35d59494ed8acd995625a378",
+        "SE": "fad5d512675bf0914d55298c9fe731495fd24e17285f52f183c0a83df9ed2622",
+        "SG": "728a46d58592b5b12f94a3362999947e08c3de718db3c5d684f51bb588e51968",
+        "US": "06f614d8ea3d8e73b54667944059089940fdf5908e5f2b62cb44e52c886a1652"
+      },
+      "aggregate_metrics": {
+        "active_regular_employees": 50043,
+        "feature_eligible_pairs": 49556,
+        "key_unavailable_employees": 487,
+        "observable_pairs": 42615,
+        "not_observable_pairs": 6941,
+        "total_unavailable_employees": 7428,
+        "calculable_coverage_percent_of_feature_eligible": 85.99362338,
+        "published_band_count": 31,
+        "minimum_published_band_count": 112,
+        "unavailable_reference_pairs": 2980,
+        "country_mapping_categories_checked": 47
+      },
+      "acceptance_rule": "Fixed active-workforce and feature-eligible counts reconcile; duplicate/conflict safeguards are zero; all publishable stored country labels map to an ISO centroid source; unrecognized or unavailable country references remain not observable rather than falling forward or using office data; observable + not observable equals feature eligible; every shown band has n >= 30; shown bands and percentages reconcile to calculable employee-manager pairs; no raw postal, employee, manager, address, or pair-hash value is persisted.",
+      "outcome": "pass"
+    },
+    "team_post_exit_attrition": {
+      "evidence": "output/distribution/json/attrition-43-variable-distributions-v2.team-post-exit-attrition-evidence-20260911.json",
+      "evidence_sha256": "586f02eb63798b8bfbedbaf988185b62c8f09a5589e7dfbe7e5b9f7f4b7fa2a5",
+      "builder": "tools/build_team_post_exit_attrition_evidence.py",
+      "analysis_plan": "config/team_post_exit_attrition_event_study_plan_v5_20260911.yaml",
+      "execution_date": "2026-09-11T06:59:23-06:00",
+      "deliverable_mode": "presentation",
+      "study": {
+        "type": "cohorte descriptiva posterior a una salida inicial",
+        "interpretation": "Asociación descriptiva; no causalidad, contagio probado, ranking de managers ni predicción individual.",
+        "population": "Empleados Employee/Regular activos con manager en el cierre índice.",
+        "index_event": "Una salida Voluntary reconciliada única en los seis intervalos cerrados previos; ocurre en el último intervalo antes de t.",
+        "reference": "Equipos sin salida Voluntary reconciliada reciente, mismo cierre y banda de tamaño; estandarizados con la distribución expuesta.",
+        "follow_up": "Seis cierres mensuales; se censura cambio de manager, salida no Voluntary o pérdida de observación.",
+        "estimand": "Incidencia acumulada Kaplan–Meier a partir de hazards mensuales estandarizados."
+      },
+      "cohort": {
+        "index_snapshot": "2026-03-29",
+        "lookback_start_exclusive": "2025-09-28",
+        "index_interval_start_exclusive": "2026-02-22",
+        "follow_up_end": "2026-09-27",
+        "follow_up_snapshot_dates": [
+          "2026-04-26",
+          "2026-05-24",
+          "2026-06-28",
+          "2026-07-26",
+          "2026-08-23",
+          "2026-09-27"
+        ],
+        "follow_up_gaps_days": [
+          28,
+          28,
+          35,
+          28,
+          28,
+          35
+        ]
+      },
+      "aggregate_metrics": {
+        "index_team_episodes": 260.0,
+        "series_points": 24.0,
+        "voluntary_monthly_match_percent": 99.7994,
+        "voluntary_exact_match": 7462.0,
+        "all_terminations_repeated_source_rows": 0.0,
+        "minimum_visible_at_risk_n": 30
+      },
+      "queries": {
+        "calendar_sql": "queries/audits/team_post_exit_attrition_calendar_20260911.sql",
+        "reconciliation_sql": "queries/audits/team_post_exit_attrition_event_source_reconciliation_20260910.sql",
+        "static_template_sql": "queries/audits/team_post_exit_attrition_static_snapshot_20260911.sql",
+        "executed_static_sql": "output/distribution/team-post-exit-attrition-static-cohort-20260911.sql"
+      },
+      "query_sha256": {
+        "calendar_sql_sha256": "2509ba6f15638ccd2d71d9b237f51ded8c3ced33255abff5f6bacfa942a3f23e",
+        "reconciliation_sql_sha256": "5ae04166f3957b03a21c069e9748fe0d575796b07aed05eb09410b0e3d4294a4",
+        "static_template_sql_sha256": "8eb9790de29df6ccd2bc5661d5cb80a2103a87301e298fbe4f4e4c73b3f43237",
+        "executed_static_sql_sha256": "ef817c93bdf199047ab264d4961365756ef9f0ba152db5d6fc8f6ede281177f4",
+        "calendar_result_sha256": "e1140dc7c144a4a52db3cc604eecf67556f514e58ba7a977306350d015c11682",
+        "reconciliation_result_sha256": "997d4abd276631159eaabe82fe8ca1ff66f8e562de65affde3e5a01cc1d672b0",
+        "static_result_sha256": "524cc8fcfcb288381bfb10584da2a9a14493d7a720af2d6d817181228e99b691"
+      },
+      "acceptance_rule": "24 puntos, n en riesgo >=30, hazards 0–100, seis cierres completos, episodio índice positivo y concordancia Voluntary >=99%.",
+      "limitation": "La evidencia corresponde a la cohorte reciente completa; no estima estabilidad histórica y debe repetirse al haber un nuevo sexto cierre.",
+      "outcome": "pass"
+    },
+    "above_average_team_turnover": {
+      "evidence": "output/distribution/json/above-average-team-turnover-evidence-20260911-threshold-1_3.json",
+      "builder": "tools/build_above_average_team_turnover_evidence_threshold_1_3.py",
+      "assessment_run": "above-average-team-turnover-v4-20260910-r13",
+      "profile_query": "queries/profiles/above_average_team_turnover_presentation_distribution_20260911_threshold_1_3.sql",
+      "audit_query": "queries/audits/above_average_team_turnover_18m_audit_20260911_threshold_1_3.sql",
+      "termination_reconciliation_query": "queries/audits/above_average_team_turnover_termination_reconciliation_20260910.sql",
+      "snapshot": "2026-09-27",
+      "population": "Empleados regulares activos con manager_employee_id en el cierre mensual t.",
+      "grain": "Empleado-snapshot mensual; cálculo intermedio manager-snapshot agregado.",
+      "buckets": [
+        "0",
+        "1",
+        "Unknown"
+      ],
+      "benchmark_six_month_rate": 0.09709225018189116,
+      "threshold_multiplier": 1.3,
+      "threshold_six_month_rate": 0.12621992523645853,
+      "aggregate_counts": {
+        "eligible_employees": 50206,
+        "observable_employees": 4445,
+        "flagged_employees": 1116,
+        "unknown_employees": 45761
+      },
+      "privacy": {
+        "minimum_shared_cohort": 30,
+        "identifiers_persisted": false,
+        "employee_rows_persisted": false,
+        "manager_rates_persisted": false,
+        "manager_rankings_persisted": false
+      },
+      "query_sha256": {
+        "assessment_evidence": "db3bd182418c322d81190e2f40c4a79b10af0703ea1a905d2be76adf2446756a",
+        "profile_sql": "ec740f76f2a5640ad1cfe48bcd4c70a5cb0f06cb5fdfd459e36970e31558d930",
+        "profile_result": "7b9bbe6ec74a2e000040234351ff40c79e86a15c2bd7f317bfaf82624c205065",
+        "audit_sql": "b75828d423b75dc986d0f5e20cd3676869eced61a49d22ac72a41ac3aa4bdf4b",
+        "audit_result": "0aa32d70025dbaaa846693ac7167f3626f0ef78ea265ceaf36bf2b591801f67f"
+      },
+      "outcome": "pass"
+    },
+    "above_average_team_turnover_threshold_sensitivity": {
+      "evidence": "output/distribution/json/above-average-team-turnover-threshold-sensitivity-20260911.json",
+      "builder": "tools/build_above_average_team_turnover_threshold_sensitivity.py",
+      "query": "queries/audits/above_average_team_turnover_threshold_sensitivity_20260911.sql",
+      "latest_snapshot": "2026-09-27",
+      "eligible_manager_count": 500,
+      "ratio_percentiles": {
+        "p25": 0.8749,
+        "p50": 1.1659,
+        "p75": 1.5258,
+        "p90": 1.8754,
+        "p95": 2.3773
+      },
+      "working_multiplier": 1.3,
+      "query_sha256": "e0da62b434ef9656932f19d4af6848570d65361a4306f15451180f82ceed9f0e",
+      "result_sha256": "1e9c8307c20f0fa59343f657a2983303e58003ce7d224522b80afae6bbae2953",
+      "outcome": "pass"
+    },
+    "compensation_grade_domain": {
+      "evidence": "output/distribution/json/attrition-43-variable-distributions-v2.compensation-grade-evidence-20260909.json",
+      "query": "queries/audits/compensation_grade_domain_validation_20260909.sql",
+      "snapshot": "2026-08-23",
+      "population": "50,218 active regular employees",
+      "public_rule": "Show each grade only when n >= 30; aggregate the nine smaller grades as Other grades when the aggregate is n >= 30.",
+      "public_grades": 36,
+      "suppressed_grades": 9,
+      "other_grades_count": 37,
+      "outcome": "pass"
+    },
+    "qvoice_comment_topics": {
+      "evidence": "output/distribution/json/qvoice-comment-evidence-20260909.json",
+      "builder": "tools/build_qvoice_comment_evidence.py",
+      "waves": [
+        "Mar-2023",
+        "Jan-2024",
+        "Jan-2025",
+        "Jan-2026"
+      ],
+      "source": "QVoice raw Excel workbooks · Raw data worksheet",
+      "prompts": [
+        "doing well",
+        "can improve",
+        "processes to improve when available"
+      ],
+      "grain": "Distinct participant-wave case per theme",
+      "deduplication": "One participant per wave and theme across selected prompts",
+      "primary_source_rule": "Original prompt columns only; 2026 … EN columns are aggregate diagnostics only",
+      "publication_rule": "Absolute counts only; every displayed value n >= 30; no identifiers or free text",
+      "outcome": "pass"
+    },
+    "qvoice_nonresponse_proxy": {
+      "evidence": "output/distribution/json/qvoice-nonrespondent-proxy-evidence-2026-09-09.json",
+      "builder": "tools/build_qvoice_nonrespondent_proxy_evidence.py",
+      "source": "QVoice raw Excel workbooks + HRDA snapshots",
+      "waves": [
+        "Mar-2023",
+        "Jan-2024",
+        "Jan-2025",
+        "Jan-2026"
+      ],
+      "snapshot_assumption": "Stored snapshot nearest the prior-month day 15 is used as the internal-review proxy population.",
+      "population": "worker_type='Employee' AND employee_type='Regular' AND active_status=1",
+      "grain": "Eligible employee / survey wave",
+      "categories": [
+        "Responded",
+        "QVoice row / no answer",
+        "No QVoice row"
+      ],
+      "denominator": "Eligible employees in the selected stored snapshot",
+      "deduplication": "Distinct employee_id per snapshot; raw QVoice keys are deduplicated before comparison.",
+      "publication_rule": "Absolute counts and percentages; every displayed category n >= 30; no identifiers, response values, or free text.",
+      "interpretation": "No QVoice row is a non-response proxy, not a confirmed non-response; invitation roster and wave-close status remain to be validated.",
+      "outcome": "pass"
+    },
+    "number_of_manager_changes_distribution": {
+      "evidence": "output/distribution/json/number-of-manager-changes-distribution-6m-evidence-20260909.json",
+      "query": "queries/profiles/number_of_manager_changes_distribution_6m_20260909.sql",
+      "snapshot": "2026-08-23",
+      "window": "(2026-02-23, 2026-08-23]",
+      "population": "50,043 active regular employees with a usable employee key at the latest deck cutoff",
+      "grain": "Distinct employee snapshot",
+      "event_key": "employee + manager_change_date where manager_change=1",
+      "deduplication": "Repeated monthly observations of the same employee/event date count once.",
+      "assumption": "Six-month retrospective window for exploratory review; reset semantics and final model feature definition remain pending.",
+      "buckets": [
+        "0",
+        "1",
+        "2",
+        "3+"
+      ],
+      "publication_rule": "Absolute counts and percentages; every displayed bucket n >= 30; no identifiers or employee rows.",
+      "outcome": "pass"
+    },
+    "number_of_manager_changes_annual_comparison": {
+      "evidence": "output/distribution/json/number-of-manager-changes-distribution-12m-evidence-20260909.json",
+      "query": "queries/profiles/number_of_manager_changes_distribution_12m_20260909.sql",
+      "snapshot": "2026-08-23",
+      "window": "(2025-08-23, 2026-08-23]",
+      "population": "50,043 active regular employees with a usable employee key at the latest deck cutoff",
+      "grain": "Distinct employee snapshot",
+      "event_key": "employee + manager_change_date where manager_change=1",
+      "purpose": "Supplementary annual comparison for the question whether two changes in a year are common; it does not replace the selected six-month feature.",
+      "buckets": [
+        "0",
+        "1",
+        "2",
+        "3+"
+      ],
+      "validation": "No repeated observations, missing event dates, invalid flags, or annual count below the nested six-month count.",
+      "publication_rule": "Absolute counts and percentages; every displayed bucket n >= 30; no identifiers or employee rows.",
+      "outcome": "pass"
+    },
+    "manager_leaving_distribution": {
+      "evidence": "output/distribution/json/manager-leaving-voluntary-6m-evidence-20260909.json",
+      "query": "queries/audits/manager_leaving_voluntary_6m_distribution_20260909.sql",
+      "source_access_query": "queries/audits/manager_leaving_voluntary_6m_source_access_20260909.sql",
+      "snapshot": "2026-08-23",
+      "window": "[2026-02-23, 2026-08-23]",
+      "population": "50,043 active regular employees with a usable employee key at the August monthly cutoff",
+      "grain": "Distinct employee snapshot",
+      "event_scope": "term_type normalized exactly to Voluntary",
+      "manager_eligibility": "reg_non_intern_dir_reports > 0 in the last manager snapshot within 45 days before term_date",
+      "historical_assignment": "last active regular employee-manager snapshot within 45 days before term_date",
+      "reassignment": "Exposure is retained after a manager change through the six-month window.",
+      "primary_feature": "Binary 0/1+ exposure flag",
+      "sensitivity": "Distinct manager-exit count; the 2+ bucket is merged into 1+ because it is below n=30.",
+      "leakage_control": "The feature uses no future manager or employee exit.",
+      "publication_rule": "Absolute counts and percentages only; every displayed bucket is n >= 30; no identifiers or individual rows.",
+      "outcome": "pass"
+    },
+    "high_risk_manager_score_distribution": {
+      "evidence": "output/distribution/json/high-risk-manager-6m-score-evidence-20260909.json",
+      "query": "queries/audits/high_risk_manager_6m_score_distribution_20260909.sql",
+      "cutoff": "2026-09-27",
+      "window": "(2026-03-29, 2026-09-27] across six complete fiscal intervals and seven dynamic closures",
+      "population": "50,018 observable active regular direct reports of 10,487 managers with reconstructable history",
+      "grain": "Aggregate manager-team distribution; no manager or employee identities",
+      "definition": "Continuous smoothed observed/expected strict-Voluntary exit ratio; expected exits use time-safe interval, region, job family, job level, and tenure strata with a global fallback below 30 employee-intervals and a 60 employee-interval prior.",
+      "buckets": [
+        "<0.50×",
+        "0.50–<1.00×",
+        "1.00–<1.50×",
+        "≥1.50×"
+      ],
+      "publication_rule": "Absolute counts and percentages only; every displayed manager and direct-report bucket n >= 30; no identities, ranking, individual label, or intervention threshold.",
+      "limitation": "190 current direct reports across 80 managers lack sufficient score history and remain unknown. 72 of 1,544 unique Voluntary events lack unique initial-interval exposure and are excluded, not imputed.",
+      "outcome": "pass"
+    },
+    "high_turnover_under_manager_distribution": {
+      "evidence": "output/distribution/json/high-turnover-under-manager-6m-evidence-20260909.json",
+      "query": "queries/audits/high_turnover_under_manager_6m_distribution_20260909.sql",
+      "cutoff": "2026-09-27",
+      "window": "(2026-03-29, 2026-09-27] across six complete fiscal intervals and seven dynamic closures",
+      "population": "50,018 observable active regular direct reports of 10,487 managers with reconstructable history",
+      "grain": "Aggregate manager-team history bucket assigned to current direct reports; no manager or employee identities",
+      "definition": "Descriptive 0/1/2+ bucket of distinct strict-Voluntary exits in the manager's observable historical team; it is not a manager evaluation or causal attribution.",
+      "buckets": [
+        "0",
+        "1",
+        "2+"
+      ],
+      "publication_rule": "Absolute counts and percentages only; every displayed manager and direct-report bucket n >= 30; no identities or individual labels.",
+      "limitation": "190 current direct reports across 80 managers lack observable history and remain unknown rather than zero. 72 of 1,544 unique Voluntary events lack unique initial-interval exposure and are excluded, not imputed.",
+      "outcome": "pass"
+    },
+    "qvoice_comparable_favorable": {
+      "evidence": "output/distribution/json/qvoice-comparable-favorable-evidence-20260909.json",
+      "builder": "tools/build_qvoice_comparable_favorable_evidence.py",
+      "source": "QVoice raw Excel workbooks; Raw data sheets only",
+      "waves": [
+        2024,
+        2025,
+        2026
+      ],
+      "grain": "Participant-wave derived aggregate",
+      "population": "Respondents with 33/33 strictly comparable valid binary items",
+      "items": 33,
+      "coding": "0=unfavorable; 1=favorable; 255=missing if present",
+      "formula": "Individual score = 100 × favorable items / 33; annual result = arithmetic mean of included individual scores.",
+      "publication_rule": "Aggregate internal analysis only; no identifiers or rows; every displayed wave cohort is n >= 30.",
+      "limitation": "No workforce eligibility denominator, workforce join, or official survey-completion flag is inferred.",
+      "outcome": "pass"
+    },
+    "commute_distance": {
+      "evidence": "output/distribution/json/commute-distance-global-evidence-20260911-onsite.json",
+      "query": "queries/profiles/commute_distance_global_zip_hash_distribution_20260911_work_arrangement.sql",
+      "coverage_audit": "queries/audits/commute_distance_global_input_coverage_20260911_work_arrangement.sql",
+      "format_audit": "queries/audits/commute_distance_global_postal_format_by_country_20260909.sql",
+      "snapshot": "2026-09-27",
+      "population": "50,207 regular active employee groups globally; 45,433 stored Onsite",
+      "grain": "Distinct employee snapshot",
+      "office": "Qualcomm global office catalog from source page and model JSON",
+      "method": "Haversine distance from residential postal centroid to office coordinate",
+      "published_population": "41,760 of 50,207 calculable overall; 39,536 of 45,433 Onsite calculable",
+      "privacy_rule": "Broad display bands are derived from 1-km evidence; only bands with n >= 30 are published; unmatched ZIPs/offices remain No calculable rather than imputed.",
+      "outcome": "pass"
+    },
+    "prior_experience_years": {
+      "evidence": "output\\distribution\\attrition-43-variable-distributions-v2.prior-experience-years-evidence-20260908.json",
+      "query": "queries/profiles/distribution_v2_prior_experience_years_20260927.sql",
+      "snapshot": "2026-09-27",
+      "population": "50,218 regular active employees",
+      "grain": "Distinct employee snapshot",
+      "field": "prior_qc_work_years",
+      "buckets": [
+        "<1",
+        "1 through 31",
+        "32+"
+      ],
+      "definition": "<1 means 0 <= prior_qc_work_years < 1; integer k means k <= prior_qc_work_years < k+1; 32+ means prior_qc_work_years >= 32.",
+      "privacy_rule": "The exact year-32 bucket has n=25, so it is combined into 32+ to keep every published category at n >= 30.",
+      "acceptance_rule": "Published counts sum to 50,218; null and negative counts are zero; every published category has n >= 30; no employee has multiple values in the snapshot.",
+      "outcome": "pass"
+    },
+    "application_intensity": {
+      "source": "hrda.job_applications_vw",
+      "analysis_cutoff": "2026-09-10",
+      "execution_date": "2026-09-13",
+      "annual_evidence": "output/distribution/json/attrition-43-variable-distributions-v2.application-intensity-evidence-20260913.json",
+      "employee_snapshot_evidence": "output/distribution/json/attrition-43-variable-distributions-v2.application-employee-snapshot-trailing-6m-evidence-20260913.json",
+      "annual_evidence_sha256": "08d4a1dd16a3c6f11de52b89ff6d9c02010845960671e36c0d91a3faad2ccb2f",
+      "employee_snapshot_evidence_sha256": "9b803b072ef3acb4d79e74c9277ae646579b90793d62d17064a62a66336649d0",
+      "annual_profile_query": "queries/profiles/application_intensity_job_applications_vw_annual_with_ytd_20260913.sql",
+      "source_metadata_audit_query": "queries/audits/application_job_applications_vw_metadata_20260913.sql",
+      "event_quality_audit_query": "queries/audits/application_job_applications_vw_event_quality_20260913.sql",
+      "annual_fiscal_audit_query": "queries/audits/application_employee_snapshot_trailing_6m_fiscal_reconciliation_20260913.sql",
+      "source_reconciliation_query": "queries/audits/applied_to_a_job_source_reconciliation_20260913.sql",
+      "employee_snapshot_profile_query": "queries/profiles/application_employee_snapshot_trailing_6m_distribution_20260913.sql",
+      "employee_snapshot_join_audit_query": "queries/audits/application_employee_snapshot_trailing_6m_join_20260913.sql",
+      "employee_snapshot_temporal_audit_query": "queries/audits/application_employee_snapshot_trailing_6m_temporal_20260913.sql",
+      "employee_snapshot_publishability_audit_query": "queries/audits/application_employee_snapshot_trailing_6m_publishability_20260913.sql",
+      "builder": "tools/build_application_intensity_evidence_20260913.py",
+      "reporting_mode": "internal_analysis",
+      "internal_analysis_authorization": {
+        "authorization_id": "application-intensity-internal-collaboration-20260913",
+        "authorized_on": "2026-09-13",
+        "authorized_audience": "requester and Julia, both project developers",
+        "scope": {
+          "artifact": "application_intensity_by_fiscal_year",
+          "source": "hrda.job_applications_vw",
+          "buckets": [
+            "1",
+            "2",
+            "3",
+            "4+"
+          ],
+          "periods": [
+            "FY2022",
+            "FY2023",
+            "FY2024",
+            "FY2025",
+            "FY2026 YTD through 2026-09-10"
+          ],
+          "employee_snapshot_rolling_view": "retain its existing Unknown and time-safe coverage controls"
+        },
+        "allow_subthreshold_aggregate_buckets": true,
+        "minimum_displayed_count": 0,
+        "controls": {
+          "aggregate_only": true,
+          "employee_rows_persisted": false,
+          "employee_ids_persisted": false,
+          "names_persisted": false,
+          "requisition_ids_or_titles_persisted": false,
+          "manager_access": false,
+          "redistribution": false,
+          "operational_use": false,
+          "score_v4_change": false,
+          "production_feature_approval": false
+        }
+      },
+      "annual_publication": {
+        "buckets": [
+          "1",
+          "2",
+          "3",
+          "4+"
+        ],
+        "standard_publishable_periods": [
+          "FY2022",
+          "FY2023",
+          "FY2024"
+        ],
+        "displayed_internal_periods": [
+          "FY2022",
+          "FY2023",
+          "FY2024",
+          "FY2025",
+          "FY2026 YTD"
+        ],
+        "standard_suppressed_periods": [
+          "FY2025",
+          "FY2026 YTD"
+        ],
+        "fy2026_ytd_through": "2026-09-10",
+        "fy2026_is_partial": true,
+        "minimum_shared_cohort": 30,
+        "standard_rule": "Do not publish a fiscal period when any 1/2/3/4+ bucket is below n=30.",
+        "internal_rule": "Under the named internal_analysis authorization, display aggregate rows below n=30 for the requester and Julia only; FY2026 YTD is not comparable with a full fiscal year."
+      },
+      "employee_snapshot_publication": {
+        "buckets": [
+          "0",
+          "1",
+          "2+",
+          "Unknown"
+        ],
+        "window": "(snapshot_date - 6 months, snapshot_date]",
+        "latest_available_snapshot": "2026-08-23",
+        "latest_publishable_snapshot": "2026-07-26",
+        "minimum_shared_cohort": 30,
+        "unknown_rule": "Do not convert missing source coverage to 0.",
+        "rule": "Publish a complete distribution only when all four buckets have n>=30 and reconcile to the employee-snapshot denominator.",
+        "publishability_gate": {
+          "snapshot_dates_checked_total": 68,
+          "trend_snapshot_count": 12,
+          "trend_publishable_snapshot_count": 1,
+          "trend_suppressed_snapshot_count": 11,
+          "latest_available_snapshot": "2026-08-23",
+          "latest_available_publication_status": "suppressed_below_n30_or_reconciliation",
+          "latest_publishable_snapshot": "2026-07-26"
+        }
+      },
+      "historical_source_reconciliation": {
+        "reference_artifact": "output/distribution/json/attrition-43-variable-distributions-v2.application-intensity-evidence-20260910.json",
+        "query_reference": "queries/audits/applied_to_a_job_source_reconciliation_20260910.sql",
+        "executed_on": "2026-09-10",
+        "comparison_window": "2019-06-17 through 2025-02-11",
+        "acceptance_rule": "Both directional exact-key match rates must be >= 95%.",
+        "outcome": "warning",
+        "metrics": {
+          "old_event_keys": 9903,
+          "new_event_keys": 10839,
+          "matched_event_keys": 9903,
+          "old_only_event_keys": 0,
+          "new_only_event_keys": 936,
+          "old_to_new_match_rate_percent": 100.0,
+          "new_to_old_match_rate_percent": 91.3645
+        },
+        "interpretation": "La evidencia congelada del 2026-09-10 registra 936 eventos adicionales en la vista y una coincidencia nueva→antigua de 91.3645%; la vista ampliada requiere lineage aprobado antes de declararse idéntica a la fuente histórica."
+      },
+      "current_source_reconciliation": {
+        "query_reference": "queries/audits/applied_to_a_job_source_reconciliation_20260913.sql",
+        "executed_on": "2026-09-13",
+        "sql_sha256": "660255c7d7fabc7814d482c288944617ee98938de11ce6f82b72c674e39fccd1",
+        "result_sha256": "79fa2f85ff1428f7893aa8305976e3fe3370817077d4b234d10c56acbd84a07d",
+        "comparison_window": "2019-06-17 through 2025-02-11",
+        "acceptance_rule": "Re-run the exact-key comparison and preserve any source drift relative to the frozen 2026-09-10 reference.",
+        "outcome": "warning",
+        "metrics": {
+          "common_window_start": "2019-06-17",
+          "common_window_end": "2025-02-11",
+          "old_event_keys": 9903,
+          "new_event_keys": 10840,
+          "matched_event_keys": 9903,
+          "old_only_event_keys": 0,
+          "new_only_event_keys": 937,
+          "old_to_new_match_rate_percent": 100,
+          "new_to_old_match_rate_percent": 91.3561
+        },
+        "interpretation": "The current rerun has one additional new-only event versus the frozen 2026-09-10 reference; this is a source-refresh diagnostic, not a change to the historical deck claim."
+      },
+      "lineage_status": "Broadened descriptive source; not approved as identical lineage to hrda.applications or as a production feature.",
+      "score_v4_change": "none",
+      "outcome": "pass"
+    },
+    "population": "Distinct linked applicants per fiscal year; not workforce prevalence.",
+    "grain": "Distinct applicant-fiscal year",
+    "buckets": [
+      "1",
+      "2",
+      "3",
+      "4+"
+    ],
+    "office_site_city": {
+      "evidence": "output\\distribution\\attrition-43-variable-distributions-v2.office-site-city-evidence-20260908.json",
+      "query": "queries/profiles/office_site_city_distribution_20260908.sql",
+      "snapshot": "2026-08-23",
+      "population": "Regular employees active in the snapshot",
+      "grain": "Distinct employee snapshot",
+      "buckets": [
+        "top 20 pairs",
+        "Other site-city pairs",
+        "No office-site/city pair"
+      ]
+    },
+    "co_location_manager_location_proxies": {
+      "evidence": "output\\distribution\\attrition-43-variable-distributions-v2.co-location-site-city-evidence-20260909.json",
+      "query": "queries/profiles/co_location_manager_site_city_annual_through_20260823.sql",
+      "cutoff": "2026-08-23",
+      "population": "Active regular employee-manager pairs with nonblank stored location fields in the same snapshot",
+      "grain": "Employee-manager snapshot",
+      "charts": [
+        "same office_site",
+        "same office_site and city"
+      ],
+      "interpretation": "The city condition removes same-code pairs recorded in different cities. Neither stored-field proxy demonstrates physical presence or travel distance.",
+      "outcome": "pass"
+    },
+    "team_turnover": {
+      "evidence": "output\\distribution\\attrition-43-variable-distributions-v2.team-turnover-evidence-20260908.json",
+      "query": "queries/profiles/team_turnover_6m_scenarios_20260908.sql",
+      "term_type_audit": "queries/audits/team_turnover_voluntary_term_type_domain_20260908.sql",
+      "team_membership_audit": "queries/audits/team_turnover_direct_team_membership_20260908.sql",
+      "manager_resolution_audit": "queries/audits/team_turnover_manager_reference_resolution_20260908.sql",
+      "cutoff": "2026-08-23",
+      "window": "(2026-02-23, 2026-08-23] across six monthly snapshots",
+      "population": "Active regular direct reports of managers selected at the cutoff",
+      "grain": "Aggregate manager-team / employee-month exposure",
+      "scenarios": [
+        "all manager-led teams (>=1 direct report)",
+        "teams with >5 direct reports (>=6)"
+      ],
+      "voluntary_definition": "term_type = Voluntary only; Voluntary Exception excluded pending HR confirmation",
+      "publication_note": "Aggregate descriptive comparison only; no manager labels or causal interpretation."
+    },
+    "more_than_1_employee_leaves": {
+      "evidence": "output\\distribution\\attrition-43-variable-distributions-v2.more-than-1-employee-leaves-evidence-20260908.json",
+      "query": "queries/audits/more_than_1_employee_leaves_team_6m_20260908.sql",
+      "annual_evidence": "output\\distribution\\more-than-1-employee-leaves-annual-evidence-20260909.json",
+      "annual_query": "queries/audits/more_than_1_employee_leaves_team_12m_20260909.sql",
+      "annual_coverage_query": "queries/audits/more_than_1_employee_leaves_annual_window_coverage_20260909.sql",
+      "cutoff": "2026-08-23",
+      "window": "(snapshot - 6 months, snapshot] with six monthly snapshots; 40 independent monthly points per scope and attribution",
+      "annual_window": "(snapshot - 12 months, snapshot] with >=12 monthly snapshots and >=330 observed days; 36 complete dates aligned to the 40 primary dates",
+      "annual_history_exclusion": "The first 4 primary dates are excluded from the annual panel because prior-year history is incomplete.",
+      "population": "Distinct employees with an observable direct team in each evaluation snapshot",
+      "grain": "Scope × attribution × monthly employee snapshot",
+      "buckets": [
+        "0",
+        "1",
+        "2+"
+      ],
+      "primary_attribution": "manager_at_evaluation",
+      "historical_attribution": "manager_at_exit",
+      "voluntary_definition": "term_type = Voluntary only",
+      "monthly_points_per_scope_and_attribution": 40,
+      "numerator": "Distinct employees in teams with at least 2 Voluntary exits in the six-month window",
+      "denominator": "Distinct employees with a non-null direct manager at the evaluation snapshot",
+      "publication_note": "The monthly employee percentage is the primary visual; the annual panel is a supplemental sensitivity, not a replacement feature. Aggregate 0/1/2+ buckets remain audit evidence only, with no manager labels or causal interpretation."
+    },
+    "job_family": {
+      "evidence": "output\\distribution\\attrition-43-variable-distributions-v2.job-family-evidence-20260908.json",
+      "daily_query": "queries/profiles/job_family_daily_snapshot_top20_20260908.sql",
+      "availability_audit": "queries/audits/job_family_snapshot_availability_20260908.sql",
+      "snapshots": [
+        "2026-08-23",
+        "2026-09-07"
+      ],
+      "population": "Regular employees active in each named snapshot",
+      "grain": "Distinct employee snapshot; monthly August and daily September",
+      "date_fields": {
+        "August": "fis_mo_end_dt",
+        "September": "transaction_date"
+      },
+      "buckets": [
+        "top 20 detailed families",
+        "Other job families"
+      ],
+      "comparison_note": "September 7 is the user-selected post-weekend daily snapshot; rankings are independent, not a trend."
+    },
+    "region": {
+      "evidence": "output\\distribution\\region-labor-market-global-evidence-20260909.json",
+      "query": "queries/audits/region_labor_market_global_display_20260909.sql",
+      "snapshot": "2026-08-23",
+      "population": "Active regular employees at the named monthly snapshot",
+      "grain": "Distinct employee snapshot",
+      "global_display": [
+        "India",
+        "Americas",
+        "APAC",
+        "EMEA"
+      ],
+      "major_country_display": [
+        "India",
+        "United States",
+        "Americas excluding U.S.",
+        "China",
+        "APAC excluding China",
+        "EMEA"
+      ],
+      "labor_market_display": "All eligible employees: top 20 stored Labor Market values plus Other Labor Markets.",
+      "labor_market_scope": "Global workforce distribution; Country and Region are separate fields and neither limits the Labor Market panel.",
+      "major_country_display_scope": "Requested display-only grouping: United States is removed from Americas and China from APAC; it does not replace the stored Region definition."
+    },
+    "transfer_within_past_year": {
+      "evidence": "output\\distribution\\attrition-43-variable-distributions-v2.transfer-within-past-year-evidence-20260908.json",
+      "query": "queries/profiles/transfer_within_past_year_distribution_monthly_weekly_20260908.sql",
+      "source_audit": "queries/audits/transfer_within_past_year_source_reconciliation_20260908.sql",
+      "validation_audit": "queries/audits/transfer_within_past_year_profile_validation_20260908.sql",
+      "history_availability_audit": "queries/audits/transfer_within_past_year_history_availability_20260908.sql",
+      "cutoff": "2026-08-23",
+      "population": "Regular employees active at each monthly or weekly endpoint",
+      "grain": "Distinct employee snapshot",
+      "definition": "At least one distinct transfer_date in (snapshot - 12 months, snapshot]",
+      "frequencies": {
+        "monthly": 24,
+        "weekly": 104
+      },
+      "canonical_frequency": "monthly",
+      "operational_frequency": "weekly",
+      "primary_chart_source": "hrda.post_hire_monthly_worker_dtls event history; workers_ios_transfers excluded"
+    },
+    "qvoice_normalized_within_region": {
+      "evidence": "output/distribution/json/qvoice-normalized-region-evidence-20260910.json",
+      "builder": "tools/build_qvoice_normalized_region_evidence.py",
+      "source": "QVoice raw Excel workbooks; Raw data sheets only",
+      "waves": [
+        2024,
+        2025,
+        2026
+      ],
+      "grain": "participant-wave derived aggregate",
+      "population": "Respondents with 33/33 strictly comparable valid binary items and a stored Region",
+      "definition": "Within stored Region × survey-wave population z-score of 100 × favorable items / 33.",
+      "reference_cohort": "Stored Region × survey wave; every cohort and displayed band has n >= 30.",
+      "publication_rule": "Aggregate internal analysis only; no identifiers, response values, individual scores, or region labels.",
+      "limitation": "Respondent-only descriptive distribution; no workforce denominator, QVoice-to-workforce join, or attrition relationship is asserted.",
+      "outcome": "pass"
+    },
+    "reconstructed_manager_layers_to_ceo": {
+      "evidence": "output/distribution/json/layers-from-ceo-depth-distribution-evidence-20260910.json",
+      "builder": "tools/build_layers_from_ceo_distribution_evidence.py",
+      "audit_query": "queries/audits/layers_from_ceo_snapshot_20260823_distribution.sql",
+      "execution_date": "2026-09-10",
+      "snapshot": "2026-08-23",
+      "population": "worker_type='Employee'; employee_type='Regular'; active_status=1 at the 2026-08-23 monthly snapshot",
+      "grain": "Distinct active regular employee at one monthly snapshot",
+      "definition": "Depth is the number of same-snapshot manager_employee_id links from an employee to the HR-approved CEO root. The CEO root is depth 0; a direct report is depth 1.",
+      "publication_rule": "Aggregate values only; every displayed contiguous depth band has n >= 30; no employee, manager, root, or name is retained.",
+      "query_sha256": {
+        "audit_sql": "f3137022f6c3627702aab99e1a66642611e9c7d7297e45855e74c77affbc76db",
+        "aggregate_result": "89245b9f9805fbb2c43709c4e8faa3eb3bb4aaa90c684e45753689e5204da4af"
+      },
+      "aggregate_metrics": {
+        "universe_node_count": 66516,
+        "display_eligible_count": 50043,
+        "root_count": 1,
+        "convergence_rate_percent": 100.0,
+        "published_bucket_count": 10,
+        "minimum_published_bucket_count": 100
+      },
+      "acceptance_rule": "The fixed snapshot exists; all active same-snapshot chains reconstruct without manager conflicts, missing links, self-links, cycles, or paths beyond 25 links; every chain converges to exactly one HR-approved CEO root with 100% convergence; display depth counts reconcile exactly to active regular employees; and every published contiguous layer band has n >= 30 without exposing the CEO root singleton.",
+      "outcome": "pass"
+    },
+    "role_level_tenure": {
+      "evidence": "output/distribution/json/role-level-tenure-distribution-evidence-20260910.json",
+      "builder": "tools/build_role_level_tenure_evidence.py",
+      "audit_query": "queries/audits/role_level_tenure_transition_audit_20260823.sql",
+      "profile_query": "queries/profiles/role_level_tenure_distribution_20260823.sql",
+      "execution_date": "2026-09-10",
+      "snapshot": "2026-08-23",
+      "population": "worker_type='Employee'; employee_type='Regular'; active_status=1 at the 2026-08-23 monthly snapshot",
+      "grain": "Distinct active regular employee at one monthly snapshot",
+      "definitions": {
+        "time_in_current_job_profile": "Descriptive date-field proxy from the later of time_in_job_profile_start_date and max_hire_rehire_date; HRIS construct lineage is not confirmed.",
+        "time_at_current_detailed_level": "Descriptive date-field proxy from the later of levelentrydate and max_hire_rehire_date, displayed with populated job_level_primary_position; HRIS construct lineage is not confirmed.",
+        "time_in_role": "Supporting audit field only; it does not define either published clock."
+      },
+      "reset_policy": {
+        "job_profile_change": "Resets the job-profile clock only.",
+        "detailed_level_change": "Resets the detailed-level clock only.",
+        "rehire": "Both clocks use the later stored start date and max_hire_rehire_date.",
+        "promotion_demotion": "Validation context only; flags do not automatically reset a clock.",
+        "manager_location_cost_center_transfer_job_family": "Do not reset either clock unless the selected construct changes."
+      },
+      "authoritative_lineage": {
+        "authority": "Not supplied",
+        "confirmation_date": "",
+        "source_reference": "No authoritative HRIS lineage confirmation was supplied; this is a descriptive stored-field analysis.",
+        "lineage_sha256": "5db1b7f1d451bc9ad2072a4e70b2c2af69dfee76809723c3d2810d7b96bbb419"
+      },
+      "coverage": {
+        "eligible_employee_count": 50043,
+        "role_calculable_employee_count": 50043,
+        "role_not_calculable_employee_count": 0,
+        "level_calculable_employee_count": 50043,
+        "level_not_calculable_employee_count": 0
+      },
+      "query_sha256": {
+        "audit_sql": "c81e52b7d5e27285dc50d32c85e93bed375cf4ff4a6da003ec123e3f737808fa",
+        "audit_result": "93cab86edd8e8fbd84dbd3863c117cd938f27ef5f780bf79d8e5368235aa2d87",
+        "profile_sql": "3ec9c3c0b7aaa1de12ba2bec101e5670492fc5037e74f6822edf260292f9f76c",
+        "profile_result": "13596b4d2c828b3042df8c7493db3d6b5ba3d1ab7bcd480a729a2d0a15251490"
+      },
+      "aggregate_metrics": {
+        "detailed_level_transition_count": 43805,
+        "detailed_level_transition_with_date_reset_count": 37707,
+        "role_rehire_adjustment_count": 0,
+        "level_rehire_adjustment_count": 114,
+        "published_band_count": 6,
+        "minimum_published_role_band_count": 566,
+        "minimum_published_level_band_count": 1220
+      },
+      "publication_rule": "Aggregate internal analysis only; shared anniversary bands are pooled identically and every displayed band has n >= 30 for both clocks. No employee rows, identifiers, job codes, titles, or raw dates are retained.",
+      "exploratory_caveat": "Stored-field distributions only. Do not interpret the chart as proof that either field is the governed current job-profile or current detailed-level clock.",
+      "acceptance_rule": "Exploratory publication: the active-regular snapshot and history are unique and conflict-free; no future dates or unresolved rehire conflicts exist; each stored-date distribution reconciles to its calculable denominator; every shared visible band has n >= 30; and unresolved construct and transition evidence is displayed as a caveat rather than treated as confirmed semantics.",
+      "outcome": "pass"
+    },
+    "time_since_last_promotion": {
+      "evidence": "output/distribution/json/time-since-last-promotion-distribution-evidence-20260910.json",
+      "evidence_sha256": "30f096b139aedede2219d4c4a9db6eafa193a36e6eb330288652ba1b8740ba11",
+      "builder": "tools/build_time_since_last_promotion_distribution_evidence.py",
+      "audit_query": "queries/audits/time_since_last_promotion_event_integrity_20260823.sql",
+      "profile_query": "queries/profiles/time_since_last_promotion_distribution_20260823.sql",
+      "execution_date": "2026-09-10",
+      "snapshot": "2026-08-23",
+      "deliverable_mode": "presentation",
+      "population": "worker_type='Employee'; employee_type='Regular'; active_status=1 at the 2026-08-23 monthly snapshot",
+      "grain": "Distinct active regular employee at one monthly snapshot",
+      "definition": {
+        "latest_recorded_promotion_event": "Latest distinct promotion_date where is_promo=1, promotion_date is not future or after its event snapshot, and promotion_date is on or after max_hire_rehire_date for the active employee's current episode.",
+        "duration": "Calendar-anniversary bands from the latest recorded valid promotion event to the 2026-08-23 cutoff.",
+        "deduplication": "Identical employee + promotion_date events are counted once.",
+        "rehire_policy": "Events dated before max_hire_rehire_date are excluded from the current episode.",
+        "left_censoring": "When the current episode starts before observed promotion-event history and no valid event remains, the employee is retained as History predates observed promotion events, not assigned a duration.",
+        "transfer_policy": "is_transferred and transfer_date are excluded from the formula; coincidence is retained only as aggregate audit context."
+      },
+      "history_observability": {
+        "observed_promotion_history_start_date": "2016-10-23",
+        "interpretation": "Observed source-history boundary, not a claim that promotion history before that date is complete."
+      },
+      "query_sha256": {
+        "audit_sql": "3fa6c7896648f45a7d50fb54d0f5d063e38b83fb88ae4c99dfe1c6d405033371",
+        "audit_result": "01066bd1a1b5610d32d4d115e912aa34ca8d63886f8e1c476bec46d20fc45d28",
+        "profile_sql": "9a8be1927b077ed9241729792efd9bc72d2a58e3d496d11de37e0299c7566f4f",
+        "profile_result": "bd0c34e571dbb4bb7220a777b4d8976810ea0ba7ba43fcb666e9a8324c479b17"
+      },
+      "aggregate_metrics": {
+        "active_regular_employee_count": 50043,
+        "latest_recorded_promotion_event_count": 23180,
+        "non_temporal_state_count": 26863,
+        "two_plus_years_employee_count": 13029,
+        "two_plus_years_percent_of_active_regular": 26.035609375936694,
+        "current_episode_events_excluded_before_rehire_count": 311,
+        "transfer_flag_on_valid_promotion_event_count": 60,
+        "transfer_date_coincident_with_valid_promotion_event_count": 29,
+        "minimum_published_bucket_count": 1695,
+        "minimum_cohort": 30
+      },
+      "acceptance_rule": "Time bands plus non-temporal states equal every active regular employee; unrounded shares equal 100%; and 2+ years equals 2–<3 + 3–<5 + 5+ years.",
+      "limitation": "This descriptive chart reports latest recorded promotion events in observed history. It does not establish an approved promotion policy, classify employees with no recorded current-episode event as never promoted, or assert a causal relationship with attrition.",
+      "outcome": "pass"
+    },
+    "promotion_history_by_current_compensation_grade": {
+      "evidence": "output/distribution/json/promotion-history-by-compensation-grade-evidence-20260910.json",
+      "evidence_sha256": "2aa1fdcfaab1e0baa2e14f7d2aa859417aff3fc424d0104ce91139cbaa1266f8",
+      "builder": "tools/build_promotion_history_by_compensation_grade_evidence.py",
+      "audit_query": "queries/audits/promotion_history_by_compensation_grade_integrity_20260823.sql",
+      "profile_query": "queries/profiles/promotion_history_by_compensation_grade_20260823.sql",
+      "execution_date": "2026-09-10",
+      "snapshot": "2026-08-23",
+      "deliverable_mode": "internal_analysis",
+      "population": "worker_type='Employee'; employee_type='Regular'; active_status=1 at the 2026-08-23 monthly snapshot",
+      "grain": "Distinct active regular employee at one monthly snapshot, grouped by current compensation_grade",
+      "definition": {
+        "classification": "Current compensation grade is taken from the fixed employee snapshot. 0/1/2+ count valid recorded promotion events only inside the current employment episode.",
+        "valid_event_rule": "is_promo=1; event date present, not later than the cutoff or its source snapshot, and on or after the current episode start.",
+        "deduplication": "Only identical employee plus event-date pairs are counted once.",
+        "partial_history_rule": "Any episode that began before the observed promotion-history boundary is Partial promotion history, regardless of recorded events.",
+        "non_claims": "0 recorded promotions is not never promoted, first job, first promotion, or hired into grade."
+      },
+      "history_observability": {
+        "observed_promotion_history_start_date": "2016-10-23",
+        "interpretation": "Observed source-history boundary; it is not a claim that earlier promotion history is complete."
+      },
+      "category_labels": {
+        "zero_recorded_promotions": "0 recorded promotions",
+        "one_recorded_promotion": "1 recorded promotion",
+        "two_or_more_recorded_promotions": "2+ recorded promotions",
+        "partial_promotion_history": "Partial promotion history"
+      },
+      "query_sha256": {
+        "audit_sql": "532e5e40db1261b91465f175bb962e0a73cb0a1457aafaa5f1f635c8bb77727c",
+        "audit_result": "4bd4237b22245a495c44f7ebcf60a5b30110198fbd7bbb9ce637b60c0c50f463",
+        "profile_sql": "7477ed43ea3a9c10cc6f23239909fa545353e4a608d0802b1d829c849d412855",
+        "profile_result": "e6baca9ac1171c6926dbbc0d127e40b2501c35794597d3743cd8e343243ce0e2"
+      },
+      "aggregate_metrics": {
+        "active_regular_employee_count": 50043,
+        "observable_history_employee_count": 38776,
+        "partial_history_employee_count": 11267,
+        "valid_event_pair_count": 26554,
+        "employees_with_valid_event_count": 23180,
+        "current_episode_events_excluded_before_rehire_count": 311,
+        "raw_current_grade_count": 45,
+        "individual_grade_count": 13,
+        "pooled_other_grade_count": 32,
+        "minimum_published_cell_count": 37,
+        "minimum_cohort": 30
+      },
+      "publication_rule": "Internal exploratory analysis only. Show a grade individually only when all four count cells are n >= 30; all remaining grades are reconciled into Other grades.",
+      "limitation": "This descriptive matrix reports recorded promotion events in observed history. It does not establish a promotion policy, a causal relationship with attrition, a first promotion, or whether a person was hired into a grade.",
+      "outcome": "pass"
+    },
+    "current_grade_entry_path": {
+      "evidence": "output/distribution/json/current-grade-entry-path-evidence-20260910.json",
+      "evidence_sha256": "11b6ec2599e662e19a655bc7235f33b5940122621f1080c4db72d028e5cc2e89",
+      "builder": "tools/build_current_grade_entry_path_evidence.py",
+      "audit_query": "queries/audits/current_grade_entry_path_integrity_20260823.sql",
+      "profile_query": "queries/profiles/current_grade_entry_path_20260823.sql",
+      "execution_date": "2026-09-10",
+      "snapshot": "2026-08-23",
+      "population": "worker_type='Employee'; employee_type='Regular'; active_status=1 at the 2026-08-23 monthly snapshot",
+      "grain": "Distinct active regular employee at one monthly snapshot, grouped by current compensation_grade",
+      "definition": {
+        "classification": "The latest observed change into the current compensation grade is reconstructed from monthly snapshots inside the current employment episode.",
+        "promotion_confirmation_rule": "A valid is_promo=1 event has a nonfuture date after the prior snapshot and on or before the entry snapshot; its event snapshot has the current compensation grade.",
+        "observed_without_registered_promotion": "A change into the current grade is observed, but no event meets the promotion-confirmation rule.",
+        "not_observable": "No previous complete snapshot demonstrates a change into the current grade; this state is not a direct-hire label.",
+        "rejected_field": "compensation_grade_old is not used: the aggregate audit shows it does not reconcile to the observed prior snapshot.",
+        "non_claims": "Neither observed entry without a registered promotion nor entry not observable means hired into grade, and this is not a causal attrition finding."
+      },
+      "query_sha256": {
+        "audit_sql": "3bbc145ae5d9290f6fea715397b68c390aacddc1ccc2581770809be06dc9e573",
+        "audit_result": "74a1781e61168adcf694f453211bd9c9186252dc0399cd6b07d9928f4d884c51",
+        "profile_sql": "80005fefe59159b1cb9bf66d382cd145acff12f0c61ace65d1e63d1be48ef20f",
+        "profile_result": "993df7031a98e353422d3a3c09ab5b2cb14e7bd694073e7e70a97cd93e8a3028"
+      },
+      "aggregate_metrics": {
+        "active_regular_employee_count": 50043,
+        "promotion_confirmed_into_current_grade_count": 19669,
+        "observed_entry_without_registered_promotion_count": 7604,
+        "current_grade_entry_not_observable_count": 22770,
+        "individual_grade_count": 15,
+        "pooled_other_grade_count": 30,
+        "minimum_published_cell_count": 38,
+        "old_grade_mismatch_previous_snapshot_count": 201395
+      },
+      "publication_rule": "Internal exploratory analysis only; every raw state cell must have n >= 30. No direct-hire inference, identities, individual dates, or exact compensation.",
+      "limitation": "This descriptive entry-path matrix does not identify direct hires, a promotion policy, employee intent, or a causal relationship with attrition.",
+      "outcome": "pass"
+    },
+    "company_tenure": {
+      "evidence": "output/distribution/json/company-tenure-distribution-evidence-20260910.json",
+      "builder": "tools/build_company_tenure_evidence.py",
+      "audit_query": "queries/audits/company_tenure_stored_date_integrity_20260823.sql",
+      "profile_query": "queries/profiles/company_tenure_stored_date_distribution_20260823.sql",
+      "execution_date": "2026-09-10",
+      "snapshot": "2026-08-23",
+      "population": "worker_type='Employee'; employee_type='Regular'; active_status=1 at the fixed 2026-08-23 monthly snapshot",
+      "grain": "Distinct active regular employee at one monthly snapshot",
+      "definitions": {
+        "original_hire_date": "Proxy descriptivo: antigüedad por aniversario desde el valor almacenado original_hire_date.",
+        "max_hire_rehire_date": "Proxy descriptivo: antigüedad por aniversario desde el valor almacenado max_hire_rehire_date.",
+        "cross_field_policy": "No se aplica una fecha sobre la otra; cada gráfica describe directamente su propio campo almacenado."
+      },
+      "coverage": {
+        "eligible_employee_count": 50043,
+        "original_hire_calculable_employee_count": 50043,
+        "original_hire_not_calculable_employee_count": 0,
+        "latest_hire_rehire_calculable_employee_count": 50043,
+        "latest_hire_rehire_not_calculable_employee_count": 0
+      },
+      "query_sha256": {
+        "audit_sql": "dfd8733853454584b00ec5aac4cf30cc4d0078ca00139dbbd969f8e29c6d8122",
+        "audit_result": "24ee61d71fe29f8b25d82a8b25a6bce8fdb148f39397a68c329b4f39abc7dc21",
+        "profile_sql": "8168566f359a5722e99fdec3187155bd352295829c4c5870693b86cb45075691",
+        "profile_result": "7bcc3a9f1d1930492efaab0e5b947d0e446269c81268a911a6b2f05e957b30aa"
+      },
+      "aggregate_metrics": {
+        "original_hire_null_count": 0,
+        "latest_hire_rehire_null_count": 0,
+        "impossible_date_order_count": 0,
+        "published_band_count": 6,
+        "minimum_published_original_hire_band_count": 3024,
+        "minimum_published_latest_hire_rehire_band_count": 3201
+      },
+      "publication_rule": "Internal aggregate analysis only; the six shared anniversary bands have n >= 30 in both stored-field distributions. No employee rows, identifiers, or raw dates are retained.",
+      "acceptance_rule": "El snapshot fijo 2026-08-23 de empleados regulares activos debe ser único y sin conflictos; no puede haber fechas futuras ni original_hire_date posterior a max_hire_rehire_date; ambos perfiles deben reconciliar cobertura y denominadores con la población auditada; cada banda compartida debe sumar su denominador y cumplir n >= 30. El resultado sólo describe los dos campos almacenados y no selecciona una definición HRIS de Company tenure.",
+      "outcome": "pass"
+    },
+    "prior_experience_annual_voluntary_attrition": {
+      "evidence": "output/distribution/json/attrition-43-variable-distributions-v2.prior-experience-annual-attrition-evidence-20260911.json",
+      "profile_or_audit_query": "queries/audits/prior_experience_annual_voluntary_attrition_20260911.sql",
+      "gap_audit_query": "queries/audits/prior_experience_annual_voluntary_attrition_gap_20260911.sql",
+      "query_sha256": "143eae86c3230a2536208b846e9fb0da4e6baaab4448585b613baf51909c40cf",
+      "query_result_sha256": "11640256834d25fbaaae87cc7d7ac96840121c235c3644fa91476420b559e8ba",
+      "gap_query_sha256": "6ea7261704947c4e13bf753fb03bb77ecb949aa16ea65de379ff768f45870be6",
+      "gap_result_sha256": "0693705554a83c18f3d654c9db49dbb00942ecdaf07de10cb473d0fe233efed3",
+      "execution_date": "2026-09-11",
+      "reporting_mode": "internal_analysis",
+      "population": "worker_type='Employee'; employee_type='Regular'; active_status=1 for monthly headcount and pre-termination band history",
+      "grain": "Band-year; average monthly active headcount denominator and Voluntary termination event numerator",
+      "outcome": "warning"
+    },
+    "engineering_cto_org_split_display": {
+      "evidence": "output/distribution/json/engineering-cto-org-split-display-evidence-20260911.json",
+      "evidence_sha256": "25a0a813a303d080e190747fce25a71d603d5bc304991049148b8c96de102a35",
+      "queries": {
+        "main_cto_audit": {
+          "query_path": "queries/audits/engineering_cto_org_split_display_20260911.sql",
+          "sql_sha256": "a25b7f15e6aa211be4910c556e152d9cbed86200791c983e0be518afa61f73bc",
+          "result_sha256": "b503ee44fc7fa95c47673552da1a6c9338f47c08486b2abb62f3398cc9e59a76"
+        },
+        "denominator_reconciliation": {
+          "query_path": "queries/audits/engineering_cto_display_denominator_reconciliation_20260911.sql",
+          "sql_sha256": "1c056bf3ca1350a9057d04a6a69c075ecbdbbff89e7a8a9323c45de8f3dc0d73",
+          "result_sha256": "81b8844f3aeb619cffa1a5b84980084335f05ee9c4eb84a38881f060f47815c4"
+        },
+        "branch_diagnostic": {
+          "query_path": "queries/audits/engineering_cto_branch_diagnostic_20260911.sql",
+          "sql_sha256": "d2ebc481239d39dc5e08580fc53db0b0d6e1eef9252e5d9e7759384cfd478251",
+          "result_sha256": "52cdcc5a0c3df85ef25aa74c1902730b16aa7bddc85a4e3fa5e3f70909bced7b"
+        },
+        "upper_chart_reconciliation": {
+          "query_path": "queries/audits/engineering_cto_display_upper_category_reconciliation_20260911.sql",
+          "sql_sha256": "4f129cac1b269e2d6c739ceb4092e92c1e1ce2ae02f906982099f5c4d85f1649",
+          "result_sha256": "69c0c4d4a95d6cff91d053b865a6dbc0518654fa3761f361edef5cbfb1d7f525"
+        }
+      },
+      "snapshot": "2026-08-23",
+      "population": "worker_type='Employee'; employee_type='Regular'; active_status=1; no RF360 filter",
+      "grain": "Distinct employee snapshot",
+      "publication_status": "exploratory_display_only",
+      "score_v4_change": "none",
+      "rule_applied": {
+        "cto": "Documented CTO branches: same-snapshot descendants of leader A plus employees with the documented et_leader value for leader B; both leader anchors are retained in the rule.",
+        "leader_inclusion": "A leader contributes to the eligible display only when present in the active snapshot universe. Leader A is present in the regular snapshot but inactive, so its active branch contributes zero employees here.",
+        "complement": "Corp Fxn & BU is the complement of CTO inside the same eligible snapshot universe.",
+        "rf360_rule": "No is_rf360_yes_no filter is applied so the lower view uses the current eng_or_noneng display universe.",
+        "upper_chart": "The upper eng_or_noneng chart remains frozen at 50,033; the lower display uses the current reconciled universe of 50,043 and states the 10-employee difference visibly."
+      },
+      "category_distribution": [
+        {
+          "category": "CTO",
+          "employee_count": 35788,
+          "percentage": 71.51449753
+        },
+        {
+          "category": "Corp Fxn & BU",
+          "employee_count": 14255,
+          "percentage": 28.48550246
+        }
+      ],
+      "metrics": {
+        "eligible_employee_count": 50043,
+        "cto_employee_count": 35788,
+        "category_total_count": 50043,
+        "category_reconciliation_difference": 0,
+        "eng_or_noneng_denominator_difference": 0,
+        "leader_a_leader_in_eligible_cto_count": 0,
+        "leader_b_leader_in_eligible_cto_count": 1,
+        "branch_overlap_count": 0,
+        "leader_a_cycle_count": 0,
+        "leader_a_depth_limit_count": 0
+      },
+      "leader_a_branch_diagnostic": {
+        "root_present": 1,
+        "root_active": 0,
+        "reachable_regular": 20,
+        "reachable_active": 0,
+        "descendant_regular": 19,
+        "descendant_active": 0,
+        "empty_active_branch_accepted": true
+      },
+      "publication_rule": "Aggregate counts and percentages only; every displayed category has n >= 30; no identities, IDs, names, or employee rows are persisted.",
+      "outcome": "pass"
+    },
+    "level_grouped_by_grade_family": {
+      "evidence": "output/distribution/json/level-grouped-by-grade-family-evidence-20260911.json",
+      "evidence_sha256": "0314d73fcfe1f8987a5a99ce58a4a94b22f3fefb3e3cab1af68b36a512e99a70",
+      "builder": "tools/build_level_grouped_by_grade_family_evidence.py",
+      "audit_query": "queries/audits/level_grouped_by_compensation_grade_family_20260911.sql",
+      "query_sha256": {
+        "audit_sql": "dc03d7647c10f5782040ce723ab94fe9b51a11886eca5d97e203666f08475ace",
+        "audit_result": "d2775aaa9517a5063cd6fef16b44f2556b245552d361d82d1b5e9e8aa135e5f0"
+      },
+      "snapshot": "2026-08-23",
+      "population": "worker_type='Employee'; employee_type='Regular'; active_status=1",
+      "grain": "Distinct employee snapshot",
+      "definition": {
+        "primary_field": "level_grouped",
+        "context_field": "compensation_grade",
+        "family_proxy": "First alphabetic grade prefix, with V and the small unmapped tail pooled for privacy.",
+        "interpretation": "The chart describes how the stored grade-family proxy is distributed within the stored Level bands; it does not infer a universal numeric ladder or an official track mapping."
+      },
+      "rule_applied": {
+        "level_order": [
+          "VP & Above",
+          "Sr Dir",
+          "Princ/Directors",
+          "Mgrs Corp",
+          "Sr Staff & /Mgr",
+          "Staff & /Mgr",
+          "Senior & Lead",
+          "Assoc & Int/Eng",
+          "Support"
+        ],
+        "family_order": [
+          "M",
+          "P",
+          "R",
+          "S",
+          "T",
+          "V / other grade families"
+        ],
+        "family_mapping": "M, P, R, S and T remain visible prefixes; V and non-M/P/R/S/T prefixes are pooled as V / other grade families so every visible cell meets n >= 30.",
+        "small_cell_rule": "No displayed Level-family cell, Level band or family total may be below n=30.",
+        "denominator_rule": "All active Regular Employee rows in the exact 2026-08-23 snapshot; no compensation or RF360 filter is applied."
+      },
+      "level_totals": [
+        {
+          "level": "VP & Above",
+          "employee_count": 428,
+          "percentage": 0.85526447
+        },
+        {
+          "level": "Sr Dir",
+          "employee_count": 1513,
+          "percentage": 3.02339988
+        },
+        {
+          "level": "Princ/Directors",
+          "employee_count": 4342,
+          "percentage": 8.67653818
+        },
+        {
+          "level": "Mgrs Corp",
+          "employee_count": 2727,
+          "percentage": 5.44931359
+        },
+        {
+          "level": "Sr Staff & /Mgr",
+          "employee_count": 7309,
+          "percentage": 14.60543932
+        },
+        {
+          "level": "Staff & /Mgr",
+          "employee_count": 8918,
+          "percentage": 17.82067422
+        },
+        {
+          "level": "Senior & Lead",
+          "employee_count": 14538,
+          "percentage": 29.05101613
+        },
+        {
+          "level": "Assoc & Int/Eng",
+          "employee_count": 7774,
+          "percentage": 15.53464021
+        },
+        {
+          "level": "Support",
+          "employee_count": 2494,
+          "percentage": 4.98371401
+        }
+      ],
+      "family_totals": [
+        {
+          "family": "M",
+          "employee_count": 4022,
+          "percentage": 8.0370881
+        },
+        {
+          "family": "P",
+          "employee_count": 4874,
+          "percentage": 9.73962392
+        },
+        {
+          "family": "R",
+          "employee_count": 32287,
+          "percentage": 64.51851408
+        },
+        {
+          "family": "S",
+          "employee_count": 2494,
+          "percentage": 4.98371401
+        },
+        {
+          "family": "T",
+          "employee_count": 5938,
+          "percentage": 11.86579542
+        },
+        {
+          "family": "V / other grade families",
+          "employee_count": 428,
+          "percentage": 0.85526447
+        }
+      ],
+      "aggregate_metrics": {
+        "source_row_count": 50043,
+        "eligible_employee_count": 50043,
+        "duplicate_employee_snapshot_count": 0,
+        "missing_level_employee_count": 0,
+        "missing_grade_employee_count": 0,
+        "level_band_count": 9,
+        "raw_grade_family_count": 7,
+        "raw_matrix_cell_count": 20,
+        "raw_matrix_cells_below_minimum_count": 0,
+        "raw_matrix_employee_count": 50043,
+        "employee_level_conflict_count": 0,
+        "employee_family_conflict_count": 0,
+        "employee_grade_conflict_count": 0
+      },
+      "publication_status": "exploratory_display_only",
+      "score_v4_change": "none",
+      "publication_rule": "Aggregate counts and percentages only; every displayed cell and total has n >= 30; no identities, IDs, names, exact compensation or employee rows are persisted.",
+      "limitations": [
+        "La familia de grade es un proxy descriptivo del prefijo almacenado; no existe un campo oficial track confirmado en esta vista.",
+        "El sufijo numérico no se interpreta como escala transversal porque el mismo sufijo cambia de significado entre prefijos.",
+        "La cola de prefijos no M/P/R/S/T se agrupa con V para preservar el umbral de privacidad; no se presenta como una familia oficial."
+      ],
+      "outcome": "pass"
+    },
+    "current_grade_entry_path_tenure_attrition": {
+      "evidence": "output/distribution/json/attrition-43-variable-distributions-v2.current-grade-entry-path-tenure-attrition-evidence-20260911.json",
+      "query": "queries/audits/current_grade_entry_path_tenure_attrition_20260911.sql",
+      "gap_query": "queries/audits/current_grade_entry_path_tenure_attrition_gap_20260911.sql",
+      "source_lineage_query": "queries/audits/current_grade_entry_path_tenure_source_lineage_20260911.sql",
+      "query_sha256": "60a74df55795e6cdb077a576a0e93f451891500117e8ddf02263fb8d56c023aa",
+      "query_result_sha256": "f29b6a654f6302d7b5c8ac8c2c6c70d5e1f4f2665926eef7f54c3ac526866d70",
+      "gap_query_sha256": "9e09ce4c27edbb3c225f5edf4641ba26ce67250eecd06b16194c39ca6abe4344",
+      "gap_result_sha256": "a181440b9a2853076b88a23ff75fcf426861e2fd16694d8df0e4b3d841cde14d",
+      "source_lineage_query_sha256": "aa22a7077119acb7d91a4e0b40fbc59cfda8d099949ce04ced5d18847733f184",
+      "source_lineage_result_sha256": "9111f460a3ab3dae9f05a1736ecf26e2283c98c2ba03bbbc1e7ae0fc341de49b",
+      "execution_date": "2026-09-11",
+      "reporting_mode": "presentation",
+      "population": "worker_type='Employee'; employee_type='Regular'; active_status=1 en snapshots mensuales FY2021-FY2025.",
+      "grain": "Empleado-snapshot mensual para headcount; evento Voluntary atribuido al ultimo snapshot activo valido anterior a term_date.",
+      "outcome": "warning"
+    },
+    "qvoice_heartbeat": {
+      "evidence": "output/distribution/json/qvoice-heartbeat-evidence-20260911.json",
+      "builder": "tools/build_qvoice_heartbeat_evidence.py",
+      "profile_query": "queries/profiles/qvoice_heartbeat_workforce_denominator_20260911.sql",
+      "audit_query": "queries/audits/qvoice_heartbeat_workforce_reconciliation_20260911.sql",
+      "wave": "Jan-2026",
+      "survey_launch_date": "2026-01-07",
+      "snapshot": "2025-12-28",
+      "population": "worker_type='Employee'; employee_type='Regular'; active_status=1",
+      "grain": "Distinct employee at the pre-Jan-2026 monthly snapshot",
+      "item_count": 53,
+      "minimum_valid_items": 38,
+      "matched_workforce_employees": 39194,
+      "personal_mean_eligible_employees": 37605,
+      "top_upvote_items": [
+        "Q38",
+        "Q37",
+        "Q32",
+        "Q30",
+        "Q33"
+      ],
+      "top_downvote_items": [
+        "Q53",
+        "Q10",
+        "Q11",
+        "Q47",
+        "Q27"
+      ],
+      "query_sha256": {
+        "profile_sql": "76b177d4e87a11e0b972781e5d439d8e82fbacaa9836ecea1e955e0eafa1e6d4",
+        "profile_result": "43350f3df2a73f77e4dda816a89174e6a5ad1a26d7cf9690afa29aab9d14142c",
+        "audit_sql": "365ec45691b9bdb8e2cbe379c367e5ba39876c5909911878d8747f8644becf8f",
+        "audit_result": "6c09c2d8d102e8f3af63d9e2e7731bf8d5f4eeafc33a10ca0e6417fded560f18"
+      },
+      "privacy": {
+        "identifiers_persisted": false,
+        "individual_rows_persisted": false,
+        "individual_scale_values_persisted": false,
+        "runtime_join_sql_persisted": false,
+        "minimum_published_cohort": 30
+      },
+      "outcome": "pass"
+    },
+    "application_employee_snapshot_trailing_6m": {
+      "source": "hrda.job_applications_vw",
+      "analysis_cutoff": "2026-09-10",
+      "execution_date": "2026-09-13",
+      "annual_evidence": "output/distribution/json/attrition-43-variable-distributions-v2.application-intensity-evidence-20260913.json",
+      "employee_snapshot_evidence": "output/distribution/json/attrition-43-variable-distributions-v2.application-employee-snapshot-trailing-6m-evidence-20260913.json",
+      "annual_evidence_sha256": "08d4a1dd16a3c6f11de52b89ff6d9c02010845960671e36c0d91a3faad2ccb2f",
+      "employee_snapshot_evidence_sha256": "9b803b072ef3acb4d79e74c9277ae646579b90793d62d17064a62a66336649d0",
+      "annual_profile_query": "queries/profiles/application_intensity_job_applications_vw_annual_with_ytd_20260913.sql",
+      "source_metadata_audit_query": "queries/audits/application_job_applications_vw_metadata_20260913.sql",
+      "event_quality_audit_query": "queries/audits/application_job_applications_vw_event_quality_20260913.sql",
+      "annual_fiscal_audit_query": "queries/audits/application_employee_snapshot_trailing_6m_fiscal_reconciliation_20260913.sql",
+      "source_reconciliation_query": "queries/audits/applied_to_a_job_source_reconciliation_20260913.sql",
+      "employee_snapshot_profile_query": "queries/profiles/application_employee_snapshot_trailing_6m_distribution_20260913.sql",
+      "employee_snapshot_join_audit_query": "queries/audits/application_employee_snapshot_trailing_6m_join_20260913.sql",
+      "employee_snapshot_temporal_audit_query": "queries/audits/application_employee_snapshot_trailing_6m_temporal_20260913.sql",
+      "employee_snapshot_publishability_audit_query": "queries/audits/application_employee_snapshot_trailing_6m_publishability_20260913.sql",
+      "builder": "tools/build_application_intensity_evidence_20260913.py",
+      "reporting_mode": "internal_analysis",
+      "internal_analysis_authorization": {
+        "authorization_id": "application-intensity-internal-collaboration-20260913",
+        "authorized_on": "2026-09-13",
+        "authorized_audience": "requester and Julia, both project developers",
+        "scope": {
+          "artifact": "application_intensity_by_fiscal_year",
+          "source": "hrda.job_applications_vw",
+          "buckets": [
+            "1",
+            "2",
+            "3",
+            "4+"
+          ],
+          "periods": [
+            "FY2022",
+            "FY2023",
+            "FY2024",
+            "FY2025",
+            "FY2026 YTD through 2026-09-10"
+          ],
+          "employee_snapshot_rolling_view": "retain its existing Unknown and time-safe coverage controls"
+        },
+        "allow_subthreshold_aggregate_buckets": true,
+        "minimum_displayed_count": 0,
+        "controls": {
+          "aggregate_only": true,
+          "employee_rows_persisted": false,
+          "employee_ids_persisted": false,
+          "names_persisted": false,
+          "requisition_ids_or_titles_persisted": false,
+          "manager_access": false,
+          "redistribution": false,
+          "operational_use": false,
+          "score_v4_change": false,
+          "production_feature_approval": false
+        }
+      },
+      "annual_publication": {
+        "buckets": [
+          "1",
+          "2",
+          "3",
+          "4+"
+        ],
+        "standard_publishable_periods": [
+          "FY2022",
+          "FY2023",
+          "FY2024"
+        ],
+        "displayed_internal_periods": [
+          "FY2022",
+          "FY2023",
+          "FY2024",
+          "FY2025",
+          "FY2026 YTD"
+        ],
+        "standard_suppressed_periods": [
+          "FY2025",
+          "FY2026 YTD"
+        ],
+        "fy2026_ytd_through": "2026-09-10",
+        "fy2026_is_partial": true,
+        "minimum_shared_cohort": 30,
+        "standard_rule": "Do not publish a fiscal period when any 1/2/3/4+ bucket is below n=30.",
+        "internal_rule": "Under the named internal_analysis authorization, display aggregate rows below n=30 for the requester and Julia only; FY2026 YTD is not comparable with a full fiscal year."
+      },
+      "employee_snapshot_publication": {
+        "buckets": [
+          "0",
+          "1",
+          "2+",
+          "Unknown"
+        ],
+        "window": "(snapshot_date - 6 months, snapshot_date]",
+        "latest_available_snapshot": "2026-08-23",
+        "latest_publishable_snapshot": "2026-07-26",
+        "minimum_shared_cohort": 30,
+        "unknown_rule": "Do not convert missing source coverage to 0.",
+        "rule": "Publish a complete distribution only when all four buckets have n>=30 and reconcile to the employee-snapshot denominator.",
+        "publishability_gate": {
+          "snapshot_dates_checked_total": 68,
+          "trend_snapshot_count": 12,
+          "trend_publishable_snapshot_count": 1,
+          "trend_suppressed_snapshot_count": 11,
+          "latest_available_snapshot": "2026-08-23",
+          "latest_available_publication_status": "suppressed_below_n30_or_reconciliation",
+          "latest_publishable_snapshot": "2026-07-26"
+        }
+      },
+      "historical_source_reconciliation": {
+        "reference_artifact": "output/distribution/json/attrition-43-variable-distributions-v2.application-intensity-evidence-20260910.json",
+        "query_reference": "queries/audits/applied_to_a_job_source_reconciliation_20260910.sql",
+        "executed_on": "2026-09-10",
+        "comparison_window": "2019-06-17 through 2025-02-11",
+        "acceptance_rule": "Both directional exact-key match rates must be >= 95%.",
+        "outcome": "warning",
+        "metrics": {
+          "old_event_keys": 9903,
+          "new_event_keys": 10839,
+          "matched_event_keys": 9903,
+          "old_only_event_keys": 0,
+          "new_only_event_keys": 936,
+          "old_to_new_match_rate_percent": 100.0,
+          "new_to_old_match_rate_percent": 91.3645
+        },
+        "interpretation": "La evidencia congelada del 2026-09-10 registra 936 eventos adicionales en la vista y una coincidencia nueva→antigua de 91.3645%; la vista ampliada requiere lineage aprobado antes de declararse idéntica a la fuente histórica."
+      },
+      "current_source_reconciliation": {
+        "query_reference": "queries/audits/applied_to_a_job_source_reconciliation_20260913.sql",
+        "executed_on": "2026-09-13",
+        "sql_sha256": "660255c7d7fabc7814d482c288944617ee98938de11ce6f82b72c674e39fccd1",
+        "result_sha256": "79fa2f85ff1428f7893aa8305976e3fe3370817077d4b234d10c56acbd84a07d",
+        "comparison_window": "2019-06-17 through 2025-02-11",
+        "acceptance_rule": "Re-run the exact-key comparison and preserve any source drift relative to the frozen 2026-09-10 reference.",
+        "outcome": "warning",
+        "metrics": {
+          "common_window_start": "2019-06-17",
+          "common_window_end": "2025-02-11",
+          "old_event_keys": 9903,
+          "new_event_keys": 10840,
+          "matched_event_keys": 9903,
+          "old_only_event_keys": 0,
+          "new_only_event_keys": 937,
+          "old_to_new_match_rate_percent": 100,
+          "new_to_old_match_rate_percent": 91.3561
+        },
+        "interpretation": "The current rerun has one additional new-only event versus the frozen 2026-09-10 reference; this is a source-refresh diagnostic, not a change to the historical deck claim."
+      },
+      "lineage_status": "Broadened descriptive source; not approved as identical lineage to hrda.applications or as a production feature.",
+      "score_v4_change": "none",
+      "outcome": "pass"
+    },
+    "comp_ratio_voluntary_attrition_history": {
+      "evidence": "output/distribution/json/comp-ratio-voluntary-attrition-history-evidence-20260913.json",
+      "evidence_sha256": "57dedad446686088f6816e1b4cd01f502adad53a98faf174b854618e3842fa5e",
+      "builder": "tools/build_comp_ratio_voluntary_attrition_evidence_20260913.py",
+      "audit_query": "queries/audits/comp_ratio_voluntary_attrition_history_20260913.sql",
+      "query_sha256": "9168e49597f9040022b5653fb7c419fb6935e31e43caba2bfad1125bde641525",
+      "result_sha256": "62d43f886f5fc5b0635a857c7ccd02c231855b7dbc3d80270426dc00f23b6491",
+      "generated_on": "2026-09-13",
+      "deliverable_mode": "presentation",
+      "population": "Empleados regulares activos en cada snapshot mensual, con compa_ratio poblado.",
+      "grain": "Snapshot mensual de empleado; serie publicada por snapshot x grupo de compa_ratio.",
+      "knowledge_boundary": "Sólo datos disponibles al cierre de cada snapshot; seguimiento completo de seis meses.",
+      "outcome_definition": "Salida voluntaria estricta con term_date en (snapshot_date, snapshot_date + 6 meses].",
+      "grouping": {
+        "threshold": 0.8,
+        "low_group": "<0.8 (incl. 0)",
+        "high_group": ">=0.8",
+        "zero_in_low_group": true,
+        "formula_lineage_status": "pending"
+      },
+      "complete_followup": {
+        "complete_followup_first_snapshot_date": "2020-07-26",
+        "complete_followup_last_snapshot_date": "2026-02-22",
+        "source_first_snapshot_date": "2020-07-26",
+        "source_max_snapshot_date": "2026-09-27"
+      },
+      "aggregate_metrics": {
+        "ambiguous_termination_event_keys": 61,
+        "complete_snapshot_count": 68,
+        "conflicting_compa_ratio_employee_snapshots": 0,
+        "eligible_employee_snapshot_duplicate_rows": 0,
+        "eligible_employee_snapshot_rows": 2730460,
+        "published_series_points": 136,
+        "ratio_missing_employee_snapshots": 0,
+        "ratio_negative_employee_snapshots": 0,
+        "ratio_observed_employee_snapshots": 2730460,
+        "ratio_zero_employee_snapshots": 86537,
+        "series_group_reconciliation_failures": 0,
+        "series_points_below_n30": 0,
+        "strict_voluntary_event_keys": 16937,
+        "termination_event_keys": 25540,
+        "voluntary_exception_event_keys": 4263
+      },
+      "pooled_comparison": {
+        "<0.8 (incl. 0)": {
+          "employee_snapshots": 217829,
+          "voluntary_exit_snapshots": 6209,
+          "voluntary_rate_percent": 2.8504
+        },
+        ">=0.8": {
+          "employee_snapshots": 2512631,
+          "voluntary_exit_snapshots": 75890,
+          "voluntary_rate_percent": 3.0203
+        },
+        "comparison": {
+          "absolute_difference_percentage_points": -0.1699,
+          "relative_rate_ratio": 0.9437,
+          "denominator_definition": "Pooled employee-snapshot rows across complete monthly snapshots; the same employee may contribute to multiple snapshots."
+        }
+      },
+      "acceptance_rule": "No duplicate employee-snapshot keys, no conflicting compa_ratio values, no missing or negative ratio values in the published population, every group-month n>=30, group totals reconcile to observed ratio rows, and all snapshots have six months of follow-up.",
+      "interpretation_limit": "Asociación descriptiva del valor almacenado; no confirma que compa_ratio represente bajo salario relativo, no demuestra causalidad y no produce predicciones individuales.",
+      "privacy_checks": {
+        "identifiers_persisted": false,
+        "employee_rows_persisted": false,
+        "exact_compensation_persisted": false,
+        "raw_compa_ratio_values_persisted": false,
+        "all_displayed_cohorts_meet_minimum": true,
+        "minimum_cohort": 30
+      },
+      "outcome": "pass"
+    },
+    "office_site_relationship_with_manager": {
+      "evidence": "output/distribution/json/attrition-43-variable-distributions-v2.co-location-site-city-evidence-20260909.json",
+      "evidence_sha256": "c4ba51876f99db1d946f35f10d2a228275e2e550c17b76702adc9193f89ca445",
+      "query": "queries/profiles/co_location_manager_site_city_annual_through_20260823.sql",
+      "cutoff": "2026-08-23",
+      "fiscal_year": "FY2026",
+      "snapshot_count": 11,
+      "population": "Active regular employees with an active regular manager in the same monthly snapshot.",
+      "grain": "Employee-manager snapshot",
+      "categories": [
+        {
+          "label": "Same office_site",
+          "employee_manager_snapshots": 459095,
+          "percent_of_total": 87.3414
+        },
+        {
+          "label": "Different office_site",
+          "employee_manager_snapshots": 29260,
+          "percent_of_total": 5.5666
+        },
+        {
+          "label": "Not comparable / missing site",
+          "employee_manager_snapshots": 37278,
+          "percent_of_total": 7.092
+        }
+      ],
+      "common_denominator": 525633,
+      "comparable_pairs": 488355,
+      "same_office_site_percent_of_comparable_pairs": 94.0085,
+      "minimum_shared_cohort": 30,
+      "acceptance_rule": "The three categories use one FY2026 denominator, reconcile to it exactly, and each displayed category has n >= 30.",
+      "interpretation": "Stored office_site comparison only; it is conceptually aligned with Co-location with manager and does not measure residential distance, address proximity, travel time, or a four-hour difference.",
+      "outcome": "pass"
+    },
+    "number_of_manager_changes_same_date_mobility_comparison": {
+      "evidence": "output/distribution/json/number-of-manager-changes-same-date-mobility-comparison-evidence-20260914.json",
+      "evidence_sha256": "838de8d51935182377b64ab21d83c8f7b93a83abe1c25f4d81cc43dd703ab7be",
+      "query": "queries/profiles/number_of_manager_changes_same_date_mobility_comparison_20260914.sql",
+      "analysis_plan": "config/number_of_manager_changes_distribution_plan_v7_20260914.yaml",
+      "snapshot": "2026-08-23",
+      "population": "worker_type='Employee' AND employee_type='Regular' AND active_status=1 at the monthly cutoff, with usable employee_id",
+      "grain": "Distinct employee snapshot; event keys are employee_id + effective date",
+      "baseline_definition": "Distinct manager_change_date event keys with manager_change=1, observed no later than the snapshot.",
+      "sensitivity_definition": "Baseline count excluding only events with a positive transfer or promotion event for the same employee on the identical effective date.",
+      "publication_rule": "Aggregate values only; every displayed bucket has n >= 30; no employee identifiers, names, or individual rows are persisted.",
+      "windows": [
+        {
+          "window_months": 6,
+          "window_start_exclusive": "2026-02-23",
+          "baseline_event_keys": 10317,
+          "transfer_overlap_event_keys": 420,
+          "promotion_overlap_event_keys": 121,
+          "overlap_with_transfer_and_promotion_event_keys": 3,
+          "excluded_overlap_event_keys": 538,
+          "excluded_overlap_event_percent": 5.215663,
+          "baseline_buckets": [
+            {
+              "label": "0",
+              "employee_count": 41266,
+              "employee_percent": 82.461083
+            },
+            {
+              "label": "1",
+              "employee_count": 7528,
+              "employee_percent": 15.043062
+            },
+            {
+              "label": "2",
+              "employee_count": 1138,
+              "employee_percent": 2.274044
+            },
+            {
+              "label": "3+",
+              "employee_count": 111,
+              "employee_percent": 0.221809
+            }
+          ],
+          "excluding_same_date_transfer_or_promotion_buckets": [
+            {
+              "label": "0",
+              "employee_count": 41671,
+              "employee_percent": 83.270387
+            },
+            {
+              "label": "1",
+              "employee_count": 7237,
+              "employee_percent": 14.461563
+            },
+            {
+              "label": "2",
+              "employee_count": 1037,
+              "employee_percent": 2.072217
+            },
+            {
+              "label": "3+",
+              "employee_count": 98,
+              "employee_percent": 0.195831
+            }
+          ]
+        },
+        {
+          "window_months": 12,
+          "window_start_exclusive": "2025-08-23",
+          "baseline_event_keys": 17013,
+          "transfer_overlap_event_keys": 671,
+          "promotion_overlap_event_keys": 249,
+          "overlap_with_transfer_and_promotion_event_keys": 7,
+          "excluded_overlap_event_keys": 913,
+          "excluded_overlap_event_percent": 5.366484,
+          "baseline_buckets": [
+            {
+              "label": "0",
+              "employee_count": 36628,
+              "employee_percent": 73.193053
+            },
+            {
+              "label": "1",
+              "employee_count": 10801,
+              "employee_percent": 21.583438
+            },
+            {
+              "label": "2",
+              "employee_count": 2260,
+              "employee_percent": 4.516116
+            },
+            {
+              "label": "3+",
+              "employee_count": 354,
+              "employee_percent": 0.707391
+            }
+          ],
+          "excluding_same_date_transfer_or_promotion_buckets": [
+            {
+              "label": "0",
+              "employee_count": 37178,
+              "employee_percent": 74.292108
+            },
+            {
+              "label": "1",
+              "employee_count": 10529,
+              "employee_percent": 21.039905
+            },
+            {
+              "label": "2",
+              "employee_count": 2034,
+              "employee_percent": 4.064504
+            },
+            {
+              "label": "3+",
+              "employee_count": 302,
+              "employee_percent": 0.603481
+            }
+          ]
+        }
+      ],
+      "outcome": "pass"
+    }
+  },
+  "visual_scope_policy": {
+    "single_snapshot": "Show the exact snapshot date; most frozen v4 category charts use 2026-08-23 and stored metrics use 2026-09-27.",
+    "historical_or_windowed": "Show fiscal-year, survey-wave, event-series, or rolling-window scope instead of a misleading singleton snapshot."
+  },
+  "slides": [
+    {
+      "slide": 1,
+      "title": "Cover"
+    },
+    {
+      "slide": 2,
+      "title": "Agenda"
+    },
+    {
+      "slide": 3,
+      "title": "Applied to a job"
+    },
+    {
+      "slide": 4,
+      "title": "Applied to a job — employee-snapshot, trailing six months"
+    },
+    {
+      "slide": 5,
+      "title": "Transfer within past year"
+    },
+    {
+      "slide": 6,
+      "title": "Location"
+    },
+    {
+      "slide": 7,
+      "title": "Office site and city"
+    },
+    {
+      "slide": 8,
+      "title": "Team turnover"
+    },
+    {
+      "slide": 9,
+      "title": "¿Una salida inicial precede más salidas?"
+    },
+    {
+      "slide": 10,
+      "title": "Sensibilidad: equipos de 6+ personas"
+    },
+    {
+      "slide": 11,
+      "title": "Job family"
+    },
+    {
+      "slide": 12,
+      "title": "Region"
+    },
+    {
+      "slide": 13,
+      "title": "Gender"
+    },
+    {
+      "slide": 14,
+      "title": "Work arrangement"
+    },
+    {
+      "slide": 15,
+      "title": "Engineering vs. non-engineering"
+    },
+    {
+      "slide": 16,
+      "title": "Rehire"
+    },
+    {
+      "slide": 17,
+      "title": "Prior experience"
+    },
+    {
+      "slide": 18,
+      "title": "Annual voluntary attrition by prior experience"
+    },
+    {
+      "slide": 19,
+      "title": "Commute distance"
+    },
+    {
+      "slide": 20,
+      "title": "RTO comment"
+    },
+    {
+      "slide": 21,
+      "title": "Any QVoice comment"
+    },
+    {
+      "slide": 22,
+      "title": "Non-respondents"
+    },
+    {
+      "slide": 23,
+      "title": "Intent to Stay"
+    },
+    {
+      "slide": 24,
+      "title": "Career goals"
+    },
+    {
+      "slide": 25,
+      "title": "Average QVoice"
+    },
+    {
+      "slide": 26,
+      "title": "QVoice heartbeat"
+    },
+    {
+      "slide": 27,
+      "title": "Standardized within region"
+    },
+    {
+      "slide": 28,
+      "title": "External pull factors"
+    },
+    {
+      "slide": 29,
+      "title": "Time in role and level"
+    },
+    {
+      "slide": 30,
+      "title": "Attrition Voluntary anual por via de entrada al grade y tenure"
+    },
+    {
+      "slide": 31,
+      "title": "Company tenure"
+    },
+    {
+      "slide": 32,
+      "title": "Time since promotion"
+    },
+    {
+      "slide": 33,
+      "title": "Promotions by grade"
+    },
+    {
+      "slide": 34,
+      "title": "Current grade entry path"
+    },
+    {
+      "slide": 35,
+      "title": "Level"
+    },
+    {
+      "slide": 36,
+      "title": "Level grouped by grade family"
+    },
+    {
+      "slide": 37,
+      "title": "Org layers to CEO"
+    },
+    {
+      "slide": 38,
+      "title": "Compensation grade"
+    },
+    {
+      "slide": 39,
+      "title": "Comp ratio"
+    },
+    {
+      "slide": 40,
+      "title": "Within-team compensation"
+    },
+    {
+      "slide": 41,
+      "title": "Co-location"
+    },
+    {
+      "slide": 42,
+      "title": "Residential distance"
+    },
+    {
+      "slide": 43,
+      "title": "Office-site relationship with manager"
+    },
+    {
+      "slide": 44,
+      "title": "High-risk manager"
+    },
+    {
+      "slide": 45,
+      "title": "High turnover"
+    },
+    {
+      "slide": 46,
+      "title": "Above-average team turnover"
+    },
+    {
+      "slide": 47,
+      "title": "Manager leaving"
+    },
+    {
+      "slide": 48,
+      "title": "Manager change"
+    },
+    {
+      "slide": 49,
+      "title": "Number of manager changes"
+    },
+    {
+      "slide": 50,
+      "title": "Talent index"
+    },
+    {
+      "slide": 51,
+      "title": "Major inflection"
+    },
+    {
+      "slide": 52,
+      "title": "ET fields"
+    }
+  ],
+  "slide_content_hash_validation": {
+    "baseline_available": true,
+    "baseline_slide_count": 52,
+    "output_slide_count": 52,
+    "allowed_changed_slides": [
+      24
+    ],
+    "observed_changed_slides": [
+      24
+    ],
+    "unchanged_slide_count": 51,
+    "outcome": "pass"
+  },
+  "deliverable_mode": "internal_analysis",
+  "publication_policy": "Internal analysis: aggregate results only. The named application-intensity authorization permits sub-threshold annual buckets for the requester and Julia only; no identities, rows, requisitions, manager access, redistribution, operational use, score change, or production approval. Unknown is not imputed to zero in the employee-snapshot view.",
+  "visible_language_validation": {
+    "language": "English",
+    "residual_spanish_text": "",
+    "outcome": "pass"
+  },
+  "slide_count": 52,
+  "active_slide": {
+    "slide": 28,
+    "title": "Attrition Voluntary anual por via de entrada al grade y tenure",
+    "reporting_mode": "presentation",
+    "query": "queries/audits/current_grade_entry_path_tenure_attrition_20260911.sql",
+    "evidence": "output/distribution/json/attrition-43-variable-distributions-v2.current-grade-entry-path-tenure-attrition-evidence-20260911.json",
+    "outcome": "warning",
+    "interpretation": "Asociacion descriptiva; no causalidad, riesgo individual ni inferencia de contratacion.",
+    "field_lineage": "La via se deriva de snapshots y eventos; time_in_job_profile_start_date no tiene cobertura FY2021-FY2025."
+  },
+  "navigation_sections": [
+    {
+      "title": "Start",
+      "start_slide": 1,
+      "end_slide": 2
+    },
+    {
+      "title": "Mobility and turnover",
+      "start_slide": 3,
+      "end_slide": 5
+    },
+    {
+      "title": "Organizational context",
+      "start_slide": 6,
+      "end_slide": 19
+    },
+    {
+      "title": "QVoice and external pull factors",
+      "start_slide": 20,
+      "end_slide": 28
+    },
+    {
+      "title": "Career and compensation",
+      "start_slide": 29,
+      "end_slide": 41
+    },
+    {
+      "title": "Manager and advanced signals",
+      "start_slide": 42,
+      "end_slide": 52
+    }
+  ],
+  "application_intensity_refresh": {
+    "source": "hrda.job_applications_vw",
+    "analysis_cutoff": "2026-09-10",
+    "execution_date": "2026-09-13",
+    "annual_evidence": "output/distribution/json/attrition-43-variable-distributions-v2.application-intensity-evidence-20260913.json",
+    "employee_snapshot_evidence": "output/distribution/json/attrition-43-variable-distributions-v2.application-employee-snapshot-trailing-6m-evidence-20260913.json",
+    "annual_evidence_sha256": "08d4a1dd16a3c6f11de52b89ff6d9c02010845960671e36c0d91a3faad2ccb2f",
+    "employee_snapshot_evidence_sha256": "9b803b072ef3acb4d79e74c9277ae646579b90793d62d17064a62a66336649d0",
+    "annual_profile_query": "queries/profiles/application_intensity_job_applications_vw_annual_with_ytd_20260913.sql",
+    "source_metadata_audit_query": "queries/audits/application_job_applications_vw_metadata_20260913.sql",
+    "event_quality_audit_query": "queries/audits/application_job_applications_vw_event_quality_20260913.sql",
+    "annual_fiscal_audit_query": "queries/audits/application_employee_snapshot_trailing_6m_fiscal_reconciliation_20260913.sql",
+    "source_reconciliation_query": "queries/audits/applied_to_a_job_source_reconciliation_20260913.sql",
+    "employee_snapshot_profile_query": "queries/profiles/application_employee_snapshot_trailing_6m_distribution_20260913.sql",
+    "employee_snapshot_join_audit_query": "queries/audits/application_employee_snapshot_trailing_6m_join_20260913.sql",
+    "employee_snapshot_temporal_audit_query": "queries/audits/application_employee_snapshot_trailing_6m_temporal_20260913.sql",
+    "employee_snapshot_publishability_audit_query": "queries/audits/application_employee_snapshot_trailing_6m_publishability_20260913.sql",
+    "builder": "tools/build_application_intensity_evidence_20260913.py",
+    "reporting_mode": "internal_analysis",
+    "internal_analysis_authorization": {
+      "authorization_id": "application-intensity-internal-collaboration-20260913",
+      "authorized_on": "2026-09-13",
+      "authorized_audience": "requester and Julia, both project developers",
+      "scope": {
+        "artifact": "application_intensity_by_fiscal_year",
+        "source": "hrda.job_applications_vw",
+        "buckets": [
+          "1",
+          "2",
+          "3",
+          "4+"
+        ],
+        "periods": [
+          "FY2022",
+          "FY2023",
+          "FY2024",
+          "FY2025",
+          "FY2026 YTD through 2026-09-10"
+        ],
+        "employee_snapshot_rolling_view": "retain its existing Unknown and time-safe coverage controls"
+      },
+      "allow_subthreshold_aggregate_buckets": true,
+      "minimum_displayed_count": 0,
+      "controls": {
+        "aggregate_only": true,
+        "employee_rows_persisted": false,
+        "employee_ids_persisted": false,
+        "names_persisted": false,
+        "requisition_ids_or_titles_persisted": false,
+        "manager_access": false,
+        "redistribution": false,
+        "operational_use": false,
+        "score_v4_change": false,
+        "production_feature_approval": false
+      }
+    },
+    "annual_publication": {
+      "buckets": [
+        "1",
+        "2",
+        "3",
+        "4+"
+      ],
+      "standard_publishable_periods": [
+        "FY2022",
+        "FY2023",
+        "FY2024"
+      ],
+      "displayed_internal_periods": [
+        "FY2022",
+        "FY2023",
+        "FY2024",
+        "FY2025",
+        "FY2026 YTD"
+      ],
+      "standard_suppressed_periods": [
+        "FY2025",
+        "FY2026 YTD"
+      ],
+      "fy2026_ytd_through": "2026-09-10",
+      "fy2026_is_partial": true,
+      "minimum_shared_cohort": 30,
+      "standard_rule": "Do not publish a fiscal period when any 1/2/3/4+ bucket is below n=30.",
+      "internal_rule": "Under the named internal_analysis authorization, display aggregate rows below n=30 for the requester and Julia only; FY2026 YTD is not comparable with a full fiscal year."
+    },
+    "employee_snapshot_publication": {
+      "buckets": [
+        "0",
+        "1",
+        "2+",
+        "Unknown"
+      ],
+      "window": "(snapshot_date - 6 months, snapshot_date]",
+      "latest_available_snapshot": "2026-08-23",
+      "latest_publishable_snapshot": "2026-07-26",
+      "minimum_shared_cohort": 30,
+      "unknown_rule": "Do not convert missing source coverage to 0.",
+      "rule": "Publish a complete distribution only when all four buckets have n>=30 and reconcile to the employee-snapshot denominator.",
+      "publishability_gate": {
+        "snapshot_dates_checked_total": 68,
+        "trend_snapshot_count": 12,
+        "trend_publishable_snapshot_count": 1,
+        "trend_suppressed_snapshot_count": 11,
+        "latest_available_snapshot": "2026-08-23",
+        "latest_available_publication_status": "suppressed_below_n30_or_reconciliation",
+        "latest_publishable_snapshot": "2026-07-26"
+      }
+    },
+    "historical_source_reconciliation": {
+      "reference_artifact": "output/distribution/json/attrition-43-variable-distributions-v2.application-intensity-evidence-20260910.json",
+      "query_reference": "queries/audits/applied_to_a_job_source_reconciliation_20260910.sql",
+      "executed_on": "2026-09-10",
+      "comparison_window": "2019-06-17 through 2025-02-11",
+      "acceptance_rule": "Both directional exact-key match rates must be >= 95%.",
+      "outcome": "warning",
+      "metrics": {
+        "old_event_keys": 9903,
+        "new_event_keys": 10839,
+        "matched_event_keys": 9903,
+        "old_only_event_keys": 0,
+        "new_only_event_keys": 936,
+        "old_to_new_match_rate_percent": 100.0,
+        "new_to_old_match_rate_percent": 91.3645
+      },
+      "interpretation": "La evidencia congelada del 2026-09-10 registra 936 eventos adicionales en la vista y una coincidencia nueva→antigua de 91.3645%; la vista ampliada requiere lineage aprobado antes de declararse idéntica a la fuente histórica."
+    },
+    "current_source_reconciliation": {
+      "query_reference": "queries/audits/applied_to_a_job_source_reconciliation_20260913.sql",
+      "executed_on": "2026-09-13",
+      "sql_sha256": "660255c7d7fabc7814d482c288944617ee98938de11ce6f82b72c674e39fccd1",
+      "result_sha256": "79fa2f85ff1428f7893aa8305976e3fe3370817077d4b234d10c56acbd84a07d",
+      "comparison_window": "2019-06-17 through 2025-02-11",
+      "acceptance_rule": "Re-run the exact-key comparison and preserve any source drift relative to the frozen 2026-09-10 reference.",
+      "outcome": "warning",
+      "metrics": {
+        "common_window_start": "2019-06-17",
+        "common_window_end": "2025-02-11",
+        "old_event_keys": 9903,
+        "new_event_keys": 10840,
+        "matched_event_keys": 9903,
+        "old_only_event_keys": 0,
+        "new_only_event_keys": 937,
+        "old_to_new_match_rate_percent": 100,
+        "new_to_old_match_rate_percent": 91.3561
+      },
+      "interpretation": "The current rerun has one additional new-only event versus the frozen 2026-09-10 reference; this is a source-refresh diagnostic, not a change to the historical deck claim."
+    },
+    "lineage_status": "Broadened descriptive source; not approved as identical lineage to hrda.applications or as a production feature.",
+    "score_v4_change": "none",
+    "outcome": "pass"
+  },
+  "internal_analysis_authorization": {
+    "authorization_id": "application-intensity-internal-collaboration-20260913",
+    "authorized_on": "2026-09-13",
+    "status": "approved",
+    "reporting_mode": "internal_analysis",
+    "authorized_audience": "requester and Julia, both project developers",
+    "purpose": "Review the aggregate distribution of internal job applications together before deciding whether the source or feature definition should be advanced.",
+    "scope": {
+      "artifact": "application_intensity_by_fiscal_year",
+      "source": "hrda.job_applications_vw",
+      "buckets": [
+        "1",
+        "2",
+        "3",
+        "4+"
+      ],
+      "periods": [
+        "FY2022",
+        "FY2023",
+        "FY2024",
+        "FY2025",
+        "FY2026 YTD through 2026-09-10"
+      ],
+      "employee_snapshot_rolling_view": "retain its existing Unknown and time-safe coverage controls"
+    },
+    "small_cell_exception": {
+      "allow_subthreshold_aggregate_buckets": true,
+      "minimum_displayed_count": 0,
+      "reason": "Explicit internal exploratory request for two named project developers; no operational or leadership distribution.",
+      "not_a_general_privacy_policy_change": true
+    },
+    "non_negotiable_controls": {
+      "aggregate_only": true,
+      "employee_rows_persisted": false,
+      "employee_ids_persisted": false,
+      "names_persisted": false,
+      "requisition_ids_or_titles_persisted": false,
+      "manager_access": false,
+      "redistribution": false,
+      "operational_use": false,
+      "score_v4_change": false,
+      "production_feature_approval": false
+    },
+    "interpretation": "FY2026 YTD remains a partial fiscal year and is not comparable with full fiscal years. The source is descriptive evidence only and is not approved as identical lineage to hrda.applications or as an individual feature."
+  },
+  "career_goals_history": {
+    "shown_waves": [
+      2024,
+      2025,
+      2026
+    ],
+    "latest_shown_wave": 2026,
+    "2023_status": "raw item exists; plain-header source mapping required before attrition processing",
+    "earlier_waves_in_visual": false
+  }
+}

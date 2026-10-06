@@ -1,0 +1,203 @@
+version: 4
+variables:
+  - category: Movimientos de manager
+    variable: Manager leaving
+    notes: >-
+      Revalidacion enfocada de Consistency y Join. La ventana de exposicion y el
+      alcance de salidas voluntarias frente a todas las terminaciones permanecen
+      pendientes, por lo que Definition conserva score maximo 1.
+    definition: >-
+      El empleado queda expuesto desde el primer snapshot que conoce la terminacion
+      del manager que lo supervisaba en el ultimo snapshot cerrado anterior a
+      term_date; la duracion final de la exposicion todavia debe aprobarse.
+    source:
+      type: Database
+      table: hrda.post_hire_monthly_worker_dtls
+      columns:
+        - employee_id
+        - manager_employee_id
+        - manager_effective_date
+        - fis_mo_beg_dt
+        - fis_mo_end_dt
+        - worker_type
+        - employee_type
+        - active_status
+        - is_termed
+        - term_date
+        - term_type
+        - max_hire_rehire_date
+      status: confirmed_accessible
+    level_data: Empleado-snapshot mensual
+    measurement:
+      type: rolling_derived
+      date_column: fis_mo_end_dt
+      fiscal_year_column: fiscal_year
+      employee_id_column: employee_id
+      observable_columns: [manager_employee_id]
+      observable_mode: all
+    population:
+      mode: default
+      display: Empleados regulares activos en cada snapshot mensual
+    numerator_definition: >-
+      Empleados-snapshot con manager_employee_id observable; la terminacion del
+      manager se reconstruye y valida por separado mediante is_termed, term_date y
+      hrda.all_terminations.
+    evidence:
+      definition: needs_alignment
+      consistency: clean_standardized
+      join: reliable_employee_date
+      effort: moderate_transformation
+    rationale:
+      definition:
+        why: >-
+          Aun no se ha aprobado si la exposicion dura 3, 6 o 12 meses ni si se
+          limita a salidas voluntarias del manager.
+        evidence: >-
+          La revision actual define y prueba la ruta temporal, pero deliberadamente
+          no usa el outcome para elegir la ventana definitiva.
+        recommended_action: >-
+          Aprobar la ventana y el alcance del evento; despues reconciliar dos
+          implementaciones independientes de la feature completa.
+      effort:
+        why: >-
+          La variable requiere self-join historico, reconciliacion de terminaciones,
+          atribucion al manager previo y una ventana movil.
+        evidence: >-
+          Los componentes estan disponibles, pero Manager leaving no existe como
+          campo directo en el grain empleado-snapshot.
+        recommended_action: >-
+          Versionar la transformacion SQL despues de aprobar la ventana y mantener
+          pruebas automatizadas de cardinalidad y leakage.
+    verification:
+      semantic_type: derived_feature
+      source:
+        method: schema_access_check
+        evidence: >-
+          Se comprobara information_schema para la tabla mensual y all_terminations.
+        result: Pendiente de ejecucion por el runner v4.
+        as_of_date: '2026-08-20'
+        query_reference: queries/audits/manager_leaving_source_access_20260820.sql
+        acceptance_rule: missing_items debe ser 0.
+        outcome: pending
+        metric_checks:
+          - {metric: missing_items, aggregate: sum, operator: eq, threshold: 0}
+      consistency:
+        method: longitudinal_aggregate_audit
+        evidence: >-
+          Se auditan las llaves employeeid-term_date, duplicados, fechas y
+          normalizacion de term_type dentro de all_terminations. Los campos
+          mensuales inconsistentes quedan fuera de la ruta definitoria.
+        result: Pendiente de ejecucion por el runner v4.
+        as_of_date: '2026-08-20'
+        query_reference: queries/audits/manager_leaving_all_terminations_consistency_v4_20260820.sql
+        acceptance_rule: >-
+          Debe existir al menos un evento canonico y anomaly_count,
+          invalid_count y unexplained_change_count deben ser 0.
+        outcome: pending
+        metric_checks:
+          - {metric: observations_checked, aggregate: sum, operator: gt, threshold: 0}
+          - {metric: event_key_count, aggregate: sum, operator: gt, threshold: 0}
+          - {metric: anomaly_count, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: invalid_count, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: unexplained_change_count, aggregate: sum, operator: eq, threshold: 0}
+      join:
+        method: key_grain_and_temporal_reconciliation
+        evidence: >-
+          Se valida el self-join empleado-manager, la fecha de conocimiento, la
+          atribucion al ultimo snapshot previo y el output empleado-snapshot.
+        result: Pendiente de ejecucion por el runner v4.
+        as_of_date: '2026-08-20'
+        query_reference: queries/audits/manager_leaving_join_reconciliation_v2_20260820.sql
+        acceptance_rule: >-
+          La ruta debe producir matches y eventos atribuidos; todos los conteos de
+          unmatched, duplicados, multi-match, conflictos y uso futuro deben ser 0.
+        outcome: pending
+        metric_checks:
+          - {metric: eligible_count, aggregate: sum, operator: gt, threshold: 0}
+          - {metric: matched_count, aggregate: sum, operator: gt, threshold: 0}
+          - {metric: manager_event_count, aggregate: sum, operator: gt, threshold: 0}
+          - {metric: attributed_employee_event_count, aggregate: sum, operator: gt, threshold: 0}
+          - {metric: unmatched_count, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: duplicate_count, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: multi_match_count, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: raw_employee_snapshot_duplicate_rows, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: conflicting_manager_snapshot_count, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: manager_event_knowledge_unmatched_count, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: manager_event_knowledge_multi_match_count, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: attribution_unmatched_count, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: attribution_multi_match_count, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: duplicate_manager_event_rows, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: manager_event_term_type_conflicts, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: future_event_usage_count, aggregate: sum, operator: eq, threshold: 0}
+    derivation_options:
+      - name: Terminacion reconciliada y manager previo
+        status: testable
+        fields_and_tables: >-
+          hrda.post_hire_monthly_worker_dtls: employee_id, manager_employee_id,
+          manager_effective_date, fis_mo_end_dt, is_termed, term_date, term_type,
+          max_hire_rehire_date; hrda.all_terminations: employeeid, term_date,
+          term_type.
+        formula: >-
+          Crear eventos canonicos de terminacion del manager, seleccionar para cada
+          empleado el ultimo snapshot cerrado dentro de los 45 dias anteriores a la
+          salida y activar la exposicion solo desde la primera observacion valida del
+          evento. La frontera inferior depende de la ventana pendiente.
+        grain: Empleado-snapshot mensual
+        temporal_window: >-
+          Limite superior inclusivo en el snapshot; la longitud retrospectiva de la
+          exposicion permanece pendiente.
+        deduplication: >-
+          Un evento canonico por manager y term_date, y una atribucion por empleado,
+          manager y evento antes de agregar al grain empleado-snapshot.
+        nulls_and_edge_cases: >-
+          manager_employee_id nulo permanece como no observable; rehired managers se
+          separan mediante max_hire_rehire_date; conflictos no explicados impiden score 2.
+        leakage_controls: >-
+          Excluir term_date posterior al snapshot y no activar la feature antes de
+          la primera observacion positiva del evento.
+        snapshot_join: >-
+          Self-join por manager_employee_id=employee_id y fis_mo_end_dt; para la
+          atribucion usar el ultimo snapshot cerrado anterior a term_date.
+        sensitivity: >-
+          Mantener IDs dentro de SQL y publicar solo conteos agregados.
+        validations_needed: >-
+          Acceso, coherencia flag-fecha, reconciliacion de fuentes, unicidad del
+          self-join, atribucion previa, cardinalidad final y ausencia de leakage.
+        estimated_effort: Transformacion SQL moderada.
+        decision_reason: >-
+          La ruta puede probarse sin fijar todavia la duracion final de exposicion.
+    selected_derivation: Terminacion reconciliada y manager previo
+    blocker: none
+    analysis:
+      language: es
+      semantic_type: derived_feature
+      definition: >-
+        Exposicion time-safe a la terminacion del manager que supervisaba al empleado
+        antes de la salida.
+      numerator_definition: >-
+        Empleados-snapshot con manager observable y una terminacion del manager
+        atribuible a una relacion previa.
+      intended_use: >-
+        Medir disrupcion potencial posterior a la salida del manager.
+      attrition_use: >-
+        Medir disrupcion potencial posterior a la salida del manager.
+      source_reasoning: >-
+        La relacion y el evento se encuentran en fuentes internas, pero requieren
+        reconciliacion temporal y de cardinalidad.
+      prediction_cutoff: >-
+        Solo eventos con term_date igual o anterior al cierre y observados en o antes
+        del snapshot de prediccion.
+      population: Empleados regulares activos en cada snapshot mensual
+      prior_evidence_policy: >-
+        El assessment historico aporta contexto; los scores actuales dependen del
+        SQL agregado ejecutado en esta revision.
+      validation_focus:
+        - Coherencia longitudinal de is_termed, term_date, term_type y episodios de rehire.
+        - Reconciliacion de eventos con all_terminations.
+        - Unicidad del self-join empleado-manager en el mismo snapshot.
+        - Atribucion al ultimo manager previo y una fila final por empleado-snapshot.
+      context_role: Manager movement
+      context_relevance: >-
+        El evento solo es utilizable si puede atribuirse al manager correcto sin
+        informacion futura.
+      documentation_path: manager-leaving/README.md

@@ -1,0 +1,85 @@
+schema_version: 1
+plan_version: 7
+plan_revision_reason: >-
+  La vista de sensibilidad se amplía a las dos ventanas visibles del slide:
+  seis y doce meses. Conserva el conteo original y añade una comparación que
+  excluye sólo eventos de movilidad formal con la misma fecha efectiva.
+language: es
+created_before_execution: true
+deliverable_mode: presentation
+variable: Number of manager changes
+concept: >-
+  Conteo retrospectivo de eventos distintos de cambio de manager por empleado
+  activo al snapshot, con una sensibilidad que retira únicamente coincidencias
+  exactas con transferencia o promoción.
+intended_use: >-
+  Documentar la distribución de movilidad de manager y evaluar si la movilidad
+  formal explica una parte material del conteo antes de cualquier decisión de
+  feature para el modelo de riesgo relativo de salida voluntaria a seis meses.
+knowledge_date: >-
+  Sólo entran eventos con fecha efectiva menor o igual al cierre mensual
+  2026-08-23 y cuya primera observación con flag positivo es anterior o igual
+  a ese cierre.
+population: >-
+  Empleados regulares activos (worker_type='Employee', employee_type='Regular',
+  active_status=1) con employee_id utilizable al snapshot 2026-08-23.
+grain: Empleado-snapshot mensual; sólo se publican conteos agregados.
+semantic_type: derived_feature
+definition:
+  baseline: >-
+    Conteo de llaves distintas employee_id + manager_change_date con
+    manager_change=1 dentro de una ventana retrospectiva.
+  sensitivity: >-
+    Mismo conteo, excluyendo un evento de manager sólo si una transferencia o
+    promoción con flag positivo tiene la misma persona y fecha efectiva.
+  windows: ['(2026-02-23, 2026-08-23] — 6 meses', '(2025-08-23, 2026-08-23] — 12 meses']
+  deduplication: >-
+    Las observaciones mensuales repetidas de una misma llave empleado-fecha
+    cuentan una sola vez por tipo de evento.
+  unresolved_business_rule: >-
+    La coincidencia técnica no decide si la movilidad formal debe excluirse,
+    etiquetarse en otra feature o conservarse como predictor independiente.
+validation_story:
+  - id: same_date_mobility_sensitivity
+    criterion: definition
+    evidence_role: supporting
+    question: >-
+      ¿Cómo cambian las distribuciones de seis y doce meses si se excluyen los
+      cambios de manager que coinciden exactamente con transfer o promo?
+    why: >-
+      Distingue una variación asociada a movilidad formal sin presumir que esa
+      variación sea la definición aprobada del concepto.
+    fields:
+      - employee_id
+      - fis_mo_end_dt
+      - manager_change
+      - manager_change_date
+      - is_transferred
+      - transfer_date
+      - is_promo
+      - promotion_date
+    method: >-
+      Deduplicar cada evento por empleado-fecha, limitar por fecha de
+      conocimiento y comparar el conteo original contra la exclusión por
+      igualdad exacta de fecha efectiva, para ambas ventanas.
+    sql_reference: queries/profiles/number_of_manager_changes_same_date_mobility_comparison_20260914.sql
+    acceptance_rule: >-
+      Cada distribución debe reconciliar con la población elegible; ningún
+      conteo alternativo puede superar su baseline; el conteo anual no puede
+      ser menor que el semestral; flags positivos sin fecha deben ser cero y
+      todo bucket visible debe tener n >= 30.
+  - id: definition_boundary
+    criterion: definition
+    evidence_role: contextual
+    question: ¿La sensibilidad redefine la feature primaria?
+    why: La coincidencia de fecha es evidencia técnica, no una decisión funcional.
+    fields: [manager_change_date, transfer_date, promotion_date]
+    method: Mantener la señal primaria y etiquetar la exclusión como sensibilidad.
+    sql_reference: queries/profiles/number_of_manager_changes_same_date_mobility_comparison_20260914.sql
+    acceptance_rule: No modificar score ni definición primaria con esta evidencia.
+planned_sql:
+  - queries/profiles/number_of_manager_changes_same_date_mobility_comparison_20260914.sql
+publication_controls:
+  - Modo presentation; sólo resultados agregados.
+  - No mostrar employee_id, nombres ni filas individuales.
+  - Todo bucket visible debe cumplir n >= 30.

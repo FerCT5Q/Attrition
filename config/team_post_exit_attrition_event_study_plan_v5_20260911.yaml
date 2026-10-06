@@ -1,0 +1,70 @@
+schema_version: 1
+plan_version: 5
+language: es
+created_before_execution: true
+deliverable_mode: presentation
+variable: More than 1 employee leaves in a year
+plan_revision_reason: >-
+  Redshift rechaza el grafo de CTE reutilizado para 24 cohortes, aun cuando cada
+  cálculo aislado es válido. La cohorte más reciente con seis cierres completos
+  (índice 2026-03-29 y seguimiento hasta 2026-09-27) se ejecutó de manera
+  reproducible y supera los umbrales de publicación. Se publica esa cohorte
+  actual como evidencia descriptiva puntual; no se presenta como promedio
+  histórico ni se extrapola causalmente.
+concept: >-
+  Comparación descriptiva agregada de incidencia acumulada retrospectiva de
+  salida Voluntary entre integrantes que permanecen después de una salida
+  inicial única de su equipo y equipos comparables sin salida reciente.
+intended_use: >-
+  Reemplazar una gráfica que no medía la hipótesis solicitada por una lectura
+  transparente de una cohorte reciente. No demuestra contagio, causalidad,
+  desempeño de managers ni riesgo individual; no cambia por sí sola la feature
+  histórica ni su score.
+semantic_type: derived_feature
+study_type: descriptive_post_event_cohort_comparison
+analysis_window: Cohorte índice más reciente con seis cierres posteriores completos; 2026-03-29 a 2026-09-27.
+event_source: >-
+  Intersección reconciliada de hrda.post_hire_monthly_worker_dtls y
+  hrda.all_terminations en employee_id, term_date y term_type normalizado.
+knowledge_boundary: El evento índice se conoce en t; los seis cierres posteriores son outcomes retrospectivos y nunca una feature disponible en t.
+population: worker_type='Employee', employee_type='Regular', active_status=1 y manager_employee_id no nulo al cierre índice.
+grain: Integrante de roster índice × episodio de equipo × intervalo mensual de seguimiento.
+definitions:
+  index_event: Una salida Voluntary reconciliada única en (t-6, t], ocurrida en el intervalo que termina en t.
+  roster: Personas activas en t bajo el manager índice, seguidas sólo mientras conservan ese manager.
+  reference: Equipo sin salida Voluntary reconciliada en (t-6, t], mismo cierre y banda 1–5, 6–10, 11–20 o 21+.
+  outcome: Primera salida Voluntary reconciliada a uno–seis meses, atribuida al manager índice.
+  censoring: Cambio de manager observado, salida no Voluntary reconciliada o pérdida de observación.
+  estimand: >-
+    Incidencia acumulada Kaplan–Meier formada a partir de hazards mensuales
+    estandarizados por las bandas de tamaño de la cohorte expuesta.
+publication_rule: >-
+  Las bandas de referencia internas requieren n inicial y en riesgo >=30. Cada
+  punto visible requiere n agregado en riesgo >=30; no se exponen estratos,
+  personas, managers ni identificadores.
+validation_story:
+  - id: event_reconciliation
+    question: ¿El evento usado concuerda entre ambas fuentes?
+    method: Reconciliar employee_id × term_date × term_type normalizado y usar sólo coincidencias.
+    sql_reference: queries/audits/team_post_exit_attrition_event_source_reconciliation_20260910.sql
+    acceptance_rule: Cobertura Voluntary mensual concordante >=99%, sin duplicados de all_terminations; excluir no concordancias.
+  - id: latest_complete_calendar
+    question: ¿La cohorte más reciente tiene seis intervalos posteriores completos?
+    method: Seleccionar el último t con seis cierres y verificar brechas mensuales de 20–45 días.
+    sql_reference: queries/audits/team_post_exit_attrition_calendar_20260911.sql
+    acceptance_rule: Siete cierres consecutivos desde t hasta f6, sin huecos fuera de 20–45 días.
+  - id: roster_control_censoring
+    question: ¿Índice, roster, control, censura y pesos corresponden a la hipótesis?
+    method: Ejecutar una cohorte aislada con atribución histórica, bandas de tamaño y hazards mensuales; convertirlos a Kaplan–Meier fuera de la base con agregados.
+    sql_reference: queries/audits/team_post_exit_attrition_static_snapshot_20260911.sql
+    acceptance_rule: 24 puntos (2 scopes × 2 series × 6 meses), n en riesgo >=30, hazards 0–100 y evento índice único.
+output_contract:
+  scopes: [all_teams, teams_6_plus]
+  series: [Equipo tras una salida inicial única, Equipos sin salida reciente ajustados]
+  prohibited_claims: [causalidad, contagio demostrado, ranking de managers, predicción individual]
+  limitation: Una cohorte actual no estima estabilidad histórica; debe repetirse al disponer de un nuevo cierre completo.
+acceptance_rules_frozen: true
+planned_sql:
+  - queries/audits/team_post_exit_attrition_event_source_reconciliation_20260910.sql
+  - queries/audits/team_post_exit_attrition_calendar_20260911.sql
+  - queries/audits/team_post_exit_attrition_static_snapshot_20260911.sql

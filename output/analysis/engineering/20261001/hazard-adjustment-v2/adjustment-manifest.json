@@ -1,0 +1,25 @@
+{
+  "artifact": "engineering-hazard-adjustment",
+  "created_at_utc": "2026-10-02T13:49:49.356390+00:00",
+  "script": "tools\\engineering_hazard_adjustment.py",
+  "authorization": {
+    "path": "config\\attrition_model_in_memory_training_authorization_20261001.json",
+    "id": "attrition-model-in-memory-person-month-training-20261001"
+  },
+  "queries": {
+    "calendar": "queries\\profiles\\critical_tech_model_calendar_20260907.sql",
+    "person_month_frame": "queries\\profiles\\engineering_person_month_features_20261001.sql"
+  },
+  "query_sha256": {
+    "calendar": "e31d37b1fd90573717ef6f672c3f08010767b2ed0514876fb0ffc61b665efaa8",
+    "person_month_frame": "48a27cfff1f197b938a4f2d4bb03baaf91f631a0ffae12c2f1259cb1d73b6847"
+  },
+  "ceiling_source": "output\\analysis\\engineering\\20261001\\feature-block-selection-v1\\selection-results.json",
+  "ceiling_source_sha256": "d098a3732dcdebafc07c9ff3eff314771c3e7476c5485cd6dc5b3268029f3a19",
+  "result": "output\\analysis\\engineering\\20261001\\hazard-adjustment-v2\\adjustment-results.json",
+  "result_sha256": "c77cebb3f11e21240678a8c270ddd149b30c5b1d965be8109cbd0542229d5cd1",
+  "report": "output\\analysis\\engineering\\20261001\\hazard-adjustment-v2\\adjustment-report.md",
+  "report_sha256": "f1be63a2234bbf56b9893166af8e4ce60a7d9587e218fcaaf5a49a79cf5dcd03",
+  "employee_level_rows_persisted": false,
+  "aggregate_training_frame_persisted": false
+}

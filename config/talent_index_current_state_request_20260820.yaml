@@ -1,0 +1,72 @@
+schema_version: 1
+language: es
+unknown_policy: conservative
+
+problem_context:
+  problem_statement: >-
+    Revalidar Talent index como dato disponible en el estado actual, sin interpretar
+    last_modified_date, airflow_execution_date ni otros timestamps técnicos como fecha
+    de evaluación, publicación o vigencia del índice.
+  decision_or_use_case: >-
+    Determinar la disponibilidad actual del valor almacenado y qué tan preparada está
+    la fuente para una futura integración de attrition, separando esa conclusión de
+    cualquier afirmación histórica o time-safe.
+  outcome: >-
+    Attrition voluntario posterior al snapshot de predicción; esta revisión no afirma
+    todavía que Talent index pueda reconstruirse históricamente antes del outcome.
+  population: >-
+    Empleados regulares activos en el último snapshot mensual disponible de la tabla
+    laboral.
+  unit_of_analysis: Empleado en el último snapshot laboral disponible.
+  time_horizon: Estado actual; una sola observación de cobertura.
+  knowledge_boundary: >-
+    Se evalúa lo que hoy puede recuperarse de la fuente. Los timestamps técnicos de
+    carga se excluyen de la semántica y no se usan para inferir cuándo fue evaluado el
+    empleado ni cuándo estuvo disponible el índice.
+  stakeholders:
+    - Equipo de People Analytics / Attrition
+  constraints:
+    - Sólo SQL read-only y resultados agregados con cohortes de al menos 30.
+    - No publicar IDs, nombres, categorías protegidas, compensación exacta ni texto libre.
+    - No inferir fórmula, vigencia o fecha de evaluación a partir de nombres de columnas.
+    - No usar timestamps técnicos para Coverage, History, Join temporal ni leakage.
+  assumptions:
+    - Talent index es una métrica precalculada almacenada por empleado y ciclo.
+    - cycle_number permite ordenar registros para una recuperación actual, pero no prueba vigencia oficial.
+    - La fórmula, elegibilidad y calendario oficial de ciclos siguen pendientes.
+  stakeholder_questions:
+    - ¿Qué proporción de empleados activos tiene actualmente un Talent index recuperable?
+    - ¿El identificador empl_id empata con employee_id en la población actual?
+    - ¿Existen duplicados o conflictos en la llave empleado-ciclo?
+    - ¿Qué fórmula, pesos, versiones y reglas de nulos producen talent_index?
+    - ¿Qué fecha oficial permitiría reconstruir el índice en snapshots históricos?
+  success_criteria:
+    - Medir Coverage y Missingness sólo en el último snapshot laboral disponible.
+    - Comparar el match por empleado y la selección del mayor cycle_number por empleado.
+    - Mantener History en 0 mientras no exista fecha oficial de evaluación, vigencia o publicación.
+    - Mantener Join por debajo de 2 mientras no exista reconciliación empleado-fecha.
+    - Emitir un assessment v4 nuevo sin sobrescribir resultados anteriores.
+
+variables:
+  - name: Talent index
+    intended_use: >-
+      Medir la disponibilidad actual de una señal almacenada de talento y determinar
+      qué falta antes de usarla de forma longitudinal en attrition.
+    population: >-
+      Empleados regulares activos en el último snapshot mensual disponible.
+    knowledge_date: >-
+      Estado actual al momento de la consulta. No se asigna una fecha histórica al
+      índice a partir de timestamps técnicos de carga.
+    context_role: Talent
+    context_relevance: >-
+      El índice puede aportar una señal útil, pero su valor longitudinal depende de
+      fórmula, elegibilidad y fechas oficiales aún no demostradas.
+
+decisions:
+  technical_timestamp_policy: exclude_from_index_semantics
+  coverage_policy: latest_workforce_snapshot_only
+  cycle_selection_policy: highest_cycle_number_per_employee_for_current_retrieval_only
+  history_policy: zero_until_official_business_dates_exist
+  temporal_join_policy: not_validated
+  formula_policy: unknown_conservative
+

@@ -1,0 +1,40 @@
+version: 1
+analysis_id: acquisition-zero-baseline-diagnosis-20261005
+artifact_classification: internal_analysis
+scope: Diagnóstico puntual de las cinco categorías sin cohorte en la lámina 8; no es una nueva evaluación ni cambia scores.
+concept: Presencia de la etiqueta acquisition y de sus empleados actuales en los snapshots históricos.
+semantic_type: direct_field
+intended_use: Explicar por qué Aqua, NAPS, Moonshot, Arduino y Augentix Inc. tienen base anual cero.
+population: Empleados Employee / Regular activos en el snapshot aplicable; se contrasta su presencia sin esos filtros para identificar exclusiones de población.
+grain: Agregados por categoría; las claves de empleado se usan exclusivamente dentro de joins y conteos.
+baseline_snapshot: '2025-08-24'
+current_snapshot: '2026-08-23'
+knowledge_boundary: Las primeras fechas observadas describen el registro en HRDA y no prueban la fecha legal de adquisición.
+authorization:
+  inherited_path: config/acquisition_attrition_internal_analysis_authorization_20261005.json
+  source: El usuario solicita en la misma conversación explicar los ceros de la revisión interna autorizada para él y Julia.
+  audience: Solicitante y Julia, desarrolladores del proyecto.
+  aggregate_only: true
+  allow_small_diagnostic_aggregate_counts: true
+  employee_rows_or_identifiers: false
+  production_or_score_change: false
+validation_stories:
+  - question: ¿Cuándo aparece por primera vez cada etiqueta en el histórico de HRDA?
+    reason: Distinguir una categoría que aparece después del corte inicial de una ausencia causada sólo por los filtros de elegibilidad.
+    method: Contar empleados distintos por categoría y fecha, con y sin los filtros de la cohorte, y obtener la primera observación no vacía.
+    sql_path: queries/audits/acquisition_zero_baseline_diagnosis_20261005.sql
+    acceptance_rule: Cinco categorías; bases elegibles del 24 ago 2025 iguales a cero y conteos actuales iguales a los agregados originales. Una primera observación posterior demuestra ausencia de la etiqueta antes del corte, no la causa de negocio.
+    score_impact: Ninguno.
+  - question: ¿Los empleados hoy clasificados en esas categorías ya estaban registrados al inicio con otra etiqueta o fuera de la población elegible?
+    reason: Separar incorporación posterior al histórico, reclasificación y exclusión por estado o tipo de empleado.
+    method: Join interno por empleado del corte actual con todo su histórico hasta el 23 ago 2026; sólo se devuelven conteos por categoría.
+    sql_path: queries/audits/acquisition_zero_baseline_diagnosis_20261005.sql
+    acceptance_rule: Sin contradicciones de etiqueta por empleado en los cortes comparados; los conteos de presencia basal y ausencia basal suman el conteo actual. Cada explicación se limita al patrón observado.
+    score_impact: Ninguno.
+expected_current_counts:
+  AQUA: 1148
+  NAPS: 178
+  MOONSHOT: 167
+  ARDUINO: 160
+  AUGENTIX INC.: 118
+output_root: output/assessments/acquisition-zero-baseline-diagnosis-20261005

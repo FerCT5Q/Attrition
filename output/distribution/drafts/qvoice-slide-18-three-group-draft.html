@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QVoice open comments — three-group draft</title>
+  <style>
+    /* =====================================================================
+       UNIVERSAL PRESENTATION TEMPLATE — base-fullscreen.html
+       - No sticky navbar — content fills 1440x810 stage, scaled to viewport
+       - Right edge: side-collapsed THEME switcher
+       - Left edge:  side-collapsed SLIDE NAVIGATOR (for multi-slide decks)
+       - JS fitSlide() scales to fit any monitor; DPR Ctrl+zoom-safe
+       - Multi-slide: add additional .slide-stage blocks; add nav-pill per slide
+
+       SINGLE SLIDE usage:
+         - Keep one .slide-stage, one nav-pill. Nav tab hides gracefully.
+       MULTI-SLIDE DECK usage:
+         - Clone .slide-stage blocks, each with unique content.
+         - Add <button class="nav-pill" data-slide="N">N. Title</button> per slide.
+         - Keyboard arrows and nav tab handle navigation.
+       ===================================================================== */
+
+    /* 1. CSS VARIABLES & THEMES
+       ================================================================== */
+    :root {
+      --font-main: Aptos, "Segoe UI", system-ui, -apple-system, sans-serif;
+
+      --bg-body:      #f4f5f8;
+      --bg-surface:   #ffffff;
+      --bg-surface-2: #f6f8ff;
+      --bg-surface-3: #eef2ff;
+
+      --accent:       #2457ff;
+      --accent-2:     #3b82f6;
+      --accent-soft:  #e2e7ff;
+
+      --text-main:    #0f172a;
+      --text-muted:   #5b6478;
+      --text-invert:  #ffffff;
+
+      --border-subtle: rgba(15, 23, 42, 0.08);
+      --border-strong: rgba(36, 87, 255, 0.22);
+
+      --shadow-soft:   0 18px 44px rgba(2, 6, 23, 0.12);
+
+      --radius-card:   18px;
+      --radius-pill:   999px;
+
+      --donut-hole-bg: #ffffff;
+
+      --diamond-fill:   color-mix(in oklab, #f59e0b 18%, var(--bg-surface));
+      --diamond-stroke: #f59e0b;
+      --diamond-tx:     #92400e;
+      --exit-yes-bg:    color-mix(in oklab, #22c55e 12%, transparent);
+      --exit-yes-bd:    #16a34a;
+      --exit-yes-tx:    #14532d;
+      --exit-no-bg:     color-mix(in oklab, #ef4444 12%, transparent);
+      --exit-no-bd:     #dc2626;
+      --exit-no-tx:     #7f1d1d;
+      --conn-color:     var(--border-subtle);
+    }
+
+    body.theme-light-classic {
+      --bg-body:       #f4f5f8;
+      --bg-surface:    #ffffff;
+      --bg-surface-2:  #f6f8ff;
+      --bg-surface-3:  #eef2ff;
+      --text-main:     #0f172a;
+      --text-muted:    #5b6478;
+      --border-subtle: rgba(15, 23, 42, 0.08);
+      --border-strong: rgba(36, 87, 255, 0.22);
+      --donut-hole-bg: #ffffff;
+      --diamond-fill:  color-mix(in oklab, #f59e0b 18%, #ffffff);
+      --diamond-tx:    #92400e;
+    }
+
+    body.theme-light-soft {
+      --bg-body:       #eef2ff;
+      --bg-surface:    #f8faff;
+      --bg-surface-2:  #f0f4ff;
+      --bg-surface-3:  #e4ebff;
+      --text-main:     #1e2a4a;
+      --text-muted:    #4a5572;
+      --border-subtle: rgba(30, 42, 74, 0.09);
+      --border-strong: rgba(36, 87, 255, 0.20);
+      --donut-hole-bg: #f8faff;
+      --diamond-fill:  color-mix(in oklab, #f59e0b 18%, #f8faff);
+      --diamond-tx:    #78350f;
+    }
+
+    body.theme-dark-royal {
+      --bg-body:       #0d1b3e;
+      --bg-surface:    #162040;
+      --bg-surface-2:  #1a2650;
+      --bg-surface-3:  #1e2c5a;
+      --text-main:     #e8eeff;
+      --text-muted:    #8fa0cc;
+      --text-invert:   #ffffff;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(100, 149, 255, 0.28);
+      --accent:        #5b8cff;
+      --accent-2:      #7aabff;
+      --accent-soft:   rgba(91, 140, 255, 0.14);
+      --donut-hole-bg: #162040;
+      --diamond-fill:  color-mix(in oklab, #f59e0b 22%, #162040);
+      --diamond-tx:    #fde68a;
+      --exit-yes-tx:   #bbf7d0;
+      --exit-no-tx:    #fecaca;
+      --conn-color:    rgba(255,255,255,0.08);
+    }
+
+    body.theme-dark-carbon {
+      --bg-body:       #111318;
+      --bg-surface:    #1c1f26;
+      --bg-surface-2:  #22262f;
+      --bg-surface-3:  #282c36;
+      --text-main:     #e2e5ef;
+      --text-muted:    #7a8098;
+      --text-invert:   #ffffff;
+      --border-subtle: rgba(255, 255, 255, 0.07);
+      --border-strong: rgba(100, 149, 255, 0.22);
+      --accent:        #5b8cff;
+      --accent-2:      #7aabff;
+      --accent-soft:   rgba(91, 140, 255, 0.12);
+      --donut-hole-bg: #1c1f26;
+      --diamond-fill:  color-mix(in oklab, #f59e0b 20%, #1c1f26);
+      --diamond-tx:    #fde68a;
+      --exit-yes-tx:   #bbf7d0;
+      --exit-no-tx:    #fecaca;
+      --conn-color:    rgba(255,255,255,0.07);
+    }
+
+    /* 2. BASE RESET & BODY
+       ================================================================== */
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html {
+      height: 100%;
+      background: #000;
+    }
+
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: var(--font-main);
+      font-size: 16px;
+      color: var(--text-main);
+      /* Letterbox: dark tint of the active theme's bg-body */
+      background: color-mix(in oklab, var(--bg-body) 35%, #000);
+      transition: background 0.25s;
+    }
+
+    /* 3. SLIDE STAGE — fixed 1440×810, scaled via JS fitSlide()
+       Each .slide-stage is one slide. Add more for multi-slide decks.
+       ================================================================== */
+    .slide-stage {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1440px;
+      height: 810px;
+      transform-origin: top left;
+      background: var(--bg-body);
+      overflow: hidden;
+      padding: 14px 16px 10px;
+      display: grid;
+      gap: 6px;
+      /* Default grid: heading row auto-height + content fills remaining space.
+         Override grid-template-rows in content-specific styles as needed. */
+      grid-template-rows: auto 1fr;
+    }
+
+    /* 4. SLIDE HEADING
+       ================================================================== */
+    .slide-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4px 8px;
+      border-bottom: 3px solid var(--accent);
+      flex-shrink: 0;
+    }
+
+    .slide-title-text {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin: 0;
+      letter-spacing: -0.01em;
+    }
+
+    .slide-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin: 2px 0 0;
+    }
+
+    /* 5. CARD COMPONENT
+       ================================================================== */
+    .card {
+      background: color-mix(in oklab, var(--bg-surface) 92%, transparent);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-soft);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      overflow: hidden;
+      height: 100%;
+    }
+
+    .card-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 6px;
+      margin-bottom: 4px;
+    }
+
+    .card-compact {
+      padding: 7px 10px;
+      gap: 4px;
+      border-radius: 10px;
+    }
+
+    .card-compact .card-title {
+      font-size: 11px;
+      padding-bottom: 3px;
+      margin-bottom: 2px;
+    }
+
+    .card-full {
+      width: 100%;
+      flex: 1;
+    }
+
+    /* 6. BADGE & CHIP SYSTEM
+       Always use color-mix() — never hardcode light-theme hex.
+       ================================================================== */
+    .badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .badge-success  { background: color-mix(in oklab, #22c55e 15%, transparent); color: #16a34a; border: 1px solid color-mix(in oklab, #22c55e 30%, transparent); }
+    .badge-warning  { background: color-mix(in oklab, #f59e0b 15%, transparent); color: #d97706; border: 1px solid color-mix(in oklab, #f59e0b 30%, transparent); }
+    .badge-neutral  { background: color-mix(in oklab, var(--text-muted) 12%, transparent); color: var(--text-muted); border: 1px solid var(--border-subtle); }
+    .badge-info     { background: color-mix(in oklab, var(--accent) 12%, transparent); color: var(--accent); border: 1px solid color-mix(in oklab, var(--accent) 25%, transparent); }
+    .badge-wip      { background: color-mix(in oklab, #f97316 15%, transparent); color: #ea580c; border: 1px solid color-mix(in oklab, #f97316 30%, transparent); }
+    .badge-beta     { background: color-mix(in oklab, #22c55e 10%, transparent); color: #15803d; border: 1px dashed color-mix(in oklab, #22c55e 40%, transparent); }
+    .badge-coming-soon { background: color-mix(in oklab, #8b5cf6 12%, transparent); color: #7c3aed; border: 1px solid color-mix(in oklab, #8b5cf6 25%, transparent); }
+
+    .chip {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .chip-linux   { background: color-mix(in oklab, #f59e0b 15%, transparent); color: #92400e; }
+    .chip-rtos    { background: color-mix(in oklab, #3b82f6 12%, transparent); color: #1e40af; }
+    .chip-android { background: color-mix(in oklab, #22c55e 12%, transparent); color: #14532d; }
+    .chip-windows { background: color-mix(in oklab, #8b5cf6 12%, transparent); color: #4c1d95; }
+
+    .term-pill {
+      display: inline-block;
+      padding: 1px 7px;
+      border-radius: var(--radius-pill);
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.9em;
+      font-weight: 600;
+    }
+
+    /* 7. BULLET LIST
+       ================================================================== */
+    .bullet-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .bullet-list li {
+      padding-left: 16px;
+      position: relative;
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--text-main);
+    }
+
+    .bullet-list li::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 11px;
+    }
+
+    /* 8. LAYOUT CONTAINERS
+       ================================================================== */
+    .slide-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .grid-4col {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .vertical-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* 9. 4-COLUMN TRACKING GRID
+       ================================================================== */
+    .tracking-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr 0.9fr;
+      gap: 6px;
+      align-items: start;
+      overflow: hidden;
+    }
+
+    .col-header {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 5px 10px;
+      border-radius: 8px;
+      color: var(--text-invert);
+      text-align: center;
+    }
+
+    .col-opportunity { background: #2457ff; }
+    .col-state       { background: #7c3aed; }
+    .col-plan        { background: #0891b2; }
+    .col-eta         { background: #059669; }
+
+    .track-divider {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 2px 0;
+    }
+
+    .track-divider hr {
+      flex: 1;
+      border: none;
+      border-top: 1px solid var(--border-subtle);
+      margin: 0;
+    }
+
+    .track-divider span {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .track-card {
+      background: color-mix(in oklab, var(--bg-surface) 92%, transparent);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 7px 10px;
+      gap: 4px;
+      display: flex;
+      flex-direction: column;
+      font-size: 13px;
+      line-height: 1.4;
+      color: var(--text-main);
+    }
+
+    .track-card.col-opportunity { border-left: 4px solid #2457ff; }
+    .track-card.col-state       { border-left: 4px solid #7c3aed; }
+    .track-card.col-plan        { border-left: 4px solid #0891b2; }
+    .track-card.col-eta         { border-left: 4px solid #059669; }
+
+    .callout-imperative {
+      background: color-mix(in oklab, #22c55e 10%, var(--bg-surface));
+      border-left: 3px solid #22c55e;
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 12px;
+      color: var(--text-main);
+      line-height: 1.35;
+    }
+
+    .eta-bar-wrap {
+      width: 100%;
+      height: 4px;
+      background: var(--border-subtle);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .eta-bar {
+      height: 100%;
+      background: #059669;
+      border-radius: 2px;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      flex-shrink: 0;
+      animation: pulse-green 1.8s ease-in-out infinite;
+    }
+
+    @keyframes pulse-green {
+      0%, 100% { opacity: 1;   transform: scale(1);   }
+      50%       { opacity: 0.5; transform: scale(1.4); }
+    }
+
+    /* 10. ADOPTION GAUGE (conic-gradient donut)
+       ================================================================== */
+    .gauge-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .gauge {
+      position: relative;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      /* Angle calculation:
+         current_deg = (current_pct / 100) * 360
+         goal_deg    = (goal_pct / 100) * 360
+         conic-gradient: accent 0 current_deg, green current_deg goal_deg, muted goal_deg 360deg */
+      background: conic-gradient(
+        var(--accent)            0deg 151.2deg,
+        #10b981               151.2deg 288deg,
+        var(--border-subtle)  288deg   360deg
+      );
+    }
+
+    .gauge-hole {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px; height: 40px;
+      background: var(--bg-body);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gauge-pct { font-size: 11px; font-weight: 800; color: var(--text-main); line-height: 1; }
+    .gauge-sub { font-size: 9px; color: var(--text-muted); }
+
+    .gauge-meta { display: flex; flex-direction: column; gap: 3px; }
+
+    .gauge-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .gm-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .gm-current { background: var(--accent); }
+    .gm-goal    { background: #10b981; }
+
+    /* 11. SIDE CONTROLS — shared base for both theme tab (right) and nav tab (left)
+       ================================================================== */
+    .side-controls,
+    .nav-ctrl {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1000;
+      display: flex;
+      align-items: stretch;
+    }
+
+    /* RIGHT EDGE — THEME SWITCHER */
+    .side-controls {
+      right: 0;
+    }
+
+    .side-panel {
+      width: 0;
+      overflow: hidden;
+      transition: width 0.22s ease;
+      background: color-mix(in oklab, var(--bg-surface) 95%, transparent);
+      border: 1px solid var(--border-subtle);
+      border-right: none;
+      border-radius: 12px 0 0 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 0;
+      box-shadow: -4px 0 20px rgba(0, 0, 0, 0.14);
+      backdrop-filter: blur(8px);
+    }
+
+    .side-controls:hover .side-panel {
+      width: 136px;
+      padding: 12px 10px;
+    }
+
+    .side-tab {
+      width: 22px;
+      background: color-mix(in oklab, var(--bg-surface) 90%, transparent);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px 0 0 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      writing-mode: vertical-rl;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 14px 0;
+      transition: background 0.15s, color 0.15s;
+      user-select: none;
+      font-family: var(--font-main);
+    }
+
+    .side-controls:hover .side-tab {
+      background: color-mix(in oklab, var(--accent) 15%, var(--bg-surface));
+      color: var(--accent);
+    }
+
+    /* LEFT EDGE — SLIDE NAVIGATOR */
+    .nav-ctrl {
+      left: 0;
+    }
+
+    .nav-panel {
+      width: 0;
+      overflow: hidden;
+      transition: width 0.22s ease;
+      background: color-mix(in oklab, var(--bg-surface) 95%, transparent);
+      border: 1px solid var(--border-subtle);
+      border-left: none;
+      border-radius: 0 12px 12px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 0;
+      box-shadow: 4px 0 20px rgba(0, 0, 0, 0.14);
+      backdrop-filter: blur(8px);
+      order: 1; /* panel appears to the right of the tab */
+    }
+
+    .nav-ctrl:hover .nav-panel {
+      width: 164px;
+      padding: 12px 10px;
+    }
+
+    .nav-tab {
+      width: 22px;
+      background: color-mix(in oklab, var(--bg-surface) 90%, transparent);
+      border: 1px solid var(--border-subtle);
+      border-radius: 0 8px 8px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg); /* read bottom-to-top for left-edge orientation */
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 14px 0;
+      transition: background 0.15s, color 0.15s;
+      user-select: none;
+      font-family: var(--font-main);
+      order: 0; /* tab stays on the left */
+    }
+
+    .nav-ctrl:hover .nav-tab {
+      background: color-mix(in oklab, var(--accent) 15%, var(--bg-surface));
+      color: var(--accent);
+    }
+
+    /* Shared label + pill styles for both panels */
+    .side-label,
+    .nav-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      white-space: nowrap;
+      margin-bottom: 2px;
+      font-family: var(--font-main);
+    }
+
+    .side-pill,
+    .nav-pill {
+      appearance: none;
+      border: 1px solid var(--border-subtle);
+      background: color-mix(in oklab, var(--bg-surface) 88%, transparent);
+      color: var(--text-main);
+      padding: 6px 10px;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      font-family: var(--font-main);
+      cursor: pointer;
+      text-align: left;
+      white-space: nowrap;
+      width: 100%;
+      transition: border-color 0.12s, background 0.12s;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .side-pill:hover,
+    .nav-pill:hover {
+      border-color: var(--border-strong);
+    }
+
+    .side-pill.pill-active,
+    .nav-pill.pill-active {
+      background: linear-gradient(135deg,
+        color-mix(in oklab, var(--accent) 92%, #fff 8%),
+        var(--accent-2));
+      color: var(--text-invert);
+      border-color: transparent;
+    }
+
+    /* 12. CODE BLOCKS (always dark — theme-independent)
+       ================================================================== */
+    .code-block, .dir-tree {
+      font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+      font-size: 13px;
+      line-height: 2;
+      color: #c9d1d9;
+      background: #161b22;
+      border-radius: 10px;
+      padding: 16px 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    .dir-tree .dir { color: #79c0ff; font-weight: 600; }
+    .dir-tree .dim { color: #6e7681; }
+    .dir-tree .hl  { color: #7ee787; font-weight: 600; }
+
+    code {
+      font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+      font-size: 0.88em;
+      background: rgba(110, 118, 129, 0.15);
+      color: var(--text-main);
+      padding: 1px 6px;
+      border-radius: 5px;
+    }
+
+    /* 13. CONTENT-SPECIFIC STYLES — add below this line
+       ================================================================== */
+
+    .qvoice-draft-stage { grid-template-rows:auto 1fr; }
+    .qvoice-draft-stage .slide-title-text { font-size:26px; }
+    .qvoice-draft-card { padding:16px; gap:12px; min-height:0; }
+    .qvoice-draft-intro { display:flex; align-items:center; justify-content:space-between; gap:14px; padding:9px 12px; border:1px solid var(--border-subtle); border-radius:12px; background:var(--bg-surface-2); }
+    .qvoice-draft-intro strong { font-size:14px; }
+    .qvoice-draft-legend { display:flex; align-items:center; gap:14px; flex-wrap:wrap; font-size:11px; color:var(--text-muted); }
+    .qvoice-draft-key { display:inline-flex; align-items:center; gap:5px; white-space:nowrap; }
+    .qvoice-draft-key i { width:10px; height:10px; border-radius:3px; display:inline-block; }
+    .key-remote { background:var(--accent); }
+    .key-other { background:color-mix(in oklab, var(--text-muted) 72%, transparent); }
+    .key-none { background:var(--accent-soft); border:1px solid var(--border-strong); }
+    .qvoice-draft-grid { display:grid; grid-template-columns:1.65fr .95fr; gap:14px; min-height:0; flex:1; }
+    .qvoice-draft-panel { border:1px solid var(--border-subtle); border-radius:14px; background:color-mix(in oklab, var(--bg-surface) 90%, transparent); padding:13px; min-height:0; }
+    .qvoice-draft-panel-head { display:flex; justify-content:space-between; align-items:baseline; gap:12px; padding-bottom:9px; border-bottom:2px solid var(--accent); }
+    .qvoice-draft-panel-head strong { font-size:15px; }
+    .qvoice-draft-panel-head span { font-size:11px; color:var(--text-muted); text-align:right; }
+    .qvoice-draft-waves { display:grid; gap:8px; padding-top:9px; }
+    .qvoice-draft-wave { padding:8px 0 9px; border-bottom:1px solid var(--border-subtle); }
+    .qvoice-draft-wave:last-child { border-bottom:0; }
+    .qvoice-draft-wave-head { display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin-bottom:6px; }
+    .qvoice-draft-wave-head strong { font-size:14px; }
+    .qvoice-draft-wave-head span { color:var(--text-muted); font-size:11px; }
+    .qvoice-draft-bar { height:25px; display:flex; overflow:hidden; border-radius:var(--radius-pill); border:1px solid var(--border-subtle); background:var(--bg-surface-2); }
+    .qvoice-draft-segment { display:flex; align-items:center; justify-content:center; min-width:0; font-size:10px; font-weight:800; color:var(--text-invert); text-shadow:0 1px 2px rgba(0,0,0,.24); }
+    .qvoice-draft-segment.remote { background:var(--accent); }
+    .qvoice-draft-segment.other { background:color-mix(in oklab, var(--text-muted) 72%, transparent); }
+    .qvoice-draft-segment.none { background:var(--accent-soft); color:var(--text-main); text-shadow:none; }
+    .qvoice-draft-attrition { display:grid; grid-template-columns:repeat(3, 1fr); gap:7px; padding-top:7px; }
+    .qvoice-draft-rate { display:flex; align-items:center; justify-content:space-between; gap:6px; padding:4px 7px; border-radius:8px; background:var(--bg-surface-2); border:1px solid var(--border-subtle); font-size:10px; color:var(--text-muted); }
+    .qvoice-draft-rate b { font-size:12px; color:var(--accent); font-variant-numeric:tabular-nums; }
+    .qvoice-draft-rate.high b { color:#d97706; }
+    .qvoice-draft-rate.low b { color:#15803d; }
+    .qvoice-draft-rate-label { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .qvoice-draft-topic-intro { font-size:12px; color:var(--text-muted); line-height:1.4; margin:10px 0 8px; }
+    .qvoice-draft-topics { display:grid; gap:13px; }
+    .qvoice-draft-topic-label { display:flex; justify-content:space-between; gap:10px; font-size:13px; color:var(--text-main); margin-bottom:5px; }
+    .qvoice-draft-topic-label b { font-variant-numeric:tabular-nums; }
+    .qvoice-draft-topic-track { height:12px; border-radius:var(--radius-pill); overflow:hidden; background:var(--bg-surface-3); border:1px solid var(--border-subtle); }
+    .qvoice-draft-topic-fill { height:100%; border-radius:var(--radius-pill); background:var(--accent-2); }
+    .qvoice-draft-note { margin:0; padding-top:8px; border-top:1px solid var(--border-subtle); color:var(--text-muted); font-size:11px; line-height:1.35; }
+    .qvoice-draft-note strong { color:var(--text-main); }
+    @media (max-width:900px) { .qvoice-draft-grid { grid-template-columns:1fr; } }
+
+  </style>
+</head>
+<!-- Default theme: change class to theme-light-soft / theme-dark-royal / theme-dark-carbon -->
+<body class="theme-light-classic">
+
+  <!-- ================================================================
+       SLIDE 1 — Replace placeholder content with real slide content.
+       Keep .slide-stage wrapper and .slide-heading structure.
+       ================================================================ -->
+  <div class="slide-stage qvoice-draft-stage" id="slide-1">
+
+    <!-- Slide heading row — title left, optional gauge right.
+         Remove .gauge-wrap if no adoption metric. See fullscreen_presentation_mode.md Pattern 4. -->
+    <div class="slide-heading">
+      <div>
+        <h2 class="slide-title-text">QVoice open comments</h2>
+        <p class="slide-subtitle">Three mutually exclusive groups per survey wave — each bar sums to 100%</p>
+      </div>
+      <!-- Optional gauge — remove entire .gauge-wrap block if not needed -->
+      <!-- <div class="gauge-wrap">...</div> -->
+    </div>
+
+    <!-- Replace with your content — choose layout from §0 in SKILL.md:
+         Single card full-width : <article class="card card-full">...</article>
+         2-column grid          : <div class="slide-grid"><article class="card">...</article><article class="card">...</article></div>
+         4-column grid          : <div class="grid-4col">...</div>
+         Vertical stack         : <div class="vertical-stack">...</div>
+         4-col tracking grid    : <div class="tracking-grid">...</div>
+    -->
+
+    <article class="card card-full qvoice-draft-card">
+      <div class="qvoice-draft-intro">
+        <strong>How to read: each bar is the full active-employee cohort before the survey.</strong>
+        <div class="qvoice-draft-legend" aria-label="Comment group legend">
+          <span class="qvoice-draft-key"><i class="key-remote"></i>Remote / hybrid / onsite comment</span>
+          <span class="qvoice-draft-key"><i class="key-other"></i>Other written comment</span>
+          <span class="qvoice-draft-key"><i class="key-none"></i>No written comment</span>
+        </div>
+      </div>
+
+      <div class="qvoice-draft-grid">
+        <section class="qvoice-draft-panel" aria-label="Participation mix and voluntary attrition by survey wave">
+          <div class="qvoice-draft-panel-head"><strong>Participation mix and subsequent attrition</strong><span>Attrition shown for each of the three groups</span></div>
+          <div class="qvoice-draft-waves">
+            <div class="qvoice-draft-wave">
+              <div class="qvoice-draft-wave-head"><strong>Mar 2023</strong><span>Illustrative cohort n=42,100</span></div>
+              <div class="qvoice-draft-bar" aria-label="Mar 2023: remote hybrid onsite comment 7 percent, other written comment 18 percent, no written comment 75 percent"><span class="qvoice-draft-segment remote" style="width:7%">7%</span><span class="qvoice-draft-segment other" style="width:18%">18%</span><span class="qvoice-draft-segment none" style="width:75%">75% no written comment</span></div>
+              <div class="qvoice-draft-attrition"><div class="qvoice-draft-rate low"><span class="qvoice-draft-rate-label">Remote / hybrid</span><b>2.8%</b></div><div class="qvoice-draft-rate"><span class="qvoice-draft-rate-label">Other comment</span><b>3.7%</b></div><div class="qvoice-draft-rate high"><span class="qvoice-draft-rate-label">No comment</span><b>4.6%</b></div></div>
+            </div>
+            <div class="qvoice-draft-wave">
+              <div class="qvoice-draft-wave-head"><strong>Jan 2024</strong><span>Illustrative cohort n=40,500</span></div>
+              <div class="qvoice-draft-bar" aria-label="Jan 2024: remote hybrid onsite comment 5 percent, other written comment 46 percent, no written comment 49 percent"><span class="qvoice-draft-segment remote" style="width:5%">5%</span><span class="qvoice-draft-segment other" style="width:46%">46% other written comment</span><span class="qvoice-draft-segment none" style="width:49%">49% no comment</span></div>
+              <div class="qvoice-draft-attrition"><div class="qvoice-draft-rate low"><span class="qvoice-draft-rate-label">Remote / hybrid</span><b>3.1%</b></div><div class="qvoice-draft-rate"><span class="qvoice-draft-rate-label">Other comment</span><b>4.0%</b></div><div class="qvoice-draft-rate high"><span class="qvoice-draft-rate-label">No comment</span><b>5.2%</b></div></div>
+            </div>
+            <div class="qvoice-draft-wave">
+              <div class="qvoice-draft-wave-head"><strong>Jan 2025</strong><span>Illustrative cohort n=42,800</span></div>
+              <div class="qvoice-draft-bar" aria-label="Jan 2025: remote hybrid onsite comment 9 percent, other written comment 43 percent, no written comment 48 percent"><span class="qvoice-draft-segment remote" style="width:9%">9%</span><span class="qvoice-draft-segment other" style="width:43%">43% other written comment</span><span class="qvoice-draft-segment none" style="width:48%">48% no comment</span></div>
+              <div class="qvoice-draft-attrition"><div class="qvoice-draft-rate low"><span class="qvoice-draft-rate-label">Remote / hybrid</span><b>2.6%</b></div><div class="qvoice-draft-rate"><span class="qvoice-draft-rate-label">Other comment</span><b>3.5%</b></div><div class="qvoice-draft-rate high"><span class="qvoice-draft-rate-label">No comment</span><b>4.4%</b></div></div>
+            </div>
+            <div class="qvoice-draft-wave">
+              <div class="qvoice-draft-wave-head"><strong>2025 QVoice <span>(fielded Jan 2026)</span></strong><span>Illustrative cohort n=47,000</span></div>
+              <div class="qvoice-draft-bar" aria-label="2025 QVoice: remote hybrid onsite comment 11 percent, other written comment 34 percent, no written comment 55 percent"><span class="qvoice-draft-segment remote" style="width:11%">11%</span><span class="qvoice-draft-segment other" style="width:34%">34% other written comment</span><span class="qvoice-draft-segment none" style="width:55%">55% no comment</span></div>
+              <div class="qvoice-draft-attrition"><div class="qvoice-draft-rate low"><span class="qvoice-draft-rate-label">Remote / hybrid</span><b>2.4%</b></div><div class="qvoice-draft-rate"><span class="qvoice-draft-rate-label">Other comment</span><b>3.1%</b></div><div class="qvoice-draft-rate high"><span class="qvoice-draft-rate-label">No comment</span><b>3.9%</b></div></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="qvoice-draft-panel" aria-label="Common remote hybrid onsite comment topics">
+          <div class="qvoice-draft-panel-head"><strong>Most common topics</strong><span>Illustrative latest wave</span></div>
+          <p class="qvoice-draft-topic-intro">Among remote / hybrid / onsite comments. A person may mention more than one topic.</p>
+          <div class="qvoice-draft-topics">
+            <div><div class="qvoice-draft-topic-label"><span>Remote / hybrid flexibility</span><b>68%</b></div><div class="qvoice-draft-topic-track"><div class="qvoice-draft-topic-fill" style="width:68%"></div></div></div>
+            <div><div class="qvoice-draft-topic-label"><span>Onsite policy or exceptions</span><b>24%</b></div><div class="qvoice-draft-topic-track"><div class="qvoice-draft-topic-fill" style="width:24%"></div></div></div>
+            <div><div class="qvoice-draft-topic-label"><span>Required onsite days</span><b>16%</b></div><div class="qvoice-draft-topic-track"><div class="qvoice-draft-topic-fill" style="width:16%"></div></div></div>
+            <div><div class="qvoice-draft-topic-label"><span>Commute / parking / travel</span><b>11%</b></div><div class="qvoice-draft-topic-track"><div class="qvoice-draft-topic-fill" style="width:11%"></div></div></div>
+            <div><div class="qvoice-draft-topic-label"><span>Onsite space / facilities</span><b>6%</b></div><div class="qvoice-draft-topic-track"><div class="qvoice-draft-topic-fill" style="width:6%"></div></div></div>
+          </div>
+        </section>
+      </div>
+      <p class="qvoice-draft-note"><strong>Draft only:</strong> values are illustrative. In the production slide, each wave will show the full pre-survey cohort split across the three exclusive groups; their shares reconcile to 100%.</p>
+    </article>
+  </div><!-- /.slide-stage (Slide 1) -->
+
+
+  <!-- ================================================================
+       SLIDE 2+ (MULTI-SLIDE DECKS ONLY)
+       Clone the .slide-stage block below for each additional slide.
+       Give each a unique id="slide-2", id="slide-3", etc.
+       Add a matching nav-pill in #slide-nav for each slide:
+         <button class="nav-pill" data-slide="1">2. Title</button>
+
+       Example slide block (remove this comment and paste as HTML):
+         <div class="slide-stage" id="slide-2">
+           <div class="slide-heading">
+             <div>
+               <h2 class="slide-title-text">[Slide 2 Title]</h2>
+             </div>
+           </div>
+           [content here]
+         </div>
+       ================================================================ -->
+
+
+  <!-- ================================================================
+       LEFT EDGE — SLIDE NAVIGATOR
+       Hover the left edge to reveal the slide list.
+       For a single-slide file, keep only one nav-pill (it still works).
+       Add one nav-pill per slide, matching data-slide to the 0-based index.
+       ================================================================ -->
+  <div class="nav-ctrl" id="slide-nav">
+    <div class="nav-tab">Slides</div>
+    <div class="nav-panel">
+      <div class="nav-label">Navigation</div>
+      <button class="nav-pill pill-active" data-slide="0">1. QVoice open comments</button>
+      <!-- <button class="nav-pill" data-slide="1">2. [Second Slide Title]</button> -->
+      <!-- <button class="nav-pill" data-slide="2">3. [Third Slide Title]</button> -->
+    </div>
+  </div>
+
+
+  <!-- ================================================================
+       RIGHT EDGE — THEME SWITCHER
+       Hover the right edge of the screen to reveal theme pills.
+       ================================================================ -->
+  <div class="side-controls" id="theme-selector">
+    <div class="side-panel">
+      <div class="side-label">Theme</div>
+      <button class="side-pill pill-active" data-theme="theme-light-classic">Light – Classic</button>
+      <button class="side-pill" data-theme="theme-light-soft">Light – Soft Blue</button>
+      <button class="side-pill" data-theme="theme-dark-royal">Dark – Royal</button>
+      <button class="side-pill" data-theme="theme-dark-carbon">Dark – Carbon</button>
+    </div>
+    <div class="side-tab">Theme</div>
+  </div>
+
+
+  <script>
+    /* =================================================================
+       THEME PERSISTENCE — localStorage key: "slide-studio-theme"
+       ================================================================= */
+    (function () {
+      var themePills = Array.from(document.querySelectorAll('#theme-selector [data-theme]'));
+
+      function applyTheme(themeClass, activeBtn) {
+        document.body.className = themeClass;
+        themePills.forEach(function (b) {
+          b.classList.toggle('pill-active', b === activeBtn);
+        });
+        try { localStorage.setItem('slide-studio-theme', themeClass); } catch (e) {}
+      }
+
+      themePills.forEach(function (btn) {
+        btn.addEventListener('click', function () { applyTheme(btn.dataset.theme, btn); });
+      });
+
+      var saved = null;
+      try { saved = localStorage.getItem('slide-studio-theme'); } catch (e) {}
+      var savedBtn = themePills.find(function (b) { return b.dataset.theme === saved; });
+      applyTheme(saved || document.body.className, savedBtn || themePills[0]);
+    })();
+
+
+    /* =================================================================
+       SLIDE NAVIGATION + fitSlide()
+
+       fitSlide() — scale 1440×810 stage to fill any viewport.
+       DPR-zoom guard: skip recalculation when Ctrl+/- changes devicePixelRatio
+       (browser zoom) vs an actual window resize.
+
+       showSlide(n) — hide all .slide-stage elements, show index n, re-fit.
+
+       Keyboard: ArrowRight/Down = next; ArrowLeft/Up = prev; Home/End = first/last.
+       ================================================================= */
+    (function () {
+      var SLIDE_W = 1440, SLIDE_H = 810;
+      var allStages = Array.from(document.querySelectorAll('.slide-stage'));
+      var navBtns   = Array.from(document.querySelectorAll('#slide-nav [data-slide]'));
+      var current   = 0;
+      var stage     = allStages[0];
+      var lastDPR   = window.devicePixelRatio;
+
+      function fitSlide() {
+        if (!stage) return;
+        var vw = window.innerWidth, vh = window.innerHeight;
+        var scale = Math.min(vw / SLIDE_W, vh / SLIDE_H);
+        stage.style.transform = 'scale(' + scale + ')';
+        stage.style.left = Math.max(0, (vw - SLIDE_W * scale) / 2) + 'px';
+        stage.style.top  = Math.max(0, (vh - SLIDE_H * scale) / 2) + 'px';
+      }
+
+      function showSlide(n) {
+        n = Math.max(0, Math.min(allStages.length - 1, n));
+        allStages.forEach(function (s, i) {
+          s.style.display = i === n ? '' : 'none';
+        });
+        navBtns.forEach(function (b, i) {
+          b.classList.toggle('pill-active', i === n);
+        });
+        stage   = allStages[n];
+        current = n;
+        fitSlide();
+      }
+
+      window.addEventListener('resize', function () {
+        var newDPR = window.devicePixelRatio;
+        if (newDPR !== lastDPR) { lastDPR = newDPR; return; } // Ctrl+zoom — skip
+        fitSlide();
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); showSlide(current + 1); }
+        if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   { e.preventDefault(); showSlide(current - 1); }
+        if (e.key === 'Home')                                  { e.preventDefault(); showSlide(0); }
+        if (e.key === 'End')                                   { e.preventDefault(); showSlide(allStages.length - 1); }
+      });
+
+      showSlide(0); // show first slide + initial fit
+    })();
+  </script>
+</body>
+</html>

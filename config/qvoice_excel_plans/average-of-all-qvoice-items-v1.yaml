@@ -1,0 +1,61 @@
+schema_version: 1
+plan_version: 1
+language: es
+created_before_execution: true
+plan_authorship: codex_explicit
+variable: Average of all Qvoice items
+concept: Composite binario calculado con el item set Favorable/FAV disponible por wave.
+intended_use: Explorar el composite binario de QVoice frente a attrition posterior.
+knowledge_date: Fecha de la wave QVoice; excluir informacion posterior.
+population: Respuestas QVoice con una fila por empleado-wave y composite valido.
+grain: Employee-wave derived aggregate
+semantic_type: derived_feature
+validation_story:
+  - id: source_access
+    criterion: source
+    evidence_role: supporting
+    question: ¿Los componentes binarios del composite estan disponibles en los workbooks raw?
+    why: Un promedio no puede derivarse si los componentes no tienen una ruta de acceso estable.
+    method: schema_access_check
+    sql_reference: queries/audits/qvoice_excel_source_inventory_20260826-2.sql
+    acceptance_rule: Debe existir un item set binario utilizable y missing_items debe ser 0.
+    metric_map:
+      missing_items: {column: missing_items, aggregate: sum}
+    metric_checks:
+      - {metric: missing_items, operator: eq, threshold: 0, aggregate: sum}
+  - id: independent_binary_recalculation
+    criterion: definition
+    evidence_role: defining
+    question: ¿El composite binario se puede recalcular con una regla de completitud explicita?
+    why: El promedio es una feature derivada y necesita formula, item set, nulos y minimo de respuestas definidos antes de asignar significado.
+    method: independent_recalculation
+    sql_reference: queries/audits/qvoice_excel_definition_audit_20260826-2.sql
+    acceptance_rule: La regla provisional exige al menos 70% de items validos, ningun valor invalido y un item set versionado; el cambio de item set debe quedar explicado.
+    metric_checks:
+      - {metric: eligible_count, operator: gt, threshold: 0, aggregate: sum}
+      - {metric: populated_count, operator: gt, threshold: 0, aggregate: sum}
+      - {metric: invalid_count, operator: eq, threshold: 0, aggregate: sum}
+      - {metric: item_set_change_count, operator: eq, threshold: 0, aggregate: sum}
+  - id: composite_consistency
+    criterion: consistency
+    evidence_role: defining
+    question: ¿El item set y el dominio del composite binario son estables entre waves?
+    why: Un promedio no es comparable si cambia el numero o significado de los items.
+    method: longitudinal_aggregate_audit
+    sql_reference: queries/audits/qvoice_excel_consistency_audit_20260826-2.sql
+    acceptance_rule: No deben existir invalidos ni cambios de item set sin versionado aprobado.
+    metric_checks:
+      - {metric: invalid_count, operator: eq, threshold: 0, aggregate: sum}
+      - {metric: item_set_change_count, operator: eq, threshold: 0, aggregate: sum}
+  - id: composite_employee_wave_grain
+    criterion: join
+    evidence_role: supporting
+    question: ¿El composite queda en un grain unico de empleado-wave antes de unirse a workforce?
+    why: La derivacion debe evitar duplicados y mantener la fecha de conocimiento de la encuesta.
+    method: key_grain_and_temporal_reconciliation
+    sql_reference: queries/audits/qvoice_excel_join_grain_audit_20260826-2.sql
+    acceptance_rule: No deben quedar duplicados o unmatched internos; el join externo a workforce sigue pendiente.
+    metric_checks:
+      - {metric: matched_count, operator: gt, threshold: 0, aggregate: sum}
+      - {metric: unmatched_count, operator: eq, threshold: 0, aggregate: sum}
+      - {metric: duplicate_count, operator: eq, threshold: 0, aggregate: sum}

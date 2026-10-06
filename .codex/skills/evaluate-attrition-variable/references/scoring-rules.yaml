@@ -1,0 +1,267 @@
+version: 4
+
+# Edit this file to change labels, thresholds, or status-to-score mappings.
+# The Python scripts load it at runtime; the original brainstorming workbook is
+# not required after this skill is installed.
+
+population:
+  minimum_shared_cohort: 30
+  default:
+    worker_type: Employee
+    employee_type: Regular
+    active_status: 1
+  display: "worker_type='Employee'; employee_type='Regular'; active_status=1"
+
+criteria_order:
+  - source
+  - definition
+  - coverage
+  - missingness
+  - consistency
+  - history
+  - join
+  - effort
+
+criteria:
+  source:
+    confirmed_accessible:
+      score: 2
+      meaning: Fuente y ruta de acceso confirmadas.
+    likely_unconfirmed:
+      score: 1
+      meaning: La fuente es plausible, pero falta confirmar acceso o propietario.
+    unavailable:
+      score: 0
+      meaning: No existe una fuente o ruta de acceso utilizable.
+
+  definition:
+    clear_stable:
+      score: 2
+      meaning: Definición de negocio clara y estable.
+    needs_alignment:
+      score: 1
+      meaning: La definición requiere alineación, limpieza o reglas para casos límite.
+    unclear:
+      score: 0
+      meaning: La definición es desconocida o no reproducible.
+
+  consistency:
+    clean_standardized:
+      score: 2
+      meaning: Los valores están limpios y estandarizados.
+    normalization_needed:
+      score: 1
+      meaning: Se requiere mapping, normalización o una limpieza acotada.
+    unreliable:
+      score: 0
+      meaning: Los valores son inconsistentes, inválidos o no son seguros en el tiempo.
+
+  join:
+    reliable_employee_date:
+      score: 2
+      meaning: Join confiable por empleado y fecha efectiva o de snapshot.
+    mapping_or_validation:
+      score: 1
+      meaning: El join es posible, pero necesita mapping o validación.
+    not_joinable:
+      score: 0
+      meaning: No existe una ruta de join confiable y segura en el tiempo.
+
+  effort:
+    direct_or_simple_sql:
+      score: 2
+      meaning: Campo directo o derivación SQL sencilla.
+    moderate_transformation:
+      score: 1
+      meaning: Requiere transformación, joins o reglas de negocio moderadas.
+    heavy_or_unresolved:
+      score: 0
+      meaning: Requiere ingeniería compleja, NLP, geocoding, trabajo manual o lógica no resuelta.
+
+coverage:
+  assessment_window_observations: 3
+  score_2_min_percent: 95
+  score_1_min_percent: 70
+  # The score uses a denominator-weighted rate over the most recent observations.
+
+missingness:
+  assessment_window_observations: 3
+  score_2_max_percent: 5
+  score_1_max_percent: 30
+  systematic_window_observations: 6
+  systematic_range_percent_points: 20
+  # A manually declared or automatically detected systematic pattern caps the
+  # score at 1; missingness above the 1-point threshold remains 0.
+
+history:
+  score_2_min_months: 24
+  score_1_min_months: 6
+  score_0_for_single_wave: true
+  score_0_for_leakage: true
+
+usable_history:
+  coverage_threshold_percent: 95
+  consecutive_observations: 3
+
+frequency:
+  monthly_gap_days: [20, 45]
+  quarterly_gap_days: [70, 110]
+  annual_gap_days: [300, 430]
+  minimum_matching_gap_ratio: 0.60
+
+privacy:
+  suppress_event_counts_below: 30
+
+# Evidence gate for qualitative scores of 2. Narrative confidence, a field
+# name, a dashboard caption, or a prior workbook never satisfies this gate.
+verification:
+  required_spec_version: 4
+  required_outcome: pass
+  require_executed_sql_provenance: true
+  required_provenance_fields: [sql_sha256, result_sha256]
+  semantic_types:
+    - direct_field
+    - precomputed_metric
+    - derived_feature
+    - grouped_mapping
+    - hierarchy
+    - survey
+    - external_source
+  metrics_required_for: [definition, consistency, join]
+  persisted_query_required_for: [source, definition, consistency, join, effort]
+  methods_by_criterion:
+    source:
+      - schema_access_check
+      - authoritative_source_confirmation
+      - approved_external_access_check
+    definition:
+      - authoritative_definition_and_data_audit
+      - independent_recalculation
+      - authoritative_lineage_and_reconciliation
+    consistency:
+      - longitudinal_aggregate_audit
+      - aggregate_domain_and_transition_audit
+      - external_quality_audit
+    join:
+      - aggregate_join_reconciliation
+      - key_grain_and_temporal_reconciliation
+      - external_join_reconciliation
+    effort:
+      - direct_field_inspection
+      - derivation_complexity_audit
+      - lineage_complexity_audit
+  complex_definition_semantic_types:
+    - precomputed_metric
+    - derived_feature
+    - hierarchy
+  complex_definition_methods:
+    - independent_recalculation
+    - authoritative_lineage_and_reconciliation
+  direct_definition_methods:
+    - authoritative_definition_and_data_audit
+  metric_requirements:
+    definition:
+      direct_field:
+        - [eligible_count, eligible_rows]
+        - [populated_count, populated_rows]
+        - [distinct_count, distinct_values]
+      external_source:
+        - [eligible_count, eligible_rows]
+        - [populated_count, populated_rows]
+        - [distinct_count, distinct_values]
+      survey:
+        - [eligible_count, eligible_rows]
+        - [populated_count, populated_rows, responses_count]
+        - [distinct_count, distinct_values, waves_checked]
+      precomputed_metric:
+        - [comparable_count]
+        - [matched_count, matched_within_tolerance_count]
+        - [mismatch_count, discrepancy_count]
+        - [match_rate_percent]
+      derived_feature:
+        - [comparable_count]
+        - [matched_count, matched_within_tolerance_count]
+        - [mismatch_count, discrepancy_count]
+        - [match_rate_percent]
+      grouped_mapping:
+        - [detailed_values_checked, comparable_count]
+        - [mapped_values_count, matched_count]
+        - [contradiction_count, mismatch_count]
+        - [unmapped_count]
+        - [mapping_stability_percent, match_rate_percent]
+      hierarchy:
+        - [eligible_count, node_count]
+        - [reconstructed_count, resolved_count]
+        - [unresolved_count]
+        - [root_count]
+        - [cycle_count]
+        - [convergence_rate_percent]
+        - [root_semantics_pass]
+    consistency:
+      default:
+        - [observations_checked, months_checked]
+        - [anomaly_count, invalid_count, unexplained_change_count]
+    join:
+      default:
+        - [eligible_count, eligible_rows]
+        - [matched_count, matched_rows]
+        - [unmatched_count, unmatched_rows]
+        - [duplicate_count, duplicate_rows, multi_match_count]
+
+# Executable v4 validations produce a maximum allowed score. Criterion scores
+# are the minimum of the status-derived score, calculated quantitative score,
+# derivation gate, executable validations, and any score-reducing override.
+validation_outcomes:
+  pass: 2
+  warning: 1
+  pending: 1
+  fail: 0
+  blocked: 0
+
+point_labels:
+  high:
+    label: Alta - lista para modelo
+    minimum_total: 14
+    maximum_total: 16
+    maximum_zero_scores: 0
+  medium:
+    label: Media - utilizable con trabajo
+    minimum_total: 9
+    maximum_total: 13
+  medium_fixable_zero:
+    label: Media - utilizable con trabajo
+    minimum_total: 14
+    maximum_zero_scores: 1
+  low:
+    label: Baja - exploratoria
+    minimum_total: 1
+    maximum_total: 8
+  zero:
+    label: No disponible / excluir
+    total: 0
+
+blockers:
+  none:
+    label: Ninguno
+    overrides_points: false
+  sensitive_restricted:
+    label: Sensible / restringida
+    overrides_points: true
+  external_third_party:
+    label: Externa / tercero
+    overrides_points: true
+  not_available_exclude:
+    label: No disponible / excluir
+    overrides_points: true
+  tbd:
+    label: Por definir
+    overrides_points: true
+
+measurement_labels:
+  snapshot: Snapshot
+  event: Evento
+  rolling_derived: Derivada móvil
+  derived: Derivada
+  survey: Encuesta
+  external: Externa
+  unavailable: No disponible

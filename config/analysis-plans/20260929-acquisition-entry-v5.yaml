@@ -1,0 +1,110 @@
+schema_version: 1
+plan_version: 5
+plan_revision_reason: >-
+  La ejecucion v4 llego a generar evidencia agregada y el notebook, pero el
+  validador de narrativa marco el metodo de la historia 4 por no contener un
+  marcador linguistico en espanol. Esta revision solo aclara esa redaccion y
+  conserva la misma poblacion, SQL, ventanas y reglas de aceptacion v4 antes
+  de repetir la ejecucion completa.
+language: es
+created_before_execution: true
+acceptance_rules_frozen: true
+plan_authorship: codex_explicit
+variable: Ingreso por adquisición
+semantic_type: direct_field
+concept: >-
+  Presencia de un nombre de adquisicion registrado en acquisition. Un vacio no
+  prueba que la persona haya ingresado sin adquisicion.
+intended_use: >-
+  Mostrar distribucion y attrition voluntaria anual por presencia de una
+  adquisicion registrada, con limites semanticos explicitos.
+knowledge_date: >-
+  2026-08-23 para distribucion y 2025-08-24 para la clasificacion de la
+  cohorte anual.
+population: >-
+  Empleados activos Regular con worker_type='Employee', employee_type='Regular'
+  y active_status=1 en el snapshot aplicable; RF360 se incluye.
+grain: >-
+  Empleado distinto por snapshot y una salida Voluntary por persona de la
+  cohorte basal.
+definition: >-
+  Con adquisicion registrada equivale a NULLIF(TRIM(acquisition), '') poblado.
+  Sin adquisicion registrada solo informa ausencia de texto y no origen de
+  ingreso. Los nombres se normalizan con TRIM y mayusculas sin unir aliases.
+source_reasoning: >-
+  post_hire_monthly_worker_dtls contiene snapshots, acquisition y terminos.
+  Las fuentes relacionadas se usan solo como contraste agregado y no prueban
+  la definicion de negocio.
+validation_story:
+  - id: source_access_and_snapshot_grain
+    criterion: source
+    evidence_role: defining
+    question: ¿La tabla mensual y los campos requeridos existen y son accesibles por la ruta read-only?
+    why: Sin una tabla, clave y fecha no hay una fuente reproducible para la visual.
+    method: Auditoria agregada de information_schema para confirmar las columnas requeridas.
+    sql_reference: queries/audits/acquisition_entry_source_access_20260929.sql
+    acceptance_rule: missing_items = 0.
+  - id: direct_field_domain_and_snapshot_uniqueness
+    criterion: consistency
+    evidence_role: defining
+    question: ¿Cada empleado tiene un registro no contradictorio por snapshot y el dominio admite normalizacion acotada?
+    why: Duplicados o contradicciones pueden sesgar los segmentos y los conteos.
+    method: Auditoria agregada de unicidad, blanks, dominios y transiciones longitudinales.
+    sql_reference: queries/audits/acquisition_entry_semantic_audit_20260929.sql
+    acceptance_rule: Cuantificar duplicados, variantes y cambios sin combinar aliases no documentados.
+  - id: related_source_metadata_context
+    criterion: source
+    evidence_role: contextual
+    question: ¿Las fuentes relacionadas exponen columnas para servir solo como contraste agregado?
+    why: Las comparaciones requieren conocer claves y fechas sin asumir igualdad semantica.
+    method: Inventario agregado de information_schema para las tablas relacionadas.
+    sql_reference: queries/audits/acquisition_entry_related_source_metadata_20260929.sql
+    acceptance_rule: Las columnas de contexto existen con tipos compatibles y no se interpretan como lineage.
+  - id: voluntary_label_normalization
+    criterion: join
+    evidence_role: defining
+    question: ¿La normalizacion de term_type recupera solo la etiqueta VOLUNTARY?
+    why: Las diferencias de casing o espacios no deben borrar ni ampliar las salidas voluntarias.
+    method: Comparar los conteos literal y normalizado para no devolver valores individuales.
+    sql_reference: queries/audits/acquisition_entry_termination_label_audit_20260929.sql
+    acceptance_rule: La normalizacion recupera Voluntary y no incorpora etiquetas distintas.
+  - id: voluntary_event_grain_and_deduplication
+    criterion: join
+    evidence_role: defining
+    question: ¿La tasa selecciona una sola salida Voluntary por persona aunque el feed mensual repita filas?
+    why: Sumar filas repetidas elevaria artificialmente el numerador anual.
+    method: Comparar filas fuente, claves empleado-fecha, multiples fechas y el evento minimo seleccionado.
+    sql_reference: queries/audits/acquisition_entry_termination_event_grain_audit_20260929.sql
+    acceptance_rule: La tasa usa una persona una vez y cuantifica repeticiones y multiples fechas.
+  - id: baseline_membership_without_future_reclassification
+    criterion: join
+    evidence_role: defining
+    question: ¿La elegibilidad se fija en el baseline sin reclasificar a la persona por una fila posterior?
+    why: Reaplicar atributos posteriores puede excluir una salida de la cohorte inicial.
+    method: Comparar las salidas por membresia basal contra la variante que filtra la fila posterior.
+    sql_reference: queries/audits/acquisition_entry_termination_population_filter_audit_20260929.sql
+    acceptance_rule: La tasa usa membresia basal y documenta cualquier exclusion posterior.
+  - id: historical_and_related_source_context
+    criterion: history
+    evidence_role: contextual
+    question: ¿Que rango historico y contraste agregado ofrecen acquisition, new_hires y el snapshot historico?
+    why: La cobertura, los cambios y los feeds condicionan la lectura de la historia.
+    method: Medir cobertura, transiciones, rangos y coincidencias normalizadas no ambiguas.
+    sql_reference: queries/audits/acquisition_entry_semantic_audit_20260929.sql
+    acceptance_rule: El rango, los cambios y las diferencias quedan cuantificados sin tratarlos como definicion.
+  - id: cohort_distribution_and_attrition
+    criterion: join
+    evidence_role: defining
+    question: ¿Los segmentos, Top 10 mas Otras y salidas deduplicadas reconcilian con las poblaciones?
+    why: La visual debe separar distribucion actual de la cohorte historica sin reclasificacion futura.
+    method: Consulta agregada con clasificacion temporal, deduplicacion y supresion n>=30.
+    sql_reference: queries/audits/acquisition_entry_distribution_attrition_20260929.sql
+    acceptance_rule: Los dos segmentos y Top 10 mas Otras reconcilian, y las tasas respetan cohorte y eventos n>=30.
+  - id: termination_source_context
+    criterion: definition
+    evidence_role: contextual
+    question: ¿Que diferencias agregadas quedan entre la tabla principal y all_terminations para la cohorte?
+    why: Un feed alterno puede revelar diferencias del numerador que deben documentarse.
+    method: Comparar la interseccion y las diferencias agregadas sin alimentar el slide con el feed alterno.
+    sql_reference: queries/audits/acquisition_entry_distribution_attrition_20260929.sql
+    acceptance_rule: Ambos feeds y sus diferencias se cuantifican sin usarlos para probar acquisition.

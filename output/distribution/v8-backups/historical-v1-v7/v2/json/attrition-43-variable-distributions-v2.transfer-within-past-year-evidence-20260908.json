@@ -1,0 +1,1353 @@
+{
+  "evidence_type": "transfer_within_past_year_monthly_weekly_distribution",
+  "query_path": "queries/profiles/transfer_within_past_year_distribution_monthly_weekly_20260908.sql",
+  "executed_on": "2026-09-08",
+  "cutoff_date": "2026-08-23",
+  "reporting_mode": "presentation",
+  "population": "Regular employees active at each snapshot; monthly from hrda.post_hire_monthly_worker_dtls and weekly from hrda.post_hire_daily_worker_dtls.",
+  "grain": {
+    "monthly": "Distinct employee monthly snapshot at fis_mo_end_dt.",
+    "weekly": "Distinct employee daily snapshot at Sunday transaction_date endpoint."
+  },
+  "definition": "Distinct employees with at least one deduplicated transfer event in (snapshot_date - 12 months, snapshot_date], using employee_id + transfer_date from hrda.post_hire_monthly_worker_dtls.",
+  "canonical_frequency": "monthly",
+  "operational_comparison_frequency": "weekly",
+  "display_scope_note_two_year_window": "La gráfica muestra aproximadamente los dos años más recientes antes del cutoff: 24 snapshots mensuales y 104 cierres semanales, desde septiembre de 2024. El asterisco aclara que el inicio de esta ventana visual no es el inicio de la historia disponible ni de la variable.",
+  "display_scope_note": "La gráfica muestra aproximadamente los dos años más recientes antes del cutoff: 24 snapshots mensuales y 104 cierres semanales desde septiembre de 2024; no implica que la variable sólo exista desde esa fecha.",
+  "history_availability": {
+    "audit_query_path": "queries/audits/transfer_within_past_year_history_availability_20260908.sql",
+    "documented_transfer_event_history_start": "2022-10-06",
+    "documented_transfer_event_history_end": "2026-09-08",
+    "monthly_active_snapshot_history_start": "2020-07-26",
+    "weekly_source_transaction_history_start": "2021-05-24"
+  },
+  "minimum_shared_cohort": 30,
+  "period_rules": {
+    "monthly_snapshots": 24,
+    "weekly_endpoints": 104,
+    "weekly_endpoint_definition": "Sunday transaction_date with all seven dates from endpoint minus six days through endpoint observed.",
+    "exclude_partial_periods": true
+  },
+  "source_exclusion": {
+    "table": "hrda.workers_ios_transfers",
+    "decision": "not used in the primary chart",
+    "reason": "Separate aggregate reconciliation is stored in queries/audits/transfer_within_past_year_source_reconciliation_20260908.sql.",
+    "ios_distinct_employee_date_keys": 50560,
+    "matched_employee_date_keys": 2922,
+    "matched_percent": 5.7793
+  },
+  "summaries": {
+    "monthly": {
+      "snapshot_count": 24,
+      "complete_snapshot_count": 24,
+      "first_snapshot": "2024-09-29",
+      "last_snapshot": "2026-08-23",
+      "eligible_employee_mean": 45336.67,
+      "eligible_employee_median": 45072,
+      "transfer_employee_mean": 747.04,
+      "transfer_employee_median": 743.5,
+      "transfer_employee_min": 658,
+      "transfer_employee_max": 837,
+      "transfer_rate_mean_percent": 1.6515,
+      "transfer_rate_min_percent": 1.396,
+      "transfer_rate_max_percent": 1.8044
+    },
+    "weekly": {
+      "snapshot_count": 104,
+      "complete_snapshot_count": 104,
+      "first_snapshot": "2024-09-01",
+      "last_snapshot": "2026-08-23",
+      "eligible_employee_mean": 45177.97,
+      "eligible_employee_median": 45024.5,
+      "transfer_employee_mean": 745.92,
+      "transfer_employee_median": 743.5,
+      "transfer_employee_min": 656,
+      "transfer_employee_max": 837,
+      "transfer_rate_mean_percent": 1.6551,
+      "transfer_rate_min_percent": 1.3926,
+      "transfer_rate_max_percent": 1.8491
+    }
+  },
+  "rows": [
+    {
+      "frequency": "monthly",
+      "snapshot_date": "2024-09-29",
+      "period_complete": true,
+      "eligible_employees": 42191,
+      "transfer_employees": 757,
+      "transfer_events_in_window": 161,
+      "transfer_rate_percent": 1.7942,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "monthly",
+      "snapshot_date": "2024-10-27",
+      "period_complete": true,
+      "eligible_employees": 42414,
+      "transfer_employees": 711,
+      "transfer_events_in_window": 157,
+      "transfer_rate_percent": 1.6763,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "monthly",
+      "snapshot_date": "2024-11-24",
+      "period_complete": true,
+      "eligible_employees": 42306,
+      "transfer_employees": 763,
+      "transfer_events_in_window": 160,
+      "transfer_rate_percent": 1.8035,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "monthly",
+      "snapshot_date": "2024-12-29",
+      "period_complete": true,
+      "eligible_employees": 42342,
+      "transfer_employees": 764,
+      "transfer_events_in_window": 157,
+      "transfer_rate_percent": 1.8044,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "monthly",
+      "snapshot_date": "2025-01-26",
+      "period_complete": true,
+      "eligible_employees": 42485,
+      "transfer_employees": 756,
+      "transfer_events_in_window": 156,
+      "transfer_rate_percent": 1.7795,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "monthly",
+      "snapshot_date": "2025-02-23",
+      "period_complete": true,
+      "eligible_employees": 42665,
+      "transfer_employees": 751,
+      "transfer_events_in_window": 154,
+      "transfer_rate_percent": 1.7602,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "monthly",
+      "snapshot_date": "2025-03-30",
+      "period_complete": true,
+      "eligible_employees": 42736,
+      "transfer_employees": 754,
+      "transfer_events_in_window": 155,
+      "transfer_rate_percent": 1.7643,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "monthly",
+      "snapshot_date": "2025-04-27",
+      "period_complete": true,
+      "eligible_employees": 43013,
+      "transfer_employees": 743,
+      "transfer_events_in_window": 162,
+      "transfer_rate_percent": 1.7274,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "monthly",
+      "snapshot_date": "2025-05-25",
+      "period_complete": true,
+      "eligible_employees": 43299,
+      "transfer_employees": 738,
+      "transfer_events_in_window": 162,
+      "transfer_rate_percent": 1.7044,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "monthly",
+      "snapshot_date": "2025-06-29",
+      "period_complete": true,
+      "eligible_employees": 44034,
+      "transfer_employees": 736,
+      "transfer_events_in_window": 160,
+      "transfer_rate_percent": 1.6714,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "monthly",
+      "snapshot_date": "2025-07-27",
+      "period_complete": true,
+      "eligible_employees": 44818,
+      "transfer_employees": 740,
+      "transfer_events_in_window": 161,
+      "transfer_rate_percent": 1.6511,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "monthly",
+      "snapshot_date": "2025-08-24",
+      "period_complete": true,
+      "eligible_employees": 45003,
+      "transfer_employees": 744,
+      "transfer_events_in_window": 159,
+      "transfer_rate_percent": 1.6532,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "monthly",
+      "snapshot_date": "2025-09-28",
+      "period_complete": true,
+      "eligible_employees": 45141,
+      "transfer_employees": 727,
+      "transfer_events_in_window": 156,
+      "transfer_rate_percent": 1.6105,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "monthly",
+      "snapshot_date": "2025-10-26",
+      "period_complete": true,
+      "eligible_employees": 45255,
+      "transfer_employees": 721,
+      "transfer_events_in_window": 152,
+      "transfer_rate_percent": 1.5932,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "monthly",
+      "snapshot_date": "2025-11-23",
+      "period_complete": true,
+      "eligible_employees": 45571,
+      "transfer_employees": 674,
+      "transfer_events_in_window": 149,
+      "transfer_rate_percent": 1.479,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "monthly",
+      "snapshot_date": "2025-12-28",
+      "period_complete": true,
+      "eligible_employees": 47134,
+      "transfer_employees": 658,
+      "transfer_events_in_window": 150,
+      "transfer_rate_percent": 1.396,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "monthly",
+      "snapshot_date": "2026-01-25",
+      "period_complete": true,
+      "eligible_employees": 47258,
+      "transfer_employees": 700,
+      "transfer_events_in_window": 156,
+      "transfer_rate_percent": 1.4812,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "monthly",
+      "snapshot_date": "2026-02-22",
+      "period_complete": true,
+      "eligible_employees": 47666,
+      "transfer_employees": 716,
+      "transfer_events_in_window": 158,
+      "transfer_rate_percent": 1.5021,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "monthly",
+      "snapshot_date": "2026-03-29",
+      "period_complete": true,
+      "eligible_employees": 47850,
+      "transfer_employees": 733,
+      "transfer_events_in_window": 161,
+      "transfer_rate_percent": 1.5319,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "monthly",
+      "snapshot_date": "2026-04-26",
+      "period_complete": true,
+      "eligible_employees": 48044,
+      "transfer_employees": 778,
+      "transfer_events_in_window": 162,
+      "transfer_rate_percent": 1.6193,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "monthly",
+      "snapshot_date": "2026-05-24",
+      "period_complete": true,
+      "eligible_employees": 48334,
+      "transfer_employees": 794,
+      "transfer_events_in_window": 165,
+      "transfer_rate_percent": 1.6427,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "monthly",
+      "snapshot_date": "2026-06-28",
+      "period_complete": true,
+      "eligible_employees": 48826,
+      "transfer_employees": 803,
+      "transfer_events_in_window": 167,
+      "transfer_rate_percent": 1.6446,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "monthly",
+      "snapshot_date": "2026-07-26",
+      "period_complete": true,
+      "eligible_employees": 49652,
+      "transfer_employees": 831,
+      "transfer_events_in_window": 172,
+      "transfer_rate_percent": 1.6736,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "monthly",
+      "snapshot_date": "2026-08-23",
+      "period_complete": true,
+      "eligible_employees": 50043,
+      "transfer_employees": 837,
+      "transfer_events_in_window": 169,
+      "transfer_rate_percent": 1.6726,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2024-09-01",
+      "period_complete": true,
+      "eligible_employees": 42163,
+      "transfer_employees": 746,
+      "transfer_events_in_window": 161,
+      "transfer_rate_percent": 1.7693,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2024-09-08",
+      "period_complete": true,
+      "eligible_employees": 42236,
+      "transfer_employees": 781,
+      "transfer_events_in_window": 163,
+      "transfer_rate_percent": 1.8491,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2024-09-15",
+      "period_complete": true,
+      "eligible_employees": 42251,
+      "transfer_employees": 780,
+      "transfer_events_in_window": 164,
+      "transfer_rate_percent": 1.8461,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2024-09-22",
+      "period_complete": true,
+      "eligible_employees": 42275,
+      "transfer_employees": 772,
+      "transfer_events_in_window": 162,
+      "transfer_rate_percent": 1.8261,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2024-09-29",
+      "period_complete": true,
+      "eligible_employees": 42191,
+      "transfer_employees": 757,
+      "transfer_events_in_window": 161,
+      "transfer_rate_percent": 1.7942,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2024-10-06",
+      "period_complete": true,
+      "eligible_employees": 42346,
+      "transfer_employees": 740,
+      "transfer_events_in_window": 158,
+      "transfer_rate_percent": 1.7475,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2024-10-13",
+      "period_complete": true,
+      "eligible_employees": 42363,
+      "transfer_employees": 737,
+      "transfer_events_in_window": 158,
+      "transfer_rate_percent": 1.7397,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2024-10-20",
+      "period_complete": true,
+      "eligible_employees": 42403,
+      "transfer_employees": 717,
+      "transfer_events_in_window": 156,
+      "transfer_rate_percent": 1.6909,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2024-10-27",
+      "period_complete": true,
+      "eligible_employees": 42414,
+      "transfer_employees": 711,
+      "transfer_events_in_window": 157,
+      "transfer_rate_percent": 1.6763,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2024-11-03",
+      "period_complete": true,
+      "eligible_employees": 42451,
+      "transfer_employees": 741,
+      "transfer_events_in_window": 159,
+      "transfer_rate_percent": 1.7455,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2024-11-10",
+      "period_complete": true,
+      "eligible_employees": 42516,
+      "transfer_employees": 765,
+      "transfer_events_in_window": 160,
+      "transfer_rate_percent": 1.7993,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2024-11-17",
+      "period_complete": true,
+      "eligible_employees": 42302,
+      "transfer_employees": 762,
+      "transfer_events_in_window": 159,
+      "transfer_rate_percent": 1.8013,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2024-11-24",
+      "period_complete": true,
+      "eligible_employees": 42306,
+      "transfer_employees": 763,
+      "transfer_events_in_window": 160,
+      "transfer_rate_percent": 1.8035,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2024-12-01",
+      "period_complete": true,
+      "eligible_employees": 42241,
+      "transfer_employees": 761,
+      "transfer_events_in_window": 158,
+      "transfer_rate_percent": 1.8016,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2024-12-08",
+      "period_complete": true,
+      "eligible_employees": 42263,
+      "transfer_employees": 767,
+      "transfer_events_in_window": 159,
+      "transfer_rate_percent": 1.8148,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2024-12-15",
+      "period_complete": true,
+      "eligible_employees": 42288,
+      "transfer_employees": 758,
+      "transfer_events_in_window": 156,
+      "transfer_rate_percent": 1.7925,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2024-12-22",
+      "period_complete": true,
+      "eligible_employees": 42302,
+      "transfer_employees": 761,
+      "transfer_events_in_window": 155,
+      "transfer_rate_percent": 1.799,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2024-12-29",
+      "period_complete": true,
+      "eligible_employees": 42342,
+      "transfer_employees": 764,
+      "transfer_events_in_window": 157,
+      "transfer_rate_percent": 1.8044,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-01-05",
+      "period_complete": true,
+      "eligible_employees": 42331,
+      "transfer_employees": 762,
+      "transfer_events_in_window": 158,
+      "transfer_rate_percent": 1.8001,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-01-12",
+      "period_complete": true,
+      "eligible_employees": 42412,
+      "transfer_employees": 758,
+      "transfer_events_in_window": 155,
+      "transfer_rate_percent": 1.7872,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-01-19",
+      "period_complete": true,
+      "eligible_employees": 42427,
+      "transfer_employees": 756,
+      "transfer_events_in_window": 154,
+      "transfer_rate_percent": 1.7819,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-01-26",
+      "period_complete": true,
+      "eligible_employees": 42485,
+      "transfer_employees": 756,
+      "transfer_events_in_window": 156,
+      "transfer_rate_percent": 1.7795,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-02-02",
+      "period_complete": true,
+      "eligible_employees": 42509,
+      "transfer_employees": 744,
+      "transfer_events_in_window": 156,
+      "transfer_rate_percent": 1.7502,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-02-09",
+      "period_complete": true,
+      "eligible_employees": 42580,
+      "transfer_employees": 750,
+      "transfer_events_in_window": 156,
+      "transfer_rate_percent": 1.7614,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-02-16",
+      "period_complete": true,
+      "eligible_employees": 42626,
+      "transfer_employees": 760,
+      "transfer_events_in_window": 155,
+      "transfer_rate_percent": 1.7829,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-02-23",
+      "period_complete": true,
+      "eligible_employees": 42665,
+      "transfer_employees": 751,
+      "transfer_events_in_window": 154,
+      "transfer_rate_percent": 1.7602,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-03-02",
+      "period_complete": true,
+      "eligible_employees": 42642,
+      "transfer_employees": 739,
+      "transfer_events_in_window": 153,
+      "transfer_rate_percent": 1.733,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-03-09",
+      "period_complete": true,
+      "eligible_employees": 42691,
+      "transfer_employees": 748,
+      "transfer_events_in_window": 156,
+      "transfer_rate_percent": 1.7521,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-03-16",
+      "period_complete": true,
+      "eligible_employees": 42657,
+      "transfer_employees": 751,
+      "transfer_events_in_window": 156,
+      "transfer_rate_percent": 1.7606,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-03-23",
+      "period_complete": true,
+      "eligible_employees": 42702,
+      "transfer_employees": 747,
+      "transfer_events_in_window": 155,
+      "transfer_rate_percent": 1.7493,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-03-30",
+      "period_complete": true,
+      "eligible_employees": 42736,
+      "transfer_employees": 754,
+      "transfer_events_in_window": 155,
+      "transfer_rate_percent": 1.7643,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-04-06",
+      "period_complete": true,
+      "eligible_employees": 42885,
+      "transfer_employees": 741,
+      "transfer_events_in_window": 158,
+      "transfer_rate_percent": 1.7279,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-04-13",
+      "period_complete": true,
+      "eligible_employees": 42933,
+      "transfer_employees": 748,
+      "transfer_events_in_window": 159,
+      "transfer_rate_percent": 1.7422,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-04-20",
+      "period_complete": true,
+      "eligible_employees": 43000,
+      "transfer_employees": 745,
+      "transfer_events_in_window": 162,
+      "transfer_rate_percent": 1.7326,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-04-27",
+      "period_complete": true,
+      "eligible_employees": 43013,
+      "transfer_employees": 743,
+      "transfer_events_in_window": 162,
+      "transfer_rate_percent": 1.7274,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-05-04",
+      "period_complete": true,
+      "eligible_employees": 43089,
+      "transfer_employees": 736,
+      "transfer_events_in_window": 161,
+      "transfer_rate_percent": 1.7081,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-05-11",
+      "period_complete": true,
+      "eligible_employees": 43167,
+      "transfer_employees": 731,
+      "transfer_events_in_window": 161,
+      "transfer_rate_percent": 1.6934,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-05-18",
+      "period_complete": true,
+      "eligible_employees": 43280,
+      "transfer_employees": 730,
+      "transfer_events_in_window": 160,
+      "transfer_rate_percent": 1.6867,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-05-25",
+      "period_complete": true,
+      "eligible_employees": 43299,
+      "transfer_employees": 738,
+      "transfer_events_in_window": 162,
+      "transfer_rate_percent": 1.7044,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-06-01",
+      "period_complete": true,
+      "eligible_employees": 43353,
+      "transfer_employees": 732,
+      "transfer_events_in_window": 164,
+      "transfer_rate_percent": 1.6885,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-06-08",
+      "period_complete": true,
+      "eligible_employees": 43506,
+      "transfer_employees": 727,
+      "transfer_events_in_window": 163,
+      "transfer_rate_percent": 1.671,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-06-15",
+      "period_complete": true,
+      "eligible_employees": 43656,
+      "transfer_employees": 739,
+      "transfer_events_in_window": 165,
+      "transfer_rate_percent": 1.6928,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-06-22",
+      "period_complete": true,
+      "eligible_employees": 43691,
+      "transfer_employees": 741,
+      "transfer_events_in_window": 162,
+      "transfer_rate_percent": 1.696,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-06-29",
+      "period_complete": true,
+      "eligible_employees": 44034,
+      "transfer_employees": 736,
+      "transfer_events_in_window": 160,
+      "transfer_rate_percent": 1.6714,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-07-06",
+      "period_complete": true,
+      "eligible_employees": 44299,
+      "transfer_employees": 743,
+      "transfer_events_in_window": 160,
+      "transfer_rate_percent": 1.6772,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-07-13",
+      "period_complete": true,
+      "eligible_employees": 44562,
+      "transfer_employees": 741,
+      "transfer_events_in_window": 161,
+      "transfer_rate_percent": 1.6629,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-07-20",
+      "period_complete": true,
+      "eligible_employees": 44774,
+      "transfer_employees": 742,
+      "transfer_events_in_window": 160,
+      "transfer_rate_percent": 1.6572,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-07-27",
+      "period_complete": true,
+      "eligible_employees": 44818,
+      "transfer_employees": 740,
+      "transfer_events_in_window": 161,
+      "transfer_rate_percent": 1.6511,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-08-03",
+      "period_complete": true,
+      "eligible_employees": 44845,
+      "transfer_employees": 762,
+      "transfer_events_in_window": 160,
+      "transfer_rate_percent": 1.6992,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-08-10",
+      "period_complete": true,
+      "eligible_employees": 44948,
+      "transfer_employees": 756,
+      "transfer_events_in_window": 163,
+      "transfer_rate_percent": 1.6819,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-08-17",
+      "period_complete": true,
+      "eligible_employees": 45003,
+      "transfer_employees": 748,
+      "transfer_events_in_window": 160,
+      "transfer_rate_percent": 1.6621,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-08-24",
+      "period_complete": true,
+      "eligible_employees": 45003,
+      "transfer_employees": 744,
+      "transfer_events_in_window": 159,
+      "transfer_rate_percent": 1.6532,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-08-31",
+      "period_complete": true,
+      "eligible_employees": 45046,
+      "transfer_employees": 739,
+      "transfer_events_in_window": 160,
+      "transfer_rate_percent": 1.6405,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-09-07",
+      "period_complete": true,
+      "eligible_employees": 45068,
+      "transfer_employees": 731,
+      "transfer_events_in_window": 160,
+      "transfer_rate_percent": 1.622,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-09-14",
+      "period_complete": true,
+      "eligible_employees": 45091,
+      "transfer_employees": 732,
+      "transfer_events_in_window": 159,
+      "transfer_rate_percent": 1.6234,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-09-21",
+      "period_complete": true,
+      "eligible_employees": 45144,
+      "transfer_employees": 729,
+      "transfer_events_in_window": 158,
+      "transfer_rate_percent": 1.6148,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-09-28",
+      "period_complete": true,
+      "eligible_employees": 45141,
+      "transfer_employees": 727,
+      "transfer_events_in_window": 156,
+      "transfer_rate_percent": 1.6105,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-10-05",
+      "period_complete": true,
+      "eligible_employees": 45190,
+      "transfer_employees": 725,
+      "transfer_events_in_window": 156,
+      "transfer_rate_percent": 1.6043,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-10-12",
+      "period_complete": true,
+      "eligible_employees": 45219,
+      "transfer_employees": 725,
+      "transfer_events_in_window": 156,
+      "transfer_rate_percent": 1.6033,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-10-19",
+      "period_complete": true,
+      "eligible_employees": 45256,
+      "transfer_employees": 724,
+      "transfer_events_in_window": 155,
+      "transfer_rate_percent": 1.5998,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-10-26",
+      "period_complete": true,
+      "eligible_employees": 45255,
+      "transfer_employees": 721,
+      "transfer_events_in_window": 152,
+      "transfer_rate_percent": 1.5932,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-11-02",
+      "period_complete": true,
+      "eligible_employees": 45423,
+      "transfer_employees": 686,
+      "transfer_events_in_window": 148,
+      "transfer_rate_percent": 1.5102,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-11-09",
+      "period_complete": true,
+      "eligible_employees": 45508,
+      "transfer_employees": 674,
+      "transfer_events_in_window": 150,
+      "transfer_rate_percent": 1.4811,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-11-16",
+      "period_complete": true,
+      "eligible_employees": 45553,
+      "transfer_employees": 676,
+      "transfer_events_in_window": 151,
+      "transfer_rate_percent": 1.484,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-11-23",
+      "period_complete": true,
+      "eligible_employees": 45571,
+      "transfer_employees": 674,
+      "transfer_events_in_window": 149,
+      "transfer_rate_percent": 1.479,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-11-30",
+      "period_complete": true,
+      "eligible_employees": 45648,
+      "transfer_employees": 674,
+      "transfer_events_in_window": 149,
+      "transfer_rate_percent": 1.4765,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-12-07",
+      "period_complete": true,
+      "eligible_employees": 45733,
+      "transfer_employees": 665,
+      "transfer_events_in_window": 149,
+      "transfer_rate_percent": 1.4541,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-12-14",
+      "period_complete": true,
+      "eligible_employees": 45860,
+      "transfer_employees": 665,
+      "transfer_events_in_window": 149,
+      "transfer_rate_percent": 1.4501,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-12-21",
+      "period_complete": true,
+      "eligible_employees": 47107,
+      "transfer_employees": 656,
+      "transfer_events_in_window": 149,
+      "transfer_rate_percent": 1.3926,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2025-12-28",
+      "period_complete": true,
+      "eligible_employees": 47134,
+      "transfer_employees": 658,
+      "transfer_events_in_window": 150,
+      "transfer_rate_percent": 1.396,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2026-01-04",
+      "period_complete": true,
+      "eligible_employees": 47088,
+      "transfer_employees": 671,
+      "transfer_events_in_window": 152,
+      "transfer_rate_percent": 1.425,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2026-01-11",
+      "period_complete": true,
+      "eligible_employees": 47169,
+      "transfer_employees": 678,
+      "transfer_events_in_window": 154,
+      "transfer_rate_percent": 1.4374,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2026-01-18",
+      "period_complete": true,
+      "eligible_employees": 47175,
+      "transfer_employees": 691,
+      "transfer_events_in_window": 155,
+      "transfer_rate_percent": 1.4648,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2026-01-25",
+      "period_complete": true,
+      "eligible_employees": 47258,
+      "transfer_employees": 700,
+      "transfer_events_in_window": 156,
+      "transfer_rate_percent": 1.4812,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2026-02-01",
+      "period_complete": true,
+      "eligible_employees": 47269,
+      "transfer_employees": 715,
+      "transfer_events_in_window": 158,
+      "transfer_rate_percent": 1.5126,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2026-02-08",
+      "period_complete": true,
+      "eligible_employees": 47361,
+      "transfer_employees": 721,
+      "transfer_events_in_window": 160,
+      "transfer_rate_percent": 1.5223,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2026-02-15",
+      "period_complete": true,
+      "eligible_employees": 47594,
+      "transfer_employees": 721,
+      "transfer_events_in_window": 159,
+      "transfer_rate_percent": 1.5149,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2026-02-22",
+      "period_complete": true,
+      "eligible_employees": 47666,
+      "transfer_employees": 716,
+      "transfer_events_in_window": 158,
+      "transfer_rate_percent": 1.5021,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2026-03-01",
+      "period_complete": true,
+      "eligible_employees": 47589,
+      "transfer_employees": 731,
+      "transfer_events_in_window": 158,
+      "transfer_rate_percent": 1.5361,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2026-03-08",
+      "period_complete": true,
+      "eligible_employees": 47700,
+      "transfer_employees": 729,
+      "transfer_events_in_window": 159,
+      "transfer_rate_percent": 1.5283,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2026-03-15",
+      "period_complete": true,
+      "eligible_employees": 47732,
+      "transfer_employees": 731,
+      "transfer_events_in_window": 159,
+      "transfer_rate_percent": 1.5315,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2026-03-22",
+      "period_complete": true,
+      "eligible_employees": 47822,
+      "transfer_employees": 727,
+      "transfer_events_in_window": 159,
+      "transfer_rate_percent": 1.5202,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2026-03-29",
+      "period_complete": true,
+      "eligible_employees": 47850,
+      "transfer_employees": 733,
+      "transfer_events_in_window": 161,
+      "transfer_rate_percent": 1.5319,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2026-04-05",
+      "period_complete": true,
+      "eligible_employees": 47891,
+      "transfer_employees": 749,
+      "transfer_events_in_window": 161,
+      "transfer_rate_percent": 1.564,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2026-04-12",
+      "period_complete": true,
+      "eligible_employees": 47945,
+      "transfer_employees": 755,
+      "transfer_events_in_window": 162,
+      "transfer_rate_percent": 1.5747,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2026-04-19",
+      "period_complete": true,
+      "eligible_employees": 48023,
+      "transfer_employees": 773,
+      "transfer_events_in_window": 162,
+      "transfer_rate_percent": 1.6096,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2026-04-26",
+      "period_complete": true,
+      "eligible_employees": 48044,
+      "transfer_employees": 778,
+      "transfer_events_in_window": 162,
+      "transfer_rate_percent": 1.6193,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2026-05-03",
+      "period_complete": true,
+      "eligible_employees": 48116,
+      "transfer_employees": 784,
+      "transfer_events_in_window": 162,
+      "transfer_rate_percent": 1.6294,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2026-05-10",
+      "period_complete": true,
+      "eligible_employees": 48183,
+      "transfer_employees": 790,
+      "transfer_events_in_window": 162,
+      "transfer_rate_percent": 1.6396,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2026-05-17",
+      "period_complete": true,
+      "eligible_employees": 48344,
+      "transfer_employees": 794,
+      "transfer_events_in_window": 165,
+      "transfer_rate_percent": 1.6424,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2026-05-24",
+      "period_complete": true,
+      "eligible_employees": 48334,
+      "transfer_employees": 794,
+      "transfer_events_in_window": 165,
+      "transfer_rate_percent": 1.6427,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2026-05-31",
+      "period_complete": true,
+      "eligible_employees": 48310,
+      "transfer_employees": 793,
+      "transfer_events_in_window": 165,
+      "transfer_rate_percent": 1.6415,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2026-06-07",
+      "period_complete": true,
+      "eligible_employees": 48383,
+      "transfer_employees": 811,
+      "transfer_events_in_window": 165,
+      "transfer_rate_percent": 1.6762,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2026-06-14",
+      "period_complete": true,
+      "eligible_employees": 48505,
+      "transfer_employees": 802,
+      "transfer_events_in_window": 165,
+      "transfer_rate_percent": 1.6534,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2026-06-21",
+      "period_complete": true,
+      "eligible_employees": 48524,
+      "transfer_employees": 802,
+      "transfer_events_in_window": 168,
+      "transfer_rate_percent": 1.6528,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2026-06-28",
+      "period_complete": true,
+      "eligible_employees": 48826,
+      "transfer_employees": 803,
+      "transfer_events_in_window": 167,
+      "transfer_rate_percent": 1.6446,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2026-07-05",
+      "period_complete": true,
+      "eligible_employees": 48995,
+      "transfer_employees": 811,
+      "transfer_events_in_window": 169,
+      "transfer_rate_percent": 1.6553,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2026-07-12",
+      "period_complete": true,
+      "eligible_employees": 49404,
+      "transfer_employees": 816,
+      "transfer_events_in_window": 169,
+      "transfer_rate_percent": 1.6517,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2026-07-19",
+      "period_complete": true,
+      "eligible_employees": 49626,
+      "transfer_employees": 826,
+      "transfer_events_in_window": 171,
+      "transfer_rate_percent": 1.6645,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2026-07-26",
+      "period_complete": true,
+      "eligible_employees": 49652,
+      "transfer_employees": 831,
+      "transfer_events_in_window": 172,
+      "transfer_rate_percent": 1.6736,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2026-08-02",
+      "period_complete": true,
+      "eligible_employees": 49866,
+      "transfer_employees": 813,
+      "transfer_events_in_window": 171,
+      "transfer_rate_percent": 1.6304,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2026-08-09",
+      "period_complete": true,
+      "eligible_employees": 49970,
+      "transfer_employees": 822,
+      "transfer_events_in_window": 169,
+      "transfer_rate_percent": 1.645,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2026-08-16",
+      "period_complete": true,
+      "eligible_employees": 50031,
+      "transfer_employees": 825,
+      "transfer_events_in_window": 169,
+      "transfer_rate_percent": 1.649,
+      "publication_status": "publish"
+    },
+    {
+      "frequency": "weekly",
+      "snapshot_date": "2026-08-23",
+      "period_complete": true,
+      "eligible_employees": 50043,
+      "transfer_employees": 837,
+      "transfer_events_in_window": 169,
+      "transfer_rate_percent": 1.6726,
+      "publication_status": "publish"
+    }
+  ]
+}

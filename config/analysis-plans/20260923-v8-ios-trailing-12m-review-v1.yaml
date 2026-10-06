@@ -1,0 +1,55 @@
+schema_version: 1
+language: es
+variable: IOS movement reason in trailing 12 months
+semantic_type: derived_feature
+deliverable_mode: internal_analysis
+intended_use: >-
+  Sustituir el corte YTD de IOS en la visual exploratoria V8 por una ventana
+  mÃ³vil de doce meses y etiquetas de attrition voluntaria anual comparables.
+score_v4_change: none
+population: >-
+  Empleados Regular activos (worker_type='Employee', employee_type='Regular',
+  active_status=1) en los snapshots mensuales 2025-08-24 y 2026-08-23.
+grain: Empleado Regular activo distinto por snapshot y motivo IOS agregado.
+knowledge_boundary: >-
+  Para cada snapshot, los eventos IOS tienen effective_date en los doce meses
+  previos, incluyendo el snapshot. La salida VOLUNTARY se observa sÃ³lo para la
+  cohorte baseline despuÃ©s de 2025-08-24 y hasta 2026-08-23.
+definition: >-
+  Un motivo IOS cuenta si workers_ios_transfers registra al menos un evento con
+  business_process_reason conocido para el empleado dentro de (snapshot - 12
+  meses, snapshot]. Las filas de motivo pueden solaparse; el Total se deduplica
+  por empleado. La distribuciÃ³n usa 2026-08-23 y el label anual usa la misma
+  definiciÃ³n en la cohorte 2025-08-24 seguida durante doce meses.
+validation_focus:
+  - Confirmar columnas, tipos y disponibilidad de effective_date y business_process_reason.
+  - Reconciliar los dos denominadores activos Regular y los siete motivos publicados.
+  - Verificar que cada evento se encuentre dentro de su ventana mÃ³vil y no sea posterior al snapshot.
+  - Verificar que term_type sea exactamente VOLUNTARY y estÃ© en (2025-08-24, 2026-08-23].
+  - Mantener los solapamientos entre motivos explÃ­citos, sin sumar sus filas como una particiÃ³n.
+validation_story:
+  - question: >-
+      Â¿Se puede describir cada motivo IOS durante los doce meses previos al
+      snapshot y comparar su attrition voluntaria anual sin convertir una
+      observaciÃ³n YTD en una tasa anual?
+    why: >-
+      El slide anterior mezclaba eventos de enero a agosto y salidas hasta el
+      mismo agosto; no ofrecÃ­a doce meses de seguimiento ni una comparaciÃ³n
+      homogÃ©nea con el resto del deck.
+    method: >-
+      Preflight de metadatos y consulta agregada con dos snapshots: ventana de
+      eventos (snapshot - 12 meses, snapshot] para cada uno; la cohorte 2025
+      se une solamente a salidas VOLUNTARY estrictamente posteriores al baseline
+      y no posteriores al cutoff 2026.
+    sql:
+      - queries/audits/v8_ios_movement_reason_trailing_12m_metadata_preflight_20260923.sql
+      - queries/audits/v8_ios_movement_reason_trailing_12m_attrition_20260923.sql
+    acceptance_rule: >-
+      Los campos requeridos existen; los denominadores activos Regular se
+      reconcilian por snapshot; las siete filas agregadas son Ãºnicas; ningÃºn
+      conteo de salida excede su cohorte baseline; y cada tasa anual publicada
+      reconcilia a salidas/cohorte, sin guardar filas ni identificadores.
+    evidence_role: defining
+    outcome_if_failed: >-
+      Conservar la advertencia de ventana parcial o retirar las etiquetas de
+      attrition anual; no relabelar YTD como doce meses.

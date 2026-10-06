@@ -1,0 +1,108 @@
+schema_version: 1
+language: es
+unknown_policy: conservative
+
+problem_context:
+  problem_statement: Evaluar que formas historicas de QVoice pueden aportar senales utiles para entender attrition.
+  decision_or_use_case: Priorizar variables QVoice binarias y ordinales para analisis longitudinal y modelado exploratorio de attrition.
+  outcome: Attrition posterior a la fecha conocida de la wave QVoice.
+  population: Respuestas QVoice disponibles en los workbooks raw; la elegibilidad oficial de workforce queda pendiente de reconciliacion.
+  unit_of_analysis: Empleado-wave para respuestas directas y composites agregados por empleado-wave.
+  knowledge_boundary: Fecha de la wave QVoice; no usar informacion posterior.
+  constraints:
+    - Usar Excel como fuente historica principal.
+    - No publicar identificadores, filas de empleados, nombres, correos ni texto libre.
+    - Suprimir o no publicar cohortes regionales menores de 30.
+    - Mantener separadas las formas binarias Favorable/FAV y las formas 1-5 scale.
+    - Usar data/QVoice/survey_structure.xlsx como diccionario autoritativo de KPI y componentes.
+    - Permitir promedio con componentes disponibles, pero medir y publicar de forma agregada la falta de componentes.
+  portfolio_hypotheses:
+    - La forma binaria puede aportar mas historia que la escala 1-5.
+    - Un composite y su normalizacion regional requieren reglas de derivacion antes de interpretarse como features confirmadas.
+    - Los cambios de item set y wording pueden limitar la comparabilidad longitudinal.
+  known_relationships:
+    - variables: [Average of all Qvoice items, Standardized / normalized within region]
+      relationship: La normalizacion regional depende del composite binario base.
+      why_relevant: Una brecha en el composite base limita la interpretacion del z-score.
+    - variables: [Average of all Qvoice items-scale, Standardized / normalized within region-scale]
+      relationship: La normalizacion ordinal depende del composite 1-5 base.
+      why_relevant: La historia corta y el cambio de item set se heredan al z-score.
+    - variables: [Intent to Stay items, Intent to Stay items-scale]
+      relationship: Son dos representaciones de los mismos items conceptuales.
+      why_relevant: Se deben comparar sin asumir que Favorable y 1-5 son equivalentes.
+    - variables: [Career goals item, Career goals item-scale]
+      relationship: Son dos representaciones del item de career goals.
+      why_relevant: El cambio de escala debe tratarse como una decision de medicion.
+
+variables:
+  - name: Intent to Stay items
+    intended_use: Comparar la senal binaria historica de Intent to Stay con attrition posterior.
+    population: Respuestas QVoice con identificador interno y una fila por empleado-wave tras deduplicacion.
+    knowledge_date: Fecha de la wave QVoice.
+  - name: Intent to Stay items-scale
+    intended_use: Comparar la senal ordinal 1-5 de Intent to Stay con attrition posterior.
+    population: Respuestas QVoice con identificador interno y una fila por empleado-wave tras deduplicacion.
+    knowledge_date: Fecha de la wave QVoice.
+  - name: Career goals item
+    intended_use: Evaluar la senal binaria de career goals frente a attrition posterior.
+    population: Respuestas QVoice con identificador interno y una fila por empleado-wave tras deduplicacion.
+    knowledge_date: Fecha de la wave QVoice.
+  - name: Career goals item-scale
+    intended_use: Evaluar la senal ordinal 1-5 de career goals frente a attrition posterior.
+    population: Respuestas QVoice con identificador interno y una fila por empleado-wave tras deduplicacion.
+    knowledge_date: Fecha de la wave QVoice.
+  - name: Average of all Qvoice items
+    intended_use: Explorar el composite binario de QVoice frente a attrition posterior.
+    population: Respuestas QVoice con composite binario valido y una fila por empleado-wave.
+    knowledge_date: Fecha de la wave QVoice.
+  - name: Average of all Qvoice items-scale
+    intended_use: Explorar el composite ordinal 1-5 de QVoice frente a attrition posterior.
+    population: Respuestas QVoice con composite 1-5 valido y una fila por empleado-wave.
+    knowledge_date: Fecha de la wave QVoice.
+  - name: Standardized / normalized within region
+    intended_use: Explorar el z-score regional del composite binario frente a attrition posterior.
+    population: Respuestas QVoice con composite binario, Region y cohorte region-wave de al menos 30.
+    knowledge_date: Fecha de la wave QVoice.
+  - name: Standardized / normalized within region-scale
+    intended_use: Explorar el z-score regional del composite 1-5 frente a attrition posterior.
+    population: Respuestas QVoice con composite 1-5, Region y cohorte region-wave de al menos 30.
+    knowledge_date: Fecha de la wave QVoice.
+  - name: Engagement items
+    intended_use: Comparar la senal binaria historica de Engagement, calculada con sus preguntas componentes, con attrition posterior.
+    population: Respuestas QVoice con al menos un componente binario de Engagement valido y una fila por empleado-wave tras deduplicacion.
+    knowledge_date: Fecha de la wave QVoice.
+  - name: Engagement items-scale
+    intended_use: Comparar la senal ordinal 1-5 de Engagement, calculada con sus preguntas componentes, con attrition posterior.
+    population: Respuestas QVoice con al menos un componente 1-5 de Engagement valido y una fila por empleado-wave tras deduplicacion.
+    knowledge_date: Fecha de la wave QVoice.
+  - name: Workplace Connection items
+    intended_use: Comparar la senal binaria historica de Workplace Connection, calculada con sus preguntas componentes, con attrition posterior.
+    population: Respuestas QVoice con al menos un componente binario de Workplace Connection valido y una fila por empleado-wave tras deduplicacion.
+    knowledge_date: Fecha de la wave QVoice.
+  - name: Workplace Connection items-scale
+    intended_use: Comparar la senal ordinal 1-5 de Workplace Connection, calculada con sus preguntas componentes, con attrition posterior.
+    population: Respuestas QVoice con al menos un componente 1-5 de Workplace Connection valido y una fila por empleado-wave tras deduplicacion.
+    knowledge_date: Fecha de la wave QVoice.
+  - name: Wellbeing items
+    intended_use: Comparar la senal binaria historica de Wellbeing, calculada con sus preguntas componentes, con attrition posterior.
+    population: Respuestas QVoice con al menos un componente binario de Wellbeing valido y una fila por empleado-wave tras deduplicacion.
+    knowledge_date: Fecha de la wave QVoice.
+  - name: Wellbeing items-scale
+    intended_use: Comparar la senal ordinal 1-5 de Wellbeing, calculada con sus preguntas componentes, con attrition posterior.
+    population: Respuestas QVoice con al menos un componente 1-5 de Wellbeing valido y una fila por empleado-wave tras deduplicacion.
+    knowledge_date: Fecha de la wave QVoice.
+  - name: Confidence items
+    intended_use: Comparar la senal binaria historica de Confidence, calculada con sus preguntas componentes, con attrition posterior.
+    population: Respuestas QVoice con al menos un componente binario de Confidence valido y una fila por empleado-wave tras deduplicacion.
+    knowledge_date: Fecha de la wave QVoice.
+  - name: Confidence items-scale
+    intended_use: Comparar la senal ordinal 1-5 de Confidence, calculada con sus preguntas componentes, con attrition posterior.
+    population: Respuestas QVoice con al menos un componente 1-5 de Confidence valido y una fila por empleado-wave tras deduplicacion.
+    knowledge_date: Fecha de la wave QVoice.
+
+decisions:
+  source_history: Usar los workbooks Excel raw como fuente historica principal y survey_structure.xlsx para mapear KPI a preguntas.
+  paired_forms: Evaluar cuatro conceptos estructurados en forma binaria y 1-5; Intent to Stay se calcula desde Q4 y Q12, sin asumir que ambos existan en todas las waves.
+  comments: Excluir RTO/hybrid comment y Any comment porque no tienen fuente estructurada utilizable en este alcance.
+  nonrespondents: Excluir Non-respondents de esta ejecucion porque no tiene una forma 1-5 pareja; requiere un roster de elegibilidad separado.
+  conservative_policy: Aceptar caps de 1 o 0 cuando falte definicion, join temporal, lineage del composite, componente del KPI o historia utilizable; conservar una señal agregada de respuestas parciales.

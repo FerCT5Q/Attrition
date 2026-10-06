@@ -1,0 +1,196 @@
+{
+  "artifact_type": "aggregate_display_evidence",
+  "evidence_version": 1,
+  "deliverable_mode": "internal_analysis",
+  "variable": "Engineering organizational split",
+  "semantic_type": "hierarchy",
+  "publication_status": "exploratory_display_only",
+  "snapshot_date": "2026-08-23",
+  "population": "worker_type='Employee'; employee_type='Regular'; active_status=1; no RF360 filter",
+  "grain": "Distinct employee snapshot",
+  "score_v4_change": "none",
+  "rule_applied": {
+    "cto": "Documented CTO branches: same-snapshot descendants of leader A plus employees with the documented et_leader value for leader B; both leader anchors are retained in the rule.",
+    "leader_inclusion": "A leader contributes to the eligible display only when present in the active snapshot universe. Leader A is present in the regular snapshot but inactive, so its active branch contributes zero employees here.",
+    "complement": "Corp Fxn & BU is the complement of CTO inside the same eligible snapshot universe.",
+    "rf360_rule": "No is_rf360_yes_no filter is applied so the lower view uses the current eng_or_noneng display universe.",
+    "upper_chart": "The upper eng_or_noneng chart remains frozen at 50,033; the lower display uses the current reconciled universe of 50,043 and states the 10-employee difference visibly."
+  },
+  "category_distribution": [
+    {
+      "category": "CTO",
+      "employee_count": 35788,
+      "percentage": 71.51449753
+    },
+    {
+      "category": "Corp Fxn & BU",
+      "employee_count": 14255,
+      "percentage": 28.48550246
+    }
+  ],
+  "metrics": {
+    "leader_b_branch_count": 35788,
+    "leader_b_et_member_count": 35788,
+    "leader_b_leader_in_cto_branch_count": 1,
+    "leader_b_leader_in_eligible_cto_count": 1,
+    "leader_b_root_present": 1,
+    "branch_overlap_count": 0,
+    "categories_below_minimum_count": 0,
+    "category_percentage_sum": 99.99999999,
+    "category_reconciliation_difference": 0,
+    "category_total_count": 50043,
+    "cto_employee_count": 35788,
+    "duplicate_branch_membership_count": 0,
+    "duplicate_source_employee_count": 0,
+    "eligible_employee_count": 50043,
+    "eng_or_noneng_category_count": 2,
+    "eng_or_noneng_conflict_employee_count": 0,
+    "eng_or_noneng_denominator_difference": 0,
+    "eng_or_noneng_missing_employee_count": 0,
+    "eng_or_noneng_observable_employee_count": 50043,
+    "et_leader_conflict_employee_count": 0,
+    "leader_a_branch_count": 1,
+    "leader_a_cycle_count": 0,
+    "leader_a_depth_limit_count": 0,
+    "leader_a_descendant_path_count": 0,
+    "leader_a_duplicate_member_count": 0,
+    "leader_a_hierarchy_member_count": 1,
+    "leader_a_leader_in_cto_branch_count": 1,
+    "leader_a_leader_in_eligible_cto_count": 0,
+    "leader_a_maximum_depth": 0,
+    "leader_a_root_present": 1,
+    "manager_conflict_employee_count": 0,
+    "minimum_category_count": 14255,
+    "source_snapshot_row_count": 50043
+  },
+  "leader_a_branch_diagnostic": {
+    "active_regular_employee_count": 50043,
+    "active_regular_manager_null_employee_count": 1,
+    "active_regular_rf360_zero_employee_count": 46878,
+    "leader_b_et_member_active_count": 35788,
+    "leader_b_et_member_regular_count": 52189,
+    "leader_b_root_active_count": 1,
+    "leader_b_root_in_active_cto_count": 1,
+    "leader_b_root_present_count": 1,
+    "leader_a_leader_b_branch_overlap_count": 0,
+    "leader_a_cycle_row_count": 0,
+    "leader_a_depth_limit_employee_count": 0,
+    "leader_a_descendant_active_count": 0,
+    "leader_a_descendant_regular_count": 19,
+    "leader_a_direct_report_active_count": 0,
+    "leader_a_direct_report_regular_count": 9,
+    "leader_a_duplicate_path_employee_count": 0,
+    "leader_a_et_leader_active_count": 0,
+    "leader_a_et_leader_regular_count": 1,
+    "leader_a_reachable_active_count": 0,
+    "leader_a_reachable_regular_count": 20,
+    "leader_a_root_active_count": 0,
+    "leader_a_root_in_active_cto_count": 0,
+    "leader_a_root_present_count": 1,
+    "regular_duplicate_employee_count": 0,
+    "regular_employee_count": 75480,
+    "regular_manager_conflict_employee_count": 0,
+    "regular_manager_null_employee_count": 4473
+  },
+  "upper_chart_reconciliation": [
+    {
+      "category": "Engineering",
+      "current_employee_count": 38455,
+      "frozen_employee_count": 38440,
+      "difference_to_frozen": 15,
+      "current_total": 50043,
+      "frozen_total": 50033,
+      "total_difference_to_frozen": 10
+    },
+    {
+      "category": "Non_Engineering",
+      "current_employee_count": 11588,
+      "frozen_employee_count": 11593,
+      "difference_to_frozen": -5,
+      "current_total": 50043,
+      "frozen_total": 50033,
+      "total_difference_to_frozen": 10
+    }
+  ],
+  "denominator_reconciliation": [
+    {
+      "variant": "active_regular_no_rf_filter",
+      "source_row_count": 50043,
+      "distinct_employee_count": 50043,
+      "duplicate_employee_count": 0,
+      "frozen_upper_chart_employee_count": 50033,
+      "difference_to_frozen_upper_chart": 10
+    },
+    {
+      "variant": "active_regular_no_rf_filter_eng_observable",
+      "source_row_count": 50043,
+      "distinct_employee_count": 50043,
+      "duplicate_employee_count": 0,
+      "frozen_upper_chart_employee_count": 50033,
+      "difference_to_frozen_upper_chart": 10
+    },
+    {
+      "variant": "active_regular_rf360_one",
+      "source_row_count": 3165,
+      "distinct_employee_count": 3165,
+      "duplicate_employee_count": 0,
+      "frozen_upper_chart_employee_count": 50033,
+      "difference_to_frozen_upper_chart": -46868
+    },
+    {
+      "variant": "active_regular_rf360_zero",
+      "source_row_count": 46878,
+      "distinct_employee_count": 46878,
+      "duplicate_employee_count": 0,
+      "frozen_upper_chart_employee_count": 50033,
+      "difference_to_frozen_upper_chart": -3155
+    },
+    {
+      "variant": "active_regular_rf360_zero_eng_observable",
+      "source_row_count": 46878,
+      "distinct_employee_count": 46878,
+      "duplicate_employee_count": 0,
+      "frozen_upper_chart_employee_count": 50033,
+      "difference_to_frozen_upper_chart": -3155
+    }
+  ],
+  "validations": {
+    "population_reconciliation": true,
+    "category_minimum_cohort": true,
+    "zero_duplicate_employee_snapshot": true,
+    "zero_manager_conflicts": true,
+    "zero_et_leader_conflicts": true,
+    "zero_eng_or_noneng_conflicts": true,
+    "eng_or_noneng_same_current_denominator": true,
+    "zero_cto_branch_overlap": true,
+    "zero_hierarchy_cycles": true,
+    "zero_hierarchy_depth_limit": true,
+    "leader_a_active_branch_empty_accepted": true,
+    "upper_chart_preserved_with_denominator_note": true
+  },
+  "provenance": {
+    "main_cto_audit": {
+      "query_path": "queries/audits/engineering_cto_org_split_display_20260911.sql",
+      "sql_sha256": "a25b7f15e6aa211be4910c556e152d9cbed86200791c983e0be518afa61f73bc",
+      "result_sha256": "b503ee44fc7fa95c47673552da1a6c9338f47c08486b2abb62f3398cc9e59a76"
+    },
+    "denominator_reconciliation": {
+      "query_path": "queries/audits/engineering_cto_display_denominator_reconciliation_20260911.sql",
+      "sql_sha256": "1c056bf3ca1350a9057d04a6a69c075ecbdbbff89e7a8a9323c45de8f3dc0d73",
+      "result_sha256": "81b8844f3aeb619cffa1a5b84980084335f05ee9c4eb84a38881f060f47815c4"
+    },
+    "branch_diagnostic": {
+      "query_path": "queries/audits/engineering_cto_branch_diagnostic_20260911.sql",
+      "sql_sha256": "d2ebc481239d39dc5e08580fc53db0b0d6e1eef9252e5d9e7759384cfd478251",
+      "result_sha256": "52cdcc5a0c3df85ef25aa74c1902730b16aa7bddc85a4e3fa5e3f70909bced7b"
+    },
+    "upper_chart_reconciliation": {
+      "query_path": "queries/audits/engineering_cto_display_upper_category_reconciliation_20260911.sql",
+      "sql_sha256": "4f129cac1b269e2d6c739ceb4092e92c1e1ce2ae02f906982099f5c4d85f1649",
+      "result_sha256": "69c0c4d4a95d6cff91d053b865a6dbc0518654fa3761f361edef5cbfb1d7f525"
+    }
+  },
+  "publication_rule": "Aggregate counts and percentages only; every displayed category has n >= 30; no identities, IDs, names, or employee rows are persisted.",
+  "outcome": "pass",
+  "generated_on": "2026-09-11"
+}

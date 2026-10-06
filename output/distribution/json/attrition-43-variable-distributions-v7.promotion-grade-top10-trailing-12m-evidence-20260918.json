@@ -1,0 +1,172 @@
+{
+  "artifact_type": "promotion_grade_top10_trailing_12m_slide_evidence",
+  "version": 1,
+  "generated_on": "2026-09-18",
+  "deliverable_mode": "internal_analysis",
+  "purpose": "Agregar al slide de pay tracks un panel con los diez compensation grades exactos de mayor poblacion actual.",
+  "query_provenance": {
+    "path": "queries\\audits\\promotion_grade_top10_trailing_12m_20260918.sql",
+    "sql_sha256": "273505cb3c68fd8761a068ce17f19308c8305a22054dae96e400878b6bea15f6",
+    "result_sha256": "db294d729fb86ff7fe3616e0ebb07c8f4772dcad408d1c5f341b31ebaa58ab1b"
+  },
+  "definition": {
+    "grade": "Compensation grade exacto, sin colapsar por letra.",
+    "ranking": "Top 10 por empleados Employee, Regular, activos y no RF360 en el snapshot 2026-08-23.",
+    "distribution": "Porcentaje de la poblacion actual completa representado por cada grade exacto.",
+    "promotion_rate": "promotion_yes_no='Yes' dividido entre participantes elegibles del ciclo AR25, por grade del ciclo.",
+    "attrition_rate": "Exits strict VOLUNTARY en (2025-08-24, 2026-08-23] divididos entre el headcount mensual promedio del grade en los doce snapshots."
+  },
+  "window": {
+    "snapshot_date": "2026-08-23",
+    "start_exclusive": "2025-08-24",
+    "end_inclusive": "2026-08-23",
+    "monthly_snapshot_count": 12,
+    "annual_review_cycle": "AR25",
+    "annual_review_population_snapshot": "2025-11-23"
+  },
+  "top_grade_rows": [
+    {
+      "grade": "R30",
+      "current_rank": 1,
+      "current_employee_count": 8577,
+      "current_distribution_percent": 18.2964,
+      "promotion_participant_count": 7381,
+      "promoted_employee_count": 1590,
+      "promotion_rate_percent": 21.5418,
+      "average_monthly_headcount": 8364.833333,
+      "voluntary_exit_count": 686,
+      "attrition_rate_percent": 8.201
+    },
+    {
+      "grade": "R40",
+      "current_rank": 2,
+      "current_employee_count": 6789,
+      "current_distribution_percent": 14.4823,
+      "promotion_participant_count": 5690,
+      "promoted_employee_count": 578,
+      "promotion_rate_percent": 10.1582,
+      "average_monthly_headcount": 6410.916666,
+      "voluntary_exit_count": 410,
+      "attrition_rate_percent": 6.3953
+    },
+    {
+      "grade": "R20",
+      "current_rank": 3,
+      "current_employee_count": 5552,
+      "current_distribution_percent": 11.8435,
+      "promotion_participant_count": 4680,
+      "promoted_employee_count": 1314,
+      "promotion_rate_percent": 28.0769,
+      "average_monthly_headcount": 4758.25,
+      "voluntary_exit_count": 361,
+      "attrition_rate_percent": 7.5868
+    },
+    {
+      "grade": "R50",
+      "current_rank": 4,
+      "current_employee_count": 4394,
+      "current_distribution_percent": 9.3733,
+      "promotion_participant_count": 3762,
+      "promoted_employee_count": 101,
+      "promotion_rate_percent": 2.6847,
+      "average_monthly_headcount": 4221.583333,
+      "voluntary_exit_count": 183,
+      "attrition_rate_percent": 4.3349
+    },
+    {
+      "grade": "R35",
+      "current_rank": 5,
+      "current_employee_count": 3882,
+      "current_distribution_percent": 8.2811,
+      "promotion_participant_count": 3277,
+      "promoted_employee_count": 637,
+      "promotion_rate_percent": 19.4385,
+      "average_monthly_headcount": 3679.75,
+      "voluntary_exit_count": 199,
+      "attrition_rate_percent": 5.408
+    },
+    {
+      "grade": "T50",
+      "current_rank": 6,
+      "current_employee_count": 2322,
+      "current_distribution_percent": 4.9533,
+      "promotion_participant_count": 2178,
+      "promoted_employee_count": 219,
+      "promotion_rate_percent": 10.0551,
+      "average_monthly_headcount": 2249.833333,
+      "voluntary_exit_count": 86,
+      "attrition_rate_percent": 3.8225
+    },
+    {
+      "grade": "T60",
+      "current_rank": 7,
+      "current_employee_count": 1468,
+      "current_distribution_percent": 3.1315,
+      "promotion_participant_count": 1335,
+      "promoted_employee_count": 23,
+      "promotion_rate_percent": 1.7228,
+      "average_monthly_headcount": 1473.166666,
+      "voluntary_exit_count": 41,
+      "attrition_rate_percent": 2.7831
+    },
+    {
+      "grade": "P30",
+      "current_rank": 8,
+      "current_employee_count": 1301,
+      "current_distribution_percent": 2.7753,
+      "promotion_participant_count": 1209,
+      "promoted_employee_count": 201,
+      "promotion_rate_percent": 16.6253,
+      "average_monthly_headcount": 1316.166666,
+      "voluntary_exit_count": 79,
+      "attrition_rate_percent": 6.0023
+    },
+    {
+      "grade": "P40",
+      "current_rank": 9,
+      "current_employee_count": 1185,
+      "current_distribution_percent": 2.5278,
+      "promotion_participant_count": 1052,
+      "promoted_employee_count": 107,
+      "promotion_rate_percent": 10.1711,
+      "average_monthly_headcount": 1154.083333,
+      "voluntary_exit_count": 46,
+      "attrition_rate_percent": 3.9858
+    },
+    {
+      "grade": "R60",
+      "current_rank": 10,
+      "current_employee_count": 1161,
+      "current_distribution_percent": 2.4766,
+      "promotion_participant_count": 977,
+      "promoted_employee_count": 12,
+      "promotion_rate_percent": 1.2282,
+      "average_monthly_headcount": 1098.666666,
+      "voluntary_exit_count": 56,
+      "attrition_rate_percent": 5.0971
+    }
+  ],
+  "privacy": {
+    "minimum_shared_cohort": 30,
+    "displayed_grade_count": 10,
+    "employee_rows_or_identifiers_persisted": false,
+    "exact_pay_values_persisted": false
+  },
+  "diagnostics": {
+    "annual_review_promoted_employee_count": "6116",
+    "annual_review_scope_eligible_count": "40805",
+    "baseline_snapshot_date": "2025-08-24",
+    "current_conflicting_grade_count": "0",
+    "current_duplicate_employee_count": "0",
+    "current_missing_grade_count": "0",
+    "current_population_count": "46878",
+    "latest_snapshot_date": "2026-08-23",
+    "review_snapshot_date": "2025-11-23",
+    "top10_grade_count": "10",
+    "voluntary_event_assigned_count": "2603",
+    "voluntary_event_count": "2604",
+    "voluntary_event_unassigned_count": "1",
+    "window_snapshot_count": "12"
+  },
+  "outcome": "pass"
+}

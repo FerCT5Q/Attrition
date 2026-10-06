@@ -1,0 +1,174 @@
+schema_version: 1
+plan_version: 5
+plan_revision_reason: >-
+  El usuario aclaró que last_modified_date y airflow_execution_date indican carga o
+  procesamiento técnico y pueden cambiar cuando se sobrescriben tablas completas.
+  Este plan retira esos campos de Coverage, History, Join y de cualquier inferencia
+  post-outcome, y limita la evaluación a disponibilidad actual.
+language: es
+created_before_execution: true
+variable: Talent index
+concept: >-
+  Métrica precalculada por empleado-ciclo evaluada como disponibilidad actual. El
+  mayor cycle_number por empleado es una convención de recuperación, no una fecha ni
+  una prueba de vigencia.
+intended_use: >-
+  Cuantificar disponibilidad actual y determinar qué falta antes de incorporar Talent
+  index de forma longitudinal en attrition.
+knowledge_date: >-
+  Estado actual al momento de la consulta. No se asigna historia al índice mediante
+  timestamps técnicos de carga.
+population: Empleados regulares activos en el último snapshot mensual disponible
+grain: Empleado en el último snapshot laboral; fuente empleado-ciclo
+semantic_type: precomputed_metric
+source_reasoning: >-
+  La tabla y el índice existen, pero fórmula, elegibilidad, dominios, versionado y
+  fechas oficiales siguen pendientes. La evaluación separa disponibilidad actual de
+  validez histórica.
+validation_story:
+  - id: current_source_access
+    criterion: source
+    evidence_role: defining
+    question: ¿Existen y son accesibles la tabla y las columnas necesarias para la evaluación actual?
+    why: >-
+      Sin una ruta read-only confirmada no puede medirse cobertura ni prepararse una
+      futura reconciliación de fórmula.
+    fields: [empl_id, talent_index, cycle_number, cycle_name, perf, stock, bonus, promo_index, talent_quartile, ar_eligibility]
+    method: Auditoría de information_schema sin requerir timestamps técnicos.
+    sql_reference: queries/audits/talent_index_current_source_access_audit.sql
+    acceptance_rule: missing_items debe ser igual a 0.
+    metric_checks:
+      - {metric: missing_items, aggregate: sum, operator: eq, threshold: 0}
+
+  - id: definition_readiness
+    criterion: definition
+    evidence_role: supporting
+    question: ¿Hay valor almacenado y componentes candidatos para una futura reconciliación de fórmula?
+    why: >-
+      Su presencia permite planear una prueba posterior, pero no revela pesos,
+      normalización, elegibilidad ni tratamiento de nulos.
+    fields: [talent_index, perf, stock, bonus, promo_index, talent_quartile, ar_eligibility]
+    method: Conteos agregados del índice y componentes candidatos.
+    sql_reference: queries/audits/talent_index_definition_readiness_audit.sql
+    acceptance_rule: >-
+      Deben existir índice y componentes poblados; aun si pasa, Definition permanece
+      en 1 hasta obtener lineage oficial y reconciliación agregada.
+    metric_checks:
+      - {metric: populated_talent_index_rows, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: rows_with_all_candidate_components, aggregate: sum, operator: gt, threshold: 0}
+
+  - id: current_coverage
+    criterion: coverage
+    evidence_role: defining
+    question: ¿Qué porcentaje de empleados activos tiene actualmente un Talent index recuperable?
+    why: >-
+      Ésta es la cobertura que puede sostenerse sin inventar una fecha histórica del índice.
+    fields: [employee_id, fis_mo_end_dt, empl_id, cycle_number, talent_index]
+    method: >-
+      Último snapshot laboral, deduplicación empleado-ciclo y selección del mayor
+      cycle_number por empleado.
+    sql_reference: queries/profiles/talent_index_current_state_coverage.sql
+    acceptance_rule: >-
+      La cohorte debe tener al menos 30 elegibles; Coverage usa esta única observación
+      actual con umbrales de 95% y 70%.
+    metric_checks:
+      - {metric: eligible_employees, aggregate: min, operator: gte, threshold: 30}
+      - {metric: observable_employees, aggregate: max, operator: gt, threshold: 0}
+
+  - id: current_structural_consistency
+    criterion: consistency
+    evidence_role: defining
+    question: ¿La llave empleado-ciclo es única y carece de conflictos o mappings contradictorios?
+    why: >-
+      La selección actual sería ambigua si una misma llave tuviera varias filas,
+      índices distintos o un mapping número-nombre inconsistente.
+    fields: [empl_id, cycle_number, cycle_name, talent_index]
+    method: >-
+      Reconciliación agregada de llaves, valores y mapping de ciclos sin timestamps técnicos.
+    sql_reference: queries/audits/talent_index_current_structural_consistency_audit.sql
+    acceptance_rule: >-
+      Deben ser cero las llaves faltantes, duplicadas, conflictivas y las
+      contradicciones número-nombre. Aun si pasa, el catálogo oficial sigue pendiente.
+    metric_checks:
+      - {metric: rows_missing_employee_id, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: rows_missing_cycle_number, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: duplicate_key_groups, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: conflicting_index_key_groups, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: cycle_numbers_with_multiple_names, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: cycle_names_with_multiple_numbers, aggregate: sum, operator: eq, threshold: 0}
+
+  - id: current_employee_join
+    criterion: join
+    evidence_role: defining
+    question: ¿El join actual produce como máximo un registro seleccionado por empleado elegible?
+    why: >-
+      El match por empleado es necesario para la disponibilidad actual, aunque no
+      sustituye la reconciliación empleado-fecha requerida para uso histórico.
+    fields: [employee_id, fis_mo_end_dt, empl_id, cycle_number, talent_index]
+    method: >-
+      Reconciliación agregada del último snapshot laboral contra el mayor cycle_number
+      por empleado, con eligible, matched, unmatched, duplicados y multi-match.
+    sql_reference: queries/audits/talent_index_current_join_reconciliation_audit.sql
+    acceptance_rule: >-
+      Join=2 requeriría cero unmatched, duplicados, multi-match y conflictos, además de
+      una regla temporal gobernada. Sin fecha oficial, el máximo es 1.
+    metric_checks:
+      - {metric: matched_count, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: unmatched_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: duplicate_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: multi_match_count, aggregate: sum, operator: eq, threshold: 0}
+
+  - id: cycle_selection_sensitivity
+    criterion: join
+    evidence_role: contextual
+    question: ¿Cuánto cambia la observabilidad si se exige el mayor ciclo global en vez del mayor ciclo de cada empleado?
+    why: >-
+      La diferencia muestra sensibilidad a la regla ordinal de selección y evita
+      presentar el mayor ciclo individual como vigencia oficial.
+    fields: [employee_id, empl_id, cycle_number, talent_index]
+    method: Comparación agregada de ambas convenciones de recuperación actual.
+    sql_reference: queries/audits/talent_index_current_join_reconciliation_audit.sql
+    acceptance_rule: >-
+      La comparación es contextual; cualquier diferencia material exige definir
+      elegibilidad y vigencia de ciclos antes del uso longitudinal.
+    metric_fields:
+      - eligible_count
+      - observable_count
+      - global_cycle_observable_count
+      - observable_percent
+      - global_cycle_observable_percent
+
+  - id: history_scope
+    criterion: history
+    evidence_role: defining
+    question: ¿Esta revisión demuestra historia utilizable del Talent index?
+    why: >-
+      Varias filas o ciclos no equivalen a historia fechada si no existe una fecha de
+      evaluación, vigencia o publicación validada.
+    fields: [fis_mo_end_dt, cycle_number]
+    method: >-
+      Confirmar que el perfil contiene una sola observación actual y aplicar la decisión
+      de excluir timestamps técnicos de la semántica histórica.
+    sql_reference: queries/profiles/talent_index_current_state_coverage.sql
+    acceptance_rule: >-
+      History permanece en 0: una sola observación actual y ninguna fecha oficial del
+      índice pueden satisfacer seis meses de historia utilizable.
+    metric_checks:
+      - {metric: eligible_employees, aggregate: min, operator: gte, threshold: 30}
+
+  - id: implementation_effort
+    criterion: effort
+    evidence_role: supporting
+    question: ¿La recuperación actual es directa o requiere transformación y reglas adicionales?
+    why: >-
+      La deduplicación y selección de ciclo agregan trabajo, y el uso longitudinal
+      requiere además una futura regla temporal.
+    fields: [empl_id, cycle_number, talent_index, employee_id]
+    method: Usar la reconciliación actual para medir duplicados, conflictos y match.
+    sql_reference: queries/audits/talent_index_current_join_reconciliation_audit.sql
+    acceptance_rule: >-
+      Effort=2 sólo sería apropiado para una proyección o join simple y gobernado; la
+      selección de ciclo y la temporalidad pendiente mantienen el máximo en 1.
+    metric_checks:
+      - {metric: source_duplicate_key_groups, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: source_conflicting_key_groups, aggregate: sum, operator: eq, threshold: 0}

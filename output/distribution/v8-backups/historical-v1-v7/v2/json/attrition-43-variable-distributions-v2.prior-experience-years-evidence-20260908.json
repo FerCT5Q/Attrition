@@ -1,0 +1,175 @@
+{
+  "version": 1,
+  "variable": "Years of experience prior to Qualcomm",
+  "reporting_mode": "internal_analysis",
+  "generated_on": "2026-09-08",
+  "executed_on": "2026-09-08",
+  "query": "queries/profiles/distribution_v2_prior_experience_years_20260927.sql",
+  "query_sha256": "37992A737E51D0D7744182224D1ACFDD5C5D25BB592C83377FA7210BEB677321",
+  "snapshot": "2026-09-27",
+  "population": "50,218 regular active employees at the latest monthly snapshot",
+  "grain": "Distinct employee snapshot",
+  "field": "prior_qc_work_years",
+  "semantic_type": "precomputed_metric",
+  "display_definition": {
+    "<1": "0 <= prior_qc_work_years < 1",
+    "1-31": "Integer k represents k <= prior_qc_work_years < k+1",
+    "32+": "prior_qc_work_years >= 32; the tail is required because the exact year-32 bucket has fewer than 30 employees"
+  },
+  "acceptance_rule": "Publish exactly <1, 1 through 31, and 32+; every published category must have n >= 30; published counts must sum to eligible employees; null and negative counts must be zero; no employee may have multiple values in the snapshot.",
+  "metrics": {
+    "source_rows": 50218,
+    "eligible_employees": 50218,
+    "observable_employees": 50218,
+    "null_employees": 0,
+    "negative_employees": 0,
+    "non_negative_employees": 50218,
+    "below_one_employees": 16795,
+    "year_31_employees": 41,
+    "year_32_employees": 25,
+    "tail_32_plus_employees": 184,
+    "excluded_employees": 0,
+    "multi_valued_employees": 0,
+    "published_category_count": 33,
+    "published_employee_count": 50218,
+    "minimum_category_employee_count": 36,
+    "categories_below_minimum": 0,
+    "all_published_categories_n_ge_30": true,
+    "published_counts_sum_to_population": true,
+    "outcome": "pass"
+  },
+  "distribution": [
+    {
+      "category": "<1",
+      "employee_count": 16795
+    },
+    {
+      "category": "1",
+      "employee_count": 3590
+    },
+    {
+      "category": "2",
+      "employee_count": 3768
+    },
+    {
+      "category": "3",
+      "employee_count": 3795
+    },
+    {
+      "category": "4",
+      "employee_count": 3295
+    },
+    {
+      "category": "5",
+      "employee_count": 2805
+    },
+    {
+      "category": "6",
+      "employee_count": 2362
+    },
+    {
+      "category": "7",
+      "employee_count": 1985
+    },
+    {
+      "category": "8",
+      "employee_count": 1694
+    },
+    {
+      "category": "9",
+      "employee_count": 1407
+    },
+    {
+      "category": "10",
+      "employee_count": 1248
+    },
+    {
+      "category": "11",
+      "employee_count": 1047
+    },
+    {
+      "category": "12",
+      "employee_count": 949
+    },
+    {
+      "category": "13",
+      "employee_count": 800
+    },
+    {
+      "category": "14",
+      "employee_count": 648
+    },
+    {
+      "category": "15",
+      "employee_count": 570
+    },
+    {
+      "category": "16",
+      "employee_count": 524
+    },
+    {
+      "category": "17",
+      "employee_count": 440
+    },
+    {
+      "category": "18",
+      "employee_count": 401
+    },
+    {
+      "category": "19",
+      "employee_count": 348
+    },
+    {
+      "category": "20",
+      "employee_count": 295
+    },
+    {
+      "category": "21",
+      "employee_count": 265
+    },
+    {
+      "category": "22",
+      "employee_count": 188
+    },
+    {
+      "category": "23",
+      "employee_count": 177
+    },
+    {
+      "category": "24",
+      "employee_count": 123
+    },
+    {
+      "category": "25",
+      "employee_count": 122
+    },
+    {
+      "category": "26",
+      "employee_count": 98
+    },
+    {
+      "category": "27",
+      "employee_count": 90
+    },
+    {
+      "category": "28",
+      "employee_count": 64
+    },
+    {
+      "category": "29",
+      "employee_count": 64
+    },
+    {
+      "category": "30",
+      "employee_count": 36
+    },
+    {
+      "category": "31",
+      "employee_count": 41
+    },
+    {
+      "category": "32+",
+      "employee_count": 184
+    }
+  ]
+}

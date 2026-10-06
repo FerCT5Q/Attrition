@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "reporting_mode": "internal_analysis",
+  "generated_on": "2026-09-08",
+  "query_path": "queries/profiles/team_turnover_6m_scenarios_20260908.sql",
+  "term_type_audit": "queries/audits/team_turnover_voluntary_term_type_domain_20260908.sql",
+  "team_membership_audit": "queries/audits/team_turnover_direct_team_membership_20260908.sql",
+  "manager_resolution_audit": "queries/audits/team_turnover_manager_reference_resolution_20260908.sql",
+  "claim": "Team turnover is a six-month, aggregate manager-team exposure rate. A team contains active regular direct reports sharing manager_employee_id; it excludes the manager and peers. Each exit is attributed to the last active-regular manager snapshot on or before term_date.",
+  "cutoff_date": "2026-08-23",
+  "window": {
+    "start_exclusive": "2026-02-23",
+    "end_inclusive": "2026-08-23",
+    "monthly_snapshot_count": 6
+  },
+  "voluntary_definition": {
+    "included_term_type": ["Voluntary"],
+    "excluded_pending_hr_confirmation": ["Voluntary Exception"],
+    "source_domain_counts": {
+      "Voluntary": 1670,
+      "Voluntary Exception": 306,
+      "Involuntary": 255
+    }
+  },
+  "attribution": {
+    "strict_voluntary_termination_events": 1671,
+    "events_with_pre_exit_manager": 1587,
+    "match_rate_percent": 94.97,
+    "unmatched_events_excluded": 84
+  },
+  "scenarios": [
+    {
+      "key": "all_manager_led_teams",
+      "label": "All manager-led teams",
+      "eligibility": "At least 1 direct report at the 2026-08-23 cutoff",
+      "manager_teams": 10583,
+      "direct_reports_at_cutoff": 50042,
+      "employee_months": 286141,
+      "voluntary_exit_events": 1485,
+      "teams_without_voluntary_exit": 9349,
+      "teams_with_at_least_one_voluntary_exit": 1234,
+      "zero_exit_team_share_percent": 88.34,
+      "positive_exit_team_share_percent": 11.66,
+      "voluntary_exits_per_100_employee_months": 0.5190,
+      "six_month_turnover_percent": 3.1138
+    },
+    {
+      "key": "teams_gt5_direct_reports",
+      "label": "Teams with >5 direct reports",
+      "eligibility": "At least 6 direct reports at the 2026-08-23 cutoff",
+      "manager_teams": 3256,
+      "direct_reports_at_cutoff": 27027,
+      "employee_months": 152957,
+      "voluntary_exit_events": 760,
+      "teams_without_voluntary_exit": 2683,
+      "teams_with_at_least_one_voluntary_exit": 573,
+      "zero_exit_team_share_percent": 82.40,
+      "positive_exit_team_share_percent": 17.60,
+      "voluntary_exits_per_100_employee_months": 0.4969,
+      "six_month_turnover_percent": 2.9812
+    }
+  ],
+  "acceptance_rule": "Six monthly snapshots must occur in the window; each scenario must have at least 30 manager teams; every displayed team must have direct-report exposure; and only exits with a pre-exit manager assignment can enter the rate.",
+  "outcome": "pass",
+  "limitations": [
+    "The measure is descriptive and aggregate-only; it is not a manager label or causal claim.",
+    "Voluntary Exception is excluded pending authoritative HR treatment.",
+    "No shrinkage, comparable-population adjustment, or minimum historical exposure rule is applied to the all-team scenario."
+  ]
+}

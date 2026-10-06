@@ -1,0 +1,57 @@
+version: 1
+analysis_id: acquisition-observed-period-20261005
+artifact_classification: internal_analysis
+scope: Completar las tasas de la lámina 8 con el período observado desde la primera cohorte disponible y asterisco para menos de doce meses.
+concept: Proporción acumulada de salidas voluntarias de la cohorte presente en el primer snapshot de cada adquisición sin base anual.
+semantic_type: derived_feature
+intended_use: Revisión descriptiva interna con Julia de todas las adquisiciones mostradas en la lámina.
+population: Employee / Regular activos en el primer snapshot con adquisición registrada; se mantiene fija esa cohorte.
+grain: Una fila agregada por adquisición; las claves personales no salen del SQL.
+knowledge_boundary: La categoría se fija al inicio de su período y se siguen sus salidas hasta el 23 ago 2026; no se reclasifica usando el final.
+current_snapshot: '2026-08-23'
+formula: 100 * empleados de la cohorte con al menos una salida VOLUNTARY en (inicio, fin] / empleados distintos de la cohorte inicial.
+duration: Días transcurridos entre snapshots; meses mostrados como días * 12 / 365.25, con máximo un decimal.
+annualization: false
+later_entrants: No se incorporan al denominador ni al numerador; se contabilizan como contexto para señalar el alcance de la cohorte fija.
+authorization:
+  inherited_path: config/acquisition_attrition_internal_analysis_authorization_20261005.json
+  source: El usuario pide calcular desde que hay datos, aunque sean pocos meses, y marcar la tasa con un asterisco; mantiene su autorización interna para él y Julia.
+  audience: Solicitante y Julia, desarrolladores del proyecto.
+  allow_small_cohort_and_event_aggregates: true
+  minimum_rate_denominator: 1
+  minimum_followup_days: 1
+  minimum_postbaseline_snapshots: 1
+  individual_rows_or_identifiers: false
+  operational_use_or_score_change: false
+validation_stories:
+  - question: ¿Cuál es la primera cohorte observable y qué seguimiento tiene cada grupo?
+    reason: No asignar un período anual ni una tasa cero a un grupo sin seguimiento posterior.
+    method: Recalcular la primera fecha con Employee / Regular activos por etiqueta; deduplicar su cohorte y contar snapshots posteriores hasta el corte final.
+    acceptance_rule: Cinco grupos; primera fecha y conteos actuales reconcilian con el diagnóstico previo; ninguna contradicción de etiqueta en la cohorte inicial. Base positiva y al menos un corte posterior para una tasa numérica.
+    sql_path: queries/audits/acquisition_observed_period_attrition_20261005.sql
+    score_impact: Ninguno.
+  - question: ¿La proporción cuenta sólo salidas voluntarias de la cohorte inicial dentro de su período?
+    reason: Evitar duplicaciones del feed mensual, cambios retrospectivos de categoría e inclusión de ingresos posteriores.
+    method: Agregar eventos por empleado y fecha, seleccionar (inicio, fin] y contar una salida por persona. Reconciliar contra COUNT DISTINCT en un join independiente y recalcular la proporción con Decimal y Fraction.
+    acceptance_rule: Numeradores independientes iguales; cero <= salidas <= base; diferencia de cálculo menor a 0.000000000001 puntos. Un período sin seguimiento produce null.
+    sql_path: queries/audits/acquisition_observed_period_attrition_20261005.sql
+    score_impact: Ninguno.
+  - question: ¿La lámina permite distinguir tasas anuales, tasas parciales y falta de seguimiento?
+    reason: Las proporciones acumuladas de ventanas distintas no son directamente comparables.
+    method: Preservar las ocho tasas anuales de V9, agregar las tasas parciales con asterisco, duración, fechas y salidas/base; usar gris para períodos no comparables con la referencia anual.
+    acceptance_rule: Sólo cambia la lámina 8; no anualización; no colores de menor o mayor attrition para tasas parciales; NAPS muestra su pequeña cohorte inicial y Moonshot conserva estado sin seguimiento si tiene un solo corte.
+    score_impact: Ninguno.
+expected_current_counts:
+  Aqua: 1148
+  NAPS: 178
+  Moonshot: 167
+  Arduino: 160
+  Augentix Inc.: 118
+expected_first_snapshots:
+  Aqua: '2025-12-28'
+  NAPS: '2026-01-25'
+  Moonshot: '2026-08-23'
+  Arduino: '2026-03-29'
+  Augentix Inc.: '2026-03-29'
+output_root: output/assessments/acquisition-observed-period-20261005
+output_deck: output/distribution/attrition-43-variable-distributions-v10.html

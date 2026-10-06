@@ -1,0 +1,35 @@
+{
+  "authorization_id": "attrition-v7-internal-aggregate-visibility-20260917",
+  "authorized_on": "2026-09-17",
+  "status": "approved",
+  "reporting_mode": "internal_analysis",
+  "authorized_audience": "requester and Julia, both project developers",
+  "purpose": "Review every aggregate percentage and count in Attrition V7, including buckets below the shared-output threshold, before deciding whether any variable should be used for attrition.",
+  "scope": {
+    "artifact": "output/distribution/attrition-43-variable-distributions-v7.html",
+    "slides": "all 50 slides",
+    "aggregate_buckets": "show every available category, count and percentage; do not suppress solely because n is below 30",
+    "historical_window": "retain the V7 source history and the previously documented Career goals history from 2024 onward; 2023 remains a mapping note"
+  },
+  "small_cell_exception": {
+    "allow_subthreshold_aggregate_buckets": true,
+    "minimum_displayed_count": 0,
+    "reason": "Explicit internal exploratory request for two named project developers; the audience can review aggregate percentages without employee-level detail.",
+    "not_a_general_privacy_policy_change": true
+  },
+  "non_negotiable_controls": {
+    "aggregate_only": true,
+    "employee_rows_persisted": false,
+    "employee_ids_persisted": false,
+    "names_persisted": false,
+    "emails_persisted": false,
+    "addresses_persisted": false,
+    "manager_access": false,
+    "redistribution": false,
+    "operational_use": false,
+    "score_v4_change": false,
+    "production_feature_approval": false,
+    "exact_compensation_values": false
+  },
+  "interpretation": "The exception changes only aggregate display suppression for this internal V7 artifact. It does not impute unavailable metrics, create employee-level records, change attrition definitions, or make a non-estimable rate estimable."
+}

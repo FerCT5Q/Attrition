@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Attrition Variable Playbook - Annual</title>
+  <style>
+    
+
+    
+    :root {
+      --font-main: Aptos, "Segoe UI", system-ui, -apple-system, sans-serif;
+
+      --bg-body:      #f4f5f8;
+      --bg-surface:   #ffffff;
+      --bg-surface-2: #f6f8ff;
+      --bg-surface-3: #eef2ff;
+
+      --accent:       #2457ff;
+      --accent-2:     #3b82f6;
+      --accent-soft:  #e2e7ff;
+
+      --text-main:    #0f172a;
+      --text-muted:   #5b6478;
+      --text-invert:  #ffffff;
+
+      --border-subtle: rgba(15, 23, 42, 0.08);
+      --border-strong: rgba(36, 87, 255, 0.22);
+
+      --shadow-soft:   0 18px 44px rgba(2, 6, 23, 0.12);
+
+      --radius-card:   18px;
+      --radius-pill:   999px;
+
+      --donut-hole-bg: #ffffff;
+
+      --diamond-fill:   color-mix(in oklab, #f59e0b 18%, var(--bg-surface));
+      --diamond-stroke: #f59e0b;
+      --diamond-tx:     #92400e;
+      --exit-yes-bg:    color-mix(in oklab, #22c55e 12%, transparent);
+      --exit-yes-bd:    #16a34a;
+      --exit-yes-tx:    #14532d;
+      --exit-no-bg:     color-mix(in oklab, #ef4444 12%, transparent);
+      --exit-no-bd:     #dc2626;
+      --exit-no-tx:     #7f1d1d;
+      --conn-color:     var(--border-subtle);
+    }
+
+    body.theme-light-classic {
+      --bg-body:       #f4f5f8;
+      --bg-surface:    #ffffff;
+      --bg-surface-2:  #f6f8ff;
+      --bg-surface-3:  #eef2ff;
+      --text-main:     #0f172a;
+      --text-muted:    #5b6478;
+      --border-subtle: rgba(15, 23, 42, 0.08);
+      --border-strong: rgba(36, 87, 255, 0.22);
+      --donut-hole-bg: #ffffff;
+      --diamond-fill:  color-mix(in oklab, #f59e0b 18%, #ffffff);
+      --diamond-tx:    #92400e;
+    }
+
+    body.theme-light-soft {
+      --bg-body:       #eef2ff;
+      --bg-surface:    #f8faff;
+      --bg-surface-2:  #f0f4ff;
+      --bg-surface-3:  #e4ebff;
+      --text-main:     #1e2a4a;
+      --text-muted:    #4a5572;
+      --border-subtle: rgba(30, 42, 74, 0.09);
+      --border-strong: rgba(36, 87, 255, 0.20);
+      --donut-hole-bg: #f8faff;
+      --diamond-fill:  color-mix(in oklab, #f59e0b 18%, #f8faff);
+      --diamond-tx:    #78350f;
+    }
+
+    body.theme-dark-royal {
+      --bg-body:       #0d1b3e;
+      --bg-surface:    #162040;
+      --bg-surface-2:  #1a2650;
+      --bg-surface-3:  #1e2c5a;
+      --text-main:     #e8eeff;
+      --text-muted:    #8fa0cc;
+      --text-invert:   #ffffff;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(100, 149, 255, 0.28);
+      --accent:        #5b8cff;
+      --accent-2:      #7aabff;
+      --accent-soft:   rgba(91, 140, 255, 0.14);
+      --donut-hole-bg: #162040;
+      --diamond-fill:  color-mix(in oklab, #f59e0b 22%, #162040);
+      --diamond-tx:    #fde68a;
+      --exit-yes-tx:   #bbf7d0;
+      --exit-no-tx:    #fecaca;
+      --conn-color:    rgba(255,255,255,0.08);
+    }
+
+    body.theme-dark-carbon {
+      --bg-body:       #111318;
+      --bg-surface:    #1c1f26;
+      --bg-surface-2:  #22262f;
+      --bg-surface-3:  #282c36;
+      --text-main:     #e2e5ef;
+      --text-muted:    #7a8098;
+      --text-invert:   #ffffff;
+      --border-subtle: rgba(255, 255, 255, 0.07);
+      --border-strong: rgba(100, 149, 255, 0.22);
+      --accent:        #5b8cff;
+      --accent-2:      #7aabff;
+      --accent-soft:   rgba(91, 140, 255, 0.12);
+      --donut-hole-bg: #1c1f26;
+      --diamond-fill:  color-mix(in oklab, #f59e0b 20%, #1c1f26);
+      --diamond-tx:    #fde68a;
+      --exit-yes-tx:   #bbf7d0;
+      --exit-no-tx:    #fecaca;
+      --conn-color:    rgba(255,255,255,0.07);
+    }
+
+    
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html {
+      height: 100%;
+      background: #000;
+    }
+
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: var(--font-main);
+      font-size: 16px;
+      color: var(--text-main);
+      
+      background: color-mix(in oklab, var(--bg-body) 35%, #000);
+      transition: background 0.25s;
+    }
+
+    
+    .slide-stage {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1440px;
+      height: 810px;
+      transform-origin: top left;
+      background: var(--bg-body);
+      overflow: hidden;
+      padding: 14px 16px 10px;
+      display: grid;
+      gap: 6px;
+      
+      grid-template-rows: auto 1fr;
+    }
+
+    
+    .slide-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4px 8px;
+      border-bottom: 3px solid var(--accent);
+      flex-shrink: 0;
+    }
+
+    .slide-title-text {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin: 0;
+      letter-spacing: -0.01em;
+    }
+
+    .slide-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin: 2px 0 0;
+    }
+
+    
+    .card {
+      background: color-mix(in oklab, var(--bg-surface) 92%, transparent);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-soft);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      overflow: hidden;
+      height: 100%;
+    }
+
+    .card-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 6px;
+      margin-bottom: 4px;
+    }
+
+    .card-compact {
+      padding: 7px 10px;
+      gap: 4px;
+      border-radius: 10px;
+    }
+
+    .card-compact .card-title {
+      font-size: 11px;
+      padding-bottom: 3px;
+      margin-bottom: 2px;
+    }
+
+    .card-full {
+      width: 100%;
+      flex: 1;
+    }
+
+    
+    .badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .badge-success  { background: color-mix(in oklab, #22c55e 15%, transparent); color: #16a34a; border: 1px solid color-mix(in oklab, #22c55e 30%, transparent); }
+    .badge-warning  { background: color-mix(in oklab, #f59e0b 15%, transparent); color: #d97706; border: 1px solid color-mix(in oklab, #f59e0b 30%, transparent); }
+    .badge-neutral  { background: color-mix(in oklab, var(--text-muted) 12%, transparent); color: var(--text-muted); border: 1px solid var(--border-subtle); }
+    .badge-info     { background: color-mix(in oklab, var(--accent) 12%, transparent); color: var(--accent); border: 1px solid color-mix(in oklab, var(--accent) 25%, transparent); }
+    .badge-wip      { background: color-mix(in oklab, #f97316 15%, transparent); color: #ea580c; border: 1px solid color-mix(in oklab, #f97316 30%, transparent); }
+    .badge-beta     { background: color-mix(in oklab, #22c55e 10%, transparent); color: #15803d; border: 1px dashed color-mix(in oklab, #22c55e 40%, transparent); }
+    .badge-coming-soon { background: color-mix(in oklab, #8b5cf6 12%, transparent); color: #7c3aed; border: 1px solid color-mix(in oklab, #8b5cf6 25%, transparent); }
+
+    .chip {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .chip-linux   { background: color-mix(in oklab, #f59e0b 15%, transparent); color: #92400e; }
+    .chip-rtos    { background: color-mix(in oklab, #3b82f6 12%, transparent); color: #1e40af; }
+    .chip-android { background: color-mix(in oklab, #22c55e 12%, transparent); color: #14532d; }
+    .chip-windows { background: color-mix(in oklab, #8b5cf6 12%, transparent); color: #4c1d95; }
+
+    .term-pill {
+      display: inline-block;
+      padding: 1px 7px;
+      border-radius: var(--radius-pill);
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.9em;
+      font-weight: 600;
+    }
+
+    
+    .bullet-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .bullet-list li {
+      padding-left: 16px;
+      position: relative;
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--text-main);
+    }
+
+    .bullet-list li::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 11px;
+    }
+
+    
+    .slide-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .grid-4col {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .vertical-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    
+    .tracking-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr 0.9fr;
+      gap: 6px;
+      align-items: start;
+      overflow: hidden;
+    }
+
+    .col-header {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 5px 10px;
+      border-radius: 8px;
+      color: var(--text-invert);
+      text-align: center;
+    }
+
+    .col-opportunity { background: #2457ff; }
+    .col-state       { background: #7c3aed; }
+    .col-plan        { background: #0891b2; }
+    .col-eta         { background: #059669; }
+
+    .track-divider {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 2px 0;
+    }
+
+    .track-divider hr {
+      flex: 1;
+      border: none;
+      border-top: 1px solid var(--border-subtle);
+      margin: 0;
+    }
+
+    .track-divider span {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .track-card {
+      background: color-mix(in oklab, var(--bg-surface) 92%, transparent);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 7px 10px;
+      gap: 4px;
+      display: flex;
+      flex-direction: column;
+      font-size: 13px;
+      line-height: 1.4;
+      color: var(--text-main);
+    }
+
+    .track-card.col-opportunity { border-left: 4px solid #2457ff; }
+    .track-card.col-state       { border-left: 4px solid #7c3aed; }
+    .track-card.col-plan        { border-left: 4px solid #0891b2; }
+    .track-card.col-eta         { border-left: 4px solid #059669; }
+
+    .callout-imperative {
+      background: color-mix(in oklab, #22c55e 10%, var(--bg-surface));
+      border-left: 3px solid #22c55e;
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 12px;
+      color: var(--text-main);
+      line-height: 1.35;
+    }
+
+    .eta-bar-wrap {
+      width: 100%;
+      height: 4px;
+      background: var(--border-subtle);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .eta-bar {
+      height: 100%;
+      background: #059669;
+      border-radius: 2px;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      flex-shrink: 0;
+      animation: pulse-green 1.8s ease-in-out infinite;
+    }
+
+    @keyframes pulse-green {
+      0%, 100% { opacity: 1;   transform: scale(1);   }
+      50%       { opacity: 0.5; transform: scale(1.4); }
+    }
+
+    
+    .gauge-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .gauge {
+      position: relative;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      
+      background: conic-gradient(
+        var(--accent)            0deg 151.2deg,
+        #10b981               151.2deg 288deg,
+        var(--border-subtle)  288deg   360deg
+      );
+    }
+
+    .gauge-hole {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px; height: 40px;
+      background: var(--bg-body);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gauge-pct { font-size: 11px; font-weight: 800; color: var(--text-main); line-height: 1; }
+    .gauge-sub { font-size: 9px; color: var(--text-muted); }
+
+    .gauge-meta { display: flex; flex-direction: column; gap: 3px; }
+
+    .gauge-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .gm-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .gm-current { background: var(--accent); }
+    .gm-goal    { background: #10b981; }
+
+    
+    .side-controls,
+    .nav-ctrl {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1000;
+      display: flex;
+      align-items: stretch;
+    }
+
+    
+    .side-controls {
+      right: 0;
+    }
+
+    .side-panel {
+      width: 0;
+      overflow: hidden;
+      transition: width 0.22s ease;
+      background: color-mix(in oklab, var(--bg-surface) 95%, transparent);
+      border: 1px solid var(--border-subtle);
+      border-right: none;
+      border-radius: 12px 0 0 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 0;
+      box-shadow: -4px 0 20px rgba(0, 0, 0, 0.14);
+      backdrop-filter: blur(8px);
+    }
+
+    .side-controls:hover .side-panel {
+      width: 136px;
+      padding: 12px 10px;
+    }
+
+    .side-tab {
+      width: 22px;
+      background: color-mix(in oklab, var(--bg-surface) 90%, transparent);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px 0 0 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      writing-mode: vertical-rl;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 14px 0;
+      transition: background 0.15s, color 0.15s;
+      user-select: none;
+      font-family: var(--font-main);
+    }
+
+    .side-controls:hover .side-tab {
+      background: color-mix(in oklab, var(--accent) 15%, var(--bg-surface));
+      color: var(--accent);
+    }
+
+    
+    .nav-ctrl {
+      left: 0;
+    }
+
+    .nav-panel {
+      width: 0;
+      overflow: hidden;
+      transition: width 0.22s ease;
+      background: color-mix(in oklab, var(--bg-surface) 95%, transparent);
+      border: 1px solid var(--border-subtle);
+      border-left: none;
+      border-radius: 0 12px 12px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 0;
+      box-shadow: 4px 0 20px rgba(0, 0, 0, 0.14);
+      backdrop-filter: blur(8px);
+      order: 1; 
+    }
+
+    .nav-ctrl:hover .nav-panel {
+      width: 164px;
+      padding: 12px 10px;
+    }
+
+    .nav-tab {
+      width: 22px;
+      background: color-mix(in oklab, var(--bg-surface) 90%, transparent);
+      border: 1px solid var(--border-subtle);
+      border-radius: 0 8px 8px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg); 
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 14px 0;
+      transition: background 0.15s, color 0.15s;
+      user-select: none;
+      font-family: var(--font-main);
+      order: 0; 
+    }
+
+    .nav-ctrl:hover .nav-tab {
+      background: color-mix(in oklab, var(--accent) 15%, var(--bg-surface));
+      color: var(--accent);
+    }
+
+    
+    .side-label,
+    .nav-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      white-space: nowrap;
+      margin-bottom: 2px;
+      font-family: var(--font-main);
+    }
+
+    .side-pill,
+    .nav-pill {
+      appearance: none;
+      border: 1px solid var(--border-subtle);
+      background: color-mix(in oklab, var(--bg-surface) 88%, transparent);
+      color: var(--text-main);
+      padding: 6px 10px;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      font-family: var(--font-main);
+      cursor: pointer;
+      text-align: left;
+      white-space: nowrap;
+      width: 100%;
+      transition: border-color 0.12s, background 0.12s;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .side-pill:hover,
+    .nav-pill:hover {
+      border-color: var(--border-strong);
+    }
+
+    .side-pill.pill-active,
+    .nav-pill.pill-active {
+      background: linear-gradient(135deg,
+        color-mix(in oklab, var(--accent) 92%, #fff 8%),
+        var(--accent-2));
+      color: var(--text-invert);
+      border-color: transparent;
+    }
+
+    
+    .code-block, .dir-tree {
+      font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+      font-size: 13px;
+      line-height: 2;
+      color: #c9d1d9;
+      background: #161b22;
+      border-radius: 10px;
+      padding: 16px 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    .dir-tree .dir { color: #79c0ff; font-weight: 600; }
+    .dir-tree .dim { color: #6e7681; }
+    .dir-tree .hl  { color: #7ee787; font-weight: 600; }
+
+    code {
+      font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+      font-size: 0.88em;
+      background: rgba(110, 118, 129, 0.15);
+      color: var(--text-main);
+      padding: 1px 6px;
+      border-radius: 5px;
+    }
+
+    
+
+    .playbook-card { gap: 10px; padding: 14px 16px 10px; }
+    .intro-card { justify-content: center; gap: 34px; padding: 54px 70px; }
+    .hero-copy h1 { margin: 0 0 12px; font-size: 54px; line-height: 1; color: var(--text-main); }
+    .hero-copy p { width: 960px; margin: 0; font-size: 24px; line-height: 1.32; color: var(--text-muted); }
+    .intro-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .intro-grid > div, .definition-strip > div { padding: 14px 16px; border: 1px solid var(--border-subtle); border-radius: 12px; background: color-mix(in oklab, var(--bg-surface-2) 82%, transparent); }
+    .mini-label { display: block; margin-bottom: 5px; color: var(--text-muted); font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+    .intro-grid strong, .definition-strip strong { display: block; color: var(--text-main); font-size: 17px; line-height: 1.25; }
+    .agenda-card { padding: 20px 24px; }
+    .agenda-vertical { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 14px; }
+    .agenda-item { display: grid; grid-template-columns: 54px 1fr; gap: 2px 10px; align-items: start; padding: 9px 11px; border: 1px solid var(--border-subtle); border-radius: 10px; background: color-mix(in oklab, var(--bg-surface-2) 70%, transparent); }
+    .agenda-num { grid-row: span 2; color: var(--accent); font-size: 12px; font-weight: 900; }
+    .agenda-item strong { font-size: 14px; color: var(--text-main); }
+    .agenda-item span:last-child { font-size: 12px; color: var(--text-muted); line-height: 1.25; }
+    .privacy-banner { margin-top: 12px; padding: 10px 12px; border-radius: 10px; background: color-mix(in oklab, #f97316 10%, transparent); border: 1px solid color-mix(in oklab, #f97316 26%, var(--border-subtle)); color: var(--text-main); font-size: 13px; }
+    .definition-strip { display: grid; grid-template-columns: 1.45fr .8fr; gap: 10px; }
+    .playbook-chart-area { flex: 1; min-height: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 18px; }
+    .play-panel { min-height: 0; display: flex; flex-direction: column; gap: 6px; padding: 2px 0 0; }
+    .play-panel + .play-panel { padding-left: 14px; border-left: 1px solid var(--border-subtle); }
+    .panel-heading { display: grid; grid-template-columns: 1fr 240px; color: var(--text-muted); font-size: 11px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+    .play-row { display: grid; grid-template-columns: minmax(150px, 250px) 1fr 104px 112px; gap: 8px; align-items: center; min-height: 28px; }
+    .play-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-main); font-size: 13px; font-weight: 700; }
+    .play-track { height: 13px; border-radius: var(--radius-pill); background: color-mix(in oklab, var(--accent) 10%, var(--bg-surface-3)); overflow: hidden; }
+    .play-fill { height: 100%; min-width: 3px; border-radius: var(--radius-pill); background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+    .play-dist { color: var(--text-muted); font-size: 12px; text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .play-attr { justify-self: end; min-width: 88px; padding: 4px 8px; border-radius: var(--radius-pill); text-align: right; font-size: 12px; font-weight: 900; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .attr-high { color: #c2410c; background: color-mix(in oklab, #f97316 14%, transparent); border: 1px solid color-mix(in oklab, #f97316 30%, var(--border-subtle)); }
+    .attr-mid { color: var(--accent); background: color-mix(in oklab, var(--accent) 10%, transparent); border: 1px solid color-mix(in oklab, var(--accent) 22%, var(--border-subtle)); }
+    .attr-low { color: #15803d; background: color-mix(in oklab, #22c55e 11%, transparent); border: 1px solid color-mix(in oklab, #22c55e 28%, var(--border-subtle)); }
+    .attr-unavailable { min-width: 98px; color: var(--text-muted); background: color-mix(in oklab, var(--text-muted) 8%, transparent); border: 1px solid var(--border-subtle); }
+    .source-line { padding-top: 7px; border-top: 1px solid var(--border-subtle); color: var(--text-muted); font-size: 11px; line-height: 1.25; }
+    .source-line strong { color: var(--text-main); }
+    .empty-chart { height: 100%; min-height: 420px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; border: 1px dashed var(--border-subtle); border-radius: 14px; color: var(--text-muted); text-align: center; }
+    .empty-chart strong { color: var(--text-main); font-size: 26px; }
+    .empty-chart span { width: 520px; max-width: 90%; font-size: 16px; line-height: 1.4; }
+    .evidence-chart { height: 100%; min-height: 420px; display: flex; flex-direction: column; justify-content: center; gap: 18px; padding: 32px 42px; border: 1px dashed var(--border-subtle); border-radius: 14px; background: color-mix(in oklab, var(--bg-surface-2) 70%, transparent); }
+    .evidence-row { display: grid; grid-template-columns: 220px 1fr 118px; gap: 14px; align-items: center; color: var(--text-main); font-size: 15px; }
+    .evidence-row span { font-weight: 800; }
+    .evidence-row strong { color: var(--text-muted); text-align: right; font-size: 13px; }
+    .evidence-track { height: 16px; border-radius: var(--radius-pill); background: color-mix(in oklab, var(--text-muted) 10%, transparent); overflow: hidden; }
+    .evidence-track > div { height: 100%; border-radius: var(--radius-pill); background: linear-gradient(90deg, #f97316, var(--accent)); min-width: 3px; }
+    body.theme-dark-royal .attr-high, body.theme-dark-carbon .attr-high { color: #fdba74; }
+    body.theme-dark-royal .attr-low, body.theme-dark-carbon .attr-low { color: #86efac; }
+    
+
+  </style>
+</head>
+
+<body class="theme-light-classic">
+  <div class="slide-stage" id="slide-1">
+      <div class="slide-heading"><div><h2 class="slide-title-text">Attrition Variable Playbook</h2><p class="slide-subtitle">Internal variables available to compare annual attrition across groups</p></div><span class="badge badge-info">Internal analysis</span></div>
+      <article class="card card-full intro-card">
+        <div class="hero-copy">
+          <h1>Internal variable playbook</h1>
+          <p>A simple guide to what each variable measures, how the active regular workforce is distributed, and how annual voluntary attrition varies by group.</p>
+        </div>
+        <div class="intro-grid">
+          <div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div>
+          <div><span class="mini-label">Outcome</span><strong>Voluntary exit in the 12 months after the snapshot</strong></div>
+          <div><span class="mini-label">Reading</span><strong>Blue = distribution; orange = annual attrition</strong></div>
+          <div><span class="mini-label">Use</span><strong>Exploration to prioritize variables before modeling</strong></div>
+        </div>
+      </article>
+    </div>
+
+  <div class="slide-stage" id="slide-2">
+      <div class="slide-heading"><div><h2 class="slide-title-text">How to use this playbook</h2><p class="slide-subtitle">Each slide prioritizes a short definition, a readable distribution, and annual attrition when it could be generated.</p></div></div>
+      <article class="card card-full agenda-card">
+        <div class="agenda-vertical"><div class="agenda-item"><span class="agenda-num">3</span><strong>Applied to a job</strong><span>Documented internal variable</span></div><div class="agenda-item"><span class="agenda-num">4</span><strong>Applied to a job — trailing six months</strong><span>Documented internal variable</span></div><div class="agenda-item"><span class="agenda-num">5</span><strong>Transfer within the past year</strong><span>Documented internal variable</span></div><div class="agenda-item"><span class="agenda-num">6</span><strong>Location</strong><span>Documented internal variable</span></div><div class="agenda-item"><span class="agenda-num">7</span><strong>Office site and city</strong><span>Documented internal variable</span></div><div class="agenda-item"><span class="agenda-num">8</span><strong>Team turnover</strong><span>Documented internal variable</span></div><div class="agenda-item"><span class="agenda-num">9</span><strong>Does one team departure precede more departures?</strong><span>Documented internal variable</span></div><div class="agenda-item"><span class="agenda-num">10</span><strong>Sensitivity check: teams with 6+ employees</strong><span>Documented internal variable</span></div><div class="agenda-item"><span class="agenda-num">11</span><strong>Job family</strong><span>Documented internal variable</span></div><div class="agenda-item"><span class="agenda-num">12</span><strong>Region</strong><span>Documented internal variable</span></div><div class="agenda-item"><span class="agenda-num">13</span><strong>Gender</strong><span>Documented internal variable</span></div><div class="agenda-item"><span class="agenda-num">14</span><strong>Work arrangement</strong><span>Documented internal variable</span></div><div class="agenda-item"><span class="agenda-num">...</span><strong>37 additional variables</strong><span>Available from the side navigator</span></div></div>
+        <div class="privacy-banner">External factors were removed. 31 variables or panels remain annual-attrition not estimable because the current artifacts lack a time-safe join, approved source, or reusable distribution.</div>
+      </article>
+    </div>
+
+  <div class="slide-stage" id="slide-3"><div class="slide-heading"><div><h2 class="slide-title-text">Applied to a job</h2><p class="slide-subtitle">Among people with application records, most applied to one job during the fiscal year</p></div><span class="badge badge-neutral">Annual attrition not estimable</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Annual internal application activity observed in the job application feed.</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Distribution</span><span>Distribution / Annual attrition</span></div><div class="evidence-chart" aria-label="Evidence availability chart"><div class="evidence-row"><span>Source documentation review</span><div class="evidence-track"><div style="width:100%"></div></div><strong>Required</strong></div><div class="evidence-row"><span>Reusable distribution</span><div class="evidence-track"><div style="width:35%"></div></div><strong>Pending</strong></div><div class="evidence-row"><span>Annual attrition</span><div class="evidence-track"><div style="width:0%"></div></div><strong>Not estimable</strong></div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.job_applications_vw. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-4"><div class="slide-heading"><div><h2 class="slide-title-text">Applied to a job — trailing six months</h2><p class="slide-subtitle">Application coverage is incomplete, so employees without reliable coverage remain Unknown</p></div><span class="badge badge-neutral">Annual attrition not estimable</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Application coverage is incomplete, so employees without reliable coverage remain Unknown</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Latest fully publishable distribution · snapshot 2026-07-26</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="0 No unique requisition">0 No unique requisition</div><div class="play-track"><div class="play-fill" style="width:8.8%"></div></div><div class="play-dist">8% · 3,935</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="1 Unique requisitions">1 Unique requisitions</div><div class="play-track"><div class="play-fill" style="width:1.9%"></div></div><div class="play-dist">2% · 843</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="2+ Unique requisitions">2+ Unique requisitions</div><div class="play-track"><div class="play-fill" style="width:0.1%"></div></div><div class="play-dist">0% · 30</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="Unknown Unknown coverage">Unknown Unknown coverage</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">90% · 44,844</div><div class="play-attr attr-unavailable">Not estimable</div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.job_applications_vw + hrda.post_hire_monthly_worker_dtls. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-5"><div class="slide-heading"><div><h2 class="slide-title-text">Transfer within the past year</h2><p class="slide-subtitle">The same 12-month transfer measure is shown monthly for modeling and weekly for monitoring</p></div><span class="badge badge-info">Annual attrition</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Flags whether the employee had a recorded transfer in the previous 12 months.</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Annual datalake distribution: transfer_event</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="No transfer (0)">No transfer (0)</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">97% · 49,708</div><div class="play-attr attr-low">5.7%</div></div><div class="play-row"><div class="play-label" title="Transfer (1)">Transfer (1)</div><div class="play-track"><div class="play-fill" style="width:2.9%"></div></div><div class="play-dist">3% · 1,448</div><div class="play-attr attr-high">7.7%</div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.post_hire_monthly_worker_dtls + post_hire_daily_worker_dtls. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-6"><div class="slide-heading"><div><h2 class="slide-title-text">Location</h2><p class="slide-subtitle">Country distribution for active regular employees; orange values show annual voluntary attrition</p></div><span class="badge badge-info">Annual attrition</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Stored work country for active regular employees.</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Country · top 20 + Other</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="India">India</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">42% · 20,817</div><div class="play-attr attr-high">7.3%</div></div><div class="play-row"><div class="play-label" title="United States of America">United States of America</div><div class="play-track"><div class="play-fill" style="width:69.5%"></div></div><div class="play-dist">29% · 14,479</div><div class="play-attr attr-mid">5.0%</div></div><div class="play-row"><div class="play-label" title="China">China</div><div class="play-track"><div class="play-fill" style="width:16.3%"></div></div><div class="play-dist">7% · 3,384</div><div class="play-attr attr-low">0.4%</div></div><div class="play-row"><div class="play-label" title="Taiwan">Taiwan</div><div class="play-track"><div class="play-fill" style="width:9.4%"></div></div><div class="play-dist">4% · 1,965</div><div class="play-attr attr-mid">5.1%</div></div><div class="play-row"><div class="play-label" title="Germany">Germany</div><div class="play-track"><div class="play-fill" style="width:7.5%"></div></div><div class="play-dist">3% · 1,568</div><div class="play-attr attr-low">3.4%</div></div><div class="play-row"><div class="play-label" title="Singapore">Singapore</div><div class="play-track"><div class="play-fill" style="width:7.0%"></div></div><div class="play-dist">3% · 1,448</div><div class="play-attr attr-mid">5.3%</div></div><div class="play-row"><div class="play-label" title="Canada">Canada</div><div class="play-track"><div class="play-fill" style="width:5.5%"></div></div><div class="play-dist">2% · 1,173</div><div class="play-attr attr-high">5.7%</div></div><div class="play-row"><div class="play-label" title="Ireland">Ireland</div><div class="play-track"><div class="play-fill" style="width:4.1%"></div></div><div class="play-dist">2% · 851</div><div class="play-attr attr-high">9.2%</div></div><div class="play-row"><div class="play-label" title="Israel">Israel</div><div class="play-track"><div class="play-fill" style="width:3.8%"></div></div><div class="play-dist">2% · 803</div><div class="play-attr attr-mid">5.1%</div></div><div class="play-row"><div class="play-label" title="United Kingdom">United Kingdom</div><div class="play-track"><div class="play-fill" style="width:3.1%"></div></div><div class="play-dist">1% · 643</div><div class="play-attr attr-mid">4.9%</div></div><div class="play-row"><div class="play-label" title="Korea, Republic of">Korea, Republic of</div><div class="play-track"><div class="play-fill" style="width:2.6%"></div></div><div class="play-dist">1% · 536</div><div class="play-attr attr-low">3.0%</div></div><div class="play-row"><div class="play-label" title="France">France</div><div class="play-track"><div class="play-fill" style="width:1.9%"></div></div><div class="play-dist">1% · 421</div><div class="play-attr attr-low">3.1%</div></div><div class="play-row"><div class="play-label" title="Sweden">Sweden</div><div class="play-track"><div class="play-fill" style="width:1.9%"></div></div><div class="play-dist">1% · 410</div><div class="play-attr attr-mid">4.2%</div></div><div class="play-row"><div class="play-label" title="Mexico">Mexico</div><div class="play-track"><div class="play-fill" style="width:1.4%"></div></div><div class="play-dist">1% · 313</div><div class="play-attr attr-high">7.8%</div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.post_hire_monthly_worker_dtls. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-7"><div class="slide-heading"><div><h2 class="slide-title-text">Office site and city</h2><p class="slide-subtitle">Stored office site and a derived site-city view answer different location questions</p></div><span class="badge badge-info">Annual attrition</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Stored office site and a derived site-city view.</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Office site · top 20 + missing</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="INDIA">INDIA</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">41% · 20,686</div><div class="play-attr attr-high">7.3%</div></div><div class="play-row"><div class="play-label" title="SAN">SAN</div><div class="play-track"><div class="play-fill" style="width:48.9%"></div></div><div class="play-dist">20% · 10,087</div><div class="play-attr attr-mid">4.7%</div></div><div class="play-row"><div class="play-label" title="CHINA">CHINA</div><div class="play-track"><div class="play-fill" style="width:16.2%"></div></div><div class="play-dist">7% · 3,370</div><div class="play-attr attr-low">0.4%</div></div><div class="play-row"><div class="play-label" title="TAIWN">TAIWN</div><div class="play-track"><div class="play-fill" style="width:9.0%"></div></div><div class="play-dist">4% · 1,874</div><div class="play-attr attr-mid">5.0%</div></div><div class="play-row"><div class="play-label" title="SCL">SCL</div><div class="play-track"><div class="play-fill" style="width:8.0%"></div></div><div class="play-dist">3% · 1,654</div><div class="play-attr attr-high">6.9%</div></div><div class="play-row"><div class="play-label" title="GERMA">GERMA</div><div class="play-track"><div class="play-fill" style="width:7.3%"></div></div><div class="play-dist">3% · 1,476</div><div class="play-attr attr-low">3.5%</div></div><div class="play-row"><div class="play-label" title="SINGA">SINGA</div><div class="play-track"><div class="play-fill" style="width:7.0%"></div></div><div class="play-dist">3% · 1,437</div><div class="play-attr attr-mid">5.2%</div></div><div class="play-row"><div class="play-label" title="CANAD">CANAD</div><div class="play-track"><div class="play-fill" style="width:5.1%"></div></div><div class="play-dist">2% · 1,028</div><div class="play-attr attr-high">5.8%</div></div><div class="play-row"><div class="play-label" title="ISRAL">ISRAL</div><div class="play-track"><div class="play-fill" style="width:3.9%"></div></div><div class="play-dist">2% · 791</div><div class="play-attr attr-mid">5.1%</div></div><div class="play-row"><div class="play-label" title="IRELN">IRELN</div><div class="play-track"><div class="play-fill" style="width:3.9%"></div></div><div class="play-dist">2% · 784</div><div class="play-attr attr-high">9.2%</div></div><div class="play-row"><div class="play-label" title="AUS">AUS</div><div class="play-track"><div class="play-fill" style="width:2.7%"></div></div><div class="play-dist">1% · 544</div><div class="play-attr attr-high">6.7%</div></div><div class="play-row"><div class="play-label" title="UNITE">UNITE</div><div class="play-track"><div class="play-fill" style="width:2.4%"></div></div><div class="play-dist">1% · 515</div><div class="play-attr attr-mid">5.0%</div></div><div class="play-row"><div class="play-label" title="KOREA">KOREA</div><div class="play-track"><div class="play-fill" style="width:2.4%"></div></div><div class="play-dist">1% · 499</div><div class="play-attr attr-low">3.0%</div></div><div class="play-row"><div class="play-label" title="SWEDN">SWEDN</div><div class="play-track"><div class="play-fill" style="width:1.9%"></div></div><div class="play-dist">1% · 392</div><div class="play-attr attr-mid">4.3%</div></div></section><section class="play-panel"><div class="panel-heading"><span>Office site · city · top 20 + Other</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="SAN · San Diego">SAN · San Diego</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">20% · 10,056</div><div class="play-attr attr-mid">4.7%</div></div><div class="play-row"><div class="play-label" title="INDIA · Bangalore">INDIA · Bangalore</div><div class="play-track"><div class="play-fill" style="width:94.0%"></div></div><div class="play-dist">19% · 9,461</div><div class="play-attr attr-high">9.0%</div></div><div class="play-row"><div class="play-label" title="INDIA · Hyderabad">INDIA · Hyderabad</div><div class="play-track"><div class="play-fill" style="width:88.1%"></div></div><div class="play-dist">18% · 8,878</div><div class="play-attr attr-mid">5.6%</div></div><div class="play-row"><div class="play-label" title="SCL · Santa Clara">SCL · Santa Clara</div><div class="play-track"><div class="play-fill" style="width:16.4%"></div></div><div class="play-dist">3% · 1,641</div><div class="play-attr attr-high">6.9%</div></div><div class="play-row"><div class="play-label" title="SINGA · Singapore">SINGA · Singapore</div><div class="play-track"><div class="play-fill" style="width:14.4%"></div></div><div class="play-dist">3% · 1,435</div><div class="play-attr attr-mid">5.2%</div></div><div class="play-row"><div class="play-label" title="CHINA · Shanghai">CHINA · Shanghai</div><div class="play-track"><div class="play-fill" style="width:13.9%"></div></div><div class="play-dist">3% · 1,403</div><div class="play-attr attr-low">0.3%</div></div><div class="play-row"><div class="play-label" title="INDIA · Chennai">INDIA · Chennai</div><div class="play-track"><div class="play-fill" style="width:13.9%"></div></div><div class="play-dist">3% · 1,393</div><div class="play-attr attr-mid">4.7%</div></div><div class="play-row"><div class="play-label" title="GERMA · Munich">GERMA · Munich</div><div class="play-track"><div class="play-fill" style="width:11.9%"></div></div><div class="play-dist">2% · 1,222</div><div class="play-attr attr-low">4.2%</div></div><div class="play-row"><div class="play-label" title="TAIWN · Hsinchu City">TAIWN · Hsinchu City</div><div class="play-track"><div class="play-fill" style="width:10.4%"></div></div><div class="play-dist">2% · 1,065</div><div class="play-attr attr-mid">5.7%</div></div><div class="play-row"><div class="play-label" title="CHINA · Wuxi">CHINA · Wuxi</div><div class="play-track"><div class="play-fill" style="width:10.4%"></div></div><div class="play-dist">2% · 1,049</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="INDIA · Noida">INDIA · Noida</div><div class="play-track"><div class="play-fill" style="width:8.5%"></div></div><div class="play-dist">2% · 829</div><div class="play-attr attr-high">10.3%</div></div><div class="play-row"><div class="play-label" title="IRELN · Cork">IRELN · Cork</div><div class="play-track"><div class="play-fill" style="width:8.0%"></div></div><div class="play-dist">2% · 781</div><div class="play-attr attr-high">9.2%</div></div><div class="play-row"><div class="play-label" title="CANAD · Markham">CANAD · Markham</div><div class="play-track"><div class="play-fill" style="width:7.0%"></div></div><div class="play-dist">1% · 687</div><div class="play-attr attr-mid">5.6%</div></div><div class="play-row"><div class="play-label" title="TAIWN · Taipei">TAIWN · Taipei</div><div class="play-track"><div class="play-fill" style="width:6.5%"></div></div><div class="play-dist">1% · 632</div><div class="play-attr attr-low">3.7%</div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.post_hire_monthly_worker_dtls. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-8"><div class="slide-heading"><div><h2 class="slide-title-text">Team turnover</h2><p class="slide-subtitle">Voluntary exits are compared with average team size across the same six-month period</p></div><span class="badge badge-neutral">Annual attrition not estimable</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Aggregate recent voluntary exit history within the employee&#x27;s team.</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Distribution</span><span>Distribution / Annual attrition</span></div><div class="evidence-chart" aria-label="Evidence availability chart"><div class="evidence-row"><span>Source documentation review</span><div class="evidence-track"><div style="width:100%"></div></div><strong>Required</strong></div><div class="evidence-row"><span>Reusable distribution</span><div class="evidence-track"><div style="width:35%"></div></div><strong>Pending</strong></div><div class="evidence-row"><span>Annual attrition</span><div class="evidence-track"><div style="width:0%"></div></div><strong>Not estimable</strong></div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.post_hire_monthly_worker_dtls. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-9"><div class="slide-heading"><div><h2 class="slide-title-text">Does one team departure precede more departures?</h2><p class="slide-subtitle">Employees who remained after a departure had higher attrition in this recent cohort; this is not causal</p></div><span class="badge badge-neutral">Annual attrition not estimable</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Employees who remained after a departure had higher attrition in this recent cohort; this is not causal</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Distribution</span><span>Distribution / Annual attrition</span></div><div class="evidence-chart" aria-label="Evidence availability chart"><div class="evidence-row"><span>Source documentation review</span><div class="evidence-track"><div style="width:100%"></div></div><strong>Required</strong></div><div class="evidence-row"><span>Reusable distribution</span><div class="evidence-track"><div style="width:35%"></div></div><strong>Pending</strong></div><div class="evidence-row"><span>Annual attrition</span><div class="evidence-track"><div style="width:0%"></div></div><strong>Not estimable</strong></div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA · events reconciled across two sources. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-10"><div class="slide-heading"><div><h2 class="slide-title-text">Sensitivity check: teams with 6+ employees</h2><p class="slide-subtitle">The same pattern is stronger for larger teams, but it remains a descriptive association</p></div><span class="badge badge-neutral">Annual attrition not estimable</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>The same pattern is stronger for larger teams, but it remains a descriptive association</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Distribution</span><span>Distribution / Annual attrition</span></div><div class="evidence-chart" aria-label="Evidence availability chart"><div class="evidence-row"><span>Source documentation review</span><div class="evidence-track"><div style="width:100%"></div></div><strong>Required</strong></div><div class="evidence-row"><span>Reusable distribution</span><div class="evidence-track"><div style="width:35%"></div></div><strong>Pending</strong></div><div class="evidence-row"><span>Annual attrition</span><div class="evidence-track"><div style="width:0%"></div></div><strong>Not estimable</strong></div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA · events reconciled across two sources. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-11"><div class="slide-heading"><div><h2 class="slide-title-text">Job family</h2><p class="slide-subtitle">August and September are separate snapshots around a reorganization, not a trend</p></div><span class="badge badge-info">Annual attrition</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Stored HRDA job family for the active workforce snapshot.</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Snapshot 2026-08-23 · top 20 + Other</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="Software Engineering">Software Engineering</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">22% · 10,948</div><div class="play-attr attr-mid">5.5%</div></div><div class="play-row"><div class="play-label" title="Hardware Engineering">Hardware Engineering</div><div class="play-track"><div class="play-fill" style="width:80.8%"></div></div><div class="play-dist">18% · 8,856</div><div class="play-attr attr-high">9.4%</div></div><div class="play-row"><div class="play-label" title="ASICS Engineering">ASICS Engineering</div><div class="play-track"><div class="play-fill" style="width:29.2%"></div></div><div class="play-dist">6% · 3,182</div><div class="play-attr attr-high">7.3%</div></div><div class="play-row"><div class="play-label" title="Systems Engineering">Systems Engineering</div><div class="play-track"><div class="play-fill" style="width:24.2%"></div></div><div class="play-dist">5% · 2,653</div><div class="play-attr attr-mid">5.8%</div></div><div class="play-row"><div class="play-label" title="Software Applications Engineering">Software Applications Engineering</div><div class="play-track"><div class="play-fill" style="width:16.4%"></div></div><div class="play-dist">4% · 1,793</div><div class="play-attr attr-low">2.3%</div></div><div class="play-row"><div class="play-label" title="Systems Test Engineering">Systems Test Engineering</div><div class="play-track"><div class="play-fill" style="width:15.5%"></div></div><div class="play-dist">3% · 1,704</div><div class="play-attr attr-low">2.6%</div></div><div class="play-row"><div class="play-label" title="Operator">Operator</div><div class="play-track"><div class="play-fill" style="width:8.7%"></div></div><div class="play-dist">2% · 954</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="Machine Learning Engineering">Machine Learning Engineering</div><div class="play-track"><div class="play-fill" style="width:8.2%"></div></div><div class="play-dist">2% · 904</div><div class="play-attr attr-high">7.2%</div></div><div class="play-row"><div class="play-label" title="Software Test Engineering">Software Test Engineering</div><div class="play-track"><div class="play-fill" style="width:7.8%"></div></div><div class="play-dist">2% · 873</div><div class="play-attr attr-low">3.5%</div></div><div class="play-row"><div class="play-label" title="Program Management">Program Management</div><div class="play-track"><div class="play-fill" style="width:7.3%"></div></div><div class="play-dist">2% · 795</div><div class="play-attr attr-low">3.0%</div></div><div class="play-row"><div class="play-label" title="Modem Technologies">Modem Technologies</div><div class="play-track"><div class="play-fill" style="width:5.9%"></div></div><div class="play-dist">1% · 631</div><div class="play-attr attr-low">4.2%</div></div><div class="play-row"><div class="play-label" title="IT Engineering">IT Engineering</div><div class="play-track"><div class="play-fill" style="width:5.9%"></div></div><div class="play-dist">1% · 630</div><div class="play-attr attr-low">4.5%</div></div><div class="play-row"><div class="play-label" title="Hardware Applications Engineering">Hardware Applications Engineering</div><div class="play-track"><div class="play-fill" style="width:5.0%"></div></div><div class="play-dist">1% · 574</div><div class="play-attr attr-low">2.0%</div></div><div class="play-row"><div class="play-label" title="GPU ASICS Engineering">GPU ASICS Engineering</div><div class="play-track"><div class="play-fill" style="width:5.0%"></div></div><div class="play-dist">1% · 572</div><div class="play-attr attr-mid">5.6%</div></div></section><section class="play-panel"><div class="panel-heading"><span>Snapshot 2026-09-07 · top 20 + Other</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="Software Engineering">Software Engineering</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">18% · 8,953</div><div class="play-attr attr-mid">5.5%</div></div><div class="play-row"><div class="play-label" title="ASICS Engineering">ASICS Engineering</div><div class="play-track"><div class="play-fill" style="width:82.0%"></div></div><div class="play-dist">15% · 7,329</div><div class="play-attr attr-high">7.3%</div></div><div class="play-row"><div class="play-label" title="Hardware Engineering">Hardware Engineering</div><div class="play-track"><div class="play-fill" style="width:28.7%"></div></div><div class="play-dist">5% · 2,565</div><div class="play-attr attr-high">9.4%</div></div><div class="play-row"><div class="play-label" title="Software Applications Engineering">Software Applications Engineering</div><div class="play-track"><div class="play-fill" style="width:20.2%"></div></div><div class="play-dist">4% · 1,796</div><div class="play-attr attr-low">2.3%</div></div><div class="play-row"><div class="play-label" title="Systems Test Engineering">Systems Test Engineering</div><div class="play-track"><div class="play-fill" style="width:19.1%"></div></div><div class="play-dist">3% · 1,700</div><div class="play-attr attr-low">2.6%</div></div><div class="play-row"><div class="play-label" title="Systems Engineering">Systems Engineering</div><div class="play-track"><div class="play-fill" style="width:16.3%"></div></div><div class="play-dist">3% · 1,455</div><div class="play-attr attr-mid">5.8%</div></div><div class="play-row"><div class="play-label" title="Cellular System Test Engineering">Cellular System Test Engineering</div><div class="play-track"><div class="play-fill" style="width:14.0%"></div></div><div class="play-dist">2% · 1,279</div><div class="play-attr attr-low">2.3%</div></div><div class="play-row"><div class="play-label" title="CPU Engineering">CPU Engineering</div><div class="play-track"><div class="play-fill" style="width:14.0%"></div></div><div class="play-dist">2% · 1,263</div><div class="play-attr attr-high">8.1%</div></div><div class="play-row"><div class="play-label" title="GPU ASICS Engineering">GPU ASICS Engineering</div><div class="play-track"><div class="play-fill" style="width:14.0%"></div></div><div class="play-dist">2% · 1,238</div><div class="play-attr attr-mid">5.6%</div></div><div class="play-row"><div class="play-label" title="Cellular Technologies Software">Cellular Technologies Software</div><div class="play-track"><div class="play-fill" style="width:12.4%"></div></div><div class="play-dist">2% · 1,123</div><div class="play-attr attr-low">2.4%</div></div><div class="play-row"><div class="play-label" title="Operator">Operator</div><div class="play-track"><div class="play-fill" style="width:10.7%"></div></div><div class="play-dist">2% · 954</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="Machine Learning Engineering">Machine Learning Engineering</div><div class="play-track"><div class="play-fill" style="width:10.1%"></div></div><div class="play-dist">2% · 915</div><div class="play-attr attr-high">7.2%</div></div><div class="play-row"><div class="play-label" title="Camera Engineering">Camera Engineering</div><div class="play-track"><div class="play-fill" style="width:9.0%"></div></div><div class="play-dist">2% · 824</div><div class="play-attr attr-mid">5.2%</div></div><div class="play-row"><div class="play-label" title="Program Management">Program Management</div><div class="play-track"><div class="play-fill" style="width:9.0%"></div></div><div class="play-dist">2% · 802</div><div class="play-attr attr-low">3.0%</div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.post_hire_monthly_worker_dtls. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-12"><div class="slide-heading"><div><h2 class="slide-title-text">Region</h2><p class="slide-subtitle">Stored Region, a display-only country split, and Labor Market are three different views</p></div><span class="badge badge-info">Annual attrition</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Region, major country split, and labor market as separate work-location views.</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Region distribution</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="India">India</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">42% · 20,814</div><div class="play-attr attr-high">7.3%</div></div><div class="play-row"><div class="play-label" title="Americas">Americas</div><div class="play-track"><div class="play-fill" style="width:77.2%"></div></div><div class="play-dist">32% · 16,040</div><div class="play-attr attr-mid">5.0%</div></div><div class="play-row"><div class="play-label" title="APAC">APAC</div><div class="play-track"><div class="play-fill" style="width:36.5%"></div></div><div class="play-dist">15% · 7,631</div><div class="play-attr attr-low">3.0%</div></div><div class="play-row"><div class="play-label" title="EMEA">EMEA</div><div class="play-track"><div class="play-fill" style="width:26.7%"></div></div><div class="play-dist">11% · 5,558</div><div class="play-attr attr-mid">5.0%</div></div></section><section class="play-panel"><div class="panel-heading"><span>Alternative display - U.S. and China separated</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="India">India</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">42% · 20,814</div><div class="play-attr attr-high">7.3%</div></div><div class="play-row"><div class="play-label" title="United States">United States</div><div class="play-track"><div class="play-fill" style="width:69.5%"></div></div><div class="play-dist">29% · 14,470</div><div class="play-attr attr-mid">5.0%</div></div><div class="play-row"><div class="play-label" title="Americas excluding U.S.">Americas excluding U.S.</div><div class="play-track"><div class="play-fill" style="width:7.5%"></div></div><div class="play-dist">3% · 1,570</div><div class="play-attr attr-high">5.3%</div></div><div class="play-row"><div class="play-label" title="China">China</div><div class="play-track"><div class="play-fill" style="width:16.3%"></div></div><div class="play-dist">7% · 3,389</div><div class="play-attr attr-low">0.4%</div></div><div class="play-row"><div class="play-label" title="APAC excluding China">APAC excluding China</div><div class="play-track"><div class="play-fill" style="width:20.4%"></div></div><div class="play-dist">8% · 4,242</div><div class="play-attr attr-mid">4.6%</div></div><div class="play-row"><div class="play-label" title="EMEA">EMEA</div><div class="play-track"><div class="play-fill" style="width:26.7%"></div></div><div class="play-dist">11% · 5,558</div><div class="play-attr attr-mid">5.0%</div></div></section><section class="play-panel"><div class="panel-heading"><span>Labor Market distribution - top 20 + Other</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="IND">IND</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">42% · 20,814</div><div class="play-attr attr-high">7.3%</div></div><div class="play-row"><div class="play-label" title="USA - Market 1">USA - Market 1</div><div class="play-track"><div class="play-fill" style="width:56.0%"></div></div><div class="play-dist">23% · 11,635</div><div class="play-attr attr-mid">4.7%</div></div><div class="play-row"><div class="play-label" title="CHN - Market 1">CHN - Market 1</div><div class="play-track"><div class="play-fill" style="width:10.8%"></div></div><div class="play-dist">4% · 2,262</div><div class="play-attr attr-low">0.4%</div></div><div class="play-row"><div class="play-label" title="USA - Market 2">USA - Market 2</div><div class="play-track"><div class="play-fill" style="width:9.9%"></div></div><div class="play-dist">4% · 2,043</div><div class="play-attr attr-high">7.0%</div></div><div class="play-row"><div class="play-label" title="TWN">TWN</div><div class="play-track"><div class="play-fill" style="width:9.4%"></div></div><div class="play-dist">4% · 1,963</div><div class="play-attr attr-mid">5.1%</div></div><div class="play-row"><div class="play-label" title="DEU">DEU</div><div class="play-track"><div class="play-fill" style="width:7.5%"></div></div><div class="play-dist">3% · 1,568</div><div class="play-attr attr-low">3.4%</div></div><div class="play-row"><div class="play-label" title="CAN">CAN</div><div class="play-track"><div class="play-fill" style="width:5.8%"></div></div><div class="play-dist">2% · 1,182</div><div class="play-attr attr-high">5.7%</div></div><div class="play-row"><div class="play-label" title="SGP - Market 2">SGP - Market 2</div><div class="play-track"><div class="play-fill" style="width:5.0%"></div></div><div class="play-dist">2% · 1,055</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="CHN - Market 2">CHN - Market 2</div><div class="play-track"><div class="play-fill" style="width:5.0%"></div></div><div class="play-dist">2% · 1,049</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="IRL">IRL</div><div class="play-track"><div class="play-fill" style="width:4.1%"></div></div><div class="play-dist">2% · 852</div><div class="play-attr attr-high">9.2%</div></div><div class="play-row"><div class="play-label" title="ISR">ISR</div><div class="play-track"><div class="play-fill" style="width:3.8%"></div></div><div class="play-dist">2% · 803</div><div class="play-attr attr-mid">5.1%</div></div><div class="play-row"><div class="play-label" title="USA - Market 3">USA - Market 3</div><div class="play-track"><div class="play-fill" style="width:3.8%"></div></div><div class="play-dist">2% · 792</div><div class="play-attr attr-mid">4.8%</div></div><div class="play-row"><div class="play-label" title="GBR">GBR</div><div class="play-track"><div class="play-fill" style="width:3.1%"></div></div><div class="play-dist">1% · 642</div><div class="play-attr attr-mid">4.9%</div></div><div class="play-row"><div class="play-label" title="KOR">KOR</div><div class="play-track"><div class="play-fill" style="width:2.6%"></div></div><div class="play-dist">1% · 536</div><div class="play-attr attr-low">3.0%</div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.post_hire_monthly_worker_dtls. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-13"><div class="slide-heading"><div><h2 class="slide-title-text">Gender</h2><p class="slide-subtitle">Protected-category results are anonymized and shown only for aggregate fairness review</p></div><span class="badge badge-info">Annual attrition</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Protected category used only for aggregate internal fairness review.</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Annual datalake distribution: gender</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="M">M</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">79% · 39,228</div><div class="play-attr attr-mid">5.7%</div></div><div class="play-row"><div class="play-label" title="F">F</div><div class="play-track"><div class="play-fill" style="width:26.7%"></div></div><div class="play-dist">21% · 10,481</div><div class="play-attr attr-mid">5.7%</div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.post_hire_monthly_worker_dtls. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-14"><div class="slide-heading"><div><h2 class="slide-title-text">Work arrangement</h2><p class="slide-subtitle">The source contains several work-arrangement labels; the two-group view is exploratory</p></div><span class="badge badge-info">Annual attrition</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>The source contains several work-arrangement labels; the two-group view is exploratory</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Stored work_arrangement categories</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="Onsite">Onsite</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">90% · 45,213</div><div class="play-attr attr-mid">5.8%</div></div><div class="play-row"><div class="play-label" title="Interim Modified – Short-Term Remote Work">Interim Modified – Short-Term Remote Work</div><div class="play-track"><div class="play-fill" style="width:2.5%"></div></div><div class="play-dist">2% · 1,154</div><div class="play-attr attr-high">10.3%</div></div><div class="play-row"><div class="play-label" title="Offsite – Hired Remote">Offsite – Hired Remote</div><div class="play-track"><div class="play-fill" style="width:2.1%"></div></div><div class="play-dist">2% · 952</div><div class="play-attr attr-low">4.8%</div></div><div class="play-row"><div class="play-label" title="Interim Modified – Space Constraints">Interim Modified – Space Constraints</div><div class="play-track"><div class="play-fill" style="width:1.4%"></div></div><div class="play-dist">1% · 639</div><div class="play-attr attr-high">8.1%</div></div><div class="play-row"><div class="play-label" title="Offsite – Critical Talent">Offsite – Critical Talent</div><div class="play-track"><div class="play-fill" style="width:1.1%"></div></div><div class="play-dist">1% · 524</div><div class="play-attr attr-mid">5.5%</div></div><div class="play-row"><div class="play-label" title="Offsite – Limited Collaboration or Space">Offsite – Limited Collaboration or Space</div><div class="play-track"><div class="play-fill" style="width:0.6%"></div></div><div class="play-dist">0% · 233</div><div class="play-attr attr-low">4.0%</div></div><div class="play-row"><div class="play-label" title="Interim Modified – Customer Location">Interim Modified – Customer Location</div><div class="play-track"><div class="play-fill" style="width:0.4%"></div></div><div class="play-dist">0% · 223</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="Interim Modified – Frequent Traveler">Interim Modified – Frequent Traveler</div><div class="play-track"><div class="play-fill" style="width:0.3%"></div></div><div class="play-dist">0% · 168</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="Offsite – Talent Availability">Offsite – Talent Availability</div><div class="play-track"><div class="play-fill" style="width:0.3%"></div></div><div class="play-dist">0% · 165</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="Offsite – Indefinite Time Zone">Offsite – Indefinite Time Zone</div><div class="play-track"><div class="play-fill" style="width:0.3%"></div></div><div class="play-dist">0% · 133</div><div class="play-attr attr-low">4.2%</div></div><div class="play-row"><div class="play-label" title="Other categories">Other categories</div><div class="play-track"><div class="play-fill" style="width:0.9%"></div></div><div class="play-dist">1% · 398</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="No work arrangement">No work arrangement</div><div class="play-track"><div class="play-fill" style="width:0.6%"></div></div><div class="play-dist">0% · 231</div><div class="play-attr attr-unavailable">Not estimable</div></div></section><section class="play-panel"><div class="panel-heading"><span>Binary view: Onsite (1) vs. other (0)</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="Onsite (1)">Onsite (1)</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">90% · 45,213</div><div class="play-attr attr-mid">5.8%</div></div><div class="play-row"><div class="play-label" title="Other stored values (0)">Other stored values (0)</div><div class="play-track"><div class="play-fill" style="width:10.6%"></div></div><div class="play-dist">10% · 4,820</div><div class="play-attr attr-mid">5.7%</div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.post_hire_monthly_worker_dtls. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-15"><div class="slide-heading"><div><h2 class="slide-title-text">Engineering vs. non-engineering</h2><p class="slide-subtitle">The stored engineering flag and the organization-based split are related but not interchangeable</p></div><span class="badge badge-info">Annual attrition</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Stored or organization-derived functional split.</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Distribution of eng_or_noneng</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="Engineering">Engineering</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">77% · 38,440</div><div class="play-attr attr-mid">6.0%</div></div><div class="play-row"><div class="play-label" title="Non_Engineering">Non_Engineering</div><div class="play-track"><div class="play-fill" style="width:30.2%"></div></div><div class="play-dist">23% · 11,593</div><div class="play-attr attr-mid">4.7%</div></div></section><section class="play-panel"><div class="panel-heading"><span>Documented organizational split: CTO vs. Corp Fxn &amp; BU</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="CTO">CTO</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">72% · 35,788</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="Corp Fxn &amp; BU">Corp Fxn &amp; BU</div><div class="play-track"><div class="play-fill" style="width:39.9%"></div></div><div class="play-dist">28% · 14,255</div><div class="play-attr attr-unavailable">Not estimable</div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.post_hire_monthly_worker_dtls. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-16"><div class="slide-heading"><div><h2 class="slide-title-text">Rehire</h2><p class="slide-subtitle">The source definition changes in 2022, so results from the two periods should not be combined</p></div><span class="badge badge-info">Annual attrition</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Stored rehire flag; historical definition changes need to remain visible.</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Annual datalake distribution: rehire</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="Not rehire (0)">Not rehire (0)</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">86% · 43,049</div><div class="play-attr attr-low">5.4%</div></div><div class="play-row"><div class="play-label" title="Rehire (1)">Rehire (1)</div><div class="play-track"><div class="play-fill" style="width:15.8%"></div></div><div class="play-dist">14% · 6,802</div><div class="play-attr attr-high">7.6%</div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.post_hire_monthly_worker_dtls. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-17"><div class="slide-heading"><div><h2 class="slide-title-text">Experience before Qualcomm</h2><p class="slide-subtitle">Prior experience is shown in completed-year bands; rare values are grouped for privacy</p></div><span class="badge badge-info">Annual attrition</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Prior experience is shown in completed-year bands; rare values are grouped for privacy</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Distribution of prior_qc_work_years</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="&lt;1">&lt;1</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">33% · 16,795</div><div class="play-attr attr-high">6.8%</div></div><div class="play-row"><div class="play-label" title="1">1</div><div class="play-track"><div class="play-fill" style="width:21.3%"></div></div><div class="play-dist">7% · 3,590</div><div class="play-attr attr-high">6.8%</div></div><div class="play-row"><div class="play-label" title="2">2</div><div class="play-track"><div class="play-fill" style="width:22.5%"></div></div><div class="play-dist">8% · 3,768</div><div class="play-attr attr-high">7.0%</div></div><div class="play-row"><div class="play-label" title="3">3</div><div class="play-track"><div class="play-fill" style="width:22.8%"></div></div><div class="play-dist">8% · 3,795</div><div class="play-attr attr-high">6.0%</div></div><div class="play-row"><div class="play-label" title="4">4</div><div class="play-track"><div class="play-fill" style="width:19.8%"></div></div><div class="play-dist">7% · 3,295</div><div class="play-attr attr-high">5.6%</div></div><div class="play-row"><div class="play-label" title="5">5</div><div class="play-track"><div class="play-fill" style="width:16.8%"></div></div><div class="play-dist">6% · 2,805</div><div class="play-attr attr-mid">5.0%</div></div><div class="play-row"><div class="play-label" title="6">6</div><div class="play-track"><div class="play-fill" style="width:14.1%"></div></div><div class="play-dist">5% · 2,362</div><div class="play-attr attr-mid">4.8%</div></div><div class="play-row"><div class="play-label" title="7">7</div><div class="play-track"><div class="play-fill" style="width:12.0%"></div></div><div class="play-dist">4% · 1,985</div><div class="play-attr attr-mid">4.6%</div></div><div class="play-row"><div class="play-label" title="8">8</div><div class="play-track"><div class="play-fill" style="width:10.2%"></div></div><div class="play-dist">3% · 1,694</div><div class="play-attr attr-low">3.5%</div></div><div class="play-row"><div class="play-label" title="9">9</div><div class="play-track"><div class="play-fill" style="width:8.4%"></div></div><div class="play-dist">3% · 1,407</div><div class="play-attr attr-low">3.5%</div></div><div class="play-row"><div class="play-label" title="10">10</div><div class="play-track"><div class="play-fill" style="width:7.5%"></div></div><div class="play-dist">2% · 1,248</div><div class="play-attr attr-mid">4.2%</div></div><div class="play-row"><div class="play-label" title="11">11</div><div class="play-track"><div class="play-fill" style="width:6.3%"></div></div><div class="play-dist">2% · 1,047</div><div class="play-attr attr-low">3.4%</div></div><div class="play-row"><div class="play-label" title="12">12</div><div class="play-track"><div class="play-fill" style="width:5.7%"></div></div><div class="play-dist">2% · 949</div><div class="play-attr attr-mid">4.0%</div></div><div class="play-row"><div class="play-label" title="13">13</div><div class="play-track"><div class="play-fill" style="width:4.8%"></div></div><div class="play-dist">2% · 800</div><div class="play-attr attr-low">3.7%</div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.post_hire_monthly_worker_dtls. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-18"><div class="slide-heading"><div><h2 class="slide-title-text">Annual voluntary attrition by prior experience</h2><p class="slide-subtitle">Rates vary by experience band, but the comparison is descriptive and does not show causation</p></div><span class="badge badge-info">Annual attrition</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Rates vary by experience band, but the comparison is descriptive and does not show causation</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Annual datalake distribution: prior_experience_years</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="&lt;1">&lt;1</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">36% · 17,716</div><div class="play-attr attr-high">6.8%</div></div><div class="play-row"><div class="play-label" title="2">2</div><div class="play-track"><div class="play-fill" style="width:22.5%"></div></div><div class="play-dist">8% · 3,992</div><div class="play-attr attr-high">7.0%</div></div><div class="play-row"><div class="play-label" title="3">3</div><div class="play-track"><div class="play-fill" style="width:22.5%"></div></div><div class="play-dist">8% · 3,992</div><div class="play-attr attr-high">6.0%</div></div><div class="play-row"><div class="play-label" title="4">4</div><div class="play-track"><div class="play-fill" style="width:19.3%"></div></div><div class="play-dist">7% · 3,420</div><div class="play-attr attr-high">5.6%</div></div><div class="play-row"><div class="play-label" title="5">5</div><div class="play-track"><div class="play-fill" style="width:16.5%"></div></div><div class="play-dist">6% · 2,924</div><div class="play-attr attr-mid">5.0%</div></div><div class="play-row"><div class="play-label" title="6">6</div><div class="play-track"><div class="play-fill" style="width:13.9%"></div></div><div class="play-dist">5% · 2,459</div><div class="play-attr attr-mid">4.8%</div></div><div class="play-row"><div class="play-label" title="7">7</div><div class="play-track"><div class="play-fill" style="width:12.0%"></div></div><div class="play-dist">4% · 2,131</div><div class="play-attr attr-mid">4.6%</div></div><div class="play-row"><div class="play-label" title="8">8</div><div class="play-track"><div class="play-fill" style="width:10.0%"></div></div><div class="play-dist">4% · 1,777</div><div class="play-attr attr-low">3.5%</div></div><div class="play-row"><div class="play-label" title="9">9</div><div class="play-track"><div class="play-fill" style="width:8.5%"></div></div><div class="play-dist">3% · 1,505</div><div class="play-attr attr-low">3.5%</div></div><div class="play-row"><div class="play-label" title="10">10</div><div class="play-track"><div class="play-fill" style="width:7.5%"></div></div><div class="play-dist">3% · 1,327</div><div class="play-attr attr-mid">4.2%</div></div><div class="play-row"><div class="play-label" title="11">11</div><div class="play-track"><div class="play-fill" style="width:6.0%"></div></div><div class="play-dist">2% · 1,071</div><div class="play-attr attr-low">3.4%</div></div><div class="play-row"><div class="play-label" title="12">12</div><div class="play-track"><div class="play-fill" style="width:5.6%"></div></div><div class="play-dist">2% · 1,000</div><div class="play-attr attr-mid">4.0%</div></div><div class="play-row"><div class="play-label" title="13">13</div><div class="play-track"><div class="play-fill" style="width:4.9%"></div></div><div class="play-dist">2% · 867</div><div class="play-attr attr-low">3.7%</div></div><div class="play-row"><div class="play-label" title="14">14</div><div class="play-track"><div class="play-fill" style="width:4.0%"></div></div><div class="play-dist">1% · 703</div><div class="play-attr attr-low">3.7%</div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.post_hire_monthly_worker_dtls + hrda.all_terminations. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-19"><div class="slide-heading"><div><h2 class="slide-title-text">Commute distance</h2><p class="slide-subtitle">Straight-line distance is estimated from postal centroids; it is not commute time or route distance</p></div><span class="badge badge-neutral">Annual attrition not estimable</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Approximate distance between residential and office centroids.</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Distribution</span><span>Distribution / Annual attrition</span></div><div class="evidence-chart" aria-label="Evidence availability chart"><div class="evidence-row"><span>Source documentation review</span><div class="evidence-track"><div style="width:100%"></div></div><strong>Required</strong></div><div class="evidence-row"><span>Reusable distribution</span><div class="evidence-track"><div style="width:35%"></div></div><strong>Pending</strong></div><div class="evidence-row"><span>Annual attrition</span><div class="evidence-track"><div style="width:0%"></div></div><strong>Not estimable</strong></div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - post-hire workforce + office/postal centroid references. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-20"><div class="slide-heading"><div><h2 class="slide-title-text">RTO and hybrid comments in QVoice</h2><p class="slide-subtitle">The chart counts topic mentions; it does not measure sentiment, complaints, or policy agreement</p></div><span class="badge badge-neutral">Annual attrition not estimable</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>The chart counts topic mentions; it does not measure sentiment, complaints, or policy agreement</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Distribution</span><span>Distribution / Annual attrition</span></div><div class="evidence-chart" aria-label="Evidence availability chart"><div class="evidence-row"><span>Source documentation review</span><div class="evidence-track"><div style="width:100%"></div></div><strong>Required</strong></div><div class="evidence-row"><span>Reusable distribution</span><div class="evidence-track"><div style="width:35%"></div></div><strong>Pending</strong></div><div class="evidence-row"><span>Annual attrition</span><div class="evidence-track"><div style="width:0%"></div></div><strong>Not estimable</strong></div></div></section></div><div class="source-line"><strong>Source:</strong> QVoice raw Excel workbooks - Raw data worksheet · four identified open-text waves. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-21"><div class="slide-heading"><div><h2 class="slide-title-text">Retention concerns in QVoice comments</h2><p class="slide-subtitle">Themes show what respondents mentioned for improvement, not individual attrition risk</p></div><span class="badge badge-neutral">Annual attrition not estimable</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>QVoice comment themes related to retention concerns.</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Distribution</span><span>Distribution / Annual attrition</span></div><div class="evidence-chart" aria-label="Evidence availability chart"><div class="evidence-row"><span>Source documentation review</span><div class="evidence-track"><div style="width:100%"></div></div><strong>Required</strong></div><div class="evidence-row"><span>Reusable distribution</span><div class="evidence-track"><div style="width:35%"></div></div><strong>Pending</strong></div><div class="evidence-row"><span>Annual attrition</span><div class="evidence-track"><div style="width:0%"></div></div><strong>Not estimable</strong></div></div></section></div><div class="source-line"><strong>Source:</strong> QVoice raw Excel workbooks - Raw data worksheet · original improvement prompts. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-22"><div class="slide-heading"><div><h2 class="slide-title-text">QVoice participation coverage</h2><p class="slide-subtitle">A missing survey row may reflect eligibility or data coverage, not confirmed non-response</p></div><span class="badge badge-neutral">Annual attrition not estimable</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>A missing survey row may reflect eligibility or data coverage, not confirmed non-response</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Distribution</span><span>Distribution / Annual attrition</span></div><div class="evidence-chart" aria-label="Evidence availability chart"><div class="evidence-row"><span>Source documentation review</span><div class="evidence-track"><div style="width:100%"></div></div><strong>Required</strong></div><div class="evidence-row"><span>Reusable distribution</span><div class="evidence-track"><div style="width:35%"></div></div><strong>Pending</strong></div><div class="evidence-row"><span>Annual attrition</span><div class="evidence-track"><div style="width:0%"></div></div><strong>Not estimable</strong></div></div></section></div><div class="source-line"><strong>Source:</strong> QVoice raw Excel workbooks + HRDA - Raw data worksheet + hrda.post_hire_monthly_worker_dtls. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-23"><div class="slide-heading"><div><h2 class="slide-title-text">Intent to Stay items</h2><p class="slide-subtitle">Item coverage is measurable; scale direction and workforce linkage still need validation</p></div><span class="badge badge-neutral">Annual attrition not estimable</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>QVoice items related to intent to stay.</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Distribution</span><span>Distribution / Annual attrition</span></div><div class="evidence-chart" aria-label="Evidence availability chart"><div class="evidence-row"><span>Source documentation review</span><div class="evidence-track"><div style="width:100%"></div></div><strong>Required</strong></div><div class="evidence-row"><span>Reusable distribution</span><div class="evidence-track"><div style="width:35%"></div></div><strong>Pending</strong></div><div class="evidence-row"><span>Annual attrition</span><div class="evidence-track"><div style="width:0%"></div></div><strong>Not estimable</strong></div></div></section></div><div class="source-line"><strong>Source:</strong> QVoice raw Excel workbooks - survey_structure.xlsx + response waves. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-24"><div class="slide-heading"><div><h2 class="slide-title-text">Career goals item</h2><p class="slide-subtitle">Response coverage is measurable; favorability and year-to-year comparability are not yet confirmed</p></div><span class="badge badge-neutral">Annual attrition not estimable</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>QVoice item related to career goals or growth clarity.</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Distribution</span><span>Distribution / Annual attrition</span></div><div class="evidence-chart" aria-label="Evidence availability chart"><div class="evidence-row"><span>Source documentation review</span><div class="evidence-track"><div style="width:100%"></div></div><strong>Required</strong></div><div class="evidence-row"><span>Reusable distribution</span><div class="evidence-track"><div style="width:35%"></div></div><strong>Pending</strong></div><div class="evidence-row"><span>Annual attrition</span><div class="evidence-track"><div style="width:0%"></div></div><strong>Not estimable</strong></div></div></section></div><div class="source-line"><strong>Source:</strong> QVoice raw Excel workbooks - survey_structure.xlsx + response waves. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-25"><div class="slide-heading"><div><h2 class="slide-title-text">Average of comparable QVoice items</h2><p class="slide-subtitle">The score covers respondents who answered all 33 common items, not the full workforce</p></div><span class="badge badge-neutral">Annual attrition not estimable</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>The score covers respondents who answered all 33 common items, not the full workforce</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Distribution</span><span>Distribution / Annual attrition</span></div><div class="evidence-chart" aria-label="Evidence availability chart"><div class="evidence-row"><span>Source documentation review</span><div class="evidence-track"><div style="width:100%"></div></div><strong>Required</strong></div><div class="evidence-row"><span>Reusable distribution</span><div class="evidence-track"><div style="width:35%"></div></div><strong>Pending</strong></div><div class="evidence-row"><span>Annual attrition</span><div class="evidence-track"><div style="width:0%"></div></div><strong>Not estimable</strong></div></div></section></div><div class="source-line"><strong>Source:</strong> QVoice raw Excel workbooks - Jan-2024, Jan-2025, and Jan-2026 Raw data sheets. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-26"><div class="slide-heading"><div><h2 class="slide-title-text">QVoice heartbeat</h2><p class="slide-subtitle">Each item is compared with the same respondent&#x27;s average response, not an external benchmark</p></div><span class="badge badge-neutral">Annual attrition not estimable</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>QVoice item comparison against each respondent&#x27;s own average response.</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Distribution</span><span>Distribution / Annual attrition</span></div><div class="evidence-chart" aria-label="Evidence availability chart"><div class="evidence-row"><span>Source documentation review</span><div class="evidence-track"><div style="width:100%"></div></div><strong>Required</strong></div><div class="evidence-row"><span>Reusable distribution</span><div class="evidence-track"><div style="width:35%"></div></div><strong>Pending</strong></div><div class="evidence-row"><span>Annual attrition</span><div class="evidence-track"><div style="width:0%"></div></div><strong>Not estimable</strong></div></div></section></div><div class="source-line"><strong>Source:</strong> QVoice raw Excel workbook + HRDA - Jan-2026 Raw data sheet + pre-wave workforce snapshot. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-27"><div class="slide-heading"><div><h2 class="slide-title-text">QVoice scores standardized within region</h2><p class="slide-subtitle">Scores show relative standing within each region and survey year, not absolute sentiment</p></div><span class="badge badge-neutral">Annual attrition not estimable</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Scores show relative standing within each region and survey year, not absolute sentiment</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Distribution</span><span>Distribution / Annual attrition</span></div><div class="evidence-chart" aria-label="Evidence availability chart"><div class="evidence-row"><span>Source documentation review</span><div class="evidence-track"><div style="width:100%"></div></div><strong>Required</strong></div><div class="evidence-row"><span>Reusable distribution</span><div class="evidence-track"><div style="width:35%"></div></div><strong>Pending</strong></div><div class="evidence-row"><span>Annual attrition</span><div class="evidence-track"><div style="width:0%"></div></div><strong>Not estimable</strong></div></div></section></div><div class="source-line"><strong>Source:</strong> QVoice raw workbooks - QVoice waves. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-28"><div class="slide-heading"><div><h2 class="slide-title-text">Time in job profile vs. detailed level</h2><p class="slide-subtitle">Two stored dates provide useful approximations, but neither is an approved career-tenure definition</p></div><span class="badge badge-neutral">Annual attrition not estimable</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Two stored dates provide useful approximations, but neither is an approved career-tenure definition</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Time in current job profile · field proxy</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="&lt;1 year">&lt;1 year</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">30% · 15,250</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="1–&lt;2 years">1–&lt;2 years</div><div class="play-track"><div class="play-fill" style="width:77.4%"></div></div><div class="play-dist">24% · 11,791</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="2–&lt;3 years">2–&lt;3 years</div><div class="play-track"><div class="play-fill" style="width:49.5%"></div></div><div class="play-dist">15% · 7,558</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="3–&lt;5 years">3–&lt;5 years</div><div class="play-track"><div class="play-fill" style="width:64.9%"></div></div><div class="play-dist">20% · 9,897</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="5–&lt;10 years">5–&lt;10 years</div><div class="play-track"><div class="play-fill" style="width:32.8%"></div></div><div class="play-dist">10% · 4,981</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="10+ years">10+ years</div><div class="play-track"><div class="play-fill" style="width:3.6%"></div></div><div class="play-dist">1% · 566</div><div class="play-attr attr-unavailable">Not estimable</div></div></section><section class="play-panel"><div class="panel-heading"><span>Time at current detailed level · field proxy</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="&lt;1 year">&lt;1 year</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">28% · 14,008</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="1–&lt;2 years">1–&lt;2 years</div><div class="play-track"><div class="play-fill" style="width:77.9%"></div></div><div class="play-dist">22% · 10,890</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="2–&lt;3 years">2–&lt;3 years</div><div class="play-track"><div class="play-fill" style="width:52.9%"></div></div><div class="play-dist">15% · 7,383</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="3–&lt;5 years">3–&lt;5 years</div><div class="play-track"><div class="play-fill" style="width:72.5%"></div></div><div class="play-dist">20% · 10,152</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="5–&lt;10 years">5–&lt;10 years</div><div class="play-track"><div class="play-fill" style="width:45.7%"></div></div><div class="play-dist">13% · 6,390</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="10+ years">10+ years</div><div class="play-track"><div class="play-fill" style="width:8.6%"></div></div><div class="play-dist">2% · 1,220</div><div class="play-attr attr-unavailable">Not estimable</div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.post_hire_monthly_worker_dtls. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-29"><div class="slide-heading"><div><h2 class="slide-title-text">Annual attrition by grade-entry path and tenure</h2><p class="slide-subtitle">Historical job-profile start dates are missing, so no reliable attrition rate can be published</p></div><span class="badge badge-neutral">Annual attrition not estimable</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Descriptive annual attrition by grade entry path and tenure.</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Distribution</span><span>Distribution / Annual attrition</span></div><div class="evidence-chart" aria-label="Evidence availability chart"><div class="evidence-row"><span>Source documentation review</span><div class="evidence-track"><div style="width:100%"></div></div><strong>Required</strong></div><div class="evidence-row"><span>Reusable distribution</span><div class="evidence-track"><div style="width:35%"></div></div><strong>Pending</strong></div><div class="evidence-row"><span>Annual attrition</span><div class="evidence-track"><div style="width:0%"></div></div><strong>Not estimable</strong></div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.post_hire_monthly_worker_dtls. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-30"><div class="slide-heading"><div><h2 class="slide-title-text">Company tenure</h2><p class="slide-subtitle">Original-hire tenure and latest-hire or rehire tenure measure different periods of service</p></div><span class="badge badge-info">Annual attrition</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Tenure since most recent hire or rehire, grouped into bands.</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Annual datalake distribution: company_tenure</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="2–&lt;4 años">2–&lt;4 años</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">22% · 17,154</div><div class="play-attr attr-high">8.4%</div></div><div class="play-row"><div class="play-label" title="1–&lt;2 años">1–&lt;2 años</div><div class="play-track"><div class="play-fill" style="width:84.3%"></div></div><div class="play-dist">18% · 14,469</div><div class="play-attr attr-high">7.3%</div></div><div class="play-row"><div class="play-label" title="&lt;1 año">&lt;1 año</div><div class="play-track"><div class="play-fill" style="width:76.1%"></div></div><div class="play-dist">17% · 13,052</div><div class="play-attr attr-mid">5.5%</div></div><div class="play-row"><div class="play-label" title="10+ años">10+ años</div><div class="play-track"><div class="play-fill" style="width:69.7%"></div></div><div class="play-dist">15% · 11,959</div><div class="play-attr attr-low">2.5%</div></div><div class="play-row"><div class="play-label" title="6–&lt;10 años">6–&lt;10 años</div><div class="play-track"><div class="play-fill" style="width:66.9%"></div></div><div class="play-dist">15% · 11,480</div><div class="play-attr attr-low">4.7%</div></div><div class="play-row"><div class="play-label" title="4–&lt;6 años">4–&lt;6 años</div><div class="play-track"><div class="play-fill" style="width:61.0%"></div></div><div class="play-dist">13% · 10,467</div><div class="play-attr attr-high">7.4%</div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.post_hire_monthly_worker_dtls. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-31"><div class="slide-heading"><div><h2 class="slide-title-text">Time since last promotion</h2><p class="slide-subtitle">The chart uses the latest recorded promotion in the current employment period; older history is incomplete</p></div><span class="badge badge-info">Annual attrition</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Time since the last recorded promotion.</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Annual datalake distribution: time_since_promotion</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="Sin promoción registrada">Sin promoción registrada</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">84% · 49,706</div><div class="play-attr attr-mid">5.7%</div></div><div class="play-row"><div class="play-label" title="&lt;1 año">&lt;1 año</div><div class="play-track"><div class="play-fill" style="width:19.3%"></div></div><div class="play-dist">16% · 9,595</div><div class="play-attr attr-mid">6.1%</div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.post_hire_monthly_worker_dtls. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-32"><div class="slide-heading"><div><h2 class="slide-title-text">Promotion history by current compensation grade</h2><p class="slide-subtitle">Counts reflect recorded promotions in the current employment period, not a full career history</p></div><span class="badge badge-neutral">Annual attrition not estimable</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Observed promotions by current compensation grade.</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Distribution</span><span>Distribution / Annual attrition</span></div><div class="evidence-chart" aria-label="Evidence availability chart"><div class="evidence-row"><span>Source documentation review</span><div class="evidence-track"><div style="width:100%"></div></div><strong>Required</strong></div><div class="evidence-row"><span>Reusable distribution</span><div class="evidence-track"><div style="width:35%"></div></div><strong>Pending</strong></div><div class="evidence-row"><span>Annual attrition</span><div class="evidence-track"><div style="width:0%"></div></div><strong>Not estimable</strong></div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.post_hire_monthly_worker_dtls. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-33"><div class="slide-heading"><div><h2 class="slide-title-text">How employees reached their current compensation grade</h2><p class="slide-subtitle">The chart shows observable entry history, not whether an employee was hired into the grade</p></div><span class="badge badge-neutral">Annual attrition not estimable</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>The chart shows observable entry history, not whether an employee was hired into the grade</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Distribution</span><span>Distribution / Annual attrition</span></div><div class="evidence-chart" aria-label="Evidence availability chart"><div class="evidence-row"><span>Source documentation review</span><div class="evidence-track"><div style="width:100%"></div></div><strong>Required</strong></div><div class="evidence-row"><span>Reusable distribution</span><div class="evidence-track"><div style="width:35%"></div></div><strong>Pending</strong></div><div class="evidence-row"><span>Annual attrition</span><div class="evidence-track"><div style="width:0%"></div></div><strong>Not estimable</strong></div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.post_hire_monthly_worker_dtls. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-34"><div class="slide-heading"><div><h2 class="slide-title-text">Level</h2><p class="slide-subtitle">Level grouped, management level, and job level are related fields with different meanings</p></div><span class="badge badge-info">Annual attrition</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Grouped level, management level, and job level as seniority views.</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Level grouped</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="VP &amp; Above">VP &amp; Above</div><div class="play-track"><div class="play-fill" style="width:3.1%"></div></div><div class="play-dist">1% · 428</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="Sr Dir">Sr Dir</div><div class="play-track"><div class="play-fill" style="width:10.3%"></div></div><div class="play-dist">3% · 1,516</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="Princ/Directors">Princ/Directors</div><div class="play-track"><div class="play-fill" style="width:29.9%"></div></div><div class="play-dist">9% · 4,352</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="Mgrs Corp">Mgrs Corp</div><div class="play-track"><div class="play-fill" style="width:18.9%"></div></div><div class="play-dist">6% · 2,730</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="Sr Staff &amp; /Mgr">Sr Staff &amp; /Mgr</div><div class="play-track"><div class="play-fill" style="width:50.2%"></div></div><div class="play-dist">15% · 7,312</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="Staff &amp; /Mgr">Staff &amp; /Mgr</div><div class="play-track"><div class="play-fill" style="width:61.2%"></div></div><div class="play-dist">18% · 8,916</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="Senior &amp; Lead">Senior &amp; Lead</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">29% · 14,535</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="Assoc &amp; Int/Eng">Assoc &amp; Int/Eng</div><div class="play-track"><div class="play-fill" style="width:53.3%"></div></div><div class="play-dist">16% · 7,750</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="Support">Support</div><div class="play-track"><div class="play-fill" style="width:17.2%"></div></div><div class="play-dist">5% · 2,494</div><div class="play-attr attr-unavailable">Not estimable</div></div></section><section class="play-panel"><div class="panel-heading"><span>Management level</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="VP/SVP">VP/SVP</div><div class="play-track"><div class="play-fill" style="width:1.1%"></div></div><div class="play-dist">1% · 422</div><div class="play-attr attr-low">3.3%</div></div><div class="play-row"><div class="play-label" title="Directors/Sr Director">Directors/Sr Director</div><div class="play-track"><div class="play-fill" style="width:16.4%"></div></div><div class="play-dist">12% · 5,867</div><div class="play-attr attr-low">2.9%</div></div><div class="play-row"><div class="play-label" title="Management">Management</div><div class="play-track"><div class="play-fill" style="width:15.9%"></div></div><div class="play-dist">11% · 5,647</div><div class="play-attr attr-mid">3.8%</div></div><div class="play-row"><div class="play-label" title="Professional">Professional</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">71% · 35,597</div><div class="play-attr attr-high">6.5%</div></div><div class="play-row"><div class="play-label" title="Support">Support</div><div class="play-track"><div class="play-fill" style="width:7.0%"></div></div><div class="play-dist">5% · 2,494</div><div class="play-attr attr-high">5.5%</div></div></section><section class="play-panel"><div class="panel-heading"><span>Top 10 job levels + Other</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="Sr Eng - R30">Sr Eng - R30</div><div class="play-track"><div class="play-fill" style="width:71.7%"></div></div><div class="play-dist">18% · 8,870</div><div class="play-attr attr-high">7.9%</div></div><div class="play-row"><div class="play-label" title="Staff Eng - R40">Staff Eng - R40</div><div class="play-track"><div class="play-fill" style="width:56.7%"></div></div><div class="play-dist">14% · 7,028</div><div class="play-attr attr-high">5.6%</div></div><div class="play-row"><div class="play-label" title="Engineer - R20">Engineer - R20</div><div class="play-track"><div class="play-fill" style="width:45.7%"></div></div><div class="play-dist">11% · 5,643</div><div class="play-attr attr-high">8.4%</div></div><div class="play-row"><div class="play-label" title="Sr Staff Eng - R50">Sr Staff Eng - R50</div><div class="play-track"><div class="play-fill" style="width:36.4%"></div></div><div class="play-dist">9% · 4,487</div><div class="play-attr attr-mid">4.1%</div></div><div class="play-row"><div class="play-label" title="Lead Eng - R35">Lead Eng - R35</div><div class="play-track"><div class="play-fill" style="width:31.6%"></div></div><div class="play-dist">8% · 3,886</div><div class="play-attr attr-high">6.6%</div></div><div class="play-row"><div class="play-label" title="Sr Staff/Mgr Eng - T50">Sr Staff/Mgr Eng - T50</div><div class="play-track"><div class="play-fill" style="width:19.0%"></div></div><div class="play-dist">5% · 2,373</div><div class="play-attr attr-low">3.5%</div></div><div class="play-row"><div class="play-label" title="Principal/Mgr Eng - T60">Principal/Mgr Eng - T60</div><div class="play-track"><div class="play-fill" style="width:12.1%"></div></div><div class="play-dist">3% · 1,501</div><div class="play-attr attr-low">2.9%</div></div><div class="play-row"><div class="play-label" title="Senior Corp - P30">Senior Corp - P30</div><div class="play-track"><div class="play-fill" style="width:11.7%"></div></div><div class="play-dist">3% · 1,444</div><div class="play-attr attr-high">5.6%</div></div><div class="play-row"><div class="play-label" title="Staff Corp - P40">Staff Corp - P40</div><div class="play-track"><div class="play-fill" style="width:10.1%"></div></div><div class="play-dist">2% · 1,273</div><div class="play-attr attr-mid">4.4%</div></div><div class="play-row"><div class="play-label" title="Principal Eng - R60">Principal Eng - R60</div><div class="play-track"><div class="play-fill" style="width:9.7%"></div></div><div class="play-dist">2% · 1,176</div><div class="play-attr attr-low">4.0%</div></div><div class="play-row"><div class="play-label" title="Other levels">Other levels</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">25% · 12,352</div><div class="play-attr attr-unavailable">Not estimable</div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.post_hire_monthly_worker_dtls. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-35"><div class="slide-heading"><div><h2 class="slide-title-text">Level grouped by grade family</h2><p class="slide-subtitle">Grade family adds visual context to Level; it is not an official career track</p></div><span class="badge badge-neutral">Annual attrition not estimable</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Grade family adds visual context to Level; it is not an official career track</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Distribution</span><span>Distribution / Annual attrition</span></div><div class="evidence-chart" aria-label="Evidence availability chart"><div class="evidence-row"><span>Source documentation review</span><div class="evidence-track"><div style="width:100%"></div></div><strong>Required</strong></div><div class="evidence-row"><span>Reusable distribution</span><div class="evidence-track"><div style="width:35%"></div></div><strong>Pending</strong></div><div class="evidence-row"><span>Annual attrition</span><div class="evidence-track"><div style="width:0%"></div></div><strong>Not estimable</strong></div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.post_hire_monthly_worker_dtls. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-36"><div class="slide-heading"><div><h2 class="slide-title-text">Manager layers to the CEO</h2><p class="slide-subtitle">The chart counts manager links between each employee and the approved CEO root</p></div><span class="badge badge-neutral">Annual attrition not estimable</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>The chart counts manager links between each employee and the approved CEO root</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Active regular employees by manager-chain depth</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="0–2 layers">0–2 layers</div><div class="play-track"><div class="play-fill" style="width:1.5%"></div></div><div class="play-dist">0% · 192</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="3 layers">3 layers</div><div class="play-track"><div class="play-fill" style="width:7.1%"></div></div><div class="play-dist">2% · 938</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="4 layers">4 layers</div><div class="play-track"><div class="play-fill" style="width:18.8%"></div></div><div class="play-dist">5% · 2,510</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="5 layers">5 layers</div><div class="play-track"><div class="play-fill" style="width:44.0%"></div></div><div class="play-dist">12% · 5,866</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="6 layers">6 layers</div><div class="play-track"><div class="play-fill" style="width:79.7%"></div></div><div class="play-dist">21% · 10,603</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="7 layers">7 layers</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">27% · 13,306</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="8 layers">8 layers</div><div class="play-track"><div class="play-fill" style="width:80.8%"></div></div><div class="play-dist">22% · 10,765</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="9 layers">9 layers</div><div class="play-track"><div class="play-fill" style="width:36.1%"></div></div><div class="play-dist">10% · 4,809</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="10 layers">10 layers</div><div class="play-track"><div class="play-fill" style="width:7.1%"></div></div><div class="play-dist">2% · 954</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="11 layers">11 layers</div><div class="play-track"><div class="play-fill" style="width:0.8%"></div></div><div class="play-dist">0% · 100</div><div class="play-attr attr-unavailable">Not estimable</div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.post_hire_monthly_worker_dtls. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-37"><div class="slide-heading"><div><h2 class="slide-title-text">Compensation grade</h2><p class="slide-subtitle">Grades are shown only in aggregate; small categories are pooled and no pay values appear</p></div><span class="badge badge-info">Annual attrition</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Stored compensation grade for active employees.</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>All publicable compensation grades</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="R30">R30</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">18% · 8,932</div><div class="play-attr attr-high">7.9%</div></div><div class="play-row"><div class="play-label" title="R40">R40</div><div class="play-track"><div class="play-fill" style="width:78.7%"></div></div><div class="play-dist">14% · 7,030</div><div class="play-attr attr-high">5.6%</div></div><div class="play-row"><div class="play-label" title="R20">R20</div><div class="play-track"><div class="play-fill" style="width:64.0%"></div></div><div class="play-dist">11% · 5,732</div><div class="play-attr attr-high">8.4%</div></div><div class="play-row"><div class="play-label" title="R50">R50</div><div class="play-track"><div class="play-fill" style="width:50.0%"></div></div><div class="play-dist">9% · 4,456</div><div class="play-attr attr-mid">4.1%</div></div><div class="play-row"><div class="play-label" title="R35">R35</div><div class="play-track"><div class="play-fill" style="width:43.3%"></div></div><div class="play-dist">8% · 3,877</div><div class="play-attr attr-high">6.6%</div></div><div class="play-row"><div class="play-label" title="T50">T50</div><div class="play-track"><div class="play-fill" style="width:27.0%"></div></div><div class="play-dist">5% · 2,390</div><div class="play-attr attr-low">3.5%</div></div><div class="play-row"><div class="play-label" title="T60">T60</div><div class="play-track"><div class="play-fill" style="width:16.3%"></div></div><div class="play-dist">3% · 1,469</div><div class="play-attr attr-low">2.9%</div></div><div class="play-row"><div class="play-label" title="P30">P30</div><div class="play-track"><div class="play-fill" style="width:16.3%"></div></div><div class="play-dist">3% · 1,452</div><div class="play-attr attr-high">5.6%</div></div><div class="play-row"><div class="play-label" title="P40">P40</div><div class="play-track"><div class="play-fill" style="width:14.0%"></div></div><div class="play-dist">2% · 1,272</div><div class="play-attr attr-mid">4.4%</div></div><div class="play-row"><div class="play-label" title="R60">R60</div><div class="play-track"><div class="play-fill" style="width:12.9%"></div></div><div class="play-dist">2% · 1,180</div><div class="play-attr attr-low">4.0%</div></div><div class="play-row"><div class="play-label" title="P20">P20</div><div class="play-track"><div class="play-fill" style="width:10.7%"></div></div><div class="play-dist">2% · 955</div><div class="play-attr attr-high">6.5%</div></div><div class="play-row"><div class="play-label" title="M30">M30</div><div class="play-track"><div class="play-fill" style="width:10.1%"></div></div><div class="play-dist">2% · 924</div><div class="play-attr attr-low">3.4%</div></div><div class="play-row"><div class="play-label" title="T70">T70</div><div class="play-track"><div class="play-fill" style="width:9.6%"></div></div><div class="play-dist">2% · 867</div><div class="play-attr attr-low">2.8%</div></div><div class="play-row"><div class="play-label" title="R10">R10</div><div class="play-track"><div class="play-fill" style="width:9.6%"></div></div><div class="play-dist">2% · 853</div><div class="play-attr attr-high">7.2%</div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.post_hire_monthly_worker_dtls. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-38"><div class="slide-heading"><div><h2 class="slide-title-text">Comp ratio</h2><p class="slide-subtitle">The 0.8 comparison is exploratory and does not determine whether anyone is underpaid</p></div><span class="badge badge-info">Annual attrition</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Aggregated compa-ratio band; exact compensation is not shown.</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Distribution by compa_ratio bands</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="≤ 0">≤ 0</div><div class="play-track"><div class="play-fill" style="width:4.6%"></div></div><div class="play-dist">2% · 835</div><div class="play-attr attr-low">4.7%</div></div><div class="play-row"><div class="play-label" title="&gt; 0–&lt; 0.8">&gt; 0–&lt; 0.8</div><div class="play-track"><div class="play-fill" style="width:42.4%"></div></div><div class="play-dist">16% · 7,840</div><div class="play-attr attr-high">7.4%</div></div><div class="play-row"><div class="play-label" title="0.8–&lt; 0.9">0.8–&lt; 0.9</div><div class="play-track"><div class="play-fill" style="width:75.8%"></div></div><div class="play-dist">28% · 14,033</div><div class="play-attr attr-high">6.5%</div></div><div class="play-row"><div class="play-label" title="0.9–&lt; 1.0">0.9–&lt; 1.0</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">37% · 18,496</div><div class="play-attr attr-mid">5.2%</div></div><div class="play-row"><div class="play-label" title="1.0–&lt; 1.1">1.0–&lt; 1.1</div><div class="play-track"><div class="play-fill" style="width:39.1%"></div></div><div class="play-dist">14% · 7,255</div><div class="play-attr attr-mid">5.5%</div></div><div class="play-row"><div class="play-label" title="1.1–&lt; 1.25">1.1–&lt; 1.25</div><div class="play-track"><div class="play-fill" style="width:8.7%"></div></div><div class="play-dist">3% · 1,594</div><div class="play-attr attr-mid">4.8%</div></div><div class="play-row"><div class="play-label" title="≥ 1.25">≥ 1.25</div><div class="play-track"><div class="play-fill" style="width:0.8%"></div></div><div class="play-dist">0% · 165</div><div class="play-attr attr-mid">4.9%</div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.post_hire_monthly_worker_dtls. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-39"><div class="slide-heading"><div><h2 class="slide-title-text">Within-team compensation range</h2><p class="slide-subtitle">Large differences within comparable groups are review signals, not pay-equity findings</p></div><span class="badge badge-neutral">Annual attrition not estimable</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Large differences within comparable groups are review signals, not pay-equity findings</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Managers by number of groups to review (10%+ pay difference)</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="No groups to review">No groups to review</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">44% · 3,421</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="1 group to review">1 group to review</div><div class="play-track"><div class="play-fill" style="width:98.0%"></div></div><div class="play-dist">43% · 3,355</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="2 groups to review">2 groups to review</div><div class="play-track"><div class="play-fill" style="width:24.1%"></div></div><div class="play-dist">11% · 821</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="3 groups to review">3 groups to review</div><div class="play-track"><div class="play-fill" style="width:4.1%"></div></div><div class="play-dist">2% · 143</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="4–7 groups to review">4–7 groups to review</div><div class="play-track"><div class="play-fill" style="width:1.1%"></div></div><div class="play-dist">0% · 40</div><div class="play-attr attr-unavailable">Not estimable</div></div></section><section class="play-panel"><div class="panel-heading"><span>Share of each manager&#x27;s comparable groups to review</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="0%">0%</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">44% · 3,421</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="&gt;0–&lt;50%">&gt;0–&lt;50%</div><div class="play-track"><div class="play-fill" style="width:7.7%"></div></div><div class="play-dist">3% · 265</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="50–&lt;75%">50–&lt;75%</div><div class="play-track"><div class="play-fill" style="width:41.4%"></div></div><div class="play-dist">18% · 1,414</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="75–&lt;100%">75–&lt;100%</div><div class="play-track"><div class="play-fill" style="width:1.4%"></div></div><div class="play-dist">1% · 50</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="100%">100%</div><div class="play-track"><div class="play-fill" style="width:76.8%"></div></div><div class="play-dist">34% · 2,630</div><div class="play-attr attr-unavailable">Not estimable</div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.post_hire_monthly_worker_dtls. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-40"><div class="slide-heading"><div><h2 class="slide-title-text">Co-location with manager</h2><p class="slide-subtitle">Matching office-site fields suggest shared assigned locations, not physical co-location</p></div><span class="badge badge-neutral">Annual attrition not estimable</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Matching office-site fields suggest shared assigned locations, not physical co-location</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Distribution</span><span>Distribution / Annual attrition</span></div><div class="evidence-chart" aria-label="Evidence availability chart"><div class="evidence-row"><span>Source documentation review</span><div class="evidence-track"><div style="width:100%"></div></div><strong>Required</strong></div><div class="evidence-row"><span>Reusable distribution</span><div class="evidence-track"><div style="width:35%"></div></div><strong>Pending</strong></div><div class="evidence-row"><span>Annual attrition</span><div class="evidence-track"><div style="width:0%"></div></div><strong>Not estimable</strong></div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.post_hire_monthly_worker_dtls. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-41"><div class="slide-heading"><div><h2 class="slide-title-text">Residential distance from manager</h2><p class="slide-subtitle">Distance uses employee and manager postal centroids; it does not use home addresses or travel routes</p></div><span class="badge badge-neutral">Annual attrition not estimable</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Distance uses employee and manager postal centroids; it does not use home addresses or travel routes</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Calculable employee-manager pairs · distance bands</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="0–&lt;1 km">0–&lt;1 km</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">14% · 5,955</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="1–&lt;2 km">1–&lt;2 km</div><div class="play-track"><div class="play-fill" style="width:2.1%"></div></div><div class="play-dist">0% · 112</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="2–&lt;3 km">2–&lt;3 km</div><div class="play-track"><div class="play-fill" style="width:7.9%"></div></div><div class="play-dist">1% · 467</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="3–&lt;4 km">3–&lt;4 km</div><div class="play-track"><div class="play-fill" style="width:7.9%"></div></div><div class="play-dist">1% · 465</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="4–&lt;5 km">4–&lt;5 km</div><div class="play-track"><div class="play-fill" style="width:10.0%"></div></div><div class="play-dist">1% · 615</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="5–&lt;6 km">5–&lt;6 km</div><div class="play-track"><div class="play-fill" style="width:9.3%"></div></div><div class="play-dist">1% · 566</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="6–&lt;7 km">6–&lt;7 km</div><div class="play-track"><div class="play-fill" style="width:17.9%"></div></div><div class="play-dist">2% · 1,060</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="7–&lt;8 km">7–&lt;8 km</div><div class="play-track"><div class="play-fill" style="width:16.4%"></div></div><div class="play-dist">2% · 989</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="8–&lt;9 km">8–&lt;9 km</div><div class="play-track"><div class="play-fill" style="width:8.6%"></div></div><div class="play-dist">1% · 505</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="9–&lt;10 km">9–&lt;10 km</div><div class="play-track"><div class="play-fill" style="width:19.3%"></div></div><div class="play-dist">3% · 1,170</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="10–&lt;11 km">10–&lt;11 km</div><div class="play-track"><div class="play-fill" style="width:10.0%"></div></div><div class="play-dist">1% · 617</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="11–&lt;12 km">11–&lt;12 km</div><div class="play-track"><div class="play-fill" style="width:10.0%"></div></div><div class="play-dist">1% · 597</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="12–&lt;13 km">12–&lt;13 km</div><div class="play-track"><div class="play-fill" style="width:15.0%"></div></div><div class="play-dist">2% · 878</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="13–&lt;14 km">13–&lt;14 km</div><div class="play-track"><div class="play-fill" style="width:19.3%"></div></div><div class="play-dist">3% · 1,161</div><div class="play-attr attr-unavailable">Not estimable</div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA + public GeoNames postal centroids - Same-snapshot HRDA postal-proxy hashes + GeoNames postal centroids. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-42"><div class="slide-heading"><div><h2 class="slide-title-text">Office-site relationship with manager</h2><p class="slide-subtitle">Stored office-site values are compared; residential distance and physical presence are not measured</p></div><span class="badge badge-neutral">Annual attrition not estimable</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Stored office-site values are compared; residential distance and physical presence are not measured</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Employee-manager snapshots by stored office_site relationship</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="Same office_site">Same office_site</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">87% · 459,095</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="Different office_site">Different office_site</div><div class="play-track"><div class="play-fill" style="width:6.4%"></div></div><div class="play-dist">6% · 29,260</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="Not comparable / missing site">Not comparable / missing site</div><div class="play-track"><div class="play-fill" style="width:8.1%"></div></div><div class="play-dist">7% · 37,278</div><div class="play-attr attr-unavailable">Not estimable</div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.post_hire_monthly_worker_dtls. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-43"><div class="slide-heading"><div><h2 class="slide-title-text">Manager observed-to-expected exit ratio</h2><p class="slide-subtitle">A ratio of 1 means exits were close to the expected number; this is not a manager rating</p></div><span class="badge badge-neutral">Annual attrition not estimable</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>A ratio of 1 means exits were close to the expected number; this is not a manager rating</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Observable managers by smoothed-ratio band</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="&lt;0.50×">&lt;0.50×</div><div class="play-track"><div class="play-fill" style="width:6.6%"></div></div><div class="play-dist">5% · 566</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="0.50–&lt;1.00×">0.50–&lt;1.00×</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">81% · 8,535</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="1.00–&lt;1.50×">1.00–&lt;1.50×</div><div class="play-track"><div class="play-fill" style="width:3.2%"></div></div><div class="play-dist">3% · 268</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="≥1.50×">≥1.50×</div><div class="play-track"><div class="play-fill" style="width:13.1%"></div></div><div class="play-dist">11% · 1,118</div><div class="play-attr attr-unavailable">Not estimable</div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.post_hire_monthly_worker_dtls. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-44"><div class="slide-heading"><div><h2 class="slide-title-text">Recent team exits under the current manager</h2><p class="slide-subtitle">Employees are grouped by recent team-exit count; the result is context, not a manager evaluation</p></div><span class="badge badge-neutral">Annual attrition not estimable</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Employees are grouped by recent team-exit count; the result is context, not a manager evaluation</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Observable direct reports by historical Voluntary exits</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="0">0</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">85% · 42,489</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="1">1</div><div class="play-track"><div class="play-fill" style="width:13.8%"></div></div><div class="play-dist">12% · 5,843</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="2+">2+</div><div class="play-track"><div class="play-fill" style="width:4.0%"></div></div><div class="play-dist">3% · 1,686</div><div class="play-attr attr-unavailable">Not estimable</div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.post_hire_monthly_worker_dtls. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-45"><div class="slide-heading"><div><h2 class="slide-title-text">Above-average team turnover</h2><p class="slide-subtitle">The flag requires enough manager history; most employees remain Unknown</p></div><span class="badge badge-neutral">Annual attrition not estimable</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Flag for teams with historical attrition above the benchmark.</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Current direct reports by inherited team-context signal</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="0">0</div><div class="play-track"><div class="play-fill" style="width:7.2%"></div></div><div class="play-dist">7% · 3,329</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="1">1</div><div class="play-track"><div class="play-fill" style="width:2.4%"></div></div><div class="play-dist">2% · 1,116</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="Unknown">Unknown</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">91% · 45,761</div><div class="play-attr attr-unavailable">Not estimable</div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.post_hire_monthly_worker_dtls. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-46"><div class="slide-heading"><div><h2 class="slide-title-text">Manager leaving</h2><p class="slide-subtitle">The flag shows recent exposure to a manager&#x27;s voluntary exit and remains after reassignment</p></div><span class="badge badge-neutral">Annual attrition not estimable</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Exposure to a manager&#x27;s voluntary exit in a historical window.</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Primary feature: six-month exposure flag</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="Not exposed">Not exposed</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">98% · 49,198</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="Exposed (1+)">Exposed (1+)</div><div class="play-track"><div class="play-fill" style="width:1.7%"></div></div><div class="play-dist">2% · 845</div><div class="play-attr attr-unavailable">Not estimable</div></div></section><section class="play-panel"><div class="panel-heading"><span>Sensitivity: distinct manager-exit count</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="No manager exits">No manager exits</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">98% · 49,198</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="1+ manager exit">1+ manager exit</div><div class="play-track"><div class="play-fill" style="width:1.7%"></div></div><div class="play-dist">2% · 845</div><div class="play-attr attr-unavailable">Not estimable</div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.post_hire_monthly_worker_dtls + hrda.all_terminations. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-47"><div class="slide-heading"><div><h2 class="slide-title-text">Manager change</h2><p class="slide-subtitle">This is an event flag by year, not a cumulative count of manager changes</p></div><span class="badge badge-info">Annual attrition</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Recorded manager-change event in HRDA.</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Annual datalake distribution: manager_change</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="No manager change (0)">No manager change (0)</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">71% · 49,569</div><div class="play-attr attr-mid">5.7%</div></div><div class="play-row"><div class="play-label" title="Manager change (1)">Manager change (1)</div><div class="play-track"><div class="play-fill" style="width:40.3%"></div></div><div class="play-dist">29% · 19,982</div><div class="play-attr attr-mid">7.1%</div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.post_hire_monthly_worker_dtls. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-48"><div class="slide-heading"><div><h2 class="slide-title-text">Number of manager changes</h2><p class="slide-subtitle">Four views compare six- and twelve-month counts, with and without same-day mobility events</p></div><span class="badge badge-neutral">Annual attrition not estimable</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Count of manager changes over the available 6- and 12-month windows.</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>All observed manager changes · trailing 6 months</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="0">0</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">82% · 41,266</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="1">1</div><div class="play-track"><div class="play-fill" style="width:18.2%"></div></div><div class="play-dist">15% · 7,528</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="2">2</div><div class="play-track"><div class="play-fill" style="width:2.8%"></div></div><div class="play-dist">2% · 1,138</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="3+">3+</div><div class="play-track"><div class="play-fill" style="width:0.2%"></div></div><div class="play-dist">0% · 111</div><div class="play-attr attr-unavailable">Not estimable</div></div></section><section class="play-panel"><div class="panel-heading"><span>All observed manager changes · trailing 12 months</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="0">0</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">73% · 36,628</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="1">1</div><div class="play-track"><div class="play-fill" style="width:29.5%"></div></div><div class="play-dist">22% · 10,801</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="2">2</div><div class="play-track"><div class="play-fill" style="width:6.1%"></div></div><div class="play-dist">4% · 2,260</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="3+">3+</div><div class="play-track"><div class="play-fill" style="width:1.0%"></div></div><div class="play-dist">1% · 354</div><div class="play-attr attr-unavailable">Not estimable</div></div></section><section class="play-panel"><div class="panel-heading"><span>Sensitivity: exclude same-date transfer/promotion · trailing 6 months</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="0">0</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">83% · 41,671</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="1">1</div><div class="play-track"><div class="play-fill" style="width:17.4%"></div></div><div class="play-dist">14% · 7,237</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="2">2</div><div class="play-track"><div class="play-fill" style="width:2.5%"></div></div><div class="play-dist">2% · 1,037</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="3+">3+</div><div class="play-track"><div class="play-fill" style="width:0.2%"></div></div><div class="play-dist">0% · 98</div><div class="play-attr attr-unavailable">Not estimable</div></div></section></div><div class="source-line"><strong>Source:</strong> Aggregate source documented in the V4 deck / distribution manifest. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-49"><div class="slide-heading"><div><h2 class="slide-title-text">Talent index</h2><p class="slide-subtitle">The latest stored value is available for 79% of active employees; the effective date is not confirmed</p></div><span class="badge badge-neutral">Annual attrition not estimable</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Latest recoverable talent-index value for active employees.</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Latest recoverable stored talent_index distribution</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="0–&lt;10">0–&lt;10</div><div class="play-track"><div class="play-fill" style="width:29.2%"></div></div><div class="play-dist">7% · 2,742</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="10–&lt;20">10–&lt;20</div><div class="play-track"><div class="play-fill" style="width:34.3%"></div></div><div class="play-dist">8% · 3,208</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="20–&lt;30">20–&lt;30</div><div class="play-track"><div class="play-fill" style="width:69.5%"></div></div><div class="play-dist">16% · 6,491</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="30–&lt;40">30–&lt;40</div><div class="play-track"><div class="play-fill" style="width:37.3%"></div></div><div class="play-dist">9% · 3,472</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="40–&lt;50">40–&lt;50</div><div class="play-track"><div class="play-fill" style="width:32.6%"></div></div><div class="play-dist">8% · 3,069</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="50–&lt;60">50–&lt;60</div><div class="play-track"><div class="play-fill" style="width:25.4%"></div></div><div class="play-dist">6% · 2,381</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="60–&lt;70">60–&lt;70</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">24% · 9,367</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="70–&lt;80">70–&lt;80</div><div class="play-track"><div class="play-fill" style="width:9.3%"></div></div><div class="play-dist">2% · 865</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="80–&lt;90">80–&lt;90</div><div class="play-track"><div class="play-fill" style="width:34.3%"></div></div><div class="play-dist">8% · 3,206</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="90–100">90–100</div><div class="play-track"><div class="play-fill" style="width:51.7%"></div></div><div class="play-dist">12% · 4,846</div><div class="play-attr attr-unavailable">Not estimable</div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.master_talent_index. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-50"><div class="slide-heading"><div><h2 class="slide-title-text">Major inflection points</h2><p class="slide-subtitle">Five change events are observable, but no approved rule defines which changes are major</p></div><span class="badge badge-info">Annual attrition</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>Five change events are observable, but no approved rule defines which changes are major</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>Annual datalake distribution: major_inflection_proxy</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="No proxy movement">No proxy movement</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">55% · 49,498</div><div class="play-attr attr-mid">5.7%</div></div><div class="play-row"><div class="play-label" title="1+ proxy movement">1+ proxy movement</div><div class="play-track"><div class="play-fill" style="width:82.5%"></div></div><div class="play-dist">45% · 40,823</div><div class="play-attr attr-mid">6.2%</div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA proxy events - hrda.post_hire_monthly_worker_dtls. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  <div class="slide-stage" id="slide-51"><div class="slide-heading"><div><h2 class="slide-title-text">ET fields</h2><p class="slide-subtitle">ET1–ET11 behave like hierarchy references; they do not define expert-track career levels</p></div><span class="badge badge-neutral">Annual attrition not estimable</span></div><article class="card card-full playbook-card"><div class="definition-strip"><div><span class="mini-label">Definition</span><strong>ET1–ET11 behave like hierarchy references; they do not define expert-track career levels</strong></div><div><span class="mini-label">Population</span><strong>Active regular employees, excluding RF360</strong></div></div><div class="playbook-chart-area"><section class="play-panel"><div class="panel-heading"><span>ET fields with observable count</span><span>Distribution / Annual attrition</span></div><div class="play-row"><div class="play-label" title="et_1">et_1</div><div class="play-track"><div class="play-fill" style="width:100.0%"></div></div><div class="play-dist">18% · 70,731</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="et_2">et_2</div><div class="play-track"><div class="play-fill" style="width:99.4%"></div></div><div class="play-dist">18% · 70,439</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="et_3">et_3</div><div class="play-track"><div class="play-fill" style="width:97.7%"></div></div><div class="play-dist">17% · 69,312</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="et_4">et_4</div><div class="play-track"><div class="play-fill" style="width:93.2%"></div></div><div class="play-dist">16% · 65,952</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="et_5">et_5</div><div class="play-track"><div class="play-fill" style="width:81.2%"></div></div><div class="play-dist">14% · 57,648</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="et_6">et_6</div><div class="play-track"><div class="play-fill" style="width:55.7%"></div></div><div class="play-dist">10% · 39,219</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="et_7">et_7</div><div class="play-track"><div class="play-fill" style="width:27.3%"></div></div><div class="play-dist">5% · 19,399</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="et_8">et_8</div><div class="play-track"><div class="play-fill" style="width:10.8%"></div></div><div class="play-dist">2% · 7,544</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="et_9">et_9</div><div class="play-track"><div class="play-fill" style="width:2.3%"></div></div><div class="play-dist">0% · 1,502</div><div class="play-attr attr-unavailable">Not estimable</div></div><div class="play-row"><div class="play-label" title="et_10">et_10</div><div class="play-track"><div class="play-fill" style="width:0.0%"></div></div><div class="play-dist">0% · 148</div><div class="play-attr attr-unavailable">Not estimable</div></div></section></div><div class="source-line"><strong>Source:</strong> HRDA - hrda.post_hire_monthly_worker_dtls. Annual attrition: voluntary exit in the 12 months after the snapshot; aggregate privacy-safe result.</div></article></div>
+
+  
+  <div class="nav-ctrl" id="slide-nav">
+    <div class="nav-tab">Slides</div>
+    <div class="nav-panel">
+      <div class="nav-label">Navigation</div>
+      <button class="nav-pill pill-active" data-slide="0">1. Playbook</button>
+<button class="nav-pill" data-slide="1">2. How to read</button>
+<button class="nav-pill" data-slide="2">3. Applied to a job</button>
+<button class="nav-pill" data-slide="3">4. Applied to a job — trailing six months</button>
+<button class="nav-pill" data-slide="4">5. Transfer within the past year</button>
+<button class="nav-pill" data-slide="5">6. Location</button>
+<button class="nav-pill" data-slide="6">7. Office site and city</button>
+<button class="nav-pill" data-slide="7">8. Team turnover</button>
+<button class="nav-pill" data-slide="8">9. Does one team departure precede more departures?</button>
+<button class="nav-pill" data-slide="9">10. Sensitivity check: teams with 6+ employees</button>
+<button class="nav-pill" data-slide="10">11. Job family</button>
+<button class="nav-pill" data-slide="11">12. Region</button>
+<button class="nav-pill" data-slide="12">13. Gender</button>
+<button class="nav-pill" data-slide="13">14. Work arrangement</button>
+<button class="nav-pill" data-slide="14">15. Engineering vs. non-engineering</button>
+<button class="nav-pill" data-slide="15">16. Rehire</button>
+<button class="nav-pill" data-slide="16">17. Experience before Qualcomm</button>
+<button class="nav-pill" data-slide="17">18. Annual voluntary attrition by prior experience</button>
+<button class="nav-pill" data-slide="18">19. Commute distance</button>
+<button class="nav-pill" data-slide="19">20. RTO and hybrid comments in QVoice</button>
+<button class="nav-pill" data-slide="20">21. Retention concerns in QVoice comments</button>
+<button class="nav-pill" data-slide="21">22. QVoice participation coverage</button>
+<button class="nav-pill" data-slide="22">23. Intent to Stay items</button>
+<button class="nav-pill" data-slide="23">24. Career goals item</button>
+<button class="nav-pill" data-slide="24">25. Average of comparable QVoice items</button>
+<button class="nav-pill" data-slide="25">26. QVoice heartbeat</button>
+<button class="nav-pill" data-slide="26">27. QVoice scores standardized within region</button>
+<button class="nav-pill" data-slide="27">28. Time in job profile vs. detailed level</button>
+<button class="nav-pill" data-slide="28">29. Annual attrition by grade-entry path and tenure</button>
+<button class="nav-pill" data-slide="29">30. Company tenure</button>
+<button class="nav-pill" data-slide="30">31. Time since last promotion</button>
+<button class="nav-pill" data-slide="31">32. Promotion history by current compensation grade</button>
+<button class="nav-pill" data-slide="32">33. How employees reached their current compensation grade</button>
+<button class="nav-pill" data-slide="33">34. Level</button>
+<button class="nav-pill" data-slide="34">35. Level grouped by grade family</button>
+<button class="nav-pill" data-slide="35">36. Manager layers to the CEO</button>
+<button class="nav-pill" data-slide="36">37. Compensation grade</button>
+<button class="nav-pill" data-slide="37">38. Comp ratio</button>
+<button class="nav-pill" data-slide="38">39. Within-team compensation range</button>
+<button class="nav-pill" data-slide="39">40. Co-location with manager</button>
+<button class="nav-pill" data-slide="40">41. Residential distance from manager</button>
+<button class="nav-pill" data-slide="41">42. Office-site relationship with manager</button>
+<button class="nav-pill" data-slide="42">43. Manager observed-to-expected exit ratio</button>
+<button class="nav-pill" data-slide="43">44. Recent team exits under the current manager</button>
+<button class="nav-pill" data-slide="44">45. Above-average team turnover</button>
+<button class="nav-pill" data-slide="45">46. Manager leaving</button>
+<button class="nav-pill" data-slide="46">47. Manager change</button>
+<button class="nav-pill" data-slide="47">48. Number of manager changes</button>
+<button class="nav-pill" data-slide="48">49. Talent index</button>
+<button class="nav-pill" data-slide="49">50. Major inflection points</button>
+<button class="nav-pill" data-slide="50">51. ET fields</button>
+    </div>
+  </div>
+
+
+  
+  <div class="side-controls" id="theme-selector">
+    <div class="side-panel">
+      <div class="side-label">Theme</div>
+      <button class="side-pill pill-active" data-theme="theme-light-classic">Light – Classic</button>
+      <button class="side-pill" data-theme="theme-light-soft">Light – Soft Blue</button>
+      <button class="side-pill" data-theme="theme-dark-royal">Dark – Royal</button>
+      <button class="side-pill" data-theme="theme-dark-carbon">Dark – Carbon</button>
+    </div>
+    <div class="side-tab">Theme</div>
+  </div>
+
+
+  <script>
+    
+    (function () {
+      var themePills = Array.from(document.querySelectorAll('#theme-selector [data-theme]'));
+
+      function applyTheme(themeClass, activeBtn) {
+        document.body.className = themeClass;
+        themePills.forEach(function (b) {
+          b.classList.toggle('pill-active', b === activeBtn);
+        });
+        try { localStorage.setItem('slide-studio-theme', themeClass); } catch (e) {}
+      }
+
+      themePills.forEach(function (btn) {
+        btn.addEventListener('click', function () { applyTheme(btn.dataset.theme, btn); });
+      });
+
+      var saved = null;
+      try { saved = localStorage.getItem('slide-studio-theme'); } catch (e) {}
+      var savedBtn = themePills.find(function (b) { return b.dataset.theme === saved; });
+      applyTheme(saved || document.body.className, savedBtn || themePills[0]);
+    })();
+
+
+    
+    (function () {
+      var SLIDE_W = 1440, SLIDE_H = 810;
+      var allStages = Array.from(document.querySelectorAll('.slide-stage'));
+      var navBtns   = Array.from(document.querySelectorAll('#slide-nav [data-slide]'));
+      var current   = 0;
+      var stage     = allStages[0];
+      var lastDPR   = window.devicePixelRatio;
+
+      function fitSlide() {
+        if (!stage) return;
+        var vw = window.innerWidth, vh = window.innerHeight;
+        var scale = Math.min(vw / SLIDE_W, vh / SLIDE_H);
+        stage.style.transform = 'scale(' + scale + ')';
+        stage.style.left = Math.max(0, (vw - SLIDE_W * scale) / 2) + 'px';
+        stage.style.top  = Math.max(0, (vh - SLIDE_H * scale) / 2) + 'px';
+      }
+
+      function showSlide(n) {
+        n = Math.max(0, Math.min(allStages.length - 1, n));
+        allStages.forEach(function (s, i) {
+          s.style.display = i === n ? '' : 'none';
+        });
+        navBtns.forEach(function (b, i) {
+          b.classList.toggle('pill-active', i === n);
+        });
+        stage   = allStages[n];
+        current = n;
+        fitSlide();
+      }
+
+      window.addEventListener('resize', function () {
+        var newDPR = window.devicePixelRatio;
+        if (newDPR !== lastDPR) { lastDPR = newDPR; return; } // Ctrl+zoom — skip
+        fitSlide();
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); showSlide(current + 1); }
+        if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   { e.preventDefault(); showSlide(current - 1); }
+        if (e.key === 'Home')                                  { e.preventDefault(); showSlide(0); }
+        if (e.key === 'End')                                   { e.preventDefault(); showSlide(allStages.length - 1); }
+      });
+
+      showSlide(0); // show first slide + initial fit
+    })();
+  </script>
+</body>
+</html>

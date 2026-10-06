@@ -1,0 +1,67 @@
+schema_version: 1
+plan_version: 5
+plan_revision_reason: >-
+  Se conserva el conteo retrospectivo de seis meses como visual principal del
+  slide 42 y se agrega una comparación anual para responder la pregunta de si
+  dos cambios de manager en un año son comunes. La comparación no reemplaza la
+  ventana primaria ni afirma una nueva feature de modelo.
+language: es
+created_before_execution: true
+deliverable_mode: internal_analysis
+variable: Number of manager changes
+concept: >-
+  Conteo de eventos distintos manager_change por empleado activo al snapshot,
+  mostrado en ventanas retrospectivas de seis y doce meses.
+intended_use: >-
+  Conservar la distribución semestral elegida para movilidad reciente y añadir
+  una vista anual descriptiva que permita leer directamente el bucket de dos
+  cambios por empleado.
+knowledge_date: >-
+  Sólo entran manager_change_date menores o iguales al cierre 2026-08-23 y
+  observadas con manager_change=1 en o antes de ese cierre.
+population: >-
+  Empleados regulares activos (worker_type='Employee', employee_type='Regular',
+  active_status=1) con employee_id utilizable al snapshot 2026-08-23.
+grain: Empleado-snapshot mensual
+semantic_type: derived_feature
+definition:
+  primary_window: '(2026-02-23, 2026-08-23] — seis meses'
+  supplemental_window: '(2025-08-23, 2026-08-23] — doce meses'
+  event_key: employee_id + manager_change_date, con manager_change=1
+  deduplication: Observaciones mensuales repetidas de la misma llave cuentan una sola vez.
+  annual_buckets: ['0', '1', '2', '3+']
+  role_of_annual_view: >-
+    Comparación descriptiva para la pregunta anual; no reemplaza la señal
+    primaria de seis meses ni resuelve sus reglas de reset.
+validation_story:
+  - id: annual_event_distribution
+    criterion: definition
+    evidence_role: supporting
+    question: ¿Cuántos cambios de manager distintos se observan por empleado en los doce meses anteriores al corte?
+    why: La pregunta de negocio sobre dos cambios en un año no se puede responder con la distribución semestral.
+    fields: [employee_id, fis_mo_end_dt, manager_change, manager_change_date]
+    method: >-
+      Deduplicar employee_id + manager_change_date con flag positivo, contar los
+      eventos en la ventana anual y comparar que cada conteo anual sea al menos
+      el conteo de la ventana semestral anidada.
+    sql_reference: queries/profiles/number_of_manager_changes_distribution_12m_20260909.sql
+    acceptance_rule: >-
+      La población y los buckets deben reconciliar exactamente; los conteos
+      anuales no pueden ser menores que los semestrales por empleado; no puede
+      haber flags positivos sin fecha, flags fuera de 0/1 ni buckets publicados
+      con n < 30.
+  - id: primary_window_preserved
+    criterion: definition
+    evidence_role: contextual
+    question: ¿La comparación anual reemplaza la ventana semestral elegida?
+    why: La ventana principal sigue siendo seis meses; la vista anual sólo responde una pregunta adicional.
+    fields: [manager_change_date, fis_mo_end_dt]
+    method: Mantener ambos gráficos separados y etiquetar cada ventana de forma explícita.
+    sql_reference: queries/profiles/number_of_manager_changes_distribution_12m_20260909.sql
+    acceptance_rule: El título y el texto del slide deben identificar seis meses como principal y doce meses como suplemento.
+planned_sql:
+  - queries/profiles/number_of_manager_changes_distribution_12m_20260909.sql
+publication_controls:
+  - Modo internal_analysis; sólo resultados agregados.
+  - No mostrar employee_id ni filas individuales.
+  - Todo bucket visible debe cumplir n >= 30.

@@ -1,0 +1,100 @@
+schema_version: 1
+version: 2
+language: es
+variable: Position / time in level
+plan_revision_reason: >-
+  La primera ejecución mostró cobertura histórica insuficiente: el inicio de
+  perfil no fue observable en los 24 snapshots con seguimiento completo y
+  time_in_role sólo fue observable en uno. Se agrega una validación temporal
+  focalizada antes de decidir cómo rotular las tasas del slide.
+semantic_type: derived_feature
+intended_use: >-
+  Comparar descriptivamente las bandas de Time in job profile y Time in role
+  con attrition voluntario anual sólo cuando la cobertura histórica sea
+  comparable; de lo contrario, mostrar la distribución actual sin una tasa
+  anual estimada.
+prediction_cutoff: Cada cierre mensual; la categoría se calcula con valores conocidos al snapshot.
+population: "worker_type='Employee'; employee_type='Regular'; active_status=1"
+grain: Empleado-snapshot mensual; los identificadores permanecen internos para la deduplicación y el join temporal.
+deliverable_mode: presentation
+knowledge_boundary: >-
+  La distribución usa el último snapshot disponible; la tasa anual sólo se
+  publica para una serie con al menos tres snapshots mensuales consecutivos de
+  cobertura suficiente y seguimiento completo de 12 meses.
+source_reasoning: >-
+  Time in job profile se deriva del inicio de perfil almacenado,
+  time_in_job_profile_start_date, ajustado al posterior max_hire_rehire_date.
+  Time in role usa directamente el valor numérico almacenado time_in_role.
+  Son medidas distintas y no se presentan como equivalentes ni como una
+  definición HRIS aprobada.
+derivation:
+  time_in_job_profile: >-
+    Bandas por aniversario desde la fecha posterior entre
+    time_in_job_profile_start_date y max_hire_rehire_date.
+  time_in_role: >-
+    Bandas directas del valor almacenado time_in_role: <1, 1–<2, 2–<3,
+    3–<5, 5–<10 y 10+ años.
+  annual_attrition: >-
+    Uno o más term_type='VOLUNTARY' con term_date en (snapshot_date,
+    snapshot_date + 12 meses].
+validation_story:
+  - id: source-grain-and-domain
+    criterion: definition
+    evidence_role: defining
+    question: >-
+      ¿Ambas medidas pueden agruparse sin columnas de nivel detallado, en un
+      único empleado-snapshot y sin valores inválidos?
+    why: >-
+      El cambio solicitado sustituye una medida de nivel detallado por un
+      campo distinto; la lámina sólo es interpretable si cada serie conserva
+      su propia definición y las bandas no mezclan registros duplicados o
+      valores imposibles.
+    fields: [time_in_job_profile_start_date, max_hire_rehire_date, time_in_role, fis_mo_end_dt]
+    method: >-
+      Auditoría agregada de unicidad, conflicto, fechas futuras, valores
+      negativos, cobertura y bandas en el snapshot de display y en la ventana
+      histórica.
+    sql_reference: queries/audits/20260918_time_in_job_profile_time_in_role_slide_evidence.sql
+    acceptance_rule: >-
+      Cero duplicados o conflictos relevantes, cero fechas futuras y cero
+      valores negativos; cada banda visible debe tener al menos 30 empleados.
+  - id: longitudinal-coverage
+    criterion: history
+    evidence_role: defining
+    question: >-
+      ¿Cada serie tiene cobertura de al menos 95% durante tres snapshots
+      mensuales consecutivos para que una tasa anual sea comparable con la
+      distribución actual?
+    why: >-
+      Una tasa basada en una observación aislada no representa una relación
+      longitudinal estable ni debe colocarse junto a una distribución de otro
+      corte temporal.
+    fields: [time_in_job_profile_start_date, max_hire_rehire_date, time_in_role, fis_mo_end_dt]
+    method: Perfil agregado por snapshot de cobertura, duplicados, conflictos y valores negativos.
+    sql_reference: queries/profiles/20260918_time_in_job_profile_time_in_role_coverage.sql
+    acceptance_rule: >-
+      Cada medida debe tener cobertura >=95%, sin duplicados ni conflictos, en
+      al menos tres snapshots mensuales consecutivos.
+  - id: time-safe-annual-attrition
+    criterion: join
+    evidence_role: defining
+    question: >-
+      ¿La tasa de attrition se asigna a la banda conocida en el snapshot y
+      usa sólo una salida voluntaria posterior durante 12 meses completos?
+    why: >-
+      La categoría debe preceder al resultado para evitar usar información
+      futura y cada tasa publicada necesita cohortes y eventos suficientes.
+    fields: [employee_id, fis_mo_end_dt, term_type, term_date]
+    method: >-
+      Join temporal interno entre empleados activos por snapshot y fechas de
+      terminación voluntaria; el resultado publicado contiene sólo conteos y
+      tasas agregadas.
+    sql_reference: queries/audits/20260918_time_in_job_profile_time_in_role_slide_evidence.sql
+    acceptance_rule: >-
+      Usar 24 snapshots con seguimiento completo; cada tasa visible requiere
+      al menos 30 employee-snapshots y 30 salidas voluntarias, y sólo puede
+      publicarse si la validación de cobertura longitudinal pasa.
+scoring_boundary: >-
+  Esta validación autoriza un gráfico descriptivo y no eleva Definition a 2:
+  falta una definición HRIS autorizada para interpretar time_in_job_profile y
+  time_in_role como constructos de carrera equivalentes.

@@ -1,0 +1,241 @@
+version: 4
+variables:
+  - category: Riesgo del manager
+    variable: High risk manager
+    notes: >-
+      Reevaluacion con membresia historica del equipo, terminaciones canonicas y
+      controles por mes, region, job family, nivel y tenure. La disponibilidad
+      tecnica se evalua por separado de la calibracion estadistica pendiente.
+    definition: >-
+      Score continuo a nivel manager-snapshot basado en attrition voluntario
+      observado frente al esperado durante 12 meses cerrados, con shrinkage para
+      equipos pequenos; flag secundario con ratio ajustado >= 1.5, top 10 por
+      ciento mensual y persistencia en 3 de 6 snapshots, sujeto a 5 reportes
+      distintos y 60 empleado-meses.
+    source:
+      type: Database
+      table: hrda.post_hire_monthly_worker_dtls
+      columns:
+        - employee_id
+        - manager_employee_id
+        - fis_mo_end_dt
+        - fiscal_year
+        - worker_type
+        - employee_type
+        - active_status
+        - region
+        - job_family
+        - job_family_group
+        - job_level_primary_position
+        - level_grouped
+        - max_hire_rehire_date
+        - service_date
+        - original_hire_date
+        - is_termed
+        - term_date
+        - term_type
+      status: confirmed_accessible
+    profile:
+      mode: aggregate_sql
+      aggregate_sql_file: ../queries/profiles/high_risk_manager_score_coverage_v2_20260821.sql
+    level_data: Manager-snapshot; asignada al empleado-snapshot mensual
+    measurement:
+      type: rolling_derived
+    population:
+      mode: custom
+      display: Empleados regulares activos en cada snapshot mensual de prediccion.
+    numerator_definition: >-
+      Empleados-snapshot con manager vigente, region, job_family,
+      job_level_primary_position y tenure time-safe observables, una vez que
+      existen 12 snapshots globales para estimar el prior. Los minimos de 5
+      reportes, 60 empleado-meses y persistencia corresponden al flag secundario
+      y no convierten el score continuo en missing.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: reliable_employee_date
+      effort: heavy_or_unresolved
+    rationale:
+      definition:
+        why: >-
+          La metodologia inicial ya esta explicitada, pero no se han calibrado el
+          baseline esperado, el shrinkage, el tratamiento definitivo de Voluntary
+          Exception ni los umbrales mediante backtest out-of-time; tampoco existe
+          una segunda implementacion independiente reconciliada.
+        evidence: >-
+          Los campos permiten probar la ruta y la cobertura, pero una feature
+          derivada compleja no queda confirmada por disponibilidad de columnas.
+        recommended_action: >-
+          Versionar dos implementaciones independientes, reconciliarlas de forma
+          agregada y calibrar ventana, shrinkage y umbrales fuera de tiempo.
+      consistency:
+        why: >-
+          La fecha max_hire_rehire_date refleja rehires posteriores en snapshots
+          historicos y existe al menos un term_type vacio; ambos requieren una
+          regla explicita aunque la ruta normalizada sea reproducible.
+        evidence: >-
+          La auditoria inicial encontro fechas futuras al usar COALESCE directo.
+          La ruta v2 elige solo fechas de tenure no posteriores al snapshot, usa
+          job_family y job_level_primary_position detallados, y clasifica el
+          term_type vacio como Unknown excluido de voluntarios.
+        recommended_action: >-
+          Versionar estas reglas de normalizacion y monitorear su frecuencia en
+          cada carga antes de considerar Consistency completamente estandarizada.
+      effort:
+        why: >-
+          Requiere reconstruccion temporal de equipos y eventos, baseline ajustado,
+          shrinkage, percentiles mensuales, persistencia, backtesting y controles
+          de gobernanza y fairness.
+        evidence: >-
+          La feature no existe como campo directo ni como una transformacion SQL
+          simple; los insumos solo habilitan su desarrollo.
+        recommended_action: >-
+          Implementar un pipeline estadistico versionado con pruebas de leakage,
+          estabilidad, calibracion y monitoreo antes de uso productivo.
+    blocker: sensitive_restricted
+    verification:
+      semantic_type: derived_feature
+      source:
+        method: schema_access_check
+        evidence: >-
+          Se comprobara information_schema para la tabla mensual y
+          hrda.all_terminations con todos los campos requeridos.
+        result: Pendiente de ejecucion por el runner v4.
+        as_of_date: '2026-08-21'
+        query_reference: queries/audits/high_risk_manager_source_access_20260821.sql
+        acceptance_rule: missing_items debe ser igual a cero.
+        outcome: pending
+        metric_checks:
+          - {metric: missing_items, aggregate: sum, operator: eq, threshold: 0}
+      consistency:
+        method: longitudinal_aggregate_audit
+        evidence: >-
+          Se auditan unicidad empleado-snapshot, contradicciones de atributos,
+          fechas de tenure futuras, llaves de terminacion, dominio normalizado de
+          term_type y duplicados de eventos.
+        result: Pendiente de ejecucion por el runner v4.
+        as_of_date: '2026-08-21'
+        query_reference: queries/audits/high_risk_manager_consistency_v2_20260821.sql
+        acceptance_rule: >-
+          Deben existir observaciones y meses; anomaly_count, invalid_count,
+          unexplained_change_count, selected_tenure_future_rows y
+          unclassified_term_type_rows deben ser cero.
+        outcome: pending
+        metric_checks:
+          - {metric: observations_checked, aggregate: sum, operator: gt, threshold: 0}
+          - {metric: months_checked, aggregate: max, operator: gte, threshold: 24}
+          - {metric: anomaly_count, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: invalid_count, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: unexplained_change_count, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: selected_tenure_future_rows, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: unclassified_term_type_rows, aggregate: sum, operator: eq, threshold: 0}
+      join:
+        method: key_grain_and_temporal_reconciliation
+        evidence: >-
+          Se atribuyen terminaciones voluntarias elegibles al ultimo snapshot
+          anterior, se determina el primer cierre que conoce el evento y se valida
+          la asignacion unica del manager-snapshot al empleado-snapshot.
+        result: Pendiente de ejecucion por el runner v4.
+        as_of_date: '2026-08-21'
+        query_reference: queries/audits/high_risk_manager_temporal_join_20260821.sql
+        acceptance_rule: >-
+          Deben existir eventos elegibles y matches; unmatched_count,
+          duplicate_count, multi_match_count, knowledge_unmatched_count,
+          knowledge_multi_match_count, feature_assignment_unmatched_count,
+          feature_assignment_multi_match_count y future_event_usage_count deben
+          ser cero.
+        outcome: pending
+        metric_checks:
+          - {metric: eligible_count, aggregate: sum, operator: gt, threshold: 0}
+          - {metric: matched_count, aggregate: sum, operator: gt, threshold: 0}
+          - {metric: unmatched_count, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: duplicate_count, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: multi_match_count, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: knowledge_unmatched_count, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: knowledge_multi_match_count, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: feature_assignment_unmatched_count, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: feature_assignment_multi_match_count, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: future_event_usage_count, aggregate: sum, operator: eq, threshold: 0}
+    derivation_options:
+      - name: Attrition voluntario ajustado con shrinkage y persistencia
+        status: testable
+        fields_and_tables: >-
+          hrda.post_hire_monthly_worker_dtls: employee_id,
+          manager_employee_id, fis_mo_end_dt, region, job_family,
+          job_level_primary_position, job_family_group, level_grouped,
+          max_hire_rehire_date, service_date y original_hire_date;
+          hrda.all_terminations: employeeid, term_date y term_type.
+        formula: >-
+          Para cada manager-snapshot, atribuir las salidas voluntarias de sus
+          reportes en los 12 meses cerrados, estimar salidas esperadas sin usar el
+          identificador del manager y ajustando por mes, region, job_family,
+          job_level_primary_position y tenure time-safe; calcular observado/esperado, aplicar shrinkage, convertir a
+          percentil mensual y evaluar el flag persistente.
+        grain: Manager-snapshot; lookup posterior al empleado-snapshot
+        temporal_window: >-
+          Doce meses cerrados hasta el snapshot y seis snapshots para persistencia;
+          ninguna terminacion posterior al cierre puede utilizarse.
+        deduplication: >-
+          Una fila canonica por empleado-snapshot, una terminacion por
+          employeeid-term_date y un score por manager-snapshot.
+        nulls_and_edge_cases: >-
+          Un insumo requerido nulo produce score no observable. Managers nuevos o
+          con poca exposicion reciben un score fuertemente reducido hacia el prior
+          mediante shrinkage; su flag secundario permanece Unknown hasta cumplir
+          los minimos. Rehires y eventos masivos requieren reglas versionadas.
+        leakage_controls: >-
+          Atribuir la salida al ultimo manager anterior a term_date, activar el
+          evento desde el primer cierre posterior y excluir outcome futuro del
+          empleado evaluado.
+        snapshot_join: >-
+          Unir el score por manager_employee_id y fis_mo_end_dt al manager vigente
+          del empleado en el mismo snapshot.
+        sensitivity: >-
+          Mantener IDs dentro del calculo y publicar solo agregados; no usar la
+          senal aisladamente para decisiones individuales.
+        validations_needed: >-
+          Acceso, cobertura de componentes, consistencia longitudinal, dominio de
+          terminaciones, atribucion temporal, cardinalidad, implementacion
+          independiente, backtest, estabilidad y fairness.
+        estimated_effort: Ingenieria estadistica alta.
+        decision_reason: >-
+          Coincide con la hipotesis acordada y evita confundir equipos de alto
+          riesgo estructural con un efecto asociado al manager.
+    selected_derivation: Attrition voluntario ajustado con shrinkage y persistencia
+    analysis:
+      language: es
+      semantic_type: derived_feature
+      definition: >-
+        Riesgo historico ajustado de attrition voluntario asociado al manager.
+      numerator_definition: >-
+        Empleados-snapshot con manager vigente cuyo score tiene historia y
+        exposicion suficientes para aplicar la regla persistente.
+      intended_use: >-
+        Medir una posible influencia del entorno de liderazgo sobre el riesgo de attrition.
+      attrition_use: >-
+        Medir una posible influencia del entorno de liderazgo sobre el riesgo de attrition.
+      source_reasoning: >-
+        La membresia y los controles provienen del snapshot mensual; los eventos
+        canonicos provienen de all_terminations y se atribuyen al manager previo.
+        La ruta selecciona campos detallados de job family y nivel y nunca usa una
+        fecha de tenure posterior al snapshot.
+      prediction_cutoff: >-
+        Solo informacion conocida al cierre del snapshot; la salida se incorpora
+        desde el primer cierre igual o posterior a term_date.
+      population: Empleados regulares activos en cada snapshot mensual.
+      prior_evidence_policy: >-
+        El assessment historico y las variables relacionadas son contexto; los
+        scores actuales dependen del SQL ejecutado en esta reevaluacion.
+      validation_focus:
+        - Disponibilidad de todos los insumos nuevos.
+        - Cobertura del score continuo a partir de sus insumos obligatorios.
+        - Elegibilidad del flag separada de missingness del score.
+        - Dominio y consistencia de terminaciones voluntarias.
+        - Atribucion unica al manager previo y fecha de conocimiento.
+        - Asignacion unica del score manager-snapshot al empleado-snapshot.
+        - Brecha entre factibilidad tecnica y calibracion estadistica.
+      context_role: Manager risk
+      context_relevance: >-
+        El exceso de attrition ajustado puede ser predictivo, pero no constituye
+        evidencia causal ni una evaluacion automatica del manager.
+      documentation_path: high-risk-manager/README.md

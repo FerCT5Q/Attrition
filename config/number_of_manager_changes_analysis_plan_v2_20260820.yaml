@@ -1,0 +1,104 @@
+schema_version: 1
+plan_version: 2
+plan_revision_reason: >-
+  La primera reconciliación demostró cardinalidad perfecta, pero la revisión de
+  suficiencia identificó que usar manager_change_date podría retroceder un evento si
+  el flag se observó en un snapshot posterior. Este plan añade la fecha de primera
+  observación como límite de conocimiento y vuelve a probar todo el Join.
+language: es
+created_before_execution: true
+variable: Number of manager changes
+concept: >-
+  Feature derivada de eventos de cambio de manager. El evento se identifica por
+  empleado-fecha efectiva, pero sólo queda disponible para modelado desde el primer
+  snapshot donde manager_change es positivo.
+intended_use: >-
+  Medir cambios repetidos de manager sin duplicar eventos ni incorporarlos antes de
+  que fueran observables en la historia mensual.
+knowledge_date: Primer snapshot con manager_change positivo para el evento.
+population: >-
+  Filas con worker_type='Employee', employee_type='Regular' y active_status=1.
+grain: Empleado-snapshot mensual; evento canónico empleado-fecha efectiva.
+semantic_type: derived_feature
+source_reasoning: >-
+  manager_change_date identifica el evento y el snapshot positivo establece cuándo
+  se volvió observable. Ambas fechas deben reconciliarse para evitar leakage.
+validation_story:
+  - id: source_access
+    criterion: source
+    evidence_role: defining
+    question: ¿Existen todos los campos necesarios para la reconstrucción time-safe?
+    why: La ruta necesita empleado, periodos fiscales, población, flag y fecha efectiva.
+    fields: [employee_id, fis_mo_beg_dt, fis_mo_end_dt, worker_type, employee_type, active_status, manager_change, manager_change_date]
+    method: Auditoría agregada de information_schema.
+    sql_reference: queries/audits/number_of_manager_changes_source_access_20260820.sql
+    acceptance_rule: missing_items debe ser igual a 0.
+    metric_checks:
+      - {metric: missing_items, aggregate: sum, operator: eq, threshold: 0}
+
+  - id: time_safe_event_availability
+    criterion: join
+    evidence_role: defining
+    question: ¿Cada evento tiene una primera observación única y libre de fechas futuras?
+    why: La feature no puede asignar el evento a snapshots anteriores a su primera observación.
+    fields: [manager_change, manager_change_date, fis_mo_beg_dt, fis_mo_end_dt]
+    method: >-
+      Construir el evento canónico, obtener el primer snapshot positivo y medir
+      observaciones tardías, contemporáneas o futuras.
+    sql_reference: queries/audits/number_of_manager_changes_join_reconciliation_v2_20260820.sql
+    acceptance_rule: flagged_without_date_rows, future_positive_flag_rows e invalid_flag_rows deben ser 0.
+    metric_checks:
+      - {metric: flagged_without_date_rows, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: future_positive_flag_rows, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: invalid_flag_rows, aggregate: sum, operator: eq, threshold: 0}
+
+  - id: event_period_and_knowledge_join
+    criterion: join
+    evidence_role: defining
+    question: ¿El evento y su primera observación empatan de forma única con los snapshots del empleado?
+    why: Se necesitan una fecha efectiva trazable y una fecha de conocimiento no ambigua.
+    fields: [employee_id, manager_change_date, fis_mo_beg_dt, fis_mo_end_dt]
+    method: >-
+      Reconciliar por separado la fecha efectiva contra su periodo fiscal y la primera
+      observación contra la llave empleado-snapshot.
+    sql_reference: queries/audits/number_of_manager_changes_join_reconciliation_v2_20260820.sql
+    acceptance_rule: >-
+      effective_unmatched_event_count, effective_multi_match_event_count,
+      knowledge_unmatched_event_count y knowledge_multi_match_event_count deben ser 0.
+    metric_checks:
+      - {metric: effective_unmatched_event_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: effective_multi_match_event_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: knowledge_unmatched_event_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: knowledge_multi_match_event_count, aggregate: sum, operator: eq, threshold: 0}
+
+  - id: time_safe_derived_output
+    criterion: join
+    evidence_role: defining
+    question: ¿La derivación basada en primera observación devuelve exactamente una fila por empleado-snapshot?
+    why: Éste es el contrato final para unir la feature al dataset de modelado sin leakage.
+    fields: [employee_id, fis_mo_end_dt, manager_change_date]
+    method: >-
+      Contar eventos sólo cuando first_positive_snapshot_date sea menor o igual al
+      snapshot objetivo y reconciliar las llaves de salida.
+    sql_reference: queries/audits/number_of_manager_changes_join_reconciliation_v2_20260820.sql
+    acceptance_rule: >-
+      matched_count debe ser mayor que 0; unmatched_count, duplicate_count y
+      multi_match_count deben ser 0; match_rate_percent debe ser 100.
+    metric_checks:
+      - {metric: matched_count, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: unmatched_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: duplicate_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: multi_match_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: match_rate_percent, aggregate: min, operator: eq, threshold: 100}
+
+  - id: unresolved_window_boundary
+    criterion: definition
+    evidence_role: contextual
+    question: ¿Esta validación decide la longitud final de la ventana retrospectiva?
+    why: Join puede confirmarse aunque la ventana del conteo siga pendiente.
+    fields: [manager_change_date, fis_mo_end_dt]
+    method: Mantener la prueba acumulada como contrato de unión, no como definición final.
+    sql_reference: queries/audits/number_of_manager_changes_join_reconciliation_v2_20260820.sql
+    acceptance_rule: Definition permanece en 1 hasta aprobar ventana, fronteras y recálculo independiente.
+    metric_fields: [eligible_event_count, late_observed_event_count, same_period_event_count]
+

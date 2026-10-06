@@ -1,0 +1,191 @@
+{
+  "artifact": "internal_analysis",
+  "evidence_type": "aggregate-only QVoice wave participant voluntary attrition",
+  "generated_on": "2026-09-18",
+  "outcome": "pass",
+  "minimum_shared_cohort": 30,
+  "outcome_contract": {
+    "historical": "Annual voluntary attrition: distinct QVoice raw-wave participants who matched to active Regular employees at the latest monthly snapshot before the wave month; strict VOLUNTARY exits in (wave-month start, wave-month start + 12 months].",
+    "2026": "Voluntary attrition YTD: the same pre-wave cohort through the latest available snapshot; not annualized.",
+    "population": "worker_type='Employee'; employee_type='Regular'; active_status=1 at each pre-wave baseline snapshot.",
+    "grain": "Distinct participant in a QVoice raw wave after a time-safe employee-date join."
+  },
+  "waves": [
+    {
+      "wave": "Mar-2023",
+      "outcome_type": "annual_12m",
+      "baseline_snapshot": "2023-02-19",
+      "outcome_start": "2023-03-01",
+      "outcome_end": "2024-03-01",
+      "label": "Annual attrition · 3.9%",
+      "source_participant_count": 7314,
+      "matched_employee_count": 6646,
+      "unmatched_employee_count": 668,
+      "voluntary_exit_count": 258,
+      "voluntary_attrition_rate_percent": 3.882
+    },
+    {
+      "wave": "Jan-2024",
+      "outcome_type": "annual_12m",
+      "baseline_snapshot": "2023-12-24",
+      "outcome_start": "2024-01-01",
+      "outcome_end": "2025-01-01",
+      "label": "Annual attrition · 5.1%",
+      "source_participant_count": 36806,
+      "matched_employee_count": 33272,
+      "unmatched_employee_count": 3534,
+      "voluntary_exit_count": 1696,
+      "voluntary_attrition_rate_percent": 5.0974
+    },
+    {
+      "wave": "Jan-2025",
+      "outcome_type": "annual_12m",
+      "baseline_snapshot": "2024-12-29",
+      "outcome_start": "2025-01-01",
+      "outcome_end": "2026-01-01",
+      "label": "Annual attrition · 4.8%",
+      "source_participant_count": 37837,
+      "matched_employee_count": 34920,
+      "unmatched_employee_count": 2917,
+      "voluntary_exit_count": 1661,
+      "voluntary_attrition_rate_percent": 4.7566
+    },
+    {
+      "wave": "Jan-2026",
+      "outcome_type": "ytd",
+      "baseline_snapshot": "2025-12-28",
+      "outcome_start": "2026-01-07",
+      "outcome_end": "2026-09-27",
+      "label": "YTD attrition · 3.8%",
+      "source_participant_count": 42203,
+      "matched_employee_count": 39194,
+      "unmatched_employee_count": 3009,
+      "voluntary_exit_count": 1505,
+      "voluntary_attrition_rate_percent": 3.8399
+    }
+  ],
+  "window_audit": [
+    {
+      "wave": "Mar-2023",
+      "wave_month_start": "2023-03-01",
+      "outcome_start": "2023-03-01",
+      "outcome_type": "annual_12m",
+      "baseline_snapshot": "2023-02-19",
+      "outcome_end": "2024-03-01 00:00:00",
+      "latest_snapshot_date": "2026-09-27",
+      "followup_complete": 1,
+      "baseline_distinct_employee_count": 42745,
+      "duplicate_baseline_employee_count": 0,
+      "voluntary_exit_count": 1920,
+      "multiple_voluntary_event_date_count": 6,
+      "workforce_voluntary_attrition_rate_percent": "4.4918"
+    },
+    {
+      "wave": "Jan-2024",
+      "wave_month_start": "2024-01-01",
+      "outcome_start": "2024-01-01",
+      "outcome_type": "annual_12m",
+      "baseline_snapshot": "2023-12-24",
+      "outcome_end": "2025-01-01 00:00:00",
+      "latest_snapshot_date": "2026-09-27",
+      "followup_complete": 1,
+      "baseline_distinct_employee_count": 40145,
+      "duplicate_baseline_employee_count": 0,
+      "voluntary_exit_count": 2227,
+      "multiple_voluntary_event_date_count": 3,
+      "workforce_voluntary_attrition_rate_percent": "5.5474"
+    },
+    {
+      "wave": "Jan-2025",
+      "wave_month_start": "2025-01-01",
+      "outcome_start": "2025-01-01",
+      "outcome_type": "annual_12m",
+      "baseline_snapshot": "2024-12-29",
+      "outcome_end": "2026-01-01 00:00:00",
+      "latest_snapshot_date": "2026-09-27",
+      "followup_complete": 1,
+      "baseline_distinct_employee_count": 42342,
+      "duplicate_baseline_employee_count": 0,
+      "voluntary_exit_count": 2343,
+      "multiple_voluntary_event_date_count": 4,
+      "workforce_voluntary_attrition_rate_percent": "5.5335"
+    },
+    {
+      "wave": "Jan-2026",
+      "wave_month_start": "2026-01-01",
+      "outcome_start": "2026-01-07",
+      "outcome_type": "ytd",
+      "baseline_snapshot": "2025-12-28",
+      "outcome_end": "2026-09-27 00:00:00",
+      "latest_snapshot_date": "2026-09-27",
+      "followup_complete": 1,
+      "baseline_distinct_employee_count": 47134,
+      "duplicate_baseline_employee_count": 0,
+      "voluntary_exit_count": 2092,
+      "multiple_voluntary_event_date_count": 1,
+      "workforce_voluntary_attrition_rate_percent": "4.4384"
+    }
+  ],
+  "validation": {
+    "outcome": "pass",
+    "raw_wave_key_quality": {
+      "Mar-2023": {
+        "source_rows": 7314,
+        "distinct_usable_participant_count": 7314,
+        "missing_key_rows": 0,
+        "invalid_key_rows": 0,
+        "unjoinable_source_rows": 0,
+        "duplicate_key_rows": 0
+      },
+      "Jan-2024": {
+        "source_rows": 36807,
+        "distinct_usable_participant_count": 36806,
+        "missing_key_rows": 1,
+        "invalid_key_rows": 0,
+        "unjoinable_source_rows": 1,
+        "duplicate_key_rows": 0
+      },
+      "Jan-2025": {
+        "source_rows": 37837,
+        "distinct_usable_participant_count": 37837,
+        "missing_key_rows": 0,
+        "invalid_key_rows": 0,
+        "unjoinable_source_rows": 0,
+        "duplicate_key_rows": 0
+      },
+      "Jan-2026": {
+        "source_rows": 42203,
+        "distinct_usable_participant_count": 42203,
+        "missing_key_rows": 0,
+        "invalid_key_rows": 0,
+        "unjoinable_source_rows": 0,
+        "duplicate_key_rows": 0
+      }
+    },
+    "unjoinable_raw_rows_recorded_not_imputed": true,
+    "all_usable_participant_keys_unique": true,
+    "all_historical_waves_have_complete_12_month_followup": true,
+    "jan_2026_is_ytd_not_annualized": true,
+    "all_published_cohorts_n_at_least": 30,
+    "runtime_join_sql_persisted": false,
+    "reason_runtime_join_sql_not_persisted": "It contains in-memory employee identifiers and returns aggregate counts only."
+  },
+  "privacy": {
+    "employee_identifiers_persisted": false,
+    "employee_rows_persisted": false,
+    "raw_comment_text_persisted": false,
+    "runtime_join_sql_persisted": false
+  },
+  "provenance": {
+    "window_audit": "queries/audits/qvoice_wave_annual_attrition_window_audit_20260918.sql",
+    "window_audit_sha256": "ae8ffa27cc1ad8c38a6aff2acb43b2ff0bf21eabc171f38e7a1cc052ccce62d7",
+    "jan_2026_ytd_evidence": "output/distribution/json/qvoice-2026-ytd-attrition-evidence-20260917.json",
+    "jan_2026_ytd_evidence_sha256": "82e7850f87512d11c99f38621fb2a2f6834802c91d0ac5d296975f29479cc1b6",
+    "raw_workbooks": [
+      "March 2023 Pulse_raw data.xlsx",
+      "Jan 2024 Qvoice raw data.xlsx",
+      "Jan 2025_Qvoice_raw data.xlsx",
+      "Jan 2026 Qvoice_raw data.xlsx"
+    ]
+  }
+}

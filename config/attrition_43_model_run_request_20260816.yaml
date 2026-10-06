@@ -1,0 +1,363 @@
+schema_version: 1
+language: es
+unknown_policy: pause
+problem_context:
+  problem_statement: Evaluar conjuntamente 43 variables de RH para construir un modelo longitudinal que prediga attrition
+    a partir de snapshots históricos.
+  decision_or_use_case: Seleccionar, definir y priorizar features time-safe para un modelo de attrition, conservando la evolución
+    de cada empleado a través de snapshots y comparando disponibilidad, cobertura y estabilidad entre años.
+  outcome: Attrition voluntario ocurrido después del snapshot de predicción y antes del siguiente snapshot mensual.
+  population: Empleados regulares activos en cada snapshot mensual de predicción.
+  unit_of_analysis: Empleado-snapshot mensual.
+  time_horizon: Un mes, desde el cierre de un snapshot mensual hasta el cierre del siguiente snapshot.
+  knowledge_boundary: Utilizar exclusivamente información disponible al cierre de cada snapshot mensual; ninguna señal posterior
+    al snapshot puede entrar a la feature.
+  stakeholders: Equipo de People Analytics / Attrition
+  assumptions:
+  - El modelo producirá una observación por empleado y snapshot mensual.
+  - El target primario será attrition voluntario en el mes siguiente.
+  - La disponibilidad, cobertura, missingness y estabilidad se resumirán por fiscal_year, conservando evidencia mensual.
+  - La población base será empleados regulares activos en cada snapshot.
+  - Gender se utilizará únicamente para auditoría de fairness y no como predictor.
+  constraints:
+  - Sólo consultas read-only y resultados agregados; cohortes compartidas de al menos 30.
+  - No publicar IDs, nombres, correos, atributos protegidos, compensación exacta, domicilios ni texto libre.
+  - Conservar el grain mensual para modelado y generar resúmenes comparables por fiscal_year.
+  - Separar claramente feature time-safe, outcome futuro y cualquier señal con riesgo de leakage.
+  - Entrenar con años anteriores y validar en años posteriores; evitar particiones aleatorias como validación principal.
+  success_criteria:
+  - Cada una de las 43 variables aparece exactamente una vez en el portafolio y conserva el orden original en el workbook.
+  - Cada variable tiene cobertura, missingness, historia y estabilidad resumidas por año, además de evidencia a nivel snapshot.
+  - Toda feature derivada es reproducible al snapshot y no usa información futura.
+  - La evaluación distingue disponibilidad técnica, validez semántica, privacidad, esfuerzo y utilidad potencial para el modelo.
+  - La validación del modelo podrá entrenar en años anteriores y probar en años posteriores sin leakage.
+  portfolio_hypotheses:
+  - Las señales de movilidad interna, progresión, compensación, manager, encuesta y mercado laboral aportan información complementaria,
+    pero tienen ventanas y elegibilidades distintas.
+  - Las variables derivadas deben evaluarse después de sus conceptos base y heredar limitaciones cuando éstos no estén confirmados.
+  - Survey y fuentes externas probablemente tendrán menor frecuencia que los snapshots mensuales y requerirán joins temporales
+    explícitos.
+  - Gender se reservará para auditoría de fairness y no se incluirá como predictor.
+  known_relationships:
+  - variables:
+    - Comp ratio
+    - Within team compensation range
+    relationship: La posición relativa dentro del equipo depende de una definición válida de Comp ratio.
+    why_relevant: Una brecha en el ratio base limita Definition de la feature derivada.
+  - variables:
+    - Manager change
+    - Number of manager changes
+    relationship: El conteo histórico depende de una definición time-safe y observable del evento Manager change.
+    why_relevant: La ventana, deduplicación y fecha efectiva deben ser consistentes.
+  - variables:
+    - Team turnover
+    - High turnover under this person
+    - High risk manager
+    relationship: Las señales de riesgo del manager dependen de una definición gobernada de rotación histórica del equipo.
+    why_relevant: Evita etiquetas circulares, leakage y exposición injustificada de managers.
+  - variables:
+    - Average of all Qvoice items
+    - Region
+    - Standardized / normalized within region
+    relationship: La normalización regional depende del composite de survey y de un mapping geográfico estable.
+    why_relevant: Ambos conceptos base limitan la feature normalizada.
+variables:
+- name: Applied to a job
+  intended_use: La búsqueda interna reciente puede señalar intención de movilidad o riesgo de salida.
+  population: Empleados regulares activos en cada snapshot mensual
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Applications / internal mobility
+  context_relevance: La búsqueda interna reciente puede señalar intención de movilidad o riesgo de salida.
+- name: More than 3 job applications
+  intended_use: Un volumen alto de solicitudes puede distinguir movilidad activa de una solicitud aislada.
+  population: Empleados regulares activos en cada snapshot mensual
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Applications / internal mobility
+  context_relevance: Un volumen alto de solicitudes puede distinguir movilidad activa de una solicitud aislada.
+- name: Transfer within past year
+  intended_use: Una movilidad interna reciente puede modificar el riesgo de salida después del cambio.
+  population: Empleados regulares activos en cada snapshot mensual
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Applications / internal mobility
+  context_relevance: Una movilidad interna reciente puede modificar el riesgo de salida después del cambio.
+- name: Location
+  intended_use: La geografía laboral permite segmentar por mercado de trabajo, sitio y contexto operativo.
+  population: Empleados regulares activos en cada snapshot mensual
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Location / workplace
+  context_relevance: La geografía laboral permite segmentar por mercado de trabajo, sitio y contexto operativo.
+- name: Within team compensation range
+  intended_use: La posición relativa dentro de un grupo comparable puede capturar compresión salarial o valores atípicos.
+  population: Empleados regulares activos en cada snapshot mensual
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Compensation
+  context_relevance: La posición relativa dentro de un grupo comparable puede capturar compresión salarial o valores atípicos.
+- name: Team turnover
+  intended_use: La rotación reciente del equipo puede reflejar inestabilidad local relacionada con attrition.
+  population: Empleados regulares activos en cada snapshot mensual
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Turnover contagion
+  context_relevance: La rotación reciente del equipo puede reflejar inestabilidad local relacionada con attrition.
+- name: More than 1 employee leaves in a year
+  intended_use: La concentración de salidas puede representar exposición a pérdidas repetidas dentro del equipo.
+  population: Empleados regulares activos en cada snapshot mensual
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Turnover contagion
+  context_relevance: La concentración de salidas puede representar exposición a pérdidas repetidas dentro del equipo.
+- name: Job family
+  intended_use: La familia detallada aporta contexto ocupacional y el grupo permite segmentos más amplios.
+  population: Empleados regulares activos en cada snapshot mensual
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Role / job
+  context_relevance: La familia detallada aporta contexto ocupacional y el grupo permite segmentos más amplios.
+- name: Region
+  intended_use: La región permite controles geográficos amplios y segmentación por mercado laboral.
+  population: Empleados regulares activos en cada snapshot mensual
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Demographics
+  context_relevance: La región permite controles geográficos amplios y segmentación por mercado laboral.
+- name: Gender
+  intended_use: Se limita a monitoreo de fairness; su uso predictivo requiere aprobación formal.
+  population: Empleados regulares activos en cada snapshot mensual
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Demographics
+  context_relevance: Se limita a monitoreo de fairness; su uso predictivo requiere aprobación formal.
+- name: Remote / hybrid / in office status
+  intended_use: La modalidad puede relacionarse de forma distinta con retención según rol y ubicación.
+  population: Empleados regulares activos en cada snapshot mensual
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Work arrangement
+  context_relevance: La modalidad puede relacionarse de forma distinta con retención según rol y ubicación.
+- name: Engineering vs. non-engineering
+  intended_use: El segmento controla diferencias materiales entre mercados laborales técnicos y no técnicos.
+  population: Empleados regulares activos en cada snapshot mensual
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Role / job
+  context_relevance: El segmento controla diferencias materiales entre mercados laborales técnicos y no técnicos.
+- name: Rehire
+  intended_use: Rehire distingue experiencia previa en la compañía y modifica la interpretación de tenure.
+  population: Empleados regulares activos en cada snapshot mensual
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Employment history
+  context_relevance: Rehire distingue experiencia previa en la compañía y modifica la interpretación de tenure.
+- name: Years of experience prior to Qualcomm
+  intended_use: La experiencia previa distingue etapa profesional más allá del tenure en la compañía.
+  population: Empleados regulares activos en cada snapshot mensual
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Employment history
+  context_relevance: La experiencia previa distingue etapa profesional más allá del tenure en la compañía.
+- name: Commute distance
+  intended_use: La carga de traslado puede interactuar con modalidad laboral y asistencia.
+  population: Empleados regulares activos; los campos de ubicación permitidos aún no están aprobados
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Location / workplace
+  context_relevance: La carga de traslado puede interactuar con modalidad laboral y asistencia.
+- name: RTO/hybrid comment in Qvoice
+  intended_use: Un topic flag gobernado podría medir sentimiento sobre la modalidad laboral.
+  population: No existe una fuente de texto elegible
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Survey data
+  context_relevance: Un topic flag gobernado podría medir sentimiento sobre la modalidad laboral.
+- name: Any comment on Qvoice
+  intended_use: La participación mediante comentarios podría aportar una señal de engagement entre empleados elegibles.
+  population: No existe una fuente de texto elegible
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Survey data
+  context_relevance: La participación mediante comentarios podría aportar una señal de engagement entre empleados elegibles.
+- name: Non-respondents
+  intended_use: La no respuesta sólo es interpretable entre personas invitadas y elegibles para la encuesta.
+  population: Empleados regulares activos en el último snapshot disponible antes o en el lanzamiento de la encuesta
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Survey data
+  context_relevance: La no respuesta sólo es interpretable entre personas invitadas y elegibles para la encuesta.
+- name: Intent to Stay items
+  intended_use: Los items miden directamente intención declarada de permanencia.
+  population: Empleados regulares activos en el último snapshot disponible antes o en el lanzamiento de la encuesta
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Survey data
+  context_relevance: Los items miden directamente intención declarada de permanencia.
+- name: Career goals item
+  intended_use: La percepción de poder cumplir metas profesionales puede relacionarse con retención.
+  population: Empleados regulares activos en el último snapshot disponible antes o en el lanzamiento de la encuesta
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Survey data
+  context_relevance: La percepción de poder cumplir metas profesionales puede relacionarse con retención.
+- name: Average of all Qvoice items
+  intended_use: Un composite amplio puede resumir sentimiento si su constructo y cálculo están gobernados.
+  population: Empleados regulares activos en el último snapshot disponible antes o en el lanzamiento de la encuesta
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Survey data
+  context_relevance: Un composite amplio puede resumir sentimiento si su constructo y cálculo están gobernados.
+- name: Standardized / normalized within region
+  intended_use: La normalización regional podría reducir diferencias de estilo de respuesta entre geografías.
+  population: Empleados regulares activos en el último snapshot disponible antes o en el lanzamiento de la encuesta
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Survey data
+  context_relevance: La normalización regional podría reducir diferencias de estilo de respuesta entre geografías.
+- name: Tech industry unemployment data
+  intended_use: La estrechez del mercado laboral puede contextualizar el riesgo de attrition voluntario.
+  population: Empleados regulares activos; el mapping geográfico externo no está validado
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: External pull factors
+  context_relevance: La estrechez del mercado laboral puede contextualizar el riesgo de attrition voluntario.
+- name: Draup data
+  intended_use: El concepto no es evaluable hasta seleccionar un dataset, campo y uso específicos.
+  population: La población del proveedor no está validada
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: External pull factors
+  context_relevance: El concepto no es evaluable hasta seleccionar un dataset, campo y uso específicos.
+- name: LinkedIn scraping
+  intended_use: La fuente solicitada no define una feature y presenta riesgos de consentimiento, términos de uso e identity
+    matching.
+  population: La población de perfiles externos no está validada
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: External pull factors
+  context_relevance: La fuente solicitada no define una feature y presenta riesgos de consentimiento, términos de uso e identity
+    matching.
+- name: Position / time in level
+  intended_use: El tiempo en nivel puede identificar progresión estancada o avance reciente.
+  population: Empleados regulares activos en cada snapshot mensual
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Tenure
+  context_relevance: El tiempo en nivel puede identificar progresión estancada o avance reciente.
+- name: Company tenure
+  intended_use: Company tenure es un control central del ciclo laboral para modelos de attrition.
+  population: Empleados regulares activos en cada snapshot mensual
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Tenure
+  context_relevance: Company tenure es un control central del ciclo laboral para modelos de attrition.
+- name: Time since last promotion
+  intended_use: Un periodo largo sin promoción puede reflejar fricción de progresión.
+  population: Empleados regulares activos en cada snapshot mensual
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Career progression
+  context_relevance: Un periodo largo sin promoción puede reflejar fricción de progresión.
+- name: Promoted vs. hired into level
+  intended_use: La vía de entrada al nivel distingue progresión interna de colocación externa.
+  population: Empleados regulares activos en cada snapshot mensual
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Career progression
+  context_relevance: La vía de entrada al nivel distingue progresión interna de colocación externa.
+- name: Level
+  intended_use: Level controla etapa profesional, alcance y contexto de compensación.
+  population: Empleados regulares activos en cada snapshot mensual
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Role / job
+  context_relevance: Level controla etapa profesional, alcance y contexto de compensación.
+- name: Layers from CEO
+  intended_use: La profundidad organizacional puede representar distancia de decisión y posición estructural.
+  population: Empleados regulares activos en cada snapshot mensual
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Organization structure
+  context_relevance: La profundidad organizacional puede representar distancia de decisión y posición estructural.
+- name: Compensation grade
+  intended_use: El grado controla estructura de compensación, pero es información gobernada y puede codificar nivel.
+  population: Empleados regulares activos en cada snapshot mensual
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Compensation
+  context_relevance: El grado controla estructura de compensación, pero es información gobernada y puede codificar nivel.
+- name: Comp ratio
+  intended_use: La posición relativa frente al rango salarial mide alineación de mercado sin publicar compensación exacta.
+  population: Empleados regulares activos en cada snapshot mensual
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Compensation
+  context_relevance: La posición relativa frente al rango salarial mide alineación de mercado sin publicar compensación exacta.
+- name: Co-location with manager
+  intended_use: La co-location física puede influir en acceso al manager y experiencia local del equipo.
+  population: Empleados regulares activos y snapshots de managers regulares activos
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Manager / workplace
+  context_relevance: La co-location física puede influir en acceso al manager y experiencia local del equipo.
+- name: Hours away from manager
+  intended_use: La separación horaria o de viaje puede representar carga de coordinación.
+  population: Empleados regulares activos; el mapping externo de distancia entre sitios no está validado
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Manager / workplace
+  context_relevance: La separación horaria o de viaje puede representar carga de coordinación.
+- name: High risk manager
+  intended_use: Una etiqueta de riesgo del manager afectaría equipos completos y tiene riesgos altos de gobernanza y fairness.
+  population: Empleados regulares activos en cada snapshot mensual
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Manager risk
+  context_relevance: Una etiqueta de riesgo del manager afectaría equipos completos y tiene riesgos altos de gobernanza y
+    fairness.
+- name: High turnover under this person
+  intended_use: La rotación histórica del equipo puede representar presión local de retención.
+  population: Empleados regulares activos en cada snapshot mensual
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Manager risk
+  context_relevance: La rotación histórica del equipo puede representar presión local de retención.
+- name: Manager leaving
+  intended_use: La salida conocida de un manager puede alterar la experiencia del equipo; una salida futura produciría leakage.
+  population: Empleados regulares activos en cada snapshot mensual
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Manager movement
+  context_relevance: La salida conocida de un manager puede alterar la experiencia del equipo; una salida futura produciría
+    leakage.
+- name: Manager change
+  intended_use: Un cambio reciente de manager puede representar disrupción organizacional.
+  population: Empleados regulares activos en cada snapshot mensual
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Manager movement
+  context_relevance: Un cambio reciente de manager puede representar disrupción organizacional.
+- name: Number of manager changes
+  intended_use: Cambios repetidos de manager pueden medir inestabilidad organizacional prolongada.
+  population: Empleados regulares activos en cada snapshot mensual
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Manager movement
+  context_relevance: Cambios repetidos de manager pueden medir inestabilidad organizacional prolongada.
+- name: Talent index
+  intended_use: Un composite gobernado podría añadir contexto de performance, pero es sensible y propenso a leakage.
+  population: Empleados presentes en cada ciclo de talent index
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Talent
+  context_relevance: Un composite gobernado podría añadir contexto de performance, pero es sensible y propenso a leakage.
+- name: Major inflection points
+  intended_use: Un composite de cambios mayores podría representar disrupción acumulada.
+  population: Empleados regulares activos en cada snapshot mensual
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Organization events
+  context_relevance: Un composite de cambios mayores podría representar disrupción acumulada.
+- name: ET fields
+  intended_use: Una clasificación expert-track podría segmentar carrera, pero el acrónimo y mapping objetivo son ambiguos.
+  population: Empleados u organizaciones según una definición todavía pendiente.
+  knowledge_date: Cierre de cada snapshot mensual de predicción; los resultados se resumirán por año.
+  context_role: Talent / expert track
+  context_relevance: Una clasificación expert-track podría segmentar carrera, pero el acrónimo y mapping objetivo son ambiguos.
+decisions:
+  business:outcome_definition:
+    decision: Usar attrition voluntario como target primario.
+    source: Confirmado por el usuario.
+  business:outcome_horizon:
+    decision: Etiquetar attrition voluntario ocurrido antes del siguiente snapshot mensual.
+    source: Confirmado por el usuario.
+  business:snapshot_and_summary:
+    decision: Evaluar snapshots mensuales y resumir los resultados por fiscal_year.
+    source: Confirmado por el usuario.
+  business:population:
+    decision: Usar empleados regulares activos en cada snapshot como población base.
+    source: Confirmado por el usuario.
+  business:gender:
+    decision: Excluir Gender de los predictores y usarlo sólo para auditoría de fairness.
+    source: Política conservadora explicada al usuario.
+  semantic:ratio_rate_percent:
+    status: resolved
+    decision: No inferir fórmulas. Confirmar numerador, denominador, elegibilidad, unidad, fecha efectiva, tolerancia y redondeo por variable; si no se reconcilia, limitar Definition.
+  semantic:index_score_average:
+    status: resolved
+    decision: Exigir componentes, pesos, normalización, versión y tratamiento de nulos; si no hay lineage o recálculo, limitar Definition.
+  semantic:count_window_time_since:
+    status: resolved
+    decision: Cerrar toda ventana en el snapshot, excluir eventos futuros, deduplicar al grain aprobado y probar fronteras temporales.
+  semantic:group_category_level:
+    status: resolved
+    decision: Identificar el campo detallado y auditar mapping, vigencia, contradicciones, cambios y valores no mapeados.
+  semantic:manager_team_layers:
+    status: resolved
+    decision: Reconstruir relaciones dentro del mismo snapshot, validar membresía, raíces, ciclos, cadenas no resueltas y semántica de la raíz.
+  semantic:flag_event:
+    status: resolved
+    decision: Reconciliar flag y fecha; usar observabilidad para coverage y ocurrencia únicamente para prevalencia.
+  semantic:survey_external:
+    status: resolved
+    decision: Exigir propietario, acceso aprobado, waves, refresh y join temporal; si faltan, limitar Source, History o Join conservadoramente.

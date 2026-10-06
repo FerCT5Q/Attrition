@@ -1,0 +1,133 @@
+{
+  "artifact": "presentation",
+  "evidence_type": "aggregate-only Jan-2026 QVoice improvement-theme distribution with August trailing-12-month voluntary attrition",
+  "generated_on": "2026-09-24",
+  "outcome": "pass",
+  "minimum_shared_cohort": 30,
+  "outcome_contract": {
+    "display_snapshot": "2025-12-28",
+    "baseline_snapshot": "2025-08-24",
+    "august_cutoff_date": "2026-08-23",
+    "window": "(2025-08-24, 2026-08-23]",
+    "label": "Trailing 12-month voluntary attrition through August 2026",
+    "target": "Distinct term_type exactly VOLUNTARY after the August-2025 baseline and on or before the August-2026 cutoff.",
+    "population": "Jan-2026 QVoice improvement-theme members matched to worker_type='Employee'; employee_type='Regular'; active_status=1 at the December-2025 display snapshot and August-2025 attrition baseline.",
+    "grain": "Distinct employee in each non-exclusive Jan-2026 improvement-theme group.",
+    "formula": "Distinct voluntary exits in the trailing window divided by the matched active-regular baseline employees in the same theme."
+  },
+  "window_audit": {
+    "window_start": "2025-08-24",
+    "august_cutoff_date": "2026-08-23",
+    "baseline_snapshot": "2025-08-24",
+    "baseline_distinct_employee_count": 45003,
+    "duplicate_baseline_employee_count": 0,
+    "voluntary_exit_count": 2484,
+    "multiple_voluntary_event_date_count": 2,
+    "trailing_12m_voluntary_attrition_rate_percent": "5.5196"
+  },
+  "distribution_denominator": 13862,
+  "rows": [
+    {
+      "theme": "Tools, processes and bureaucracy",
+      "distribution_count": 2505,
+      "distribution_percent": 18.07,
+      "source_employee_count": 2505,
+      "matched_employee_count": 2441,
+      "unmatched_employee_count": 64,
+      "voluntary_exit_count": 68,
+      "trailing_12m_voluntary_attrition_rate_percent": 2.7857,
+      "publication_status": "publishable"
+    },
+    {
+      "theme": "Work arrangement/RTO/commute",
+      "distribution_count": 2443,
+      "distribution_percent": 17.62,
+      "source_employee_count": 2443,
+      "matched_employee_count": 2383,
+      "unmatched_employee_count": 60,
+      "voluntary_exit_count": 74,
+      "trailing_12m_voluntary_attrition_rate_percent": 3.1053,
+      "publication_status": "publishable"
+    },
+    {
+      "theme": "Manager, leadership and respect",
+      "distribution_count": 1944,
+      "distribution_percent": 14.02,
+      "source_employee_count": 1944,
+      "matched_employee_count": 1907,
+      "unmatched_employee_count": 37,
+      "voluntary_exit_count": 86,
+      "trailing_12m_voluntary_attrition_rate_percent": 4.5097,
+      "publication_status": "publishable"
+    },
+    {
+      "theme": "Workload, staffing and work-life",
+      "distribution_count": 1502,
+      "distribution_percent": 10.84,
+      "source_employee_count": 1502,
+      "matched_employee_count": 1476,
+      "unmatched_employee_count": 26,
+      "voluntary_exit_count": 54,
+      "trailing_12m_voluntary_attrition_rate_percent": 3.6585,
+      "publication_status": "publishable"
+    },
+    {
+      "theme": "Rewards",
+      "distribution_count": 1254,
+      "distribution_percent": 9.05,
+      "source_employee_count": 1254,
+      "matched_employee_count": 1230,
+      "unmatched_employee_count": 24,
+      "voluntary_exit_count": 49,
+      "trailing_12m_voluntary_attrition_rate_percent": 3.9837,
+      "publication_status": "publishable"
+    }
+  ],
+  "reference_cohort": {
+    "reference_id": "qvoice-theme-union",
+    "label": "Unique employees in any displayed theme",
+    "definition": "Distinct union of the five displayed Jan-2026 improvement themes; a person is counted once even when they match multiple themes.",
+    "source_employee_count": 7284,
+    "matched_employee_count": 7108,
+    "unmatched_employee_count": 176,
+    "voluntary_exit_count": 240,
+    "trailing_12m_voluntary_attrition_rate_percent": 3.3765,
+    "publication_status": "publishable"
+  },
+  "definition": {
+    "distribution": "Jan-2026 selected improvement comments; denominator is 13,862 employees with at least one selected improvement comment.",
+    "overlap": "Themes are non-exclusive; counts and percentages do not sum to 100%.",
+    "explicit_intent_to_leave": "Suppressed below n=30 and not assigned an attrition rate."
+  },
+  "validation": {
+    "outcome": "pass",
+    "source_quality": {
+      "raw_rows": 42203,
+      "distinct_usable_employee_keys": 42203,
+      "duplicate_key_rows": 0,
+      "invalid_key_rows": 0
+    },
+    "all_displayed_groups_have_n_at_least": 30,
+    "all_rates_reconcile_to_exits_and_matched_cohort": true,
+    "reference_cohort_is_deduplicated_union": true,
+    "reference_cohort_source_duplicate_employee_count": 0,
+    "reference_cohort_reconciles_to_exits_and_matched_cohort": true,
+    "runtime_join_sql_persisted": false,
+    "reason_runtime_join_sql_not_persisted": "The expanded query contains in-memory employee identifiers and returns aggregate counts only.",
+    "themes_non_exclusive": true
+  },
+  "privacy": {
+    "employee_identifiers_persisted": false,
+    "employee_rows_persisted": false,
+    "raw_comment_text_persisted": false
+  },
+  "provenance": {
+    "window_audit": "queries/audits/qvoice_retention_theme_august_trailing_12m_window_audit_20260922.sql",
+    "window_audit_sha256": "d3bd0c6f15d96e78e66d9b93bf494e1fc85bb523b41f5df866de23ecd0626ef9",
+    "runtime_template": "queries/audits/qvoice_retention_theme_august_trailing_12m_attrition_runtime_template_20260922.sql",
+    "runtime_template_sha256": "466b11ac775bbbd759e683cc343bba782d77576c08944b74762a188c25078c31",
+    "source_evidence": "output/distribution/json/qvoice-retention-concerns-evidence-20260910.json",
+    "source_evidence_sha256": "8b30c048f2d0cfcc225c21e4faff6c9ac35c2f9a259cefb75450a3b95f004bdc",
+    "raw_workbook": "data/QVoice/Jan 2026 Qvoice_raw data.xlsx, read in memory only"
+  }
+}

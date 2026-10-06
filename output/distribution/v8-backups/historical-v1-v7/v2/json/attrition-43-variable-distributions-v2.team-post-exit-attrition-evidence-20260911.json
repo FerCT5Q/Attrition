@@ -1,0 +1,322 @@
+{
+  "artifact_classification": "presentation",
+  "execution_date": "2026-09-11T06:59:23-06:00",
+  "outcome": "pass",
+  "variable": "More than 1 employee leaves in a year",
+  "study": {
+    "type": "cohorte descriptiva posterior a una salida inicial",
+    "interpretation": "Asociación descriptiva; no causalidad, contagio probado, ranking de managers ni predicción individual.",
+    "population": "Empleados Employee/Regular activos con manager en el cierre índice.",
+    "index_event": "Una salida Voluntary reconciliada única en los seis intervalos cerrados previos; ocurre en el último intervalo antes de t.",
+    "reference": "Equipos sin salida Voluntary reconciliada reciente, mismo cierre y banda de tamaño; estandarizados con la distribución expuesta.",
+    "follow_up": "Seis cierres mensuales; se censura cambio de manager, salida no Voluntary o pérdida de observación.",
+    "estimand": "Incidencia acumulada Kaplan–Meier a partir de hazards mensuales estandarizados."
+  },
+  "cohort": {
+    "index_snapshot": "2026-03-29",
+    "lookback_start_exclusive": "2025-09-28",
+    "index_interval_start_exclusive": "2026-02-22",
+    "follow_up_end": "2026-09-27",
+    "follow_up_snapshot_dates": [
+      "2026-04-26",
+      "2026-05-24",
+      "2026-06-28",
+      "2026-07-26",
+      "2026-08-23",
+      "2026-09-27"
+    ],
+    "follow_up_gaps_days": [
+      28,
+      28,
+      35,
+      28,
+      28,
+      35
+    ]
+  },
+  "reconciliation_metrics": {
+    "all_terminations_repeated_source_rows": 0.0,
+    "event_keys_all_terminations": 13968.0,
+    "event_keys_exact_match": 12033.0,
+    "event_keys_monthly": 12096.0,
+    "event_keys_only_all_terminations": 1935.0,
+    "event_keys_only_monthly": 63.0,
+    "monthly_repeated_source_rows": 240264.0,
+    "voluntary_exact_match": 7462.0,
+    "voluntary_monthly_match_percent": 99.7994,
+    "voluntary_only_all_terminations": 1923.0,
+    "voluntary_only_monthly": 15.0
+  },
+  "query_audits": {
+    "index_team_episodes": 260.0,
+    "series_points": 24.0
+  },
+  "curves": {
+    "all_teams::exposed": [
+      {
+        "follow_month": 1,
+        "interval_hazard_percent": 0.958248,
+        "cumulative_incidence_percent": 0.9582,
+        "initial_roster_n": 1461,
+        "at_risk_n": 1461,
+        "voluntary_events_in_interval": 14,
+        "censored_in_interval": 62,
+        "included_size_bands": 4
+      },
+      {
+        "follow_month": 2,
+        "interval_hazard_percent": 1.026077,
+        "cumulative_incidence_percent": 1.9745,
+        "initial_roster_n": 1461,
+        "at_risk_n": 1385,
+        "voluntary_events_in_interval": 14,
+        "censored_in_interval": 33,
+        "included_size_bands": 4
+      },
+      {
+        "follow_month": 3,
+        "interval_hazard_percent": 1.198471,
+        "cumulative_incidence_percent": 3.1493,
+        "initial_roster_n": 1461,
+        "at_risk_n": 1352,
+        "voluntary_events_in_interval": 16,
+        "censored_in_interval": 74,
+        "included_size_bands": 4
+      },
+      {
+        "follow_month": 4,
+        "interval_hazard_percent": 0.723228,
+        "cumulative_incidence_percent": 3.8498,
+        "initial_roster_n": 1461,
+        "at_risk_n": 1276,
+        "voluntary_events_in_interval": 9,
+        "censored_in_interval": 61,
+        "included_size_bands": 4
+      },
+      {
+        "follow_month": 5,
+        "interval_hazard_percent": 0.401872,
+        "cumulative_incidence_percent": 4.2362,
+        "initial_roster_n": 1461,
+        "at_risk_n": 1222,
+        "voluntary_events_in_interval": 5,
+        "censored_in_interval": 32,
+        "included_size_bands": 4
+      },
+      {
+        "follow_month": 6,
+        "interval_hazard_percent": 0.669966,
+        "cumulative_incidence_percent": 4.8777,
+        "initial_roster_n": 1461,
+        "at_risk_n": 1194,
+        "voluntary_events_in_interval": 8,
+        "censored_in_interval": 12,
+        "included_size_bands": 4
+      }
+    ],
+    "all_teams::reference_standardized": [
+      {
+        "follow_month": 1,
+        "interval_hazard_percent": 0.461178,
+        "cumulative_incidence_percent": 0.4612,
+        "initial_roster_n": 41617,
+        "at_risk_n": 41617,
+        "voluntary_events_in_interval": 189,
+        "censored_in_interval": 1257,
+        "included_size_bands": 4
+      },
+      {
+        "follow_month": 2,
+        "interval_hazard_percent": 0.4391,
+        "cumulative_incidence_percent": 0.8983,
+        "initial_roster_n": 41617,
+        "at_risk_n": 40171,
+        "voluntary_events_in_interval": 170,
+        "censored_in_interval": 1002,
+        "included_size_bands": 4
+      },
+      {
+        "follow_month": 3,
+        "interval_hazard_percent": 0.721689,
+        "cumulative_incidence_percent": 1.6135,
+        "initial_roster_n": 41617,
+        "at_risk_n": 39187,
+        "voluntary_events_in_interval": 284,
+        "censored_in_interval": 1509,
+        "included_size_bands": 4
+      },
+      {
+        "follow_month": 4,
+        "interval_hazard_percent": 0.500043,
+        "cumulative_incidence_percent": 2.1054,
+        "initial_roster_n": 41617,
+        "at_risk_n": 37565,
+        "voluntary_events_in_interval": 185,
+        "censored_in_interval": 1192,
+        "included_size_bands": 4
+      },
+      {
+        "follow_month": 5,
+        "interval_hazard_percent": 0.384093,
+        "cumulative_incidence_percent": 2.4814,
+        "initial_roster_n": 41617,
+        "at_risk_n": 36472,
+        "voluntary_events_in_interval": 137,
+        "censored_in_interval": 1076,
+        "included_size_bands": 4
+      },
+      {
+        "follow_month": 6,
+        "interval_hazard_percent": 0.40589,
+        "cumulative_incidence_percent": 2.8773,
+        "initial_roster_n": 41617,
+        "at_risk_n": 35444,
+        "voluntary_events_in_interval": 135,
+        "censored_in_interval": 743,
+        "included_size_bands": 4
+      }
+    ],
+    "teams_6_plus::exposed": [
+      {
+        "follow_month": 1,
+        "interval_hazard_percent": 1.124744,
+        "cumulative_incidence_percent": 1.1247,
+        "initial_roster_n": 978,
+        "at_risk_n": 978,
+        "voluntary_events_in_interval": 11,
+        "censored_in_interval": 47,
+        "included_size_bands": 3
+      },
+      {
+        "follow_month": 2,
+        "interval_hazard_percent": 1.426613,
+        "cumulative_incidence_percent": 2.5353,
+        "initial_roster_n": 978,
+        "at_risk_n": 920,
+        "voluntary_events_in_interval": 13,
+        "censored_in_interval": 22,
+        "included_size_bands": 3
+      },
+      {
+        "follow_month": 3,
+        "interval_hazard_percent": 1.465443,
+        "cumulative_incidence_percent": 3.9636,
+        "initial_roster_n": 978,
+        "at_risk_n": 896,
+        "voluntary_events_in_interval": 13,
+        "censored_in_interval": 59,
+        "included_size_bands": 3
+      },
+      {
+        "follow_month": 4,
+        "interval_hazard_percent": 0.967907,
+        "cumulative_incidence_percent": 4.8931,
+        "initial_roster_n": 978,
+        "at_risk_n": 837,
+        "voluntary_events_in_interval": 8,
+        "censored_in_interval": 50,
+        "included_size_bands": 3
+      },
+      {
+        "follow_month": 5,
+        "interval_hazard_percent": 0.48549,
+        "cumulative_incidence_percent": 5.3549,
+        "initial_roster_n": 978,
+        "at_risk_n": 792,
+        "voluntary_events_in_interval": 4,
+        "censored_in_interval": 20,
+        "included_size_bands": 3
+      },
+      {
+        "follow_month": 6,
+        "interval_hazard_percent": 0.410092,
+        "cumulative_incidence_percent": 5.743,
+        "initial_roster_n": 978,
+        "at_risk_n": 776,
+        "voluntary_events_in_interval": 3,
+        "censored_in_interval": 6,
+        "included_size_bands": 3
+      }
+    ],
+    "teams_6_plus::reference_standardized": [
+      {
+        "follow_month": 1,
+        "interval_hazard_percent": 0.458826,
+        "cumulative_incidence_percent": 0.4588,
+        "initial_roster_n": 20155,
+        "at_risk_n": 20155,
+        "voluntary_events_in_interval": 89,
+        "censored_in_interval": 743,
+        "included_size_bands": 3
+      },
+      {
+        "follow_month": 2,
+        "interval_hazard_percent": 0.440388,
+        "cumulative_incidence_percent": 0.8972,
+        "initial_roster_n": 20155,
+        "at_risk_n": 19323,
+        "voluntary_events_in_interval": 79,
+        "censored_in_interval": 573,
+        "included_size_bands": 3
+      },
+      {
+        "follow_month": 3,
+        "interval_hazard_percent": 0.737225,
+        "cumulative_incidence_percent": 1.6278,
+        "initial_roster_n": 20155,
+        "at_risk_n": 18759,
+        "voluntary_events_in_interval": 143,
+        "censored_in_interval": 822,
+        "included_size_bands": 3
+      },
+      {
+        "follow_month": 4,
+        "interval_hazard_percent": 0.503714,
+        "cumulative_incidence_percent": 2.1233,
+        "initial_roster_n": 20155,
+        "at_risk_n": 17874,
+        "voluntary_events_in_interval": 88,
+        "censored_in_interval": 625,
+        "included_size_bands": 3
+      },
+      {
+        "follow_month": 5,
+        "interval_hazard_percent": 0.396004,
+        "cumulative_incidence_percent": 2.5109,
+        "initial_roster_n": 20155,
+        "at_risk_n": 17304,
+        "voluntary_events_in_interval": 68,
+        "censored_in_interval": 488,
+        "included_size_bands": 3
+      },
+      {
+        "follow_month": 6,
+        "interval_hazard_percent": 0.412599,
+        "cumulative_incidence_percent": 2.9132,
+        "initial_roster_n": 20155,
+        "at_risk_n": 16836,
+        "voluntary_events_in_interval": 62,
+        "censored_in_interval": 391,
+        "included_size_bands": 3
+      }
+    ]
+  },
+  "validation": {
+    "acceptance_rule": "24 puntos, n en riesgo >=30, hazards 0–100, seis cierres completos, episodio índice positivo y concordancia Voluntary >=99%.",
+    "errors": []
+  },
+  "limitation": "La evidencia corresponde a la cohorte reciente completa; no estima estabilidad histórica y debe repetirse al haber un nuevo sexto cierre.",
+  "provenance": {
+    "calendar_sql": "queries/audits/team_post_exit_attrition_calendar_20260911.sql",
+    "reconciliation_sql": "queries/audits/team_post_exit_attrition_event_source_reconciliation_20260910.sql",
+    "static_template_sql": "queries/audits/team_post_exit_attrition_static_snapshot_20260911.sql",
+    "executed_static_sql": "output/distribution/team-post-exit-attrition-static-cohort-20260911.sql",
+    "calendar_sql_sha256": "2509ba6f15638ccd2d71d9b237f51ded8c3ced33255abff5f6bacfa942a3f23e",
+    "reconciliation_sql_sha256": "5ae04166f3957b03a21c069e9748fe0d575796b07aed05eb09410b0e3d4294a4",
+    "static_template_sql_sha256": "8eb9790de29df6ccd2bc5661d5cb80a2103a87301e298fbe4f4e4c73b3f43237",
+    "executed_static_sql_sha256": "ef817c93bdf199047ab264d4961365756ef9f0ba152db5d6fc8f6ede281177f4",
+    "calendar_result_sha256": "e1140dc7c144a4a52db3cc604eecf67556f514e58ba7a977306350d015c11682",
+    "reconciliation_result_sha256": "997d4abd276631159eaabe82fe8ca1ff66f8e562de65affde3e5a01cc1d672b0",
+    "static_result_sha256": "524cc8fcfcb288381bfb10584da2a9a14493d7a720af2d6d817181228e99b691"
+  }
+}

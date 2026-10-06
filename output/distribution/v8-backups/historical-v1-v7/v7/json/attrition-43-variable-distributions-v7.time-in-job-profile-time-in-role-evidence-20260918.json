@@ -1,0 +1,214 @@
+{
+  "artifact_type": "time_in_job_profile_time_in_role_slide_evidence",
+  "version": 1,
+  "generated_on": "2026-09-18",
+  "deliverable_mode": "presentation",
+  "purpose": "Actualizar la lámina para comparar sólo Time in job profile y Time in role con resultados agregados seguros.",
+  "display_contract": {
+    "population": "worker_type='Employee' AND employee_type='Regular' AND active_status=1",
+    "grain": "employee_snapshot",
+    "minimum_shared_cohort": 30,
+    "display_snapshot_date": "2026-09-27"
+  },
+  "annual_attrition_contract": {
+    "target": "term_type='VOLUNTARY' con term_date en (snapshot_date, snapshot_date + 12 months]",
+    "required_consecutive_high_coverage_complete_followup_snapshots": 3,
+    "coverage_threshold_percent": 95.0,
+    "publication_decision": "No mostrar tasas anuales cuando la cobertura longitudinal no satisface la regla."
+  },
+  "query_provenance": {
+    "evidence_sql": "queries/audits/20260918_time_in_job_profile_time_in_role_slide_evidence.sql",
+    "evidence_sql_sha256": "fb0f7e6c85c565d884160b1966ca3b972886f2a160028037f8ecded31a537d01",
+    "coverage_sql": "queries/profiles/20260918_time_in_job_profile_time_in_role_coverage.sql",
+    "coverage_sql_sha256": "4d5d5b404f30895f31452f8d89c3381e14c5e580a425c6decd02798e237ce1b7"
+  },
+  "diagnostics": {
+    "display_conflicting_employee_snapshot_count": 0,
+    "display_duplicate_employee_snapshot_count": 0,
+    "display_employee_snapshot_count": 50270,
+    "display_invalid_or_missing_job_profile_count": 0,
+    "display_invalid_or_missing_time_in_role_count": 0,
+    "display_snapshot_count": 1,
+    "history_baseline_voluntary_exit_count": 55570,
+    "history_conflicting_employee_snapshot_count": 0,
+    "history_duplicate_employee_snapshot_count": 0,
+    "history_employee_snapshot_count": 1013112,
+    "history_invalid_or_missing_job_profile_count": 1013112,
+    "history_invalid_or_missing_time_in_role_count": 968109,
+    "history_snapshot_count": 24
+  },
+  "coverage": {
+    "time_in_job_profile": {
+      "max_consecutive_high_coverage_snapshots": 11,
+      "max_consecutive_high_coverage_complete_followup_snapshots": 0,
+      "annual_attrition_displayable": false
+    },
+    "time_in_role": {
+      "max_consecutive_high_coverage_snapshots": 14,
+      "max_consecutive_high_coverage_complete_followup_snapshots": 1,
+      "annual_attrition_displayable": false
+    }
+  },
+  "display_rows": {
+    "time_in_job_profile": [
+      {
+        "category": "<1 year",
+        "snapshot_date": "2026-09-27",
+        "employee_count": 23608
+      },
+      {
+        "category": "1–<2 years",
+        "snapshot_date": "2026-09-27",
+        "employee_count": 7891
+      },
+      {
+        "category": "2–<3 years",
+        "snapshot_date": "2026-09-27",
+        "employee_count": 5493
+      },
+      {
+        "category": "3–<5 years",
+        "snapshot_date": "2026-09-27",
+        "employee_count": 8187
+      },
+      {
+        "category": "5–<10 years",
+        "snapshot_date": "2026-09-27",
+        "employee_count": 4540
+      },
+      {
+        "category": "10+ years",
+        "snapshot_date": "2026-09-27",
+        "employee_count": 551
+      }
+    ],
+    "time_in_role": [
+      {
+        "category": "<1 year",
+        "snapshot_date": "2026-09-27",
+        "employee_count": 13945
+      },
+      {
+        "category": "1–<2 years",
+        "snapshot_date": "2026-09-27",
+        "employee_count": 10891
+      },
+      {
+        "category": "2–<3 years",
+        "snapshot_date": "2026-09-27",
+        "employee_count": 7747
+      },
+      {
+        "category": "3–<5 years",
+        "snapshot_date": "2026-09-27",
+        "employee_count": 10021
+      },
+      {
+        "category": "5–<10 years",
+        "snapshot_date": "2026-09-27",
+        "employee_count": 6439
+      },
+      {
+        "category": "10+ years",
+        "snapshot_date": "2026-09-27",
+        "employee_count": 1227
+      }
+    ]
+  },
+  "annual_rows": [
+    {
+      "row_type": "annual_category",
+      "metric": "time_in_role",
+      "category": "10+ years",
+      "first_snapshot_date": "2025-08-24",
+      "last_snapshot_date": "2025-08-24",
+      "distinct_employee_count": 938,
+      "employee_snapshot_count": 938,
+      "voluntary_exits": 35,
+      "annual_attrition_rate_percent": "3.7313",
+      "display_snapshot_date": null,
+      "display_employee_count": null,
+      "diagnostic_value": null,
+      "publication_status": "not_estimable_insufficient_longitudinal_coverage"
+    },
+    {
+      "row_type": "annual_category",
+      "metric": "time_in_role",
+      "category": "1–<2 years",
+      "first_snapshot_date": "2025-08-24",
+      "last_snapshot_date": "2025-08-24",
+      "distinct_employee_count": 9190,
+      "employee_snapshot_count": 9190,
+      "voluntary_exits": 588,
+      "annual_attrition_rate_percent": "6.3983",
+      "display_snapshot_date": null,
+      "display_employee_count": null,
+      "diagnostic_value": null,
+      "publication_status": "not_estimable_insufficient_longitudinal_coverage"
+    },
+    {
+      "row_type": "annual_category",
+      "metric": "time_in_role",
+      "category": "2–<3 years",
+      "first_snapshot_date": "2025-08-24",
+      "last_snapshot_date": "2025-08-24",
+      "distinct_employee_count": 8094,
+      "employee_snapshot_count": 8094,
+      "voluntary_exits": 483,
+      "annual_attrition_rate_percent": "5.9674",
+      "display_snapshot_date": null,
+      "display_employee_count": null,
+      "diagnostic_value": null,
+      "publication_status": "not_estimable_insufficient_longitudinal_coverage"
+    },
+    {
+      "row_type": "annual_category",
+      "metric": "time_in_role",
+      "category": "3–<5 years",
+      "first_snapshot_date": "2025-08-24",
+      "last_snapshot_date": "2025-08-24",
+      "distinct_employee_count": 9408,
+      "employee_snapshot_count": 9408,
+      "voluntary_exits": 523,
+      "annual_attrition_rate_percent": "5.5591",
+      "display_snapshot_date": null,
+      "display_employee_count": null,
+      "diagnostic_value": null,
+      "publication_status": "not_estimable_insufficient_longitudinal_coverage"
+    },
+    {
+      "row_type": "annual_category",
+      "metric": "time_in_role",
+      "category": "5–<10 years",
+      "first_snapshot_date": "2025-08-24",
+      "last_snapshot_date": "2025-08-24",
+      "distinct_employee_count": 5853,
+      "employee_snapshot_count": 5853,
+      "voluntary_exits": 194,
+      "annual_attrition_rate_percent": "3.3145",
+      "display_snapshot_date": null,
+      "display_employee_count": null,
+      "diagnostic_value": null,
+      "publication_status": "not_estimable_insufficient_longitudinal_coverage"
+    },
+    {
+      "row_type": "annual_category",
+      "metric": "time_in_role",
+      "category": "<1 year",
+      "first_snapshot_date": "2025-08-24",
+      "last_snapshot_date": "2025-08-24",
+      "distinct_employee_count": 11520,
+      "employee_snapshot_count": 11520,
+      "voluntary_exits": 678,
+      "annual_attrition_rate_percent": "5.8854",
+      "display_snapshot_date": null,
+      "display_employee_count": null,
+      "diagnostic_value": null,
+      "publication_status": "not_estimable_insufficient_longitudinal_coverage"
+    }
+  ],
+  "outcome": "pass",
+  "annual_attrition_status": "not_estimable_insufficient_longitudinal_coverage",
+  "safe_display_rule": "La distribución actual se puede mostrar porque ambas medidas tienen cobertura completa en el snapshot actual, no presentan duplicados, conflictos ni valores negativos, y cada banda visible cumple n >= 30.",
+  "annual_attrition_limitation": "No se muestran tasas anuales: Time in job profile no tiene tres snapshots completos con seguimiento y cobertura alta; Time in role sólo tiene uno."
+}

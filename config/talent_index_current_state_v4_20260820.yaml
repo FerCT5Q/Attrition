@@ -1,0 +1,191 @@
+version: 4
+variables:
+  - category: Talento
+    variable: Talent index
+    notes: >-
+      Revisión de estado actual. last_modified_date y airflow_execution_date se
+      consideran metadatos técnicos de carga y se excluyen de Coverage, History y Join.
+      El mayor cycle_number por empleado se usa sólo para medir recuperación actual;
+      no demuestra vigencia oficial.
+    definition: >-
+      Métrica precalculada almacenada por empleado y ciclo. Para esta revisión actual
+      se recupera el registro del mayor cycle_number por empleado, sin afirmar que sea
+      el valor vigente en una fecha histórica.
+    source:
+      type: Database
+      table: hrda.master_talent_index
+      columns:
+        - empl_id
+        - talent_index
+        - cycle_number
+        - cycle_name
+        - perf
+        - stock
+        - bonus
+        - promo_index
+        - talent_quartile
+        - ar_eligibility
+      status: confirmed_accessible
+    profile:
+      mode: aggregate_sql
+      aggregate_sql_file: ../queries/profiles/talent_index_current_state_coverage.sql
+    level_data: Empleado en el último snapshot laboral; fuente empleado-ciclo
+    measurement:
+      type: snapshot
+      frequency_override: Estado actual; una sola observación sin historia del índice
+    population:
+      mode: custom
+      display: Empleados regulares activos en el último snapshot mensual disponible
+    numerator_definition: >-
+      Empleados elegibles cuyo registro del mayor cycle_number tiene un talent_index
+      no nulo y sin conflicto dentro de la llave empleado-ciclo.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: mapping_or_validation
+      effort: moderate_transformation
+    rationale:
+      definition:
+        why: >-
+          La fórmula oficial, pesos, normalización, versiones, elegibilidad y reglas de
+          nulos no están documentados ni reconciliados sobre la población objetivo.
+        evidence: >-
+          La tabla contiene talent_index y componentes candidatos, pero su coexistencia
+          no demuestra cómo se calcula la métrica.
+        recommended_action: >-
+          Obtener lineage oficial y reconciliar el cálculo de forma agregada con una
+          tolerancia aprobada.
+      consistency:
+        why: >-
+          Puede validarse la estructura empleado-ciclo, pero no están gobernados el
+          dominio completo, la versión ni la interpretación de cycle_number.
+        evidence: >-
+          La auditoría actual medirá llaves faltantes, duplicados, conflictos y mapping
+          de ciclo sin utilizar timestamps técnicos.
+        recommended_action: >-
+          Documentar el catálogo de ciclos, dominios, versiones y reglas de corrección
+          antes de considerar el índice estandarizado.
+      join:
+        why: >-
+          El match actual por empleado puede medirse, pero no existe una fecha oficial
+          para reconciliar exactamente un valor por empleado-snapshot histórico.
+        evidence: >-
+          La evaluación actual compara employee_id con empl_id y selecciona el mayor
+          cycle_number sólo como convención de recuperación, no como join temporal.
+        recommended_action: >-
+          Obtener fecha efectiva, de evaluación o de publicación por ciclo y repetir
+          la reconciliación al grain empleado-fecha.
+      effort:
+        why: >-
+          La consulta actual requiere deduplicar empleado-ciclo y seleccionar un ciclo;
+          el uso longitudinal todavía requiere reglas de vigencia adicionales.
+        evidence: >-
+          La recuperación es implementable en SQL, pero no es una proyección directa
+          ni una feature histórica validada.
+        recommended_action: >-
+          Encapsular la selección actual y, por separado, diseñar la lógica temporal
+          cuando exista un calendario oficial.
+    verification:
+      semantic_type: precomputed_metric
+      source:
+        method: schema_access_check
+        evidence: >-
+          Se comprobarán en information_schema la tabla y las columnas requeridas para
+          la evaluación actual, excluyendo timestamps técnicos de la semántica.
+        result: >-
+          La fuente se considerará confirmada sólo si no falta ningún objeto requerido.
+        as_of_date: '2026-08-20'
+        query_reference: queries/audits/talent_index_current_source_access_audit.sql
+        acceptance_rule: missing_items debe ser igual a 0.
+        outcome: pending
+        metric_checks:
+          - metric: missing_items
+            aggregate: sum
+            operator: eq
+            threshold: 0
+    score_overrides:
+      history:
+        score: 0
+        reason: >-
+          La revisión contiene una sola observación actual y no existe una fecha de
+          negocio validada para ubicar cada índice históricamente.
+        evidence: >-
+          last_modified_date y airflow_execution_date son metadatos de carga que pueden
+          cambiar al sobrescribirse la tabla; por decisión de negocio no representan
+          evaluación, publicación ni vigencia.
+        recommended_action: >-
+          Obtener y validar la fecha oficial de evaluación, vigencia o publicación por
+          ciclo antes de calcular profundidad histórica.
+    derivation_options:
+      - name: Recuperación actual por mayor cycle_number del empleado
+        status: testable
+        fields_and_tables: >-
+          hrda.master_talent_index: empl_id, talent_index, cycle_number;
+          hrda.post_hire_monthly_worker_dtls: employee_id, fis_mo_end_dt,
+          worker_type, employee_type, active_status.
+        formula: >-
+          Tomar el último snapshot laboral disponible, deduplicar la fuente por
+          empleado-ciclo y seleccionar el mayor cycle_number por empleado.
+        grain: Empleado en el último snapshot laboral disponible
+        temporal_window: >-
+          Estado actual de las tablas. No se reconstruyen snapshots históricos del índice.
+        deduplication: >-
+          Colapsar empleado-ciclo; si existen distintos talent_index en la misma llave,
+          tratar el índice como no observable y reportar el conflicto.
+        nulls_and_edge_cases: >-
+          Un empleado sin match, sin cycle_number o con talent_index nulo/conflictivo
+          cuenta como no observable.
+        leakage_controls: >-
+          No usar campos de terminación ni timestamps técnicos para decidir vigencia.
+          Esta ruta no se declara time-safe para entrenamiento histórico.
+        snapshot_join: >-
+          Igualar empl_id con employee_id en el último snapshot laboral y seleccionar
+          un solo ciclo ordinal por empleado.
+        sensitivity: >-
+          Mantener IDs dentro del join y publicar únicamente métricas agregadas.
+        validations_needed: >-
+          Fuente, readiness de fórmula, cobertura actual, consistencia empleado-ciclo
+          y reconciliación del join actual.
+        estimated_effort: Transformación SQL moderada y gobernanza temporal pendiente.
+        decision_reason: >-
+          Permite medir disponibilidad actual sin convertir fechas de carga en fechas
+          de evaluación. No valida uso longitudinal.
+    selected_derivation: Recuperación actual por mayor cycle_number del empleado
+    blocker: none
+    analysis:
+      language: es
+      semantic_type: precomputed_metric
+      definition: >-
+        Métrica precalculada por empleado-ciclo evaluada únicamente como disponibilidad actual.
+      numerator_definition: >-
+        Empleados del último snapshot laboral con talent_index no nulo en su mayor
+        cycle_number y sin conflicto en la llave empleado-ciclo.
+      intended_use: >-
+        Cuantificar disponibilidad actual y brechas antes de una futura integración
+        longitudinal en attrition.
+      attrition_use: >-
+        Cuantificar disponibilidad actual y brechas antes de una futura integración
+        longitudinal en attrition.
+      source_reasoning: >-
+        La fuente contiene el índice por ciclo, pero los timestamps técnicos no
+        representan evaluación ni vigencia. Por ello la evaluación actual separa
+        acceso, fórmula, estructura, cobertura actual y limitaciones temporales.
+      prediction_cutoff: >-
+        No se declara un cutoff histórico para Talent index. La medición usa el estado
+        actual del warehouse y no puede incorporarse retrospectivamente al modelo.
+      population: Empleados regulares activos en el último snapshot mensual disponible
+      prior_evidence_policy: >-
+        Los resultados anteriores son contexto. La cobertura y el join actuales se
+        vuelven a ejecutar sin utilizar timestamps técnicos.
+      validation_focus:
+        - Confirmar la fuente y las columnas requeridas sin fechas técnicas.
+        - Medir factibilidad de reconciliar la fórmula sin inferirla.
+        - Calcular cobertura y missingness en una sola población actual.
+        - Auditar llaves y conflictos por empleado-ciclo.
+        - Reconciliar el join actual por empleado y separar el join temporal pendiente.
+        - Mantener History en 0 hasta obtener fechas oficiales de negocio.
+      context_role: Talent
+      context_relevance: >-
+        El índice puede ser útil, pero esta revisión sólo demuestra disponibilidad
+        actual; no demuestra vigencia histórica ni ausencia de leakage temporal.
+      documentation_path: talent-index/README.md

@@ -1,0 +1,3990 @@
+{
+  "artifact": "critical-tech-model-comparison-rolling-noseg",
+  "created_at_utc": "2026-10-02T02:45:57.523188+00:00",
+  "knowledge_boundary": "2026-09-07",
+  "deliverable_classification": "presentation",
+  "seg_stability": {
+    "sql": "queries\\audits\\critical_tech_seg_stability_job_family_reassignment_20261001.sql",
+    "sql_sha256": "6593e61f96b535949f1c7af5d5fdbc09cd7152c25055dbc2a1750d3f261d9c88",
+    "snapshots": [
+      "2026-08-23",
+      "2026-09-27"
+    ],
+    "employees_in_both": 49653,
+    "employees_seg_changed": 5420,
+    "changed_percent": 10.9158,
+    "acceptance_rule": ">=99% conserva el mismo seg",
+    "outcome": "fail",
+    "pairs": [
+      {
+        "seg_before": "Other Eng",
+        "seg_after": "Other Eng",
+        "employees": 26419,
+        "employees_family_changed": 6585
+      },
+      {
+        "seg_before": "(fuera de Critical Tech)",
+        "seg_after": "(fuera de Critical Tech)",
+        "employees": 11483,
+        "employees_family_changed": 37
+      },
+      {
+        "seg_before": "Other Eng",
+        "seg_after": "Other Premium Job Families",
+        "employees": 2922,
+        "employees_family_changed": 2922
+      },
+      {
+        "seg_before": "Other Premium Job Families",
+        "seg_after": "Other Premium Job Families",
+        "employees": 2244,
+        "employees_family_changed": 2
+      },
+      {
+        "seg_before": "Machine Learning Eng",
+        "seg_after": "Machine Learning Eng",
+        "employees": 898,
+        "employees_family_changed": 0
+      },
+      {
+        "seg_before": "Modem",
+        "seg_after": "Modem",
+        "employees": 830,
+        "employees_family_changed": 1
+      },
+      {
+        "seg_before": "Other Eng",
+        "seg_after": "Graphics",
+        "employees": 666,
+        "employees_family_changed": 666
+      },
+      {
+        "seg_before": "Other Eng",
+        "seg_after": "CPU Arch/Eng",
+        "employees": 655,
+        "employees_family_changed": 655
+      },
+      {
+        "seg_before": "Other Eng",
+        "seg_after": "Camera",
+        "employees": 584,
+        "employees_family_changed": 584
+      },
+      {
+        "seg_before": "CPU Arch/Eng",
+        "seg_after": "CPU Arch/Eng",
+        "employees": 572,
+        "employees_family_changed": 0
+      },
+      {
+        "seg_before": "Graphics",
+        "seg_after": "Graphics",
+        "employees": 565,
+        "employees_family_changed": 0
+      },
+      {
+        "seg_before": "Other Eng",
+        "seg_after": "Camera/Modem/Graphics SW",
+        "employees": 542,
+        "employees_family_changed": 542
+      },
+      {
+        "seg_before": "Camera/Modem/Graphics SW",
+        "seg_after": "Camera/Modem/Graphics SW",
+        "employees": 452,
+        "employees_family_changed": 0
+      },
+      {
+        "seg_before": "Camera",
+        "seg_after": "Camera",
+        "employees": 297,
+        "employees_family_changed": 0
+      },
+      {
+        "seg_before": "Machine Learning Research",
+        "seg_after": "Machine Learning Research",
+        "employees": 153,
+        "employees_family_changed": 0
+      },
+      {
+        "seg_before": "SW Eng Modular",
+        "seg_after": "SW Eng Modular",
+        "employees": 117,
+        "employees_family_changed": 0
+      },
+      {
+        "seg_before": "SoC Architecture",
+        "seg_after": "SoC Architecture",
+        "employees": 75,
+        "employees_family_changed": 0
+      },
+      {
+        "seg_before": "(pares <30 agrupados)",
+        "seg_after": "(pares <30 agrupados)",
+        "employees": 58,
+        "employees_family_changed": 58
+      },
+      {
+        "seg_before": "Modem",
+        "seg_after": "CPU Arch/Eng",
+        "employees": 51,
+        "employees_family_changed": 51
+      },
+      {
+        "seg_before": "ADAS",
+        "seg_after": "ADAS",
+        "employees": 37,
+        "employees_family_changed": 0
+      },
+      {
+        "seg_before": "Video Standards",
+        "seg_after": "Video Standards",
+        "employees": 33,
+        "employees_family_changed": 0
+      }
+    ]
+  },
+  "design": {
+    "features": [
+      "level_grouped",
+      "company_tenure_band",
+      "manager_change_12m",
+      "calendar_month"
+    ],
+    "interaction_terms": [
+      "level_x_tenure"
+    ],
+    "population_key": "engineering",
+    "population": "Employee Regular activos, sin RF360, eng_or_noneng='Engineering' en cada foto; sin catálogo critical_tech ni job family",
+    "population_audits": {
+      "queries\\audits\\eng_or_noneng_scope_stability_by_snapshot_20261001.sql": "7951d2a7f4c1428eae7df42a45e6cfeebb2d472d22286dd3d5c64ba841ba113d",
+      "queries\\audits\\eng_or_noneng_reassignment_flips_20261001.sql": "aeb969a6dabf43044faa8f8941a9fc38352b47a100f9d34b8724cb729b2d44c1"
+    },
+    "fold_starts": [
+      "2024-02-01",
+      "2024-08-01",
+      "2025-02-01",
+      "2025-08-01"
+    ],
+    "fold_snapshots": 6,
+    "monthly_train_rule": "snapshot < inicio de prueba",
+    "six_month_train_rule": "snapshot <= inicio de prueba - 6 meses",
+    "l2_grid": [
+      0.0,
+      0.01,
+      0.1,
+      1.0,
+      10.0
+    ],
+    "lightgbm_grid": {
+      "num_leaves": [
+        4,
+        8,
+        16
+      ],
+      "min_sum_hessian_in_leaf": [
+        20.0,
+        100.0
+      ],
+      "lambda_l2": [
+        1.0,
+        10.0
+      ]
+    }
+  },
+  "lightgbm_version": "4.7.0",
+  "frame_sha256": {
+    "monthly": "a84712f48e726c51cdd0e4d2a3bf8e14bbac831f21649a2d3d28adc607b798d8",
+    "six_month": "5ccb1fb51d970986a66ebe8111d8e4043acd57a29f23bf2eb275ed349fc50111"
+  },
+  "privacy": {
+    "employee_level_rows_persisted": false,
+    "aggregate_training_frame_persisted": false,
+    "individual_scores_published": false,
+    "minimum_group_people_per_snapshot": 30,
+    "minimum_published_events": 30
+  },
+  "scope": {
+    "scope": "engineering_noseg",
+    "exposures": {
+      "monthly": 2171724,
+      "monthly_events": 11477,
+      "six_month": 1990954,
+      "six_month_events": 63344
+    },
+    "folds": [
+      {
+        "test_start": "2024-02-18",
+        "test_end": "2024-07-21",
+        "test_snapshots": 6,
+        "validation_start": "2023-02-19",
+        "validation_end": "2023-07-23",
+        "monthly_train_last_snapshot": "2024-01-21",
+        "six_month_train_last_snapshot": "2023-07-23",
+        "chosen": {
+          "hazard_l2": 10.0,
+          "hazard_interactions_l2": 10.0,
+          "logistic_l2": 10.0,
+          "lightgbm": {
+            "num_leaves": 8,
+            "min_sum_hessian_in_leaf": 100.0,
+            "lambda_l2": 10.0,
+            "rounds": 377
+          }
+        },
+        "selection": {
+          "hazard": [
+            {
+              "l2": 0.0,
+              "validation_brier_score": 0.02285102
+            },
+            {
+              "l2": 0.01,
+              "validation_brier_score": 0.0228146
+            },
+            {
+              "l2": 0.1,
+              "validation_brier_score": 0.02263851
+            },
+            {
+              "l2": 1.0,
+              "validation_brier_score": 0.02224695
+            },
+            {
+              "l2": 10.0,
+              "validation_brier_score": 0.02194889
+            }
+          ],
+          "hazard_interactions": [
+            {
+              "l2": 0.0,
+              "validation_brier_score": 0.02285373
+            },
+            {
+              "l2": 0.01,
+              "validation_brier_score": 0.02281168
+            },
+            {
+              "l2": 0.1,
+              "validation_brier_score": 0.02263433
+            },
+            {
+              "l2": 1.0,
+              "validation_brier_score": 0.02224583
+            },
+            {
+              "l2": 10.0,
+              "validation_brier_score": 0.0219396
+            }
+          ],
+          "logistic": [
+            {
+              "l2": 0.0,
+              "validation_brier_score": 0.0244892
+            },
+            {
+              "l2": 0.01,
+              "validation_brier_score": 0.02447902
+            },
+            {
+              "l2": 0.1,
+              "validation_brier_score": 0.02441132
+            },
+            {
+              "l2": 1.0,
+              "validation_brier_score": 0.02413866
+            },
+            {
+              "l2": 10.0,
+              "validation_brier_score": 0.02330082
+            }
+          ],
+          "lightgbm": [
+            {
+              "num_leaves": 4,
+              "min_sum_hessian_in_leaf": 20.0,
+              "lambda_l2": 1.0,
+              "rounds": 2000,
+              "validation_brier_score": 0.02175451,
+              "validation_log_loss": 0.10688659
+            },
+            {
+              "num_leaves": 4,
+              "min_sum_hessian_in_leaf": 20.0,
+              "lambda_l2": 10.0,
+              "rounds": 523,
+              "validation_brier_score": 0.02175248,
+              "validation_log_loss": 0.10693216
+            },
+            {
+              "num_leaves": 4,
+              "min_sum_hessian_in_leaf": 100.0,
+              "lambda_l2": 1.0,
+              "rounds": 845,
+              "validation_brier_score": 0.02175,
+              "validation_log_loss": 0.10683259
+            },
+            {
+              "num_leaves": 4,
+              "min_sum_hessian_in_leaf": 100.0,
+              "lambda_l2": 10.0,
+              "rounds": 737,
+              "validation_brier_score": 0.02174203,
+              "validation_log_loss": 0.10674471
+            },
+            {
+              "num_leaves": 8,
+              "min_sum_hessian_in_leaf": 20.0,
+              "lambda_l2": 1.0,
+              "rounds": 922,
+              "validation_brier_score": 0.02171554,
+              "validation_log_loss": 0.10643763
+            },
+            {
+              "num_leaves": 8,
+              "min_sum_hessian_in_leaf": 20.0,
+              "lambda_l2": 10.0,
+              "rounds": 970,
+              "validation_brier_score": 0.02172185,
+              "validation_log_loss": 0.1064805
+            },
+            {
+              "num_leaves": 8,
+              "min_sum_hessian_in_leaf": 100.0,
+              "lambda_l2": 1.0,
+              "rounds": 466,
+              "validation_brier_score": 0.02170903,
+              "validation_log_loss": 0.10643752
+            },
+            {
+              "num_leaves": 8,
+              "min_sum_hessian_in_leaf": 100.0,
+              "lambda_l2": 10.0,
+              "rounds": 377,
+              "validation_brier_score": 0.02169959,
+              "validation_log_loss": 0.10634977
+            },
+            {
+              "num_leaves": 16,
+              "min_sum_hessian_in_leaf": 20.0,
+              "lambda_l2": 1.0,
+              "rounds": 567,
+              "validation_brier_score": 0.0217125,
+              "validation_log_loss": 0.10646536
+            },
+            {
+              "num_leaves": 16,
+              "min_sum_hessian_in_leaf": 20.0,
+              "lambda_l2": 10.0,
+              "rounds": 546,
+              "validation_brier_score": 0.02171783,
+              "validation_log_loss": 0.10651834
+            },
+            {
+              "num_leaves": 16,
+              "min_sum_hessian_in_leaf": 100.0,
+              "lambda_l2": 1.0,
+              "rounds": 242,
+              "validation_brier_score": 0.02170812,
+              "validation_log_loss": 0.1064809
+            },
+            {
+              "num_leaves": 16,
+              "min_sum_hessian_in_leaf": 100.0,
+              "lambda_l2": 10.0,
+              "rounds": 246,
+              "validation_brier_score": 0.02173726,
+              "validation_log_loss": 0.10679649
+            }
+          ]
+        },
+        "metrics": {
+          "hazard": {
+            "rows": 300,
+            "snapshot_count": 6,
+            "exposures": 179384,
+            "events": 5441,
+            "observed_rate_percent": 3.0332,
+            "brier_score": 0.0293684,
+            "log_loss": 0.13514585,
+            "pr_auc": 0.0449714,
+            "lift_at_10_percent": 1.75097402,
+            "lift_at_20_percent": 1.5591804,
+            "calibration": [
+              {
+                "bin": 1,
+                "exposures": 36254,
+                "events": 566,
+                "observed_rate_percent": 1.5612,
+                "mean_predicted_percent": 2.7066,
+                "published": true
+              },
+              {
+                "bin": 2,
+                "exposures": 35854,
+                "events": 687,
+                "observed_rate_percent": 1.9161,
+                "mean_predicted_percent": 2.814,
+                "published": true
+              },
+              {
+                "bin": 3,
+                "exposures": 36225,
+                "events": 1129,
+                "observed_rate_percent": 3.1166,
+                "mean_predicted_percent": 2.9907,
+                "published": true
+              },
+              {
+                "bin": 4,
+                "exposures": 37232,
+                "events": 1452,
+                "observed_rate_percent": 3.8999,
+                "mean_predicted_percent": 3.0938,
+                "published": true
+              },
+              {
+                "bin": 5,
+                "exposures": 33819,
+                "events": 1607,
+                "observed_rate_percent": 4.7518,
+                "mean_predicted_percent": 3.2408,
+                "published": true
+              }
+            ]
+          },
+          "hazard_interactions": {
+            "rows": 300,
+            "snapshot_count": 6,
+            "exposures": 179384,
+            "events": 5441,
+            "observed_rate_percent": 3.0332,
+            "brier_score": 0.02935632,
+            "log_loss": 0.13493895,
+            "pr_auc": 0.04476443,
+            "lift_at_10_percent": 1.75097402,
+            "lift_at_20_percent": 1.55942074,
+            "calibration": [
+              {
+                "bin": 1,
+                "exposures": 36483,
+                "events": 507,
+                "observed_rate_percent": 1.3897,
+                "mean_predicted_percent": 2.6609,
+                "published": true
+              },
+              {
+                "bin": 2,
+                "exposures": 35445,
+                "events": 743,
+                "observed_rate_percent": 2.0962,
+                "mean_predicted_percent": 2.7545,
+                "published": true
+              },
+              {
+                "bin": 3,
+                "exposures": 35786,
+                "events": 1086,
+                "observed_rate_percent": 3.0347,
+                "mean_predicted_percent": 2.9692,
+                "published": true
+              },
+              {
+                "bin": 4,
+                "exposures": 37857,
+                "events": 1498,
+                "observed_rate_percent": 3.957,
+                "mean_predicted_percent": 3.1512,
+                "published": true
+              },
+              {
+                "bin": 5,
+                "exposures": 33813,
+                "events": 1607,
+                "observed_rate_percent": 4.7526,
+                "mean_predicted_percent": 3.327,
+                "published": true
+              }
+            ]
+          },
+          "logistic": {
+            "rows": 300,
+            "snapshot_count": 6,
+            "exposures": 179384,
+            "events": 5441,
+            "observed_rate_percent": 3.0332,
+            "brier_score": 0.02931652,
+            "log_loss": 0.13415981,
+            "pr_auc": 0.04268923,
+            "lift_at_10_percent": 1.65998565,
+            "lift_at_20_percent": 1.5140026,
+            "calibration": [
+              {
+                "bin": 1,
+                "exposures": 36732,
+                "events": 549,
+                "observed_rate_percent": 1.4946,
+                "mean_predicted_percent": 2.0546,
+                "published": true
+              },
+              {
+                "bin": 2,
+                "exposures": 35208,
+                "events": 701,
+                "observed_rate_percent": 1.991,
+                "mean_predicted_percent": 2.2811,
+                "published": true
+              },
+              {
+                "bin": 3,
+                "exposures": 38281,
+                "events": 1205,
+                "observed_rate_percent": 3.1478,
+                "mean_predicted_percent": 2.8188,
+                "published": true
+              },
+              {
+                "bin": 4,
+                "exposures": 36953,
+                "events": 1515,
+                "observed_rate_percent": 4.0998,
+                "mean_predicted_percent": 3.0962,
+                "published": true
+              },
+              {
+                "bin": 5,
+                "exposures": 32210,
+                "events": 1471,
+                "observed_rate_percent": 4.5669,
+                "mean_predicted_percent": 3.625,
+                "published": true
+              }
+            ]
+          },
+          "lightgbm": {
+            "rows": 300,
+            "snapshot_count": 6,
+            "exposures": 179384,
+            "events": 5441,
+            "observed_rate_percent": 3.0332,
+            "brier_score": 0.02929903,
+            "log_loss": 0.13419945,
+            "pr_auc": 0.0455111,
+            "lift_at_10_percent": 1.75349565,
+            "lift_at_20_percent": 1.44595571,
+            "calibration": [
+              {
+                "bin": 1,
+                "exposures": 35917,
+                "events": 506,
+                "observed_rate_percent": 1.4088,
+                "mean_predicted_percent": 0.9936,
+                "published": true
+              },
+              {
+                "bin": 2,
+                "exposures": 35893,
+                "events": 745,
+                "observed_rate_percent": 2.0756,
+                "mean_predicted_percent": 1.3737,
+                "published": true
+              },
+              {
+                "bin": 3,
+                "exposures": 36272,
+                "events": 1178,
+                "observed_rate_percent": 3.2477,
+                "mean_predicted_percent": 2.3668,
+                "published": true
+              },
+              {
+                "bin": 4,
+                "exposures": 35525,
+                "events": 1444,
+                "observed_rate_percent": 4.0647,
+                "mean_predicted_percent": 3.0466,
+                "published": true
+              },
+              {
+                "bin": 5,
+                "exposures": 35777,
+                "events": 1568,
+                "observed_rate_percent": 4.3827,
+                "mean_predicted_percent": 3.8675,
+                "published": true
+              }
+            ]
+          },
+          "historical": {
+            "rows": 300,
+            "snapshot_count": 6,
+            "exposures": 179384,
+            "events": 5441,
+            "observed_rate_percent": 3.0332,
+            "brier_score": 0.0294196,
+            "log_loss": 0.13602162,
+            "pr_auc": 0.03033797,
+            "lift_at_10_percent": 0.82971802,
+            "lift_at_20_percent": 1.01093551,
+            "calibration": [
+              {
+                "bin": 1,
+                "exposures": 38907,
+                "events": 1153,
+                "observed_rate_percent": 2.9635,
+                "mean_predicted_percent": 3.3164,
+                "published": true
+              },
+              {
+                "bin": 2,
+                "exposures": 35458,
+                "events": 1131,
+                "observed_rate_percent": 3.1897,
+                "mean_predicted_percent": 3.3164,
+                "published": true
+              },
+              {
+                "bin": 3,
+                "exposures": 33295,
+                "events": 1089,
+                "observed_rate_percent": 3.2708,
+                "mean_predicted_percent": 3.3164,
+                "published": true
+              },
+              {
+                "bin": 4,
+                "exposures": 36088,
+                "events": 1085,
+                "observed_rate_percent": 3.0065,
+                "mean_predicted_percent": 3.3164,
+                "published": true
+              },
+              {
+                "bin": 5,
+                "exposures": 35636,
+                "events": 983,
+                "observed_rate_percent": 2.7584,
+                "mean_predicted_percent": 3.3164,
+                "published": true
+              }
+            ]
+          }
+        }
+      },
+      {
+        "test_start": "2024-08-25",
+        "test_end": "2025-01-26",
+        "test_snapshots": 6,
+        "validation_start": "2023-09-24",
+        "validation_end": "2024-02-18",
+        "monthly_train_last_snapshot": "2024-07-21",
+        "six_month_train_last_snapshot": "2024-02-18",
+        "chosen": {
+          "hazard_l2": 0.0,
+          "hazard_interactions_l2": 0.1,
+          "logistic_l2": 0.0,
+          "lightgbm": {
+            "num_leaves": 8,
+            "min_sum_hessian_in_leaf": 20.0,
+            "lambda_l2": 10.0,
+            "rounds": 26
+          }
+        },
+        "selection": {
+          "hazard": [
+            {
+              "l2": 0.0,
+              "validation_brier_score": 0.03052896
+            },
+            {
+              "l2": 0.01,
+              "validation_brier_score": 0.03052907
+            },
+            {
+              "l2": 0.1,
+              "validation_brier_score": 0.03052923
+            },
+            {
+              "l2": 1.0,
+              "validation_brier_score": 0.03053752
+            },
+            {
+              "l2": 10.0,
+              "validation_brier_score": 0.03059268
+            }
+          ],
+          "hazard_interactions": [
+            {
+              "l2": 0.0,
+              "validation_brier_score": 0.03050497
+            },
+            {
+              "l2": 0.01,
+              "validation_brier_score": 0.03050476
+            },
+            {
+              "l2": 0.1,
+              "validation_brier_score": 0.03050473
+            },
+            {
+              "l2": 1.0,
+              "validation_brier_score": 0.03052177
+            },
+            {
+              "l2": 10.0,
+              "validation_brier_score": 0.03058316
+            }
+          ],
+          "logistic": [
+            {
+              "l2": 0.0,
+              "validation_brier_score": 0.03053207
+            },
+            {
+              "l2": 0.01,
+              "validation_brier_score": 0.03053217
+            },
+            {
+              "l2": 0.1,
+              "validation_brier_score": 0.03053293
+            },
+            {
+              "l2": 1.0,
+              "validation_brier_score": 0.03053654
+            },
+            {
+              "l2": 10.0,
+              "validation_brier_score": 0.03055744
+            }
+          ],
+          "lightgbm": [
+            {
+              "num_leaves": 4,
+              "min_sum_hessian_in_leaf": 20.0,
+              "lambda_l2": 1.0,
+              "rounds": 27,
+              "validation_brier_score": 0.03057028,
+              "validation_log_loss": 0.13936652
+            },
+            {
+              "num_leaves": 4,
+              "min_sum_hessian_in_leaf": 20.0,
+              "lambda_l2": 10.0,
+              "rounds": 28,
+              "validation_brier_score": 0.03057034,
+              "validation_log_loss": 0.13936041
+            },
+            {
+              "num_leaves": 4,
+              "min_sum_hessian_in_leaf": 100.0,
+              "lambda_l2": 1.0,
+              "rounds": 27,
+              "validation_brier_score": 0.03057028,
+              "validation_log_loss": 0.13936652
+            },
+            {
+              "num_leaves": 4,
+              "min_sum_hessian_in_leaf": 100.0,
+              "lambda_l2": 10.0,
+              "rounds": 28,
+              "validation_brier_score": 0.03057034,
+              "validation_log_loss": 0.13936041
+            },
+            {
+              "num_leaves": 8,
+              "min_sum_hessian_in_leaf": 20.0,
+              "lambda_l2": 1.0,
+              "rounds": 27,
+              "validation_brier_score": 0.03056559,
+              "validation_log_loss": 0.13926283
+            },
+            {
+              "num_leaves": 8,
+              "min_sum_hessian_in_leaf": 20.0,
+              "lambda_l2": 10.0,
+              "rounds": 26,
+              "validation_brier_score": 0.03056228,
+              "validation_log_loss": 0.1392068
+            },
+            {
+              "num_leaves": 8,
+              "min_sum_hessian_in_leaf": 100.0,
+              "lambda_l2": 1.0,
+              "rounds": 27,
+              "validation_brier_score": 0.03056559,
+              "validation_log_loss": 0.13926283
+            },
+            {
+              "num_leaves": 8,
+              "min_sum_hessian_in_leaf": 100.0,
+              "lambda_l2": 10.0,
+              "rounds": 26,
+              "validation_brier_score": 0.03056228,
+              "validation_log_loss": 0.1392068
+            },
+            {
+              "num_leaves": 16,
+              "min_sum_hessian_in_leaf": 20.0,
+              "lambda_l2": 1.0,
+              "rounds": 16,
+              "validation_brier_score": 0.03057402,
+              "validation_log_loss": 0.13941542
+            },
+            {
+              "num_leaves": 16,
+              "min_sum_hessian_in_leaf": 20.0,
+              "lambda_l2": 10.0,
+              "rounds": 17,
+              "validation_brier_score": 0.0305745,
+              "validation_log_loss": 0.13941763
+            },
+            {
+              "num_leaves": 16,
+              "min_sum_hessian_in_leaf": 100.0,
+              "lambda_l2": 1.0,
+              "rounds": 16,
+              "validation_brier_score": 0.03057402,
+              "validation_log_loss": 0.13941542
+            },
+            {
+              "num_leaves": 16,
+              "min_sum_hessian_in_leaf": 100.0,
+              "lambda_l2": 10.0,
+              "rounds": 17,
+              "validation_brier_score": 0.0305745,
+              "validation_log_loss": 0.13941763
+            }
+          ]
+        },
+        "metrics": {
+          "hazard": {
+            "rows": 296,
+            "snapshot_count": 6,
+            "exposures": 185788,
+            "events": 5587,
+            "observed_rate_percent": 3.0072,
+            "brier_score": 0.02903986,
+            "log_loss": 0.13286124,
+            "pr_auc": 0.04559792,
+            "lift_at_10_percent": 1.74512965,
+            "lift_at_20_percent": 1.54330442,
+            "calibration": [
+              {
+                "bin": 1,
+                "exposures": 41408,
+                "events": 680,
+                "observed_rate_percent": 1.6422,
+                "mean_predicted_percent": 1.4364,
+                "published": true
+              },
+              {
+                "bin": 2,
+                "exposures": 33307,
+                "events": 736,
+                "observed_rate_percent": 2.2097,
+                "mean_predicted_percent": 1.9554,
+                "published": true
+              },
+              {
+                "bin": 3,
+                "exposures": 37383,
+                "events": 1101,
+                "observed_rate_percent": 2.9452,
+                "mean_predicted_percent": 2.7068,
+                "published": true
+              },
+              {
+                "bin": 4,
+                "exposures": 37011,
+                "events": 1362,
+                "observed_rate_percent": 3.68,
+                "mean_predicted_percent": 3.6613,
+                "published": true
+              },
+              {
+                "bin": 5,
+                "exposures": 36679,
+                "events": 1708,
+                "observed_rate_percent": 4.6566,
+                "mean_predicted_percent": 4.4647,
+                "published": true
+              }
+            ]
+          },
+          "hazard_interactions": {
+            "rows": 296,
+            "snapshot_count": 6,
+            "exposures": 185788,
+            "events": 5587,
+            "observed_rate_percent": 3.0072,
+            "brier_score": 0.02902641,
+            "log_loss": 0.13269774,
+            "pr_auc": 0.04580176,
+            "lift_at_10_percent": 1.75210234,
+            "lift_at_20_percent": 1.54172316,
+            "calibration": [
+              {
+                "bin": 1,
+                "exposures": 38989,
+                "events": 623,
+                "observed_rate_percent": 1.5979,
+                "mean_predicted_percent": 1.509,
+                "published": true
+              },
+              {
+                "bin": 2,
+                "exposures": 35650,
+                "events": 748,
+                "observed_rate_percent": 2.0982,
+                "mean_predicted_percent": 2.0084,
+                "published": true
+              },
+              {
+                "bin": 3,
+                "exposures": 37873,
+                "events": 1161,
+                "observed_rate_percent": 3.0655,
+                "mean_predicted_percent": 2.7558,
+                "published": true
+              },
+              {
+                "bin": 4,
+                "exposures": 40780,
+                "events": 1520,
+                "observed_rate_percent": 3.7273,
+                "mean_predicted_percent": 3.5994,
+                "published": true
+              },
+              {
+                "bin": 5,
+                "exposures": 32496,
+                "events": 1535,
+                "observed_rate_percent": 4.7237,
+                "mean_predicted_percent": 4.6657,
+                "published": true
+              }
+            ]
+          },
+          "logistic": {
+            "rows": 296,
+            "snapshot_count": 6,
+            "exposures": 185788,
+            "events": 5587,
+            "observed_rate_percent": 3.0072,
+            "brier_score": 0.02907123,
+            "log_loss": 0.13335144,
+            "pr_auc": 0.04444547,
+            "lift_at_10_percent": 1.72580459,
+            "lift_at_20_percent": 1.53391328,
+            "calibration": [
+              {
+                "bin": 1,
+                "exposures": 38795,
+                "events": 605,
+                "observed_rate_percent": 1.5595,
+                "mean_predicted_percent": 1.2232,
+                "published": true
+              },
+              {
+                "bin": 2,
+                "exposures": 35599,
+                "events": 788,
+                "observed_rate_percent": 2.2135,
+                "mean_predicted_percent": 1.6786,
+                "published": true
+              },
+              {
+                "bin": 3,
+                "exposures": 39080,
+                "events": 1160,
+                "observed_rate_percent": 2.9683,
+                "mean_predicted_percent": 2.4632,
+                "published": true
+              },
+              {
+                "bin": 4,
+                "exposures": 35221,
+                "events": 1323,
+                "observed_rate_percent": 3.7563,
+                "mean_predicted_percent": 3.2083,
+                "published": true
+              },
+              {
+                "bin": 5,
+                "exposures": 37093,
+                "events": 1711,
+                "observed_rate_percent": 4.6127,
+                "mean_predicted_percent": 3.8329,
+                "published": true
+              }
+            ]
+          },
+          "lightgbm": {
+            "rows": 296,
+            "snapshot_count": 6,
+            "exposures": 185788,
+            "events": 5587,
+            "observed_rate_percent": 3.0072,
+            "brier_score": 0.02906828,
+            "log_loss": 0.13326166,
+            "pr_auc": 0.04043199,
+            "lift_at_10_percent": 1.48668559,
+            "lift_at_20_percent": 1.3606715,
+            "calibration": [
+              {
+                "bin": 1,
+                "exposures": 39033,
+                "events": 648,
+                "observed_rate_percent": 1.6601,
+                "mean_predicted_percent": 1.9775,
+                "published": true
+              },
+              {
+                "bin": 2,
+                "exposures": 35505,
+                "events": 794,
+                "observed_rate_percent": 2.2363,
+                "mean_predicted_percent": 2.147,
+                "published": true
+              },
+              {
+                "bin": 3,
+                "exposures": 37468,
+                "events": 1080,
+                "observed_rate_percent": 2.8825,
+                "mean_predicted_percent": 3.3409,
+                "published": true
+              },
+              {
+                "bin": 4,
+                "exposures": 36713,
+                "events": 1391,
+                "observed_rate_percent": 3.7888,
+                "mean_predicted_percent": 3.6419,
+                "published": true
+              },
+              {
+                "bin": 5,
+                "exposures": 37069,
+                "events": 1674,
+                "observed_rate_percent": 4.5159,
+                "mean_predicted_percent": 3.7978,
+                "published": true
+              }
+            ]
+          },
+          "historical": {
+            "rows": 296,
+            "snapshot_count": 6,
+            "exposures": 185788,
+            "events": 5587,
+            "observed_rate_percent": 3.0072,
+            "brier_score": 0.02917458,
+            "log_loss": 0.13510552,
+            "pr_auc": 0.02613496,
+            "lift_at_10_percent": 0.66036313,
+            "lift_at_20_percent": 0.77417174,
+            "calibration": [
+              {
+                "bin": 1,
+                "exposures": 40058,
+                "events": 913,
+                "observed_rate_percent": 2.2792,
+                "mean_predicted_percent": 3.2716,
+                "published": true
+              },
+              {
+                "bin": 2,
+                "exposures": 36825,
+                "events": 987,
+                "observed_rate_percent": 2.6802,
+                "mean_predicted_percent": 3.2716,
+                "published": true
+              },
+              {
+                "bin": 3,
+                "exposures": 39232,
+                "events": 1276,
+                "observed_rate_percent": 3.2524,
+                "mean_predicted_percent": 3.2716,
+                "published": true
+              },
+              {
+                "bin": 4,
+                "exposures": 32949,
+                "events": 1097,
+                "observed_rate_percent": 3.3294,
+                "mean_predicted_percent": 3.2716,
+                "published": true
+              },
+              {
+                "bin": 5,
+                "exposures": 36724,
+                "events": 1314,
+                "observed_rate_percent": 3.578,
+                "mean_predicted_percent": 3.2716,
+                "published": true
+              }
+            ]
+          }
+        }
+      },
+      {
+        "test_start": "2025-02-23",
+        "test_end": "2025-07-27",
+        "test_snapshots": 6,
+        "validation_start": "2024-02-18",
+        "validation_end": "2024-07-21",
+        "monthly_train_last_snapshot": "2025-01-26",
+        "six_month_train_last_snapshot": "2024-07-21",
+        "chosen": {
+          "hazard_l2": 0.01,
+          "hazard_interactions_l2": 0.01,
+          "logistic_l2": 0.0,
+          "lightgbm": {
+            "num_leaves": 4,
+            "min_sum_hessian_in_leaf": 100.0,
+            "lambda_l2": 1.0,
+            "rounds": 537
+          }
+        },
+        "selection": {
+          "hazard": [
+            {
+              "l2": 0.0,
+              "validation_brier_score": 0.02925376
+            },
+            {
+              "l2": 0.01,
+              "validation_brier_score": 0.0292537
+            },
+            {
+              "l2": 0.1,
+              "validation_brier_score": 0.02925462
+            },
+            {
+              "l2": 1.0,
+              "validation_brier_score": 0.02928168
+            },
+            {
+              "l2": 10.0,
+              "validation_brier_score": 0.0293684
+            }
+          ],
+          "hazard_interactions": [
+            {
+              "l2": 0.0,
+              "validation_brier_score": 0.02984694
+            },
+            {
+              "l2": 0.01,
+              "validation_brier_score": 0.02923392
+            },
+            {
+              "l2": 0.1,
+              "validation_brier_score": 0.02923392
+            },
+            {
+              "l2": 1.0,
+              "validation_brier_score": 0.02926481
+            },
+            {
+              "l2": 10.0,
+              "validation_brier_score": 0.02935632
+            }
+          ],
+          "logistic": [
+            {
+              "l2": 0.0,
+              "validation_brier_score": 0.02926549
+            },
+            {
+              "l2": 0.01,
+              "validation_brier_score": 0.02926561
+            },
+            {
+              "l2": 0.1,
+              "validation_brier_score": 0.02926652
+            },
+            {
+              "l2": 1.0,
+              "validation_brier_score": 0.02927359
+            },
+            {
+              "l2": 10.0,
+              "validation_brier_score": 0.02931652
+            }
+          ],
+          "lightgbm": [
+            {
+              "num_leaves": 4,
+              "min_sum_hessian_in_leaf": 20.0,
+              "lambda_l2": 1.0,
+              "rounds": 63,
+              "validation_brier_score": 0.02931981,
+              "validation_log_loss": 0.13412352
+            },
+            {
+              "num_leaves": 4,
+              "min_sum_hessian_in_leaf": 20.0,
+              "lambda_l2": 10.0,
+              "rounds": 56,
+              "validation_brier_score": 0.02931968,
+              "validation_log_loss": 0.13411355
+            },
+            {
+              "num_leaves": 4,
+              "min_sum_hessian_in_leaf": 100.0,
+              "lambda_l2": 1.0,
+              "rounds": 537,
+              "validation_brier_score": 0.02928227,
+              "validation_log_loss": 0.13371894
+            },
+            {
+              "num_leaves": 4,
+              "min_sum_hessian_in_leaf": 100.0,
+              "lambda_l2": 10.0,
+              "rounds": 56,
+              "validation_brier_score": 0.02931968,
+              "validation_log_loss": 0.13411355
+            },
+            {
+              "num_leaves": 8,
+              "min_sum_hessian_in_leaf": 20.0,
+              "lambda_l2": 1.0,
+              "rounds": 32,
+              "validation_brier_score": 0.02931616,
+              "validation_log_loss": 0.13405662
+            },
+            {
+              "num_leaves": 8,
+              "min_sum_hessian_in_leaf": 20.0,
+              "lambda_l2": 10.0,
+              "rounds": 31,
+              "validation_brier_score": 0.02931644,
+              "validation_log_loss": 0.13405444
+            },
+            {
+              "num_leaves": 8,
+              "min_sum_hessian_in_leaf": 100.0,
+              "lambda_l2": 1.0,
+              "rounds": 32,
+              "validation_brier_score": 0.02931616,
+              "validation_log_loss": 0.13405662
+            },
+            {
+              "num_leaves": 8,
+              "min_sum_hessian_in_leaf": 100.0,
+              "lambda_l2": 10.0,
+              "rounds": 31,
+              "validation_brier_score": 0.02931644,
+              "validation_log_loss": 0.13405444
+            },
+            {
+              "num_leaves": 16,
+              "min_sum_hessian_in_leaf": 20.0,
+              "lambda_l2": 1.0,
+              "rounds": 26,
+              "validation_brier_score": 0.0293095,
+              "validation_log_loss": 0.13397606
+            },
+            {
+              "num_leaves": 16,
+              "min_sum_hessian_in_leaf": 20.0,
+              "lambda_l2": 10.0,
+              "rounds": 24,
+              "validation_brier_score": 0.02930819,
+              "validation_log_loss": 0.13396502
+            },
+            {
+              "num_leaves": 16,
+              "min_sum_hessian_in_leaf": 100.0,
+              "lambda_l2": 1.0,
+              "rounds": 26,
+              "validation_brier_score": 0.02930855,
+              "validation_log_loss": 0.13396461
+            },
+            {
+              "num_leaves": 16,
+              "min_sum_hessian_in_leaf": 100.0,
+              "lambda_l2": 10.0,
+              "rounds": 24,
+              "validation_brier_score": 0.02930819,
+              "validation_log_loss": 0.13396502
+            }
+          ]
+        },
+        "metrics": {
+          "hazard": {
+            "rows": 300,
+            "snapshot_count": 6,
+            "exposures": 190975,
+            "events": 5865,
+            "observed_rate_percent": 3.0711,
+            "brier_score": 0.02959411,
+            "log_loss": 0.13435944,
+            "pr_auc": 0.04994312,
+            "lift_at_10_percent": 1.91566571,
+            "lift_at_20_percent": 1.69446313,
+            "calibration": [
+              {
+                "bin": 1,
+                "exposures": 41730,
+                "events": 632,
+                "observed_rate_percent": 1.5145,
+                "mean_predicted_percent": 1.4343,
+                "published": true
+              },
+              {
+                "bin": 2,
+                "exposures": 36469,
+                "events": 798,
+                "observed_rate_percent": 2.1882,
+                "mean_predicted_percent": 1.9199,
+                "published": true
+              },
+              {
+                "bin": 3,
+                "exposures": 36564,
+                "events": 1047,
+                "observed_rate_percent": 2.8635,
+                "mean_predicted_percent": 2.6625,
+                "published": true
+              },
+              {
+                "bin": 4,
+                "exposures": 38756,
+                "events": 1428,
+                "observed_rate_percent": 3.6846,
+                "mean_predicted_percent": 3.6099,
+                "published": true
+              },
+              {
+                "bin": 5,
+                "exposures": 37456,
+                "events": 1960,
+                "observed_rate_percent": 5.2328,
+                "mean_predicted_percent": 4.4815,
+                "published": true
+              }
+            ]
+          },
+          "hazard_interactions": {
+            "rows": 300,
+            "snapshot_count": 6,
+            "exposures": 190975,
+            "events": 5865,
+            "observed_rate_percent": 3.0711,
+            "brier_score": 0.02955891,
+            "log_loss": 0.13392956,
+            "pr_auc": 0.05082317,
+            "lift_at_10_percent": 1.93651839,
+            "lift_at_20_percent": 1.70119256,
+            "calibration": [
+              {
+                "bin": 1,
+                "exposures": 41881,
+                "events": 579,
+                "observed_rate_percent": 1.3825,
+                "mean_predicted_percent": 1.3952,
+                "published": true
+              },
+              {
+                "bin": 2,
+                "exposures": 34983,
+                "events": 746,
+                "observed_rate_percent": 2.1325,
+                "mean_predicted_percent": 1.903,
+                "published": true
+              },
+              {
+                "bin": 3,
+                "exposures": 37923,
+                "events": 1108,
+                "observed_rate_percent": 2.9217,
+                "mean_predicted_percent": 2.5975,
+                "published": true
+              },
+              {
+                "bin": 4,
+                "exposures": 39895,
+                "events": 1517,
+                "observed_rate_percent": 3.8025,
+                "mean_predicted_percent": 3.4759,
+                "published": true
+              },
+              {
+                "bin": 5,
+                "exposures": 36293,
+                "events": 1915,
+                "observed_rate_percent": 5.2765,
+                "mean_predicted_percent": 4.7035,
+                "published": true
+              }
+            ]
+          },
+          "logistic": {
+            "rows": 300,
+            "snapshot_count": 6,
+            "exposures": 190975,
+            "events": 5865,
+            "observed_rate_percent": 3.0711,
+            "brier_score": 0.02961483,
+            "log_loss": 0.13459275,
+            "pr_auc": 0.04877758,
+            "lift_at_10_percent": 1.86652722,
+            "lift_at_20_percent": 1.68608609,
+            "calibration": [
+              {
+                "bin": 1,
+                "exposures": 39514,
+                "events": 576,
+                "observed_rate_percent": 1.4577,
+                "mean_predicted_percent": 1.28,
+                "published": true
+              },
+              {
+                "bin": 2,
+                "exposures": 37698,
+                "events": 806,
+                "observed_rate_percent": 2.138,
+                "mean_predicted_percent": 1.7472,
+                "published": true
+              },
+              {
+                "bin": 3,
+                "exposures": 39912,
+                "events": 1150,
+                "observed_rate_percent": 2.8813,
+                "mean_predicted_percent": 2.5434,
+                "published": true
+              },
+              {
+                "bin": 4,
+                "exposures": 36467,
+                "events": 1389,
+                "observed_rate_percent": 3.8089,
+                "mean_predicted_percent": 3.4078,
+                "published": true
+              },
+              {
+                "bin": 5,
+                "exposures": 37384,
+                "events": 1944,
+                "observed_rate_percent": 5.2001,
+                "mean_predicted_percent": 4.1068,
+                "published": true
+              }
+            ]
+          },
+          "lightgbm": {
+            "rows": 300,
+            "snapshot_count": 6,
+            "exposures": 190975,
+            "events": 5865,
+            "observed_rate_percent": 3.0711,
+            "brier_score": 0.02958963,
+            "log_loss": 0.13437343,
+            "pr_auc": 0.04901338,
+            "lift_at_10_percent": 1.7581753,
+            "lift_at_20_percent": 1.61026331,
+            "calibration": [
+              {
+                "bin": 1,
+                "exposures": 38809,
+                "events": 561,
+                "observed_rate_percent": 1.4455,
+                "mean_predicted_percent": 1.1825,
+                "published": true
+              },
+              {
+                "bin": 2,
+                "exposures": 38242,
+                "events": 776,
+                "observed_rate_percent": 2.0292,
+                "mean_predicted_percent": 1.5868,
+                "published": true
+              },
+              {
+                "bin": 3,
+                "exposures": 39726,
+                "events": 1248,
+                "observed_rate_percent": 3.1415,
+                "mean_predicted_percent": 2.6765,
+                "published": true
+              },
+              {
+                "bin": 4,
+                "exposures": 38313,
+                "events": 1485,
+                "observed_rate_percent": 3.876,
+                "mean_predicted_percent": 3.3603,
+                "published": true
+              },
+              {
+                "bin": 5,
+                "exposures": 35885,
+                "events": 1795,
+                "observed_rate_percent": 5.0021,
+                "mean_predicted_percent": 4.4068,
+                "published": true
+              }
+            ]
+          },
+          "historical": {
+            "rows": 300,
+            "snapshot_count": 6,
+            "exposures": 190975,
+            "events": 5865,
+            "observed_rate_percent": 3.0711,
+            "brier_score": 0.0297705,
+            "log_loss": 0.13725032,
+            "pr_auc": 0.03118354,
+            "lift_at_10_percent": 0.8576822,
+            "lift_at_20_percent": 1.04339981,
+            "calibration": [
+              {
+                "bin": 1,
+                "exposures": 41012,
+                "events": 1277,
+                "observed_rate_percent": 3.1137,
+                "mean_predicted_percent": 3.2392,
+                "published": true
+              },
+              {
+                "bin": 2,
+                "exposures": 37486,
+                "events": 1231,
+                "observed_rate_percent": 3.2839,
+                "mean_predicted_percent": 3.2392,
+                "published": true
+              },
+              {
+                "bin": 3,
+                "exposures": 40151,
+                "events": 1296,
+                "observed_rate_percent": 3.2278,
+                "mean_predicted_percent": 3.2392,
+                "published": true
+              },
+              {
+                "bin": 4,
+                "exposures": 34175,
+                "events": 943,
+                "observed_rate_percent": 2.7593,
+                "mean_predicted_percent": 3.2392,
+                "published": true
+              },
+              {
+                "bin": 5,
+                "exposures": 38151,
+                "events": 1118,
+                "observed_rate_percent": 2.9305,
+                "mean_predicted_percent": 3.2392,
+                "published": true
+              }
+            ]
+          }
+        }
+      },
+      {
+        "test_start": "2025-08-24",
+        "test_end": "2026-02-22",
+        "test_snapshots": 7,
+        "validation_start": "2024-09-29",
+        "validation_end": "2025-02-23",
+        "monthly_train_last_snapshot": "2025-07-27",
+        "six_month_train_last_snapshot": "2025-02-23",
+        "chosen": {
+          "hazard_l2": 0.0,
+          "hazard_interactions_l2": 0.01,
+          "logistic_l2": 0.0,
+          "lightgbm": {
+            "num_leaves": 8,
+            "min_sum_hessian_in_leaf": 100.0,
+            "lambda_l2": 10.0,
+            "rounds": 423
+          }
+        },
+        "selection": {
+          "hazard": [
+            {
+              "l2": 0.0,
+              "validation_brier_score": 0.03069179
+            },
+            {
+              "l2": 0.01,
+              "validation_brier_score": 0.03069221
+            },
+            {
+              "l2": 0.1,
+              "validation_brier_score": 0.03069473
+            },
+            {
+              "l2": 1.0,
+              "validation_brier_score": 0.03071469
+            },
+            {
+              "l2": 10.0,
+              "validation_brier_score": 0.03079347
+            }
+          ],
+          "hazard_interactions": [
+            {
+              "l2": 0.0,
+              "validation_brier_score": 0.03185455
+            },
+            {
+              "l2": 0.01,
+              "validation_brier_score": 0.03066692
+            },
+            {
+              "l2": 0.1,
+              "validation_brier_score": 0.03066754
+            },
+            {
+              "l2": 1.0,
+              "validation_brier_score": 0.03069289
+            },
+            {
+              "l2": 10.0,
+              "validation_brier_score": 0.03078188
+            }
+          ],
+          "logistic": [
+            {
+              "l2": 0.0,
+              "validation_brier_score": 0.03073166
+            },
+            {
+              "l2": 0.01,
+              "validation_brier_score": 0.03073187
+            },
+            {
+              "l2": 0.1,
+              "validation_brier_score": 0.0307333
+            },
+            {
+              "l2": 1.0,
+              "validation_brier_score": 0.03073934
+            },
+            {
+              "l2": 10.0,
+              "validation_brier_score": 0.03076636
+            }
+          ],
+          "lightgbm": [
+            {
+              "num_leaves": 4,
+              "min_sum_hessian_in_leaf": 20.0,
+              "lambda_l2": 1.0,
+              "rounds": 272,
+              "validation_brier_score": 0.03067146,
+              "validation_log_loss": 0.13847682
+            },
+            {
+              "num_leaves": 4,
+              "min_sum_hessian_in_leaf": 20.0,
+              "lambda_l2": 10.0,
+              "rounds": 316,
+              "validation_brier_score": 0.03067154,
+              "validation_log_loss": 0.13848399
+            },
+            {
+              "num_leaves": 4,
+              "min_sum_hessian_in_leaf": 100.0,
+              "lambda_l2": 1.0,
+              "rounds": 283,
+              "validation_brier_score": 0.03067067,
+              "validation_log_loss": 0.13847752
+            },
+            {
+              "num_leaves": 4,
+              "min_sum_hessian_in_leaf": 100.0,
+              "lambda_l2": 10.0,
+              "rounds": 328,
+              "validation_brier_score": 0.03067106,
+              "validation_log_loss": 0.13848922
+            },
+            {
+              "num_leaves": 8,
+              "min_sum_hessian_in_leaf": 20.0,
+              "lambda_l2": 1.0,
+              "rounds": 283,
+              "validation_brier_score": 0.03067372,
+              "validation_log_loss": 0.13853292
+            },
+            {
+              "num_leaves": 8,
+              "min_sum_hessian_in_leaf": 20.0,
+              "lambda_l2": 10.0,
+              "rounds": 479,
+              "validation_brier_score": 0.0306698,
+              "validation_log_loss": 0.13847767
+            },
+            {
+              "num_leaves": 8,
+              "min_sum_hessian_in_leaf": 100.0,
+              "lambda_l2": 1.0,
+              "rounds": 169,
+              "validation_brier_score": 0.03067342,
+              "validation_log_loss": 0.13853872
+            },
+            {
+              "num_leaves": 8,
+              "min_sum_hessian_in_leaf": 100.0,
+              "lambda_l2": 10.0,
+              "rounds": 423,
+              "validation_brier_score": 0.03066821,
+              "validation_log_loss": 0.13849811
+            },
+            {
+              "num_leaves": 16,
+              "min_sum_hessian_in_leaf": 20.0,
+              "lambda_l2": 1.0,
+              "rounds": 218,
+              "validation_brier_score": 0.03067228,
+              "validation_log_loss": 0.13850656
+            },
+            {
+              "num_leaves": 16,
+              "min_sum_hessian_in_leaf": 20.0,
+              "lambda_l2": 10.0,
+              "rounds": 199,
+              "validation_brier_score": 0.03067128,
+              "validation_log_loss": 0.13849892
+            },
+            {
+              "num_leaves": 16,
+              "min_sum_hessian_in_leaf": 100.0,
+              "lambda_l2": 1.0,
+              "rounds": 99,
+              "validation_brier_score": 0.03067286,
+              "validation_log_loss": 0.13854284
+            },
+            {
+              "num_leaves": 16,
+              "min_sum_hessian_in_leaf": 100.0,
+              "lambda_l2": 10.0,
+              "rounds": 137,
+              "validation_brier_score": 0.03067442,
+              "validation_log_loss": 0.13854518
+            }
+          ]
+        },
+        "metrics": {
+          "hazard": {
+            "rows": 339,
+            "snapshot_count": 7,
+            "exposures": 238451,
+            "events": 7329,
+            "observed_rate_percent": 3.0736,
+            "brier_score": 0.02971663,
+            "log_loss": 0.13611387,
+            "pr_auc": 0.04133827,
+            "lift_at_10_percent": 1.50485698,
+            "lift_at_20_percent": 1.40951416,
+            "calibration": [
+              {
+                "bin": 1,
+                "exposures": 50409,
+                "events": 864,
+                "observed_rate_percent": 1.714,
+                "mean_predicted_percent": 1.4203,
+                "published": true
+              },
+              {
+                "bin": 2,
+                "exposures": 46922,
+                "events": 1147,
+                "observed_rate_percent": 2.4445,
+                "mean_predicted_percent": 1.9663,
+                "published": true
+              },
+              {
+                "bin": 3,
+                "exposures": 45863,
+                "events": 1579,
+                "observed_rate_percent": 3.4429,
+                "mean_predicted_percent": 2.6725,
+                "published": true
+              },
+              {
+                "bin": 4,
+                "exposures": 48946,
+                "events": 1724,
+                "observed_rate_percent": 3.5222,
+                "mean_predicted_percent": 3.6846,
+                "published": true
+              },
+              {
+                "bin": 5,
+                "exposures": 46311,
+                "events": 2015,
+                "observed_rate_percent": 4.351,
+                "mean_predicted_percent": 4.6124,
+                "published": true
+              }
+            ]
+          },
+          "hazard_interactions": {
+            "rows": 339,
+            "snapshot_count": 7,
+            "exposures": 238451,
+            "events": 7329,
+            "observed_rate_percent": 3.0736,
+            "brier_score": 0.0297128,
+            "log_loss": 0.13580566,
+            "pr_auc": 0.0420131,
+            "lift_at_10_percent": 1.52581972,
+            "lift_at_20_percent": 1.43170347,
+            "calibration": [
+              {
+                "bin": 1,
+                "exposures": 49779,
+                "events": 768,
+                "observed_rate_percent": 1.5428,
+                "mean_predicted_percent": 1.4069,
+                "published": true
+              },
+              {
+                "bin": 2,
+                "exposures": 45786,
+                "events": 1079,
+                "observed_rate_percent": 2.3566,
+                "mean_predicted_percent": 1.9454,
+                "published": true
+              },
+              {
+                "bin": 3,
+                "exposures": 48628,
+                "events": 1663,
+                "observed_rate_percent": 3.4198,
+                "mean_predicted_percent": 2.6421,
+                "published": true
+              },
+              {
+                "bin": 4,
+                "exposures": 47367,
+                "events": 1750,
+                "observed_rate_percent": 3.6946,
+                "mean_predicted_percent": 3.5059,
+                "published": true
+              },
+              {
+                "bin": 5,
+                "exposures": 46891,
+                "events": 2069,
+                "observed_rate_percent": 4.4124,
+                "mean_predicted_percent": 4.8687,
+                "published": true
+              }
+            ]
+          },
+          "logistic": {
+            "rows": 339,
+            "snapshot_count": 7,
+            "exposures": 238451,
+            "events": 7329,
+            "observed_rate_percent": 3.0736,
+            "brier_score": 0.02972174,
+            "log_loss": 0.13624315,
+            "pr_auc": 0.04150602,
+            "lift_at_10_percent": 1.52149293,
+            "lift_at_20_percent": 1.44025361,
+            "calibration": [
+              {
+                "bin": 1,
+                "exposures": 50630,
+                "events": 857,
+                "observed_rate_percent": 1.6927,
+                "mean_predicted_percent": 1.2971,
+                "published": true
+              },
+              {
+                "bin": 2,
+                "exposures": 45677,
+                "events": 1115,
+                "observed_rate_percent": 2.4411,
+                "mean_predicted_percent": 1.7848,
+                "published": true
+              },
+              {
+                "bin": 3,
+                "exposures": 47392,
+                "events": 1534,
+                "observed_rate_percent": 3.2368,
+                "mean_predicted_percent": 2.4977,
+                "published": true
+              },
+              {
+                "bin": 4,
+                "exposures": 50717,
+                "events": 1856,
+                "observed_rate_percent": 3.6595,
+                "mean_predicted_percent": 3.3785,
+                "published": true
+              },
+              {
+                "bin": 5,
+                "exposures": 44035,
+                "events": 1967,
+                "observed_rate_percent": 4.4669,
+                "mean_predicted_percent": 4.1545,
+                "published": true
+              }
+            ]
+          },
+          "lightgbm": {
+            "rows": 339,
+            "snapshot_count": 7,
+            "exposures": 238451,
+            "events": 7329,
+            "observed_rate_percent": 3.0736,
+            "brier_score": 0.02979145,
+            "log_loss": 0.13627849,
+            "pr_auc": 0.04149847,
+            "lift_at_10_percent": 1.49300214,
+            "lift_at_20_percent": 1.40360186,
+            "calibration": [
+              {
+                "bin": 1,
+                "exposures": 48290,
+                "events": 793,
+                "observed_rate_percent": 1.6422,
+                "mean_predicted_percent": 1.7697,
+                "published": true
+              },
+              {
+                "bin": 2,
+                "exposures": 47327,
+                "events": 1081,
+                "observed_rate_percent": 2.2841,
+                "mean_predicted_percent": 2.2182,
+                "published": true
+              },
+              {
+                "bin": 3,
+                "exposures": 47611,
+                "events": 1684,
+                "observed_rate_percent": 3.537,
+                "mean_predicted_percent": 3.5634,
+                "published": true
+              },
+              {
+                "bin": 4,
+                "exposures": 52283,
+                "events": 1897,
+                "observed_rate_percent": 3.6283,
+                "mean_predicted_percent": 4.4287,
+                "published": true
+              },
+              {
+                "bin": 5,
+                "exposures": 42940,
+                "events": 1874,
+                "observed_rate_percent": 4.3642,
+                "mean_predicted_percent": 5.9912,
+                "published": true
+              }
+            ]
+          },
+          "historical": {
+            "rows": 339,
+            "snapshot_count": 7,
+            "exposures": 238451,
+            "events": 7329,
+            "observed_rate_percent": 3.0736,
+            "brier_score": 0.02979326,
+            "log_loss": 0.13732483,
+            "pr_auc": 0.02719253,
+            "lift_at_10_percent": 0.7971154,
+            "lift_at_20_percent": 0.79528441,
+            "calibration": [
+              {
+                "bin": 1,
+                "exposures": 49232,
+                "events": 1202,
+                "observed_rate_percent": 2.4415,
+                "mean_predicted_percent": 3.2179,
+                "published": true
+              },
+              {
+                "bin": 2,
+                "exposures": 47288,
+                "events": 1374,
+                "observed_rate_percent": 2.9056,
+                "mean_predicted_percent": 3.2179,
+                "published": true
+              },
+              {
+                "bin": 3,
+                "exposures": 47518,
+                "events": 1376,
+                "observed_rate_percent": 2.8957,
+                "mean_predicted_percent": 3.2179,
+                "published": true
+              },
+              {
+                "bin": 4,
+                "exposures": 50826,
+                "events": 1787,
+                "observed_rate_percent": 3.5159,
+                "mean_predicted_percent": 3.2179,
+                "published": true
+              },
+              {
+                "bin": 5,
+                "exposures": 43587,
+                "events": 1590,
+                "observed_rate_percent": 3.6479,
+                "mean_predicted_percent": 3.2179,
+                "published": true
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "summary": {
+      "hazard": {
+        "brier_score": {
+          "mean": 0.02942975,
+          "by_fold": [
+            0.0293684,
+            0.02903986,
+            0.02959411,
+            0.02971663
+          ]
+        },
+        "log_loss": {
+          "mean": 0.1346201,
+          "by_fold": [
+            0.13514585,
+            0.13286124,
+            0.13435944,
+            0.13611387
+          ]
+        },
+        "pr_auc": {
+          "mean": 0.04546268,
+          "by_fold": [
+            0.0449714,
+            0.04559792,
+            0.04994312,
+            0.04133827
+          ]
+        },
+        "lift_at_10_percent": {
+          "mean": 1.72915659,
+          "by_fold": [
+            1.75097402,
+            1.74512965,
+            1.91566571,
+            1.50485698
+          ]
+        },
+        "lift_at_20_percent": {
+          "mean": 1.55161553,
+          "by_fold": [
+            1.5591804,
+            1.54330442,
+            1.69446313,
+            1.40951416
+          ]
+        }
+      },
+      "hazard_interactions": {
+        "brier_score": {
+          "mean": 0.02941361,
+          "by_fold": [
+            0.02935632,
+            0.02902641,
+            0.02955891,
+            0.0297128
+          ]
+        },
+        "log_loss": {
+          "mean": 0.13434298,
+          "by_fold": [
+            0.13493895,
+            0.13269774,
+            0.13392956,
+            0.13580566
+          ]
+        },
+        "pr_auc": {
+          "mean": 0.04585061,
+          "by_fold": [
+            0.04476443,
+            0.04580176,
+            0.05082317,
+            0.0420131
+          ]
+        },
+        "lift_at_10_percent": {
+          "mean": 1.74135362,
+          "by_fold": [
+            1.75097402,
+            1.75210234,
+            1.93651839,
+            1.52581972
+          ]
+        },
+        "lift_at_20_percent": {
+          "mean": 1.55850998,
+          "by_fold": [
+            1.55942074,
+            1.54172316,
+            1.70119256,
+            1.43170347
+          ]
+        }
+      },
+      "logistic": {
+        "brier_score": {
+          "mean": 0.02943108,
+          "by_fold": [
+            0.02931652,
+            0.02907123,
+            0.02961483,
+            0.02972174
+          ]
+        },
+        "log_loss": {
+          "mean": 0.13458679,
+          "by_fold": [
+            0.13415981,
+            0.13335144,
+            0.13459275,
+            0.13624315
+          ]
+        },
+        "pr_auc": {
+          "mean": 0.04435458,
+          "by_fold": [
+            0.04268923,
+            0.04444547,
+            0.04877758,
+            0.04150602
+          ]
+        },
+        "lift_at_10_percent": {
+          "mean": 1.6934526,
+          "by_fold": [
+            1.65998565,
+            1.72580459,
+            1.86652722,
+            1.52149293
+          ]
+        },
+        "lift_at_20_percent": {
+          "mean": 1.54356389,
+          "by_fold": [
+            1.5140026,
+            1.53391328,
+            1.68608609,
+            1.44025361
+          ]
+        }
+      },
+      "lightgbm": {
+        "brier_score": {
+          "mean": 0.0294371,
+          "by_fold": [
+            0.02929903,
+            0.02906828,
+            0.02958963,
+            0.02979145
+          ]
+        },
+        "log_loss": {
+          "mean": 0.13452826,
+          "by_fold": [
+            0.13419945,
+            0.13326166,
+            0.13437343,
+            0.13627849
+          ]
+        },
+        "pr_auc": {
+          "mean": 0.04411374,
+          "by_fold": [
+            0.0455111,
+            0.04043199,
+            0.04901338,
+            0.04149847
+          ]
+        },
+        "lift_at_10_percent": {
+          "mean": 1.62283967,
+          "by_fold": [
+            1.75349565,
+            1.48668559,
+            1.7581753,
+            1.49300214
+          ]
+        },
+        "lift_at_20_percent": {
+          "mean": 1.4551231,
+          "by_fold": [
+            1.44595571,
+            1.3606715,
+            1.61026331,
+            1.40360186
+          ]
+        }
+      },
+      "historical": {
+        "brier_score": {
+          "mean": 0.02953949,
+          "by_fold": [
+            0.0294196,
+            0.02917458,
+            0.0297705,
+            0.02979326
+          ]
+        },
+        "log_loss": {
+          "mean": 0.13642557,
+          "by_fold": [
+            0.13602162,
+            0.13510552,
+            0.13725032,
+            0.13732483
+          ]
+        },
+        "pr_auc": {
+          "mean": 0.02871225,
+          "by_fold": [
+            0.03033797,
+            0.02613496,
+            0.03118354,
+            0.02719253
+          ]
+        },
+        "lift_at_10_percent": {
+          "mean": 0.78621969,
+          "by_fold": [
+            0.82971802,
+            0.66036313,
+            0.8576822,
+            0.7971154
+          ]
+        },
+        "lift_at_20_percent": {
+          "mean": 0.90594787,
+          "by_fold": [
+            1.01093551,
+            0.77417174,
+            1.04339981,
+            0.79528441
+          ]
+        }
+      },
+      "wins_vs_hazard": {
+        "hazard_interactions": {
+          "pr_auc_folds_won_vs_hazard": 3,
+          "lift10_folds_won_vs_hazard": 3,
+          "brier_folds_not_worse_vs_hazard": 4,
+          "fold_count": 4
+        },
+        "logistic": {
+          "pr_auc_folds_won_vs_hazard": 1,
+          "lift10_folds_won_vs_hazard": 1,
+          "brier_folds_not_worse_vs_hazard": 1,
+          "fold_count": 4
+        },
+        "lightgbm": {
+          "pr_auc_folds_won_vs_hazard": 2,
+          "lift10_folds_won_vs_hazard": 1,
+          "brier_folds_not_worse_vs_hazard": 2,
+          "fold_count": 4
+        }
+      }
+    },
+    "last_fold": {
+      "one_way_fit": {
+        "company_tenure_band": [
+          {
+            "level": "1-3 years",
+            "exposures": 36191,
+            "events": 1320,
+            "observed_rate_percent": 3.6473,
+            "hazard_predicted_percent": 3.6504,
+            "hazard_interactions_predicted_percent": 3.5887,
+            "logistic_predicted_percent": 3.5063,
+            "lightgbm_predicted_percent": 4.2084,
+            "historical_predicted_percent": 3.2179
+          },
+          {
+            "level": "3-7 years",
+            "exposures": 82805,
+            "events": 3337,
+            "observed_rate_percent": 4.0299,
+            "hazard_predicted_percent": 3.9371,
+            "hazard_interactions_predicted_percent": 3.9671,
+            "logistic_predicted_percent": 3.4873,
+            "lightgbm_predicted_percent": 5.0239,
+            "historical_predicted_percent": 3.2179
+          },
+          {
+            "level": "7+ years",
+            "exposures": 89829,
+            "events": 1810,
+            "observed_rate_percent": 2.0149,
+            "hazard_predicted_percent": 1.745,
+            "hazard_interactions_predicted_percent": 1.7428,
+            "logistic_predicted_percent": 1.5574,
+            "lightgbm_predicted_percent": 2.153,
+            "historical_predicted_percent": 3.2179
+          },
+          {
+            "level": "<1 year",
+            "exposures": 29626,
+            "events": 862,
+            "observed_rate_percent": 2.9096,
+            "hazard_predicted_percent": 2.211,
+            "hazard_interactions_predicted_percent": 2.2621,
+            "logistic_predicted_percent": 2.1701,
+            "lightgbm_predicted_percent": 2.9434,
+            "historical_predicted_percent": 3.2179
+          }
+        ],
+        "seg": [
+          {
+            "level": "Engineering",
+            "exposures": 238451,
+            "events": 7329,
+            "observed_rate_percent": 3.0736,
+            "hazard_predicted_percent": 2.8533,
+            "hazard_interactions_predicted_percent": 2.8599,
+            "logistic_predicted_percent": 2.5995,
+            "lightgbm_predicted_percent": 3.5601,
+            "historical_predicted_percent": 3.2179
+          }
+        ],
+        "level_grouped": [
+          {
+            "level": "1 - VP & Above",
+            "exposures": 1503,
+            "events": 42,
+            "observed_rate_percent": 2.7944,
+            "hazard_predicted_percent": 0.7507,
+            "hazard_interactions_predicted_percent": 0.9579,
+            "logistic_predicted_percent": 0.6896,
+            "lightgbm_predicted_percent": 1.0948,
+            "historical_predicted_percent": 3.2179
+          },
+          {
+            "level": "2 - Sr Dir",
+            "exposures": 6111,
+            "events": 77,
+            "observed_rate_percent": 1.26,
+            "hazard_predicted_percent": 1.0786,
+            "hazard_interactions_predicted_percent": 1.1117,
+            "logistic_predicted_percent": 1.0313,
+            "lightgbm_predicted_percent": 1.1158,
+            "historical_predicted_percent": 3.2179
+          },
+          {
+            "level": "3 - Princ/Directors",
+            "exposures": 22827,
+            "events": 445,
+            "observed_rate_percent": 1.9494,
+            "hazard_predicted_percent": 1.5923,
+            "hazard_interactions_predicted_percent": 1.5754,
+            "logistic_predicted_percent": 1.4415,
+            "lightgbm_predicted_percent": 1.9144,
+            "historical_predicted_percent": 3.2179
+          },
+          {
+            "level": "5 - Sr Staff & /Mgr",
+            "exposures": 43873,
+            "events": 937,
+            "observed_rate_percent": 2.1357,
+            "hazard_predicted_percent": 1.8439,
+            "hazard_interactions_predicted_percent": 1.8195,
+            "logistic_predicted_percent": 1.6783,
+            "lightgbm_predicted_percent": 2.4047,
+            "historical_predicted_percent": 3.2179
+          },
+          {
+            "level": "6 - Staff & /Mgr",
+            "exposures": 46816,
+            "events": 1493,
+            "observed_rate_percent": 3.1891,
+            "hazard_predicted_percent": 2.6225,
+            "hazard_interactions_predicted_percent": 2.5418,
+            "logistic_predicted_percent": 2.3401,
+            "lightgbm_predicted_percent": 2.9969,
+            "historical_predicted_percent": 3.2179
+          },
+          {
+            "level": "7 - Senior & Lead",
+            "exposures": 80893,
+            "events": 3029,
+            "observed_rate_percent": 3.7445,
+            "hazard_predicted_percent": 3.5651,
+            "hazard_interactions_predicted_percent": 3.5156,
+            "logistic_predicted_percent": 3.2589,
+            "lightgbm_predicted_percent": 4.4438,
+            "historical_predicted_percent": 3.2179
+          },
+          {
+            "level": "8 - Assoc & Int/Eng",
+            "exposures": 36428,
+            "events": 1306,
+            "observed_rate_percent": 3.5852,
+            "hazard_predicted_percent": 3.9599,
+            "hazard_interactions_predicted_percent": 4.2422,
+            "logistic_predicted_percent": 3.6456,
+            "lightgbm_predicted_percent": 5.2561,
+            "historical_predicted_percent": 3.2179
+          }
+        ],
+        "manager_change_12m": [
+          {
+            "level": "unknown",
+            "exposures": 232141,
+            "events": 7081,
+            "observed_rate_percent": 3.0503,
+            "hazard_predicted_percent": 2.8749,
+            "hazard_interactions_predicted_percent": 2.8806,
+            "logistic_predicted_percent": 2.583,
+            "lightgbm_predicted_percent": 3.545,
+            "historical_predicted_percent": 3.2179
+          },
+          {
+            "level": "yes",
+            "exposures": 6310,
+            "events": 248,
+            "observed_rate_percent": 3.9303,
+            "hazard_predicted_percent": 2.0599,
+            "hazard_interactions_predicted_percent": 2.0975,
+            "logistic_predicted_percent": 3.2066,
+            "lightgbm_predicted_percent": 4.1157,
+            "historical_predicted_percent": 3.2179
+          }
+        ]
+      },
+      "cohorts_segment_tenure": {
+        "hazard": [
+          {
+            "seg": "Engineering",
+            "company_tenure_band": "3-7 years",
+            "employee_snapshot_exposures": 82805,
+            "voluntary_events": 3337,
+            "observed_rate_percent": 4.0299,
+            "predicted_rate_percent": 3.9371,
+            "lift_vs_overall": 1.2524
+          },
+          {
+            "seg": "Engineering",
+            "company_tenure_band": "1-3 years",
+            "employee_snapshot_exposures": 36191,
+            "voluntary_events": 1320,
+            "observed_rate_percent": 3.6473,
+            "predicted_rate_percent": 3.6504,
+            "lift_vs_overall": 1.1335
+          },
+          {
+            "seg": "Engineering",
+            "company_tenure_band": "<1 year",
+            "employee_snapshot_exposures": 29626,
+            "voluntary_events": 862,
+            "observed_rate_percent": 2.9096,
+            "predicted_rate_percent": 2.211,
+            "lift_vs_overall": 0.9042
+          },
+          {
+            "seg": "Engineering",
+            "company_tenure_band": "7+ years",
+            "employee_snapshot_exposures": 89829,
+            "voluntary_events": 1810,
+            "observed_rate_percent": 2.0149,
+            "predicted_rate_percent": 1.745,
+            "lift_vs_overall": 0.6262
+          }
+        ],
+        "hazard_interactions": [
+          {
+            "seg": "Engineering",
+            "company_tenure_band": "3-7 years",
+            "employee_snapshot_exposures": 82805,
+            "voluntary_events": 3337,
+            "observed_rate_percent": 4.0299,
+            "predicted_rate_percent": 3.9671,
+            "lift_vs_overall": 1.2524
+          },
+          {
+            "seg": "Engineering",
+            "company_tenure_band": "1-3 years",
+            "employee_snapshot_exposures": 36191,
+            "voluntary_events": 1320,
+            "observed_rate_percent": 3.6473,
+            "predicted_rate_percent": 3.5887,
+            "lift_vs_overall": 1.1335
+          },
+          {
+            "seg": "Engineering",
+            "company_tenure_band": "<1 year",
+            "employee_snapshot_exposures": 29626,
+            "voluntary_events": 862,
+            "observed_rate_percent": 2.9096,
+            "predicted_rate_percent": 2.2621,
+            "lift_vs_overall": 0.9042
+          },
+          {
+            "seg": "Engineering",
+            "company_tenure_band": "7+ years",
+            "employee_snapshot_exposures": 89829,
+            "voluntary_events": 1810,
+            "observed_rate_percent": 2.0149,
+            "predicted_rate_percent": 1.7428,
+            "lift_vs_overall": 0.6262
+          }
+        ],
+        "logistic": [
+          {
+            "seg": "Engineering",
+            "company_tenure_band": "3-7 years",
+            "employee_snapshot_exposures": 82805,
+            "voluntary_events": 3337,
+            "observed_rate_percent": 4.0299,
+            "predicted_rate_percent": 3.4873,
+            "lift_vs_overall": 1.2524
+          },
+          {
+            "seg": "Engineering",
+            "company_tenure_band": "1-3 years",
+            "employee_snapshot_exposures": 36191,
+            "voluntary_events": 1320,
+            "observed_rate_percent": 3.6473,
+            "predicted_rate_percent": 3.5063,
+            "lift_vs_overall": 1.1335
+          },
+          {
+            "seg": "Engineering",
+            "company_tenure_band": "<1 year",
+            "employee_snapshot_exposures": 29626,
+            "voluntary_events": 862,
+            "observed_rate_percent": 2.9096,
+            "predicted_rate_percent": 2.1701,
+            "lift_vs_overall": 0.9042
+          },
+          {
+            "seg": "Engineering",
+            "company_tenure_band": "7+ years",
+            "employee_snapshot_exposures": 89829,
+            "voluntary_events": 1810,
+            "observed_rate_percent": 2.0149,
+            "predicted_rate_percent": 1.5574,
+            "lift_vs_overall": 0.6262
+          }
+        ],
+        "lightgbm": [
+          {
+            "seg": "Engineering",
+            "company_tenure_band": "3-7 years",
+            "employee_snapshot_exposures": 82805,
+            "voluntary_events": 3337,
+            "observed_rate_percent": 4.0299,
+            "predicted_rate_percent": 5.0239,
+            "lift_vs_overall": 1.2524
+          },
+          {
+            "seg": "Engineering",
+            "company_tenure_band": "1-3 years",
+            "employee_snapshot_exposures": 36191,
+            "voluntary_events": 1320,
+            "observed_rate_percent": 3.6473,
+            "predicted_rate_percent": 4.2084,
+            "lift_vs_overall": 1.1335
+          },
+          {
+            "seg": "Engineering",
+            "company_tenure_band": "<1 year",
+            "employee_snapshot_exposures": 29626,
+            "voluntary_events": 862,
+            "observed_rate_percent": 2.9096,
+            "predicted_rate_percent": 2.9434,
+            "lift_vs_overall": 0.9042
+          },
+          {
+            "seg": "Engineering",
+            "company_tenure_band": "7+ years",
+            "employee_snapshot_exposures": 89829,
+            "voluntary_events": 1810,
+            "observed_rate_percent": 2.0149,
+            "predicted_rate_percent": 2.153,
+            "lift_vs_overall": 0.6262
+          }
+        ]
+      },
+      "cohorts_segment_level": {
+        "hazard": [
+          {
+            "seg": "Engineering",
+            "level_grouped": "7 - Senior & Lead",
+            "employee_snapshot_exposures": 80893,
+            "voluntary_events": 3029,
+            "observed_rate_percent": 3.7445,
+            "predicted_rate_percent": 3.5651,
+            "lift_vs_overall": 1.1636
+          },
+          {
+            "seg": "Engineering",
+            "level_grouped": "8 - Assoc & Int/Eng",
+            "employee_snapshot_exposures": 36428,
+            "voluntary_events": 1306,
+            "observed_rate_percent": 3.5852,
+            "predicted_rate_percent": 3.9599,
+            "lift_vs_overall": 1.1141
+          },
+          {
+            "seg": "Engineering",
+            "level_grouped": "6 - Staff & /Mgr",
+            "employee_snapshot_exposures": 46816,
+            "voluntary_events": 1493,
+            "observed_rate_percent": 3.1891,
+            "predicted_rate_percent": 2.6225,
+            "lift_vs_overall": 0.9911
+          },
+          {
+            "seg": "Engineering",
+            "level_grouped": "1 - VP & Above",
+            "employee_snapshot_exposures": 1503,
+            "voluntary_events": 42,
+            "observed_rate_percent": 2.7944,
+            "predicted_rate_percent": 0.7507,
+            "lift_vs_overall": 0.8684
+          },
+          {
+            "seg": "Engineering",
+            "level_grouped": "5 - Sr Staff & /Mgr",
+            "employee_snapshot_exposures": 43873,
+            "voluntary_events": 937,
+            "observed_rate_percent": 2.1357,
+            "predicted_rate_percent": 1.8439,
+            "lift_vs_overall": 0.6637
+          },
+          {
+            "seg": "Engineering",
+            "level_grouped": "3 - Princ/Directors",
+            "employee_snapshot_exposures": 22827,
+            "voluntary_events": 445,
+            "observed_rate_percent": 1.9494,
+            "predicted_rate_percent": 1.5923,
+            "lift_vs_overall": 0.6058
+          },
+          {
+            "seg": "Engineering",
+            "level_grouped": "2 - Sr Dir",
+            "employee_snapshot_exposures": 6111,
+            "voluntary_events": 77,
+            "observed_rate_percent": 1.26,
+            "predicted_rate_percent": 1.0786,
+            "lift_vs_overall": 0.3916
+          }
+        ],
+        "hazard_interactions": [
+          {
+            "seg": "Engineering",
+            "level_grouped": "7 - Senior & Lead",
+            "employee_snapshot_exposures": 80893,
+            "voluntary_events": 3029,
+            "observed_rate_percent": 3.7445,
+            "predicted_rate_percent": 3.5156,
+            "lift_vs_overall": 1.1636
+          },
+          {
+            "seg": "Engineering",
+            "level_grouped": "8 - Assoc & Int/Eng",
+            "employee_snapshot_exposures": 36428,
+            "voluntary_events": 1306,
+            "observed_rate_percent": 3.5852,
+            "predicted_rate_percent": 4.2422,
+            "lift_vs_overall": 1.1141
+          },
+          {
+            "seg": "Engineering",
+            "level_grouped": "6 - Staff & /Mgr",
+            "employee_snapshot_exposures": 46816,
+            "voluntary_events": 1493,
+            "observed_rate_percent": 3.1891,
+            "predicted_rate_percent": 2.5418,
+            "lift_vs_overall": 0.9911
+          },
+          {
+            "seg": "Engineering",
+            "level_grouped": "1 - VP & Above",
+            "employee_snapshot_exposures": 1503,
+            "voluntary_events": 42,
+            "observed_rate_percent": 2.7944,
+            "predicted_rate_percent": 0.9579,
+            "lift_vs_overall": 0.8684
+          },
+          {
+            "seg": "Engineering",
+            "level_grouped": "5 - Sr Staff & /Mgr",
+            "employee_snapshot_exposures": 43873,
+            "voluntary_events": 937,
+            "observed_rate_percent": 2.1357,
+            "predicted_rate_percent": 1.8195,
+            "lift_vs_overall": 0.6637
+          },
+          {
+            "seg": "Engineering",
+            "level_grouped": "3 - Princ/Directors",
+            "employee_snapshot_exposures": 22827,
+            "voluntary_events": 445,
+            "observed_rate_percent": 1.9494,
+            "predicted_rate_percent": 1.5754,
+            "lift_vs_overall": 0.6058
+          },
+          {
+            "seg": "Engineering",
+            "level_grouped": "2 - Sr Dir",
+            "employee_snapshot_exposures": 6111,
+            "voluntary_events": 77,
+            "observed_rate_percent": 1.26,
+            "predicted_rate_percent": 1.1117,
+            "lift_vs_overall": 0.3916
+          }
+        ],
+        "logistic": [
+          {
+            "seg": "Engineering",
+            "level_grouped": "7 - Senior & Lead",
+            "employee_snapshot_exposures": 80893,
+            "voluntary_events": 3029,
+            "observed_rate_percent": 3.7445,
+            "predicted_rate_percent": 3.2589,
+            "lift_vs_overall": 1.1636
+          },
+          {
+            "seg": "Engineering",
+            "level_grouped": "8 - Assoc & Int/Eng",
+            "employee_snapshot_exposures": 36428,
+            "voluntary_events": 1306,
+            "observed_rate_percent": 3.5852,
+            "predicted_rate_percent": 3.6456,
+            "lift_vs_overall": 1.1141
+          },
+          {
+            "seg": "Engineering",
+            "level_grouped": "6 - Staff & /Mgr",
+            "employee_snapshot_exposures": 46816,
+            "voluntary_events": 1493,
+            "observed_rate_percent": 3.1891,
+            "predicted_rate_percent": 2.3401,
+            "lift_vs_overall": 0.9911
+          },
+          {
+            "seg": "Engineering",
+            "level_grouped": "1 - VP & Above",
+            "employee_snapshot_exposures": 1503,
+            "voluntary_events": 42,
+            "observed_rate_percent": 2.7944,
+            "predicted_rate_percent": 0.6896,
+            "lift_vs_overall": 0.8684
+          },
+          {
+            "seg": "Engineering",
+            "level_grouped": "5 - Sr Staff & /Mgr",
+            "employee_snapshot_exposures": 43873,
+            "voluntary_events": 937,
+            "observed_rate_percent": 2.1357,
+            "predicted_rate_percent": 1.6783,
+            "lift_vs_overall": 0.6637
+          },
+          {
+            "seg": "Engineering",
+            "level_grouped": "3 - Princ/Directors",
+            "employee_snapshot_exposures": 22827,
+            "voluntary_events": 445,
+            "observed_rate_percent": 1.9494,
+            "predicted_rate_percent": 1.4415,
+            "lift_vs_overall": 0.6058
+          },
+          {
+            "seg": "Engineering",
+            "level_grouped": "2 - Sr Dir",
+            "employee_snapshot_exposures": 6111,
+            "voluntary_events": 77,
+            "observed_rate_percent": 1.26,
+            "predicted_rate_percent": 1.0313,
+            "lift_vs_overall": 0.3916
+          }
+        ],
+        "lightgbm": [
+          {
+            "seg": "Engineering",
+            "level_grouped": "7 - Senior & Lead",
+            "employee_snapshot_exposures": 80893,
+            "voluntary_events": 3029,
+            "observed_rate_percent": 3.7445,
+            "predicted_rate_percent": 4.4438,
+            "lift_vs_overall": 1.1636
+          },
+          {
+            "seg": "Engineering",
+            "level_grouped": "8 - Assoc & Int/Eng",
+            "employee_snapshot_exposures": 36428,
+            "voluntary_events": 1306,
+            "observed_rate_percent": 3.5852,
+            "predicted_rate_percent": 5.2561,
+            "lift_vs_overall": 1.1141
+          },
+          {
+            "seg": "Engineering",
+            "level_grouped": "6 - Staff & /Mgr",
+            "employee_snapshot_exposures": 46816,
+            "voluntary_events": 1493,
+            "observed_rate_percent": 3.1891,
+            "predicted_rate_percent": 2.9969,
+            "lift_vs_overall": 0.9911
+          },
+          {
+            "seg": "Engineering",
+            "level_grouped": "1 - VP & Above",
+            "employee_snapshot_exposures": 1503,
+            "voluntary_events": 42,
+            "observed_rate_percent": 2.7944,
+            "predicted_rate_percent": 1.0948,
+            "lift_vs_overall": 0.8684
+          },
+          {
+            "seg": "Engineering",
+            "level_grouped": "5 - Sr Staff & /Mgr",
+            "employee_snapshot_exposures": 43873,
+            "voluntary_events": 937,
+            "observed_rate_percent": 2.1357,
+            "predicted_rate_percent": 2.4047,
+            "lift_vs_overall": 0.6637
+          },
+          {
+            "seg": "Engineering",
+            "level_grouped": "3 - Princ/Directors",
+            "employee_snapshot_exposures": 22827,
+            "voluntary_events": 445,
+            "observed_rate_percent": 1.9494,
+            "predicted_rate_percent": 1.9144,
+            "lift_vs_overall": 0.6058
+          },
+          {
+            "seg": "Engineering",
+            "level_grouped": "2 - Sr Dir",
+            "employee_snapshot_exposures": 6111,
+            "voluntary_events": 77,
+            "observed_rate_percent": 1.26,
+            "predicted_rate_percent": 1.1158,
+            "lift_vs_overall": 0.3916
+          }
+        ]
+      },
+      "hazard_coefficients": [
+        {
+          "feature": "company_tenure_band",
+          "level": "3-7 years",
+          "reference_level": "7+ years",
+          "coefficient": 0.520533,
+          "relative_hazard_scale": 1.682925,
+          "training_exposures": 491191,
+          "training_events": 3564
+        },
+        {
+          "feature": "calendar_month",
+          "level": "5",
+          "reference_level": "7",
+          "coefficient": 0.475304,
+          "relative_hazard_scale": 1.608503,
+          "training_exposures": 145792,
+          "training_events": 1314
+        },
+        {
+          "feature": "company_tenure_band",
+          "level": "1-3 years",
+          "reference_level": "7+ years",
+          "coefficient": 0.324106,
+          "relative_hazard_scale": 1.382794,
+          "training_exposures": 421703,
+          "training_events": 2874
+        },
+        {
+          "feature": "calendar_month",
+          "level": "2",
+          "reference_level": "7",
+          "coefficient": 0.284745,
+          "relative_hazard_scale": 1.329423,
+          "training_exposures": 143025,
+          "training_events": 1062
+        },
+        {
+          "feature": "level_grouped",
+          "level": "8 - Assoc & Int/Eng",
+          "reference_level": "7 - Senior & Lead",
+          "coefficient": 0.217581,
+          "relative_hazard_scale": 1.243067,
+          "training_exposures": 318071,
+          "training_events": 2321
+        },
+        {
+          "feature": "calendar_month",
+          "level": "11",
+          "reference_level": "7",
+          "coefficient": 0.211186,
+          "relative_hazard_scale": 1.235142,
+          "training_exposures": 143482,
+          "training_events": 1023
+        },
+        {
+          "feature": "calendar_month",
+          "level": "8",
+          "reference_level": "7",
+          "coefficient": 0.048417,
+          "relative_hazard_scale": 1.049608,
+          "training_exposures": 141461,
+          "training_events": 864
+        },
+        {
+          "feature": "calendar_month",
+          "level": "6",
+          "reference_level": "7",
+          "coefficient": 0.02427,
+          "relative_hazard_scale": 1.024567,
+          "training_exposures": 147436,
+          "training_events": 844
+        },
+        {
+          "feature": "calendar_month",
+          "level": "12",
+          "reference_level": "7",
+          "coefficient": -0.098774,
+          "relative_hazard_scale": 0.905947,
+          "training_exposures": 141980,
+          "training_events": 715
+        },
+        {
+          "feature": "company_tenure_band",
+          "level": "<1 year",
+          "reference_level": "7+ years",
+          "coefficient": -0.144756,
+          "relative_hazard_scale": 0.865233,
+          "training_exposures": 205152,
+          "training_events": 872
+        },
+        {
+          "feature": "calendar_month",
+          "level": "3",
+          "reference_level": "7",
+          "coefficient": -0.156511,
+          "relative_hazard_scale": 0.855122,
+          "training_exposures": 143324,
+          "training_events": 686
+        },
+        {
+          "feature": "level_grouped",
+          "level": "6 - Staff & /Mgr",
+          "reference_level": "7 - Senior & Lead",
+          "coefficient": -0.195638,
+          "relative_hazard_scale": 0.822309,
+          "training_exposures": 352110,
+          "training_events": 1732
+        },
+        {
+          "feature": "calendar_month",
+          "level": "1",
+          "reference_level": "7",
+          "coefficient": -0.213412,
+          "relative_hazard_scale": 0.807823,
+          "training_exposures": 142110,
+          "training_events": 643
+        },
+        {
+          "feature": "manager_change_12m",
+          "level": "yes",
+          "reference_level": "unknown",
+          "coefficient": -0.42244,
+          "relative_hazard_scale": 0.655446,
+          "training_exposures": 50468,
+          "training_events": 191
+        },
+        {
+          "feature": "level_grouped",
+          "level": "5 - Sr Staff & /Mgr",
+          "reference_level": "7 - Senior & Lead",
+          "coefficient": -0.424198,
+          "relative_hazard_scale": 0.654294,
+          "training_exposures": 330112,
+          "training_events": 1154
+        },
+        {
+          "feature": "calendar_month",
+          "level": "4",
+          "reference_level": "7",
+          "coefficient": -0.425703,
+          "relative_hazard_scale": 0.653311,
+          "training_exposures": 144837,
+          "training_events": 531
+        },
+        {
+          "feature": "level_grouped",
+          "level": "3 - Princ/Directors",
+          "reference_level": "7 - Senior & Lead",
+          "coefficient": -0.53427,
+          "relative_hazard_scale": 0.586097,
+          "training_exposures": 166724,
+          "training_events": 500
+        },
+        {
+          "feature": "calendar_month",
+          "level": "9",
+          "reference_level": "7",
+          "coefficient": -0.615812,
+          "relative_hazard_scale": 0.540202,
+          "training_exposures": 142151,
+          "training_events": 448
+        },
+        {
+          "feature": "level_grouped",
+          "level": "2 - Sr Dir",
+          "reference_level": "7 - Senior & Lead",
+          "coefficient": -0.904837,
+          "relative_hazard_scale": 0.404608,
+          "training_exposures": 43124,
+          "training_events": 87
+        },
+        {
+          "feature": "calendar_month",
+          "level": "10",
+          "reference_level": "7",
+          "coefficient": -1.274438,
+          "relative_hazard_scale": 0.279588,
+          "training_exposures": 142991,
+          "training_events": 233
+        }
+      ],
+      "hazard_reference_levels": {
+        "level_grouped": "7 - Senior & Lead",
+        "company_tenure_band": "7+ years",
+        "manager_change_12m": "unknown",
+        "calendar_month": "7"
+      },
+      "hazard_parameter_count": 24,
+      "hazard_interactions_parameter_count": 52,
+      "hazard_trend_ratio_per_year": 0.960052,
+      "hazard_worked_example": [
+        {
+          "profile": "referencia",
+          "levels": {
+            "level_grouped": "7 - Senior & Lead",
+            "company_tenure_band": "7+ years",
+            "manager_change_12m": "unknown"
+          },
+          "first_month": "2025-08-24",
+          "monthly_hazard_percent": [
+            0.4764,
+            0.2446,
+            0.1263,
+            0.5547,
+            0.4058,
+            0.3607
+          ],
+          "six_month_risk_percent": 2.1494
+        },
+        {
+          "profile": "antigüedad 3-7 años",
+          "levels": {
+            "level_grouped": "7 - Senior & Lead",
+            "company_tenure_band": "3-7 years",
+            "manager_change_12m": "unknown"
+          },
+          "first_month": "2025-08-24",
+          "monthly_hazard_percent": [
+            0.8004,
+            0.4113,
+            0.2124,
+            0.9317,
+            0.6819,
+            0.6062
+          ],
+          "six_month_risk_percent": 3.5907
+        },
+        {
+          "profile": "antigüedad 1-3 años",
+          "levels": {
+            "level_grouped": "7 - Senior & Lead",
+            "company_tenure_band": "1-3 years",
+            "manager_change_12m": "unknown"
+          },
+          "first_month": "2025-08-24",
+          "monthly_hazard_percent": [
+            0.6581,
+            0.3381,
+            0.1745,
+            0.7662,
+            0.5606,
+            0.4984
+          ],
+          "six_month_risk_percent": 2.9599
+        },
+        {
+          "profile": "3-7 años + cambio de manager",
+          "levels": {
+            "level_grouped": "7 - Senior & Lead",
+            "company_tenure_band": "3-7 years",
+            "manager_change_12m": "yes"
+          },
+          "first_month": "2025-08-24",
+          "monthly_hazard_percent": [
+            0.5253,
+            0.2698,
+            0.1393,
+            0.6116,
+            0.4475,
+            0.3978
+          ],
+          "six_month_risk_percent": 2.3683
+        }
+      ],
+      "lightgbm_gain_importance": [
+        {
+          "feature": "company_tenure_band",
+          "gain_share_percent": 48.6691
+        },
+        {
+          "feature": "time_index",
+          "gain_share_percent": 34.3839
+        },
+        {
+          "feature": "level_grouped",
+          "gain_share_percent": 16.0068
+        },
+        {
+          "feature": "calendar_month",
+          "gain_share_percent": 0.5364
+        },
+        {
+          "feature": "manager_change_12m",
+          "gain_share_percent": 0.4038
+        }
+      ],
+      "lightgbm_tree_count": 423
+    },
+    "last_fold_extra": {
+      "test_snapshots": 7,
+      "capture": {
+        "hazard": [
+          {
+            "people_percent": 0,
+            "exits_percent": 0.0
+          },
+          {
+            "people_percent": 10,
+            "exits_percent": 15.0486
+          },
+          {
+            "people_percent": 20,
+            "exits_percent": 28.1903
+          },
+          {
+            "people_percent": 30,
+            "exits_percent": 40.2479
+          },
+          {
+            "people_percent": 40,
+            "exits_percent": 51.1049
+          },
+          {
+            "people_percent": 50,
+            "exits_percent": 62.6991
+          },
+          {
+            "people_percent": 60,
+            "exits_percent": 73.2291
+          },
+          {
+            "people_percent": 70,
+            "exits_percent": 82.1712
+          },
+          {
+            "people_percent": 80,
+            "exits_percent": 88.8569
+          },
+          {
+            "people_percent": 90,
+            "exits_percent": 94.4122
+          },
+          {
+            "people_percent": 100,
+            "exits_percent": 100.0
+          }
+        ],
+        "hazard_interactions": [
+          {
+            "people_percent": 0,
+            "exits_percent": 0.0
+          },
+          {
+            "people_percent": 10,
+            "exits_percent": 15.2582
+          },
+          {
+            "people_percent": 20,
+            "exits_percent": 28.6341
+          },
+          {
+            "people_percent": 30,
+            "exits_percent": 40.4429
+          },
+          {
+            "people_percent": 40,
+            "exits_percent": 52.5439
+          },
+          {
+            "people_percent": 50,
+            "exits_percent": 64.1905
+          },
+          {
+            "people_percent": 60,
+            "exits_percent": 74.8566
+          },
+          {
+            "people_percent": 70,
+            "exits_percent": 83.4779
+          },
+          {
+            "people_percent": 80,
+            "exits_percent": 90.1829
+          },
+          {
+            "people_percent": 90,
+            "exits_percent": 95.5277
+          },
+          {
+            "people_percent": 100,
+            "exits_percent": 100.0
+          }
+        ],
+        "logistic": [
+          {
+            "people_percent": 0,
+            "exits_percent": 0.0
+          },
+          {
+            "people_percent": 10,
+            "exits_percent": 15.2149
+          },
+          {
+            "people_percent": 20,
+            "exits_percent": 28.8051
+          },
+          {
+            "people_percent": 30,
+            "exits_percent": 40.917
+          },
+          {
+            "people_percent": 40,
+            "exits_percent": 52.4067
+          },
+          {
+            "people_percent": 50,
+            "exits_percent": 62.6188
+          },
+          {
+            "people_percent": 60,
+            "exits_percent": 73.4175
+          },
+          {
+            "people_percent": 70,
+            "exits_percent": 82.2863
+          },
+          {
+            "people_percent": 80,
+            "exits_percent": 89.2381
+          },
+          {
+            "people_percent": 90,
+            "exits_percent": 95.263
+          },
+          {
+            "people_percent": 100,
+            "exits_percent": 100.0
+          }
+        ],
+        "lightgbm": [
+          {
+            "people_percent": 0,
+            "exits_percent": 0.0
+          },
+          {
+            "people_percent": 10,
+            "exits_percent": 14.93
+          },
+          {
+            "people_percent": 20,
+            "exits_percent": 28.072
+          },
+          {
+            "people_percent": 30,
+            "exits_percent": 40.2691
+          },
+          {
+            "people_percent": 40,
+            "exits_percent": 51.5153
+          },
+          {
+            "people_percent": 50,
+            "exits_percent": 63.4565
+          },
+          {
+            "people_percent": 60,
+            "exits_percent": 74.5372
+          },
+          {
+            "people_percent": 70,
+            "exits_percent": 82.4913
+          },
+          {
+            "people_percent": 80,
+            "exits_percent": 89.3328
+          },
+          {
+            "people_percent": 90,
+            "exits_percent": 95.5397
+          },
+          {
+            "people_percent": 100,
+            "exits_percent": 100.0
+          }
+        ]
+      },
+      "groups": {
+        "hazard": [
+          {
+            "level_grouped": "8 - Assoc & Int/Eng",
+            "company_tenure_band": "3-7 years",
+            "people_per_snapshot": 1283,
+            "people_share_percent": 3.7677,
+            "predicted_percent": 5.0468,
+            "events": 487,
+            "exits_share_percent": 6.6448,
+            "observed_percent": 5.4207
+          },
+          {
+            "level_grouped": "8 - Assoc & Int/Eng",
+            "company_tenure_band": "1-3 years",
+            "people_per_snapshot": 2396,
+            "people_share_percent": 7.0337,
+            "predicted_percent": 4.2158,
+            "events": 613,
+            "exits_share_percent": 8.364,
+            "observed_percent": 3.6549
+          },
+          {
+            "level_grouped": "7 - Senior & Lead",
+            "company_tenure_band": "3-7 years",
+            "people_per_snapshot": 6653,
+            "people_share_percent": 19.5294,
+            "predicted_percent": 4.1719,
+            "events": 1856,
+            "exits_share_percent": 25.3241,
+            "observed_percent": 3.9856
+          },
+          {
+            "level_grouped": "6 - Staff & /Mgr",
+            "company_tenure_band": "3-7 years",
+            "people_per_snapshot": 2485,
+            "people_share_percent": 7.295,
+            "predicted_percent": 3.4702,
+            "events": 604,
+            "exits_share_percent": 8.2412,
+            "observed_percent": 3.4723
+          },
+          {
+            "level_grouped": "7 - Senior & Lead",
+            "company_tenure_band": "1-3 years",
+            "people_per_snapshot": 1927,
+            "people_share_percent": 5.6561,
+            "predicted_percent": 3.4335,
+            "events": 464,
+            "exits_share_percent": 6.331,
+            "observed_percent": 3.4403
+          },
+          {
+            "level_grouped": "6 - Staff & /Mgr",
+            "company_tenure_band": "1-3 years",
+            "people_per_snapshot": 478,
+            "people_share_percent": 1.4024,
+            "predicted_percent": 2.8362,
+            "events": 180,
+            "exits_share_percent": 2.456,
+            "observed_percent": 5.3828
+          },
+          {
+            "level_grouped": "5 - Sr Staff & /Mgr",
+            "company_tenure_band": "3-7 years",
+            "people_per_snapshot": 987,
+            "people_share_percent": 2.8979,
+            "predicted_percent": 2.775,
+            "events": 260,
+            "exits_share_percent": 3.5476,
+            "observed_percent": 3.7627
+          },
+          {
+            "level_grouped": "8 - Assoc & Int/Eng",
+            "company_tenure_band": "<1 year",
+            "people_per_snapshot": 1500,
+            "people_share_percent": 4.4043,
+            "predicted_percent": 2.6359,
+            "events": 206,
+            "exits_share_percent": 2.8108,
+            "observed_percent": 1.9615
+          },
+          {
+            "level_grouped": "3 - Princ/Directors",
+            "company_tenure_band": "3-7 years",
+            "people_per_snapshot": 345,
+            "people_share_percent": 1.0128,
+            "predicted_percent": 2.4778,
+            "events": 101,
+            "exits_share_percent": 1.3781,
+            "observed_percent": 4.1822
+          },
+          {
+            "level_grouped": "7 - Senior & Lead",
+            "company_tenure_band": "7+ years",
+            "people_per_snapshot": 1133,
+            "people_share_percent": 3.3269,
+            "predicted_percent": 2.4763,
+            "events": 293,
+            "exits_share_percent": 3.9978,
+            "observed_percent": 3.6934
+          },
+          {
+            "level_grouped": "5 - Sr Staff & /Mgr",
+            "company_tenure_band": "1-3 years",
+            "people_per_snapshot": 268,
+            "people_share_percent": 0.7859,
+            "predicted_percent": 2.2649,
+            "events": 53,
+            "exits_share_percent": 0.7232,
+            "observed_percent": 2.8282
+          },
+          {
+            "level_grouped": "7 - Senior & Lead",
+            "company_tenure_band": "<1 year",
+            "people_per_snapshot": 1844,
+            "people_share_percent": 5.412,
+            "predicted_percent": 2.1819,
+            "events": 416,
+            "exits_share_percent": 5.6761,
+            "observed_percent": 3.2236
+          },
+          {
+            "level_grouped": "6 - Staff & /Mgr",
+            "company_tenure_band": "7+ years",
+            "people_per_snapshot": 3305,
+            "people_share_percent": 9.703,
+            "predicted_percent": 2.0619,
+            "events": 605,
+            "exits_share_percent": 8.2549,
+            "observed_percent": 2.6149
+          },
+          {
+            "level_grouped": "3 - Princ/Directors",
+            "company_tenure_band": "1-3 years",
+            "people_per_snapshot": 85,
+            "people_share_percent": 0.2491,
+            "predicted_percent": 2.0418,
+            "events": null,
+            "exits_share_percent": null,
+            "observed_percent": null
+          },
+          {
+            "level_grouped": "6 - Staff & /Mgr",
+            "company_tenure_band": "<1 year",
+            "people_per_snapshot": 420,
+            "people_share_percent": 1.233,
+            "predicted_percent": 1.7763,
+            "events": 104,
+            "exits_share_percent": 1.419,
+            "observed_percent": 3.5374
+          },
+          {
+            "level_grouped": "2 - Sr Dir",
+            "company_tenure_band": "3-7 years",
+            "people_per_snapshot": 62,
+            "people_share_percent": 0.1816,
+            "predicted_percent": 1.7355,
+            "events": null,
+            "exits_share_percent": null,
+            "observed_percent": null
+          },
+          {
+            "level_grouped": "5 - Sr Staff & /Mgr",
+            "company_tenure_band": "7+ years",
+            "people_per_snapshot": 4751,
+            "people_share_percent": 13.9458,
+            "predicted_percent": 1.6494,
+            "events": 562,
+            "exits_share_percent": 7.6682,
+            "observed_percent": 1.69
+          },
+          {
+            "level_grouped": "3 - Princ/Directors",
+            "company_tenure_band": "7+ years",
+            "people_per_snapshot": 2652,
+            "people_share_percent": 7.7861,
+            "predicted_percent": 1.4807,
+            "events": 263,
+            "exits_share_percent": 3.5885,
+            "observed_percent": 1.4166
+          },
+          {
+            "level_grouped": "5 - Sr Staff & /Mgr",
+            "company_tenure_band": "<1 year",
+            "people_per_snapshot": 262,
+            "people_share_percent": 0.7696,
+            "predicted_percent": 1.4316,
+            "events": 62,
+            "exits_share_percent": 0.846,
+            "observed_percent": 3.3787
+          },
+          {
+            "level_grouped": "3 - Princ/Directors",
+            "company_tenure_band": "<1 year",
+            "people_per_snapshot": 179,
+            "people_share_percent": 0.5251,
+            "predicted_percent": 1.3254,
+            "events": 71,
+            "exits_share_percent": 0.9688,
+            "observed_percent": 5.6709
+          },
+          {
+            "level_grouped": "2 - Sr Dir",
+            "company_tenure_band": "7+ years",
+            "people_per_snapshot": 781,
+            "people_share_percent": 2.2915,
+            "predicted_percent": 1.0256,
+            "events": 61,
+            "exits_share_percent": 0.8323,
+            "observed_percent": 1.1164
+          },
+          {
+            "level_grouped": "1 - VP & Above",
+            "company_tenure_band": "7+ years",
+            "people_per_snapshot": 186,
+            "people_share_percent": 0.5473,
+            "predicted_percent": 0.715,
+            "events": null,
+            "exits_share_percent": null,
+            "observed_percent": null
+          }
+        ],
+        "lightgbm": [
+          {
+            "level_grouped": "8 - Assoc & Int/Eng",
+            "company_tenure_band": "3-7 years",
+            "people_per_snapshot": 1283,
+            "people_share_percent": 3.7677,
+            "predicted_percent": 10.2046,
+            "events": 487,
+            "exits_share_percent": 6.6448,
+            "observed_percent": 5.4207
+          },
+          {
+            "level_grouped": "7 - Senior & Lead",
+            "company_tenure_band": "3-7 years",
+            "people_per_snapshot": 6653,
+            "people_share_percent": 19.5294,
+            "predicted_percent": 4.8301,
+            "events": 1856,
+            "exits_share_percent": 25.3241,
+            "observed_percent": 3.9856
+          },
+          {
+            "level_grouped": "8 - Assoc & Int/Eng",
+            "company_tenure_band": "1-3 years",
+            "people_per_snapshot": 2396,
+            "people_share_percent": 7.0337,
+            "predicted_percent": 4.523,
+            "events": 613,
+            "exits_share_percent": 8.364,
+            "observed_percent": 3.6549
+          },
+          {
+            "level_grouped": "7 - Senior & Lead",
+            "company_tenure_band": "1-3 years",
+            "people_per_snapshot": 1927,
+            "people_share_percent": 5.6561,
+            "predicted_percent": 4.2372,
+            "events": 464,
+            "exits_share_percent": 6.331,
+            "observed_percent": 3.4403
+          },
+          {
+            "level_grouped": "7 - Senior & Lead",
+            "company_tenure_band": "7+ years",
+            "people_per_snapshot": 1133,
+            "people_share_percent": 3.3269,
+            "predicted_percent": 4.1609,
+            "events": 293,
+            "exits_share_percent": 3.9978,
+            "observed_percent": 3.6934
+          },
+          {
+            "level_grouped": "6 - Staff & /Mgr",
+            "company_tenure_band": "<1 year",
+            "people_per_snapshot": 420,
+            "people_share_percent": 1.233,
+            "predicted_percent": 3.9042,
+            "events": 104,
+            "exits_share_percent": 1.419,
+            "observed_percent": 3.5374
+          },
+          {
+            "level_grouped": "6 - Staff & /Mgr",
+            "company_tenure_band": "3-7 years",
+            "people_per_snapshot": 2485,
+            "people_share_percent": 7.295,
+            "predicted_percent": 3.7847,
+            "events": 604,
+            "exits_share_percent": 8.2412,
+            "observed_percent": 3.4723
+          },
+          {
+            "level_grouped": "6 - Staff & /Mgr",
+            "company_tenure_band": "1-3 years",
+            "people_per_snapshot": 478,
+            "people_share_percent": 1.4024,
+            "predicted_percent": 3.6777,
+            "events": 180,
+            "exits_share_percent": 2.456,
+            "observed_percent": 5.3828
+          },
+          {
+            "level_grouped": "5 - Sr Staff & /Mgr",
+            "company_tenure_band": "3-7 years",
+            "people_per_snapshot": 987,
+            "people_share_percent": 2.8979,
+            "predicted_percent": 3.6026,
+            "events": 260,
+            "exits_share_percent": 3.5476,
+            "observed_percent": 3.7627
+          },
+          {
+            "level_grouped": "7 - Senior & Lead",
+            "company_tenure_band": "<1 year",
+            "people_per_snapshot": 1844,
+            "people_share_percent": 5.412,
+            "predicted_percent": 3.4396,
+            "events": 416,
+            "exits_share_percent": 5.6761,
+            "observed_percent": 3.2236
+          },
+          {
+            "level_grouped": "3 - Princ/Directors",
+            "company_tenure_band": "3-7 years",
+            "people_per_snapshot": 345,
+            "people_share_percent": 1.0128,
+            "predicted_percent": 3.1659,
+            "events": 101,
+            "exits_share_percent": 1.3781,
+            "observed_percent": 4.1822
+          },
+          {
+            "level_grouped": "3 - Princ/Directors",
+            "company_tenure_band": "1-3 years",
+            "people_per_snapshot": 85,
+            "people_share_percent": 0.2491,
+            "predicted_percent": 3.1535,
+            "events": null,
+            "exits_share_percent": null,
+            "observed_percent": null
+          },
+          {
+            "level_grouped": "5 - Sr Staff & /Mgr",
+            "company_tenure_band": "1-3 years",
+            "people_per_snapshot": 268,
+            "people_share_percent": 0.7859,
+            "predicted_percent": 2.6215,
+            "events": 53,
+            "exits_share_percent": 0.7232,
+            "observed_percent": 2.8282
+          },
+          {
+            "level_grouped": "3 - Princ/Directors",
+            "company_tenure_band": "<1 year",
+            "people_per_snapshot": 179,
+            "people_share_percent": 0.5251,
+            "predicted_percent": 2.4293,
+            "events": 71,
+            "exits_share_percent": 0.9688,
+            "observed_percent": 5.6709
+          },
+          {
+            "level_grouped": "5 - Sr Staff & /Mgr",
+            "company_tenure_band": "<1 year",
+            "people_per_snapshot": 262,
+            "people_share_percent": 0.7696,
+            "predicted_percent": 2.4119,
+            "events": 62,
+            "exits_share_percent": 0.846,
+            "observed_percent": 3.3787
+          },
+          {
+            "level_grouped": "8 - Assoc & Int/Eng",
+            "company_tenure_band": "<1 year",
+            "people_per_snapshot": 1500,
+            "people_share_percent": 4.4043,
+            "predicted_percent": 2.2445,
+            "events": 206,
+            "exits_share_percent": 2.8108,
+            "observed_percent": 1.9615
+          },
+          {
+            "level_grouped": "6 - Staff & /Mgr",
+            "company_tenure_band": "7+ years",
+            "people_per_snapshot": 3305,
+            "people_share_percent": 9.703,
+            "predicted_percent": 2.1909,
+            "events": 605,
+            "exits_share_percent": 8.2549,
+            "observed_percent": 2.6149
+          },
+          {
+            "level_grouped": "5 - Sr Staff & /Mgr",
+            "company_tenure_band": "7+ years",
+            "people_per_snapshot": 4751,
+            "people_share_percent": 13.9458,
+            "predicted_percent": 2.1431,
+            "events": 562,
+            "exits_share_percent": 7.6682,
+            "observed_percent": 1.69
+          },
+          {
+            "level_grouped": "2 - Sr Dir",
+            "company_tenure_band": "3-7 years",
+            "people_per_snapshot": 62,
+            "people_share_percent": 0.1816,
+            "predicted_percent": 1.9288,
+            "events": null,
+            "exits_share_percent": null,
+            "observed_percent": null
+          },
+          {
+            "level_grouped": "3 - Princ/Directors",
+            "company_tenure_band": "7+ years",
+            "people_per_snapshot": 2652,
+            "people_share_percent": 7.7861,
+            "predicted_percent": 1.6772,
+            "events": 263,
+            "exits_share_percent": 3.5885,
+            "observed_percent": 1.4166
+          },
+          {
+            "level_grouped": "2 - Sr Dir",
+            "company_tenure_band": "7+ years",
+            "people_per_snapshot": 781,
+            "people_share_percent": 2.2915,
+            "predicted_percent": 1.0319,
+            "events": 61,
+            "exits_share_percent": 0.8323,
+            "observed_percent": 1.1164
+          },
+          {
+            "level_grouped": "1 - VP & Above",
+            "company_tenure_band": "7+ years",
+            "people_per_snapshot": 186,
+            "people_share_percent": 0.5473,
+            "predicted_percent": 0.9929,
+            "events": null,
+            "exits_share_percent": null,
+            "observed_percent": null
+          }
+        ]
+      }
+    },
+    "current": {
+      "snapshot": "2026-07-26",
+      "train_last_snapshot": "2026-07-26",
+      "l2": 0.0,
+      "people": 37221,
+      "mean_predicted_percent": 2.5035,
+      "trend_ratio_per_year": 0.969903,
+      "groups": [
+        {
+          "level_grouped": "8 - Assoc & Int/Eng",
+          "company_tenure_band": "3-7 years",
+          "people_per_snapshot": 1284,
+          "people_share_percent": 3.4497,
+          "predicted_percent": 4.3906
+        },
+        {
+          "level_grouped": "7 - Senior & Lead",
+          "company_tenure_band": "3-7 years",
+          "people_per_snapshot": 6585,
+          "people_share_percent": 17.6916,
+          "predicted_percent": 3.6489
+        },
+        {
+          "level_grouped": "8 - Assoc & Int/Eng",
+          "company_tenure_band": "1-3 years",
+          "people_per_snapshot": 2958,
+          "people_share_percent": 7.9471,
+          "predicted_percent": 3.6086
+        },
+        {
+          "level_grouped": "6 - Staff & /Mgr",
+          "company_tenure_band": "3-7 years",
+          "people_per_snapshot": 2401,
+          "people_share_percent": 6.4507,
+          "predicted_percent": 3.1383
+        },
+        {
+          "level_grouped": "7 - Senior & Lead",
+          "company_tenure_band": "1-3 years",
+          "people_per_snapshot": 2226,
+          "people_share_percent": 5.9805,
+          "predicted_percent": 3.0434
+        },
+        {
+          "level_grouped": "6 - Staff & /Mgr",
+          "company_tenure_band": "1-3 years",
+          "people_per_snapshot": 531,
+          "people_share_percent": 1.4266,
+          "predicted_percent": 2.6172
+        },
+        {
+          "level_grouped": "8 - Assoc & Int/Eng",
+          "company_tenure_band": "7+ years",
+          "people_per_snapshot": 31,
+          "people_share_percent": 0.0833,
+          "predicted_percent": 2.5488
+        },
+        {
+          "level_grouped": "5 - Sr Staff & /Mgr",
+          "company_tenure_band": "3-7 years",
+          "people_per_snapshot": 1007,
+          "people_share_percent": 2.7055,
+          "predicted_percent": 2.4975
+        },
+        {
+          "level_grouped": "8 - Assoc & Int/Eng",
+          "company_tenure_band": "<1 year",
+          "people_per_snapshot": 1974,
+          "people_share_percent": 5.3035,
+          "predicted_percent": 2.3277
+        },
+        {
+          "level_grouped": "3 - Princ/Directors",
+          "company_tenure_band": "3-7 years",
+          "people_per_snapshot": 329,
+          "people_share_percent": 0.8839,
+          "predicted_percent": 2.2917
+        },
+        {
+          "level_grouped": "7 - Senior & Lead",
+          "company_tenure_band": "7+ years",
+          "people_per_snapshot": 1591,
+          "people_share_percent": 4.2745,
+          "predicted_percent": 2.1666
+        },
+        {
+          "level_grouped": "5 - Sr Staff & /Mgr",
+          "company_tenure_band": "1-3 years",
+          "people_per_snapshot": 330,
+          "people_share_percent": 0.8866,
+          "predicted_percent": 2.0552
+        },
+        {
+          "level_grouped": "7 - Senior & Lead",
+          "company_tenure_band": "<1 year",
+          "people_per_snapshot": 1961,
+          "people_share_percent": 5.2685,
+          "predicted_percent": 1.9809
+        },
+        {
+          "level_grouped": "3 - Princ/Directors",
+          "company_tenure_band": "1-3 years",
+          "people_per_snapshot": 139,
+          "people_share_percent": 0.3734,
+          "predicted_percent": 1.897
+        },
+        {
+          "level_grouped": "6 - Staff & /Mgr",
+          "company_tenure_band": "7+ years",
+          "people_per_snapshot": 3721,
+          "people_share_percent": 9.997,
+          "predicted_percent": 1.8562
+        },
+        {
+          "level_grouped": "6 - Staff & /Mgr",
+          "company_tenure_band": "<1 year",
+          "people_per_snapshot": 650,
+          "people_share_percent": 1.7463,
+          "predicted_percent": 1.7142
+        },
+        {
+          "level_grouped": "5 - Sr Staff & /Mgr",
+          "company_tenure_band": "7+ years",
+          "people_per_snapshot": 4927,
+          "people_share_percent": 13.2372,
+          "predicted_percent": 1.472
+        },
+        {
+          "level_grouped": "2 - Sr Dir",
+          "company_tenure_band": "3-7 years",
+          "people_per_snapshot": 59,
+          "people_share_percent": 0.1585,
+          "predicted_percent": 1.463
+        },
+        {
+          "level_grouped": "5 - Sr Staff & /Mgr",
+          "company_tenure_band": "<1 year",
+          "people_per_snapshot": 420,
+          "people_share_percent": 1.1284,
+          "predicted_percent": 1.3703
+        },
+        {
+          "level_grouped": "3 - Princ/Directors",
+          "company_tenure_band": "7+ years",
+          "people_per_snapshot": 2750,
+          "people_share_percent": 7.3883,
+          "predicted_percent": 1.3522
+        },
+        {
+          "level_grouped": "3 - Princ/Directors",
+          "company_tenure_band": "<1 year",
+          "people_per_snapshot": 241,
+          "people_share_percent": 0.6475,
+          "predicted_percent": 1.2553
+        },
+        {
+          "level_grouped": "2 - Sr Dir",
+          "company_tenure_band": "7+ years",
+          "people_per_snapshot": 810,
+          "people_share_percent": 2.1762,
+          "predicted_percent": 0.8703
+        },
+        {
+          "level_grouped": "1 - VP & Above",
+          "company_tenure_band": "7+ years",
+          "people_per_snapshot": 191,
+          "people_share_percent": 0.5132,
+          "predicted_percent": 0.8558
+        },
+        {
+          "level_grouped": "2 - Sr Dir",
+          "company_tenure_band": "<1 year",
+          "people_per_snapshot": 51,
+          "people_share_percent": 0.137,
+          "predicted_percent": 0.8128
+        }
+      ]
+    }
+  }
+}

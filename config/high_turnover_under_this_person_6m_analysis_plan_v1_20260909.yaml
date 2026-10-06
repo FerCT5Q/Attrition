@@ -1,0 +1,65 @@
+schema_version: 1
+plan_version: 1
+language: es
+created_before_execution: true
+variable: High turnover under this person
+concept: >-
+  Concentración de salidas voluntarias distintas de reportes directos bajo el
+  manager histórico correspondiente durante seis meses cerrados.
+intended_use: >-
+  Asignar al empleado-snapshot una bandera descriptiva del contexto reciente
+  de su manager vigente, sin inferir causalidad ni evaluar al manager.
+knowledge_date: >-
+  En el snapshot t se usan sólo term_date en (t - 6 meses, t] y el último
+  manager observado en o antes de cada term_date.
+population: Empleados worker_type='Employee', employee_type='Regular' y active_status=1.
+grain: Manager-snapshot para el cálculo; empleado-snapshot para asignación.
+semantic_type: derived_feature
+source_reasoning: >-
+  El manager se define por al menos un reporte directo reconstruido mediante
+  manager_employee_id. La reconciliación actual mostró que
+  reg_non_intern_dir_reports > 0 identifica la población, pero su conteo no
+  coincide siempre con la membresía directa y no sustituye el join temporal.
+validation_story:
+  - id: six_month_high_turnover_flag
+    criterion: definition
+    evidence_role: defining
+    question: >-
+      ¿La bandera de alta rotación reproduce, para cada manager-snapshot, dos
+      o más salidas Voluntary distintas en la ventana cerrada de seis meses?
+    why: >-
+      La bandera sólo tiene sentido si el evento, la ventana, la atribución y
+      el denominador de empleados asignados son explícitos y time-safe.
+    fields: [employee_id, manager_employee_id, fis_mo_end_dt, term_date, term_type]
+    method: >-
+      Reconstruir equipos activos por snapshot, atribuir cada evento al último
+      manager previo, formar los buckets 0, 1 y 2+, y asignar el resultado a
+      los reportes directos presentes en t.
+    sql_reference: queries/audits/high_turnover_under_manager_6m_distribution_20260909.sql
+    acceptance_rule: >-
+      Cada punto debe usar exactamente seis snapshots; los buckets deben
+      reconciliar al total de manager-snapshots y de empleado-snapshots; y
+      ningún numerador mensual puede exceder el denominador.
+    metric_checks:
+      - {metric: window_snapshot_count_min, aggregate: min, operator: eq, threshold: 6}
+      - {metric: window_snapshot_count_max, aggregate: max, operator: eq, threshold: 6}
+      - {metric: bucket_group_reconciliation_failures, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: bucket_employee_reconciliation_failures, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: monthly_numerator_over_denominator, aggregate: sum, operator: eq, threshold: 0}
+  - id: attribution_quality
+    criterion: join
+    evidence_role: defining
+    question: ¿Cada evento Voluntary entra una sola vez y puede atribuirse a un manager histórico?
+    why: >-
+      La pérdida o multiplicación de eventos cambia artificialmente la bandera
+      de los equipos y puede introducir leakage por cambios de manager.
+    fields: [employee_id, manager_employee_id, fis_mo_end_dt, term_date, term_type]
+    method: >-
+      Deduplicar por empleado-fecha, seleccionar el último manager no nulo no
+      posterior a term_date y cuantificar los eventos sin atribución.
+    sql_reference: queries/audits/high_turnover_under_manager_6m_distribution_20260909.sql
+    acceptance_rule: >-
+      Debe haber cero eventos duplicados después de deduplicación; los eventos
+      sin manager deben cuantificarse explícitamente y excluirse del numerador.
+    metric_checks:
+      - {metric: voluntary_event_duplicate_count, aggregate: sum, operator: eq, threshold: 0}

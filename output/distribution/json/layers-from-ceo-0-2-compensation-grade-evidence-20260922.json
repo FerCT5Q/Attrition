@@ -1,0 +1,83 @@
+{
+  "artifact_type": "aggregate_segment_composition_attrition_evidence",
+  "version": 1,
+  "generated_on": "2026-09-22",
+  "deliverable_mode": "presentation",
+  "artifact_classification": "presentation",
+  "variable": "Mezcla de familias de compensation grade en 0–2 capas reconstruidas al CEO",
+  "semantic_type": "jerarquía reconstruida y agrupación de categoría almacenada",
+  "baseline_snapshot_date": "2025-08-24",
+  "outcome_cutoff_date": "2026-08-23",
+  "outcome_window": "(2025-08-24, 2026-08-23]",
+  "population": "Empleados regulares activos al snapshot base; cada persona pertenece a una cadena de manager reconstruida en el mismo snapshot hasta la raíz CEO aprobada.",
+  "grain": "snapshot base por empleado",
+  "cohort": {
+    "label": "0–2 capas reconstruidas al CEO",
+    "employee_count": 185,
+    "voluntary_exits": 19,
+    "annual_attrition_rate_percent": 10.27027027
+  },
+  "definition": "El segmento incluye profundidades reconstruidas 0, 1 y 2. La familia V se obtiene del primer carácter del compensation_grade almacenado; cualquier otro valor, incluido vacío o no-V, permanece en el grupo complementario. Attrition es una terminación strict VOLUNTARY del mismo cohorte base dentro de la ventana de 12 meses.",
+  "grade_grouping": {
+    "method": "Primer carácter del compensation_grade almacenado, sin publicar grados exactos ni remuneración.",
+    "groups": [
+      "V grade family",
+      "All other grade families"
+    ]
+  },
+  "rows": [
+    {
+      "label": "V grade family",
+      "employee_count": 109,
+      "cohort_share_percent": 58.91891892,
+      "voluntary_exits": 13,
+      "annual_attrition_rate_percent": 11.9266055,
+      "publication_status": "publishable"
+    },
+    {
+      "label": "All other grade families",
+      "employee_count": 76,
+      "cohort_share_percent": 41.08108108,
+      "voluntary_exits": 6,
+      "annual_attrition_rate_percent": 7.89473684,
+      "publication_status": "publishable"
+    }
+  ],
+  "acceptance_rule": "Las dos familias visibles deben tener al menos 30 empleados base y reconciliar exactamente con el cohorte 0–2 de la evidencia de capas: 185 empleados y 19 salidas voluntarias. La tasa de cada grupo debe ser salidas voluntarias / empleados base; las participaciones deben sumar 100%.",
+  "validation": {
+    "question": "¿La concentración de la cohorte 0–2 por familia de compensation grade ayuda a contextualizar su attrition anual de 10.3%?",
+    "reason": "El resultado de 0–2 capas es mayor que otras capas y se pidió describir su composición sin atribuir causalidad a compensation grade.",
+    "method": "Consulta agregada de solo lectura que reconstruye la cadena de managers y cruza el compensation_grade del mismo snapshot; las terminaciones VOLUNTARY se cuentan en la ventana prospectiva de 12 meses.",
+    "execution_date": "2026-09-22",
+    "metrics": {
+      "cohort_employee_count": 185,
+      "cohort_voluntary_exits": 19,
+      "cohort_annual_attrition_rate_percent": 10.27027027,
+      "displayed_group_count": 2,
+      "minimum_displayed_group_employee_count": 76,
+      "displayed_employee_count": 185,
+      "displayed_voluntary_exits": 19,
+      "displayed_share_percent": 100.0
+    },
+    "result": "Las dos familias cumplen n≥30 y reconcilian con el cohorte 0–2. La familia V representa 58.9% del cohorte y tiene 11.9% de attrition anual; las demás familias representan 41.1% y tienen 7.9%.",
+    "conclusion": "La cohorte está concentrada en familias V y su tasa anual es mayor que la del resto del mismo cohorte. Es una asociación descriptiva, no evidencia de que el grade cause attrition.",
+    "outcome": "pass"
+  },
+  "provenance": {
+    "audit_sql": "queries/audits/layers_from_ceo_0_2_compensation_grade_distribution_20260922.sql",
+    "audit_sql_sha256": "634840a46de5702468f9fc1b7bc2344fa0dbb8bc96fa2efcc1f0c199829bcc55",
+    "execution_date": "2026-09-22",
+    "query_mode": "read_only_aggregate",
+    "raw_employee_rows_persisted": false,
+    "raw_grade_values_persisted": false
+  },
+  "privacy_checks": {
+    "employee_identifiers_persisted": false,
+    "manager_identifiers_persisted": false,
+    "employee_rows_persisted": false,
+    "exact_compensation_persisted": false,
+    "exact_grade_values_persisted": false,
+    "all_displayed_groups_meet_minimum": true
+  },
+  "outcome": "pass"
+}

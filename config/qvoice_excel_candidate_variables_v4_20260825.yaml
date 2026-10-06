@@ -1,0 +1,930 @@
+version: 4
+generated_from: data/QVoice raw workbooks
+generated_at: '2026-08-26'
+analysis_catalog: qvoice_excel_analysis_v4_20260825.yaml
+
+qvoice_kpi_source_binary: &qvoice_kpi_source_binary
+  type: Excel raw workbooks
+  detail: "data/QVoice/*.xlsx, hojas Raw Data o Raw data; mapping: data/QVoice/survey_structure.xlsx"
+  status: likely_unconfirmed
+
+qvoice_kpi_source_scale: &qvoice_kpi_source_scale
+  type: Excel raw workbooks
+  detail: "data/QVoice/*.xlsx, hojas Raw Data o Raw data; mapping: data/QVoice/survey_structure.xlsx"
+  status: likely_unconfirmed
+
+qvoice_kpi_rationale: &qvoice_kpi_rationale
+  definition:
+    why: La definicion del KPI requiere confirmar la formula, el fallback de componentes y el tratamiento de respuestas parciales.
+    evidence: El diccionario identifica los componentes, pero su disponibilidad y completitud cambian entre waves.
+    recommended_action: Aprobar la formula de promedio y mantener indicadores separados de headers faltantes, respuestas completas y parciales.
+  consistency:
+    why: El wording, el formato y el conjunto de componentes pueden cambiar entre waves.
+    evidence: La auditoria conserva el estado de cada componente por wave y los valores fuera de dominio.
+    recommended_action: Versionar el mapping y revisar cada cambio de componente antes de comparar waves.
+  join:
+    why: El Excel permite deduplicar empleado-wave, pero no demuestra por si solo el join temporal a workforce.
+    evidence: La auditoria de grain confirma unicidad interna y deja pendiente la reconciliacion con el snapshot de workforce.
+    recommended_action: Ejecutar una reconciliacion agregada empleado-fecha antes del uso productivo.
+  effort:
+    why: El KPI requiere leer varios workbooks, resolver componentes, deduplicar y agregar por wave.
+    evidence: El adapter conserva solo conteos y estados agregados, sin publicar filas individuales.
+    recommended_action: Mantener el mapping y sus controles como parte del pipeline gobernado.
+
+qvoice_kpi_verification_source: &qvoice_kpi_verification_source
+  method: schema_access_check
+  evidence: Se inspeccionaron survey_structure.xlsx y los encabezados raw para resolver cada componente del KPI por workbook.
+  result: La fuente es accesible; cualquier wave sin uno o mas componentes queda registrada como cobertura parcial.
+  as_of_date: '2026-08-26'
+  query_reference: queries/audits/qvoice_excel_source_inventory_20260826-2.sql
+  acceptance_rule: El mapping debe reportar cada componente esperado por workbook y no ocultar los componentes no disponibles.
+  outcome: pending
+  metric_map:
+    missing_items: {column: missing_items, aggregate: sum}
+
+variables:
+  - category: Survey data
+    variable: Intent to Stay items
+    notes: KPI binario Intent to Stay, promedio de Q4 y Q12 segun survey_structure.xlsx; conserva el nombre de la variable historica.
+    definition: KPI Intent to Stay calculado como el promedio de las preguntas Q4 y Q12 definidas en survey_structure.xlsx. Si una wave o una respuesta no tiene ambos componentes, se calcula con los componentes validos disponibles y se marca como parcial.
+    source:
+      type: Excel raw workbooks
+      detail: "data/QVoice/*.xlsx, hojas Raw Data o Raw data; mapping: data/QVoice/survey_structure.xlsx"
+      columns: [Emp ID, Snapshot Date o Recorded Date, Response Type, Region, Q4, Q12, "*_favorable o *_FAV"]
+      status: likely_unconfirmed
+    profile:
+      mode: aggregate_sql
+      aggregate_sql_file: ../queries/profiles/qvoice-excel-v4-20260826-2_01_intent-to-stay-items_coverage.sql
+    level_data: Employee-wave response aggregate
+    measurement:
+      type: survey
+      date_column: survey_wave_date
+      employee_id_column: Emp ID (uso interno; no se publica)
+      observable_columns: [Q4, Q12]
+      observable_mode: any
+    population:
+      mode: custom
+      display: Respuestas QVoice con identificador interno; Response Type=EX cuando existe; una fila por empleado-wave tras deduplicacion interna.
+    numerator_definition: Respuestas con al menos un componente Q4/Q12 valido en 0/1; se reportan por separado las respuestas completas y parciales.
+    derivation_options:
+      - id: survey_structure_kpi_average_binary
+        status: testable
+        fields: [survey_structure.xlsx, Q4, Q12, Emp ID, survey_wave_date]
+        formula: Promedio de los componentes Q4 y Q12 validos por empleado-wave; si solo uno esta disponible, conservar el promedio de ese componente y marcar la respuesta como parcial.
+        grain: Employee-wave
+        temporal_window: Fecha de la wave QVoice; no usar informacion posterior.
+        deduplication: Conservar una fila por identificador interno y wave antes de calcular el promedio.
+        null_behavior: Ignorar componentes nulos; no crear un KPI cuando ambos componentes estan ausentes.
+        edge_case_handling: Separar headers faltantes, respuestas parciales y valores fuera de 0-1.
+        leakage_controls: Excluir cualquier dato posterior a la fecha de la wave.
+        snapshot_join: Reconciliacion agregada posterior contra workforce; no demostrada en esta corrida.
+        sensitivity: Los identificadores se usan solo en memoria; se publican conteos agregados.
+        estimated_effort: moderate
+        decision_reason: La formula es ejecutable con los componentes disponibles, pero el fallback parcial y la elegibilidad requieren aprobacion de negocio.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: mapping_or_validation
+      effort: moderate_transformation
+    rationale:
+      definition:
+        why: La correspondencia entre el encabezado con sufijo _S y Favorable, la elegibilidad y el tratamiento de respuestas parciales no esta aprobada por el propietario de QVoice.
+        evidence: El diccionario define dos componentes. El inventario encuentra solo Q4 en el longitudinal, ambos componentes en 2024-2026 y respuestas parciales dentro de las waves.
+        recommended_action: Aprobar el uso de un solo componente como fallback y mantener un indicador de respuesta parcial antes de modelar.
+      consistency:
+        why: El dominio binario es auditable, pero el wording y el formato cambian entre waves.
+        evidence: La auditoria de Excel resuelve Q4/Q12 desde survey_structure.xlsx, valida el dominio binario y registra disponibilidad de encabezados y completitud por wave.
+        recommended_action: Mantener un mapping versionado por wave y monitorear dominios, wording y completitud.
+      join:
+        why: El archivo contiene identificador y fecha de wave, pero esta ejecucion no reconcilia el employee-wave con el snapshot mensual de workforce.
+        evidence: La auditoria de grain solo confirma unicidad interna de empleado-wave y no prueba un join temporal a HRDA.
+        recommended_action: Reconciliar agregadamente contra el workforce snapshot historico y documentar la fecha efectiva.
+      effort:
+        why: La forma parece directa, pero requiere lectura de varios workbooks, deduplicacion y mapping historico.
+        evidence: El adaptador local normaliza encabezados y conserva solo agregados; no existe aun un feed gobernado equivalente.
+        recommended_action: Productivizar el mapping y sus controles de refresh, deduplicacion y privacidad.
+    blocker: sensitive_restricted
+    verification:
+      semantic_type: derived_feature
+      source:
+        method: schema_access_check
+        evidence: Se inspeccionaron survey_structure.xlsx y los encabezados de los cinco workbooks raw para resolver Q4 y Q12.
+        result: La fuente es accesible, pero el mapping completo no existe en todas las waves; el resultado se congelo como agregados sin identificadores.
+        as_of_date: '2026-08-26'
+        query_reference: queries/audits/qvoice_excel_source_inventory_20260826-2.sql
+        acceptance_rule: El mapping completo requiere ambos componentes por wave; cualquier componente ausente deja Source como evidencia parcial.
+        outcome: pending
+        metric_map:
+          missing_items: {column: missing_items, aggregate: sum}
+
+  - category: Survey data
+    variable: Engagement items
+    notes: KPI binario Engagement, promedio de Q1, Q2 y Q3 segun survey_structure.xlsx.
+    definition: KPI Engagement calculado como el promedio de Q1, Q2 y Q3 validos por empleado-wave; si falta un componente, se conserva como parcial.
+    source:
+      <<: *qvoice_kpi_source_binary
+      columns: [Emp ID, Snapshot Date o Recorded Date, Response Type, Region, Q1, Q2, Q3, "*_favorable o *_FAV"]
+    profile:
+      mode: aggregate_sql
+      aggregate_sql_file: ../queries/profiles/qvoice-excel-v4-20260826-2_engagement-items_coverage.sql
+    level_data: Employee-wave response aggregate
+    measurement:
+      type: survey
+      date_column: survey_wave_date
+      employee_id_column: Emp ID (uso interno; no se publica)
+      observable_columns: [Q1, Q2, Q3]
+      observable_mode: any
+    population:
+      mode: custom
+      display: Respuestas QVoice con una fila por empleado-wave tras deduplicacion interna y al menos un componente valido.
+    numerator_definition: Respuestas con al menos un componente Q1/Q2/Q3 valido en 0/1; se separan completas, parciales y sin componente.
+    derivation_options:
+      - id: survey_structure_engagement_binary
+        status: testable
+        fields: [survey_structure.xlsx, Q1, Q2, Q3, Emp ID, survey_wave_date]
+        formula: Promedio de Q1, Q2 y Q3 validos; si solo algunos estan disponibles, conservar el promedio y marcarlo como parcial.
+        grain: Employee-wave
+        temporal_window: Fecha de la wave QVoice; no usar informacion posterior.
+        deduplication: Una fila por identificador interno y wave.
+        null_behavior: Ignorar componentes nulos; no crear KPI cuando todos estan ausentes.
+        edge_case_handling: Separar headers faltantes, respuestas parciales y valores fuera de 0-1.
+        leakage_controls: Excluir datos posteriores a la fecha de la wave.
+        snapshot_join: Reconciliacion agregada posterior contra workforce.
+        sensitivity: Solo se publican conteos agregados.
+        estimated_effort: moderate
+        decision_reason: El fallback parcial es ejecutable, pero requiere aprobacion de negocio.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: mapping_or_validation
+      effort: moderate_transformation
+    rationale: *qvoice_kpi_rationale
+    blocker: sensitive_restricted
+    verification:
+      semantic_type: derived_feature
+      source:
+        <<: *qvoice_kpi_verification_source
+
+  - category: Survey data
+    variable: Engagement items-scale
+    notes: KPI ordinal Engagement, promedio de Q1, Q2 y Q3 en escala 1-5.
+    definition: KPI Engagement ordinal calculado como el promedio de Q1, Q2 y Q3 validos en 1-5 por empleado-wave; los faltantes quedan como parcial.
+    source:
+      <<: *qvoice_kpi_source_scale
+      columns: [Emp ID, Recorded Date, Response Type, Region, Q1, Q2, Q3, "*_1-5 scale"]
+    profile:
+      mode: aggregate_sql
+      aggregate_sql_file: ../queries/profiles/qvoice-excel-v4-20260826-2_engagement-items-scale_coverage.sql
+    level_data: Employee-wave response aggregate
+    measurement:
+      type: survey
+      date_column: survey_wave_date
+      employee_id_column: Emp ID (uso interno; no se publica)
+      observable_columns: [Q1, Q2, Q3]
+      observable_mode: any
+    population:
+      mode: custom
+      display: Respuestas QVoice con una fila por empleado-wave tras deduplicacion interna y al menos un componente valido.
+    numerator_definition: Respuestas con al menos un componente Q1/Q2/Q3 valido en 1-5; se separan completas, parciales y sin componente.
+    derivation_options:
+      - id: survey_structure_engagement_scale
+        status: testable
+        fields: [survey_structure.xlsx, Q1, Q2, Q3, Emp ID, survey_wave_date]
+        formula: Promedio de Q1, Q2 y Q3 validos en 1-5; si faltan componentes, conservar el promedio y marcarlo como parcial.
+        grain: Employee-wave
+        temporal_window: Fecha de la wave QVoice; no usar informacion posterior.
+        deduplication: Una fila por identificador interno y wave.
+        null_behavior: Ignorar componentes nulos; no crear KPI cuando todos estan ausentes.
+        edge_case_handling: Separar headers faltantes, respuestas parciales y valores fuera de 1-5.
+        leakage_controls: Excluir datos posteriores a la fecha de la wave.
+        snapshot_join: Reconciliacion agregada posterior contra workforce.
+        sensitivity: Solo se publican conteos agregados.
+        estimated_effort: moderate
+        decision_reason: La forma ordinal y el fallback parcial requieren aprobacion de negocio.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: mapping_or_validation
+      effort: moderate_transformation
+    rationale: *qvoice_kpi_rationale
+    blocker: sensitive_restricted
+    verification:
+      semantic_type: derived_feature
+      source:
+        <<: *qvoice_kpi_verification_source
+
+  - category: Survey data
+    variable: Workplace Connection items
+    notes: KPI binario Workplace Connection, promedio de Q5, Q6 y Q7 segun survey_structure.xlsx.
+    definition: KPI Workplace Connection calculado como el promedio de Q5, Q6 y Q7 validos por empleado-wave; los componentes faltantes quedan visibles.
+    source:
+      <<: *qvoice_kpi_source_binary
+      columns: [Emp ID, Snapshot Date o Recorded Date, Response Type, Region, Q5, Q6, Q7, "*_favorable o *_FAV"]
+    profile:
+      mode: aggregate_sql
+      aggregate_sql_file: ../queries/profiles/qvoice-excel-v4-20260826-2_workplace-connection-items_coverage.sql
+    level_data: Employee-wave response aggregate
+    measurement:
+      type: survey
+      date_column: survey_wave_date
+      employee_id_column: Emp ID (uso interno; no se publica)
+      observable_columns: [Q5, Q6, Q7]
+      observable_mode: any
+    population:
+      mode: custom
+      display: Respuestas QVoice con una fila por empleado-wave tras deduplicacion interna y al menos un componente valido.
+    numerator_definition: Respuestas con al menos un componente Q5/Q6/Q7 valido en 0/1; se separan completas, parciales y sin componente.
+    derivation_options:
+      - id: survey_structure_connection_binary
+        status: testable
+        fields: [survey_structure.xlsx, Q5, Q6, Q7, Emp ID, survey_wave_date]
+        formula: Promedio de Q5, Q6 y Q7 validos; los componentes faltantes se conservan como respuesta parcial.
+        grain: Employee-wave
+        temporal_window: Fecha de la wave QVoice; no usar informacion posterior.
+        deduplication: Una fila por identificador interno y wave.
+        null_behavior: Ignorar componentes nulos; no crear KPI cuando todos estan ausentes.
+        edge_case_handling: Separar headers faltantes, respuestas parciales y valores fuera de 0-1.
+        leakage_controls: Excluir datos posteriores a la fecha de la wave.
+        snapshot_join: Reconciliacion agregada posterior contra workforce.
+        sensitivity: Solo se publican conteos agregados.
+        estimated_effort: moderate
+        decision_reason: La disponibilidad historica de los tres componentes debe quedar aprobada.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: mapping_or_validation
+      effort: moderate_transformation
+    rationale: *qvoice_kpi_rationale
+    blocker: sensitive_restricted
+    verification:
+      semantic_type: derived_feature
+      source:
+        <<: *qvoice_kpi_verification_source
+
+  - category: Survey data
+    variable: Workplace Connection items-scale
+    notes: KPI ordinal Workplace Connection, promedio de Q5, Q6 y Q7 en escala 1-5.
+    definition: KPI Workplace Connection ordinal calculado como el promedio de Q5, Q6 y Q7 validos en 1-5 por empleado-wave.
+    source:
+      <<: *qvoice_kpi_source_scale
+      columns: [Emp ID, Recorded Date, Response Type, Region, Q5, Q6, Q7, "*_1-5 scale"]
+    profile:
+      mode: aggregate_sql
+      aggregate_sql_file: ../queries/profiles/qvoice-excel-v4-20260826-2_workplace-connection-items-scale_coverage.sql
+    level_data: Employee-wave response aggregate
+    measurement:
+      type: survey
+      date_column: survey_wave_date
+      employee_id_column: Emp ID (uso interno; no se publica)
+      observable_columns: [Q5, Q6, Q7]
+      observable_mode: any
+    population:
+      mode: custom
+      display: Respuestas QVoice con una fila por empleado-wave tras deduplicacion interna y al menos un componente valido.
+    numerator_definition: Respuestas con al menos un componente Q5/Q6/Q7 valido en 1-5; se separan completas, parciales y sin componente.
+    derivation_options:
+      - id: survey_structure_connection_scale
+        status: testable
+        fields: [survey_structure.xlsx, Q5, Q6, Q7, Emp ID, survey_wave_date]
+        formula: Promedio de Q5, Q6 y Q7 validos en 1-5; los componentes faltantes se conservan como respuesta parcial.
+        grain: Employee-wave
+        temporal_window: Fecha de la wave QVoice; no usar informacion posterior.
+        deduplication: Una fila por identificador interno y wave.
+        null_behavior: Ignorar componentes nulos; no crear KPI cuando todos estan ausentes.
+        edge_case_handling: Separar headers faltantes, respuestas parciales y valores fuera de 1-5.
+        leakage_controls: Excluir datos posteriores a la fecha de la wave.
+        snapshot_join: Reconciliacion agregada posterior contra workforce.
+        sensitivity: Solo se publican conteos agregados.
+        estimated_effort: moderate
+        decision_reason: La escala ordinal solo tiene historia reciente y requiere aprobacion.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: mapping_or_validation
+      effort: moderate_transformation
+    rationale: *qvoice_kpi_rationale
+    blocker: sensitive_restricted
+    verification:
+      semantic_type: derived_feature
+      source:
+        <<: *qvoice_kpi_verification_source
+
+  - category: Survey data
+    variable: Wellbeing items
+    notes: KPI binario Wellbeing, promedio de Q8, Q9, Q10 y Q11 segun survey_structure.xlsx.
+    definition: KPI Wellbeing calculado como el promedio de Q8, Q9, Q10 y Q11 validos por empleado-wave; los componentes faltantes quedan visibles.
+    source:
+      <<: *qvoice_kpi_source_binary
+      columns: [Emp ID, Snapshot Date o Recorded Date, Response Type, Region, Q8, Q9, Q10, Q11, "*_favorable o *_FAV"]
+    profile:
+      mode: aggregate_sql
+      aggregate_sql_file: ../queries/profiles/qvoice-excel-v4-20260826-2_wellbeing-items_coverage.sql
+    level_data: Employee-wave response aggregate
+    measurement:
+      type: survey
+      date_column: survey_wave_date
+      employee_id_column: Emp ID (uso interno; no se publica)
+      observable_columns: [Q8, Q9, Q10, Q11]
+      observable_mode: any
+    population:
+      mode: custom
+      display: Respuestas QVoice con una fila por empleado-wave tras deduplicacion interna y al menos un componente valido.
+    numerator_definition: Respuestas con al menos un componente Q8/Q9/Q10/Q11 valido en 0/1; se separan completas, parciales y sin componente.
+    derivation_options:
+      - id: survey_structure_wellbeing_binary
+        status: testable
+        fields: [survey_structure.xlsx, Q8, Q9, Q10, Q11, Emp ID, survey_wave_date]
+        formula: Promedio de Q8, Q9, Q10 y Q11 validos; los componentes faltantes se conservan como respuesta parcial.
+        grain: Employee-wave
+        temporal_window: Fecha de la wave QVoice; no usar informacion posterior.
+        deduplication: Una fila por identificador interno y wave.
+        null_behavior: Ignorar componentes nulos; no crear KPI cuando todos estan ausentes.
+        edge_case_handling: Separar headers faltantes, respuestas parciales y valores fuera de 0-1.
+        leakage_controls: Excluir datos posteriores a la fecha de la wave.
+        snapshot_join: Reconciliacion agregada posterior contra workforce.
+        sensitivity: Solo se publican conteos agregados.
+        estimated_effort: moderate
+        decision_reason: La disponibilidad historica y el fallback parcial requieren aprobacion.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: mapping_or_validation
+      effort: moderate_transformation
+    rationale: *qvoice_kpi_rationale
+    blocker: sensitive_restricted
+    verification:
+      semantic_type: derived_feature
+      source:
+        <<: *qvoice_kpi_verification_source
+
+  - category: Survey data
+    variable: Wellbeing items-scale
+    notes: KPI ordinal Wellbeing, promedio de Q8, Q9, Q10 y Q11 en escala 1-5.
+    definition: KPI Wellbeing ordinal calculado como el promedio de Q8, Q9, Q10 y Q11 validos en 1-5 por empleado-wave.
+    source:
+      <<: *qvoice_kpi_source_scale
+      columns: [Emp ID, Recorded Date, Response Type, Region, Q8, Q9, Q10, Q11, "*_1-5 scale"]
+    profile:
+      mode: aggregate_sql
+      aggregate_sql_file: ../queries/profiles/qvoice-excel-v4-20260826-2_wellbeing-items-scale_coverage.sql
+    level_data: Employee-wave response aggregate
+    measurement:
+      type: survey
+      date_column: survey_wave_date
+      employee_id_column: Emp ID (uso interno; no se publica)
+      observable_columns: [Q8, Q9, Q10, Q11]
+      observable_mode: any
+    population:
+      mode: custom
+      display: Respuestas QVoice con una fila por empleado-wave tras deduplicacion interna y al menos un componente valido.
+    numerator_definition: Respuestas con al menos un componente Q8/Q9/Q10/Q11 valido en 1-5; se separan completas, parciales y sin componente.
+    derivation_options:
+      - id: survey_structure_wellbeing_scale
+        status: testable
+        fields: [survey_structure.xlsx, Q8, Q9, Q10, Q11, Emp ID, survey_wave_date]
+        formula: Promedio de Q8, Q9, Q10 y Q11 validos en 1-5; los componentes faltantes se conservan como respuesta parcial.
+        grain: Employee-wave
+        temporal_window: Fecha de la wave QVoice; no usar informacion posterior.
+        deduplication: Una fila por identificador interno y wave.
+        null_behavior: Ignorar componentes nulos; no crear KPI cuando todos estan ausentes.
+        edge_case_handling: Separar headers faltantes, respuestas parciales y valores fuera de 1-5.
+        leakage_controls: Excluir datos posteriores a la fecha de la wave.
+        snapshot_join: Reconciliacion agregada posterior contra workforce.
+        sensitivity: Solo se publican conteos agregados.
+        estimated_effort: moderate
+        decision_reason: La escala ordinal solo tiene historia reciente y requiere aprobacion.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: mapping_or_validation
+      effort: moderate_transformation
+    rationale: *qvoice_kpi_rationale
+    blocker: sensitive_restricted
+    verification:
+      semantic_type: derived_feature
+      source:
+        <<: *qvoice_kpi_verification_source
+
+  - category: Survey data
+    variable: Confidence items
+    notes: KPI binario Confidence, promedio de Q13 y Q17 segun survey_structure.xlsx.
+    definition: KPI Confidence calculado como el promedio de Q13 y Q17 validos por empleado-wave; los componentes faltantes quedan visibles.
+    source:
+      <<: *qvoice_kpi_source_binary
+      columns: [Emp ID, Snapshot Date o Recorded Date, Response Type, Region, Q13, Q17, "*_favorable o *_FAV"]
+    profile:
+      mode: aggregate_sql
+      aggregate_sql_file: ../queries/profiles/qvoice-excel-v4-20260826-2_confidence-items_coverage.sql
+    level_data: Employee-wave response aggregate
+    measurement:
+      type: survey
+      date_column: survey_wave_date
+      employee_id_column: Emp ID (uso interno; no se publica)
+      observable_columns: [Q13, Q17]
+      observable_mode: any
+    population:
+      mode: custom
+      display: Respuestas QVoice con una fila por empleado-wave tras deduplicacion interna y al menos un componente valido.
+    numerator_definition: Respuestas con al menos un componente Q13/Q17 valido en 0/1; se separan completas, parciales y sin componente.
+    derivation_options:
+      - id: survey_structure_confidence_binary
+        status: testable
+        fields: [survey_structure.xlsx, Q13, Q17, Emp ID, survey_wave_date]
+        formula: Promedio de Q13 y Q17 validos; los componentes faltantes se conservan como respuesta parcial.
+        grain: Employee-wave
+        temporal_window: Fecha de la wave QVoice; no usar informacion posterior.
+        deduplication: Una fila por identificador interno y wave.
+        null_behavior: Ignorar componentes nulos; no crear KPI cuando todos estan ausentes.
+        edge_case_handling: Separar headers faltantes, respuestas parciales y valores fuera de 0-1.
+        leakage_controls: Excluir datos posteriores a la fecha de la wave.
+        snapshot_join: Reconciliacion agregada posterior contra workforce.
+        sensitivity: Solo se publican conteos agregados.
+        estimated_effort: moderate
+        decision_reason: El fallback parcial requiere aprobacion de negocio.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: mapping_or_validation
+      effort: moderate_transformation
+    rationale: *qvoice_kpi_rationale
+    blocker: sensitive_restricted
+    verification:
+      semantic_type: derived_feature
+      source:
+        <<: *qvoice_kpi_verification_source
+
+  - category: Survey data
+    variable: Confidence items-scale
+    notes: KPI ordinal Confidence, promedio de Q13 y Q17 en escala 1-5.
+    definition: KPI Confidence ordinal calculado como el promedio de Q13 y Q17 validos en 1-5 por empleado-wave.
+    source:
+      <<: *qvoice_kpi_source_scale
+      columns: [Emp ID, Recorded Date, Response Type, Region, Q13, Q17, "*_1-5 scale"]
+    profile:
+      mode: aggregate_sql
+      aggregate_sql_file: ../queries/profiles/qvoice-excel-v4-20260826-2_confidence-items-scale_coverage.sql
+    level_data: Employee-wave response aggregate
+    measurement:
+      type: survey
+      date_column: survey_wave_date
+      employee_id_column: Emp ID (uso interno; no se publica)
+      observable_columns: [Q13, Q17]
+      observable_mode: any
+    population:
+      mode: custom
+      display: Respuestas QVoice con una fila por empleado-wave tras deduplicacion interna y al menos un componente valido.
+    numerator_definition: Respuestas con al menos un componente Q13/Q17 valido en 1-5; se separan completas, parciales y sin componente.
+    derivation_options:
+      - id: survey_structure_confidence_scale
+        status: testable
+        fields: [survey_structure.xlsx, Q13, Q17, Emp ID, survey_wave_date]
+        formula: Promedio de Q13 y Q17 validos en 1-5; los componentes faltantes se conservan como respuesta parcial.
+        grain: Employee-wave
+        temporal_window: Fecha de la wave QVoice; no usar informacion posterior.
+        deduplication: Una fila por identificador interno y wave.
+        null_behavior: Ignorar componentes nulos; no crear KPI cuando todos estan ausentes.
+        edge_case_handling: Separar headers faltantes, respuestas parciales y valores fuera de 1-5.
+        leakage_controls: Excluir datos posteriores a la fecha de la wave.
+        snapshot_join: Reconciliacion agregada posterior contra workforce.
+        sensitivity: Solo se publican conteos agregados.
+        estimated_effort: moderate
+        decision_reason: La forma ordinal solo aparece en waves recientes y requiere aprobacion.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: mapping_or_validation
+      effort: moderate_transformation
+    rationale: *qvoice_kpi_rationale
+    blocker: sensitive_restricted
+    verification:
+      semantic_type: derived_feature
+      source:
+        <<: *qvoice_kpi_verification_source
+
+  - category: Survey data
+    variable: Intent to Stay items-scale
+    notes: KPI ordinal 1-5 Intent to Stay, promedio de Q4 y Q12 segun survey_structure.xlsx.
+    definition: KPI Intent to Stay calculado como el promedio ordinal de las preguntas Q4 y Q12 definidas en survey_structure.xlsx. Si una respuesta no tiene ambos componentes, se calcula con los componentes validos disponibles y se marca como parcial.
+    source:
+      type: Excel raw workbooks
+      detail: "data/QVoice/*.xlsx, hojas Raw Data o Raw data; mapping: data/QVoice/survey_structure.xlsx"
+      columns: [Emp ID, Recorded Date, Response Type, Region, Q4, Q12, "*_1-5 scale"]
+      status: likely_unconfirmed
+    profile:
+      mode: aggregate_sql
+      aggregate_sql_file: ../queries/profiles/qvoice-excel-v4-20260826-2_02_intent-to-stay-items-scale_coverage.sql
+    level_data: Employee-wave response aggregate
+    measurement:
+      type: survey
+      date_column: survey_wave_date
+      employee_id_column: Emp ID (uso interno; no se publica)
+      observable_columns: [Q4, Q12]
+      observable_mode: any
+    population:
+      mode: custom
+      display: Respuestas QVoice con identificador interno; Response Type=EX cuando existe; una fila por empleado-wave tras deduplicacion interna.
+    numerator_definition: Respuestas con al menos un componente Q4/Q12 valido en 1-5; se reportan por separado las respuestas completas y parciales.
+    derivation_options:
+      - id: survey_structure_kpi_average_scale
+        status: testable
+        fields: [survey_structure.xlsx, Q4, Q12, Emp ID, survey_wave_date]
+        formula: Promedio de los componentes Q4 y Q12 validos en escala 1-5 por empleado-wave; si solo uno esta disponible, conservar el promedio de ese componente y marcar la respuesta como parcial.
+        grain: Employee-wave
+        temporal_window: Fecha de la wave QVoice; no usar informacion posterior.
+        deduplication: Conservar una fila por identificador interno y wave antes de calcular el promedio.
+        null_behavior: Ignorar componentes nulos; no crear un KPI cuando ambos componentes estan ausentes.
+        edge_case_handling: Separar headers faltantes, respuestas parciales y valores fuera de 1-5.
+        leakage_controls: Excluir cualquier dato posterior a la fecha de la wave.
+        snapshot_join: Reconciliacion agregada posterior contra workforce; no demostrada en esta corrida.
+        sensitivity: Los identificadores se usan solo en memoria; se publican conteos agregados.
+        estimated_effort: moderate
+        decision_reason: La formula es ejecutable con los componentes disponibles, pero el fallback parcial y la elegibilidad requieren aprobacion de negocio.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: mapping_or_validation
+      effort: moderate_transformation
+    rationale:
+      definition:
+        why: La equivalencia de la escala 1-5 con la forma binaria y la regla de respuesta parcial no estan aprobadas.
+        evidence: La escala aparece en 2025-2026 y el diccionario resuelve Q4/Q12; la salida distingue respuestas completas y parciales.
+        recommended_action: Aprobar el mapping ordinal, la equivalencia con Favorable, el fallback de un componente y la poblacion de modelado.
+      consistency:
+        why: La escala tiene un set de items que cambia entre 2025 y 2026 y necesita controles de rango.
+        evidence: Los valores no nulos observados se validan contra 1-5 y el audit registra disponibilidad y completitud de Q4/Q12 por wave.
+        recommended_action: Versionar el set de items y controlar valores fuera de rango y waves faltantes.
+      join:
+        why: La clave y fecha de encuesta no han sido reconciliadas con workforce historico en esta ejecucion.
+        evidence: Solo se valida el grain interno del workbook, sin evidencia de match empleado-fecha a HRDA.
+        recommended_action: Ejecutar una reconciliacion agregada al snapshot de workforce antes del uso productivo.
+      effort:
+        why: Requiere transformacion de escala, deduplicacion y controles de comparabilidad entre waves.
+        evidence: La fuente esta distribuida en workbooks raw y solo tiene dos waves con columnas 1-5.
+        recommended_action: Crear un pipeline versionado con reglas de escala y monitoreo de historia.
+    blocker: sensitive_restricted
+    verification:
+      semantic_type: derived_feature
+      source:
+        method: schema_access_check
+        evidence: Se localizaron columnas 1-5 scale para los dos items en los workbooks 2025 y 2026.
+        result: La forma ordinal existe y es accesible en los archivos locales; el resultado se congelo como agregados.
+        as_of_date: '2026-08-26'
+        query_reference: queries/audits/qvoice_excel_source_inventory_20260826-2.sql
+        acceptance_rule: El mapping completo requiere Q4 y Q12; waves sin uno de los componentes quedan documentadas como cobertura parcial.
+        outcome: pending
+        metric_map:
+          missing_items: {column: missing_items, aggregate: sum}
+
+  - category: Survey data
+    variable: Career goals item
+    notes: Forma binaria del item de career goals.
+    definition: Respuesta estructurada al item de career goals can be met, usando columnas binarias Favorable/FAV.
+    source:
+      type: Excel raw workbooks
+      detail: data/QVoice/*.xlsx, hojas Raw Data o Raw data
+      columns: [Emp ID, Snapshot Date o Recorded Date, Response Type, Region, "career goals *_favorable o *_FAV"]
+      status: confirmed_accessible
+    profile:
+      mode: aggregate_sql
+      aggregate_sql_file: ../queries/profiles/qvoice-excel-v4-20260826-2_03_career-goals-item_coverage.sql
+    level_data: Employee-wave response aggregate
+    measurement:
+      type: survey
+      date_column: survey_wave_date
+      employee_id_column: Emp ID (uso interno; no se publica)
+      observable_columns: [Career goals Favorable/FAV]
+      observable_mode: all
+    population:
+      mode: custom
+      display: Respuestas QVoice con identificador interno; Response Type=EX cuando existe; una fila por empleado-wave tras deduplicacion interna.
+    numerator_definition: Respuestas con el item de career goals valido en el dominio binario 0/1.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: mapping_or_validation
+      effort: moderate_transformation
+    rationale:
+      definition:
+        why: El wording de career goals y la definicion de elegibilidad no son identicos en todas las waves.
+        evidence: El item existe desde el longitudinal, pero el texto cambia entre Overall, I feel y I feel; la auditoria conserva esa diferencia como contexto.
+        recommended_action: Aprobar el mapping semantico por wave y la regla de inclusion de respuestas parciales.
+      consistency:
+        why: El dominio binario es simple, pero los nombres y el wording de las columnas requieren normalizacion.
+        evidence: Los valores validos se restringen a 0/1 y se conservaron los encabezados por workbook para rastrear cambios.
+        recommended_action: Versionar el mapping y monitorear cambios de wording, rango y completitud.
+      join:
+        why: La fecha de wave no equivale por si sola a una fecha efectiva de workforce.
+        evidence: El join auditado es solo empleado-wave interno al Excel.
+        recommended_action: Reconciliar el resultado agregado con el snapshot de workforce correspondiente.
+      effort:
+        why: Aunque es un campo directo en cada workbook, la historia requiere extraccion y armonizacion entre formatos.
+        evidence: Cinco workbooks y varias convenciones de encabezado alimentan el mismo concepto.
+        recommended_action: Automatizar la ingestion con un contrato de columnas y pruebas de regresion por wave.
+    blocker: sensitive_restricted
+    verification:
+      semantic_type: survey
+      source:
+        method: schema_access_check
+        evidence: El item de career goals fue localizado en las cinco hojas raw relevantes con una forma binaria utilizable.
+        result: La fuente y la ruta local son accesibles y el inventario agregado no reporta missing_items.
+        as_of_date: '2026-08-25'
+        query_reference: queries/audits/qvoice_excel_source_inventory_20260826-2.sql
+        acceptance_rule: La fuente debe ser accesible y missing_items debe ser 0.
+        outcome: pending
+        metric_map:
+          missing_items: {column: missing_items, aggregate: sum}
+
+  - category: Survey data
+    variable: Career goals item-scale
+    notes: Forma ordinal 1-5 del item de career goals.
+    definition: Respuesta estructurada al item de career goals can be met, usando columnas 1-5 scale.
+    source:
+      type: Excel raw workbooks
+      detail: data/QVoice/*.xlsx, hojas Raw Data o Raw data
+      columns: [Emp ID, Recorded Date, Response Type, Region, "career goals *_1-5 scale"]
+      status: confirmed_accessible
+    profile:
+      mode: aggregate_sql
+      aggregate_sql_file: ../queries/profiles/qvoice-excel-v4-20260826-2_04_career-goals-item-scale_coverage.sql
+    level_data: Employee-wave response aggregate
+    measurement:
+      type: survey
+      date_column: survey_wave_date
+      employee_id_column: Emp ID (uso interno; no se publica)
+      observable_columns: [Career goals 1-5 scale]
+      observable_mode: all
+    population:
+      mode: custom
+      display: Respuestas QVoice con identificador interno; Response Type=EX cuando existe; una fila por empleado-wave tras deduplicacion interna.
+    numerator_definition: Respuestas con el item de career goals valido en el dominio ordinal 1-5.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: mapping_or_validation
+      effort: moderate_transformation
+    rationale:
+      definition:
+        why: La conversion de escala a feature de attrition y su equivalencia con Favorable requieren una decision de negocio.
+        evidence: La forma 1-5 solo aparece en 2025-2026 y no tiene historia comparable anterior.
+        recommended_action: Aprobar la semantica ordinal, los puntos de corte y la fecha de conocimiento.
+      consistency:
+        why: El rango 1-5 es controlable, pero la continuidad historica es corta.
+        evidence: El audit verifica rango y reporta dos waves con un cambio de item set entre 2025 y 2026.
+        recommended_action: Mantener controles de rango y completar waves historicas o documentar la limitacion.
+      join:
+        why: No se ha probado el match temporal de la respuesta a la poblacion de workforce.
+        evidence: El resultado actual solo reconcilia el grain interno del Excel.
+        recommended_action: Ejecutar el join agregado por empleado y snapshot antes de usar el campo.
+      effort:
+        why: Requiere normalizacion de escala y una fuente raw que no tiene contrato tabular estable.
+        evidence: La forma ordinal esta disponible en solo dos workbooks.
+        recommended_action: Productivizar el feed y sus reglas de versionado.
+    blocker: sensitive_restricted
+    verification:
+      semantic_type: survey
+      source:
+        method: schema_access_check
+        evidence: Se localizaron las columnas 1-5 scale de career goals en las waves 2025 y 2026.
+        result: La fuente ordinal es accesible y se congelo de forma agregada.
+        as_of_date: '2026-08-25'
+        query_reference: queries/audits/qvoice_excel_source_inventory_20260826-2.sql
+        acceptance_rule: La forma 1-5 debe existir y missing_items debe ser 0.
+        outcome: pending
+        metric_map:
+          missing_items: {column: missing_items, aggregate: sum}
+
+  - category: Survey data
+    variable: Average of all Qvoice items
+    notes: Compositea binario calculado sobre los items Favorable/FAV seleccionados por wave.
+    definition: Promedio por respuesta QVoice de los items binarios disponibles en la wave, con un minimo tecnico de 70% de items validos.
+    source:
+      type: Excel raw workbooks
+      detail: data/QVoice/*.xlsx, hojas Raw Data o Raw data
+      columns: [Emp ID, Snapshot Date o Recorded Date, Response Type, Region, "*_favorable o *_FAV"]
+      status: confirmed_accessible
+    profile:
+      mode: aggregate_sql
+      aggregate_sql_file: ../queries/profiles/qvoice-excel-v4-20260826-2_05_average-of-all-qvoice-items_coverage.sql
+    level_data: Employee-wave derived aggregate
+    measurement:
+      type: survey
+      date_column: survey_wave_date
+      employee_id_column: Emp ID (uso interno; no se publica)
+      observable_columns: [QVoice Favorable/FAV item set]
+      observable_mode: all
+    population:
+      mode: custom
+      display: Respuestas QVoice con identificador interno; Response Type=EX cuando existe; una fila por empleado-wave tras deduplicacion interna.
+    numerator_definition: Respuestas con al menos 70% del item set de la wave valido y sin valores fuera de dominio.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: mapping_or_validation
+      effort: moderate_transformation
+    rationale:
+      definition:
+        why: El item set, el minimo de respuestas, el tratamiento de wording y la formula del composite no estan aprobados.
+        evidence: El Excel muestra 52 items en varias waves y 53 en 2026; el extractor usa 70% como regla tecnica provisional.
+        recommended_action: Aprobar item set, minimo de completitud, tratamiento de cambios y formula antes de usar el promedio.
+      consistency:
+        why: Un promedio puede ocultar cambios de item set y missingness item-level.
+        evidence: La auditoria conserva item_count, min_items_required, invalid_count y item_set_change_count por wave.
+        recommended_action: Versionar el composite y monitorear item-level missingness y cambios de cuestionario.
+      join:
+        why: El promedio se calcula en Excel, pero no se ha reconciliado al snapshot mensual de workforce.
+        evidence: La evidencia de join solo confirma grain interno empleado-wave.
+        recommended_action: Validar el join temporal y la ventana de conocimiento con HRDA historico.
+      effort:
+        why: Es una derivacion multi-columna que requiere completitud, exclusion de invalidos y versionado.
+        evidence: El extractor recalcula el promedio y conserva solo metricas agregadas; no existe un campo directo gobernado.
+        recommended_action: Implementar una derivacion reproducible con pruebas independientes y controles de leakage.
+    blocker: sensitive_restricted
+    verification:
+      semantic_type: derived_feature
+      source:
+        method: schema_access_check
+        evidence: Las columnas binarias que alimentan el composite fueron localizadas en los workbooks raw.
+        result: La fuente de componentes es accesible; la definicion del composite sigue siendo una decision pendiente.
+        as_of_date: '2026-08-25'
+        query_reference: queries/audits/qvoice_excel_source_inventory_20260826-2.sql
+        acceptance_rule: Los componentes requeridos deben ser accesibles y missing_items debe ser 0.
+        outcome: pending
+        metric_map:
+          missing_items: {column: missing_items, aggregate: sum}
+
+  - category: Survey data
+    variable: Average of all Qvoice items-scale
+    notes: Composite ordinal 1-5 calculado sobre los items 1-5 scale.
+    definition: Promedio por respuesta QVoice de los items 1-5 scale disponibles en la wave, con un minimo tecnico de 70% de items validos.
+    source:
+      type: Excel raw workbooks
+      detail: data/QVoice/*.xlsx, hojas Raw Data o Raw data
+      columns: [Emp ID, Recorded Date, Response Type, Region, "*_1-5 scale"]
+      status: confirmed_accessible
+    profile:
+      mode: aggregate_sql
+      aggregate_sql_file: ../queries/profiles/qvoice-excel-v4-20260826-2_06_average-of-all-qvoice-items-scale_coverage.sql
+    level_data: Employee-wave derived aggregate
+    measurement:
+      type: survey
+      date_column: survey_wave_date
+      employee_id_column: Emp ID (uso interno; no se publica)
+      observable_columns: [QVoice 1-5 scale item set]
+      observable_mode: all
+    population:
+      mode: custom
+      display: Respuestas QVoice con identificador interno; Response Type=EX cuando existe; una fila por empleado-wave tras deduplicacion interna.
+    numerator_definition: Respuestas con al menos 70% del item set 1-5 de la wave valido y sin valores fuera de rango.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: mapping_or_validation
+      effort: moderate_transformation
+    rationale:
+      definition:
+        why: La formula del promedio, el minimo de completitud y el item set aprobado no estan definidos por negocio.
+        evidence: La escala estructurada se observa en 2025-2026 y el set pasa de 52 a 53 items.
+        recommended_action: Aprobar la formula ordinal y su versionado antes de compararla con la forma binaria.
+      consistency:
+        why: Dos waves no establecen estabilidad historica y un cambio de item set puede alterar el promedio.
+        evidence: El audit registra dos observaciones, rango 1-5 y un cambio de item set.
+        recommended_action: Completar historia o usar la escala solo como señal exploratoria hasta validar comparabilidad.
+      join:
+        why: La respuesta ordinal no se ha unido de forma temporal al workforce snapshot en esta ejecucion.
+        evidence: Solo se confirma el grain interno empleado-wave.
+        recommended_action: Reconciliar contra HRDA antes de construir una feature de attrition.
+      effort:
+        why: Es una derivacion multi-columna y requiere reglas de completitud y versionado.
+        evidence: No existe un campo directo de promedio 1-5 en la fuente validada.
+        recommended_action: Construir la derivacion gobernada y sus pruebas de leakage y reproducibilidad.
+    blocker: sensitive_restricted
+    verification:
+      semantic_type: derived_feature
+      source:
+        method: schema_access_check
+        evidence: Las columnas 1-5 scale requeridas fueron localizadas en 2025 y 2026.
+        result: La fuente de componentes es accesible y el resultado se congelo como agregados.
+        as_of_date: '2026-08-25'
+        query_reference: queries/audits/qvoice_excel_source_inventory_20260826-2.sql
+        acceptance_rule: Debe existir la forma 1-5 y missing_items debe ser 0.
+        outcome: pending
+        metric_map:
+          missing_items: {column: missing_items, aggregate: sum}
+
+  - category: Survey data
+    variable: Standardized / normalized within region
+    notes: Z-score regional del composite binario; su dependencia base es Average of all Qvoice items.
+    definition: Z-score poblacional del promedio binario dentro de cohortes region-wave con al menos 30 respuestas observables.
+    source:
+      type: Excel raw workbooks
+      detail: data/QVoice/*.xlsx, hojas Raw Data o Raw data
+      columns: [Emp ID, Snapshot Date o Recorded Date, Response Type, Region, "*_favorable o *_FAV"]
+      status: confirmed_accessible
+    profile:
+      mode: aggregate_sql
+      aggregate_sql_file: ../queries/profiles/qvoice-excel-v4-20260826-2_07_standardized-normalized-within-region_coverage.sql
+    level_data: Employee-wave-region derived aggregate
+    measurement:
+      type: survey
+      date_column: survey_wave_date
+      employee_id_column: Emp ID (uso interno; no se publica)
+      observable_columns: [QVoice binary composite, Region]
+      observable_mode: all
+    population:
+      mode: custom
+      display: Respuestas QVoice con identificador interno, composite valido y Region poblada; cohortes regionales menores de 30 se excluyen del z-score.
+    numerator_definition: Respuestas con composite binario valido, region poblada y cohortes region-wave de al menos 30.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: mapping_or_validation
+      effort: moderate_transformation
+    rationale:
+      definition:
+        why: El composite base, la formula de estandarizacion, el minimo regional y el fallback de desviacion cero requieren aprobacion.
+        evidence: El extractor recalcula z-scores poblacionales y suprime cohortes menores de 30, pero no existe lineage de negocio.
+        recommended_action: Aprobar formula, base, cohortes, tratamiento de desviacion cero y reglas de comparabilidad.
+      consistency:
+        why: La estandarizacion puede cambiar por region, wave e item set aunque los items individuales sean validos.
+        evidence: Se reportan regions_checked, standard_deviation_zero_count e item_set_change_count por wave.
+        recommended_action: Monitorear distribuciones agregadas y versionar la poblacion regional.
+      join:
+        why: Region proviene del workbook y no se ha reconciliado con la region efectiva de workforce.
+        evidence: El join auditado confirma solo el grain interno de Excel.
+        recommended_action: Validar un join temporal de region y la estabilidad del mapping antes del modelo.
+      effort:
+        why: Requiere composite, cohortes, supresion de small cells y estandarizacion por wave.
+        evidence: No existe una columna directa de score normalizado en los workbooks raw.
+        recommended_action: Implementar la derivacion gobernada con reconciliacion independiente.
+    blocker: sensitive_restricted
+    verification:
+      semantic_type: derived_feature
+      source:
+        method: schema_access_check
+        evidence: Los componentes binarios y Region fueron localizados en los workbooks raw.
+        result: La fuente de componentes es accesible; el z-score sigue sujeto a validacion de definicion.
+        as_of_date: '2026-08-25'
+        query_reference: queries/audits/qvoice_excel_source_inventory_20260826-2.sql
+        acceptance_rule: Los componentes y Region deben estar accesibles y missing_items debe ser 0.
+        outcome: pending
+        metric_map:
+          missing_items: {column: missing_items, aggregate: sum}
+
+  - category: Survey data
+    variable: Standardized / normalized within region-scale
+    notes: Z-score regional del composite 1-5; su dependencia base es Average of all Qvoice items-scale.
+    definition: Z-score poblacional del promedio 1-5 dentro de cohortes region-wave con al menos 30 respuestas observables.
+    source:
+      type: Excel raw workbooks
+      detail: data/QVoice/*.xlsx, hojas Raw Data o Raw data
+      columns: [Emp ID, Recorded Date, Response Type, Region, "*_1-5 scale"]
+      status: confirmed_accessible
+    profile:
+      mode: aggregate_sql
+      aggregate_sql_file: ../queries/profiles/qvoice-excel-v4-20260826-2_08_standardized-normalized-within-region-scale_coverage.sql
+    level_data: Employee-wave-region derived aggregate
+    measurement:
+      type: survey
+      date_column: survey_wave_date
+      employee_id_column: Emp ID (uso interno; no se publica)
+      observable_columns: [QVoice 1-5 composite, Region]
+      observable_mode: all
+    population:
+      mode: custom
+      display: Respuestas QVoice con identificador interno, composite 1-5 valido y Region poblada; cohortes regionales menores de 30 se excluyen del z-score.
+    numerator_definition: Respuestas con composite 1-5 valido, region poblada y cohortes region-wave de al menos 30.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: mapping_or_validation
+      effort: moderate_transformation
+    rationale:
+      definition:
+        why: La formula del composite, la estandarizacion regional y la comparabilidad de solo dos waves no estan aprobadas.
+        evidence: El extractor usa z-score poblacional y cohortes de 30, pero no hay lineage autoritativo para el feature.
+        recommended_action: Aprobar la formula y completar una historia ordinal suficiente antes del uso de attrition.
+      consistency:
+        why: La escala tiene historia corta y cambios de item set entre 2025 y 2026.
+        evidence: El audit conserva rango, item set, cohortes y desviacion regional sin publicar celdas pequenas.
+        recommended_action: Mantener el feature exploratorio hasta validar estabilidad longitudinal.
+      join:
+        why: Region y wave no han sido reconciliadas a la poblacion de workforce mensual.
+        evidence: La evidencia actual es solo de grain interno del workbook.
+        recommended_action: Ejecutar join agregado empleado-fecha-region antes de modelar.
+      effort:
+        why: Combina promedio, cohortes, reglas de privacidad y z-score por wave.
+        evidence: No existe un score normalizado directo en la fuente.
+        recommended_action: Crear una implementacion gobernada con recalculo independiente y pruebas de small cells.
+    blocker: sensitive_restricted
+    verification:
+      semantic_type: derived_feature
+      source:
+        method: schema_access_check
+        evidence: Los componentes 1-5 y Region fueron localizados en las waves disponibles.
+        result: La fuente de componentes es accesible y el resultado se congelo de forma agregada.
+        as_of_date: '2026-08-25'
+        query_reference: queries/audits/qvoice_excel_source_inventory_20260826-2.sql
+        acceptance_rule: La forma 1-5 y Region deben estar accesibles y missing_items debe ser 0.
+        outcome: pending
+        metric_map:
+          missing_items: {column: missing_items, aggregate: sum}

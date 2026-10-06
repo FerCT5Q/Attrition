@@ -1,0 +1,146 @@
+{
+  "artifact_type": "aggregate_direct_team_span_attrition_evidence",
+  "version": 1,
+  "generated_on": "2026-09-23",
+  "deliverable_mode": "internal_analysis",
+  "artifact_classification": "internal_analysis",
+  "variable": "Tamaño de equipo directo (span) reconstruido",
+  "semantic_type": "hierarchy",
+  "baseline_snapshot_date": "2025-08-24",
+  "outcome_cutoff_date": "2026-08-23",
+  "outcome_window": "(2025-08-24, 2026-08-23]",
+  "population": "Personas Employee, Regular y activas al snapshot base; el visual conserva solo relaciones cuyo manager se resuelve como Employee, Regular y activo en ese mismo snapshot.",
+  "grain": "empleado del snapshot base",
+  "definition": "El span de una persona es el número de empleados elegibles que reportan directamente a su manager en el mismo snapshot. Se recalcula desde la relación de reporting del snapshot; los campos almacenados de número de reportes no se usan como definición primaria. Attrition anual = terminaciones strict VOLUNTARY del mismo cohorte base en la ventana prospectiva divididas entre empleados base de la banda.",
+  "coverage": {
+    "baseline_employee_count": 45003,
+    "eligible_employee_count": 44737,
+    "eligible_percent": 99.4089282936693,
+    "unresolvable_manager_exclusion_count": 266,
+    "exclusion_treatment": "Exclusión de cobertura; no se muestra como banda de span.",
+    "manager_assignment_conflict_count": 0,
+    "missing_manager_value_count": 1,
+    "manager_not_active_regular_snapshot_count": 265
+  },
+  "bands": [
+    {
+      "label": "1–4",
+      "employee_count": 14882,
+      "employee_share_percent": 33.26552965,
+      "team_count": 5488,
+      "voluntary_exits": 856,
+      "annual_attrition_rate_percent": 5.751915065179411,
+      "publication_status": "internal_analysis_authorized"
+    },
+    {
+      "label": "5–9",
+      "employee_count": 22838,
+      "employee_share_percent": 51.04946688,
+      "team_count": 3675,
+      "voluntary_exits": 1257,
+      "annual_attrition_rate_percent": 5.503984587091689,
+      "publication_status": "internal_analysis_authorized"
+    },
+    {
+      "label": "10–14",
+      "employee_count": 4536,
+      "employee_share_percent": 10.13925833,
+      "team_count": 402,
+      "voluntary_exits": 235,
+      "annual_attrition_rate_percent": 5.180776014109347,
+      "publication_status": "internal_analysis_authorized"
+    },
+    {
+      "label": "15–19",
+      "employee_count": 1098,
+      "employee_share_percent": 2.45434428,
+      "team_count": 66,
+      "voluntary_exits": 66,
+      "annual_attrition_rate_percent": 6.010928961748633,
+      "publication_status": "internal_analysis_authorized"
+    },
+    {
+      "label": "20–29",
+      "employee_count": 502,
+      "employee_share_percent": 1.12211369,
+      "team_count": 21,
+      "voluntary_exits": 35,
+      "annual_attrition_rate_percent": 6.97211155378486,
+      "publication_status": "internal_analysis_authorized"
+    },
+    {
+      "label": "30+",
+      "employee_count": 881,
+      "employee_share_percent": 1.96928717,
+      "team_count": 13,
+      "voluntary_exits": 31,
+      "annual_attrition_rate_percent": 3.518728717366628,
+      "publication_status": "internal_analysis_authorized"
+    }
+  ],
+  "exact_span_comparison": {
+    "five_direct_reports": {
+      "direct_report_count": 5,
+      "employee_count": 7160,
+      "team_count": 1432,
+      "voluntary_exits": 390,
+      "annual_attrition_rate_percent": 5.446927374301675,
+      "exploratory": false
+    },
+    "twenty_direct_reports": {
+      "direct_report_count": 20,
+      "employee_count": 80,
+      "team_count": 4,
+      "voluntary_exits": 7,
+      "annual_attrition_rate_percent": 8.75,
+      "exploratory": true,
+      "exploratory_reason": "Solo cuatro equipos contribuyen al valor exacto; la comparación es descriptiva y no causal."
+    }
+  },
+  "validation": {
+    "question": "¿Cómo se distribuyen los empleados por el tamaño directo de su manager y cuál es su attrition voluntaria prospectiva de 12 meses?",
+    "reason": "El tamaño del equipo puede describir el contexto de gestión, pero debe calcularse desde relaciones del snapshot y no desde un conteo almacenado cuya definición no fue confirmada.",
+    "method": "Consulta agregada de solo lectura que deduplica la relación de reporting del 24-ago-2025, exige manager resoluble dentro de la población activa Regular, cuenta miembros directos por manager y enlaza solo salidas strict VOLUNTARY posteriores del mismo cohorte base.",
+    "acceptance_rule": "La cobertura debe reconciliar 45,003 = 44,737 elegibles + 266 exclusiones; seis bandas deben sumar 44,737 empleados, 9,665 equipos y 2,480 salidas; tamaño exacto 5 debe ser 7,160 empleados / 1,432 equipos y tamaño exacto 20 debe ser 80 / 4; cada tasa debe reconciliar salidas / empleados.",
+    "metrics": {
+      "baseline_employee_count": 45003,
+      "eligible_employee_count": 44737,
+      "eligible_percent": 99.4089282936693,
+      "coverage_exclusion_count": 266,
+      "eligible_team_count": 9665,
+      "baseline_voluntary_exits": 2480,
+      "published_band_count": 6,
+      "five_direct_reports_employee_count": 7160,
+      "five_direct_reports_team_count": 1432,
+      "twenty_direct_reports_employee_count": 80,
+      "twenty_direct_reports_team_count": 4
+    },
+    "result": "Las seis bandas reconcilian exactamente la población elegible y sus salidas. La cobertura alcanza 99.41%; las 266 relaciones no resolubles se excluyen del denominador y del gráfico. El tamaño exacto 20 reúne cuatro equipos, por lo que se mantiene como comparación exploratoria.",
+    "conclusion": "El visual es descriptivo de distribución y attrition observada por banda; no prueba que el tamaño de equipo cause attrition.",
+    "outcome": "pass"
+  },
+  "authorization": {
+    "path": "config/attrition_v7_internal_analysis_authorization_20260917.json",
+    "sha256": "6dd40fbb3a9eded9704c64d735e906697575351fa44c5ddfc423d2dca14536be",
+    "authorization_id": "attrition-v7-internal-aggregate-visibility-20260917",
+    "authorized_audience": "requester and Julia, both project developers",
+    "small_cell_exception_applied": true
+  },
+  "provenance": {
+    "audit_sql": "queries/audits/direct_team_span_annual_attrition_20260923.sql",
+    "audit_sql_sha256": "dc322e21f5d2d269a171ed169b39e42addcba382f615ca3801b09a54dd03658f",
+    "aggregate_result_sha256": "beef35eb938757030b981e60f8d19f55a0c6d570be8ca5b6b74b4b458de5d8cb",
+    "execution_date": "2026-09-23",
+    "query_mode": "read_only_aggregate",
+    "raw_aggregate_rows_persisted": false
+  },
+  "privacy_checks": {
+    "identity_fields_persisted": false,
+    "employee_rows_persisted": false,
+    "manager_rows_persisted": false,
+    "names_persisted": false,
+    "all_rows_aggregate_only": true,
+    "small_team_count_authorized_for_internal_analysis": true
+  },
+  "outcome": "pass"
+}

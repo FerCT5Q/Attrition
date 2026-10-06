@@ -1,0 +1,55 @@
+schema_version: 1
+plan_version: 2
+plan_revision_reason: >-
+  La reconstrucción anual estricta encontró sólo 13 snapshots con doce cierres
+  mensuales completos, frente a los 40 puntos de la serie semestral. Antes de
+  renderizar una comparación anual se debe medir la cobertura de cada ventana
+  calendario y descartar una relajación que esconda meses no observables.
+language: es
+created_before_execution: true
+deliverable_mode: internal_analysis
+variable: More than 1 employee leaves in a year
+concept: >-
+  Sensibilidad anual de la exposición de un empleado a un equipo con dos o más
+  salidas voluntarias, sólo cuando la cobertura temporal declarada permite
+  interpretar la ventana anual.
+intended_use: >-
+  Responder la observación anual sin sustituir la bandera semestral ni publicar
+  una serie que aparente doce meses completos cuando no los tiene.
+knowledge_date: Cierre mensual t; no usar eventos ni asignaciones posteriores a t.
+population: >-
+  Empleados worker_type='Employee', employee_type='Regular' y active_status=1
+  en los snapshots evaluables de la serie semestral.
+grain: Snapshot mensual evaluable × cobertura de ventana calendario de doce meses
+semantic_type: derived_feature
+definition:
+  primary_window: '(t - 6 meses, t] — señal principal existente'
+  candidate_annual_window: '(t - 12 meses, t] — comparación suplementaria'
+  completeness_rule: >-
+    Doce snapshots mensuales distintos dentro de la ventana calendario; una
+    ventana con menos de doce no se presenta como anual completa.
+validation_story:
+  - id: annual_history_coverage
+    criterion: history
+    evidence_role: defining
+    question: >-
+      ¿Cuántos de los 40 snapshots evaluables de la serie semestral tienen los
+      doce cierres mensuales requeridos dentro de su ventana anual calendario?
+    why: >-
+      El rótulo anual no debe ocultar lagunas en la historia de snapshots usada
+      para reconstruir miembros de equipo y atribuir las salidas.
+    fields: [fis_mo_end_dt, employee_id, manager_employee_id]
+    method: >-
+      Partir de los 40 cortes que cumplen seis snapshots y contar los snapshots
+      mensuales distintos observados en (t - 12 meses, t] para cada corte.
+    sql_reference: queries/audits/more_than_1_employee_leaves_annual_window_coverage_20260909.sql
+    acceptance_rule: >-
+      Una serie anual comparable con los 40 puntos exige doce snapshots en cada
+      ventana. Si no se cumple, se reporta la cantidad y el último corte
+      completo; no se relaja el criterio sin una regla aprobada.
+planned_sql:
+  - queries/audits/more_than_1_employee_leaves_annual_window_coverage_20260909.sql
+  - queries/audits/more_than_1_employee_leaves_team_12m_20260909.sql
+publication_controls:
+  - Resultados agregados únicamente.
+  - No mostrar employee_id, manager_employee_id, nombres ni filas individuales.

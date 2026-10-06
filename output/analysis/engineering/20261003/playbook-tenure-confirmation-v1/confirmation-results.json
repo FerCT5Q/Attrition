@@ -1,0 +1,3053 @@
+{
+  "artifact": "engineering-playbook-tenure-confirmation",
+  "created_at_utc": "2026-10-03T17:45:05.180142+00:00",
+  "knowledge_boundary": "2026-09-07",
+  "deliverable_classification": "presentation",
+  "authorization": {
+    "path": "config\\attrition_model_in_memory_training_authorization_20261001.json",
+    "id": "attrition-model-in-memory-person-month-training-20261001"
+  },
+  "frame": {
+    "first_snapshot": "2021-07-25",
+    "last_snapshot": "2026-07-26",
+    "person_months_read": 1880719,
+    "six_month_exposures": 1699949,
+    "six_month_events": 54452
+  },
+  "design": {
+    "step_a": "vigente con cortes del playbook en lugar de los heredados; promovido si gana >= 3 de 4 folds en PR-AUC y lift@10% sin peor Brier medio frente al vigente",
+    "step_b": "campeón después de A + tiempo desde la última promoción + recontratación (juntas); misma regla frente a ese campeón",
+    "origin_of_b": "combinación observada en la exploración output\\analysis\\engineering\\20261003\\playbook-priority-v1\\playbook-model-results.json; aquí se confirma con regla declarada",
+    "trend": "none",
+    "recalibration_months": 0,
+    "penalty": "L2 × 8.0 (escala fija, independiente del grano de las celdas)",
+    "non_finite_fits": "un ajuste con coeficientes no finitos cuenta como no convergido y no es elegible en la rejilla L2",
+    "interaction_references": {
+      "level_grouped": "7 - Senior & Lead",
+      "manager_changes_12m": "0",
+      "tenure_julia_band": "5+ years",
+      "tenure_playbook_band": "5-10 years",
+      "company_tenure_band": "7+ years"
+    },
+    "fold_starts": [
+      "2024-02-01",
+      "2024-08-01",
+      "2025-02-01",
+      "2025-08-01"
+    ],
+    "l2_grid": [
+      0.0,
+      0.01,
+      0.1,
+      1.0,
+      10.0
+    ]
+  },
+  "specs": {
+    "incumbent": {
+      "label": "base (company_tenure_band) + manager/equipo + level_x_tenure + tenure_x_manager_changes",
+      "features": [
+        "level_grouped",
+        "company_tenure_band",
+        "calendar_month",
+        "manager_changes_12m",
+        "team_exits_12m",
+        "direct_reports_band",
+        "level_x_tenure",
+        "tenure_x_manager_changes"
+      ],
+      "tenure": "company_tenure_band",
+      "parameters": 53,
+      "summary": {
+        "pr_auc": 0.05119223,
+        "lift_at_10_percent": 2.0138307,
+        "lift_at_20_percent": 1.72656362,
+        "brier_score": 0.02915477,
+        "log_loss": 0.13234024,
+        "by_fold": {
+          "pr_auc": [
+            0.05354,
+            0.052325,
+            0.055522,
+            0.043382
+          ],
+          "lift_at_10_percent": [
+            2.153419,
+            2.092816,
+            2.1417,
+            1.667388
+          ],
+          "lift_at_20_percent": [
+            1.796596,
+            1.760845,
+            1.801378,
+            1.547436
+          ],
+          "brier_score": [
+            0.029176,
+            0.028947,
+            0.029491,
+            0.029004
+          ],
+          "log_loss": [
+            0.132256,
+            0.131442,
+            0.132893,
+            0.132771
+          ]
+        },
+        "calibration_ratio_by_fold": [
+          1.1479,
+          1.0995,
+          1.0841,
+          1.08
+        ],
+        "mean_abs_log_calibration_ratio": 0.097625
+      },
+      "folds": [
+        {
+          "rows": 2438,
+          "snapshot_count": 6,
+          "exposures": 179384,
+          "events": 5441,
+          "observed_rate_percent": 3.0332,
+          "brier_score": 0.02917613,
+          "log_loss": 0.13225565,
+          "pr_auc": 0.05354001,
+          "lift_at_10_percent": 2.15341924,
+          "lift_at_20_percent": 1.79659559,
+          "calibration": [
+            {
+              "bin": 1,
+              "exposures": 36073,
+              "events": 436,
+              "observed_rate_percent": 1.2087,
+              "mean_predicted_percent": 1.7235,
+              "published": true
+            },
+            {
+              "bin": 2,
+              "exposures": 35715,
+              "events": 715,
+              "observed_rate_percent": 2.002,
+              "mean_predicted_percent": 2.4238,
+              "published": true
+            },
+            {
+              "bin": 3,
+              "exposures": 35926,
+              "events": 1035,
+              "observed_rate_percent": 2.8809,
+              "mean_predicted_percent": 3.3887,
+              "published": true
+            },
+            {
+              "bin": 4,
+              "exposures": 35819,
+              "events": 1301,
+              "observed_rate_percent": 3.6322,
+              "mean_predicted_percent": 4.1798,
+              "published": true
+            },
+            {
+              "bin": 5,
+              "exposures": 35851,
+              "events": 1954,
+              "observed_rate_percent": 5.4503,
+              "mean_predicted_percent": 5.7001,
+              "published": true
+            }
+          ],
+          "l2": 10.0,
+          "mean_predicted_percent": 3.4817,
+          "recalibration_offset": 0.0,
+          "converged": true
+        },
+        {
+          "rows": 2499,
+          "snapshot_count": 6,
+          "exposures": 185788,
+          "events": 5587,
+          "observed_rate_percent": 3.0072,
+          "brier_score": 0.02894744,
+          "log_loss": 0.13144152,
+          "pr_auc": 0.05232451,
+          "lift_at_10_percent": 2.09281577,
+          "lift_at_20_percent": 1.76084471,
+          "calibration": [
+            {
+              "bin": 1,
+              "exposures": 38161,
+              "events": 519,
+              "observed_rate_percent": 1.36,
+              "mean_predicted_percent": 1.3986,
+              "published": true
+            },
+            {
+              "bin": 2,
+              "exposures": 36250,
+              "events": 703,
+              "observed_rate_percent": 1.9393,
+              "mean_predicted_percent": 2.1738,
+              "published": true
+            },
+            {
+              "bin": 3,
+              "exposures": 37236,
+              "events": 1070,
+              "observed_rate_percent": 2.8736,
+              "mean_predicted_percent": 3.2074,
+              "published": true
+            },
+            {
+              "bin": 4,
+              "exposures": 37135,
+              "events": 1340,
+              "observed_rate_percent": 3.6085,
+              "mean_predicted_percent": 3.9464,
+              "published": true
+            },
+            {
+              "bin": 5,
+              "exposures": 37006,
+              "events": 1955,
+              "observed_rate_percent": 5.2829,
+              "mean_predicted_percent": 5.8409,
+              "published": true
+            }
+          ],
+          "l2": 0.01,
+          "mean_predicted_percent": 3.3065,
+          "recalibration_offset": 0.0,
+          "converged": true
+        },
+        {
+          "rows": 2494,
+          "snapshot_count": 6,
+          "exposures": 190975,
+          "events": 5865,
+          "observed_rate_percent": 3.0711,
+          "brier_score": 0.02949134,
+          "log_loss": 0.13289264,
+          "pr_auc": 0.05552232,
+          "lift_at_10_percent": 2.14170016,
+          "lift_at_20_percent": 1.80137796,
+          "calibration": [
+            {
+              "bin": 1,
+              "exposures": 38214,
+              "events": 477,
+              "observed_rate_percent": 1.2482,
+              "mean_predicted_percent": 1.3828,
+              "published": true
+            },
+            {
+              "bin": 2,
+              "exposures": 38246,
+              "events": 732,
+              "observed_rate_percent": 1.9139,
+              "mean_predicted_percent": 2.1428,
+              "published": true
+            },
+            {
+              "bin": 3,
+              "exposures": 38144,
+              "events": 1061,
+              "observed_rate_percent": 2.7816,
+              "mean_predicted_percent": 3.1703,
+              "published": true
+            },
+            {
+              "bin": 4,
+              "exposures": 38681,
+              "events": 1504,
+              "observed_rate_percent": 3.8882,
+              "mean_predicted_percent": 3.9637,
+              "published": true
+            },
+            {
+              "bin": 5,
+              "exposures": 37690,
+              "events": 2091,
+              "observed_rate_percent": 5.5479,
+              "mean_predicted_percent": 6.0177,
+              "published": true
+            }
+          ],
+          "l2": 0.01,
+          "mean_predicted_percent": 3.3295,
+          "recalibration_offset": 0.0,
+          "converged": true
+        },
+        {
+          "rows": 2496,
+          "snapshot_count": 6,
+          "exposures": 203138,
+          "events": 6088,
+          "observed_rate_percent": 2.997,
+          "brier_score": 0.02900417,
+          "log_loss": 0.13277116,
+          "pr_auc": 0.04338209,
+          "lift_at_10_percent": 1.66738763,
+          "lift_at_20_percent": 1.54743624,
+          "calibration": [
+            {
+              "bin": 1,
+              "exposures": 41789,
+              "events": 587,
+              "observed_rate_percent": 1.4047,
+              "mean_predicted_percent": 1.3235,
+              "published": true
+            },
+            {
+              "bin": 2,
+              "exposures": 39586,
+              "events": 862,
+              "observed_rate_percent": 2.1775,
+              "mean_predicted_percent": 2.0707,
+              "published": true
+            },
+            {
+              "bin": 3,
+              "exposures": 42062,
+              "events": 1330,
+              "observed_rate_percent": 3.162,
+              "mean_predicted_percent": 3.0218,
+              "published": true
+            },
+            {
+              "bin": 4,
+              "exposures": 39823,
+              "events": 1463,
+              "observed_rate_percent": 3.6738,
+              "mean_predicted_percent": 3.8273,
+              "published": true
+            },
+            {
+              "bin": 5,
+              "exposures": 39878,
+              "events": 1846,
+              "observed_rate_percent": 4.6291,
+              "mean_predicted_percent": 6.0369,
+              "published": true
+            }
+          ],
+          "l2": 0.01,
+          "mean_predicted_percent": 3.2369,
+          "recalibration_offset": 0.0,
+          "converged": true
+        }
+      ],
+      "name": "Vigente (cortes <1, 1-3, 3-7, 7+)"
+    },
+    "a": {
+      "label": "base (tenure_playbook_band) + manager/equipo + level_x_tenure + tenure_x_manager_changes",
+      "features": [
+        "level_grouped",
+        "tenure_playbook_band",
+        "calendar_month",
+        "manager_changes_12m",
+        "team_exits_12m",
+        "direct_reports_band",
+        "level_x_tenure",
+        "tenure_x_manager_changes"
+      ],
+      "tenure": "tenure_playbook_band",
+      "parameters": 72,
+      "summary": {
+        "pr_auc": 0.05204634,
+        "lift_at_10_percent": 2.08117301,
+        "lift_at_20_percent": 1.77686677,
+        "brier_score": 0.02914807,
+        "log_loss": 0.13221711,
+        "by_fold": {
+          "pr_auc": [
+            0.055828,
+            0.05312,
+            0.055231,
+            0.044006
+          ],
+          "lift_at_10_percent": [
+            2.266705,
+            2.183801,
+            2.151706,
+            1.722481
+          ],
+          "lift_at_20_percent": [
+            1.875424,
+            1.813121,
+            1.842895,
+            1.576027
+          ],
+          "brier_score": [
+            0.029142,
+            0.028947,
+            0.029506,
+            0.028997
+          ],
+          "log_loss": [
+            0.131793,
+            0.131402,
+            0.133082,
+            0.132592
+          ]
+        },
+        "calibration_ratio_by_fold": [
+          1.1598,
+          1.1428,
+          1.1095,
+          1.0783
+        ],
+        "mean_abs_log_calibration_ratio": 0.115256
+      },
+      "folds": [
+        {
+          "rows": 3414,
+          "snapshot_count": 6,
+          "exposures": 179384,
+          "events": 5441,
+          "observed_rate_percent": 3.0332,
+          "brier_score": 0.02914172,
+          "log_loss": 0.13179297,
+          "pr_auc": 0.05582837,
+          "lift_at_10_percent": 2.26670517,
+          "lift_at_20_percent": 1.87542434,
+          "calibration": [
+            {
+              "bin": 1,
+              "exposures": 36012,
+              "events": 419,
+              "observed_rate_percent": 1.1635,
+              "mean_predicted_percent": 1.6514,
+              "published": true
+            },
+            {
+              "bin": 2,
+              "exposures": 36674,
+              "events": 757,
+              "observed_rate_percent": 2.0641,
+              "mean_predicted_percent": 2.5238,
+              "published": true
+            },
+            {
+              "bin": 3,
+              "exposures": 35553,
+              "events": 936,
+              "observed_rate_percent": 2.6327,
+              "mean_predicted_percent": 3.313,
+              "published": true
+            },
+            {
+              "bin": 4,
+              "exposures": 35453,
+              "events": 1295,
+              "observed_rate_percent": 3.6527,
+              "mean_predicted_percent": 4.1163,
+              "published": true
+            },
+            {
+              "bin": 5,
+              "exposures": 35692,
+              "events": 2034,
+              "observed_rate_percent": 5.6988,
+              "mean_predicted_percent": 6.0321,
+              "published": true
+            }
+          ],
+          "l2": 10.0,
+          "mean_predicted_percent": 3.5179,
+          "recalibration_offset": 0.0,
+          "converged": true
+        },
+        {
+          "rows": 3442,
+          "snapshot_count": 6,
+          "exposures": 185788,
+          "events": 5587,
+          "observed_rate_percent": 3.0072,
+          "brier_score": 0.02894745,
+          "log_loss": 0.1314019,
+          "pr_auc": 0.05311978,
+          "lift_at_10_percent": 2.18380076,
+          "lift_at_20_percent": 1.81312137,
+          "calibration": [
+            {
+              "bin": 1,
+              "exposures": 37443,
+              "events": 478,
+              "observed_rate_percent": 1.2766,
+              "mean_predicted_percent": 1.3527,
+              "published": true
+            },
+            {
+              "bin": 2,
+              "exposures": 36879,
+              "events": 778,
+              "observed_rate_percent": 2.1096,
+              "mean_predicted_percent": 2.2836,
+              "published": true
+            },
+            {
+              "bin": 3,
+              "exposures": 38403,
+              "events": 1050,
+              "observed_rate_percent": 2.7342,
+              "mean_predicted_percent": 3.1924,
+              "published": true
+            },
+            {
+              "bin": 4,
+              "exposures": 35954,
+              "events": 1256,
+              "observed_rate_percent": 3.4934,
+              "mean_predicted_percent": 4.1103,
+              "published": true
+            },
+            {
+              "bin": 5,
+              "exposures": 37109,
+              "events": 2025,
+              "observed_rate_percent": 5.4569,
+              "mean_predicted_percent": 6.285,
+              "published": true
+            }
+          ],
+          "l2": 1.0,
+          "mean_predicted_percent": 3.4366,
+          "recalibration_offset": 0.0,
+          "converged": true
+        },
+        {
+          "rows": 3419,
+          "snapshot_count": 6,
+          "exposures": 190975,
+          "events": 5865,
+          "observed_rate_percent": 3.0711,
+          "brier_score": 0.02950607,
+          "log_loss": 0.13308161,
+          "pr_auc": 0.05523097,
+          "lift_at_10_percent": 2.15170556,
+          "lift_at_20_percent": 1.84289454,
+          "calibration": [
+            {
+              "bin": 1,
+              "exposures": 38423,
+              "events": 471,
+              "observed_rate_percent": 1.2258,
+              "mean_predicted_percent": 1.3315,
+              "published": true
+            },
+            {
+              "bin": 2,
+              "exposures": 38012,
+              "events": 766,
+              "observed_rate_percent": 2.0152,
+              "mean_predicted_percent": 2.2702,
+              "published": true
+            },
+            {
+              "bin": 3,
+              "exposures": 38150,
+              "events": 1123,
+              "observed_rate_percent": 2.9436,
+              "mean_predicted_percent": 3.1091,
+              "published": true
+            },
+            {
+              "bin": 4,
+              "exposures": 38498,
+              "events": 1355,
+              "observed_rate_percent": 3.5197,
+              "mean_predicted_percent": 4.059,
+              "published": true
+            },
+            {
+              "bin": 5,
+              "exposures": 37892,
+              "events": 2150,
+              "observed_rate_percent": 5.674,
+              "mean_predicted_percent": 6.2912,
+              "published": true
+            }
+          ],
+          "l2": 1.0,
+          "mean_predicted_percent": 3.4073,
+          "recalibration_offset": 0.0,
+          "converged": true
+        },
+        {
+          "rows": 3391,
+          "snapshot_count": 6,
+          "exposures": 203138,
+          "events": 6088,
+          "observed_rate_percent": 2.997,
+          "brier_score": 0.02899704,
+          "log_loss": 0.13259198,
+          "pr_auc": 0.04400626,
+          "lift_at_10_percent": 1.72248054,
+          "lift_at_20_percent": 1.57602683,
+          "calibration": [
+            {
+              "bin": 1,
+              "exposures": 41033,
+              "events": 559,
+              "observed_rate_percent": 1.3623,
+              "mean_predicted_percent": 1.2467,
+              "published": true
+            },
+            {
+              "bin": 2,
+              "exposures": 40716,
+              "events": 865,
+              "observed_rate_percent": 2.1245,
+              "mean_predicted_percent": 2.1166,
+              "published": true
+            },
+            {
+              "bin": 3,
+              "exposures": 41333,
+              "events": 1293,
+              "observed_rate_percent": 3.1283,
+              "mean_predicted_percent": 2.935,
+              "published": true
+            },
+            {
+              "bin": 4,
+              "exposures": 39625,
+              "events": 1460,
+              "observed_rate_percent": 3.6845,
+              "mean_predicted_percent": 3.8049,
+              "published": true
+            },
+            {
+              "bin": 5,
+              "exposures": 40431,
+              "events": 1911,
+              "observed_rate_percent": 4.7266,
+              "mean_predicted_percent": 6.1109,
+              "published": true
+            }
+          ],
+          "l2": 0.1,
+          "mean_predicted_percent": 3.2317,
+          "recalibration_offset": 0.0,
+          "converged": true
+        }
+      ],
+      "name": "A: vigente con cortes del playbook"
+    },
+    "b": {
+      "label": "base (tenure_playbook_band) + manager/equipo + time_since_promotion_band + rehire + level_x_tenure + tenure_x_manager_changes",
+      "features": [
+        "level_grouped",
+        "tenure_playbook_band",
+        "calendar_month",
+        "manager_changes_12m",
+        "team_exits_12m",
+        "direct_reports_band",
+        "time_since_promotion_band",
+        "rehire",
+        "level_x_tenure",
+        "tenure_x_manager_changes"
+      ],
+      "tenure": "tenure_playbook_band",
+      "parameters": 82,
+      "summary": {
+        "pr_auc": 0.05371607,
+        "lift_at_10_percent": 2.10448331,
+        "lift_at_20_percent": 1.80681391,
+        "brier_score": 0.02912408,
+        "log_loss": 0.13204496,
+        "by_fold": {
+          "pr_auc": [
+            0.05994,
+            0.053077,
+            0.056932,
+            0.044916
+          ],
+          "lift_at_10_percent": [
+            2.335968,
+            2.131734,
+            2.162896,
+            1.787335
+          ],
+          "lift_at_20_percent": [
+            1.926259,
+            1.808272,
+            1.858509,
+            1.634217
+          ],
+          "brier_score": [
+            0.029106,
+            0.028941,
+            0.02948,
+            0.028969
+          ],
+          "log_loss": [
+            0.131575,
+            0.131467,
+            0.132828,
+            0.132309
+          ]
+        },
+        "calibration_ratio_by_fold": [
+          1.1136,
+          1.1138,
+          1.0608,
+          1.0359
+        ],
+        "mean_abs_log_calibration_ratio": 0.077417
+      },
+      "folds": [
+        {
+          "rows": 12371,
+          "snapshot_count": 6,
+          "exposures": 179384,
+          "events": 5441,
+          "observed_rate_percent": 3.0332,
+          "brier_score": 0.02910589,
+          "log_loss": 0.13157476,
+          "pr_auc": 0.05993977,
+          "lift_at_10_percent": 2.33596765,
+          "lift_at_20_percent": 1.9262589,
+          "calibration": [
+            {
+              "bin": 1,
+              "exposures": 35882,
+              "events": 442,
+              "observed_rate_percent": 1.2318,
+              "mean_predicted_percent": 1.6411,
+              "published": true
+            },
+            {
+              "bin": 2,
+              "exposures": 35949,
+              "events": 777,
+              "observed_rate_percent": 2.1614,
+              "mean_predicted_percent": 2.4397,
+              "published": true
+            },
+            {
+              "bin": 3,
+              "exposures": 35813,
+              "events": 865,
+              "observed_rate_percent": 2.4153,
+              "mean_predicted_percent": 3.1493,
+              "published": true
+            },
+            {
+              "bin": 4,
+              "exposures": 35908,
+              "events": 1264,
+              "observed_rate_percent": 3.5201,
+              "mean_predicted_percent": 3.909,
+              "published": true
+            },
+            {
+              "bin": 5,
+              "exposures": 35832,
+              "events": 2093,
+              "observed_rate_percent": 5.8411,
+              "mean_predicted_percent": 5.7547,
+              "published": true
+            }
+          ],
+          "l2": 10.0,
+          "mean_predicted_percent": 3.3779,
+          "recalibration_offset": 0.0,
+          "converged": true
+        },
+        {
+          "rows": 12747,
+          "snapshot_count": 6,
+          "exposures": 185788,
+          "events": 5587,
+          "observed_rate_percent": 3.0072,
+          "brier_score": 0.02894083,
+          "log_loss": 0.13146749,
+          "pr_auc": 0.05307675,
+          "lift_at_10_percent": 2.13173438,
+          "lift_at_20_percent": 1.80827158,
+          "calibration": [
+            {
+              "bin": 1,
+              "exposures": 37163,
+              "events": 497,
+              "observed_rate_percent": 1.3374,
+              "mean_predicted_percent": 1.5694,
+              "published": true
+            },
+            {
+              "bin": 2,
+              "exposures": 37260,
+              "events": 811,
+              "observed_rate_percent": 2.1766,
+              "mean_predicted_percent": 2.3617,
+              "published": true
+            },
+            {
+              "bin": 3,
+              "exposures": 37050,
+              "events": 929,
+              "observed_rate_percent": 2.5074,
+              "mean_predicted_percent": 3.0775,
+              "published": true
+            },
+            {
+              "bin": 4,
+              "exposures": 37366,
+              "events": 1335,
+              "observed_rate_percent": 3.5728,
+              "mean_predicted_percent": 3.9062,
+              "published": true
+            },
+            {
+              "bin": 5,
+              "exposures": 36949,
+              "events": 2015,
+              "observed_rate_percent": 5.4535,
+              "mean_predicted_percent": 5.8455,
+              "published": true
+            }
+          ],
+          "l2": 10.0,
+          "mean_predicted_percent": 3.3495,
+          "recalibration_offset": 0.0,
+          "converged": true
+        },
+        {
+          "rows": 12800,
+          "snapshot_count": 6,
+          "exposures": 190975,
+          "events": 5865,
+          "observed_rate_percent": 3.0711,
+          "brier_score": 0.02948029,
+          "log_loss": 0.13282835,
+          "pr_auc": 0.05693199,
+          "lift_at_10_percent": 2.16289593,
+          "lift_at_20_percent": 1.8585086,
+          "calibration": [
+            {
+              "bin": 1,
+              "exposures": 38614,
+              "events": 486,
+              "observed_rate_percent": 1.2586,
+              "mean_predicted_percent": 1.2774,
+              "published": true
+            },
+            {
+              "bin": 2,
+              "exposures": 37807,
+              "events": 763,
+              "observed_rate_percent": 2.0181,
+              "mean_predicted_percent": 2.1801,
+              "published": true
+            },
+            {
+              "bin": 3,
+              "exposures": 38538,
+              "events": 1049,
+              "observed_rate_percent": 2.722,
+              "mean_predicted_percent": 2.9275,
+              "published": true
+            },
+            {
+              "bin": 4,
+              "exposures": 38215,
+              "events": 1412,
+              "observed_rate_percent": 3.6949,
+              "mean_predicted_percent": 3.8564,
+              "published": true
+            },
+            {
+              "bin": 5,
+              "exposures": 37801,
+              "events": 2155,
+              "observed_rate_percent": 5.7009,
+              "mean_predicted_percent": 6.0904,
+              "published": true
+            }
+          ],
+          "l2": 1.0,
+          "mean_predicted_percent": 3.2578,
+          "recalibration_offset": 0.0,
+          "converged": true
+        },
+        {
+          "rows": 12640,
+          "snapshot_count": 6,
+          "exposures": 203138,
+          "events": 6088,
+          "observed_rate_percent": 2.997,
+          "brier_score": 0.0289693,
+          "log_loss": 0.13230923,
+          "pr_auc": 0.04491575,
+          "lift_at_10_percent": 1.7873353,
+          "lift_at_20_percent": 1.63421656,
+          "calibration": [
+            {
+              "bin": 1,
+              "exposures": 40859,
+              "events": 526,
+              "observed_rate_percent": 1.2874,
+              "mean_predicted_percent": 1.2218,
+              "published": true
+            },
+            {
+              "bin": 2,
+              "exposures": 40691,
+              "events": 883,
+              "observed_rate_percent": 2.17,
+              "mean_predicted_percent": 2.0696,
+              "published": true
+            },
+            {
+              "bin": 3,
+              "exposures": 40337,
+              "events": 1296,
+              "observed_rate_percent": 3.2129,
+              "mean_predicted_percent": 2.7859,
+              "published": true
+            },
+            {
+              "bin": 4,
+              "exposures": 40748,
+              "events": 1397,
+              "observed_rate_percent": 3.4284,
+              "mean_predicted_percent": 3.6088,
+              "published": true
+            },
+            {
+              "bin": 5,
+              "exposures": 40503,
+              "events": 1986,
+              "observed_rate_percent": 4.9033,
+              "mean_predicted_percent": 5.8542,
+              "published": true
+            }
+          ],
+          "l2": 1.0,
+          "mean_predicted_percent": 3.1047,
+          "recalibration_offset": 0.0,
+          "converged": true
+        }
+      ],
+      "name": "B: A + promoción + recontratación"
+    }
+  },
+  "a_vs_incumbent": {
+    "pr_auc_wins": 3,
+    "lift_wins": 4,
+    "brier_not_worse": true,
+    "promoted": true
+  },
+  "champion_after_a": "A: vigente con cortes del playbook",
+  "b_vs_champion": {
+    "pr_auc_wins": 3,
+    "lift_wins": 3,
+    "brier_not_worse": true,
+    "promoted": true
+  },
+  "b_vs_incumbent": {
+    "pr_auc_wins": 4,
+    "lift_wins": 4,
+    "brier_not_worse": true,
+    "promoted": true
+  },
+  "final_key": "b",
+  "final_name": "B: A + promoción + recontratación",
+  "b_drop_one": [
+    {
+      "dropped": "time_since_promotion_band",
+      "parameters": 74,
+      "summary": {
+        "pr_auc": 0.05222055,
+        "lift_at_10_percent": 2.08221779,
+        "lift_at_20_percent": 1.77771827,
+        "brier_score": 0.02914501,
+        "log_loss": 0.132175,
+        "by_fold": {
+          "pr_auc": [
+            0.056017,
+            0.053221,
+            0.055476,
+            0.044168
+          ],
+          "lift_at_10_percent": [
+            2.274387,
+            2.169625,
+            2.150261,
+            1.734598
+          ],
+          "lift_at_20_percent": [
+            1.873937,
+            1.810483,
+            1.844509,
+            1.581944
+          ],
+          "brier_score": [
+            0.029141,
+            0.028946,
+            0.029503,
+            0.02899
+          ],
+          "log_loss": [
+            0.131783,
+            0.131384,
+            0.133052,
+            0.132481
+          ]
+        },
+        "calibration_ratio_by_fold": [
+          1.1602,
+          1.141,
+          1.108,
+          1.0778
+        ],
+        "mean_abs_log_calibration_ratio": 0.114494
+      }
+    },
+    {
+      "dropped": "rehire",
+      "parameters": 80,
+      "summary": {
+        "pr_auc": 0.05302448,
+        "lift_at_10_percent": 2.09900593,
+        "lift_at_20_percent": 1.79578351,
+        "brier_score": 0.02913128,
+        "log_loss": 0.1321404,
+        "by_fold": {
+          "pr_auc": [
+            0.059292,
+            0.052699,
+            0.055742,
+            0.044365
+          ],
+          "lift_at_10_percent": [
+            2.370153,
+            2.166632,
+            2.113676,
+            1.745563
+          ],
+          "lift_at_20_percent": [
+            1.9308,
+            1.820483,
+            1.833524,
+            1.598327
+          ],
+          "brier_score": [
+            0.02911,
+            0.028943,
+            0.029493,
+            0.02898
+          ],
+          "log_loss": [
+            0.131617,
+            0.13149,
+            0.132947,
+            0.132509
+          ]
+        },
+        "calibration_ratio_by_fold": [
+          1.1125,
+          1.1128,
+          1.0588,
+          1.0335
+        ],
+        "mean_abs_log_calibration_ratio": 0.075894
+      }
+    }
+  ],
+  "interpretation": {
+    "a": {
+      "coefficients": [
+        {
+          "term": "level_grouped=1 - VP & Above",
+          "hazard_ratio_by_fold": [
+            0.8957,
+            0.6589,
+            0.6547,
+            0.4266
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=8 - Assoc & Int/Eng | 10+ years",
+          "hazard_ratio_by_fold": [
+            0.9906,
+            0.8987,
+            0.9005,
+            0.4419
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=2 - Sr Dir | 1-2 years",
+          "hazard_ratio_by_fold": [
+            0.9848,
+            0.8831,
+            0.8734,
+            0.5073
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "team_exits_12m=2+",
+          "hazard_ratio_by_fold": [
+            1.6127,
+            1.7771,
+            1.8129,
+            1.8742
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_grouped=2 - Sr Dir",
+          "hazard_ratio_by_fold": [
+            0.8224,
+            0.6614,
+            0.6558,
+            0.5381
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "direct_reports_band=6+",
+          "hazard_ratio_by_fold": [
+            0.6089,
+            0.5336,
+            0.54,
+            0.546
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=2 - Sr Dir | <1 year",
+          "hazard_ratio_by_fold": [
+            0.9892,
+            0.917,
+            0.9124,
+            0.5613
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=6 - Staff & /Mgr | 1-2 years",
+          "hazard_ratio_by_fold": [
+            1.1722,
+            1.5891,
+            1.5532,
+            1.7417
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=2 - Sr Dir | 3-5 years",
+          "hazard_ratio_by_fold": [
+            0.99,
+            0.9054,
+            0.8686,
+            0.5799
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=6 - Staff & /Mgr | <1 year",
+          "hazard_ratio_by_fold": [
+            1.1523,
+            1.5461,
+            1.5211,
+            1.6955
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=8 - Assoc & Int/Eng | <1 year",
+          "hazard_ratio_by_fold": [
+            0.7921,
+            0.6893,
+            0.6654,
+            0.5985
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=1 - VP & Above | 3-5 years",
+          "hazard_ratio_by_fold": [
+            1.0103,
+            1.0971,
+            1.0808,
+            1.6247
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=5 - Sr Staff & /Mgr | 1-2 years",
+          "hazard_ratio_by_fold": [
+            1.0932,
+            1.4245,
+            1.3683,
+            1.5858
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=8 - Assoc & Int/Eng | 3-5 years",
+          "hazard_ratio_by_fold": [
+            1.4228,
+            1.6089,
+            1.5791,
+            1.548
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "tenure_x_manager_changes=1-2 years | 1",
+          "hazard_ratio_by_fold": [
+            0.8865,
+            0.7483,
+            0.707,
+            0.6536
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "tenure_x_manager_changes=1-2 years | 2+",
+          "hazard_ratio_by_fold": [
+            0.9649,
+            0.7634,
+            0.7408,
+            0.6544
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "tenure_x_manager_changes=<1 year | 2+",
+          "hazard_ratio_by_fold": [
+            0.9743,
+            0.8347,
+            0.8024,
+            0.6641
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_grouped=5 - Sr Staff & /Mgr",
+          "hazard_ratio_by_fold": [
+            0.7665,
+            0.6938,
+            0.7328,
+            0.6693
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "tenure_x_manager_changes=<1 year | 1",
+          "hazard_ratio_by_fold": [
+            0.8482,
+            0.7158,
+            0.7183,
+            0.6767
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=2 - Sr Dir | 2-3 years",
+          "hazard_ratio_by_fold": [
+            1.0168,
+            1.1489,
+            1.1194,
+            1.4746
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "tenure_x_manager_changes=10+ years | 2+",
+          "hazard_ratio_by_fold": [
+            1.076,
+            1.3618,
+            1.4117,
+            1.4524
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "team_exits_12m=1",
+          "hazard_ratio_by_fold": [
+            1.3237,
+            1.3848,
+            1.4169,
+            1.4385
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_grouped=6 - Staff & /Mgr",
+          "hazard_ratio_by_fold": [
+            0.8711,
+            0.7541,
+            0.7738,
+            0.7035
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "manager_changes_12m=1",
+          "hazard_ratio_by_fold": [
+            1.1311,
+            1.2778,
+            1.3426,
+            1.4179
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "tenure_playbook_band=<1 year",
+          "hazard_ratio_by_fold": [
+            0.8934,
+            0.9892,
+            0.7557,
+            0.7146
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_grouped=3 - Princ/Directors",
+          "hazard_ratio_by_fold": [
+            0.8466,
+            0.7854,
+            0.8192,
+            0.7233
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=1 - VP & Above | 10+ years",
+          "hazard_ratio_by_fold": [
+            0.9107,
+            0.7348,
+            0.7515,
+            0.725
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=1 - VP & Above | 2-3 years",
+          "hazard_ratio_by_fold": [
+            0.9956,
+            0.9533,
+            0.9426,
+            0.7282
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "manager_changes_12m=2+",
+          "hazard_ratio_by_fold": [
+            1.1271,
+            1.2271,
+            1.2437,
+            1.3664
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "tenure_playbook_band=10+ years",
+          "hazard_ratio_by_fold": [
+            null,
+            null,
+            0.6323,
+            0.7333
+          ],
+          "same_sign_all_folds": false
+        },
+        {
+          "term": "level_x_tenure=6 - Staff & /Mgr | 3-5 years",
+          "hazard_ratio_by_fold": [
+            1.0209,
+            1.2147,
+            1.1961,
+            1.3308
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=3 - Princ/Directors | 3-5 years",
+          "hazard_ratio_by_fold": [
+            1.0397,
+            1.2201,
+            1.2355,
+            1.3287
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_grouped=8 - Assoc & Int/Eng",
+          "hazard_ratio_by_fold": [
+            1.2203,
+            1.2582,
+            1.2418,
+            1.3222
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=3 - Princ/Directors | 2-3 years",
+          "hazard_ratio_by_fold": [
+            1.0206,
+            1.1026,
+            1.0543,
+            1.2843
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=1 - VP & Above | 1-2 years",
+          "hazard_ratio_by_fold": [
+            0.9947,
+            0.962,
+            0.9609,
+            0.7853
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=1 - VP & Above | <1 year",
+          "hazard_ratio_by_fold": [
+            0.9957,
+            0.9686,
+            0.9636,
+            0.7915
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=6 - Staff & /Mgr | 2-3 years",
+          "hazard_ratio_by_fold": [
+            1.0275,
+            1.1855,
+            1.1328,
+            1.2608
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=3 - Princ/Directors | 10+ years",
+          "hazard_ratio_by_fold": [
+            0.7777,
+            0.7749,
+            0.8677,
+            0.794
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=5 - Sr Staff & /Mgr | <1 year",
+          "hazard_ratio_by_fold": [
+            1.0198,
+            1.2189,
+            1.1276,
+            1.2573
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "tenure_x_manager_changes=3-5 years | 1",
+          "hazard_ratio_by_fold": [
+            1.0014,
+            0.8466,
+            0.8303,
+            0.7992
+          ],
+          "same_sign_all_folds": false
+        },
+        {
+          "term": "level_x_tenure=8 - Assoc & Int/Eng | 1-2 years",
+          "hazard_ratio_by_fold": [
+            0.9295,
+            0.9151,
+            0.8781,
+            0.8103
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "tenure_x_manager_changes=3-5 years | 2+",
+          "hazard_ratio_by_fold": [
+            1.0306,
+            0.8938,
+            0.8947,
+            0.8174
+          ],
+          "same_sign_all_folds": false
+        },
+        {
+          "term": "tenure_x_manager_changes=2-3 years | 1",
+          "hazard_ratio_by_fold": [
+            1.0997,
+            0.9337,
+            0.8945,
+            0.8238
+          ],
+          "same_sign_all_folds": false
+        },
+        {
+          "term": "tenure_playbook_band=1-2 years",
+          "hazard_ratio_by_fold": [
+            1.0899,
+            1.1466,
+            0.8847,
+            0.8491
+          ],
+          "same_sign_all_folds": false
+        },
+        {
+          "term": "direct_reports_band=1-5",
+          "hazard_ratio_by_fold": [
+            0.8388,
+            0.8513,
+            0.8543,
+            0.8511
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=5 - Sr Staff & /Mgr | 3-5 years",
+          "hazard_ratio_by_fold": [
+            0.9895,
+            1.1069,
+            1.0893,
+            1.172
+          ],
+          "same_sign_all_folds": false
+        },
+        {
+          "term": "tenure_playbook_band=2-3 years",
+          "hazard_ratio_by_fold": [
+            1.5136,
+            1.673,
+            1.2189,
+            1.1562
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "tenure_x_manager_changes=2-3 years | 2+",
+          "hazard_ratio_by_fold": [
+            1.0446,
+            0.9816,
+            0.9999,
+            0.8738
+          ],
+          "same_sign_all_folds": false
+        },
+        {
+          "term": "level_x_tenure=3 - Princ/Directors | <1 year",
+          "hazard_ratio_by_fold": [
+            0.9834,
+            0.9297,
+            1.0022,
+            1.1427
+          ],
+          "same_sign_all_folds": false
+        },
+        {
+          "term": "tenure_playbook_band=3-5 years",
+          "hazard_ratio_by_fold": [
+            1.5014,
+            1.6552,
+            1.2381,
+            1.1317
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=5 - Sr Staff & /Mgr | 10+ years",
+          "hazard_ratio_by_fold": [
+            0.8174,
+            0.8887,
+            0.9637,
+            0.8904
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=5 - Sr Staff & /Mgr | 2-3 years",
+          "hazard_ratio_by_fold": [
+            1.053,
+            1.2212,
+            1.0301,
+            1.1012
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=3 - Princ/Directors | 1-2 years",
+          "hazard_ratio_by_fold": [
+            1.0056,
+            0.9964,
+            0.9687,
+            1.0901
+          ],
+          "same_sign_all_folds": false
+        },
+        {
+          "term": "level_x_tenure=8 - Assoc & Int/Eng | 2-3 years",
+          "hazard_ratio_by_fold": [
+            1.0942,
+            1.0232,
+            1.0223,
+            0.9564
+          ],
+          "same_sign_all_folds": false
+        },
+        {
+          "term": "level_x_tenure=2 - Sr Dir | 10+ years",
+          "hazard_ratio_by_fold": [
+            0.8486,
+            0.9,
+            1.0379,
+            0.9646
+          ],
+          "same_sign_all_folds": false
+        },
+        {
+          "term": "level_x_tenure=6 - Staff & /Mgr | 10+ years",
+          "hazard_ratio_by_fold": [
+            0.8447,
+            0.95,
+            1.0678,
+            0.9656
+          ],
+          "same_sign_all_folds": false
+        },
+        {
+          "term": "team_exits_12m=(unknown)",
+          "hazard_ratio_by_fold": [
+            null,
+            0.9994,
+            0.9994,
+            0.994
+          ],
+          "same_sign_all_folds": false
+        },
+        {
+          "term": "level_grouped=Misc",
+          "hazard_ratio_by_fold": [
+            0.9999,
+            0.9995,
+            0.9995,
+            0.9942
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=Misc | 10+ years",
+          "hazard_ratio_by_fold": [
+            0.9999,
+            0.9995,
+            0.9995,
+            0.9942
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "tenure_x_manager_changes=10+ years | 1",
+          "hazard_ratio_by_fold": [
+            0.9944,
+            1.0546,
+            1.0639,
+            1.0055
+          ],
+          "same_sign_all_folds": false
+        },
+        {
+          "term": "tenure_playbook_band=5-10 years",
+          "hazard_ratio_by_fold": [
+            1.184,
+            1.4001,
+            null,
+            null
+          ],
+          "same_sign_all_folds": false
+        }
+      ],
+      "references": {
+        "level_grouped": "7 - Senior & Lead",
+        "tenure_playbook_band": "5-10 years",
+        "calendar_month": "7",
+        "manager_changes_12m": "0",
+        "team_exits_12m": "0",
+        "direct_reports_band": "0",
+        "level_x_tenure": "ref",
+        "tenure_x_manager_changes": "ref"
+      },
+      "groups": {
+        "snapshot": "2026-07-26",
+        "people": 37221,
+        "mean_predicted_6m_percent": 2.881,
+        "max_depth": 3,
+        "min_leaf_people": 300,
+        "variance_explained_r2": 0.5551,
+        "groups": [
+          {
+            "rule": "tenure_playbook_band ≠ 10+ years y team_exits_12m ≠ 0 y tenure_playbook_band = 3-5 years",
+            "people": 1854,
+            "people_share_percent": 4.98,
+            "predicted_6m_percent": 5.808,
+            "last_fold_people_per_snapshot": 1939,
+            "last_fold_predicted_percent": 6.575,
+            "last_fold_events": 625,
+            "last_fold_observed_percent": 5.373,
+            "lift_vs_mean": 2.016
+          },
+          {
+            "rule": "tenure_playbook_band ≠ 10+ years y team_exits_12m ≠ 0 y tenure_playbook_band ≠ 3-5 years",
+            "people": 5636,
+            "people_share_percent": 15.14,
+            "predicted_6m_percent": 4.079,
+            "last_fold_people_per_snapshot": 4853,
+            "last_fold_predicted_percent": 4.495,
+            "last_fold_events": 1185,
+            "last_fold_observed_percent": 4.07,
+            "lift_vs_mean": 1.416
+          },
+          {
+            "rule": "tenure_playbook_band ≠ 10+ years y team_exits_12m = 0 y tenure_playbook_band = 3-5 years",
+            "people": 5294,
+            "people_share_percent": 14.22,
+            "predicted_6m_percent": 3.828,
+            "last_fold_people_per_snapshot": 5516,
+            "last_fold_predicted_percent": 4.355,
+            "last_fold_events": 1254,
+            "last_fold_observed_percent": 3.789,
+            "lift_vs_mean": 1.329
+          },
+          {
+            "rule": "tenure_playbook_band ≠ 10+ years y team_exits_12m = 0 y tenure_playbook_band ≠ 3-5 years",
+            "people": 15557,
+            "people_share_percent": 41.8,
+            "predicted_6m_percent": 2.629,
+            "last_fold_people_per_snapshot": 13280,
+            "last_fold_predicted_percent": 2.891,
+            "last_fold_events": 2266,
+            "last_fold_observed_percent": 2.844,
+            "lift_vs_mean": 0.913
+          },
+          {
+            "rule": "tenure_playbook_band = 10+ years y direct_reports_band = 0 y team_exits_12m ≠ 0",
+            "people": 696,
+            "people_share_percent": 1.87,
+            "predicted_6m_percent": 2.406,
+            "last_fold_people_per_snapshot": 598,
+            "last_fold_predicted_percent": 2.604,
+            "last_fold_events": 114,
+            "last_fold_observed_percent": 3.179,
+            "lift_vs_mean": 0.835
+          },
+          {
+            "rule": "tenure_playbook_band = 10+ years y direct_reports_band = 0 y team_exits_12m = 0",
+            "people": 3359,
+            "people_share_percent": 9.02,
+            "predicted_6m_percent": 1.572,
+            "last_fold_people_per_snapshot": 3167,
+            "last_fold_predicted_percent": 1.672,
+            "last_fold_events": 346,
+            "last_fold_observed_percent": 1.821,
+            "lift_vs_mean": 0.546
+          },
+          {
+            "rule": "tenure_playbook_band = 10+ years y direct_reports_band ≠ 0 y team_exits_12m ≠ 0",
+            "people": 871,
+            "people_share_percent": 2.34,
+            "predicted_6m_percent": 1.553,
+            "last_fold_people_per_snapshot": 717,
+            "last_fold_predicted_percent": 1.792,
+            "last_fold_events": 65,
+            "last_fold_observed_percent": 1.51,
+            "lift_vs_mean": 0.539
+          },
+          {
+            "rule": "tenure_playbook_band = 10+ years y direct_reports_band ≠ 0 y team_exits_12m = 0",
+            "people": 3954,
+            "people_share_percent": 10.62,
+            "predicted_6m_percent": 1.011,
+            "last_fold_people_per_snapshot": 3785,
+            "last_fold_predicted_percent": 1.134,
+            "last_fold_events": 233,
+            "last_fold_observed_percent": 1.026,
+            "lift_vs_mean": 0.351
+          }
+        ]
+      },
+      "subgroup_calibration": [
+        {
+          "variable": "level_grouped",
+          "category": "1 - VP & Above",
+          "people_per_snapshot": 212,
+          "predicted_percent": 0.694,
+          "observed_percent": 2.745,
+          "ratio": 0.253
+        },
+        {
+          "variable": "level_grouped",
+          "category": "2 - Sr Dir",
+          "people_per_snapshot": 867,
+          "predicted_percent": 1.153,
+          "observed_percent": 1.307,
+          "ratio": 0.882
+        },
+        {
+          "variable": "level_grouped",
+          "category": "3 - Princ/Directors",
+          "people_per_snapshot": 3225,
+          "predicted_percent": 1.712,
+          "observed_percent": 1.866,
+          "ratio": 0.917
+        },
+        {
+          "variable": "level_grouped",
+          "category": "5 - Sr Staff & /Mgr",
+          "people_per_snapshot": 6216,
+          "predicted_percent": 1.995,
+          "observed_percent": 2.091,
+          "ratio": 0.954
+        },
+        {
+          "variable": "level_grouped",
+          "category": "6 - Staff & /Mgr",
+          "people_per_snapshot": 6632,
+          "predicted_percent": 2.923,
+          "observed_percent": 3.146,
+          "ratio": 0.929
+        },
+        {
+          "variable": "level_grouped",
+          "category": "7 - Senior & Lead",
+          "people_per_snapshot": 11428,
+          "predicted_percent": 4.007,
+          "observed_percent": 3.639,
+          "ratio": 1.101
+        },
+        {
+          "variable": "level_grouped",
+          "category": "8 - Assoc & Int/Eng",
+          "people_per_snapshot": 5276,
+          "predicted_percent": 4.77,
+          "observed_percent": 3.465,
+          "ratio": 1.377
+        },
+        {
+          "variable": "tenure_playbook_band",
+          "category": "1-2 years",
+          "people_per_snapshot": 2964,
+          "predicted_percent": 3.355,
+          "observed_percent": 3.098,
+          "ratio": 1.083
+        },
+        {
+          "variable": "tenure_playbook_band",
+          "category": "10+ years",
+          "people_per_snapshot": 8268,
+          "predicted_percent": 1.503,
+          "observed_percent": 1.528,
+          "ratio": 0.984
+        },
+        {
+          "variable": "tenure_playbook_band",
+          "category": "2-3 years",
+          "people_per_snapshot": 2204,
+          "predicted_percent": 4.96,
+          "observed_percent": 4.129,
+          "ratio": 1.201
+        },
+        {
+          "variable": "tenure_playbook_band",
+          "category": "3-5 years",
+          "people_per_snapshot": 7455,
+          "predicted_percent": 4.933,
+          "observed_percent": 4.201,
+          "ratio": 1.174
+        },
+        {
+          "variable": "tenure_playbook_band",
+          "category": "5-10 years",
+          "people_per_snapshot": 8847,
+          "predicted_percent": 3.273,
+          "observed_percent": 3.165,
+          "ratio": 1.034
+        },
+        {
+          "variable": "tenure_playbook_band",
+          "category": "<1 year",
+          "people_per_snapshot": 4118,
+          "predicted_percent": 2.519,
+          "observed_percent": 2.728,
+          "ratio": 0.924
+        },
+        {
+          "variable": "manager_changes_12m",
+          "category": "0",
+          "people_per_snapshot": 24742,
+          "predicted_percent": 2.982,
+          "observed_percent": 2.802,
+          "ratio": 1.064
+        },
+        {
+          "variable": "manager_changes_12m",
+          "category": "1",
+          "people_per_snapshot": 7313,
+          "predicted_percent": 3.827,
+          "observed_percent": 3.211,
+          "ratio": 1.192
+        },
+        {
+          "variable": "manager_changes_12m",
+          "category": "2+",
+          "people_per_snapshot": 1801,
+          "predicted_percent": 4.244,
+          "observed_percent": 4.811,
+          "ratio": 0.882
+        },
+        {
+          "variable": "team_exits_12m",
+          "category": "0",
+          "people_per_snapshot": 25750,
+          "predicted_percent": 2.797,
+          "observed_percent": 2.653,
+          "ratio": 1.054
+        },
+        {
+          "variable": "team_exits_12m",
+          "category": "1",
+          "people_per_snapshot": 6030,
+          "predicted_percent": 4.305,
+          "observed_percent": 3.985,
+          "ratio": 1.08
+        },
+        {
+          "variable": "team_exits_12m",
+          "category": "2+",
+          "people_per_snapshot": 2076,
+          "predicted_percent": 5.509,
+          "observed_percent": 4.391,
+          "ratio": 1.255
+        },
+        {
+          "variable": "direct_reports_band",
+          "category": "0",
+          "people_per_snapshot": 26406,
+          "predicted_percent": 3.655,
+          "observed_percent": 3.322,
+          "ratio": 1.1
+        },
+        {
+          "variable": "direct_reports_band",
+          "category": "1-5",
+          "people_per_snapshot": 5103,
+          "predicted_percent": 1.977,
+          "observed_percent": 1.894,
+          "ratio": 1.044
+        },
+        {
+          "variable": "direct_reports_band",
+          "category": "6+",
+          "people_per_snapshot": 2347,
+          "predicted_percent": 1.193,
+          "observed_percent": 1.74,
+          "ratio": 0.686
+        }
+      ]
+    },
+    "final": {
+      "coefficients": [
+        {
+          "term": "time_since_promotion_band=(unknown)",
+          "hazard_ratio_by_fold": [
+            1.4825,
+            1.4835,
+            4.3611,
+            4.3969
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "rehire=(unknown)",
+          "hazard_ratio_by_fold": [
+            1.4825,
+            1.4835,
+            4.3611,
+            4.3969
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "time_since_promotion_band=sin promo, contratado <1 year",
+          "hazard_ratio_by_fold": [
+            0.6888,
+            0.6592,
+            0.4246,
+            0.4128
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "team_exits_12m=2+",
+          "hazard_ratio_by_fold": [
+            1.6134,
+            1.6712,
+            1.8039,
+            1.8585
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "direct_reports_band=6+",
+          "hazard_ratio_by_fold": [
+            0.6054,
+            0.6116,
+            0.5434,
+            0.5497
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "tenure_playbook_band=<1 year",
+          "hazard_ratio_by_fold": [
+            1.1132,
+            1.1699,
+            1.692,
+            1.6931
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=8 - Assoc & Int/Eng | 3-5 years",
+          "hazard_ratio_by_fold": [
+            1.4029,
+            1.4967,
+            1.585,
+            1.6401
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_grouped=1 - VP & Above",
+          "hazard_ratio_by_fold": [
+            0.887,
+            0.8554,
+            0.6577,
+            0.6121
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_grouped=2 - Sr Dir",
+          "hazard_ratio_by_fold": [
+            0.8068,
+            0.7797,
+            0.6528,
+            0.6136
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=6 - Staff & /Mgr | 1-2 years",
+          "hazard_ratio_by_fold": [
+            1.1792,
+            1.2101,
+            1.5217,
+            1.5584
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=8 - Assoc & Int/Eng | <1 year",
+          "hazard_ratio_by_fold": [
+            0.8164,
+            0.7907,
+            0.6764,
+            0.6438
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "time_since_promotion_band=sin promo, contratado 1-3 years",
+          "hazard_ratio_by_fold": [
+            0.735,
+            0.7399,
+            0.647,
+            0.6636
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=6 - Staff & /Mgr | <1 year",
+          "hazard_ratio_by_fold": [
+            1.1765,
+            1.2145,
+            1.472,
+            1.5065
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "tenure_playbook_band=10+ years",
+          "hazard_ratio_by_fold": [
+            null,
+            null,
+            0.6175,
+            0.6713
+          ],
+          "same_sign_all_folds": false
+        },
+        {
+          "term": "tenure_x_manager_changes=10+ years | 2+",
+          "hazard_ratio_by_fold": [
+            1.0685,
+            1.0993,
+            1.4143,
+            1.4488
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=5 - Sr Staff & /Mgr | 1-2 years",
+          "hazard_ratio_by_fold": [
+            1.1085,
+            1.1173,
+            1.3885,
+            1.4343
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "team_exits_12m=1",
+          "hazard_ratio_by_fold": [
+            1.3224,
+            1.351,
+            1.4084,
+            1.4275
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_grouped=5 - Sr Staff & /Mgr",
+          "hazard_ratio_by_fold": [
+            0.7581,
+            0.767,
+            0.7331,
+            0.7054
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "tenure_x_manager_changes=<1 year | 1",
+          "hazard_ratio_by_fold": [
+            0.8666,
+            0.8625,
+            0.7256,
+            0.7088
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "tenure_x_manager_changes=1-2 years | 1",
+          "hazard_ratio_by_fold": [
+            0.9056,
+            0.8906,
+            0.7368,
+            0.7102
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "tenure_playbook_band=2-3 years",
+          "hazard_ratio_by_fold": [
+            1.5145,
+            1.5296,
+            1.4333,
+            1.4005
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=1 - VP & Above | 10+ years",
+          "hazard_ratio_by_fold": [
+            0.9005,
+            0.8732,
+            0.7472,
+            0.7155
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "manager_changes_12m=1",
+          "hazard_ratio_by_fold": [
+            1.1362,
+            1.1647,
+            1.3436,
+            1.3851
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_grouped=6 - Staff & /Mgr",
+          "hazard_ratio_by_fold": [
+            0.862,
+            0.8537,
+            0.7732,
+            0.7393
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "tenure_x_manager_changes=<1 year | 2+",
+          "hazard_ratio_by_fold": [
+            0.9784,
+            0.9699,
+            0.7966,
+            0.7468
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "tenure_x_manager_changes=1-2 years | 2+",
+          "hazard_ratio_by_fold": [
+            0.9778,
+            0.9256,
+            0.7823,
+            0.7538
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "manager_changes_12m=2+",
+          "hazard_ratio_by_fold": [
+            1.1344,
+            1.1416,
+            1.2464,
+            1.3079
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_grouped=3 - Princ/Directors",
+          "hazard_ratio_by_fold": [
+            0.8392,
+            0.8068,
+            0.826,
+            0.777
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=6 - Staff & /Mgr | 3-5 years",
+          "hazard_ratio_by_fold": [
+            1.0284,
+            1.0607,
+            1.2257,
+            1.2851
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_grouped=8 - Assoc & Int/Eng",
+          "hazard_ratio_by_fold": [
+            1.2306,
+            1.2311,
+            1.2326,
+            1.2406
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=3 - Princ/Directors | 3-5 years",
+          "hazard_ratio_by_fold": [
+            1.0414,
+            1.0491,
+            1.2469,
+            1.2326
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=3 - Princ/Directors | 2-3 years",
+          "hazard_ratio_by_fold": [
+            1.0324,
+            1.0381,
+            1.1202,
+            1.23
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=3 - Princ/Directors | 10+ years",
+          "hazard_ratio_by_fold": [
+            0.7451,
+            0.7372,
+            0.8667,
+            0.8255
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "tenure_x_manager_changes=3-5 years | 1",
+          "hazard_ratio_by_fold": [
+            0.9953,
+            0.9634,
+            0.8349,
+            0.8276
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=6 - Staff & /Mgr | 2-3 years",
+          "hazard_ratio_by_fold": [
+            1.0331,
+            1.053,
+            1.1399,
+            1.199
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "tenure_playbook_band=1-2 years",
+          "hazard_ratio_by_fold": [
+            1.2249,
+            1.2029,
+            1.213,
+            1.1844
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "direct_reports_band=1-5",
+          "hazard_ratio_by_fold": [
+            0.8327,
+            0.8345,
+            0.8568,
+            0.8461
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=2 - Sr Dir | 3-5 years",
+          "hazard_ratio_by_fold": [
+            0.9904,
+            0.9831,
+            0.8752,
+            0.8486
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=5 - Sr Staff & /Mgr | <1 year",
+          "hazard_ratio_by_fold": [
+            1.0374,
+            1.0614,
+            1.1465,
+            1.1767
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "rehire=yes",
+          "hazard_ratio_by_fold": [
+            1.0749,
+            1.0954,
+            1.1659,
+            1.1646
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "tenure_x_manager_changes=2-3 years | 1",
+          "hazard_ratio_by_fold": [
+            1.1049,
+            1.0473,
+            0.9053,
+            0.8602
+          ],
+          "same_sign_all_folds": false
+        },
+        {
+          "term": "level_x_tenure=2 - Sr Dir | 1-2 years",
+          "hazard_ratio_by_fold": [
+            0.9842,
+            0.9816,
+            0.8637,
+            0.8649
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "tenure_playbook_band=3-5 years",
+          "hazard_ratio_by_fold": [
+            1.3906,
+            1.3912,
+            1.2145,
+            1.1495
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "tenure_x_manager_changes=3-5 years | 2+",
+          "hazard_ratio_by_fold": [
+            1.0256,
+            0.9909,
+            0.9015,
+            0.8711
+          ],
+          "same_sign_all_folds": false
+        },
+        {
+          "term": "level_x_tenure=8 - Assoc & Int/Eng | 10+ years",
+          "hazard_ratio_by_fold": [
+            0.9897,
+            0.987,
+            0.9062,
+            0.8784
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "time_since_promotion_band=promo 3+ years",
+          "hazard_ratio_by_fold": [
+            1.0138,
+            1.0286,
+            0.8592,
+            0.8794
+          ],
+          "same_sign_all_folds": false
+        },
+        {
+          "term": "level_x_tenure=8 - Assoc & Int/Eng | 1-2 years",
+          "hazard_ratio_by_fold": [
+            0.9357,
+            0.9369,
+            0.9061,
+            0.8799
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=5 - Sr Staff & /Mgr | 3-5 years",
+          "hazard_ratio_by_fold": [
+            0.9949,
+            1.0075,
+            1.1141,
+            1.1324
+          ],
+          "same_sign_all_folds": false
+        },
+        {
+          "term": "time_since_promotion_band=promo <1 year",
+          "hazard_ratio_by_fold": [
+            0.9349,
+            0.9406,
+            0.8862,
+            0.8908
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=2 - Sr Dir | <1 year",
+          "hazard_ratio_by_fold": [
+            0.9895,
+            0.9887,
+            0.9046,
+            0.892
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "time_since_promotion_band=sin promo, contratado 3+ years",
+          "hazard_ratio_by_fold": [
+            0.9628,
+            1.0126,
+            0.9736,
+            0.9029
+          ],
+          "same_sign_all_folds": false
+        },
+        {
+          "term": "level_x_tenure=2 - Sr Dir | 2-3 years",
+          "hazard_ratio_by_fold": [
+            1.0171,
+            1.0125,
+            1.1121,
+            1.0881
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=5 - Sr Staff & /Mgr | 10+ years",
+          "hazard_ratio_by_fold": [
+            0.7756,
+            0.7535,
+            0.9622,
+            0.9305
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=5 - Sr Staff & /Mgr | 2-3 years",
+          "hazard_ratio_by_fold": [
+            1.0568,
+            1.0625,
+            1.0562,
+            1.0743
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "time_since_promotion_band=promo 2-3 years",
+          "hazard_ratio_by_fold": [
+            0.7777,
+            0.9062,
+            0.8914,
+            0.9347
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "time_since_promotion_band=promo 1-2 years",
+          "hazard_ratio_by_fold": [
+            1.093,
+            1.1169,
+            1.0789,
+            1.0622
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=1 - VP & Above | 3-5 years",
+          "hazard_ratio_by_fold": [
+            1.0103,
+            1.0085,
+            1.0816,
+            1.0595
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=2 - Sr Dir | 10+ years",
+          "hazard_ratio_by_fold": [
+            0.8305,
+            0.8362,
+            1.0468,
+            0.9443
+          ],
+          "same_sign_all_folds": false
+        },
+        {
+          "term": "tenure_x_manager_changes=2-3 years | 2+",
+          "hazard_ratio_by_fold": [
+            1.0526,
+            1.0543,
+            1.0269,
+            0.9485
+          ],
+          "same_sign_all_folds": false
+        },
+        {
+          "term": "level_x_tenure=3 - Princ/Directors | <1 year",
+          "hazard_ratio_by_fold": [
+            0.9919,
+            0.9892,
+            1.0065,
+            1.0537
+          ],
+          "same_sign_all_folds": false
+        },
+        {
+          "term": "level_x_tenure=1 - VP & Above | 2-3 years",
+          "hazard_ratio_by_fold": [
+            0.9963,
+            0.9944,
+            0.9514,
+            0.9504
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=1 - VP & Above | <1 year",
+          "hazard_ratio_by_fold": [
+            0.996,
+            0.996,
+            0.9634,
+            0.9598
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=1 - VP & Above | 1-2 years",
+          "hazard_ratio_by_fold": [
+            0.9952,
+            0.995,
+            0.9635,
+            0.9601
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=3 - Princ/Directors | 1-2 years",
+          "hazard_ratio_by_fold": [
+            1.0154,
+            0.9989,
+            0.9858,
+            1.0252
+          ],
+          "same_sign_all_folds": false
+        },
+        {
+          "term": "tenure_x_manager_changes=10+ years | 1",
+          "hazard_ratio_by_fold": [
+            0.9758,
+            0.998,
+            1.0621,
+            1.0216
+          ],
+          "same_sign_all_folds": false
+        },
+        {
+          "term": "level_x_tenure=8 - Assoc & Int/Eng | 2-3 years",
+          "hazard_ratio_by_fold": [
+            1.0856,
+            1.0695,
+            1.0251,
+            1.0109
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=6 - Staff & /Mgr | 10+ years",
+          "hazard_ratio_by_fold": [
+            0.805,
+            0.8086,
+            1.0608,
+            1.0021
+          ],
+          "same_sign_all_folds": false
+        },
+        {
+          "term": "team_exits_12m=(unknown)",
+          "hazard_ratio_by_fold": [
+            null,
+            0.9999,
+            0.9994,
+            0.9994
+          ],
+          "same_sign_all_folds": false
+        },
+        {
+          "term": "level_grouped=Misc",
+          "hazard_ratio_by_fold": [
+            0.9999,
+            0.9999,
+            0.9995,
+            0.9995
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "level_x_tenure=Misc | 10+ years",
+          "hazard_ratio_by_fold": [
+            0.9999,
+            0.9999,
+            0.9995,
+            0.9995
+          ],
+          "same_sign_all_folds": true
+        },
+        {
+          "term": "tenure_playbook_band=5-10 years",
+          "hazard_ratio_by_fold": [
+            1.1102,
+            1.124,
+            null,
+            null
+          ],
+          "same_sign_all_folds": false
+        }
+      ],
+      "references": {
+        "level_grouped": "7 - Senior & Lead",
+        "tenure_playbook_band": "5-10 years",
+        "calendar_month": "7",
+        "manager_changes_12m": "0",
+        "team_exits_12m": "0",
+        "direct_reports_band": "0",
+        "time_since_promotion_band": "sin promo en historial",
+        "rehire": "no",
+        "level_x_tenure": "ref",
+        "tenure_x_manager_changes": "ref"
+      },
+      "groups": {
+        "snapshot": "2026-07-26",
+        "people": 37221,
+        "mean_predicted_6m_percent": 2.795,
+        "max_depth": 3,
+        "min_leaf_people": 300,
+        "variance_explained_r2": 0.5344,
+        "groups": [
+          {
+            "rule": "tenure_playbook_band ≠ 10+ years y team_exits_12m ≠ 0 y tenure_playbook_band = 3-5 years",
+            "people": 1854,
+            "people_share_percent": 4.98,
+            "predicted_6m_percent": 5.636,
+            "last_fold_people_per_snapshot": 1939,
+            "last_fold_predicted_percent": 6.28,
+            "last_fold_events": 625,
+            "last_fold_observed_percent": 5.373,
+            "lift_vs_mean": 2.017
+          },
+          {
+            "rule": "tenure_playbook_band ≠ 10+ years y team_exits_12m ≠ 0 y tenure_playbook_band ≠ 3-5 years",
+            "people": 5636,
+            "people_share_percent": 15.14,
+            "predicted_6m_percent": 3.915,
+            "last_fold_people_per_snapshot": 4853,
+            "last_fold_predicted_percent": 4.278,
+            "last_fold_events": 1185,
+            "last_fold_observed_percent": 4.07,
+            "lift_vs_mean": 1.401
+          },
+          {
+            "rule": "tenure_playbook_band ≠ 10+ years y team_exits_12m = 0 y tenure_playbook_band = 3-5 years",
+            "people": 5294,
+            "people_share_percent": 14.22,
+            "predicted_6m_percent": 3.712,
+            "last_fold_people_per_snapshot": 5516,
+            "last_fold_predicted_percent": 4.177,
+            "last_fold_events": 1254,
+            "last_fold_observed_percent": 3.789,
+            "lift_vs_mean": 1.328
+          },
+          {
+            "rule": "tenure_playbook_band ≠ 10+ years y team_exits_12m = 0 y tenure_playbook_band ≠ 3-5 years",
+            "people": 15557,
+            "people_share_percent": 41.8,
+            "predicted_6m_percent": 2.557,
+            "last_fold_people_per_snapshot": 13280,
+            "last_fold_predicted_percent": 2.787,
+            "last_fold_events": 2266,
+            "last_fold_observed_percent": 2.844,
+            "lift_vs_mean": 0.915
+          },
+          {
+            "rule": "tenure_playbook_band = 10+ years y direct_reports_band = 0 y team_exits_12m ≠ 0",
+            "people": 696,
+            "people_share_percent": 1.87,
+            "predicted_6m_percent": 2.335,
+            "last_fold_people_per_snapshot": 598,
+            "last_fold_predicted_percent": 2.524,
+            "last_fold_events": 114,
+            "last_fold_observed_percent": 3.179,
+            "lift_vs_mean": 0.835
+          },
+          {
+            "rule": "tenure_playbook_band = 10+ years y direct_reports_band = 0 y team_exits_12m = 0",
+            "people": 3359,
+            "people_share_percent": 9.02,
+            "predicted_6m_percent": 1.541,
+            "last_fold_people_per_snapshot": 3167,
+            "last_fold_predicted_percent": 1.632,
+            "last_fold_events": 346,
+            "last_fold_observed_percent": 1.821,
+            "lift_vs_mean": 0.551
+          },
+          {
+            "rule": "tenure_playbook_band = 10+ years y direct_reports_band ≠ 0 y team_exits_12m ≠ 0",
+            "people": 871,
+            "people_share_percent": 2.34,
+            "predicted_6m_percent": 1.538,
+            "last_fold_people_per_snapshot": 717,
+            "last_fold_predicted_percent": 1.73,
+            "last_fold_events": 65,
+            "last_fold_observed_percent": 1.51,
+            "lift_vs_mean": 0.55
+          },
+          {
+            "rule": "tenure_playbook_band = 10+ years y direct_reports_band ≠ 0 y team_exits_12m = 0",
+            "people": 3954,
+            "people_share_percent": 10.62,
+            "predicted_6m_percent": 0.998,
+            "last_fold_people_per_snapshot": 3785,
+            "last_fold_predicted_percent": 1.11,
+            "last_fold_events": 233,
+            "last_fold_observed_percent": 1.026,
+            "lift_vs_mean": 0.357
+          }
+        ]
+      },
+      "subgroup_calibration": [
+        {
+          "variable": "level_grouped",
+          "category": "1 - VP & Above",
+          "people_per_snapshot": 212,
+          "predicted_percent": 0.843,
+          "observed_percent": 2.745,
+          "ratio": 0.307
+        },
+        {
+          "variable": "level_grouped",
+          "category": "2 - Sr Dir",
+          "people_per_snapshot": 867,
+          "predicted_percent": 1.18,
+          "observed_percent": 1.307,
+          "ratio": 0.903
+        },
+        {
+          "variable": "level_grouped",
+          "category": "3 - Princ/Directors",
+          "people_per_snapshot": 3225,
+          "predicted_percent": 1.659,
+          "observed_percent": 1.866,
+          "ratio": 0.889
+        },
+        {
+          "variable": "level_grouped",
+          "category": "5 - Sr Staff & /Mgr",
+          "people_per_snapshot": 6216,
+          "predicted_percent": 1.934,
+          "observed_percent": 2.091,
+          "ratio": 0.925
+        },
+        {
+          "variable": "level_grouped",
+          "category": "6 - Staff & /Mgr",
+          "people_per_snapshot": 6632,
+          "predicted_percent": 2.838,
+          "observed_percent": 3.146,
+          "ratio": 0.902
+        },
+        {
+          "variable": "level_grouped",
+          "category": "7 - Senior & Lead",
+          "people_per_snapshot": 11428,
+          "predicted_percent": 3.831,
+          "observed_percent": 3.639,
+          "ratio": 1.053
+        },
+        {
+          "variable": "level_grouped",
+          "category": "8 - Assoc & Int/Eng",
+          "people_per_snapshot": 5276,
+          "predicted_percent": 4.537,
+          "observed_percent": 3.465,
+          "ratio": 1.309
+        },
+        {
+          "variable": "tenure_playbook_band",
+          "category": "1-2 years",
+          "people_per_snapshot": 2964,
+          "predicted_percent": 3.169,
+          "observed_percent": 3.098,
+          "ratio": 1.023
+        },
+        {
+          "variable": "tenure_playbook_band",
+          "category": "10+ years",
+          "people_per_snapshot": 8268,
+          "predicted_percent": 1.466,
+          "observed_percent": 1.528,
+          "ratio": 0.959
+        },
+        {
+          "variable": "tenure_playbook_band",
+          "category": "2-3 years",
+          "people_per_snapshot": 2204,
+          "predicted_percent": 4.538,
+          "observed_percent": 4.129,
+          "ratio": 1.099
+        },
+        {
+          "variable": "tenure_playbook_band",
+          "category": "3-5 years",
+          "people_per_snapshot": 7455,
+          "predicted_percent": 4.724,
+          "observed_percent": 4.201,
+          "ratio": 1.125
+        },
+        {
+          "variable": "tenure_playbook_band",
+          "category": "5-10 years",
+          "people_per_snapshot": 8847,
+          "predicted_percent": 3.175,
+          "observed_percent": 3.165,
+          "ratio": 1.003
+        },
+        {
+          "variable": "tenure_playbook_band",
+          "category": "<1 year",
+          "people_per_snapshot": 4118,
+          "predicted_percent": 2.499,
+          "observed_percent": 2.728,
+          "ratio": 0.916
+        },
+        {
+          "variable": "manager_changes_12m",
+          "category": "0",
+          "people_per_snapshot": 24742,
+          "predicted_percent": 2.872,
+          "observed_percent": 2.802,
+          "ratio": 1.025
+        },
+        {
+          "variable": "manager_changes_12m",
+          "category": "1",
+          "people_per_snapshot": 7313,
+          "predicted_percent": 3.656,
+          "observed_percent": 3.211,
+          "ratio": 1.138
+        },
+        {
+          "variable": "manager_changes_12m",
+          "category": "2+",
+          "people_per_snapshot": 1801,
+          "predicted_percent": 4.069,
+          "observed_percent": 4.811,
+          "ratio": 0.846
+        },
+        {
+          "variable": "team_exits_12m",
+          "category": "0",
+          "people_per_snapshot": 25750,
+          "predicted_percent": 2.696,
+          "observed_percent": 2.653,
+          "ratio": 1.016
+        },
+        {
+          "variable": "team_exits_12m",
+          "category": "1",
+          "people_per_snapshot": 6030,
+          "predicted_percent": 4.106,
+          "observed_percent": 3.985,
+          "ratio": 1.03
+        },
+        {
+          "variable": "team_exits_12m",
+          "category": "2+",
+          "people_per_snapshot": 2076,
+          "predicted_percent": 5.263,
+          "observed_percent": 4.391,
+          "ratio": 1.199
+        },
+        {
+          "variable": "direct_reports_band",
+          "category": "0",
+          "people_per_snapshot": 26406,
+          "predicted_percent": 3.506,
+          "observed_percent": 3.322,
+          "ratio": 1.055
+        },
+        {
+          "variable": "direct_reports_band",
+          "category": "1-5",
+          "people_per_snapshot": 5103,
+          "predicted_percent": 1.914,
+          "observed_percent": 1.894,
+          "ratio": 1.011
+        },
+        {
+          "variable": "direct_reports_band",
+          "category": "6+",
+          "people_per_snapshot": 2347,
+          "predicted_percent": 1.178,
+          "observed_percent": 1.74,
+          "ratio": 0.677
+        },
+        {
+          "variable": "time_since_promotion_band",
+          "category": "promo 1-2 years",
+          "people_per_snapshot": 3705,
+          "predicted_percent": 3.909,
+          "observed_percent": 3.436,
+          "ratio": 1.137
+        },
+        {
+          "variable": "time_since_promotion_band",
+          "category": "promo 2-3 years",
+          "people_per_snapshot": 3141,
+          "predicted_percent": 2.896,
+          "observed_percent": 3.306,
+          "ratio": 0.876
+        },
+        {
+          "variable": "time_since_promotion_band",
+          "category": "promo 3+ years",
+          "people_per_snapshot": 5106,
+          "predicted_percent": 2.337,
+          "observed_percent": 2.37,
+          "ratio": 0.986
+        },
+        {
+          "variable": "time_since_promotion_band",
+          "category": "promo <1 year",
+          "people_per_snapshot": 3942,
+          "predicted_percent": 3.424,
+          "observed_percent": 3.395,
+          "ratio": 1.008
+        },
+        {
+          "variable": "time_since_promotion_band",
+          "category": "sin promo en historial",
+          "people_per_snapshot": 4895,
+          "predicted_percent": 2.13,
+          "observed_percent": 1.706,
+          "ratio": 1.249
+        },
+        {
+          "variable": "time_since_promotion_band",
+          "category": "sin promo, contratado 1-3 years",
+          "people_per_snapshot": 4705,
+          "predicted_percent": 3.703,
+          "observed_percent": 3.613,
+          "ratio": 1.025
+        },
+        {
+          "variable": "time_since_promotion_band",
+          "category": "sin promo, contratado 3+ years",
+          "people_per_snapshot": 3688,
+          "predicted_percent": 4.507,
+          "observed_percent": 3.986,
+          "ratio": 1.131
+        },
+        {
+          "variable": "time_since_promotion_band",
+          "category": "sin promo, contratado <1 year",
+          "people_per_snapshot": 4673,
+          "predicted_percent": 2.489,
+          "observed_percent": 2.743,
+          "ratio": 0.907
+        },
+        {
+          "variable": "rehire",
+          "category": "no",
+          "people_per_snapshot": 28765,
+          "predicted_percent": 2.937,
+          "observed_percent": 2.765,
+          "ratio": 1.062
+        },
+        {
+          "variable": "rehire",
+          "category": "yes",
+          "people_per_snapshot": 5092,
+          "predicted_percent": 4.05,
+          "observed_percent": 4.308,
+          "ratio": 0.94
+        }
+      ]
+    }
+  },
+  "privacy": {
+    "employee_level_rows_persisted": false,
+    "employee_ids_selected": false,
+    "aggregate_training_frame_persisted": false,
+    "individual_scores_published": false,
+    "minimum_group_people_per_snapshot": 30,
+    "minimum_published_events": 30
+  }
+}

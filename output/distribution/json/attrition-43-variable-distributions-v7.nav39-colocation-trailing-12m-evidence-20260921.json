@@ -1,0 +1,65 @@
+{
+  "artifact_type": "aggregate_segment_attrition_evidence",
+  "version": 1,
+  "generated_on": "2026-09-21",
+  "deliverable_mode": "presentation",
+  "artifact_classification": "presentation",
+  "purpose": "Regenerar las etiquetas de attrition del slide de co-location con ventanas retrospectivas completas de doce meses, en lugar de suprimir FY2025-FY2026 por seguimiento prospectivo incompleto.",
+  "outcome_contract": {
+    "population": "active regular employees at each fiscal-year-end baseline snapshot with an observable employee-manager assigned-location pair",
+    "grain": "baseline employee snapshot",
+    "co_location_rule": "Employee and manager have the same normalized stored office_site; the second series also requires the same normalized city. This is an assigned-location proxy, not proof of physical co-location.",
+    "target": "term_type='VOLUNTARY' with term_date in (baseline_snapshot_date, outcome_cutoff_date]",
+    "window_rule": "Each fiscal-year label is the trailing window ending at that fiscal year's final available snapshot, with the prior fiscal-year-end snapshot as baseline.",
+    "fy2020": "Not estimable because the source does not contain the preceding fiscal-year-end baseline required for a full trailing window.",
+    "minimum_employee_count": 30
+  },
+  "execution": {
+    "executed_on": "2026-09-21",
+    "query_path": "queries/audits/v7_nav39_colocation_august_trailing_12m_attrition_20260921.sql",
+    "query_sha256": "9141B63C1B6A3813E71E9C710834055DC98856877EFB2B2CD9C3AF4049D00F93",
+    "result_row_count": 18,
+    "reporting_mode": "presentation"
+  },
+  "rates": {
+    "same_office_site": [
+      {"fiscal_year": "2021", "baseline_snapshot_date": "2020-09-27", "outcome_cutoff_date": "2021-09-26", "window_days": 364, "employee_count": 28879, "voluntary_exits": 1652, "annual_attrition_rate_percent": 5.7204, "publication_status": "publishable"},
+      {"fiscal_year": "2022", "baseline_snapshot_date": "2021-09-26", "outcome_cutoff_date": "2022-09-25", "window_days": 364, "employee_count": 34571, "voluntary_exits": 3202, "annual_attrition_rate_percent": 9.2621, "publication_status": "publishable"},
+      {"fiscal_year": "2023", "baseline_snapshot_date": "2022-09-25", "outcome_cutoff_date": "2023-09-24", "window_days": 364, "employee_count": 38119, "voluntary_exits": 1732, "annual_attrition_rate_percent": 4.5437, "publication_status": "publishable"},
+      {"fiscal_year": "2024", "baseline_snapshot_date": "2023-09-24", "outcome_cutoff_date": "2024-09-29", "window_days": 371, "employee_count": 38405, "voluntary_exits": 2145, "annual_attrition_rate_percent": 5.5852, "publication_status": "publishable"},
+      {"fiscal_year": "2025", "baseline_snapshot_date": "2024-09-29", "outcome_cutoff_date": "2025-09-28", "window_days": 364, "employee_count": 37914, "voluntary_exits": 2126, "annual_attrition_rate_percent": 5.6074, "publication_status": "publishable"},
+      {"fiscal_year": "2026", "baseline_snapshot_date": "2025-09-28", "outcome_cutoff_date": "2026-09-27", "window_days": 364, "employee_count": 39778, "voluntary_exits": 2180, "annual_attrition_rate_percent": 5.4804, "publication_status": "publishable"}
+    ],
+    "same_office_site_and_city": [
+      {"fiscal_year": "2021", "baseline_snapshot_date": "2020-09-27", "outcome_cutoff_date": "2021-09-26", "window_days": 364, "employee_count": 28086, "voluntary_exits": 1635, "annual_attrition_rate_percent": 5.8214, "publication_status": "publishable"},
+      {"fiscal_year": "2022", "baseline_snapshot_date": "2021-09-26", "outcome_cutoff_date": "2022-09-25", "window_days": 364, "employee_count": 33611, "voluntary_exits": 3126, "annual_attrition_rate_percent": 9.3005, "publication_status": "publishable"},
+      {"fiscal_year": "2023", "baseline_snapshot_date": "2022-09-25", "outcome_cutoff_date": "2023-09-24", "window_days": 364, "employee_count": 37044, "voluntary_exits": 1688, "annual_attrition_rate_percent": 4.5567, "publication_status": "publishable"},
+      {"fiscal_year": "2024", "baseline_snapshot_date": "2023-09-24", "outcome_cutoff_date": "2024-09-29", "window_days": 371, "employee_count": 37320, "voluntary_exits": 2094, "annual_attrition_rate_percent": 5.6109, "publication_status": "publishable"},
+      {"fiscal_year": "2025", "baseline_snapshot_date": "2024-09-29", "outcome_cutoff_date": "2025-09-28", "window_days": 364, "employee_count": 36627, "voluntary_exits": 2089, "annual_attrition_rate_percent": 5.7034, "publication_status": "publishable"},
+      {"fiscal_year": "2026", "baseline_snapshot_date": "2025-09-28", "outcome_cutoff_date": "2026-09-27", "window_days": 364, "employee_count": 38296, "voluntary_exits": 2120, "annual_attrition_rate_percent": 5.5358, "publication_status": "publishable"}
+    ]
+  },
+  "diagnostics": [
+    {"fiscal_year": "2021", "baseline_snapshot_date": "2020-09-27", "outcome_cutoff_date": "2021-09-26", "window_days": 364, "active_baseline_employee_count": 30965, "duplicate_employee_snapshot_count": 0, "conflicting_employee_snapshot_count": 0, "unmatched_manager_count": 270, "outcome": "complete_trailing_window"},
+    {"fiscal_year": "2022", "baseline_snapshot_date": "2021-09-26", "outcome_cutoff_date": "2022-09-25", "window_days": 364, "active_baseline_employee_count": 37550, "duplicate_employee_snapshot_count": 0, "conflicting_employee_snapshot_count": 0, "unmatched_manager_count": 430, "outcome": "complete_trailing_window"},
+    {"fiscal_year": "2023", "baseline_snapshot_date": "2022-09-25", "outcome_cutoff_date": "2023-09-24", "window_days": 364, "active_baseline_employee_count": 42227, "duplicate_employee_snapshot_count": 0, "conflicting_employee_snapshot_count": 0, "unmatched_manager_count": 366, "outcome": "complete_trailing_window"},
+    {"fiscal_year": "2024", "baseline_snapshot_date": "2023-09-24", "outcome_cutoff_date": "2024-09-29", "window_days": 371, "active_baseline_employee_count": 42572, "duplicate_employee_snapshot_count": 0, "conflicting_employee_snapshot_count": 0, "unmatched_manager_count": 354, "outcome": "complete_trailing_window_53_week_fiscal_year"},
+    {"fiscal_year": "2025", "baseline_snapshot_date": "2024-09-29", "outcome_cutoff_date": "2025-09-28", "window_days": 364, "active_baseline_employee_count": 42191, "duplicate_employee_snapshot_count": 0, "conflicting_employee_snapshot_count": 0, "unmatched_manager_count": 256, "outcome": "complete_trailing_window"},
+    {"fiscal_year": "2026", "baseline_snapshot_date": "2025-09-28", "outcome_cutoff_date": "2026-09-27", "window_days": 364, "active_baseline_employee_count": 45141, "duplicate_employee_snapshot_count": 0, "conflicting_employee_snapshot_count": 0, "unmatched_manager_count": 254, "outcome": "complete_trailing_window"}
+  ],
+  "acceptance_rule": {
+    "expected_trailing_windows": ["2021", "2022", "2023", "2024", "2025", "2026"],
+    "observed_trailing_windows": ["2021", "2022", "2023", "2024", "2025", "2026"],
+    "all_windows_complete": true,
+    "all_displayed_cohorts_at_least_30": true,
+    "duplicate_employee_snapshot_count": 0,
+    "conflicting_employee_snapshot_count": 0,
+    "outcome": "pass"
+  },
+  "limitations": [
+    "The FY2020 distribution remains visible, but there is no preceding fiscal-year-end baseline in the source for a comparable full trailing window.",
+    "Unmatched manager records are excluded from the same-site cohorts; their aggregate counts are retained as a coverage diagnostic.",
+    "The 371-day FY2024 interval reflects the source fiscal calendar's 53-week year."
+  ],
+  "outcome": "pass"
+}

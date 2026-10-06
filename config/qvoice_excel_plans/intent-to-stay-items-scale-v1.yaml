@@ -1,0 +1,62 @@
+schema_version: 1
+plan_version: 1
+language: es
+created_before_execution: true
+plan_authorship: codex_explicit
+variable: Intent to Stay items-scale
+concept: KPI ordinal 1-5 Intent to Stay calculado como el promedio de Q4 y Q12 segun survey_structure.xlsx.
+intended_use: Comparar la senal ordinal 1-5 de Intent to Stay con attrition posterior.
+knowledge_date: Fecha de la wave QVoice; excluir informacion posterior.
+population: Respuestas QVoice con una fila por empleado-wave tras deduplicacion interna y al menos un componente Q4/Q12 valido.
+grain: Employee-wave response aggregate
+semantic_type: derived_feature
+validation_story:
+  - id: source_access
+    criterion: source
+    evidence_role: supporting
+    question: ¿El diccionario y los encabezados de cada workbook resuelven Q4 y Q12 en la forma 1-5?
+    why: La escala debe conservar la misma definicion de componentes que la forma binaria y su historia disponible.
+    method: schema_access_check
+    sql_reference: queries/audits/qvoice_excel_source_inventory_20260826-2.sql
+    acceptance_rule: El mapping completo requiere ambos componentes en cada wave ordinal; la ausencia historica se conserva como limitacion de Source y History.
+    metric_map:
+      missing_items: {column: missing_items, aggregate: sum}
+    metric_checks:
+      - {metric: missing_items, operator: gte, threshold: 0, aggregate: sum}
+  - id: scale_definition
+    criterion: definition
+    evidence_role: defining
+    question: ¿El promedio ordinal se calcula con Q4 y Q12 validos, distinguiendo respuestas completas de parciales?
+    why: Un valor fuera de rango o una respuesta parcial cambia la interpretacion de la escala y del KPI.
+    method: authoritative_definition_and_data_audit
+    sql_reference: queries/audits/qvoice_excel_definition_audit_20260826-2.sql
+    acceptance_rule: Debe haber respuestas pobladas, invalid_count igual a 0 y conteos separados de complete_component_count y partial_component_count; cualquier parcial limita Definition a 1.
+    metric_checks:
+      - {metric: eligible_count, operator: gt, threshold: 0, aggregate: sum}
+      - {metric: populated_count, operator: gt, threshold: 0, aggregate: sum}
+      - {metric: invalid_count, operator: eq, threshold: 0, aggregate: sum}
+      - {metric: partial_component_count, operator: gte, threshold: 0, aggregate: sum}
+      - {metric: complete_component_count, operator: gt, threshold: 0, aggregate: sum}
+  - id: scale_consistency
+    criterion: consistency
+    evidence_role: defining
+    question: ¿La disponibilidad de Q4/Q12 y el dominio 1-5 son trazables entre sus waves disponibles?
+    why: La historia 1-5 es corta y una respuesta parcial no debe tratarse como el mismo KPI completo.
+    method: longitudinal_aggregate_audit
+    sql_reference: queries/audits/qvoice_excel_consistency_audit_20260826-2.sql
+    acceptance_rule: No debe haber valores invalidos; cada cambio en available_component_count debe quedar explicado por el mapping del diccionario.
+    metric_checks:
+      - {metric: invalid_count, operator: eq, threshold: 0, aggregate: sum}
+      - {metric: item_set_change_count, operator: gte, threshold: 0, aggregate: sum}
+  - id: scale_employee_wave_grain
+    criterion: join
+    evidence_role: supporting
+    question: ¿El Excel conserva un grain unico de empleado-wave para la escala?
+    why: La deduplicacion precede al join temporal con workforce y evita sobrecontar respuestas.
+    method: key_grain_and_temporal_reconciliation
+    sql_reference: queries/audits/qvoice_excel_join_grain_audit_20260826-2.sql
+    acceptance_rule: No debe haber filas duplicadas o sin grain interno; el join a workforce queda pendiente.
+    metric_checks:
+      - {metric: matched_count, operator: gt, threshold: 0, aggregate: sum}
+      - {metric: unmatched_count, operator: eq, threshold: 0, aggregate: sum}
+      - {metric: duplicate_count, operator: eq, threshold: 0, aggregate: sum}

@@ -1,0 +1,178 @@
+schema_version: 1
+language: es
+model_id: critical-tech-voluntary-attrition-discrete-hazard
+status: exploratory-aggregate-screen-complete
+knowledge_boundary: '2026-09-07'
+
+problem_context:
+  objective: >-
+    Identificar cohortes dentro de Critical Tech con attrition voluntario
+    elevado, entender las señales asociadas y priorizar acciones de retención
+    que puedan evaluarse.
+  decision: >-
+    Decidir dónde concentrar diagnósticos y acciones agregadas de People
+    Analytics, sin producir targeting ni scores individuales.
+  scope: >-
+    Sólo empleados regulares activos cuyo job_family coincide con el catálogo
+    hrda.critical_tech.
+
+population:
+  source_table: hrda.post_hire_monthly_worker_dtls
+  worker_type: Employee
+  employee_type: Regular
+  active_status: 1
+  critical_tech_join:
+    table: hrda.critical_tech
+    left_key: job_family
+    right_key: extended_job_family
+    normalization: trim_lower
+    temporal_status: current_mapping_applied_exploratorily
+    historical_archive_reconciliation: pending
+
+grain:
+  exposure: employee_snapshot_month
+  internal_training_key: employee_id + snapshot_date
+  published_output: cohort_only
+
+outcome:
+  primary:
+    name: voluntary_next_snapshot
+    definition: >-
+      Evento Voluntary deduplicado entre el snapshot actual y el siguiente
+      snapshot real del calendario mensual.
+    model_role: discrete_monthly_hazard
+  operational_rollup:
+    name: voluntary_attrition_6m
+    definition: >-
+      Al menos un evento Voluntary estrictamente después del snapshot y hasta
+      seis meses después.
+    use: cohort_screen_and_risk_rollup
+  exclusions_pending_business_confirmation:
+    - Voluntary Exception
+    - null_term_type
+  excluded_from_primary_target:
+    - Involuntary
+
+model:
+  champion_candidate:
+    family: discrete_time_survival
+    link: complementary_log_log
+    formula: log(-log(1 - hazard)) = baseline_month + beta_X
+    baseline: calendar_month_or_fiscal_month
+    regularization: elastic_net_or_l2
+    standard_errors: employee_clustered_for_inference_only
+  benchmark:
+    - historical_baseline
+    - broad_cohort_baseline
+    - direct_six_month_logistic
+  challenger:
+    family: gradient_boosting_or_random_survival_forest
+    promotion_rule: >-
+      Sólo puede ser champion si mejora lift, PR-AUC, Brier/calibración y
+      estabilidad temporal de forma consistente y mantiene explicabilidad.
+  risk_rollup: 1 - product(1 - monthly_hazard_over_next_6_snapshots)
+
+feature_blocks:
+  scope_and_context:
+    - seg
+    - job_family
+    - job_family_group
+    - level_grouped
+    - management_level
+    - region
+    - labor_market
+  career_and_tenure:
+    - company_tenure_band
+    - position_or_time_in_level
+    - time_since_last_promotion
+    - promoted_vs_hired_into_level
+  manager_and_mobility:
+    - manager_change_12m
+    - number_of_manager_changes
+    - manager_leaving_lookback
+    - team_turnover_lagged
+    - transfer_12m
+    - promotion_12m
+  work_arrangement:
+    - work_arrangement_governed_band
+  governed_challengers:
+    - qvoice_intent_to_stay
+    - qvoice_career_goals
+    - compensation_relative_band
+  reserved_or_excluded:
+    - gender_for_targeting
+    - free_text_qvoice
+    - talent_index_current
+    - high_risk_manager_as_label
+    - external_identity_scraping
+
+time_safety:
+  feature_as_of: snapshot_date
+  target_after_snapshot_only: true
+  use_future_term_fields_as_features: false
+  use_future_manager_events: false
+  qvoice_latest_wave_at_or_before_snapshot: true
+  rolling_event_windows_closed_at_snapshot: true
+  exclude_incomplete_six_month_follow_up: true
+  future_snapshot_2026_09_27:
+    status: excluded_until_explained
+
+cohort_discovery:
+  query: queries/audits/critical_tech_cohort_discovery_20260907.sql
+  minimum_shared_employees: 30
+  minimum_positive_events: 30
+  preferred_shared_employees: 100
+  minimum_lift_for_priority: 1.25
+  temporal_stability:
+    periods_required_with_30_events: 2
+    maximum_rate_range_percentage_points: 5
+  unknown_event_categories:
+    interpretation: data_quality_gap
+    actionability: do_not_treat_as_driver
+
+validation:
+  design: rolling_origin_out_of_time
+  primary_split: train_earlier_validate_later
+  final_holdout: latest_complete_block_with_full_target_horizon
+  random_split_primary: false
+  metrics:
+    - PR_AUC
+    - lift_at_operational_percentiles
+    - precision_at_operational_percentiles
+    - brier_score
+    - calibration_global
+    - calibration_by_large_cohort
+    - monthly_stability
+    - fiscal_year_stability
+    - feature_drift
+    - authorized_fairness_audits
+
+actions:
+  output_contract:
+    - cohort
+    - size
+    - observed_rate_or_lift
+    - associated_signal
+    - candidate_lever
+    - approved_action
+    - owner
+    - process_metric
+    - retention_metric
+    - review_date
+  causal_status: association_is_not_causation
+  evaluation_design: pilot_or_quasi_experimental_before_scale
+
+privacy:
+  publish_employee_level_scores: false
+  publish_employee_ids: false
+  publish_names_or_contacts: false
+  publish_protected_categories: false
+  publish_exact_compensation: false
+  minimum_shared_cohort: 30
+  continuous_sensitive_features: bands_or_percentiles_only
+
+artifacts:
+  hazard_preflight_report: output/analysis/critical-tech/20260907/hazard-preflight-report.md
+  cohort_screen_report: output/analysis/critical-tech/20260907/cohort-screen-report.md
+  action_register: output/analysis/critical-tech/20260907/action-register.md
+  result_manifest: output/analysis/critical-tech/20260907/manifest.json

@@ -1,0 +1,152 @@
+schema_version: 1
+plan_version: 3
+plan_revision_reason: >-
+  El join v2 reconcilio sin perdidas los 17,542 eventos elegibles, pero mostro
+  4,540 terminaciones voluntarias de personas presentes alguna vez en la
+  poblacion que no tenian un snapshot activo-regular dentro de los 45 dias
+  previos. Esta revision clasifica esas exclusiones antes de confirmar que no
+  representan una perdida del join objetivo.
+language: es
+created_before_execution: true
+variable: High risk manager
+concept: >-
+  Riesgo historico ajustado de attrition voluntario asociado al manager, medido
+  en manager-snapshot y asignado al empleado-snapshot vigente.
+intended_use: >-
+  Incorporar al modelo una posible influencia del entorno de liderazgo sin
+  tratar la senal como causal ni como evaluacion individual del manager.
+knowledge_date: >-
+  Cierre fiscal mensual. Cada terminacion elegible se conoce desde el primer
+  cierre igual o posterior a term_date y se atribuye al ultimo manager observado
+  en la poblacion activa-regular antes del evento.
+population: Empleados regulares activos en cada snapshot mensual de prediccion.
+grain: Manager-snapshot para calculo; empleado-snapshot para consumo del modelo.
+semantic_type: derived_feature
+source_reasoning: >-
+  La tabla mensual aporta membresia, calendario, region, job_family,
+  job_level_primary_position y tenure time-safe. All_terminations aporta eventos
+  canonicos. Un evento solo pertenece al numerador del equipo cuando la persona
+  estaba en la poblacion activa-regular y tenia manager observable en los 45 dias
+  previos; los demas se clasifican como fuera de esa exposicion, no se descartan
+  silenciosamente.
+plan_authorship:
+  mode: codex_explicit
+  revision_reason: >-
+    Revision previa al SQL de seguimiento para explicar todas las terminaciones
+    sin snapshot objetivo reciente observadas por el join inicial.
+  generated_story_fallback: false
+validation_story:
+  - id: source_access
+    criterion: source
+    evidence_role: defining
+    question: ¿Existen ambas fuentes y todos los campos requeridos por la ruta v3?
+    why: Sin membresia, calendario, controles detallados y eventos no existe una ruta reproducible.
+    fields: [employee_id, manager_employee_id, fis_mo_end_dt, region, job_family, job_level_primary_position, max_hire_rehire_date, service_date, original_hire_date, employeeid, term_date, term_type]
+    method: Auditoria de information_schema para las dos fuentes y columnas seleccionadas.
+    sql_reference: queries/audits/high_risk_manager_source_access_20260821.sql
+    acceptance_rule: La prueba se aprueba solo cuando missing_items es cero.
+    metric_checks:
+      - {metric: missing_items, aggregate: sum, operator: eq, threshold: 0}
+  - id: component_coverage_v2
+    criterion: coverage
+    evidence_role: supporting
+    question: ¿Que tan completos estan los controles detallados y el tenure time-safe en cada snapshot?
+    why: La cobertura debe corresponder a la ruta seleccionada y no a campos agrupados alternativos.
+    fields: [manager_employee_id, region, job_family, job_level_primary_position, max_hire_rehire_date, service_date, original_hire_date]
+    method: Conteos mensuales con prioridad de fechas condicionada a que cada fecha sea menor o igual al snapshot.
+    sql_reference: queries/audits/high_risk_manager_input_components_v2_20260821.sql
+    acceptance_rule: La consulta debe reconciliar cada componente contra la poblacion mensual.
+    metric_fields: [eligible_count, manager_count, region_count, job_family_count, level_count, tenure_count, all_inputs_count]
+  - id: normalized_input_and_event_consistency_v2
+    criterion: consistency
+    evidence_role: defining
+    question: ¿La ruta normalizada elimina fechas futuras, duplicados, contradicciones y tipos no clasificados?
+    why: Estos problemas multiplicarian exposicion, asignarian tenure futuro o contaminarian salidas voluntarias.
+    fields: [employee_id, manager_employee_id, fis_mo_end_dt, job_family, job_level_primary_position, max_hire_rehire_date, service_date, original_hire_date, employeeid, term_date, term_type]
+    method: Auditar grain y eventos, seleccionar una fecha no futura y excluir term_type Unknown del numerador voluntario.
+    sql_reference: queries/audits/high_risk_manager_consistency_v2_20260821.sql
+    acceptance_rule: >-
+      Deben existir al menos 24 meses y anomaly_count, invalid_count,
+      unexplained_change_count, selected_tenure_future_rows y
+      unclassified_term_type_rows deben ser cero.
+    metric_checks:
+      - {metric: observations_checked, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: months_checked, aggregate: max, operator: gte, threshold: 24}
+      - {metric: anomaly_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: invalid_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: unexplained_change_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: selected_tenure_future_rows, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: unclassified_term_type_rows, aggregate: sum, operator: eq, threshold: 0}
+  - id: termination_and_feature_join
+    criterion: join
+    evidence_role: defining
+    question: ¿Cada salida elegible encuentra un solo manager previo y cada empleado-snapshot un solo manager-score?
+    why: Una perdida, multiplicacion o fecha futura cambia el manager al que se atribuye el evento y contamina la feature.
+    fields: [employeeid, term_date, employee_id, manager_employee_id, fis_mo_end_dt]
+    method: Deduplicar, seleccionar el ultimo snapshot menor a term_date, fijar la fecha de conocimiento y reconciliar el lookup final.
+    sql_reference: queries/audits/high_risk_manager_temporal_join_20260821.sql
+    acceptance_rule: >-
+      Deben existir eventos y matches; unmatched_count, duplicate_count,
+      multi_match_count, knowledge_unmatched_count,
+      knowledge_multi_match_count, feature_assignment_unmatched_count,
+      feature_assignment_multi_match_count y future_event_usage_count deben ser cero.
+    metric_checks:
+      - {metric: eligible_count, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: matched_count, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: unmatched_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: duplicate_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: multi_match_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: knowledge_unmatched_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: knowledge_multi_match_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: feature_assignment_unmatched_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: feature_assignment_multi_match_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: future_event_usage_count, aggregate: sum, operator: eq, threshold: 0}
+  - id: excluded_event_reconciliation
+    criterion: join
+    evidence_role: supporting
+    question: ¿Por que 4,540 eventos voluntarios no tenian snapshot activo-regular reciente?
+    why: Debemos distinguir eventos fuera de la poblacion expuesta de huecos o perdidas de datos.
+    fields: [employeeid, term_date, max_hire_rehire_date, employee_id, fis_mo_end_dt]
+    method: >-
+      Comparar cada evento excluido con el primer, ultimo y ultimo snapshot previo
+      del empleado; separar episodios anteriores, salidas posteriores al ultimo
+      snapshot y huecos dentro de la historia activa.
+    sql_reference: queries/audits/high_risk_manager_join_exclusions_v2_20260821.sql
+    acceptance_rule: >-
+      Todas las exclusiones deben reconciliarse en categorias mutuamente
+      excluyentes y unclassified_excluded_count debe ser cero. Los huecos dentro
+      de la historia se reportan como limitacion de poblacion, no como matches.
+    metric_checks:
+      - {metric: excluded_event_count, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: classified_excluded_count, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: unclassified_excluded_count, aggregate: sum, operator: eq, threshold: 0}
+  - id: structural_feature_coverage
+    criterion: history
+    evidence_role: defining
+    question: ¿Desde cuando y para que proporcion de empleados puede calcularse la feature con historia suficiente?
+    why: Un manager con poca exposicion o menos de seis scores evaluables debe quedar Unknown, no cero.
+    fields: [employee_id, manager_employee_id, fis_mo_end_dt]
+    method: Contar 12 snapshots de exposicion, 5 reportes, 60 empleado-meses y seis scores consecutivos evaluables.
+    sql_reference: queries/profiles/high_risk_manager_feature_coverage_20260821.sql
+    acceptance_rule: >-
+      El profile debe devolver una fila por snapshot; Coverage, Missingness e
+      History se calcularan con las reglas vigentes del skill.
+    metric_fields: [eligible_employees, observable_employees]
+  - id: unresolved_statistical_definition
+    criterion: definition
+    evidence_role: contextual
+    question: ¿La disponibilidad y los joins confirman ya la formula estadistica y sus umbrales?
+    why: Una feature derivada compleja requiere dos implementaciones, calibracion y backtest.
+    fields: [term_type, region, job_family, job_level_primary_position]
+    method: Separar factibilidad tecnica de validacion estadistica productiva.
+    sql_reference: queries/audits/high_risk_manager_consistency_v2_20260821.sql
+    acceptance_rule: Definition permanecera en uno hasta reconciliar la formula y calibrarla fuera de tiempo.
+    metric_fields: [voluntary_event_rows, voluntary_exception_event_rows, involuntary_event_rows]
+planned_sql:
+  - queries/audits/high_risk_manager_source_access_20260821.sql
+  - queries/audits/high_risk_manager_input_components_v2_20260821.sql
+  - queries/audits/high_risk_manager_consistency_v2_20260821.sql
+  - queries/audits/high_risk_manager_temporal_join_20260821.sql
+  - queries/audits/high_risk_manager_join_exclusions_v2_20260821.sql
+  - queries/profiles/high_risk_manager_feature_coverage_20260821.sql
+acceptance_rules_frozen: true

@@ -1,0 +1,309 @@
+{
+  "artifact": "internal_analysis",
+  "evidence_type": "aggregate-only QVoice improvement themes relevant to retention",
+  "generated_on": "2026-09-10",
+  "outcome": "pass",
+  "minimum_cohort": 30,
+  "scope": "Descriptive improvement-comment themes only; no attrition join, causal claim, model feature, or individual-risk label.",
+  "source_rule": "Original can-improve prompt in every wave; original processes-to-improve prompt additionally in Jan-2025 and Jan-2026 where available.",
+  "denominator_rule": "Distinct participants with at least one selected improvement comment in the same wave.",
+  "grain": "Distinct participant-wave-theme; themes are non-exclusive.",
+  "deduplication_rule": "A participant contributes at most once per wave and taxonomy theme across selected improvement prompts.",
+  "comment_text_persisted": false,
+  "identifiers_persisted": false,
+  "employee_rows_persisted": false,
+  "taxonomy": {
+    "Rewards": {
+      "alignment": "QVoice rewards / exit-survey rewards concept; no exit-survey data used."
+    },
+    "Career growth and promotion": {
+      "alignment": "QVoice career-growth / exit-survey advancement concept; no exit-survey data used."
+    },
+    "Manager, leadership and respect": {
+      "alignment": "QVoice leadership / exit-survey manager concept; no exit-survey data used."
+    },
+    "Workload, staffing and work-life": {
+      "alignment": "QVoice wellbeing / exit-survey workload concept; no exit-survey data used."
+    },
+    "Work arrangement/RTO/commute": {
+      "alignment": "QVoice flexibility / work-arrangement concept; no exit-survey data used."
+    },
+    "Tools, processes and bureaucracy": {
+      "alignment": "QVoice processes / tools concept; no exit-survey data used."
+    },
+    "Organizational confidence/job security": {
+      "alignment": "QVoice confidence / exit-survey organizational-security concept; no exit-survey data used."
+    }
+  },
+  "explicit_intent_to_leave_rule": "Conservative non-negated multiword English/Spanish wording, calculated separately as an aggregate contextual signal and never as an employee label.",
+  "waves": [
+    {
+      "wave": "Mar-2023",
+      "source_file": "March 2023 Pulse_raw data.xlsx",
+      "sheet": "Raw data",
+      "prompt_availability": {
+        "can_improve": true,
+        "processes_to_improve": false
+      },
+      "selected_prompt_rule": "can improve only",
+      "participant_rows": 7314,
+      "distinct_participant_keys": 7314,
+      "improvement_comment_participants": 3510,
+      "rows_with_improvement_comment": 3510,
+      "improvement_comments_without_key": 0,
+      "duplicate_participant_rows": 0,
+      "themes": {
+        "Rewards": {
+          "participant_count": 215,
+          "percent_of_improvement_comment_participants": 6.13,
+          "publication_status": "published"
+        },
+        "Career growth and promotion": {
+          "participant_count": 104,
+          "percent_of_improvement_comment_participants": 2.96,
+          "publication_status": "published"
+        },
+        "Manager, leadership and respect": {
+          "participant_count": 328,
+          "percent_of_improvement_comment_participants": 9.34,
+          "publication_status": "published"
+        },
+        "Workload, staffing and work-life": {
+          "participant_count": 364,
+          "percent_of_improvement_comment_participants": 10.37,
+          "publication_status": "published"
+        },
+        "Work arrangement/RTO/commute": {
+          "participant_count": 475,
+          "percent_of_improvement_comment_participants": 13.53,
+          "publication_status": "published"
+        },
+        "Tools, processes and bureaucracy": {
+          "participant_count": 261,
+          "percent_of_improvement_comment_participants": 7.44,
+          "publication_status": "published"
+        },
+        "Organizational confidence/job security": {
+          "participant_count": 103,
+          "percent_of_improvement_comment_participants": 2.93,
+          "publication_status": "published"
+        }
+      },
+      "explicit_intent_to_leave": {
+        "participant_count": null,
+        "percent_of_improvement_comment_participants": null,
+        "publication_status": "suppressed_below_n_30"
+      }
+    },
+    {
+      "wave": "Jan-2024",
+      "source_file": "Jan 2024 Qvoice raw data.xlsx",
+      "sheet": "Raw data",
+      "prompt_availability": {
+        "can_improve": true,
+        "processes_to_improve": false
+      },
+      "selected_prompt_rule": "can improve only",
+      "participant_rows": 36806,
+      "distinct_participant_keys": 36806,
+      "improvement_comment_participants": 19318,
+      "rows_with_improvement_comment": 19318,
+      "improvement_comments_without_key": 0,
+      "duplicate_participant_rows": 0,
+      "themes": {
+        "Rewards": {
+          "participant_count": 2157,
+          "percent_of_improvement_comment_participants": 11.17,
+          "publication_status": "published"
+        },
+        "Career growth and promotion": {
+          "participant_count": 959,
+          "percent_of_improvement_comment_participants": 4.96,
+          "publication_status": "published"
+        },
+        "Manager, leadership and respect": {
+          "participant_count": 1883,
+          "percent_of_improvement_comment_participants": 9.75,
+          "publication_status": "published"
+        },
+        "Workload, staffing and work-life": {
+          "participant_count": 2018,
+          "percent_of_improvement_comment_participants": 10.45,
+          "publication_status": "published"
+        },
+        "Work arrangement/RTO/commute": {
+          "participant_count": 1129,
+          "percent_of_improvement_comment_participants": 5.84,
+          "publication_status": "published"
+        },
+        "Tools, processes and bureaucracy": {
+          "participant_count": 1900,
+          "percent_of_improvement_comment_participants": 9.84,
+          "publication_status": "published"
+        },
+        "Organizational confidence/job security": {
+          "participant_count": 501,
+          "percent_of_improvement_comment_participants": 2.59,
+          "publication_status": "published"
+        }
+      },
+      "explicit_intent_to_leave": {
+        "participant_count": 31,
+        "percent_of_improvement_comment_participants": 0.16,
+        "publication_status": "published"
+      }
+    },
+    {
+      "wave": "Jan-2025",
+      "source_file": "Jan 2025_Qvoice_raw data.xlsx",
+      "sheet": "Raw data",
+      "prompt_availability": {
+        "can_improve": true,
+        "processes_to_improve": true
+      },
+      "selected_prompt_rule": "can improve plus processes to improve",
+      "participant_rows": 37837,
+      "distinct_participant_keys": 37837,
+      "improvement_comment_participants": 18506,
+      "rows_with_improvement_comment": 18506,
+      "improvement_comments_without_key": 0,
+      "duplicate_participant_rows": 0,
+      "themes": {
+        "Rewards": {
+          "participant_count": 1482,
+          "percent_of_improvement_comment_participants": 8.01,
+          "publication_status": "published"
+        },
+        "Career growth and promotion": {
+          "participant_count": 967,
+          "percent_of_improvement_comment_participants": 5.23,
+          "publication_status": "published"
+        },
+        "Manager, leadership and respect": {
+          "participant_count": 2279,
+          "percent_of_improvement_comment_participants": 12.31,
+          "publication_status": "published"
+        },
+        "Workload, staffing and work-life": {
+          "participant_count": 2208,
+          "percent_of_improvement_comment_participants": 11.93,
+          "publication_status": "published"
+        },
+        "Work arrangement/RTO/commute": {
+          "participant_count": 2410,
+          "percent_of_improvement_comment_participants": 13.02,
+          "publication_status": "published"
+        },
+        "Tools, processes and bureaucracy": {
+          "participant_count": 2704,
+          "percent_of_improvement_comment_participants": 14.61,
+          "publication_status": "published"
+        },
+        "Organizational confidence/job security": {
+          "participant_count": 502,
+          "percent_of_improvement_comment_participants": 2.71,
+          "publication_status": "published"
+        }
+      },
+      "explicit_intent_to_leave": {
+        "participant_count": null,
+        "percent_of_improvement_comment_participants": null,
+        "publication_status": "suppressed_below_n_30"
+      }
+    },
+    {
+      "wave": "Jan-2026",
+      "source_file": "Jan 2026 Qvoice_raw data.xlsx",
+      "sheet": "Raw data",
+      "prompt_availability": {
+        "can_improve": true,
+        "processes_to_improve": true
+      },
+      "selected_prompt_rule": "can improve plus processes to improve",
+      "participant_rows": 42203,
+      "distinct_participant_keys": 42203,
+      "improvement_comment_participants": 13862,
+      "rows_with_improvement_comment": 13862,
+      "improvement_comments_without_key": 0,
+      "duplicate_participant_rows": 0,
+      "themes": {
+        "Rewards": {
+          "participant_count": 1254,
+          "percent_of_improvement_comment_participants": 9.05,
+          "publication_status": "published"
+        },
+        "Career growth and promotion": {
+          "participant_count": 802,
+          "percent_of_improvement_comment_participants": 5.79,
+          "publication_status": "published"
+        },
+        "Manager, leadership and respect": {
+          "participant_count": 1944,
+          "percent_of_improvement_comment_participants": 14.02,
+          "publication_status": "published"
+        },
+        "Workload, staffing and work-life": {
+          "participant_count": 1502,
+          "percent_of_improvement_comment_participants": 10.84,
+          "publication_status": "published"
+        },
+        "Work arrangement/RTO/commute": {
+          "participant_count": 2443,
+          "percent_of_improvement_comment_participants": 17.62,
+          "publication_status": "published"
+        },
+        "Tools, processes and bureaucracy": {
+          "participant_count": 2505,
+          "percent_of_improvement_comment_participants": 18.07,
+          "publication_status": "published"
+        },
+        "Organizational confidence/job security": {
+          "participant_count": 156,
+          "percent_of_improvement_comment_participants": 1.13,
+          "publication_status": "published"
+        }
+      },
+      "explicit_intent_to_leave": {
+        "participant_count": null,
+        "percent_of_improvement_comment_participants": null,
+        "publication_status": "suppressed_below_n_30"
+      }
+    }
+  ],
+  "jan_2026_display": {
+    "ranked_themes": [
+      "Tools, processes and bureaucracy",
+      "Work arrangement/RTO/commute",
+      "Manager, leadership and respect",
+      "Workload, staffing and work-life",
+      "Rewards"
+    ],
+    "trend_themes": [
+      "Tools, processes and bureaucracy",
+      "Work arrangement/RTO/commute",
+      "Manager, leadership and respect"
+    ],
+    "explicit_intent_to_leave": {
+      "participant_count": null,
+      "percent_of_improvement_comment_participants": null,
+      "publication_status": "suppressed_below_n_30"
+    },
+    "trend_comparability_note": "Jan-2025 and Jan-2026 additionally include the processes-to-improve prompt; the 2023-2026 trend is descriptive and not strictly comparable."
+  },
+  "acceptance_rule": {
+    "expected_waves": [
+      "Mar-2023",
+      "Jan-2024",
+      "Jan-2025",
+      "Jan-2026"
+    ],
+    "can_improve_available_in_every_wave": true,
+    "processes_available_only_in_jan_2025_and_jan_2026": true,
+    "zero_duplicate_participant_rows": true,
+    "zero_improvement_comments_without_key": true,
+    "theme_percentages_reconcile_to_wave_denominator": true,
+    "published_values_minimum_n": 30,
+    "top_five_jan_2026_publishable_themes": 5,
+    "no_identifiers_employee_rows_or_free_text": true
+  }
+}

@@ -1,0 +1,191 @@
+version: 4
+variables:
+  - category: Movimientos de manager
+    variable: Number of manager changes
+    notes: >-
+      Revalidación enfocada del Join. La ventana histórica final permanece pendiente,
+      por lo que Definition conserva score máximo 1.
+    definition: >-
+      Conteo de eventos deduplicados de cambio de manager conocidos al cierre del
+      snapshot, dentro de una ventana histórica que todavía debe aprobarse.
+    source:
+      type: Database
+      table: hrda.post_hire_monthly_worker_dtls
+      columns:
+        - employee_id
+        - fis_mo_beg_dt
+        - fis_mo_end_dt
+        - worker_type
+        - employee_type
+        - active_status
+        - manager_change
+        - manager_change_date
+      status: confirmed_accessible
+    level_data: Conteo móvil de eventos por empleado-snapshot
+    measurement:
+      type: rolling_derived
+      date_column: fis_mo_end_dt
+      fiscal_year_column: fiscal_year
+      employee_id_column: employee_id
+      observable_columns: [manager_change]
+      observable_mode: all
+      event_conditions:
+        - column: manager_change
+          operator: positive
+    population:
+      mode: default
+      display: Empleados regulares activos en cada snapshot mensual
+    numerator_definition: >-
+      Empleados regulares activos con estado de manager_change observable; el conteo
+      final se derivará de eventos deduplicados por empleado y fecha efectiva.
+    evidence:
+      definition: needs_alignment
+      consistency: normalization_needed
+      join: reliable_employee_date
+      effort: moderate_transformation
+    rationale:
+      definition:
+        why: >-
+          La ventana exacta, fronteras, tratamiento de nulos y regla definitiva de
+          deduplicación todavía no están aprobados.
+        evidence: >-
+          manager_change y manager_change_date permiten probar la ruta, pero el conteo
+          no existe como campo directo y su fórmula completa permanece pendiente.
+        recommended_action: >-
+          Aprobar la ventana y reconciliar dos implementaciones independientes del
+          conteo antes de elevar Definition.
+      consistency:
+        why: >-
+          Falta confirmar longitudinalmente la relación entre flag, fecha efectiva,
+          correcciones y posibles repeticiones del mismo evento.
+        evidence: >-
+          La cobertura histórica no demuestra ausencia de contradicciones ni cambios
+          de semántica en los campos de evento.
+        recommended_action: >-
+          Ejecutar una auditoría longitudinal específica del flag y la fecha después
+          de revisar los hallazgos del join.
+      effort:
+        why: >-
+          La variable requiere deduplicación de eventos y una transformación temporal
+          antes de asignarse a cada snapshot.
+        evidence: >-
+          Los componentes están en una sola tabla, pero el resultado no es una
+          proyección directa.
+        recommended_action: >-
+          Versionar la lógica SQL después de aprobar la ventana y las reglas de casos
+          límite.
+    verification:
+      semantic_type: derived_feature
+      source:
+        method: schema_access_check
+        evidence: >-
+          Se comprobarán la tabla y las columnas requeridas mediante information_schema.
+        result: Pendiente de ejecución.
+        as_of_date: '2026-08-20'
+        query_reference: queries/audits/number_of_manager_changes_source_access_20260820.sql
+        acceptance_rule: missing_items debe ser igual a 0.
+        outcome: pending
+        metric_checks:
+          - metric: missing_items
+            aggregate: sum
+            operator: eq
+            threshold: 0
+      join:
+        method: key_grain_and_temporal_reconciliation
+        evidence: >-
+          Se reconstruyen eventos canónicos por empleado-fecha, se valida su primera
+          observación, se reconcilian fecha efectiva y fecha de conocimiento contra
+          snapshots, y se genera una fila derivada por empleado-snapshot.
+        result: Pendiente de ejecución por el runner v4.
+        as_of_date: '2026-08-20'
+        query_reference: queries/audits/number_of_manager_changes_join_reconciliation_v2_20260820.sql
+        acceptance_rule: >-
+          matched_count debe ser positivo; unmatched_count, duplicate_count,
+          multi_match_count, effective_unmatched_event_count,
+          effective_multi_match_event_count, knowledge_unmatched_event_count,
+          knowledge_multi_match_event_count, flagged_without_date_rows,
+          future_positive_flag_rows e invalid_flag_rows deben ser 0. Estos conteos
+          demuestran correspondencia completa sin depender del formato del porcentaje.
+        outcome: pending
+        metric_checks:
+          - {metric: matched_count, aggregate: sum, operator: gt, threshold: 0}
+          - {metric: unmatched_count, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: duplicate_count, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: multi_match_count, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: effective_unmatched_event_count, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: effective_multi_match_event_count, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: knowledge_unmatched_event_count, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: knowledge_multi_match_event_count, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: flagged_without_date_rows, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: future_positive_flag_rows, aggregate: sum, operator: eq, threshold: 0}
+          - {metric: invalid_flag_rows, aggregate: sum, operator: eq, threshold: 0}
+    derivation_options:
+      - name: Eventos deduplicados unidos a snapshots
+        status: testable
+        fields_and_tables: >-
+          hrda.post_hire_monthly_worker_dtls: employee_id, fis_mo_beg_dt,
+          fis_mo_end_dt, manager_change y manager_change_date.
+        formula: >-
+          Deduplicar eventos por empleado-fecha, identificar el primer snapshot con
+          manager_change positivo y contar únicamente eventos cuya primera observación
+          sea anterior o igual al snapshot objetivo; la frontera inferior depende de
+          la ventana que se apruebe posteriormente.
+        grain: Empleado-snapshot mensual
+        temporal_window: >-
+          Límite superior inclusivo en fis_mo_end_dt; la longitud retrospectiva sigue
+          pendiente y no es necesaria para probar la cardinalidad del join.
+        deduplication: >-
+          Un evento canónico por employee_id y manager_change_date. Cada snapshot debe
+          producir exactamente una fila derivada.
+        nulls_and_edge_cases: >-
+          Flags positivos sin fecha no pueden incorporarse al conteo y se auditan como
+          brecha. Fechas anteriores a la historia disponible se separan como prehistoria.
+        leakage_controls: >-
+          No asignar el evento antes del primer snapshot donde manager_change fue
+          positivo y excluir cualquier fecha efectiva futura.
+        snapshot_join: >-
+          Reconciliar la fecha efectiva con su periodo fiscal, usar la primera
+          observación como fecha de conocimiento y unir el conteo agregado a
+          employee_id y fis_mo_end_dt.
+        sensitivity: >-
+          Mantener employee_id dentro de SQL y publicar sólo métricas agregadas.
+        validations_needed: >-
+          Acceso, unicidad empleado-snapshot, eventos sin fecha, fechas futuras,
+          event-to-snapshot match y cardinalidad del output derivado.
+        estimated_effort: Transformación SQL moderada.
+        decision_reason: >-
+          La ruta puede probarse independientemente de la ventana final del conteo.
+    selected_derivation: Eventos deduplicados unidos a snapshots
+    blocker: none
+    analysis:
+      language: es
+      semantic_type: derived_feature
+      definition: >-
+        Conteo time-safe de eventos deduplicados de cambio de manager por empleado-snapshot.
+      numerator_definition: >-
+        Empleados-snapshot con manager_change observable; los eventos se identifican
+        internamente por empleado y fecha efectiva.
+      intended_use: >-
+        Medir inestabilidad organizacional mediante cambios repetidos de manager.
+      attrition_use: >-
+        Medir inestabilidad organizacional mediante cambios repetidos de manager.
+      source_reasoning: >-
+        Los campos necesarios están en la tabla mensual, pero la feature debe derivarse
+        de la historia y reconciliarse al grain empleado-snapshot.
+      prediction_cutoff: >-
+        Sólo eventos cuya primera observación positiva sea anterior o igual al cierre
+        del snapshot; manager_change_date tampoco puede ser futura.
+      population: Empleados regulares activos en cada snapshot mensual
+      prior_evidence_policy: >-
+        El assessment de 43 variables es contexto; la decisión actual depende del SQL
+        agregado ejecutado en esta revisión.
+      validation_focus:
+        - Unicidad del grain empleado-snapshot.
+        - Eventos positivos sin fecha y fechas futuras.
+        - Match único del evento al periodo fiscal del empleado.
+        - Una sola fila derivada por empleado-snapshot.
+      context_role: Manager movement
+      context_relevance: >-
+        Un Join confiable es necesario para que el conteo no duplique eventos ni use
+        información futura.
+      documentation_path: number-of-manager-changes/README.md

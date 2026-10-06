@@ -1,0 +1,56 @@
+schema_version: 1
+language: es
+unknown_policy: conservative
+
+problem_context:
+  problem_statement: >-
+    Incorporar «Adquisiciones y attrition» entre las variables prioritarias con
+    una distribución actual y una comparación anual de attrition voluntaria que
+    no convierta valores vacíos en una afirmación sobre el origen de ingreso.
+  decision_or_use_case: >-
+    Determinar si el campo acquisition dispone de evidencia suficiente para una
+    visual descriptiva agregada y documentar sus límites antes de cualquier uso
+    analítico posterior.
+  outcome: >-
+    Salida voluntaria posterior al snapshot basal y hasta 2026-08-23.
+  population: >-
+    Empleados Regular activos (worker_type='Employee', employee_type='Regular',
+    active_status=1) en el snapshot aplicable.
+  unit_of_analysis: Empleado-snapshot mensual; una salida Voluntary por persona en la cohorte anual.
+  time_horizon: >-
+    Distribución al 2026-08-23 y attrition para la cohorte basal 2025-08-24 en
+    (2025-08-24, 2026-08-23].
+  knowledge_boundary: >-
+    acquisition se toma del snapshot de clasificación; ningún valor posterior al
+    baseline puede reclasificar la cohorte de attrition.
+  constraints:
+    - Sólo consultas Redshift read-only y resultados agregados.
+    - Entregable presentation; cada cohorte publicada debe tener al menos 30 empleados.
+    - No mostrar IDs, filas, nombres de personas, texto libre ni compensación exacta.
+    - Un vacío en acquisition se etiqueta como «Sin adquisición registrada», no «sin adquisición».
+    - Incluir RF360; no trasladar exclusiones usadas por la lámina de promociones.
+  portfolio_hypotheses:
+    - acquisition es una marca textual de una adquisición registrada en el snapshot mensual.
+    - new_hires.acquisition_org y all_terminations.acquisition_name pueden detectar discrepancias o actualizaciones, pero no prueban por sí solos la definición de acquisition.
+  known_relationships:
+    - variables: [Ingreso por adquisición, Rehire]
+      relationship: Los reingresos pueden requerir una regla de vigencia distinta para interpretar acquisition.
+      why_relevant: Un valor adquirido histórico puede persistir o actualizarse al iniciar un nuevo episodio de empleo.
+
+variables:
+  - name: Ingreso por adquisición
+    intended_use: >-
+      Mostrar distribución y attrition voluntaria anual por presencia de
+      adquisición registrada, con un desglose de las principales adquisiciones
+      actuales y limitaciones explícitas de semántica.
+    population: Empleados Regular activos en cada snapshot aplicable.
+    knowledge_date: >-
+      2026-08-23 para distribución actual y 2025-08-24 para clasificación de la
+      cohorte anual.
+
+decisions:
+  deliverable_mode: presentation
+  empty_value_label: Sin adquisición registrada
+  populated_value_label: Con adquisición registrada
+  alias_policy: Conservar nombres almacenados normalizados; no unir aliases sin mapping documentado.
+  termination_rule: Sólo term_type='VOLUNTARY', una salida por persona, en la ventana anual definida.

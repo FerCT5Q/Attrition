@@ -1,0 +1,61 @@
+schema_version: 1
+plan_version: 1
+language: es
+created_before_execution: true
+plan_authorship: codex_explicit
+variable: Standardized / normalized within region-scale
+concept: Z-score poblacional del composite 1-5 dentro de cohortes region-wave de al menos 30.
+intended_use: Explorar una senal ordinal relativa a la distribucion regional frente a attrition posterior.
+knowledge_date: Fecha de la wave QVoice; excluir informacion posterior.
+population: Respuestas QVoice con composite 1-5, Region y cohorte region-wave de al menos 30.
+grain: Employee-wave-region derived aggregate
+semantic_type: derived_feature
+validation_story:
+  - id: source_access
+    criterion: source
+    evidence_role: supporting
+    question: ¿Estan disponibles los componentes 1-5 y Region para normalizar?
+    why: La forma ordinal y la region deben observarse en la misma wave para evitar una normalizacion ficticia.
+    method: schema_access_check
+    sql_reference: queries/audits/qvoice_excel_source_inventory_20260826-2.sql
+    acceptance_rule: Los componentes y Region deben ser accesibles y missing_items debe ser 0.
+    metric_map:
+      missing_items: {column: missing_items, aggregate: sum}
+    metric_checks:
+      - {metric: missing_items, operator: eq, threshold: 0, aggregate: sum}
+  - id: regional_scale_recalculation
+    criterion: definition
+    evidence_role: defining
+    question: ¿El z-score 1-5 se puede recalcular por Region y wave con cohortes de al menos 30?
+    why: La formula ordinal, la poblacion regional y la supresion de small cells son parte de la definicion del feature.
+    method: independent_recalculation
+    sql_reference: queries/audits/qvoice_excel_definition_audit_20260826-2.sql
+    acceptance_rule: Debe haber regiones observables y ningun valor invalido; la definicion base y la historia siguen pendientes.
+    metric_checks:
+      - {metric: eligible_count, operator: gt, threshold: 0, aggregate: sum}
+      - {metric: populated_count, operator: gt, threshold: 0, aggregate: sum}
+      - {metric: regions_checked, operator: gt, threshold: 0, aggregate: sum}
+      - {metric: invalid_count, operator: eq, threshold: 0, aggregate: sum}
+  - id: regional_scale_consistency
+    criterion: consistency
+    evidence_role: defining
+    question: ¿Las cohortes regionales, el rango y el item set ordinal son consistentes entre las waves?
+    why: La escala solo tiene dos waves y cambia el item set, por lo que el z-score puede cambiar por medicion y no por señal.
+    method: longitudinal_aggregate_audit
+    sql_reference: queries/audits/qvoice_excel_consistency_audit_20260826-2.sql
+    acceptance_rule: No deben existir invalidos, cambios de item set o desviaciones cero sin una regla aprobada.
+    metric_checks:
+      - {metric: invalid_count, operator: eq, threshold: 0, aggregate: sum}
+      - {metric: item_set_change_count, operator: eq, threshold: 0, aggregate: sum}
+      - {metric: standard_deviation_zero_count, operator: eq, threshold: 0, aggregate: sum}
+  - id: regional_scale_employee_wave_grain
+    criterion: join
+    evidence_role: supporting
+    question: ¿El z-score ordinal conserva un grain unico de empleado-wave-region?
+    why: La region debe estar alineada con la wave y no multiplicar respuestas antes del join externo.
+    method: key_grain_and_temporal_reconciliation
+    sql_reference: queries/audits/qvoice_excel_join_grain_audit_20260826-2.sql
+    acceptance_rule: No deben quedar duplicados; el join de Region y workforce queda pendiente de una prueba separada.
+    metric_checks:
+      - {metric: matched_count, operator: gt, threshold: 0, aggregate: sum}
+      - {metric: duplicate_count, operator: eq, threshold: 0, aggregate: sum}
