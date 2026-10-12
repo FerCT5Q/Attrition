@@ -1,0 +1,115 @@
+{
+  "run_id": "engineering-model-c-20261008-v1",
+  "reporting_mode": "presentation",
+  "output": "output/analysis/engineering/20261008/model-c-v1",
+  "authorization": "config/attrition_model_in_memory_training_authorization_20261001.json",
+  "query": "queries/profiles/engineering_model_c_person_month_20261008.sql",
+  "knowledge_boundary": "2026-09-07",
+  "training_start": "2020-07-26",
+  "qvoice_included": false,
+  "base_features": [
+    "level_grouped",
+    "tenure_playbook_band",
+    "calendar_month",
+    "manager_changes_12m",
+    "team_exits_12m",
+    "direct_reports_band",
+    "time_since_promotion_band",
+    "rehire",
+    "level_x_tenure",
+    "tenure_x_manager_changes"
+  ],
+  "candidate_features": [
+    "level_grouped",
+    "tenure_playbook_band",
+    "calendar_month",
+    "manager_changes_12m",
+    "team_exits_12m",
+    "direct_reports_band",
+    "time_since_promotion_band",
+    "rehire",
+    "level_x_tenure",
+    "tenure_x_manager_changes",
+    "prior_experience_band",
+    "time_at_level_band",
+    "manager_left_6m",
+    "ios_12m",
+    "layers_band",
+    "work_arrangement_group",
+    "region",
+    "comp_ratio_band",
+    "grade_family",
+    "acquisition_recorded",
+    "transfer_12m"
+  ],
+  "interactions": {
+    "level_x_tenure": [
+      "level_grouped",
+      "tenure_playbook_band"
+    ],
+    "tenure_x_manager_changes": [
+      "tenure_playbook_band",
+      "manager_changes_12m"
+    ]
+  },
+  "outer_starts": [
+    "2024-02-01",
+    "2024-08-01",
+    "2025-02-01",
+    "2025-08-01"
+  ],
+  "outer_snapshots": 6,
+  "inner_origins_months_before": [
+    15,
+    9
+  ],
+  "inner_snapshots": 3,
+  "screening_inverse_penalties": [
+    0.003,
+    0.01,
+    0.03,
+    0.1,
+    0.3,
+    1.0
+  ],
+  "ridge_grid": [
+    0.1,
+    1.0,
+    10.0
+  ],
+  "penalty_cell_scale": 8.0,
+  "selection": {
+    "maximum_relative_brier_worsening": 0.0,
+    "minimum_relative_pr_auc": 0.99,
+    "minimum_relative_lift10": 0.99,
+    "log_loss_parsimony_tolerance": 0.002,
+    "description": "L1 mensual en el entrenamiento interno más antiguo; conjuntos completos de variables, jerarquía de interacciones; refit cloglog L2; selección por log-loss R6 sujeto a Brier y ranking; menor número de variables dentro de 0,2% del mínimo."
+  },
+  "groups": {
+    "depth": 3,
+    "maximum_leaves": 8,
+    "minimum_training_people": 300,
+    "target_high_fraction": 0.2,
+    "minimum_people_per_snapshot": 30,
+    "minimum_events_for_rates": 30
+  },
+  "decision": {
+    "minimum_log_loss_improvement": 0.005,
+    "minimum_relative_pr_auc_gain": 0.02,
+    "minimum_relative_lift10_gain": 0.02,
+    "minimum_winning_folds": 3,
+    "maximum_group_mae_worsening_pp": 0.1,
+    "maximum_high_group_error_worsening_pp": 0.1,
+    "description": "Ganar log-loss >=0,5%; Brier no peor; PR-AUC y lift10 >=2% mejores y ganar ambos en >=3/4 periodos; error en los mismos grupos y grupo alto de C no empeora >0,1 pp. Además, límite superior IC95 de diferencia de log-loss <0 para evidencia concluyente."
+  },
+  "bootstrap_repetitions": 500,
+  "seed": 20261008,
+  "pca": "No se usa: selección supervisada sobre categorías originales conserva interpretación; PCA maximiza varianza de X y no la señal de salida.",
+  "limitations": [
+    "Evaluación anidada retrospectiva; estos años ya se habían explorado. No es una confirmación prospectiva independiente.",
+    "IOS usa fecha efectiva; no se conoce la fecha de publicación de cada evento. Los snapshots pueden contener revisiones históricas.",
+    "Las tasas de salida voluntaria son etiquetas binarias de población activa; otras salidas cuentan como no voluntarias. No es un modelo de riesgos competitivos.",
+    "Los intervalos entre snapshots fiscales no tienen siempre la misma duración; se conserva la convención mensual de B.",
+    "Candidatos limitados al inventario y representaciones documentadas; no se afirma óptimo global entre todas las combinaciones posibles."
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "verifier": {
+    "command": "verify_deck.py output/presentations/20261012-0822_evolucion-b-cq-captura-clara/presentacion-eng.html --mode presentation",
+    "errors": [
+      "El elemento <html> debe declarar lang=\"es\"."
+    ],
+    "warnings": [
+      "Etiqueta visible en inglés: Theme",
+      "Etiqueta visible en inglés: Slides",
+      "Etiqueta visible en inglés: Navigation"
+    ],
+    "result": "verificador original con excepción documentada de idioma"
+  },
+  "language_exception": "Texto proyectado en inglés por preferencia explícita del usuario y por coincidir con la base; guion, evidencia y validación en español.",
+  "jargon_visible": [],
+  "privacy": {
+    "aggregates_only": true,
+    "employee_rows": false,
+    "individual_scores": false,
+    "min_group_people": "300+",
+    "protected_labels": false
+  },
+  "browser_review": {
+    "file": "output/preview/20261012-0822_evolucion-b-cq-captura-clara/browser-review.json",
+    "status": "pass",
+    "mode": "presentation",
+    "reviewed_slides": [
+      1
+    ],
+    "screenshots": [
+      "slide-1-theme-light-classic.png",
+      "slide-1-theme-light-soft.png",
+      "slide-1-theme-dark-royal.png",
+      "slide-1-theme-dark-carbon.png"
+    ],
+    "screenshot_size": {
+      "width": 1440,
+      "height": 810
+    },
+    "scope": "Revisión visual de la portada en cuatro temas y comprobación estática del alcance contra la presentación indicada por el usuario.",
+    "checks": {
+      "title_in_two_lines": true,
+      "selected_people_denominator_explicit": true,
+      "all_voluntary_exits_denominator_explicit": true,
+      "historical_average_and_six_month_window_visible": true,
+      "estimated_risk_selection_visible": true,
+      "visible_clipping_or_overlaps": false,
+      "existing_unit_tests": 9,
+      "changed_slides": [
+        1
+      ],
+      "styles_unchanged": true,
+      "remaining_eight_slides_and_scripts_identical": true,
+      "figures_unchanged": true,
+      "source_hashes_unchanged": true,
+      "previous_deck_sha256": "06162b1dd6d1af5db93c5f3aec56e37ff99f2415a9e754d9251e542dd8168ae9"
+    },
+    "console": {
+      "status": "no revalidada en esta revisión",
+      "detail": "La sesión MCP estaba ocupada y la comprobación adicional por CDP se interrumpió con WinError 10054. Los bloques JavaScript son idénticos a los de la versión anterior."
+    },
+    "render_note": "Las cuatro capturas se generaron correctamente. El renderer terminó con un error al limpiar un archivo temporal del perfil de Edge aún bloqueado; se verificaron las cuatro imágenes producidas.",
+    "conclusion": "La portada distingue la selección del 30% de las personas y el 43,1% del total de salidas voluntarias. Ambas frases se leen completas, sin recortes ni solapamientos en los cuatro temas. Las cifras, fuentes y las otras ocho diapositivas coinciden con la versión anterior.",
+    "previous_deck": "output/presentations/20261011-2034_evolucion-b-cq-mejora-modesta/presentacion-eng.html"
+  }
+}

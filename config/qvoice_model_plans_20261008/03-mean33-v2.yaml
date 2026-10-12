@@ -1,0 +1,116 @@
+schema_version: 1
+plan_version: 2
+language: es
+created_before_execution: true
+plan_authorship: codex_explicit
+variable: Promedio de 33 preguntas comparables
+concept: 'Promedio de treinta y tres preguntas comparables: cien veces las respuestas favorables entre treinta y tres. Exige
+  todos los binarios válidos y asigna seis bandas sin redondeo previo.'
+intended_use: Medir contexto adicional de QVoice y comparar una ablación de treinta y un ítems que excluye Q4 y Q12 sobre
+  la misma cohorte completa.
+knowledge_date: La wave del ano Y se usa exclusivamente en snapshots del ano Y+1; frontera global 2026-09-07.
+population: Empleados regulares activos de Engineering, excluyendo RF360; el promedio exige 33 respuestas validas.
+grain: Empleado-wave completo para la formula; empleado-snapshot para el modelo; publicacion agregada.
+semantic_type: derived_feature
+source_reasoning: La lista exacta del playbook define los componentes, el denominador, las fronteras y la cohorte de la ablación.
+validation_story:
+- id: source_mean33
+  criterion: source
+  evidence_role: supporting
+  question: ¿Los 33 textos exactos tienen encabezado unico en los tres archivos?
+  why: Cambiar un item cambiaria el significado del promedio.
+  method: approved_external_access_check
+  sql_reference: queries/audits/qvoice_model_mean33_20261008.sql
+  acceptance_rule: Tres archivos, cero ambiguedades y cero componentes ausentes.
+  metric_checks:
+  - metric: workbooks_checked
+    aggregate: sum
+    operator: eq
+    threshold: 3
+  - metric: header_ambiguities
+    aggregate: sum
+    operator: eq
+    threshold: 0
+  - metric: missing_component_headers
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: exact_formula
+  criterion: definition
+  evidence_role: defining
+  question: ¿La formula y las seis bandas coinciden con una implementacion independiente?
+  why: Las fronteras deben aplicarse sin redondear antes de clasificar.
+  method: independent_recalculation
+  sql_reference: queries/audits/qvoice_model_mean33_20261008.sql
+  acceptance_rule: Cero diferencias de formula y misma cohorte para la ablacion de 31 items.
+  metric_checks:
+  - metric: comparable_count
+    aggregate: sum
+    operator: gt
+    threshold: 0
+  - metric: mismatch_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+  - metric: overlap_cohort_difference
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: mean33_domain
+  criterion: consistency
+  evidence_role: defining
+  question: ¿Los incompletos quedan fuera del promedio sin salir de la cohorte general del modelo?
+  why: Un filtro de casos completos puede ocultar el costo real de cobertura.
+  method: aggregate_domain_and_transition_audit
+  sql_reference: queries/audits/qvoice_model_mean33_20261008.sql
+  acceptance_rule: Cero valores invalidos y reconciliacion exacta de los 33 estados por persona.
+  metric_checks:
+  - metric: invalid_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+  - metric: status_reconciliation_difference
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: mean33_join
+  criterion: join
+  evidence_role: supporting
+  question: ¿Las bandas se calculan sobre personas unicas de Engineering?
+  why: Los conteos raw no son el denominador del modelo.
+  method: aggregate_join_reconciliation
+  sql_reference: queries/audits/qvoice_model_mean33_20261008.sql
+  acceptance_rule: Cero duplicados usados y cero multi-match.
+  metric_checks:
+  - metric: duplicate_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+  - metric: multi_match_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: mean33_annual_lag
+  criterion: history
+  evidence_role: defining
+  question: ¿La politica Y a Y+1 produce las ventanas declaradas antes de entrenar?
+  why: El promedio debe estar congelado antes del snapshot y del outcome.
+  method: Reconciliacion agregada de snapshots y ano de wave asignado.
+  sql_reference: queries/audits/qvoice_model_annual_lag_windows_20261008.sql
+  acceptance_rule: Cinco snapshots de ago-dic 2025 usan wave 2024; dos de ene-feb 2026 usan wave 2025; cero contradicciones
+    y cohortes de al menos 30.
+  metric_checks:
+  - metric: snapshot_count
+    aggregate: sum
+    operator: eq
+    threshold: 7
+  - metric: mapping_contradiction_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+  - metric: below_privacy_threshold_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+plan_revision_reason: Se corrige la redacción pública para cumplir el contrato en español; no cambian las preguntas, SQL ni
+  reglas de aceptación.

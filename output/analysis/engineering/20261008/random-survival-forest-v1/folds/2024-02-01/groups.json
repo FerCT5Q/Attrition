@@ -1,0 +1,334 @@
+{
+  "rules": [
+    {
+      "node": 7,
+      "conditions": [
+        {
+          "condition": "tenure_playbook_band=10+ years",
+          "present": false
+        },
+        {
+          "condition": "tenure_playbook_band=5-10 years",
+          "present": false
+        },
+        {
+          "condition": "tenure_playbook_band=2-3 years",
+          "present": false
+        },
+        {
+          "condition": "tenure_playbook_band=3-5 years",
+          "present": false
+        }
+      ],
+      "label": "NO tenure_playbook_band=10+ years Y NO tenure_playbook_band=5-10 years Y NO tenure_playbook_band=2-3 years Y NO tenure_playbook_band=3-5 years"
+    },
+    {
+      "node": 8,
+      "conditions": [
+        {
+          "condition": "tenure_playbook_band=10+ years",
+          "present": false
+        },
+        {
+          "condition": "tenure_playbook_band=5-10 years",
+          "present": false
+        },
+        {
+          "condition": "tenure_playbook_band=2-3 years",
+          "present": false
+        },
+        {
+          "condition": "tenure_playbook_band=3-5 years",
+          "present": true
+        }
+      ],
+      "label": "NO tenure_playbook_band=10+ years Y NO tenure_playbook_band=5-10 years Y NO tenure_playbook_band=2-3 years Y tenure_playbook_band=3-5 years"
+    },
+    {
+      "node": 11,
+      "conditions": [
+        {
+          "condition": "tenure_playbook_band=10+ years",
+          "present": false
+        },
+        {
+          "condition": "tenure_playbook_band=5-10 years",
+          "present": false
+        },
+        {
+          "condition": "tenure_playbook_band=2-3 years",
+          "present": true
+        },
+        {
+          "condition": "level_grouped=8 - Assoc & Int/Eng",
+          "present": false
+        }
+      ],
+      "label": "NO tenure_playbook_band=10+ years Y NO tenure_playbook_band=5-10 years Y tenure_playbook_band=2-3 years Y NO level_grouped=8 - Assoc & Int/Eng"
+    },
+    {
+      "node": 12,
+      "conditions": [
+        {
+          "condition": "tenure_playbook_band=10+ years",
+          "present": false
+        },
+        {
+          "condition": "tenure_playbook_band=5-10 years",
+          "present": false
+        },
+        {
+          "condition": "tenure_playbook_band=2-3 years",
+          "present": true
+        },
+        {
+          "condition": "level_grouped=8 - Assoc & Int/Eng",
+          "present": true
+        }
+      ],
+      "label": "NO tenure_playbook_band=10+ years Y NO tenure_playbook_band=5-10 years Y tenure_playbook_band=2-3 years Y level_grouped=8 - Assoc & Int/Eng"
+    },
+    {
+      "node": 13,
+      "conditions": [
+        {
+          "condition": "tenure_playbook_band=10+ years",
+          "present": false
+        },
+        {
+          "condition": "tenure_playbook_band=5-10 years",
+          "present": true
+        },
+        {
+          "condition": "level_grouped=7 - Senior & Lead",
+          "present": false
+        },
+        {
+          "condition": "level_grouped=6 - Staff & /Mgr",
+          "present": false
+        }
+      ],
+      "label": "NO tenure_playbook_band=10+ years Y tenure_playbook_band=5-10 years Y NO level_grouped=7 - Senior & Lead Y NO level_grouped=6 - Staff & /Mgr"
+    },
+    {
+      "node": 14,
+      "conditions": [
+        {
+          "condition": "tenure_playbook_band=10+ years",
+          "present": false
+        },
+        {
+          "condition": "tenure_playbook_band=5-10 years",
+          "present": true
+        },
+        {
+          "condition": "level_grouped=7 - Senior & Lead",
+          "present": false
+        },
+        {
+          "condition": "level_grouped=6 - Staff & /Mgr",
+          "present": true
+        }
+      ],
+      "label": "NO tenure_playbook_band=10+ years Y tenure_playbook_band=5-10 years Y NO level_grouped=7 - Senior & Lead Y level_grouped=6 - Staff & /Mgr"
+    },
+    {
+      "node": 17,
+      "conditions": [
+        {
+          "condition": "tenure_playbook_band=10+ years",
+          "present": false
+        },
+        {
+          "condition": "tenure_playbook_band=5-10 years",
+          "present": true
+        },
+        {
+          "condition": "level_grouped=7 - Senior & Lead",
+          "present": true
+        },
+        {
+          "condition": "rehire=yes",
+          "present": false
+        }
+      ],
+      "label": "NO tenure_playbook_band=10+ years Y tenure_playbook_band=5-10 years Y level_grouped=7 - Senior & Lead Y NO rehire=yes"
+    },
+    {
+      "node": 18,
+      "conditions": [
+        {
+          "condition": "tenure_playbook_band=10+ years",
+          "present": false
+        },
+        {
+          "condition": "tenure_playbook_band=5-10 years",
+          "present": true
+        },
+        {
+          "condition": "level_grouped=7 - Senior & Lead",
+          "present": true
+        },
+        {
+          "condition": "rehire=yes",
+          "present": true
+        }
+      ],
+      "label": "NO tenure_playbook_band=10+ years Y tenure_playbook_band=5-10 years Y level_grouped=7 - Senior & Lead Y rehire=yes"
+    },
+    {
+      "node": 25,
+      "conditions": [
+        {
+          "condition": "tenure_playbook_band=10+ years",
+          "present": true
+        },
+        {
+          "condition": "grade_family=R",
+          "present": false
+        },
+        {
+          "condition": "region=APAC",
+          "present": false
+        },
+        {
+          "condition": "manager_changes_12m=0",
+          "present": false
+        }
+      ],
+      "label": "tenure_playbook_band=10+ years Y NO grade_family=R Y NO region=APAC Y NO manager_changes_12m=0"
+    },
+    {
+      "node": 26,
+      "conditions": [
+        {
+          "condition": "tenure_playbook_band=10+ years",
+          "present": true
+        },
+        {
+          "condition": "grade_family=R",
+          "present": false
+        },
+        {
+          "condition": "region=APAC",
+          "present": false
+        },
+        {
+          "condition": "manager_changes_12m=0",
+          "present": true
+        }
+      ],
+      "label": "tenure_playbook_band=10+ years Y NO grade_family=R Y NO region=APAC Y manager_changes_12m=0"
+    },
+    {
+      "node": 22,
+      "conditions": [
+        {
+          "condition": "tenure_playbook_band=10+ years",
+          "present": true
+        },
+        {
+          "condition": "grade_family=R",
+          "present": false
+        },
+        {
+          "condition": "region=APAC",
+          "present": true
+        }
+      ],
+      "label": "tenure_playbook_band=10+ years Y NO grade_family=R Y region=APAC"
+    },
+    {
+      "node": 23,
+      "conditions": [
+        {
+          "condition": "tenure_playbook_band=10+ years",
+          "present": true
+        },
+        {
+          "condition": "grade_family=R",
+          "present": true
+        },
+        {
+          "condition": "region=APAC",
+          "present": false
+        },
+        {
+          "condition": "manager_changes_12m=0",
+          "present": false
+        }
+      ],
+      "label": "tenure_playbook_band=10+ years Y grade_family=R Y NO region=APAC Y NO manager_changes_12m=0"
+    },
+    {
+      "node": 24,
+      "conditions": [
+        {
+          "condition": "tenure_playbook_band=10+ years",
+          "present": true
+        },
+        {
+          "condition": "grade_family=R",
+          "present": true
+        },
+        {
+          "condition": "region=APAC",
+          "present": false
+        },
+        {
+          "condition": "manager_changes_12m=0",
+          "present": true
+        }
+      ],
+      "label": "tenure_playbook_band=10+ years Y grade_family=R Y NO region=APAC Y manager_changes_12m=0"
+    },
+    {
+      "node": 27,
+      "conditions": [
+        {
+          "condition": "tenure_playbook_band=10+ years",
+          "present": true
+        },
+        {
+          "condition": "grade_family=R",
+          "present": true
+        },
+        {
+          "condition": "region=APAC",
+          "present": true
+        },
+        {
+          "condition": "comp_ratio_band=0.9-1.0",
+          "present": false
+        }
+      ],
+      "label": "tenure_playbook_band=10+ years Y grade_family=R Y region=APAC Y NO comp_ratio_band=0.9-1.0"
+    },
+    {
+      "node": 28,
+      "conditions": [
+        {
+          "condition": "tenure_playbook_band=10+ years",
+          "present": true
+        },
+        {
+          "condition": "grade_family=R",
+          "present": true
+        },
+        {
+          "condition": "region=APAC",
+          "present": true
+        },
+        {
+          "condition": "comp_ratio_band=0.9-1.0",
+          "present": true
+        }
+      ],
+      "label": "tenure_playbook_band=10+ years Y grade_family=R Y region=APAC Y comp_ratio_band=0.9-1.0"
+    }
+  ],
+  "maximum_depth": 4,
+  "training_r2": 0.7443582213611892,
+  "training_snapshot": "2023-12-24",
+  "role": "Agrupacion explicativa del bosque; no reemplaza su estimacion."
+}

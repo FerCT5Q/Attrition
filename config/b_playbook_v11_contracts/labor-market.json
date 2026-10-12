@@ -1,0 +1,29 @@
+{
+  "schema_version": 4,
+  "id": "labor-market",
+  "title": "Mercado laboral registrado",
+  "feature": "labor_market_detail",
+  "claim": "La representación conserva el valor de la foto sin conflictos, duplicación ni imputación con datos futuros.",
+  "use": "Contrastar diferencias entre mercados laborales más allá de la región.",
+  "semantic_type": "direct_field",
+  "population": "Employee, Regular, activo, Engineering, sin RF360",
+  "grain": "persona-foto mensual",
+  "known_at": "valor registrado en la misma foto; no rellenar con una foto posterior",
+  "window": "2020-07-26 a 2026-09-07",
+  "history": "Se conserva la historia mensual disponible y sus estados sin dato; la primera fecha observada se recalcula en esta consulta.",
+  "query": "queries/audits/engineering_b_v11_labor-market_20261011.sql",
+  "source_query": "queries/profiles/engineering_b_v11_categories_person_month_20261011.sql",
+  "zero_fields": [
+    "duplicate_keys",
+    "contradictory_cells",
+    "missing_encoding_violations"
+  ],
+  "positive_fields": [
+    "person_snapshots"
+  ],
+  "expected_rows": 7,
+  "acceptance_rule": "Siete años agregados, al menos 30 personas por fila, cero llaves duplicadas o contradictorias y cero violaciones del mapping/nulos. La cobertura no se fuerza.",
+  "conclusion_if_pass": "Representación disponible para la prueba incremental; su utilidad predictiva aún no se conoce",
+  "limitation": "Se modela la etiqueta registrada; no se acredita una delimitación económica externa.",
+  "action": "Agrupar categorías raras sólo con el entrenamiento y probar como B + X"
+}

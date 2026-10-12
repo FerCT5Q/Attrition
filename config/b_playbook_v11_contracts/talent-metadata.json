@@ -1,0 +1,18 @@
+{
+  "schema_version": 4,
+  "id": "talent-metadata",
+  "title": "Talent index: búsqueda de fuente histórica fechada",
+  "claim": "Se inspeccionan fuentes y columnas de Talent index sin inferir vigencia desde timestamps técnicos.",
+  "use": "Comprobar si puede reconstruirse el valor disponible antes de cada predicción.",
+  "semantic_type": "precomputed_metric",
+  "population": "Metadata de tablas HRDA con talent en el nombre; objetivo Engineering 2020–2026",
+  "grain": "tabla-columna; sin datos de personas",
+  "known_at": "Requiere fecha de negocio o snapshot histórico; los timestamps técnicos no la acreditan",
+  "window": "26-jul-2020 a 7-sep-2026",
+  "history": "La fuente real del V11 es master_talent_index; las revisiones previas sólo describen disponibilidad actual.",
+  "query": "queries/audits/engineering_b_v11_talent_metadata_20261012.sql",
+  "acceptance_rule": "La consulta debe devolver metadata; pass sólo acredita inspección, no historia ni selección de la variable.",
+  "conclusion_if_pass": "Metadata disponible para revisar temporalidad",
+  "limitation": "Fórmula, elegibilidad y fecha de publicación deben verificarse separadamente.",
+  "action": "Si sólo existen timestamps técnicos, conservar la limitación temporal sin cambiar scores."
+}

@@ -1,6 +1,6 @@
 # Plan actualizado: evaluar QVoice en el modelo de Engineering
 
-Fecha: 2026-10-06. Estado: plan acordado, pendiente de ejecución.
+Fecha del plan: 2026-10-06. Estado actualizado el 2026-10-07: implementación y evaluación descriptiva completadas; comparación predictiva pendiente de fechas verificadas de publicación.
 Clasificación del documento: `presentation`.
 
 ## 1. Objetivo y punto de partida
@@ -88,3 +88,22 @@ Un candidato se considerará **prometedor** si mejora PR-AUC y lift en ambos per
 - Ejecución bajo la [autorización vigente de procesamiento en memoria](../../config/attrition_model_in_memory_training_authorization_20261001.json), con entregables agregados clasificados como `presentation` y los mínimos de publicación del proyecto.
 
 El resultado será una recomendación sustentada para la siguiente revisión del modelo.
+
+## 6. Estado de la ejecución — 7 de octubre de 2026
+
+- Configuración y flujo implementados para las 17 variantes, incluidos los controles de disponibilidad y la ablación sobre la misma cohorte.
+- Ocho conceptos evaluados secuencialmente con evidencia agregada, assessment v4, notebook ejecutado, HTML, Excel y documentación.
+- Modelo B reproducido: las 32 comprobaciones del control coinciden con la referencia del 3 de octubre.
+- Pruebas: 24 regresiones del experimento y 53 del motor de assessment aprobadas. La consulta del modelo pasó `EXPLAIN` y la comprobación de columnas con `LIMIT 0`.
+- Revisadas en navegador las 135 diapositivas de los ocho HTML; sus 32 imágenes cargan y no se detectó desbordamiento de las tarjetas.
+- Heartbeat: dominio auditado sobre las 53 entradas ordinales; la fórmula completa sólo se reconstruye en 2026. La conciliación retrospectiva cumple 93 comprobaciones y explica el efecto de incluir snapshots posteriores al corte.
+- Las 17 configuraciones conservan el resultado **evidencia temporal insuficiente**. Ninguna wave tiene aún una fecha acreditada de publicación de resultados; la comparación predictiva sigue pendiente.
+
+Entregables:
+
+- [Informe comparativo y gráficos](../../output/analysis/engineering/20261006/qvoice-experiment-v1/comparison-report.md).
+- [Excel consolidado de los ocho conceptos](../../output/assessments/qvoice-experiment-v1-consolidated/assessment.xlsx).
+- [Configuración ejecutable](../../config/qvoice_model_experiment_20261006.yaml).
+- [Guía de reproducción](../context/qvoice-model-experiment.md).
+
+Para completar el objetivo predictivo, se necesitan las fechas documentadas de disponibilidad de QVoice 2024, 2025 y 2026, además de resolver la equivalencia pendiente de Career goals de 2024. Después se ejecutará una nueva carpeta de experimento con las reglas ya implementadas.

@@ -1,0 +1,119 @@
+schema_version: 1
+plan_version: 2
+language: es
+created_before_execution: true
+plan_authorship: codex_explicit
+variable: Intent to Stay — Q4 y Q12
+concept: Respuestas binarias a Q4 y Q12, separadas y conjuntas; la alternativa ambas favorables exige dos respuestas válidas
+  y no equivale a un promedio parcial.
+intended_use: Medir el aporte incremental de la intención de permanencia al modelo B de salida voluntaria a seis meses.
+knowledge_date: Desde publicación verificable; máximo 12 meses y hasta la siguiente wave; frontera global 2026-09-07.
+population: Empleados regulares activos de Engineering, excluyendo RF360; cobertura descriptiva en el snapshot previo a cada
+  encuesta.
+grain: Empleado-wave para auditorías; empleado-snapshot para predicción; publicación agregada.
+semantic_type: survey
+source_reasoning: El diccionario identifica Q4 y Q12. La evidencia anual anterior usa workforce; hay que repetir el enlace
+  en Engineering y no reutilizar sus scores.
+validation_story:
+- id: source_intent
+  criterion: source
+  evidence_role: supporting
+  question: ¿Los tres archivos resuelven de forma única los encabezados binarios de Q4 y Q12?
+  why: Una pregunta de permanencia no puede sustituir silenciosamente a la otra.
+  method: approved_external_access_check
+  sql_reference: queries/audits/qvoice_model_intent_20261006.sql
+  acceptance_rule: Tres archivos accesibles y ningún encabezado ambiguo; registrar preguntas ausentes.
+  metric_checks:
+  - metric: workbooks_checked
+    aggregate: sum
+    operator: eq
+    threshold: 3
+  - metric: header_ambiguities
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: both_favorable
+  criterion: definition
+  evidence_role: defining
+  question: ¿Ambas favorables exige Q4=1 y Q12=1 y excluye respuestas parciales?
+  why: Codificar un faltante como desfavorable alteraría el contraste observado en el playbook.
+  method: independent_recalculation
+  sql_reference: queries/audits/qvoice_model_intent_20261006.sql
+  acceptance_rule: La conjunción y el producto de los dos binarios válidos deben coincidir en todas las respuestas comparables.
+  metric_checks:
+  - metric: comparable_count
+    aggregate: sum
+    operator: gt
+    threshold: 0
+  - metric: mismatch_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: intent_domain
+  criterion: consistency
+  evidence_role: defining
+  question: ¿Se distinguen 0/1, vacío, 255, inválido y pregunta ausente?
+  why: Los dos componentes conservan sus propios faltantes y sus propias muestras.
+  method: aggregate_domain_and_transition_audit
+  sql_reference: queries/audits/qvoice_model_intent_20261006.sql
+  acceptance_rule: Cero valores inválidos y reconciliación exacta del conteo de componentes.
+  metric_checks:
+  - metric: invalid_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+  - metric: status_reconciliation_difference
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: intent_join
+  criterion: join
+  evidence_role: supporting
+  question: ¿Cada respuesta enlaza como máximo con una persona de Engineering en la foto previa?
+  why: El contraste anual debe usar el denominador de Engineering y evitar multiplicar salidas por duplicados.
+  method: aggregate_join_reconciliation
+  sql_reference: queries/audits/qvoice_model_intent_20261006.sql
+  acceptance_rule: Cero llaves duplicadas usadas y cero múltiples filas de workforce; no equiparar un no enlace con no respuesta.
+  metric_checks:
+  - metric: duplicate_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+  - metric: multi_match_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: intent_publication
+  criterion: history
+  evidence_role: defining
+  question: ¿Se acredita la fecha en que Q4 y Q12 pudieron conocerse antes de cada predicción?
+  why: La ventana anual del playbook empieza antes de una fecha de publicación demostrada.
+  method: Revisión documental de disponibilidad y reglas de reemplazo y episodio laboral.
+  sql_reference: queries/audits/qvoice_model_intent_20261006.sql
+  acceptance_rule: Todas las waves usadas en predicción deben tener fecha y evidencia documental; las demás quedan pendientes.
+  metric_checks:
+  - metric: unverified_availability_waves
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: intent_playbook_reconciliation
+  criterion: consistency
+  evidence_role: contextual
+  question: ¿Se reproducen los conteos, fórmulas y ventanas publicados al usar la población original?
+  why: Una diferencia entre toda la plantilla y Engineering debe atribuirse a la población; el acumulado de 2026 también tiene
+    una frontera más temprana.
+  method: aggregate_historical_reconciliation
+  sql_reference: queries/audits/qvoice_model_intent_20261006.sql
+  acceptance_rule: Conciliar exactamente los conteos de la fuente y de las cohortes comparables, y tasas con tolerancia de
+    0.000051 puntos porcentuales. Las salidas de 2026 no se comparan porque cambia el final de la ventana. No eleva scores.
+  metric_checks:
+  - metric: reconciliation_tests
+    aggregate: sum
+    operator: gt
+    threshold: 0
+  - metric: reconciliation_mismatch_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+plan_revision_reason: Se explicita la conciliación del playbook antes de ejecutar la evidencia actual; el cálculo de Engineering
+  conserva una población distinta.

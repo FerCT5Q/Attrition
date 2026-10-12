@@ -1,0 +1,29 @@
+{
+  "executed_at_utc": "2026-10-12 02:29:30 UTC",
+  "reporting_mode": "presentation",
+  "employee_data_used": false,
+  "tests": [
+    {
+      "command": ".venv\\Scripts\\python.exe -B -m unittest discover -s tests -p test_b_incremental.py -v",
+      "tests": 13,
+      "outcome": "pass"
+    },
+    {
+      "command": ".venv\\Scripts\\python.exe -B -m unittest discover -s tests -p test_engineering_model_c.py",
+      "tests": 17,
+      "outcome": "pass"
+    },
+    {
+      "command": ".venv\\Scripts\\python.exe -B -m unittest discover -s tests -p test_engineering_model_d.py",
+      "tests": 9,
+      "outcome": "pass"
+    },
+    {
+      "command": ".venv\\Scripts\\python.exe -B -m unittest discover -s .codex/skills/evaluate-attrition-variable/tests -p test_traceable_assessment.py",
+      "tests": 53,
+      "outcome": "pass"
+    }
+  ],
+  "total_tests": 92,
+  "scope": "Invariantes B, temporalidad, compresión exacta, exportación, controles QVoice, SQL read-only y contratos de assessment."
+}

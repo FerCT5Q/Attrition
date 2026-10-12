@@ -1,0 +1,4582 @@
+{
+  "fold": 2,
+  "origin": "2024-08-01",
+  "first_snapshot": "2024-08-25",
+  "last_snapshot": "2025-01-26",
+  "latest_outcome": "2025-07-26",
+  "exposures": 185788,
+  "reproduction": {
+    "B": {
+      "outcome": "pass",
+      "maximum_absolute_difference": 2.7755575615628914e-17,
+      "differences": {
+        "exposures": 0.0,
+        "event_exposures": 0.0,
+        "pr_auc": 0.0,
+        "lift_at_10_percent": 0.0,
+        "log_loss": 2.7755575615628914e-17,
+        "brier_score": 3.469446951953614e-18,
+        "predicted_percent": 0.0,
+        "observed_percent": 0.0
+      }
+    },
+    "C": {
+      "outcome": "pass",
+      "maximum_absolute_difference": 0.0,
+      "differences": {
+        "exposures": 0.0,
+        "event_exposures": 0.0,
+        "pr_auc": 0.0,
+        "lift_at_10_percent": 0.0,
+        "log_loss": 0.0,
+        "brier_score": 0.0,
+        "predicted_percent": 0.0,
+        "observed_percent": 0.0
+      }
+    }
+  },
+  "development": {
+    "first_snapshot": "2023-08-20",
+    "last_snapshot": "2024-01-21",
+    "latest_outcome": "2024-07-21",
+    "exposures": 182409
+  },
+  "candidates_count": 288,
+  "selection_priority": {
+    "criterion": "priority",
+    "winner": {
+      "name": "antiguedad × prior_experience_band",
+      "kind": "cut",
+      "dimensions": [
+        "antiguedad",
+        "prior_experience_band"
+      ],
+      "coverage_percent": 30.0,
+      "capture_percent": 46.10970498718136,
+      "observed_percent": 4.6301229454058666,
+      "predicted_percent": 4.235495313642142,
+      "bias_pp": -0.3946276317637246,
+      "aggregate_error_pp": 0.3946276317637246,
+      "group_mae_pp": 0.4707973477432236,
+      "group_snapshot_mae_pp": 0.6439669707233789,
+      "lift": 1.5369901662393788,
+      "mean_people_per_snapshot": 9120.449999999999,
+      "mean_selected_groups_per_snapshot": 9.833333333333334,
+      "mean_eligible_groups": 25.5,
+      "minimum_eligible_groups": 25,
+      "maximum_eligible_groups": 26,
+      "rest_percent": 3.2783470113864994,
+      "gini_groups": 0.21371053635462142,
+      "efficiency_percent": 84.52305512475662
+    },
+    "best_fixed_metric": 46.86630381173895,
+    "candidates_in_final_tolerance": 3
+  },
+  "selection_efficiency": {
+    "criterion": "gini",
+    "winner": {
+      "name": "antiguedad × cambios_manager",
+      "kind": "cut",
+      "dimensions": [
+        "antiguedad",
+        "cambios_manager"
+      ],
+      "coverage_percent": 30.0,
+      "capture_percent": 44.133641304292524,
+      "observed_percent": 4.431695785607937,
+      "predicted_percent": 4.19601180537489,
+      "bias_pp": -0.23568398023304787,
+      "aggregate_error_pp": 0.23568398023304787,
+      "group_mae_pp": 0.23568398023304832,
+      "group_snapshot_mae_pp": 0.48607754953141297,
+      "lift": 1.471121376809751,
+      "mean_people_per_snapshot": 9120.449999999999,
+      "mean_selected_groups_per_snapshot": 5.0,
+      "mean_eligible_groups": 12.0,
+      "minimum_eligible_groups": 12,
+      "maximum_eligible_groups": 12,
+      "rest_percent": 0.0,
+      "gini_groups": 0.21286281379896332,
+      "efficiency_percent": 84.1144938894325
+    },
+    "best_fixed_metric": 85.81115140722196,
+    "candidates_in_final_tolerance": 5
+  },
+  "evaluation": {
+    "B_cuts": {
+      "definition": {
+        "kind": "cut",
+        "dimensions": [
+          "antiguedad",
+          "salidas_equipo",
+          "nivel"
+        ],
+        "name": "antiguedad × salidas_equipo × nivel"
+      },
+      "structure": {
+        "mean_eligible_groups": 20.0,
+        "minimum_eligible_groups": 19,
+        "maximum_eligible_groups": 21,
+        "rest_percent": 5.397549895579909,
+        "gini_groups": 0.20968582121641766,
+        "efficiency_percent": 83.13379568576407
+      },
+      "scenarios": {
+        "20": {
+          "metrics": {
+            "coverage_percent": 20.000000000000004,
+            "capture_percent": 32.02467902887715,
+            "observed_percent": 4.815216314679543,
+            "predicted_percent": 5.260380174749242,
+            "bias_pp": 0.4451638600696979,
+            "aggregate_error_pp": 0.4451638600696979,
+            "group_mae_pp": 0.8441339744450796,
+            "group_snapshot_mae_pp": 0.8441339744450796,
+            "lift": 1.6012339514438576,
+            "mean_people_per_snapshot": 6192.933333333334,
+            "mean_selected_groups_per_snapshot": 4.0,
+            "distinct_people_with_event": 697,
+            "worst_publishable_group_error_pp": 1.1418694842156853,
+            "publishable_group_exposure_percent": 100.0
+          },
+          "selected_groups": [
+            {
+              "group": "Antigüedad: 2-3 años · Salidas en su equipo: con salidas · Nivel: entrada",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 1047.6666666666667,
+              "predicted_percent": 5.366490434639383,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 937.0,
+              "observed_percent": 5.83837098313713,
+              "error_pp": 0.47188054849774763,
+              "distinct_people_with_event": 139
+            },
+            {
+              "group": "Antigüedad: 2-3 años · Salidas en su equipo: sin salidas · Nivel: entrada",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 1245.9333333333336,
+              "predicted_percent": 4.943822736708682,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 1109.0,
+              "observed_percent": 3.8019532524929964,
+              "error_pp": 1.1418694842156853,
+              "distinct_people_with_event": 237
+            },
+            {
+              "group": "Antigüedad: 3-5 años · Salidas en su equipo: con salidas · Nivel: entrada",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 1049.1666666666667,
+              "predicted_percent": 5.72737969291493,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 1011.0,
+              "observed_percent": 6.433677521842732,
+              "error_pp": 0.7062978289278024,
+              "distinct_people_with_event": 146
+            },
+            {
+              "group": "Antigüedad: 3-5 años · Salidas en su equipo: sin salidas · Nivel: entrada",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 2850.1666666666665,
+              "predicted_percent": 5.187851417559228,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 2722.0,
+              "observed_percent": 4.286299046839366,
+              "error_pp": 0.9015523707198624,
+              "distinct_people_with_event": 274
+            }
+          ],
+          "whole_groups_excluding_boundary": {
+            "coverage_percent": 15.976274032768531,
+            "capture_percent": 26.937533560050117,
+            "observed_percent": 5.070413044943063,
+            "predicted_percent": 5.34010717373233,
+            "bias_pp": 0.26969412878926674,
+            "aggregate_error_pp": 0.26969412878926674,
+            "group_mae_pp": 0.7691473975014391,
+            "group_snapshot_mae_pp": 0.7691473975014391,
+            "lift": 1.6860961138247392,
+            "mean_people_per_snapshot": 4947.0,
+            "mean_selected_groups_per_snapshot": 3.0,
+            "distinct_people_with_event": 516,
+            "worst_publishable_group_error_pp": 0.9015523707198624,
+            "publishable_group_exposure_percent": 100.0
+          },
+          "whole_groups_including_boundary": {
+            "coverage_percent": 25.320257497793182,
+            "capture_percent": 38.60748165383927,
+            "observed_percent": 4.585264231962927,
+            "predicted_percent": 5.181323804087234,
+            "bias_pp": 0.5960595721243077,
+            "aggregate_error_pp": 0.5960595721243077,
+            "group_mae_pp": 0.9111986376809313,
+            "group_snapshot_mae_pp": 0.9111986376809313,
+            "lift": 1.5247665493608882,
+            "mean_people_per_snapshot": 7840.333333333333,
+            "mean_selected_groups_per_snapshot": 4.0,
+            "distinct_people_with_event": 697,
+            "worst_publishable_group_error_pp": 1.154076800757411,
+            "publishable_group_exposure_percent": 100.0
+          }
+        },
+        "30": {
+          "metrics": {
+            "coverage_percent": 29.999999999999996,
+            "capture_percent": 45.941025711354264,
+            "observed_percent": 4.605114622568668,
+            "predicted_percent": 4.970284943766822,
+            "bias_pp": 0.36517032119815507,
+            "aggregate_error_pp": 0.36517032119815507,
+            "group_mae_pp": 0.9390355934571458,
+            "group_snapshot_mae_pp": 0.9535068162344204,
+            "lift": 1.531367523711809,
+            "mean_people_per_snapshot": 9289.4,
+            "mean_selected_groups_per_snapshot": 6.666666666666667,
+            "distinct_people_with_event": 948,
+            "worst_publishable_group_error_pp": 1.6285593988290206,
+            "publishable_group_exposure_percent": 97.67118077234984
+          },
+          "selected_groups": [
+            {
+              "group": "Antigüedad: 2-3 años · Salidas en su equipo: con salidas · Nivel: entrada",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 1047.6666666666667,
+              "predicted_percent": 5.366490434639383,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 937.0,
+              "observed_percent": 5.83837098313713,
+              "error_pp": 0.47188054849774763,
+              "distinct_people_with_event": 139
+            },
+            {
+              "group": "Antigüedad: 2-3 años · Salidas en su equipo: con salidas · Nivel: medio",
+              "observed_publishable": false,
+              "mean_selected_people_per_snapshot": 53.833333333333336,
+              "predicted_percent": 4.195390490331547,
+              "selected_snapshots": 1,
+              "minimum_effective_people_selected_snapshot": 323.0
+            },
+            {
+              "group": "Antigüedad: 2-3 años · Salidas en su equipo: sin salidas · Nivel: entrada",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 2893.3333333333335,
+              "predicted_percent": 4.909837169421006,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 2805.0,
+              "observed_percent": 3.7557603686635943,
+              "error_pp": 1.154076800757411,
+              "distinct_people_with_event": 237
+            },
+            {
+              "group": "Antigüedad: 3-5 años · Salidas en su equipo: con salidas · Nivel: entrada",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 1049.1666666666667,
+              "predicted_percent": 5.72737969291493,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 1011.0,
+              "observed_percent": 6.433677521842732,
+              "error_pp": 0.7062978289278024,
+              "distinct_people_with_event": 146
+            },
+            {
+              "group": "Antigüedad: 3-5 años · Salidas en su equipo: con salidas · Nivel: medio",
+              "observed_publishable": false,
+              "mean_selected_people_per_snapshot": 162.5,
+              "predicted_percent": 4.085281723239082,
+              "selected_snapshots": 3,
+              "minimum_effective_people_selected_snapshot": 307.0
+            },
+            {
+              "group": "Antigüedad: 3-5 años · Salidas en su equipo: sin salidas · Nivel: entrada",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 2850.1666666666665,
+              "predicted_percent": 5.187851417559228,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 2722.0,
+              "observed_percent": 4.286299046839366,
+              "error_pp": 0.9015523707198624,
+              "distinct_people_with_event": 274
+            },
+            {
+              "group": "Antigüedad: 3-5 años · Salidas en su equipo: sin salidas · Nivel: medio",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 278.6833333333331,
+              "predicted_percent": 3.6641298894505687,
+              "selected_snapshots": 3,
+              "minimum_effective_people_selected_snapshot": 378.7999999999993,
+              "observed_percent": 3.7321086781912993,
+              "error_pp": 0.06797878874073088,
+              "distinct_people_with_event": 61
+            },
+            {
+              "group": "Antigüedad: 5-10 años · Salidas en su equipo: con salidas · Nivel: entrada",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 752.1666666666666,
+              "predicted_percent": 3.9109930053367226,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 685.0,
+              "observed_percent": 5.539552404165743,
+              "error_pp": 1.6285593988290206,
+              "distinct_people_with_event": 88
+            },
+            {
+              "group": "Antigüedad: 5-10 años · Salidas en su equipo: sin salidas · Nivel: entrada",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 201.8833333333332,
+              "predicted_percent": 3.4430706828393793,
+              "selected_snapshots": 3,
+              "minimum_effective_people_selected_snapshot": 253.39999999999964,
+              "observed_percent": 2.9984741422707812,
+              "error_pp": 0.44459654056859854,
+              "distinct_people_with_event": 96
+            }
+          ],
+          "whole_groups_excluding_boundary": {
+            "coverage_percent": 28.44801601825737,
+            "capture_percent": 44.17397529980312,
+            "observed_percent": 4.6695551813520515,
+            "predicted_percent": 5.046608643473245,
+            "bias_pp": 0.37705346212119417,
+            "aggregate_error_pp": 0.37705346212119417,
+            "group_mae_pp": 0.9779247408646762,
+            "group_snapshot_mae_pp": 0.9779247408646762,
+            "lift": 1.552796345145937,
+            "mean_people_per_snapshot": 8808.833333333334,
+            "mean_selected_groups_per_snapshot": 5.666666666666667,
+            "distinct_people_with_event": 811,
+            "worst_publishable_group_error_pp": 1.6285593988290206,
+            "publishable_group_exposure_percent": 97.54413183736023
+          },
+          "whole_groups_including_boundary": {
+            "coverage_percent": 33.62219303722522,
+            "capture_percent": 49.758367639162344,
+            "observed_percent": 4.450421029039798,
+            "predicted_percent": 4.813813453223228,
+            "bias_pp": 0.3633924241834306,
+            "aggregate_error_pp": 0.3633924241834306,
+            "group_mae_pp": 0.8775062165802338,
+            "group_snapshot_mae_pp": 0.8949304428903584,
+            "lift": 1.4799262970167282,
+            "mean_people_per_snapshot": 10411.0,
+            "mean_selected_groups_per_snapshot": 6.666666666666667,
+            "distinct_people_with_event": 948,
+            "worst_publishable_group_error_pp": 1.6285593988290206,
+            "publishable_group_exposure_percent": 97.92206960586559
+          }
+        },
+        "40": {
+          "metrics": {
+            "coverage_percent": 40.00000000000001,
+            "capture_percent": 56.45407862336419,
+            "observed_percent": 4.2442049172811975,
+            "predicted_percent": 4.614192139203333,
+            "bias_pp": 0.36998722192213535,
+            "aggregate_error_pp": 0.36998722192213535,
+            "group_mae_pp": 0.8061483853469686,
+            "group_snapshot_mae_pp": 0.8655788861232177,
+            "lift": 1.4113519655841047,
+            "mean_people_per_snapshot": 12385.866666666669,
+            "mean_selected_groups_per_snapshot": 8.666666666666666,
+            "distinct_people_with_event": 1019,
+            "worst_publishable_group_error_pp": 1.6285593988290206,
+            "publishable_group_exposure_percent": 98.25338557926239
+          },
+          "selected_groups": [
+            {
+              "group": "Antigüedad: 2-3 años · Salidas en su equipo: con salidas · Nivel: entrada",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 1047.6666666666667,
+              "predicted_percent": 5.366490434639383,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 937.0,
+              "observed_percent": 5.83837098313713,
+              "error_pp": 0.47188054849774763,
+              "distinct_people_with_event": 139
+            },
+            {
+              "group": "Antigüedad: 2-3 años · Salidas en su equipo: con salidas · Nivel: medio",
+              "observed_publishable": false,
+              "mean_selected_people_per_snapshot": 53.833333333333336,
+              "predicted_percent": 4.195390490331547,
+              "selected_snapshots": 1,
+              "minimum_effective_people_selected_snapshot": 323.0
+            },
+            {
+              "group": "Antigüedad: 2-3 años · Salidas en su equipo: sin salidas · Nivel: entrada",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 2893.3333333333335,
+              "predicted_percent": 4.909837169421006,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 2805.0,
+              "observed_percent": 3.7557603686635943,
+              "error_pp": 1.154076800757411,
+              "distinct_people_with_event": 237
+            },
+            {
+              "group": "Antigüedad: 2-3 años · Salidas en su equipo: sin salidas · Nivel: medio",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 507.3666666666674,
+              "predicted_percent": 3.4716029404833075,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 225.2000000000007,
+              "observed_percent": 2.0724450656118916,
+              "error_pp": 1.3991578748714155,
+              "distinct_people_with_event": 38
+            },
+            {
+              "group": "Antigüedad: 3-5 años · Salidas en su equipo: con salidas · Nivel: entrada",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 1049.1666666666667,
+              "predicted_percent": 5.72737969291493,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 1011.0,
+              "observed_percent": 6.433677521842732,
+              "error_pp": 0.7062978289278024,
+              "distinct_people_with_event": 146
+            },
+            {
+              "group": "Antigüedad: 3-5 años · Salidas en su equipo: con salidas · Nivel: medio",
+              "observed_publishable": false,
+              "mean_selected_people_per_snapshot": 162.5,
+              "predicted_percent": 4.085281723239082,
+              "selected_snapshots": 3,
+              "minimum_effective_people_selected_snapshot": 307.0
+            },
+            {
+              "group": "Antigüedad: 3-5 años · Salidas en su equipo: sin salidas · Nivel: entrada",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 2850.1666666666665,
+              "predicted_percent": 5.187851417559228,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 2722.0,
+              "observed_percent": 4.286299046839366,
+              "error_pp": 0.9015523707198624,
+              "distinct_people_with_event": 274
+            },
+            {
+              "group": "Antigüedad: 3-5 años · Salidas en su equipo: sin salidas · Nivel: medio",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 800.8333333333334,
+              "predicted_percent": 3.5946353385307055,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 719.0,
+              "observed_percent": 3.662851196670135,
+              "error_pp": 0.0682158581394296,
+              "distinct_people_with_event": 64
+            },
+            {
+              "group": "Antigüedad: 5-10 años · Salidas en su equipo: con salidas · Nivel: entrada",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 752.1666666666666,
+              "predicted_percent": 3.9109930053367226,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 685.0,
+              "observed_percent": 5.539552404165743,
+              "error_pp": 1.6285593988290206,
+              "distinct_people_with_event": 88
+            },
+            {
+              "group": "Antigüedad: 5-10 años · Salidas en su equipo: sin salidas · Nivel: entrada",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 2268.8333333333335,
+              "predicted_percent": 3.5507036330546393,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 2069.0,
+              "observed_percent": 3.283625945787115,
+              "error_pp": 0.2670776872675238,
+              "distinct_people_with_event": 157
+            }
+          ],
+          "whole_groups_excluding_boundary": {
+            "coverage_percent": 38.36146575666889,
+            "capture_percent": 55.32486128512618,
+            "observed_percent": 4.336967349974043,
+            "predicted_percent": 4.6629955801364416,
+            "bias_pp": 0.3260282301623989,
+            "aggregate_error_pp": 0.3260282301623989,
+            "group_mae_pp": 0.7808191562354041,
+            "group_snapshot_mae_pp": 0.8427881134730898,
+            "lift": 1.4421988366153167,
+            "mean_people_per_snapshot": 11878.5,
+            "mean_selected_groups_per_snapshot": 7.666666666666667,
+            "distinct_people_with_event": 992,
+            "worst_publishable_group_error_pp": 1.6285593988290206,
+            "publishable_group_exposure_percent": 98.17878239396107
+          },
+          "whole_groups_including_boundary": {
+            "coverage_percent": 40.807264193597,
+            "capture_percent": 56.97154107750134,
+            "observed_percent": 4.198377629756645,
+            "predicted_percent": 4.592697718056507,
+            "bias_pp": 0.39432008829986254,
+            "aggregate_error_pp": 0.39432008829986254,
+            "group_mae_pp": 0.82185295240524,
+            "group_snapshot_mae_pp": 0.8801077773249405,
+            "lift": 1.3961127314788393,
+            "mean_people_per_snapshot": 12635.833333333334,
+            "mean_selected_groups_per_snapshot": 8.666666666666666,
+            "distinct_people_with_event": 1019,
+            "worst_publishable_group_error_pp": 1.6285593988290206,
+            "publishable_group_exposure_percent": 98.28793774319067
+          }
+        }
+      },
+      "same_selected_people_C_estimator": {
+        "coverage_percent": 29.999999999999996,
+        "capture_percent": 45.941025711354264,
+        "observed_percent": 4.605114622568668,
+        "predicted_percent": 4.45635851025539,
+        "bias_pp": -0.14875611231327804,
+        "aggregate_error_pp": 0.14875611231327804,
+        "group_mae_pp": 0.9665556523700758,
+        "group_snapshot_mae_pp": 1.0091888579157395,
+        "lift": 1.531367523711809,
+        "mean_people_per_snapshot": 9289.4,
+        "mean_selected_groups_per_snapshot": 6.666666666666667,
+        "distinct_people_with_event": 948,
+        "worst_publishable_group_error_pp": 2.240796803809922,
+        "publishable_group_exposure_percent": 97.67118077234984
+      }
+    },
+    "C_Bcuts": {
+      "definition": {
+        "kind": "cut",
+        "dimensions": [
+          "antiguedad",
+          "salidas_equipo",
+          "nivel"
+        ],
+        "name": "antiguedad × salidas_equipo × nivel"
+      },
+      "structure": {
+        "mean_eligible_groups": 20.0,
+        "minimum_eligible_groups": 19,
+        "maximum_eligible_groups": 21,
+        "rest_percent": 5.397549895579909,
+        "gini_groups": 0.19325397320316243,
+        "efficiency_percent": 75.97812319278695
+      },
+      "scenarios": {
+        "20": {
+          "metrics": {
+            "coverage_percent": 20.000000000000004,
+            "capture_percent": 30.308545578223722,
+            "observed_percent": 4.55717926199582,
+            "predicted_percent": 4.701820828770183,
+            "bias_pp": 0.14464156677436252,
+            "aggregate_error_pp": 0.14464156677436252,
+            "group_mae_pp": 0.8714961774425818,
+            "group_snapshot_mae_pp": 0.9235021358313465,
+            "lift": 1.515427278911186,
+            "mean_people_per_snapshot": 6192.933333333334,
+            "mean_selected_groups_per_snapshot": 3.6666666666666665,
+            "distinct_people_with_event": 675,
+            "worst_publishable_group_error_pp": 1.5694771729348371,
+            "publishable_group_exposure_percent": 100.0
+          },
+          "selected_groups": [
+            {
+              "group": "Antigüedad: 2-3 años · Salidas en su equipo: con salidas · Nivel: entrada",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 1047.6666666666667,
+              "predicted_percent": 4.750474564551628,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 937.0,
+              "observed_percent": 5.83837098313713,
+              "error_pp": 1.0878964185855013,
+              "distinct_people_with_event": 139
+            },
+            {
+              "group": "Antigüedad: 2-3 años · Salidas en su equipo: sin salidas · Nivel: entrada",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 2893.3333333333335,
+              "predicted_percent": 4.7354853668199075,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 2805.0,
+              "observed_percent": 3.7557603686635943,
+              "error_pp": 0.9797249981563135,
+              "distinct_people_with_event": 237
+            },
+            {
+              "group": "Antigüedad: 3-5 años · Salidas en su equipo: con salidas · Nivel: entrada",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 707.8333333333334,
+              "predicted_percent": 4.552491275381621,
+              "selected_snapshots": 4,
+              "minimum_effective_people_selected_snapshot": 1015.0,
+              "observed_percent": 6.1219684483164585,
+              "error_pp": 1.5694771729348371,
+              "distinct_people_with_event": 99
+            },
+            {
+              "group": "Antigüedad: 3-5 años · Salidas en su equipo: sin salidas · Nivel: entrada",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 1544.1000000000004,
+              "predicted_percent": 4.674183245882182,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 1057.0,
+              "observed_percent": 4.472275559175344,
+              "error_pp": 0.20190768670683798,
+              "distinct_people_with_event": 274
+            }
+          ],
+          "whole_groups_excluding_boundary": {
+            "coverage_percent": 15.013348547807178,
+            "capture_percent": 22.892428852693754,
+            "observed_percent": 4.585379844405407,
+            "predicted_percent": 4.711000592525396,
+            "bias_pp": 0.12562074811998983,
+            "aggregate_error_pp": 0.12562074811998983,
+            "group_mae_pp": 1.093898555504116,
+            "group_snapshot_mae_pp": 1.093898555504116,
+            "lift": 1.5248049946883688,
+            "mean_people_per_snapshot": 4648.833333333333,
+            "mean_selected_groups_per_snapshot": 2.6666666666666665,
+            "distinct_people_with_event": 442,
+            "worst_publishable_group_error_pp": 1.5694771729348371,
+            "publishable_group_exposure_percent": 100.0
+          },
+          "whole_groups_including_boundary": {
+            "coverage_percent": 24.217925807910092,
+            "capture_percent": 36.01217111150886,
+            "observed_percent": 4.4717073387562785,
+            "predicted_percent": 4.6691697184901475,
+            "bias_pp": 0.19746237973386885,
+            "aggregate_error_pp": 0.19746237973386885,
+            "group_mae_pp": 0.7977240342070306,
+            "group_snapshot_mae_pp": 0.8475940923043824,
+            "lift": 1.4870047665166484,
+            "mean_people_per_snapshot": 7499.0,
+            "mean_selected_groups_per_snapshot": 3.6666666666666665,
+            "distinct_people_with_event": 675,
+            "worst_publishable_group_error_pp": 1.5694771729348371,
+            "publishable_group_exposure_percent": 100.0
+          }
+        },
+        "30": {
+          "metrics": {
+            "coverage_percent": 29.999999999999996,
+            "capture_percent": 44.247735609963385,
+            "observed_percent": 4.4353797312504115,
+            "predicted_percent": 4.480396971505656,
+            "bias_pp": 0.045017240255244444,
+            "aggregate_error_pp": 0.045017240255244444,
+            "group_mae_pp": 1.0040799507916838,
+            "group_snapshot_mae_pp": 1.0443382630262783,
+            "lift": 1.474924520332113,
+            "mean_people_per_snapshot": 9289.4,
+            "mean_selected_groups_per_snapshot": 6.333333333333333,
+            "distinct_people_with_event": 897,
+            "worst_publishable_group_error_pp": 2.304888257979781,
+            "publishable_group_exposure_percent": 99.42048643256473
+          },
+          "selected_groups": [
+            {
+              "group": "Antigüedad: 2-3 años · Salidas en su equipo: con salidas · Nivel: entrada",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 1047.6666666666667,
+              "predicted_percent": 4.750474564551628,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 937.0,
+              "observed_percent": 5.83837098313713,
+              "error_pp": 1.0878964185855013,
+              "distinct_people_with_event": 139
+            },
+            {
+              "group": "Antigüedad: 2-3 años · Salidas en su equipo: con salidas · Nivel: medio",
+              "observed_publishable": false,
+              "mean_selected_people_per_snapshot": 53.833333333333336,
+              "predicted_percent": 3.8533988158410883,
+              "selected_snapshots": 1,
+              "minimum_effective_people_selected_snapshot": 323.0
+            },
+            {
+              "group": "Antigüedad: 2-3 años · Salidas en su equipo: sin salidas · Nivel: entrada",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 2893.3333333333335,
+              "predicted_percent": 4.7354853668199075,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 2805.0,
+              "observed_percent": 3.7557603686635943,
+              "error_pp": 0.9797249981563135,
+              "distinct_people_with_event": 237
+            },
+            {
+              "group": "Antigüedad: 2-3 años · Salidas en su equipo: sin salidas · Nivel: medio",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 757.3333333333334,
+              "predicted_percent": 3.4777935227968553,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 695.0,
+              "observed_percent": 2.0246478873239435,
+              "error_pp": 1.4531456354729118,
+              "distinct_people_with_event": 38
+            },
+            {
+              "group": "Antigüedad: 3-5 años · Salidas en su equipo: con salidas · Nivel: entrada",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 1049.1666666666667,
+              "predicted_percent": 4.640964067706813,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 1011.0,
+              "observed_percent": 6.433677521842732,
+              "error_pp": 1.7927134541359202,
+              "distinct_people_with_event": 146
+            },
+            {
+              "group": "Antigüedad: 3-5 años · Salidas en su equipo: sin salidas · Nivel: entrada",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 2850.1666666666665,
+              "predicted_percent": 4.600940458829006,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 2722.0,
+              "observed_percent": 4.286299046839366,
+              "error_pp": 0.31464141198963974,
+              "distinct_people_with_event": 274
+            },
+            {
+              "group": "Antigüedad: 5-10 años · Salidas en su equipo: con salidas · Nivel: entrada",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 613.583333333333,
+              "predicted_percent": 3.3092690022037505,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 526.5,
+              "observed_percent": 5.614157260183531,
+              "error_pp": 2.304888257979781,
+              "distinct_people_with_event": 88
+            },
+            {
+              "group": "Antigüedad: 5-10 años · Salidas en su equipo: sin salidas · Nivel: entrada",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 24.316666666666602,
+              "predicted_percent": 3.6005597840631136,
+              "selected_snapshots": 1,
+              "minimum_effective_people_selected_snapshot": 145.8999999999996,
+              "observed_percent": 4.411095952705776,
+              "error_pp": 0.8105361686426621,
+              "distinct_people_with_event": 97
+            }
+          ],
+          "whole_groups_excluding_boundary": {
+            "coverage_percent": 28.32960148125821,
+            "capture_percent": 41.399677823518886,
+            "observed_percent": 4.394581346303649,
+            "predicted_percent": 4.553366834887217,
+            "bias_pp": 0.15878548858356706,
+            "aggregate_error_pp": 0.15878548858356706,
+            "group_mae_pp": 0.9521696285305626,
+            "group_snapshot_mae_pp": 0.9948016919514628,
+            "lift": 1.4613575786058037,
+            "mean_people_per_snapshot": 8772.166666666666,
+            "mean_selected_groups_per_snapshot": 5.333333333333333,
+            "distinct_people_with_event": 788,
+            "worst_publishable_group_error_pp": 3.8058641407472598,
+            "publishable_group_exposure_percent": 99.38631656945263
+          },
+          "whole_groups_including_boundary": {
+            "coverage_percent": 31.55262987921717,
+            "capture_percent": 46.64399498836585,
+            "observed_percent": 4.445505876733594,
+            "predicted_percent": 4.432161123967188,
+            "bias_pp": -0.013344752766405489,
+            "aggregate_error_pp": 0.013344752766405489,
+            "group_mae_pp": 1.0108183659607899,
+            "group_snapshot_mae_pp": 1.0490956623909473,
+            "lift": 1.478291830725937,
+            "mean_people_per_snapshot": 9770.166666666666,
+            "mean_selected_groups_per_snapshot": 6.333333333333333,
+            "distinct_people_with_event": 897,
+            "worst_publishable_group_error_pp": 2.240796803809922,
+            "publishable_group_exposure_percent": 99.44900291704339
+          }
+        },
+        "40": {
+          "metrics": {
+            "coverage_percent": 40.00000000000001,
+            "capture_percent": 56.008031758657374,
+            "observed_percent": 4.210671214443596,
+            "predicted_percent": 4.164271113648058,
+            "bias_pp": -0.04640010079553732,
+            "aggregate_error_pp": 0.04640010079553732,
+            "group_mae_pp": 0.8332229940807332,
+            "group_snapshot_mae_pp": 0.9207208312090289,
+            "lift": 1.4002007939664343,
+            "mean_people_per_snapshot": 12385.866666666669,
+            "mean_selected_groups_per_snapshot": 8.666666666666666,
+            "distinct_people_with_event": 1019,
+            "worst_publishable_group_error_pp": 2.240796803809922,
+            "publishable_group_exposure_percent": 98.25338557926239
+          },
+          "selected_groups": [
+            {
+              "group": "Antigüedad: 2-3 años · Salidas en su equipo: con salidas · Nivel: entrada",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 1047.6666666666667,
+              "predicted_percent": 4.750474564551628,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 937.0,
+              "observed_percent": 5.83837098313713,
+              "error_pp": 1.0878964185855013,
+              "distinct_people_with_event": 139
+            },
+            {
+              "group": "Antigüedad: 2-3 años · Salidas en su equipo: con salidas · Nivel: medio",
+              "observed_publishable": false,
+              "mean_selected_people_per_snapshot": 53.833333333333336,
+              "predicted_percent": 3.8533988158410883,
+              "selected_snapshots": 1,
+              "minimum_effective_people_selected_snapshot": 323.0
+            },
+            {
+              "group": "Antigüedad: 2-3 años · Salidas en su equipo: sin salidas · Nivel: entrada",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 2893.3333333333335,
+              "predicted_percent": 4.7354853668199075,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 2805.0,
+              "observed_percent": 3.7557603686635943,
+              "error_pp": 0.9797249981563135,
+              "distinct_people_with_event": 237
+            },
+            {
+              "group": "Antigüedad: 2-3 años · Salidas en su equipo: sin salidas · Nivel: medio",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 757.3333333333334,
+              "predicted_percent": 3.4777935227968553,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 695.0,
+              "observed_percent": 2.0246478873239435,
+              "error_pp": 1.4531456354729118,
+              "distinct_people_with_event": 38
+            },
+            {
+              "group": "Antigüedad: 3-5 años · Salidas en su equipo: con salidas · Nivel: entrada",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 1049.1666666666667,
+              "predicted_percent": 4.640964067706813,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 1011.0,
+              "observed_percent": 6.433677521842732,
+              "error_pp": 1.7927134541359202,
+              "distinct_people_with_event": 146
+            },
+            {
+              "group": "Antigüedad: 3-5 años · Salidas en su equipo: con salidas · Nivel: medio",
+              "observed_publishable": false,
+              "mean_selected_people_per_snapshot": 162.5,
+              "predicted_percent": 3.3332762564781726,
+              "selected_snapshots": 3,
+              "minimum_effective_people_selected_snapshot": 307.0
+            },
+            {
+              "group": "Antigüedad: 3-5 años · Salidas en su equipo: sin salidas · Nivel: entrada",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 2850.1666666666665,
+              "predicted_percent": 4.600940458829006,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 2722.0,
+              "observed_percent": 4.286299046839366,
+              "error_pp": 0.31464141198963974,
+              "distinct_people_with_event": 274
+            },
+            {
+              "group": "Antigüedad: 3-5 años · Salidas en su equipo: sin salidas · Nivel: medio",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 550.8666666666674,
+              "predicted_percent": 3.068926370599815,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 260.2000000000007,
+              "observed_percent": 3.6962584520206763,
+              "error_pp": 0.627332081420861,
+              "distinct_people_with_event": 64
+            },
+            {
+              "group": "Antigüedad: 5-10 años · Salidas en su equipo: con salidas · Nivel: entrada",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 752.1666666666666,
+              "predicted_percent": 3.298755600355821,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 685.0,
+              "observed_percent": 5.539552404165743,
+              "error_pp": 2.240796803809922,
+              "distinct_people_with_event": 88
+            },
+            {
+              "group": "Antigüedad: 5-10 años · Salidas en su equipo: sin salidas · Nivel: entrada",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 2268.8333333333335,
+              "predicted_percent": 3.2450741638051683,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 2069.0,
+              "observed_percent": 3.283625945787115,
+              "error_pp": 0.03855178198194696,
+              "distinct_people_with_event": 157
+            }
+          ],
+          "whole_groups_excluding_boundary": {
+            "coverage_percent": 38.22098305595625,
+            "capture_percent": 53.821371039914084,
+            "observed_percent": 4.234614842979862,
+            "predicted_percent": 4.215254544780619,
+            "bias_pp": -0.019360298199243748,
+            "aggregate_error_pp": 0.019360298199243748,
+            "group_mae_pp": 0.8428063012842738,
+            "group_snapshot_mae_pp": 0.9323640948829379,
+            "lift": 1.4081629182880664,
+            "mean_people_per_snapshot": 11835.0,
+            "mean_selected_groups_per_snapshot": 7.666666666666667,
+            "distinct_people_with_event": 969,
+            "worst_publishable_group_error_pp": 2.240796803809922,
+            "publishable_group_exposure_percent": 98.17208843824814
+          },
+          "whole_groups_including_boundary": {
+            "coverage_percent": 40.807264193597,
+            "capture_percent": 56.97154107750134,
+            "observed_percent": 4.198377629756645,
+            "predicted_percent": 4.143591226483781,
+            "bias_pp": -0.0547864032728634,
+            "aggregate_error_pp": 0.0547864032728634,
+            "group_mae_pp": 0.8260440789184217,
+            "group_snapshot_mae_pp": 0.9121962062329975,
+            "lift": 1.3961127314788393,
+            "mean_people_per_snapshot": 12635.833333333334,
+            "mean_selected_groups_per_snapshot": 8.666666666666666,
+            "distinct_people_with_event": 1019,
+            "worst_publishable_group_error_pp": 2.240796803809922,
+            "publishable_group_exposure_percent": 98.28793774319067
+          }
+        }
+      }
+    },
+    "B_tree8": {
+      "definition": {
+        "kind": "tree",
+        "name": "B_tree8",
+        "dimensions": [
+          "level_grouped",
+          "tenure_playbook_band",
+          "manager_changes_12m",
+          "team_exits_12m",
+          "direct_reports_band",
+          "time_since_promotion_band",
+          "rehire"
+        ]
+      },
+      "structure": {
+        "mean_eligible_groups": 8.0,
+        "minimum_eligible_groups": 8,
+        "maximum_eligible_groups": 8,
+        "rest_percent": 0.0,
+        "gini_groups": 0.18798644628646113,
+        "efficiency_percent": 74.42935393179924
+      },
+      "scenarios": {
+        "20": {
+          "metrics": {
+            "coverage_percent": 20.000000000000004,
+            "capture_percent": 28.229892091513275,
+            "observed_percent": 4.244633859971706,
+            "predicted_percent": 5.085519319751438,
+            "bias_pp": 0.8408854597797331,
+            "aggregate_error_pp": 0.8408854597797331,
+            "group_mae_pp": 0.8408854597797334,
+            "group_snapshot_mae_pp": 1.034910746859181,
+            "lift": 1.4114946045756636,
+            "mean_people_per_snapshot": 6192.933333333334,
+            "mean_selected_groups_per_snapshot": 3.0,
+            "distinct_people_with_event": 845,
+            "worst_publishable_group_error_pp": 0.9680068087582283,
+            "publishable_group_exposure_percent": 95.57129631623138
+          },
+          "selected_groups": [
+            {
+              "group": "no tenure_playbook_band=10+ years y no tenure_playbook_band=3-5 years y tenure_playbook_band=2-3 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 5140.0,
+              "predicted_percent": 4.682232282619354,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 5037.0,
+              "observed_percent": 3.832684824902724,
+              "error_pp": 0.8495474577166295,
+              "distinct_people_with_event": 404
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=3-5 years y no level_grouped=8 - Assoc & Int/Eng",
+              "observed_publishable": false
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=3-5 years y level_grouped=8 - Assoc & Int/Eng",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 778.6666666666666,
+              "predicted_percent": 7.924342425196584,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 485.0,
+              "observed_percent": 6.9563356164383565,
+              "error_pp": 0.9680068087582283,
+              "distinct_people_with_event": 120
+            }
+          ],
+          "whole_groups_excluding_boundary": {
+            "coverage_percent": 19.114259263246282,
+            "capture_percent": 26.973330946840882,
+            "observed_percent": 4.243635954043704,
+            "predicted_percent": 5.108768061683355,
+            "bias_pp": 0.8651321076396516,
+            "aggregate_error_pp": 0.8651321076396516,
+            "group_mae_pp": 0.8651321076396515,
+            "group_snapshot_mae_pp": 1.0654038700745871,
+            "lift": 1.4111627646856482,
+            "mean_people_per_snapshot": 5918.666666666667,
+            "mean_selected_groups_per_snapshot": 2.0,
+            "distinct_people_with_event": 507,
+            "worst_publishable_group_error_pp": 0.9680068087582283,
+            "publishable_group_exposure_percent": 100.0
+          },
+          "whole_groups_including_boundary": {
+            "coverage_percent": 33.35898981634982,
+            "capture_percent": 47.055664936459635,
+            "observed_percent": 4.241896187295287,
+            "predicted_percent": 4.796219232798598,
+            "bias_pp": 0.5543230455033114,
+            "aggregate_error_pp": 0.5543230455033114,
+            "group_mae_pp": 0.5543230455033119,
+            "group_snapshot_mae_pp": 0.7153255663853506,
+            "lift": 1.4105842291842077,
+            "mean_people_per_snapshot": 10329.5,
+            "mean_selected_groups_per_snapshot": 3.0,
+            "distinct_people_with_event": 845,
+            "worst_publishable_group_error_pp": 0.9680068087582283,
+            "publishable_group_exposure_percent": 100.0
+          }
+        },
+        "30": {
+          "metrics": {
+            "coverage_percent": 30.0,
+            "capture_percent": 42.32266448208736,
+            "observed_percent": 4.242411179434303,
+            "predicted_percent": 4.845069076385166,
+            "bias_pp": 0.6026578969508645,
+            "aggregate_error_pp": 0.6026578969508645,
+            "group_mae_pp": 0.6026578969508641,
+            "group_snapshot_mae_pp": 0.7694441802886269,
+            "lift": 1.4107554827362452,
+            "mean_people_per_snapshot": 9289.4,
+            "mean_selected_groups_per_snapshot": 3.0,
+            "distinct_people_with_event": 845,
+            "worst_publishable_group_error_pp": 0.9680068087582283,
+            "publishable_group_exposure_percent": 100.0
+          },
+          "selected_groups": [
+            {
+              "group": "no tenure_playbook_band=10+ years y no tenure_playbook_band=3-5 years y tenure_playbook_band=2-3 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 5140.0,
+              "predicted_percent": 4.682232282619354,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 5037.0,
+              "observed_percent": 3.832684824902724,
+              "error_pp": 0.8495474577166295,
+              "distinct_people_with_event": 404
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=3-5 years y no level_grouped=8 - Assoc & Int/Eng",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 3370.7333333333336,
+              "predicted_percent": 4.382040340506265,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 3102.5,
+              "observed_percent": 4.240260599148655,
+              "error_pp": 0.14177974135760968,
+              "distinct_people_with_event": 380
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=3-5 years y level_grouped=8 - Assoc & Int/Eng",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 778.6666666666666,
+              "predicted_percent": 7.924342425196584,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 485.0,
+              "observed_percent": 6.9563356164383565,
+              "error_pp": 0.9680068087582283,
+              "distinct_people_with_event": 120
+            }
+          ],
+          "whole_groups_excluding_boundary": {
+            "coverage_percent": 19.114259263246282,
+            "capture_percent": 26.973330946840882,
+            "observed_percent": 4.243635954043704,
+            "predicted_percent": 5.108768061683355,
+            "bias_pp": 0.8651321076396516,
+            "aggregate_error_pp": 0.8651321076396516,
+            "group_mae_pp": 0.8651321076396515,
+            "group_snapshot_mae_pp": 1.0654038700745871,
+            "lift": 1.4111627646856482,
+            "mean_people_per_snapshot": 5918.666666666667,
+            "mean_selected_groups_per_snapshot": 2.0,
+            "distinct_people_with_event": 507,
+            "worst_publishable_group_error_pp": 0.9680068087582283,
+            "publishable_group_exposure_percent": 100.0
+          },
+          "whole_groups_including_boundary": {
+            "coverage_percent": 33.35898981634982,
+            "capture_percent": 47.055664936459635,
+            "observed_percent": 4.241896187295287,
+            "predicted_percent": 4.796219232798598,
+            "bias_pp": 0.5543230455033114,
+            "aggregate_error_pp": 0.5543230455033114,
+            "group_mae_pp": 0.5543230455033119,
+            "group_snapshot_mae_pp": 0.7153255663853506,
+            "lift": 1.4105842291842077,
+            "mean_people_per_snapshot": 10329.5,
+            "mean_selected_groups_per_snapshot": 3.0,
+            "distinct_people_with_event": 845,
+            "worst_publishable_group_error_pp": 0.9680068087582283,
+            "publishable_group_exposure_percent": 100.0
+          }
+        },
+        "40": {
+          "metrics": {
+            "coverage_percent": 40.00000000000001,
+            "capture_percent": 53.320364511805614,
+            "observed_percent": 4.008612996095791,
+            "predicted_percent": 4.501638537820262,
+            "bias_pp": 0.49302554172447094,
+            "aggregate_error_pp": 0.49302554172447094,
+            "group_mae_pp": 0.49302554172447105,
+            "group_snapshot_mae_pp": 0.6298217607639637,
+            "lift": 1.3330091127951402,
+            "mean_people_per_snapshot": 12385.866666666669,
+            "mean_selected_groups_per_snapshot": 4.0,
+            "distinct_people_with_event": 1512,
+            "worst_publishable_group_error_pp": 0.9680068087582283,
+            "publishable_group_exposure_percent": 100.0
+          },
+          "selected_groups": [
+            {
+              "group": "no tenure_playbook_band=10+ years y no tenure_playbook_band=3-5 years y no tenure_playbook_band=2-3 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 2056.3666666666672,
+              "predicted_percent": 3.021906669908222,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 1972.2000000000007,
+              "observed_percent": 2.8367895258188374,
+              "error_pp": 0.18511714408938504,
+              "distinct_people_with_event": 752
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y no tenure_playbook_band=3-5 years y tenure_playbook_band=2-3 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 5140.0,
+              "predicted_percent": 4.682232282619354,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 5037.0,
+              "observed_percent": 3.832684824902724,
+              "error_pp": 0.8495474577166295,
+              "distinct_people_with_event": 404
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=3-5 years y no level_grouped=8 - Assoc & Int/Eng",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 4410.833333333333,
+              "predicted_percent": 4.376826298305667,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 4208.0,
+              "observed_percent": 4.239561685244663,
+              "error_pp": 0.13726461306100374,
+              "distinct_people_with_event": 380
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=3-5 years y level_grouped=8 - Assoc & Int/Eng",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 778.6666666666666,
+              "predicted_percent": 7.924342425196584,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 485.0,
+              "observed_percent": 6.9563356164383565,
+              "error_pp": 0.9680068087582283,
+              "distinct_people_with_event": 120
+            }
+          ],
+          "whole_groups_excluding_boundary": {
+            "coverage_percent": 33.35898981634982,
+            "capture_percent": 47.055664936459635,
+            "observed_percent": 4.241896187295287,
+            "predicted_percent": 4.796219232798598,
+            "bias_pp": 0.5543230455033114,
+            "aggregate_error_pp": 0.5543230455033114,
+            "group_mae_pp": 0.5543230455033119,
+            "group_snapshot_mae_pp": 0.7153255663853506,
+            "lift": 1.4105842291842077,
+            "mean_people_per_snapshot": 10329.5,
+            "mean_selected_groups_per_snapshot": 3.0,
+            "distinct_people_with_event": 845,
+            "worst_publishable_group_error_pp": 0.9680068087582283,
+            "publishable_group_exposure_percent": 100.0
+          },
+          "whole_groups_including_boundary": {
+            "coverage_percent": 76.07165155984241,
+            "capture_percent": 87.34562376946482,
+            "observed_percent": 3.4528627628562534,
+            "predicted_percent": 3.799681783355881,
+            "bias_pp": 0.3468190204996275,
+            "aggregate_error_pp": 0.3468190204996275,
+            "group_mae_pp": 0.34681902049962776,
+            "group_snapshot_mae_pp": 0.42574895293634585,
+            "lift": 1.1482020171568599,
+            "mean_people_per_snapshot": 23555.333333333332,
+            "mean_selected_groups_per_snapshot": 4.0,
+            "distinct_people_with_event": 1512,
+            "worst_publishable_group_error_pp": 0.9680068087582283,
+            "publishable_group_exposure_percent": 100.0
+          }
+        }
+      }
+    },
+    "C_tree8": {
+      "definition": {
+        "kind": "tree",
+        "name": "C_tree8",
+        "dimensions": [
+          "level_grouped",
+          "tenure_playbook_band",
+          "manager_changes_12m",
+          "direct_reports_band",
+          "time_since_promotion_band",
+          "prior_experience_band",
+          "time_at_level_band",
+          "region",
+          "grade_family",
+          "acquisition_recorded"
+        ]
+      },
+      "structure": {
+        "mean_eligible_groups": 8.0,
+        "minimum_eligible_groups": 8,
+        "maximum_eligible_groups": 8,
+        "rest_percent": 0.0,
+        "gini_groups": 0.19886018963795837,
+        "efficiency_percent": 78.06048976158418
+      },
+      "scenarios": {
+        "20": {
+          "metrics": {
+            "coverage_percent": 20.000000000000004,
+            "capture_percent": 31.56849754734523,
+            "observed_percent": 4.746625072583207,
+            "predicted_percent": 4.60810948935804,
+            "bias_pp": -0.13851558322516672,
+            "aggregate_error_pp": 0.13851558322516672,
+            "group_mae_pp": 0.45845321733004546,
+            "group_snapshot_mae_pp": 0.4769577571851466,
+            "lift": 1.5784248773672613,
+            "mean_people_per_snapshot": 6192.933333333334,
+            "mean_selected_groups_per_snapshot": 2.0,
+            "distinct_people_with_event": 660,
+            "worst_publishable_group_error_pp": 0.5302459693584054,
+            "publishable_group_exposure_percent": 100.0
+          },
+          "selected_groups": [
+            {
+              "group": "no tenure_playbook_band=10+ years y no tenure_playbook_band=2-3 years y tenure_playbook_band=3-5 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 4324.600000000001,
+              "predicted_percent": 4.238628306481624,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 4064.0,
+              "observed_percent": 4.666065293014297,
+              "error_pp": 0.4274369865326727,
+              "distinct_people_with_event": 489
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=2-3 years y level_grouped=8 - Assoc & Int/Eng",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 1868.3333333333333,
+              "predicted_percent": 5.463341419849039,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 1424.0,
+              "observed_percent": 4.933095450490633,
+              "error_pp": 0.5302459693584054,
+              "distinct_people_with_event": 197
+            }
+          ],
+          "whole_groups_excluding_boundary": {
+            "coverage_percent": 6.03375890800267,
+            "capture_percent": 9.897977447646323,
+            "observed_percent": 4.933095450490633,
+            "predicted_percent": 5.463341419849039,
+            "bias_pp": 0.5302459693584054,
+            "aggregate_error_pp": 0.5302459693584054,
+            "group_mae_pp": 0.5302459693584051,
+            "group_snapshot_mae_pp": 0.591582658931992,
+            "lift": 1.6404330366131266,
+            "mean_people_per_snapshot": 1868.3333333333333,
+            "mean_selected_groups_per_snapshot": 1.0,
+            "distinct_people_with_event": 197,
+            "worst_publishable_group_error_pp": 0.5302459693584054,
+            "publishable_group_exposure_percent": 100.0
+          },
+          "whole_groups_including_boundary": {
+            "coverage_percent": 22.793183628652013,
+            "capture_percent": 35.79738679076427,
+            "observed_percent": 4.722884737997969,
+            "predicted_percent": 4.556374755522451,
+            "bias_pp": -0.16650998247551818,
+            "aggregate_error_pp": 0.16650998247551818,
+            "group_mae_pp": 0.44724095829471316,
+            "group_snapshot_mae_pp": 0.46347786504418564,
+            "lift": 1.5705303556527057,
+            "mean_people_per_snapshot": 7057.833333333333,
+            "mean_selected_groups_per_snapshot": 2.0,
+            "distinct_people_with_event": 660,
+            "worst_publishable_group_error_pp": 0.5302459693584054,
+            "publishable_group_exposure_percent": 100.0
+          }
+        },
+        "30": {
+          "metrics": {
+            "coverage_percent": 29.999999999999996,
+            "capture_percent": 43.50895069278932,
+            "observed_percent": 4.361324152988244,
+            "predicted_percent": 4.391649358132263,
+            "bias_pp": 0.030325205144018725,
+            "aggregate_error_pp": 0.030325205144018725,
+            "group_mae_pp": 0.4966364683184792,
+            "group_snapshot_mae_pp": 0.50897282822188,
+            "lift": 1.450298356426311,
+            "mean_people_per_snapshot": 9289.4,
+            "mean_selected_groups_per_snapshot": 3.0,
+            "distinct_people_with_event": 845,
+            "worst_publishable_group_error_pp": 0.6528609192256454,
+            "publishable_group_exposure_percent": 100.0
+          },
+          "selected_groups": [
+            {
+              "group": "no tenure_playbook_band=10+ years y no tenure_playbook_band=2-3 years y tenure_playbook_band=3-5 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 5189.5,
+              "predicted_percent": 4.2298469491473645,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 5134.0,
+              "observed_percent": 4.6472042907152264,
+              "error_pp": 0.41735734156786114,
+              "distinct_people_with_event": 489
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=2-3 years y no level_grouped=8 - Assoc & Int/Eng",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 2231.566666666666,
+              "predicted_percent": 3.870668104059466,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 1992.3999999999999,
+              "observed_percent": 3.2178071848338208,
+              "error_pp": 0.6528609192256454,
+              "distinct_people_with_event": 238
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=2-3 years y level_grouped=8 - Assoc & Int/Eng",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 1868.3333333333333,
+              "predicted_percent": 5.463341419849039,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 1424.0,
+              "observed_percent": 4.933095450490633,
+              "error_pp": 0.5302459693584054,
+              "distinct_people_with_event": 197
+            }
+          ],
+          "whole_groups_excluding_boundary": {
+            "coverage_percent": 22.793183628652013,
+            "capture_percent": 35.79738679076427,
+            "observed_percent": 4.722884737997969,
+            "predicted_percent": 4.556374755522451,
+            "bias_pp": -0.16650998247551818,
+            "aggregate_error_pp": 0.16650998247551818,
+            "group_mae_pp": 0.44724095829471316,
+            "group_snapshot_mae_pp": 0.46347786504418564,
+            "lift": 1.5705303556527057,
+            "mean_people_per_snapshot": 7057.833333333333,
+            "mean_selected_groups_per_snapshot": 2.0,
+            "distinct_people_with_event": 660,
+            "worst_publishable_group_error_pp": 0.5302459693584054,
+            "publishable_group_exposure_percent": 100.0
+          },
+          "whole_groups_including_boundary": {
+            "coverage_percent": 33.35898981634982,
+            "capture_percent": 47.055664936459635,
+            "observed_percent": 4.241896187295287,
+            "predicted_percent": 4.336854494817494,
+            "bias_pp": 0.09495830752220664,
+            "aggregate_error_pp": 0.09495830752220664,
+            "group_mae_pp": 0.5143156673298285,
+            "group_snapshot_mae_pp": 0.5254098521099874,
+            "lift": 1.4105842291842077,
+            "mean_people_per_snapshot": 10329.5,
+            "mean_selected_groups_per_snapshot": 3.0,
+            "distinct_people_with_event": 845,
+            "worst_publishable_group_error_pp": 0.6590132069890254,
+            "publishable_group_exposure_percent": 100.0
+          }
+        },
+        "40": {
+          "metrics": {
+            "coverage_percent": 40.00000000000001,
+            "capture_percent": 53.320364511805614,
+            "observed_percent": 4.008612996095791,
+            "predicted_percent": 4.040390821747274,
+            "bias_pp": 0.031777825651483245,
+            "aggregate_error_pp": 0.031777825651483245,
+            "group_mae_pp": 0.4763412824099174,
+            "group_snapshot_mae_pp": 0.4886267640148172,
+            "lift": 1.3330091127951402,
+            "mean_people_per_snapshot": 12385.866666666669,
+            "mean_selected_groups_per_snapshot": 4.0,
+            "distinct_people_with_event": 1512,
+            "worst_publishable_group_error_pp": 0.6590132069890254,
+            "publishable_group_exposure_percent": 100.0
+          },
+          "selected_groups": [
+            {
+              "group": "no tenure_playbook_band=10+ years y no tenure_playbook_band=2-3 years y no tenure_playbook_band=3-5 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 2056.3666666666672,
+              "predicted_percent": 2.5512004158636805,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 1972.2000000000007,
+              "observed_percent": 2.8367895258188374,
+              "error_pp": 0.2855891099551572,
+              "distinct_people_with_event": 752
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y no tenure_playbook_band=2-3 years y tenure_playbook_band=3-5 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 5189.5,
+              "predicted_percent": 4.2298469491473645,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 5134.0,
+              "observed_percent": 4.6472042907152264,
+              "error_pp": 0.41735734156786114,
+              "distinct_people_with_event": 489
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=2-3 years y no level_grouped=8 - Assoc & Int/Eng",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 3271.6666666666665,
+              "predicted_percent": 3.8632923715330905,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 3061.0,
+              "observed_percent": 3.204279164544065,
+              "error_pp": 0.6590132069890254,
+              "distinct_people_with_event": 238
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=2-3 years y level_grouped=8 - Assoc & Int/Eng",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 1868.3333333333333,
+              "predicted_percent": 5.463341419849039,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 1424.0,
+              "observed_percent": 4.933095450490633,
+              "error_pp": 0.5302459693584054,
+              "distinct_people_with_event": 197
+            }
+          ],
+          "whole_groups_excluding_boundary": {
+            "coverage_percent": 33.35898981634982,
+            "capture_percent": 47.055664936459635,
+            "observed_percent": 4.241896187295287,
+            "predicted_percent": 4.336854494817494,
+            "bias_pp": 0.09495830752220664,
+            "aggregate_error_pp": 0.09495830752220664,
+            "group_mae_pp": 0.5143156673298285,
+            "group_snapshot_mae_pp": 0.5254098521099874,
+            "lift": 1.4105842291842077,
+            "mean_people_per_snapshot": 10329.5,
+            "mean_selected_groups_per_snapshot": 3.0,
+            "distinct_people_with_event": 845,
+            "worst_publishable_group_error_pp": 0.6590132069890254,
+            "publishable_group_exposure_percent": 100.0
+          },
+          "whole_groups_including_boundary": {
+            "coverage_percent": 76.07165155984241,
+            "capture_percent": 87.34562376946482,
+            "observed_percent": 3.4528627628562534,
+            "predicted_percent": 3.3339566346421172,
+            "bias_pp": -0.11890612821413615,
+            "aggregate_error_pp": 0.11890612821413615,
+            "group_mae_pp": 0.38608534551386037,
+            "group_snapshot_mae_pp": 0.40097876254533554,
+            "lift": 1.1482020171568599,
+            "mean_people_per_snapshot": 23555.333333333332,
+            "mean_selected_groups_per_snapshot": 4.0,
+            "distinct_people_with_event": 1512,
+            "worst_publishable_group_error_pp": 0.6590132069890254,
+            "publishable_group_exposure_percent": 100.0
+          }
+        }
+      }
+    },
+    "B_tree16": {
+      "definition": {
+        "kind": "tree",
+        "name": "B_tree16",
+        "dimensions": [
+          "level_grouped",
+          "tenure_playbook_band",
+          "manager_changes_12m",
+          "team_exits_12m",
+          "direct_reports_band",
+          "time_since_promotion_band",
+          "rehire"
+        ]
+      },
+      "structure": {
+        "mean_eligible_groups": 13.5,
+        "minimum_eligible_groups": 12,
+        "maximum_eligible_groups": 14,
+        "rest_percent": 0.3961504510517364,
+        "gini_groups": 0.18479326577206578,
+        "efficiency_percent": 73.08699872631365
+      },
+      "scenarios": {
+        "20": {
+          "metrics": {
+            "coverage_percent": 20.000000000000004,
+            "capture_percent": 30.482734513006463,
+            "observed_percent": 4.58337023177404,
+            "predicted_percent": 5.199236037349302,
+            "bias_pp": 0.615865805575261,
+            "aggregate_error_pp": 0.615865805575261,
+            "group_mae_pp": 0.6544778562790596,
+            "group_snapshot_mae_pp": 0.7943834722550824,
+            "lift": 1.524136725650323,
+            "mean_people_per_snapshot": 6192.933333333334,
+            "mean_selected_groups_per_snapshot": 4.5,
+            "distinct_people_with_event": 750,
+            "worst_publishable_group_error_pp": 2.824775855394817,
+            "publishable_group_exposure_percent": 100.0
+          },
+          "selected_groups": [
+            {
+              "group": "no tenure_playbook_band=10+ years y no tenure_playbook_band=3-5 years y tenure_playbook_band=2-3 years y no level_grouped=8 - Assoc & Int/Eng",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 591.3666666666668,
+              "predicted_percent": 4.516868818933856,
+              "selected_snapshots": 1,
+              "minimum_effective_people_selected_snapshot": 3548.2000000000007,
+              "observed_percent": 3.8077234674588176,
+              "error_pp": 0.7091453514750385,
+              "distinct_people_with_event": 141
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y no tenure_playbook_band=3-5 years y tenure_playbook_band=2-3 years y level_grouped=8 - Assoc & Int/Eng",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 1868.3333333333333,
+              "predicted_percent": 5.749365930758186,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 1424.0,
+              "observed_percent": 4.933095450490633,
+              "error_pp": 0.8162704802675532,
+              "distinct_people_with_event": 197
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=3-5 years y no level_grouped=8 - Assoc & Int/Eng y no time_since_promotion_band=promo 1-2 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 2098.9,
+              "predicted_percent": 4.127488029389522,
+              "selected_snapshots": 5,
+              "minimum_effective_people_selected_snapshot": 2219.6000000000004,
+              "observed_percent": 4.184451642680273,
+              "error_pp": 0.05696361329074987,
+              "distinct_people_with_event": 315
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=3-5 years y no level_grouped=8 - Assoc & Int/Eng y time_since_promotion_band=promo 1-2 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 978.3333333333334,
+              "predicted_percent": 5.119589451664402,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 613.0,
+              "observed_percent": 4.258943781942079,
+              "error_pp": 0.8606456697223241,
+              "distinct_people_with_event": 123
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=3-5 years y level_grouped=8 - Assoc & Int/Eng y no rehire=yes",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 292.8333333333333,
+              "predicted_percent": 7.890228331205859,
+              "selected_snapshots": 4,
+              "minimum_effective_people_selected_snapshot": 410.0,
+              "observed_percent": 5.065452475811042,
+              "error_pp": 2.824775855394817,
+              "distinct_people_with_event": 42
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=3-5 years y level_grouped=8 - Assoc & Int/Eng y rehire=yes",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 363.1666666666667,
+              "predicted_percent": 7.7190261338950545,
+              "selected_snapshots": 5,
+              "minimum_effective_people_selected_snapshot": 332.0,
+              "observed_percent": 6.837999082147774,
+              "error_pp": 0.8810270517472798,
+              "distinct_people_with_event": 65
+            }
+          ],
+          "whole_groups_excluding_boundary": {
+            "coverage_percent": 11.311817770792516,
+            "capture_percent": 18.632539824592804,
+            "observed_percent": 4.953368861819566,
+            "predicted_percent": 5.956664983286797,
+            "bias_pp": 1.003296121467231,
+            "aggregate_error_pp": 1.003296121467231,
+            "group_mae_pp": 1.0032961214672311,
+            "group_snapshot_mae_pp": 1.1791442218545638,
+            "lift": 1.647174680686833,
+            "mean_people_per_snapshot": 3502.6666666666665,
+            "mean_selected_groups_per_snapshot": 3.5,
+            "distinct_people_with_event": 413,
+            "worst_publishable_group_error_pp": 2.824775855394817,
+            "publishable_group_exposure_percent": 100.0
+          },
+          "whole_groups_including_boundary": {
+            "coverage_percent": 22.52728916829935,
+            "capture_percent": 33.882226597458384,
+            "observed_percent": 4.522973263565336,
+            "predicted_percent": 5.070189524969112,
+            "bias_pp": 0.5472162614037756,
+            "aggregate_error_pp": 0.5472162614037756,
+            "group_mae_pp": 0.5858559926887594,
+            "group_snapshot_mae_pp": 0.7258613757090173,
+            "lift": 1.5040525446416264,
+            "mean_people_per_snapshot": 6975.5,
+            "mean_selected_groups_per_snapshot": 4.5,
+            "distinct_people_with_event": 750,
+            "worst_publishable_group_error_pp": 2.824775855394817,
+            "publishable_group_exposure_percent": 100.0
+          }
+        },
+        "30": {
+          "metrics": {
+            "coverage_percent": 29.999999999999996,
+            "capture_percent": 42.36128559146453,
+            "observed_percent": 4.246282547841489,
+            "predicted_percent": 4.826760771150265,
+            "bias_pp": 0.5804782233087759,
+            "aggregate_error_pp": 0.5804782233087759,
+            "group_mae_pp": 0.6281382607449508,
+            "group_snapshot_mae_pp": 0.7332696523588128,
+            "lift": 1.4120428530488178,
+            "mean_people_per_snapshot": 9289.4,
+            "mean_selected_groups_per_snapshot": 5.5,
+            "distinct_people_with_event": 835,
+            "worst_publishable_group_error_pp": 2.824775855394817,
+            "publishable_group_exposure_percent": 100.0
+          },
+          "selected_groups": [
+            {
+              "group": "no tenure_playbook_band=10+ years y no tenure_playbook_band=3-5 years y tenure_playbook_band=2-3 years y no level_grouped=8 - Assoc & Int/Eng",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 2440.2666666666664,
+              "predicted_percent": 4.123215652606957,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 1992.3999999999999,
+              "observed_percent": 3.2628797185457405,
+              "error_pp": 0.8603359340612173,
+              "distinct_people_with_event": 238
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y no tenure_playbook_band=3-5 years y tenure_playbook_band=2-3 years y level_grouped=8 - Assoc & Int/Eng",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 1868.3333333333333,
+              "predicted_percent": 5.749365930758186,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 1424.0,
+              "observed_percent": 4.933095450490633,
+              "error_pp": 0.8162704802675532,
+              "distinct_people_with_event": 197
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=3-5 years y no level_grouped=8 - Assoc & Int/Eng y no time_since_promotion_band=promo 1-2 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 3346.4666666666667,
+              "predicted_percent": 4.157147013625029,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 2944.7999999999993,
+              "observed_percent": 4.223296357972242,
+              "error_pp": 0.06614934434721301,
+              "distinct_people_with_event": 326
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=3-5 years y no level_grouped=8 - Assoc & Int/Eng y time_since_promotion_band=promo 1-2 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 978.3333333333334,
+              "predicted_percent": 5.119589451664402,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 613.0,
+              "observed_percent": 4.258943781942079,
+              "error_pp": 0.8606456697223241,
+              "distinct_people_with_event": 123
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=3-5 years y level_grouped=8 - Assoc & Int/Eng y no rehire=yes",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 292.8333333333333,
+              "predicted_percent": 7.890228331205859,
+              "selected_snapshots": 4,
+              "minimum_effective_people_selected_snapshot": 410.0,
+              "observed_percent": 5.065452475811042,
+              "error_pp": 2.824775855394817,
+              "distinct_people_with_event": 42
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=3-5 years y level_grouped=8 - Assoc & Int/Eng y rehire=yes",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 363.1666666666667,
+              "predicted_percent": 7.7190261338950545,
+              "selected_snapshots": 5,
+              "minimum_effective_people_selected_snapshot": 332.0,
+              "observed_percent": 6.837999082147774,
+              "error_pp": 0.8810270517472798,
+              "distinct_people_with_event": 65
+            }
+          ],
+          "whole_groups_excluding_boundary": {
+            "coverage_percent": 22.52728916829935,
+            "capture_percent": 33.882226597458384,
+            "observed_percent": 4.522973263565336,
+            "predicted_percent": 5.070189524969112,
+            "bias_pp": 0.5472162614037756,
+            "aggregate_error_pp": 0.5472162614037756,
+            "group_mae_pp": 0.5858559926887594,
+            "group_snapshot_mae_pp": 0.7258613757090173,
+            "lift": 1.5040525446416264,
+            "mean_people_per_snapshot": 6975.5,
+            "mean_selected_groups_per_snapshot": 4.5,
+            "distinct_people_with_event": 750,
+            "worst_publishable_group_error_pp": 2.824775855394817,
+            "publishable_group_exposure_percent": 100.0
+          },
+          "whole_groups_including_boundary": {
+            "coverage_percent": 32.96283936529808,
+            "capture_percent": 45.498478611061394,
+            "observed_percent": 4.1508139971587665,
+            "predicted_percent": 4.750341122847852,
+            "bias_pp": 0.5995271256890854,
+            "aggregate_error_pp": 0.5995271256890854,
+            "group_mae_pp": 0.6458778416019554,
+            "group_snapshot_mae_pp": 0.7415595792539672,
+            "lift": 1.3802960997031195,
+            "mean_people_per_snapshot": 10206.833333333334,
+            "mean_selected_groups_per_snapshot": 5.5,
+            "distinct_people_with_event": 835,
+            "worst_publishable_group_error_pp": 2.824775855394817,
+            "publishable_group_exposure_percent": 100.0
+          }
+        },
+        "40": {
+          "metrics": {
+            "coverage_percent": 40.0,
+            "capture_percent": 52.28757028938157,
+            "observed_percent": 3.9309677590422263,
+            "predicted_percent": 4.458384397320906,
+            "bias_pp": 0.5274166382786797,
+            "aggregate_error_pp": 0.5274166382786797,
+            "group_mae_pp": 0.5656129183562422,
+            "group_snapshot_mae_pp": 0.645328667851326,
+            "lift": 1.3071892572345394,
+            "mean_people_per_snapshot": 12385.866666666667,
+            "mean_selected_groups_per_snapshot": 6.5,
+            "distinct_people_with_event": 1484,
+            "worst_publishable_group_error_pp": 2.824775855394817,
+            "publishable_group_exposure_percent": 100.00000000000001
+          },
+          "selected_groups": [
+            {
+              "group": "no tenure_playbook_band=10+ years y no tenure_playbook_band=3-5 years y tenure_playbook_band=2-3 years y no level_grouped=8 - Assoc & Int/Eng",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 3271.6666666666665,
+              "predicted_percent": 4.072829929301068,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 3061.0,
+              "observed_percent": 3.204279164544065,
+              "error_pp": 0.8685507647570023,
+              "distinct_people_with_event": 238
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y no tenure_playbook_band=3-5 years y tenure_playbook_band=2-3 years y level_grouped=8 - Assoc & Int/Eng",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 1868.3333333333333,
+              "predicted_percent": 5.749365930758186,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 1424.0,
+              "observed_percent": 4.933095450490633,
+              "error_pp": 0.8162704802675532,
+              "distinct_people_with_event": 197
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y no tenure_playbook_band=3-5 years y no tenure_playbook_band=2-3 years y no direct_reports_band=6+",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 2179.033333333334,
+              "predicted_percent": 3.0908267778875422,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 1972.2000000000007,
+              "observed_percent": 2.9011836446417254,
+              "error_pp": 0.1896431332458169,
+              "distinct_people_with_event": 734
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=3-5 years y no level_grouped=8 - Assoc & Int/Eng y no time_since_promotion_band=promo 1-2 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 3432.5,
+              "predicted_percent": 4.165123471881037,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 3246.0,
+              "observed_percent": 4.234037387715465,
+              "error_pp": 0.06891391583442825,
+              "distinct_people_with_event": 326
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=3-5 years y no level_grouped=8 - Assoc & Int/Eng y time_since_promotion_band=promo 1-2 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 978.3333333333334,
+              "predicted_percent": 5.119589451664402,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 613.0,
+              "observed_percent": 4.258943781942079,
+              "error_pp": 0.8606456697223241,
+              "distinct_people_with_event": 123
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=3-5 years y level_grouped=8 - Assoc & Int/Eng y no rehire=yes",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 292.8333333333333,
+              "predicted_percent": 7.890228331205859,
+              "selected_snapshots": 4,
+              "minimum_effective_people_selected_snapshot": 410.0,
+              "observed_percent": 5.065452475811042,
+              "error_pp": 2.824775855394817,
+              "distinct_people_with_event": 42
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=3-5 years y level_grouped=8 - Assoc & Int/Eng y rehire=yes",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 363.1666666666667,
+              "predicted_percent": 7.7190261338950545,
+              "selected_snapshots": 5,
+              "minimum_effective_people_selected_snapshot": 332.0,
+              "observed_percent": 6.837999082147774,
+              "error_pp": 0.8810270517472798,
+              "distinct_people_with_event": 65
+            }
+          ],
+          "whole_groups_excluding_boundary": {
+            "coverage_percent": 32.96283936529808,
+            "capture_percent": 45.498478611061394,
+            "observed_percent": 4.1508139971587665,
+            "predicted_percent": 4.750341122847852,
+            "bias_pp": 0.5995271256890854,
+            "aggregate_error_pp": 0.5995271256890854,
+            "group_mae_pp": 0.6458778416019554,
+            "group_snapshot_mae_pp": 0.7415595792539672,
+            "lift": 1.3802960997031195,
+            "mean_people_per_snapshot": 10206.833333333334,
+            "mean_selected_groups_per_snapshot": 5.5,
+            "distinct_people_with_event": 835,
+            "worst_publishable_group_error_pp": 2.824775855394817,
+            "publishable_group_exposure_percent": 100.0
+          },
+          "whole_groups_including_boundary": {
+            "coverage_percent": 73.85030249531724,
+            "capture_percent": 84.64292106676213,
+            "observed_percent": 3.4466673955030793,
+            "predicted_percent": 3.8241327489104906,
+            "bias_pp": 0.3774653534074111,
+            "aggregate_error_pp": 0.3774653534074111,
+            "group_mae_pp": 0.39815384284453165,
+            "group_snapshot_mae_pp": 0.4433840483819821,
+            "lift": 1.1461418329617437,
+            "mean_people_per_snapshot": 22867.5,
+            "mean_selected_groups_per_snapshot": 6.5,
+            "distinct_people_with_event": 1484,
+            "worst_publishable_group_error_pp": 2.824775855394817,
+            "publishable_group_exposure_percent": 100.0
+          }
+        }
+      }
+    },
+    "C_tree16": {
+      "definition": {
+        "kind": "tree",
+        "name": "C_tree16",
+        "dimensions": [
+          "level_grouped",
+          "tenure_playbook_band",
+          "manager_changes_12m",
+          "direct_reports_band",
+          "time_since_promotion_band",
+          "prior_experience_band",
+          "time_at_level_band",
+          "region",
+          "grade_family",
+          "acquisition_recorded"
+        ]
+      },
+      "structure": {
+        "mean_eligible_groups": 14.666666666666666,
+        "minimum_eligible_groups": 14,
+        "maximum_eligible_groups": 15,
+        "rest_percent": 0.29980407776605594,
+        "gini_groups": 0.20861013470361592,
+        "efficiency_percent": 81.93440023282746
+      },
+      "scenarios": {
+        "20": {
+          "metrics": {
+            "coverage_percent": 20.000000000000004,
+            "capture_percent": 29.074476733975423,
+            "observed_percent": 4.37162522640646,
+            "predicted_percent": 4.785010396175538,
+            "bias_pp": 0.4133851697690792,
+            "aggregate_error_pp": 0.4133851697690792,
+            "group_mae_pp": 0.5208167108677141,
+            "group_snapshot_mae_pp": 0.835960055153107,
+            "lift": 1.4537238366987708,
+            "mean_people_per_snapshot": 6192.933333333334,
+            "mean_selected_groups_per_snapshot": 5.666666666666667,
+            "distinct_people_with_event": 820,
+            "worst_publishable_group_error_pp": 0.7837239388099089,
+            "publishable_group_exposure_percent": 80.02131461665984
+          },
+          "selected_groups": [
+            {
+              "group": "no tenure_playbook_band=10+ years y no tenure_playbook_band=2-3 years y tenure_playbook_band=3-5 years y no level_grouped=8 - Assoc & Int/Eng",
+              "observed_publishable": false
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y no tenure_playbook_band=2-3 years y tenure_playbook_band=3-5 years y level_grouped=8 - Assoc & Int/Eng",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 778.6666666666666,
+              "predicted_percent": 7.265904793838507,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 485.0,
+              "observed_percent": 6.9563356164383565,
+              "error_pp": 0.30956917740015005,
+              "distinct_people_with_event": 120
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=2-3 years y level_grouped=8 - Assoc & Int/Eng y no time_at_level_band=2-3 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 626.5,
+              "predicted_percent": 4.9394654599991075,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 603.0,
+              "observed_percent": 4.309656823623304,
+              "error_pp": 0.6298086363758036,
+              "distinct_people_with_event": 57
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=2-3 years y level_grouped=8 - Assoc & Int/Eng y time_at_level_band=2-3 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 1241.8333333333333,
+              "predicted_percent": 5.727634767463587,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 806.0,
+              "observed_percent": 5.247617769426922,
+              "error_pp": 0.4800169980366643,
+              "distinct_people_with_event": 143
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=2-3 years y no level_grouped=8 - Assoc & Int/Eng y no manager_changes_12m=1",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 1603.5,
+              "predicted_percent": 3.5807140007846185,
+              "selected_snapshots": 4,
+              "minimum_effective_people_selected_snapshot": 2380.0,
+              "observed_percent": 2.8895125246855837,
+              "error_pp": 0.6912014760990347,
+              "distinct_people_with_event": 132
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=2-3 years y no level_grouped=8 - Assoc & Int/Eng y manager_changes_12m=1",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 705.1666666666666,
+              "predicted_percent": 4.328985106382587,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 675.0,
+              "observed_percent": 3.545261167572678,
+              "error_pp": 0.7837239388099089,
+              "distinct_people_with_event": 67
+            }
+          ],
+          "whole_groups_excluding_boundary": {
+            "coverage_percent": 16.00426292333197,
+            "capture_percent": 23.37569357436907,
+            "observed_percent": 4.392278200040358,
+            "predicted_percent": 4.975998853163882,
+            "bias_pp": 0.5837206531235247,
+            "aggregate_error_pp": 0.5837206531235247,
+            "group_mae_pp": 0.583720653123524,
+            "group_snapshot_mae_pp": 0.9775449058180463,
+            "lift": 1.4605916989960588,
+            "mean_people_per_snapshot": 4955.666666666667,
+            "mean_selected_groups_per_snapshot": 4.666666666666667,
+            "distinct_people_with_event": 479,
+            "worst_publishable_group_error_pp": 0.7837239388099089,
+            "publishable_group_exposure_percent": 100.0
+          },
+          "whole_groups_including_boundary": {
+            "coverage_percent": 30.24899347643551,
+            "capture_percent": 43.45802756398783,
+            "observed_percent": 4.320361572269969,
+            "predicted_percent": 4.372227035334486,
+            "bias_pp": 0.051865463064516865,
+            "aggregate_error_pp": 0.051865463064516865,
+            "group_mae_pp": 0.5658092250963002,
+            "group_snapshot_mae_pp": 0.7741753940604975,
+            "lift": 1.4366768136547219,
+            "mean_people_per_snapshot": 9366.5,
+            "mean_selected_groups_per_snapshot": 5.666666666666667,
+            "distinct_people_with_event": 820,
+            "worst_publishable_group_error_pp": 0.7837239388099089,
+            "publishable_group_exposure_percent": 100.0
+          }
+        },
+        "30": {
+          "metrics": {
+            "coverage_percent": 30.0,
+            "capture_percent": 42.612061522328595,
+            "observed_percent": 4.271420251850673,
+            "predicted_percent": 4.4128992619131004,
+            "bias_pp": 0.14147901006242766,
+            "aggregate_error_pp": 0.14147901006242766,
+            "group_mae_pp": 0.5513897898605737,
+            "group_snapshot_mae_pp": 0.7614853527175026,
+            "lift": 1.4204020507442865,
+            "mean_people_per_snapshot": 9289.4,
+            "mean_selected_groups_per_snapshot": 6.0,
+            "distinct_people_with_event": 845,
+            "worst_publishable_group_error_pp": 0.7837239388099089,
+            "publishable_group_exposure_percent": 99.99999999999999
+          },
+          "selected_groups": [
+            {
+              "group": "no tenure_playbook_band=10+ years y no tenure_playbook_band=2-3 years y tenure_playbook_band=3-5 years y no level_grouped=8 - Assoc & Int/Eng",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 3700.783333333333,
+              "predicted_percent": 3.7307090258328635,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 3102.5,
+              "observed_percent": 4.245171080873945,
+              "error_pp": 0.5144620550410819,
+              "distinct_people_with_event": 380
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y no tenure_playbook_band=2-3 years y tenure_playbook_band=3-5 years y level_grouped=8 - Assoc & Int/Eng",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 778.6666666666666,
+              "predicted_percent": 7.265904793838507,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 485.0,
+              "observed_percent": 6.9563356164383565,
+              "error_pp": 0.30956917740015005,
+              "distinct_people_with_event": 120
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=2-3 years y level_grouped=8 - Assoc & Int/Eng y no time_at_level_band=2-3 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 626.5,
+              "predicted_percent": 4.9394654599991075,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 603.0,
+              "observed_percent": 4.309656823623304,
+              "error_pp": 0.6298086363758036,
+              "distinct_people_with_event": 57
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=2-3 years y level_grouped=8 - Assoc & Int/Eng y time_at_level_band=2-3 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 1241.8333333333333,
+              "predicted_percent": 5.727634767463587,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 806.0,
+              "observed_percent": 5.247617769426922,
+              "error_pp": 0.4800169980366643,
+              "distinct_people_with_event": 143
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=2-3 years y no level_grouped=8 - Assoc & Int/Eng y no manager_changes_12m=1",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 2236.45,
+              "predicted_percent": 3.697343499545882,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 1880.8999999999996,
+              "observed_percent": 3.056245197058448,
+              "error_pp": 0.641098302487434,
+              "distinct_people_with_event": 186
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=2-3 years y no level_grouped=8 - Assoc & Int/Eng y manager_changes_12m=1",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 705.1666666666666,
+              "predicted_percent": 4.328985106382587,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 675.0,
+              "observed_percent": 3.545261167572678,
+              "error_pp": 0.7837239388099089,
+              "distinct_people_with_event": 67
+            }
+          ],
+          "whole_groups_excluding_boundary": {
+            "coverage_percent": 21.053566430555257,
+            "capture_percent": 30.58886701270807,
+            "observed_percent": 4.369167838425157,
+            "predicted_percent": 4.7553551284933135,
+            "bias_pp": 0.3861872900681574,
+            "aggregate_error_pp": 0.3861872900681574,
+            "group_mae_pp": 0.5012650888133391,
+            "group_snapshot_mae_pp": 0.8006379720964509,
+            "lift": 1.452906666127319,
+            "mean_people_per_snapshot": 6519.166666666667,
+            "mean_selected_groups_per_snapshot": 5.0,
+            "distinct_people_with_event": 688,
+            "worst_publishable_group_error_pp": 0.7837239388099089,
+            "publishable_group_exposure_percent": 100.0
+          },
+          "whole_groups_including_boundary": {
+            "coverage_percent": 33.35898981634982,
+            "capture_percent": 47.055664936459635,
+            "observed_percent": 4.241896187295287,
+            "predicted_percent": 4.336854494817493,
+            "bias_pp": 0.09495830752220591,
+            "aggregate_error_pp": 0.09495830752220591,
+            "group_mae_pp": 0.5609880521439884,
+            "group_snapshot_mae_pp": 0.7499286321917309,
+            "lift": 1.4105842291842077,
+            "mean_people_per_snapshot": 10329.5,
+            "mean_selected_groups_per_snapshot": 6.0,
+            "distinct_people_with_event": 845,
+            "worst_publishable_group_error_pp": 0.7837239388099089,
+            "publishable_group_exposure_percent": 100.0
+          }
+        },
+        "40": {
+          "metrics": {
+            "coverage_percent": 40.00000000000001,
+            "capture_percent": 53.764587593073344,
+            "observed_percent": 4.042009587305164,
+            "predicted_percent": 4.05842020573059,
+            "bias_pp": 0.016410618425425166,
+            "aggregate_error_pp": 0.016410618425425166,
+            "group_mae_pp": 0.5306320798789829,
+            "group_snapshot_mae_pp": 0.6882037520216796,
+            "lift": 1.3441146898268335,
+            "mean_people_per_snapshot": 12385.866666666669,
+            "mean_selected_groups_per_snapshot": 7.0,
+            "distinct_people_with_event": 1476,
+            "worst_publishable_group_error_pp": 0.7837239388099089,
+            "publishable_group_exposure_percent": 100.0
+          },
+          "selected_groups": [
+            {
+              "group": "no tenure_playbook_band=10+ years y no tenure_playbook_band=2-3 years y tenure_playbook_band=3-5 years y no level_grouped=8 - Assoc & Int/Eng",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 4410.833333333333,
+              "predicted_percent": 3.693876337003132,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 4208.0,
+              "observed_percent": 4.239561685244663,
+              "error_pp": 0.5456853482415308,
+              "distinct_people_with_event": 380
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y no tenure_playbook_band=2-3 years y tenure_playbook_band=3-5 years y level_grouped=8 - Assoc & Int/Eng",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 778.6666666666666,
+              "predicted_percent": 7.265904793838507,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 485.0,
+              "observed_percent": 6.9563356164383565,
+              "error_pp": 0.30956917740015005,
+              "distinct_people_with_event": 120
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y no tenure_playbook_band=2-3 years y no tenure_playbook_band=3-5 years y no region=APAC",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 2056.3666666666672,
+              "predicted_percent": 2.659794641650011,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 1972.200000000001,
+              "observed_percent": 3.0379432074776536,
+              "error_pp": 0.3781485658276422,
+              "distinct_people_with_event": 707
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=2-3 years y level_grouped=8 - Assoc & Int/Eng y no time_at_level_band=2-3 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 626.5,
+              "predicted_percent": 4.9394654599991075,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 603.0,
+              "observed_percent": 4.309656823623304,
+              "error_pp": 0.6298086363758036,
+              "distinct_people_with_event": 57
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=2-3 years y level_grouped=8 - Assoc & Int/Eng y time_at_level_band=2-3 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 1241.8333333333333,
+              "predicted_percent": 5.727634767463587,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 806.0,
+              "observed_percent": 5.247617769426922,
+              "error_pp": 0.4800169980366643,
+              "distinct_people_with_event": 143
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=2-3 years y no level_grouped=8 - Assoc & Int/Eng y no manager_changes_12m=1",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 2566.5,
+              "predicted_percent": 3.735339519974662,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 2380.0,
+              "observed_percent": 3.110591596856939,
+              "error_pp": 0.6247479231177232,
+              "distinct_people_with_event": 186
+            },
+            {
+              "group": "no tenure_playbook_band=10+ years y tenure_playbook_band=2-3 years y no level_grouped=8 - Assoc & Int/Eng y manager_changes_12m=1",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 705.1666666666666,
+              "predicted_percent": 4.328985106382587,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 675.0,
+              "observed_percent": 3.545261167572678,
+              "error_pp": 0.7837239388099089,
+              "distinct_people_with_event": 67
+            }
+          ],
+          "whole_groups_excluding_boundary": {
+            "coverage_percent": 33.35898981634982,
+            "capture_percent": 47.055664936459635,
+            "observed_percent": 4.241896187295287,
+            "predicted_percent": 4.336854494817493,
+            "bias_pp": 0.09495830752220591,
+            "aggregate_error_pp": 0.09495830752220591,
+            "group_mae_pp": 0.5609880521439884,
+            "group_snapshot_mae_pp": 0.7499286321917309,
+            "lift": 1.4105842291842077,
+            "mean_people_per_snapshot": 10329.5,
+            "mean_selected_groups_per_snapshot": 6.0,
+            "distinct_people_with_event": 845,
+            "worst_publishable_group_error_pp": 0.7837239388099089,
+            "publishable_group_exposure_percent": 100.0
+          },
+          "whole_groups_including_boundary": {
+            "coverage_percent": 71.11008245957758,
+            "capture_percent": 85.19778056201898,
+            "observed_percent": 3.6029489683152427,
+            "predicted_percent": 3.4462826344932846,
+            "bias_pp": -0.15666633382195838,
+            "aggregate_error_pp": 0.15666633382195838,
+            "group_mae_pp": 0.464382302856518,
+            "group_snapshot_mae_pp": 0.5530176505836243,
+            "lift": 1.198111120324597,
+            "mean_people_per_snapshot": 22019.0,
+            "mean_selected_groups_per_snapshot": 7.0,
+            "distinct_people_with_event": 1476,
+            "worst_publishable_group_error_pp": 0.7837239388099089,
+            "publishable_group_exposure_percent": 100.0
+          }
+        }
+      }
+    },
+    "C_selected": {
+      "definition": {
+        "kind": "cut",
+        "name": "antiguedad × prior_experience_band",
+        "dimensions": [
+          "antiguedad",
+          "prior_experience_band"
+        ]
+      },
+      "structure": {
+        "mean_eligible_groups": 26.666666666666668,
+        "minimum_eligible_groups": 26,
+        "maximum_eligible_groups": 28,
+        "rest_percent": 2.284324068292893,
+        "gini_groups": 0.2103919905741319,
+        "efficiency_percent": 82.59556016067803
+      },
+      "scenarios": {
+        "20": {
+          "metrics": {
+            "coverage_percent": 20.000000000000004,
+            "capture_percent": 30.728058331368462,
+            "observed_percent": 4.620257010607671,
+            "predicted_percent": 4.860971646767061,
+            "bias_pp": 0.24071463615939134,
+            "aggregate_error_pp": 0.24071463615939134,
+            "group_mae_pp": 0.6356520872072526,
+            "group_snapshot_mae_pp": 0.6495186377126418,
+            "lift": 1.5364029165684228,
+            "mean_people_per_snapshot": 6192.933333333334,
+            "mean_selected_groups_per_snapshot": 4.833333333333333,
+            "distinct_people_with_event": 614,
+            "worst_publishable_group_error_pp": 0.9979970182890124,
+            "publishable_group_exposure_percent": 99.99999999999999
+          },
+          "selected_groups": [
+            {
+              "group": "Antigüedad: 2-3 años · prior_experience_band: 1-3 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 754.5,
+              "predicted_percent": 5.104228824237187,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 736.0,
+              "observed_percent": 5.345703556439143,
+              "error_pp": 0.24147473220195612,
+              "distinct_people_with_event": 87
+            },
+            {
+              "group": "Antigüedad: 2-3 años · prior_experience_band: 3-5 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 47.333333333333634,
+              "predicted_percent": 4.315662602307762,
+              "selected_snapshots": 5,
+              "minimum_effective_people_selected_snapshot": 31.600000000000367,
+              "observed_percent": 5.131943746260113,
+              "error_pp": 0.8162811439523505,
+              "distinct_people_with_event": 55
+            },
+            {
+              "group": "Antigüedad: 2-3 años · prior_experience_band: <1 year",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 2464.0,
+              "predicted_percent": 4.772347667639662,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 2400.0,
+              "observed_percent": 3.7743506493506493,
+              "error_pp": 0.9979970182890124,
+              "distinct_people_with_event": 196
+            },
+            {
+              "group": "Antigüedad: 3-5 años · prior_experience_band: 1-3 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 921.7666666666668,
+              "predicted_percent": 4.691650821812672,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 899.0,
+              "observed_percent": 4.415468461544448,
+              "error_pp": 0.2761823602682248,
+              "distinct_people_with_event": 87
+            },
+            {
+              "group": "Antigüedad: 3-5 años · prior_experience_band: <1 year",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 2005.3333333333333,
+              "predicted_percent": 4.969042224238092,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 1941.0,
+              "observed_percent": 5.46875,
+              "error_pp": 0.499707775761908,
+              "distinct_people_with_event": 230
+            }
+          ],
+          "whole_groups_excluding_boundary": {
+            "coverage_percent": 19.347320601976445,
+            "capture_percent": 29.783425809915876,
+            "observed_percent": 4.6292947558770345,
+            "predicted_percent": 4.8806869580824985,
+            "bias_pp": 0.2513922022054643,
+            "aggregate_error_pp": 0.2513922022054643,
+            "group_mae_pp": 0.6467540088904292,
+            "group_snapshot_mae_pp": 0.6583852599349377,
+            "lift": 1.5394082944422454,
+            "mean_people_per_snapshot": 5990.833333333333,
+            "mean_selected_groups_per_snapshot": 3.8333333333333335,
+            "distinct_people_with_event": 550,
+            "worst_publishable_group_error_pp": 0.9979970182890124,
+            "publishable_group_exposure_percent": 100.0
+          },
+          "whole_groups_including_boundary": {
+            "coverage_percent": 21.844790836867826,
+            "capture_percent": 33.70323966350456,
+            "observed_percent": 4.6396451891092765,
+            "predicted_percent": 4.81329004538955,
+            "bias_pp": 0.17364485628027382,
+            "aggregate_error_pp": 0.17364485628027382,
+            "group_mae_pp": 0.6288568077984038,
+            "group_snapshot_mae_pp": 0.6798772435732968,
+            "lift": 1.5428501886419086,
+            "mean_people_per_snapshot": 6764.166666666667,
+            "mean_selected_groups_per_snapshot": 4.833333333333333,
+            "distinct_people_with_event": 614,
+            "worst_publishable_group_error_pp": 0.9979970182890124,
+            "publishable_group_exposure_percent": 100.0
+          }
+        },
+        "30": {
+          "metrics": {
+            "coverage_percent": 29.999999999999996,
+            "capture_percent": 44.263458158324084,
+            "observed_percent": 4.4369557547770695,
+            "predicted_percent": 4.48269663992494,
+            "bias_pp": 0.045740885147870634,
+            "aggregate_error_pp": 0.045740885147870634,
+            "group_mae_pp": 0.624960545976317,
+            "group_snapshot_mae_pp": 0.696897939289842,
+            "lift": 1.4754486052774696,
+            "mean_people_per_snapshot": 9289.4,
+            "mean_selected_groups_per_snapshot": 8.0,
+            "distinct_people_with_event": 880,
+            "worst_publishable_group_error_pp": 1.264542250923807,
+            "publishable_group_exposure_percent": 100.0
+          },
+          "selected_groups": [
+            {
+              "group": "Antigüedad: 2-3 años · prior_experience_band: 1-3 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 754.5,
+              "predicted_percent": 5.104228824237187,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 736.0,
+              "observed_percent": 5.345703556439143,
+              "error_pp": 0.24147473220195612,
+              "distinct_people_with_event": 87
+            },
+            {
+              "group": "Antigüedad: 2-3 años · prior_experience_band: 3-5 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 732.8333333333334,
+              "predicted_percent": 4.215984765940834,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 705.0,
+              "observed_percent": 4.4803274960200135,
+              "error_pp": 0.26434273007918013,
+              "distinct_people_with_event": 64
+            },
+            {
+              "group": "Antigüedad: 2-3 años · prior_experience_band: 5-10 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 721.8333333333334,
+              "predicted_percent": 3.672702979574818,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 686.0,
+              "observed_percent": 3.117063033941353,
+              "error_pp": 0.555639945633465,
+              "distinct_people_with_event": 46
+            },
+            {
+              "group": "Antigüedad: 2-3 años · prior_experience_band: <1 year",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 2464.0,
+              "predicted_percent": 4.772347667639662,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 2400.0,
+              "observed_percent": 3.7743506493506493,
+              "error_pp": 0.9979970182890124,
+              "distinct_people_with_event": 196
+            },
+            {
+              "group": "Antigüedad: 3-5 años · prior_experience_band: 1-3 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 925.0,
+              "predicted_percent": 4.690158036023749,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 899.0,
+              "observed_percent": 4.414414414414415,
+              "error_pp": 0.2757436216093339,
+              "distinct_people_with_event": 87
+            },
+            {
+              "group": "Antigüedad: 3-5 años · prior_experience_band: 3-5 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 832.5,
+              "predicted_percent": 3.812483452219271,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 821.0,
+              "observed_percent": 4.724724724724725,
+              "error_pp": 0.9122412725054535,
+              "distinct_people_with_event": 81
+            },
+            {
+              "group": "Antigüedad: 3-5 años · prior_experience_band: 5-10 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 551.7833333333332,
+              "predicted_percent": 3.1452342237140476,
+              "selected_snapshots": 4,
+              "minimum_effective_people_selected_snapshot": 797.3999999999996,
+              "observed_percent": 3.455974257372803,
+              "error_pp": 0.31074003365875597,
+              "distinct_people_with_event": 51
+            },
+            {
+              "group": "Antigüedad: 3-5 años · prior_experience_band: <1 year",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 2005.3333333333333,
+              "predicted_percent": 4.969042224238092,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 1941.0,
+              "observed_percent": 5.46875,
+              "error_pp": 0.499707775761908,
+              "distinct_people_with_event": 230
+            },
+            {
+              "group": "Antigüedad: 5-10 años · prior_experience_band: <1 year",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 301.6166666666665,
+              "predicted_percent": 3.5750702575983255,
+              "selected_snapshots": 2,
+              "minimum_effective_people_selected_snapshot": 904.7999999999993,
+              "observed_percent": 4.839612508522132,
+              "error_pp": 1.264542250923807,
+              "distinct_people_with_event": 102
+            }
+          ],
+          "whole_groups_excluding_boundary": {
+            "coverage_percent": 27.24395547613409,
+            "capture_percent": 40.64793270091283,
+            "observed_percent": 4.486723565670934,
+            "predicted_percent": 4.602628445785654,
+            "bias_pp": 0.11590488011471999,
+            "aggregate_error_pp": 0.11590488011471999,
+            "group_mae_pp": 0.622645839928551,
+            "group_snapshot_mae_pp": 0.701860541380265,
+            "lift": 1.4919982062267254,
+            "mean_people_per_snapshot": 8436.0,
+            "mean_selected_groups_per_snapshot": 7.0,
+            "distinct_people_with_event": 741,
+            "worst_publishable_group_error_pp": 0.9979970182890124,
+            "publishable_group_exposure_percent": 100.0
+          },
+          "whole_groups_including_boundary": {
+            "coverage_percent": 31.217301440351367,
+            "capture_percent": 46.12493287989977,
+            "observed_percent": 4.443256664022897,
+            "predicted_percent": 4.444546244075014,
+            "bias_pp": 0.001289580052116819,
+            "aggregate_error_pp": 0.001289580052116819,
+            "group_mae_pp": 0.6432582189359556,
+            "group_snapshot_mae_pp": 0.7123904533005881,
+            "lift": 1.4775438859772438,
+            "mean_people_per_snapshot": 9666.333333333334,
+            "mean_selected_groups_per_snapshot": 8.0,
+            "distinct_people_with_event": 880,
+            "worst_publishable_group_error_pp": 1.2687627462731585,
+            "publishable_group_exposure_percent": 100.0
+          }
+        },
+        "40": {
+          "metrics": {
+            "coverage_percent": 40.00000000000001,
+            "capture_percent": 56.708502750316164,
+            "observed_percent": 4.263332465848391,
+            "predicted_percent": 4.177292129550539,
+            "bias_pp": -0.0860403362978525,
+            "aggregate_error_pp": 0.0860403362978525,
+            "group_mae_pp": 0.6098481556615993,
+            "group_snapshot_mae_pp": 0.6825341581142436,
+            "lift": 1.417712568757904,
+            "mean_people_per_snapshot": 12385.866666666669,
+            "mean_selected_groups_per_snapshot": 10.333333333333334,
+            "distinct_people_with_event": 1028,
+            "worst_publishable_group_error_pp": 0.9979970182890124,
+            "publishable_group_exposure_percent": 99.27175059745515
+          },
+          "selected_groups": [
+            {
+              "group": "Antigüedad: 2-3 años · prior_experience_band: 1-3 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 754.5,
+              "predicted_percent": 5.104228824237187,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 736.0,
+              "observed_percent": 5.345703556439143,
+              "error_pp": 0.24147473220195612,
+              "distinct_people_with_event": 87
+            },
+            {
+              "group": "Antigüedad: 2-3 años · prior_experience_band: 10+ years",
+              "observed_publishable": false,
+              "mean_selected_people_per_snapshot": 90.20000000000012,
+              "predicted_percent": 3.246066582606616,
+              "selected_snapshots": 2,
+              "minimum_effective_people_selected_snapshot": 59.20000000000073
+            },
+            {
+              "group": "Antigüedad: 2-3 años · prior_experience_band: 3-5 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 732.8333333333334,
+              "predicted_percent": 4.215984765940834,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 705.0,
+              "observed_percent": 4.4803274960200135,
+              "error_pp": 0.26434273007918013,
+              "distinct_people_with_event": 64
+            },
+            {
+              "group": "Antigüedad: 2-3 años · prior_experience_band: 5-10 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 721.8333333333334,
+              "predicted_percent": 3.672702979574818,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 686.0,
+              "observed_percent": 3.117063033941353,
+              "error_pp": 0.555639945633465,
+              "distinct_people_with_event": 46
+            },
+            {
+              "group": "Antigüedad: 2-3 años · prior_experience_band: <1 year",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 2464.0,
+              "predicted_percent": 4.772347667639662,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 2400.0,
+              "observed_percent": 3.7743506493506493,
+              "error_pp": 0.9979970182890124,
+              "distinct_people_with_event": 196
+            },
+            {
+              "group": "Antigüedad: 3-5 años · prior_experience_band: 1-3 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 925.0,
+              "predicted_percent": 4.690158036023749,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 899.0,
+              "observed_percent": 4.414414414414415,
+              "error_pp": 0.2757436216093339,
+              "distinct_people_with_event": 87
+            },
+            {
+              "group": "Antigüedad: 3-5 años · prior_experience_band: 3-5 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 832.5,
+              "predicted_percent": 3.812483452219271,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 821.0,
+              "observed_percent": 4.724724724724725,
+              "error_pp": 0.9122412725054535,
+              "distinct_people_with_event": 81
+            },
+            {
+              "group": "Antigüedad: 3-5 años · prior_experience_band: 5-10 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 884.6000000000004,
+              "predicted_percent": 3.269063929468899,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 731.2000000000007,
+              "observed_percent": 3.4716193893421323,
+              "error_pp": 0.20255545987323373,
+              "distinct_people_with_event": 60
+            },
+            {
+              "group": "Antigüedad: 3-5 años · prior_experience_band: <1 year",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 2005.3333333333333,
+              "predicted_percent": 4.969042224238092,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 1941.0,
+              "observed_percent": 5.46875,
+              "error_pp": 0.499707775761908,
+              "distinct_people_with_event": 230
+            },
+            {
+              "group": "Antigüedad: 5-10 años · prior_experience_band: 1-3 years",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 1213.2333333333336,
+              "predicted_percent": 3.252983594085758,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 718.2000000000008,
+              "observed_percent": 4.068998319445647,
+              "error_pp": 0.8160147253598894,
+              "distinct_people_with_event": 107
+            },
+            {
+              "group": "Antigüedad: 5-10 años · prior_experience_band: <1 year",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 1761.8333333333333,
+              "predicted_percent": 3.280884961947202,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 1696.0,
+              "observed_percent": 3.850156087408949,
+              "error_pp": 0.5692711254617473,
+              "distinct_people_with_event": 133
+            }
+          ],
+          "whole_groups_excluding_boundary": {
+            "coverage_percent": 37.37970159536676,
+            "capture_percent": 53.409701091820295,
+            "observed_percent": 4.296801877690901,
+            "predicted_percent": 4.240930977954376,
+            "bias_pp": -0.05587089973652556,
+            "aggregate_error_pp": 0.05587089973652556,
+            "group_mae_pp": 0.6139698675289136,
+            "group_snapshot_mae_pp": 0.6858802103197695,
+            "lift": 1.4288423612894885,
+            "mean_people_per_snapshot": 11574.5,
+            "mean_selected_groups_per_snapshot": 9.333333333333334,
+            "distinct_people_with_event": 1016,
+            "worst_publishable_group_error_pp": 0.9979970182890124,
+            "publishable_group_exposure_percent": 99.30594554120408
+          },
+          "whole_groups_including_boundary": {
+            "coverage_percent": 40.729218248756645,
+            "capture_percent": 57.52640057275819,
+            "observed_percent": 4.24738998282014,
+            "predicted_percent": 4.159861192851783,
+            "bias_pp": -0.08752878996835776,
+            "aggregate_error_pp": 0.08752878996835776,
+            "group_mae_pp": 0.6155363626592609,
+            "group_snapshot_mae_pp": 0.6882753836456789,
+            "lift": 1.4124111153180385,
+            "mean_people_per_snapshot": 12611.666666666666,
+            "mean_selected_groups_per_snapshot": 10.333333333333334,
+            "distinct_people_with_event": 1028,
+            "worst_publishable_group_error_pp": 0.9979970182890124,
+            "publishable_group_exposure_percent": 98.80798202722347
+          }
+        }
+      }
+    },
+    "C_gini": {
+      "definition": {
+        "kind": "cut",
+        "name": "antiguedad × cambios_manager",
+        "dimensions": [
+          "antiguedad",
+          "cambios_manager"
+        ]
+      },
+      "structure": {
+        "mean_eligible_groups": 12.0,
+        "minimum_eligible_groups": 12,
+        "maximum_eligible_groups": 12,
+        "rest_percent": 0.0,
+        "gini_groups": 0.20446602643762116,
+        "efficiency_percent": 80.29469065160201
+      },
+      "scenarios": {
+        "20": {
+          "metrics": {
+            "coverage_percent": 20.000000000000004,
+            "capture_percent": 28.401139548888413,
+            "observed_percent": 4.270382550531776,
+            "predicted_percent": 4.551888017399064,
+            "bias_pp": 0.28150546686728795,
+            "aggregate_error_pp": 0.28150546686728795,
+            "group_mae_pp": 0.6477621479934946,
+            "group_snapshot_mae_pp": 0.6751655750432304,
+            "lift": 1.4200569774444205,
+            "mean_people_per_snapshot": 6192.933333333334,
+            "mean_selected_groups_per_snapshot": 3.0,
+            "distinct_people_with_event": 563,
+            "worst_publishable_group_error_pp": 0.8011077969516814,
+            "publishable_group_exposure_percent": 100.0
+          },
+          "selected_groups": [
+            {
+              "group": "Antigüedad: 2-3 años · Cambios de manager: con cambios de manager",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 1521.3333333333333,
+              "predicted_percent": 5.044907480432562,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 1422.0,
+              "observed_percent": 4.7217353198948295,
+              "error_pp": 0.32317216053773307,
+              "distinct_people_with_event": 158
+            },
+            {
+              "group": "Antigüedad: 2-3 años · Cambios de manager: sin cambios de manager",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 3255.933333333334,
+              "predicted_percent": 4.1919331037299425,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 3146.6000000000004,
+              "observed_percent": 3.459180504291631,
+              "error_pp": 0.7327525994383123,
+              "distinct_people_with_event": 271
+            },
+            {
+              "group": "Antigüedad: 3-5 años · Cambios de manager: con cambios de manager",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 1415.6666666666667,
+              "predicted_percent": 4.84994000149428,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 1365.0,
+              "observed_percent": 5.651047798445962,
+              "error_pp": 0.8011077969516814,
+              "distinct_people_with_event": 179
+            }
+          ],
+          "whole_groups_excluding_boundary": {
+            "coverage_percent": 9.485004413632742,
+            "capture_percent": 16.305709683193125,
+            "observed_percent": 5.1696742707978665,
+            "predicted_percent": 4.950930987066216,
+            "bias_pp": -0.2187432837316504,
+            "aggregate_error_pp": 0.2187432837316504,
+            "group_mae_pp": 0.5535424531095223,
+            "group_snapshot_mae_pp": 0.6113250873702911,
+            "lift": 1.719104069130113,
+            "mean_people_per_snapshot": 2937.0,
+            "mean_selected_groups_per_snapshot": 2.0,
+            "distinct_people_with_event": 317,
+            "worst_publishable_group_error_pp": 0.8011077969516814,
+            "publishable_group_exposure_percent": 100.0
+          },
+          "whole_groups_including_boundary": {
+            "coverage_percent": 21.171442719658966,
+            "capture_percent": 29.74762842312511,
+            "observed_percent": 4.225352112676056,
+            "predicted_percent": 4.532360729709538,
+            "bias_pp": 0.30700861703348153,
+            "aggregate_error_pp": 0.30700861703348153,
+            "group_mae_pp": 0.652999852468859,
+            "group_snapshot_mae_pp": 0.6788870132189294,
+            "lift": 1.4050827247357423,
+            "mean_people_per_snapshot": 6555.666666666667,
+            "mean_selected_groups_per_snapshot": 3.0,
+            "distinct_people_with_event": 563,
+            "worst_publishable_group_error_pp": 0.8011077969516814,
+            "publishable_group_exposure_percent": 100.0
+          }
+        },
+        "30": {
+          "metrics": {
+            "coverage_percent": 29.999999999999996,
+            "capture_percent": 42.29272131691988,
+            "observed_percent": 4.239409685548966,
+            "predicted_percent": 4.374760233613531,
+            "bias_pp": 0.13535054806456534,
+            "aggregate_error_pp": 0.13535054806456534,
+            "group_mae_pp": 0.5421415960173106,
+            "group_snapshot_mae_pp": 0.5604105473838011,
+            "lift": 1.409757377230663,
+            "mean_people_per_snapshot": 9289.4,
+            "mean_selected_groups_per_snapshot": 4.0,
+            "distinct_people_with_event": 845,
+            "worst_publishable_group_error_pp": 0.8011077969516814,
+            "publishable_group_exposure_percent": 100.0
+          },
+          "selected_groups": [
+            {
+              "group": "Antigüedad: 2-3 años · Cambios de manager: con cambios de manager",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 1521.3333333333333,
+              "predicted_percent": 5.044907480432562,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 1422.0,
+              "observed_percent": 4.7217353198948295,
+              "error_pp": 0.32317216053773307,
+              "distinct_people_with_event": 158
+            },
+            {
+              "group": "Antigüedad: 2-3 años · Cambios de manager: sin cambios de manager",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 3618.6666666666665,
+              "predicted_percent": 4.192638683139006,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 3549.0,
+              "observed_percent": 3.4589167280766397,
+              "error_pp": 0.7337219550623666,
+              "distinct_people_with_event": 271
+            },
+            {
+              "group": "Antigüedad: 3-5 años · Cambios de manager: con cambios de manager",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 1415.6666666666667,
+              "predicted_percent": 4.84994000149428,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 1365.0,
+              "observed_percent": 5.651047798445962,
+              "error_pp": 0.8011077969516814,
+              "distinct_people_with_event": 179
+            },
+            {
+              "group": "Antigüedad: 3-5 años · Cambios de manager: sin cambios de manager",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 2733.733333333333,
+              "predicted_percent": 3.99682420513963,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 2681.3999999999996,
+              "observed_percent": 4.273120640737415,
+              "error_pp": 0.2762964355977852,
+              "distinct_people_with_event": 342
+            }
+          ],
+          "whole_groups_excluding_boundary": {
+            "coverage_percent": 21.171442719658966,
+            "capture_percent": 29.74762842312511,
+            "observed_percent": 4.225352112676056,
+            "predicted_percent": 4.532360729709538,
+            "bias_pp": 0.30700861703348153,
+            "aggregate_error_pp": 0.30700861703348153,
+            "group_mae_pp": 0.652999852468859,
+            "group_snapshot_mae_pp": 0.6788870132189294,
+            "lift": 1.4050827247357423,
+            "mean_people_per_snapshot": 6555.666666666667,
+            "mean_selected_groups_per_snapshot": 3.0,
+            "distinct_people_with_event": 563,
+            "worst_publishable_group_error_pp": 0.8011077969516814,
+            "publishable_group_exposure_percent": 100.0
+          },
+          "whole_groups_including_boundary": {
+            "coverage_percent": 33.35898981634982,
+            "capture_percent": 47.055664936459635,
+            "observed_percent": 4.241896187295287,
+            "predicted_percent": 4.336854494817497,
+            "bias_pp": 0.09495830752220959,
+            "aggregate_error_pp": 0.09495830752220959,
+            "group_mae_pp": 0.5143156673298331,
+            "group_snapshot_mae_pp": 0.5307450779328515,
+            "lift": 1.4105842291842077,
+            "mean_people_per_snapshot": 10329.5,
+            "mean_selected_groups_per_snapshot": 4.0,
+            "distinct_people_with_event": 845,
+            "worst_publishable_group_error_pp": 0.8011077969516814,
+            "publishable_group_exposure_percent": 100.0
+          }
+        },
+        "40": {
+          "metrics": {
+            "coverage_percent": 40.00000000000001,
+            "capture_percent": 56.79142705293612,
+            "observed_percent": 4.269566696244564,
+            "predicted_percent": 4.137154899189784,
+            "bias_pp": -0.13241179705478148,
+            "aggregate_error_pp": 0.13241179705478148,
+            "group_mae_pp": 0.661252430561641,
+            "group_snapshot_mae_pp": 0.6749541440865089,
+            "lift": 1.419785676323403,
+            "mean_people_per_snapshot": 12385.866666666669,
+            "mean_selected_groups_per_snapshot": 6.0,
+            "distinct_people_with_event": 1054,
+            "worst_publishable_group_error_pp": 1.5289092927686951,
+            "publishable_group_exposure_percent": 100.0
+          },
+          "selected_groups": [
+            {
+              "group": "Antigüedad: 1-2 años · Cambios de manager: con cambios de manager",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 258.2000000000007,
+              "predicted_percent": 2.9458204871198506,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 164.20000000000073,
+              "observed_percent": 2.4488141910367482,
+              "error_pp": 0.49700629608310243,
+              "distinct_people_with_event": 59
+            },
+            {
+              "group": "Antigüedad: 2-3 años · Cambios de manager: con cambios de manager",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 1521.3333333333333,
+              "predicted_percent": 5.044907480432562,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 1422.0,
+              "observed_percent": 4.7217353198948295,
+              "error_pp": 0.32317216053773307,
+              "distinct_people_with_event": 158
+            },
+            {
+              "group": "Antigüedad: 2-3 años · Cambios de manager: sin cambios de manager",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 3618.6666666666665,
+              "predicted_percent": 4.192638683139006,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 3549.0,
+              "observed_percent": 3.4589167280766397,
+              "error_pp": 0.7337219550623666,
+              "distinct_people_with_event": 271
+            },
+            {
+              "group": "Antigüedad: 3-5 años · Cambios de manager: con cambios de manager",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 1415.6666666666667,
+              "predicted_percent": 4.84994000149428,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 1365.0,
+              "observed_percent": 5.651047798445962,
+              "error_pp": 0.8011077969516814,
+              "distinct_people_with_event": 179
+            },
+            {
+              "group": "Antigüedad: 3-5 años · Cambios de manager: sin cambios de manager",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 3773.8333333333335,
+              "predicted_percent": 3.997233320801529,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 3717.0,
+              "observed_percent": 4.270635516495164,
+              "error_pp": 0.27340219569363505,
+              "distinct_people_with_event": 342
+            },
+            {
+              "group": "Antigüedad: 5-10 años · Cambios de manager: con cambios de manager",
+              "observed_publishable": true,
+              "mean_selected_people_per_snapshot": 1798.1666666666667,
+              "predicted_percent": 3.161052705562939,
+              "selected_snapshots": 6,
+              "minimum_effective_people_selected_snapshot": 1714.0,
+              "observed_percent": 4.689961998331634,
+              "error_pp": 1.5289092927686951,
+              "distinct_people_with_event": 174
+            }
+          ],
+          "whole_groups_excluding_boundary": {
+            "coverage_percent": 39.16614636036773,
+            "capture_percent": 56.112403794523,
+            "observed_percent": 4.308330813841629,
+            "predicted_percent": 4.162518602996214,
+            "bias_pp": -0.14581221084541532,
+            "aggregate_error_pp": 0.14581221084541532,
+            "group_mae_pp": 0.6647492575348724,
+            "group_snapshot_mae_pp": 0.6787426827739026,
+            "lift": 1.4326761504242145,
+            "mean_people_per_snapshot": 12127.666666666666,
+            "mean_selected_groups_per_snapshot": 5.0,
+            "distinct_people_with_event": 1009,
+            "worst_publishable_group_error_pp": 1.5289092927686951,
+            "publishable_group_exposure_percent": 100.0
+          },
+          "whole_groups_including_boundary": {
+            "coverage_percent": 42.20347923439619,
+            "capture_percent": 58.56452478969035,
+            "observed_percent": 4.172990345496053,
+            "predicted_percent": 4.075302516701885,
+            "bias_pp": -0.09768782879416782,
+            "aggregate_error_pp": 0.09768782879416782,
+            "group_mae_pp": 0.6545385203259585,
+            "group_snapshot_mae_pp": 0.6675248558351891,
+            "lift": 1.3876705393037778,
+            "mean_people_per_snapshot": 13068.166666666666,
+            "mean_selected_groups_per_snapshot": 6.0,
+            "distinct_people_with_event": 1054,
+            "worst_publishable_group_error_pp": 1.5289092927686951,
+            "publishable_group_exposure_percent": 100.0
+          }
+        }
+      }
+    }
+  },
+  "group_artifacts": {
+    "B_tree8": {
+      "training_snapshot": "2024-06-23",
+      "rules": [
+        {
+          "node": 5,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=3-5 years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=2-3 years",
+              "present": false
+            }
+          ],
+          "training_people": 12789,
+          "training_mean_risk": 0.028404234292057233
+        },
+        {
+          "node": 6,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=3-5 years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=2-3 years",
+              "present": true
+            }
+          ],
+          "training_people": 4746,
+          "training_mean_risk": 0.043860607869082864
+        },
+        {
+          "node": 7,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=3-5 years",
+              "present": true
+            },
+            {
+              "condition": "level_grouped=8 - Assoc & Int/Eng",
+              "present": false
+            }
+          ],
+          "training_people": 4403,
+          "training_mean_risk": 0.0409489092358772
+        },
+        {
+          "node": 8,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=3-5 years",
+              "present": true
+            },
+            {
+              "condition": "level_grouped=8 - Assoc & Int/Eng",
+              "present": true
+            }
+          ],
+          "training_people": 766,
+          "training_mean_risk": 0.07558143171607157
+        },
+        {
+          "node": 11,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": true
+            },
+            {
+              "condition": "direct_reports_band=6+",
+              "present": false
+            },
+            {
+              "condition": "direct_reports_band=1-5",
+              "present": false
+            }
+          ],
+          "training_people": 3313,
+          "training_mean_risk": 0.018316381140057784
+        },
+        {
+          "node": 12,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": true
+            },
+            {
+              "condition": "direct_reports_band=6+",
+              "present": false
+            },
+            {
+              "condition": "direct_reports_band=1-5",
+              "present": true
+            }
+          ],
+          "training_people": 2886,
+          "training_mean_risk": 0.01490145289782568
+        },
+        {
+          "node": 13,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": true
+            },
+            {
+              "condition": "direct_reports_band=6+",
+              "present": true
+            },
+            {
+              "condition": "time_since_promotion_band=sin promo en historial",
+              "present": false
+            }
+          ],
+          "training_people": 642,
+          "training_mean_risk": 0.010469433084354902
+        },
+        {
+          "node": 14,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": true
+            },
+            {
+              "condition": "direct_reports_band=6+",
+              "present": true
+            },
+            {
+              "condition": "time_since_promotion_band=sin promo en historial",
+              "present": true
+            }
+          ],
+          "training_people": 438,
+          "training_mean_risk": 0.009900921752694636
+        }
+      ],
+      "high_nodes": [
+        8,
+        6,
+        7
+      ],
+      "features": [
+        "level_grouped",
+        "tenure_playbook_band",
+        "manager_changes_12m",
+        "team_exits_12m",
+        "direct_reports_band",
+        "time_since_promotion_band",
+        "rehire"
+      ],
+      "encoder": {
+        "features": [
+          "level_grouped",
+          "tenure_playbook_band",
+          "manager_changes_12m",
+          "team_exits_12m",
+          "direct_reports_band",
+          "time_since_promotion_band",
+          "rehire"
+        ],
+        "references": {
+          "level_grouped": "7 - Senior & Lead",
+          "tenure_playbook_band": "5-10 years",
+          "manager_changes_12m": "0",
+          "team_exits_12m": "0",
+          "direct_reports_band": "0",
+          "time_since_promotion_band": "sin promo, contratado 1-3 years",
+          "rehire": "no"
+        },
+        "levels": {
+          "level_grouped": [
+            "1 - VP & Above",
+            "2 - Sr Dir",
+            "3 - Princ/Directors",
+            "5 - Sr Staff & /Mgr",
+            "6 - Staff & /Mgr",
+            "7 - Senior & Lead",
+            "8 - Assoc & Int/Eng"
+          ],
+          "tenure_playbook_band": [
+            "1-2 years",
+            "10+ years",
+            "2-3 years",
+            "3-5 years",
+            "5-10 years",
+            "<1 year"
+          ],
+          "manager_changes_12m": [
+            "0",
+            "1",
+            "2+"
+          ],
+          "team_exits_12m": [
+            "0",
+            "1",
+            "2+"
+          ],
+          "direct_reports_band": [
+            "0",
+            "1-5",
+            "6+"
+          ],
+          "time_since_promotion_band": [
+            "promo 1-2 years",
+            "promo 2-3 years",
+            "promo 3+ years",
+            "promo <1 year",
+            "sin promo en historial",
+            "sin promo, contratado 1-3 years",
+            "sin promo, contratado 3+ years",
+            "sin promo, contratado <1 year"
+          ],
+          "rehire": [
+            "no",
+            "yes"
+          ]
+        },
+        "columns": [
+          "intercept",
+          "level_grouped=1 - VP & Above",
+          "level_grouped=2 - Sr Dir",
+          "level_grouped=3 - Princ/Directors",
+          "level_grouped=5 - Sr Staff & /Mgr",
+          "level_grouped=6 - Staff & /Mgr",
+          "level_grouped=8 - Assoc & Int/Eng",
+          "tenure_playbook_band=1-2 years",
+          "tenure_playbook_band=10+ years",
+          "tenure_playbook_band=2-3 years",
+          "tenure_playbook_band=3-5 years",
+          "tenure_playbook_band=<1 year",
+          "manager_changes_12m=1",
+          "manager_changes_12m=2+",
+          "team_exits_12m=1",
+          "team_exits_12m=2+",
+          "direct_reports_band=1-5",
+          "direct_reports_band=6+",
+          "time_since_promotion_band=promo 1-2 years",
+          "time_since_promotion_band=promo 2-3 years",
+          "time_since_promotion_band=promo 3+ years",
+          "time_since_promotion_band=promo <1 year",
+          "time_since_promotion_band=sin promo en historial",
+          "time_since_promotion_band=sin promo, contratado 3+ years",
+          "time_since_promotion_band=sin promo, contratado <1 year",
+          "rehire=yes"
+        ],
+        "interactions": {}
+      },
+      "training_r2": 0.766731493706279,
+      "training_high_fraction": 0.3306873895207284,
+      "maximum_depth": 3
+    },
+    "C_tree8": {
+      "training_snapshot": "2024-06-23",
+      "rules": [
+        {
+          "node": 5,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=2-3 years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=3-5 years",
+              "present": false
+            }
+          ],
+          "training_people": 12789,
+          "training_mean_risk": 0.02327952465399926
+        },
+        {
+          "node": 6,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=2-3 years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=3-5 years",
+              "present": true
+            }
+          ],
+          "training_people": 5169,
+          "training_mean_risk": 0.03806541286927286
+        },
+        {
+          "node": 7,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=2-3 years",
+              "present": true
+            },
+            {
+              "condition": "level_grouped=8 - Assoc & Int/Eng",
+              "present": false
+            }
+          ],
+          "training_people": 3125,
+          "training_mean_risk": 0.034563893546035215
+        },
+        {
+          "node": 8,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=2-3 years",
+              "present": true
+            },
+            {
+              "condition": "level_grouped=8 - Assoc & Int/Eng",
+              "present": true
+            }
+          ],
+          "training_people": 1621,
+          "training_mean_risk": 0.0483780889017782
+        },
+        {
+          "node": 11,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": true
+            },
+            {
+              "condition": "direct_reports_band=6+",
+              "present": false
+            },
+            {
+              "condition": "region=APAC",
+              "present": false
+            }
+          ],
+          "training_people": 5295,
+          "training_mean_risk": 0.015003891044181853
+        },
+        {
+          "node": 12,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": true
+            },
+            {
+              "condition": "direct_reports_band=6+",
+              "present": false
+            },
+            {
+              "condition": "region=APAC",
+              "present": true
+            }
+          ],
+          "training_people": 904,
+          "training_mean_risk": 0.009895913438650686
+        },
+        {
+          "node": 13,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": true
+            },
+            {
+              "condition": "direct_reports_band=6+",
+              "present": true
+            },
+            {
+              "condition": "prior_experience_band=5-10 years",
+              "present": false
+            }
+          ],
+          "training_people": 710,
+          "training_mean_risk": 0.00908664067114778
+        },
+        {
+          "node": 14,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": true
+            },
+            {
+              "condition": "direct_reports_band=6+",
+              "present": true
+            },
+            {
+              "condition": "prior_experience_band=5-10 years",
+              "present": true
+            }
+          ],
+          "training_people": 370,
+          "training_mean_risk": 0.007959898890623273
+        }
+      ],
+      "high_nodes": [
+        8,
+        6
+      ],
+      "features": [
+        "level_grouped",
+        "tenure_playbook_band",
+        "manager_changes_12m",
+        "direct_reports_band",
+        "time_since_promotion_band",
+        "prior_experience_band",
+        "time_at_level_band",
+        "region",
+        "grade_family",
+        "acquisition_recorded"
+      ],
+      "encoder": {
+        "features": [
+          "level_grouped",
+          "tenure_playbook_band",
+          "manager_changes_12m",
+          "direct_reports_band",
+          "time_since_promotion_band",
+          "prior_experience_band",
+          "time_at_level_band",
+          "region",
+          "grade_family",
+          "acquisition_recorded"
+        ],
+        "references": {
+          "level_grouped": "7 - Senior & Lead",
+          "tenure_playbook_band": "5-10 years",
+          "manager_changes_12m": "0",
+          "direct_reports_band": "0",
+          "time_since_promotion_band": "sin promo, contratado 1-3 years",
+          "prior_experience_band": "<1 year",
+          "time_at_level_band": "1-2 years",
+          "region": "INDIA",
+          "grade_family": "R",
+          "acquisition_recorded": "sin registro"
+        },
+        "levels": {
+          "level_grouped": [
+            "1 - VP & Above",
+            "2 - Sr Dir",
+            "3 - Princ/Directors",
+            "5 - Sr Staff & /Mgr",
+            "6 - Staff & /Mgr",
+            "7 - Senior & Lead",
+            "8 - Assoc & Int/Eng"
+          ],
+          "tenure_playbook_band": [
+            "1-2 years",
+            "10+ years",
+            "2-3 years",
+            "3-5 years",
+            "5-10 years",
+            "<1 year"
+          ],
+          "manager_changes_12m": [
+            "0",
+            "1",
+            "2+"
+          ],
+          "direct_reports_band": [
+            "0",
+            "1-5",
+            "6+"
+          ],
+          "time_since_promotion_band": [
+            "promo 1-2 years",
+            "promo 2-3 years",
+            "promo 3+ years",
+            "promo <1 year",
+            "sin promo en historial",
+            "sin promo, contratado 1-3 years",
+            "sin promo, contratado 3+ years",
+            "sin promo, contratado <1 year"
+          ],
+          "prior_experience_band": [
+            "1-3 years",
+            "10+ years",
+            "3-5 years",
+            "5-10 years",
+            "<1 year"
+          ],
+          "time_at_level_band": [
+            "1-2 years",
+            "2-3 years",
+            "3-5 years",
+            "5+ years",
+            "<1 year"
+          ],
+          "region": [
+            "AMERICAS",
+            "APAC",
+            "EMEA",
+            "INDIA"
+          ],
+          "grade_family": [
+            "R",
+            "T",
+            "other"
+          ],
+          "acquisition_recorded": [
+            "registrada",
+            "sin registro"
+          ]
+        },
+        "columns": [
+          "intercept",
+          "level_grouped=1 - VP & Above",
+          "level_grouped=2 - Sr Dir",
+          "level_grouped=3 - Princ/Directors",
+          "level_grouped=5 - Sr Staff & /Mgr",
+          "level_grouped=6 - Staff & /Mgr",
+          "level_grouped=8 - Assoc & Int/Eng",
+          "tenure_playbook_band=1-2 years",
+          "tenure_playbook_band=10+ years",
+          "tenure_playbook_band=2-3 years",
+          "tenure_playbook_band=3-5 years",
+          "tenure_playbook_band=<1 year",
+          "manager_changes_12m=1",
+          "manager_changes_12m=2+",
+          "direct_reports_band=1-5",
+          "direct_reports_band=6+",
+          "time_since_promotion_band=promo 1-2 years",
+          "time_since_promotion_band=promo 2-3 years",
+          "time_since_promotion_band=promo 3+ years",
+          "time_since_promotion_band=promo <1 year",
+          "time_since_promotion_band=sin promo en historial",
+          "time_since_promotion_band=sin promo, contratado 3+ years",
+          "time_since_promotion_band=sin promo, contratado <1 year",
+          "prior_experience_band=1-3 years",
+          "prior_experience_band=10+ years",
+          "prior_experience_band=3-5 years",
+          "prior_experience_band=5-10 years",
+          "time_at_level_band=2-3 years",
+          "time_at_level_band=3-5 years",
+          "time_at_level_band=5+ years",
+          "time_at_level_band=<1 year",
+          "region=AMERICAS",
+          "region=APAC",
+          "region=EMEA",
+          "grade_family=T",
+          "grade_family=other",
+          "acquisition_recorded=registrada"
+        ],
+        "interactions": {}
+      },
+      "training_r2": 0.6297363628855224,
+      "training_high_fraction": 0.22646166160824469,
+      "maximum_depth": 3
+    },
+    "B_tree16": {
+      "training_snapshot": "2024-06-23",
+      "rules": [
+        {
+          "node": 11,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=3-5 years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=2-3 years",
+              "present": false
+            },
+            {
+              "condition": "direct_reports_band=6+",
+              "present": false
+            }
+          ],
+          "training_people": 12263,
+          "training_mean_risk": 0.028919901627044328
+        },
+        {
+          "node": 12,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=3-5 years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=2-3 years",
+              "present": false
+            },
+            {
+              "condition": "direct_reports_band=6+",
+              "present": true
+            }
+          ],
+          "training_people": 526,
+          "training_mean_risk": 0.016382126822576594
+        },
+        {
+          "node": 9,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=3-5 years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=2-3 years",
+              "present": true
+            },
+            {
+              "condition": "level_grouped=8 - Assoc & Int/Eng",
+              "present": false
+            }
+          ],
+          "training_people": 3125,
+          "training_mean_risk": 0.038301866417427076
+        },
+        {
+          "node": 10,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=3-5 years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=2-3 years",
+              "present": true
+            },
+            {
+              "condition": "level_grouped=8 - Assoc & Int/Eng",
+              "present": true
+            }
+          ],
+          "training_people": 1621,
+          "training_mean_risk": 0.054576873776809184
+        },
+        {
+          "node": 13,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=3-5 years",
+              "present": true
+            },
+            {
+              "condition": "level_grouped=8 - Assoc & Int/Eng",
+              "present": false
+            },
+            {
+              "condition": "time_since_promotion_band=promo 1-2 years",
+              "present": false
+            }
+          ],
+          "training_people": 3222,
+          "training_mean_risk": 0.0385657757413374
+        },
+        {
+          "node": 14,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=3-5 years",
+              "present": true
+            },
+            {
+              "condition": "level_grouped=8 - Assoc & Int/Eng",
+              "present": false
+            },
+            {
+              "condition": "time_since_promotion_band=promo 1-2 years",
+              "present": true
+            }
+          ],
+          "training_people": 1181,
+          "training_mean_risk": 0.04745056556052345
+        },
+        {
+          "node": 23,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=3-5 years",
+              "present": true
+            },
+            {
+              "condition": "level_grouped=8 - Assoc & Int/Eng",
+              "present": true
+            },
+            {
+              "condition": "rehire=yes",
+              "present": false
+            }
+          ],
+          "training_people": 306,
+          "training_mean_risk": 0.07635369427902514
+        },
+        {
+          "node": 24,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=3-5 years",
+              "present": true
+            },
+            {
+              "condition": "level_grouped=8 - Assoc & Int/Eng",
+              "present": true
+            },
+            {
+              "condition": "rehire=yes",
+              "present": true
+            }
+          ],
+          "training_people": 460,
+          "training_mean_risk": 0.07506770922854158
+        },
+        {
+          "node": 19,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": true
+            },
+            {
+              "condition": "direct_reports_band=6+",
+              "present": false
+            },
+            {
+              "condition": "direct_reports_band=1-5",
+              "present": false
+            },
+            {
+              "condition": "manager_changes_12m=1",
+              "present": false
+            }
+          ],
+          "training_people": 2744,
+          "training_mean_risk": 0.017588834671984212
+        },
+        {
+          "node": 20,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": true
+            },
+            {
+              "condition": "direct_reports_band=6+",
+              "present": false
+            },
+            {
+              "condition": "direct_reports_band=1-5",
+              "present": false
+            },
+            {
+              "condition": "manager_changes_12m=1",
+              "present": true
+            }
+          ],
+          "training_people": 569,
+          "training_mean_risk": 0.021824970785741225
+        },
+        {
+          "node": 21,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": true
+            },
+            {
+              "condition": "direct_reports_band=6+",
+              "present": false
+            },
+            {
+              "condition": "direct_reports_band=1-5",
+              "present": true
+            },
+            {
+              "condition": "manager_changes_12m=1",
+              "present": false
+            }
+          ],
+          "training_people": 2444,
+          "training_mean_risk": 0.014355711004251872
+        },
+        {
+          "node": 22,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": true
+            },
+            {
+              "condition": "direct_reports_band=6+",
+              "present": false
+            },
+            {
+              "condition": "direct_reports_band=1-5",
+              "present": true
+            },
+            {
+              "condition": "manager_changes_12m=1",
+              "present": true
+            }
+          ],
+          "training_people": 442,
+          "training_mean_risk": 0.01791908454464555
+        },
+        {
+          "node": 25,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": true
+            },
+            {
+              "condition": "direct_reports_band=6+",
+              "present": true
+            },
+            {
+              "condition": "time_since_promotion_band=sin promo en historial",
+              "present": false
+            }
+          ],
+          "training_people": 642,
+          "training_mean_risk": 0.010469433084354903
+        },
+        {
+          "node": 26,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": true
+            },
+            {
+              "condition": "direct_reports_band=6+",
+              "present": true
+            },
+            {
+              "condition": "time_since_promotion_band=sin promo en historial",
+              "present": true
+            }
+          ],
+          "training_people": 438,
+          "training_mean_risk": 0.009900921752694636
+        }
+      ],
+      "high_nodes": [
+        23,
+        24,
+        10,
+        14,
+        13
+      ],
+      "features": [
+        "level_grouped",
+        "tenure_playbook_band",
+        "manager_changes_12m",
+        "team_exits_12m",
+        "direct_reports_band",
+        "time_since_promotion_band",
+        "rehire"
+      ],
+      "encoder": {
+        "features": [
+          "level_grouped",
+          "tenure_playbook_band",
+          "manager_changes_12m",
+          "team_exits_12m",
+          "direct_reports_band",
+          "time_since_promotion_band",
+          "rehire"
+        ],
+        "references": {
+          "level_grouped": "7 - Senior & Lead",
+          "tenure_playbook_band": "5-10 years",
+          "manager_changes_12m": "0",
+          "team_exits_12m": "0",
+          "direct_reports_band": "0",
+          "time_since_promotion_band": "sin promo, contratado 1-3 years",
+          "rehire": "no"
+        },
+        "levels": {
+          "level_grouped": [
+            "1 - VP & Above",
+            "2 - Sr Dir",
+            "3 - Princ/Directors",
+            "5 - Sr Staff & /Mgr",
+            "6 - Staff & /Mgr",
+            "7 - Senior & Lead",
+            "8 - Assoc & Int/Eng"
+          ],
+          "tenure_playbook_band": [
+            "1-2 years",
+            "10+ years",
+            "2-3 years",
+            "3-5 years",
+            "5-10 years",
+            "<1 year"
+          ],
+          "manager_changes_12m": [
+            "0",
+            "1",
+            "2+"
+          ],
+          "team_exits_12m": [
+            "0",
+            "1",
+            "2+"
+          ],
+          "direct_reports_band": [
+            "0",
+            "1-5",
+            "6+"
+          ],
+          "time_since_promotion_band": [
+            "promo 1-2 years",
+            "promo 2-3 years",
+            "promo 3+ years",
+            "promo <1 year",
+            "sin promo en historial",
+            "sin promo, contratado 1-3 years",
+            "sin promo, contratado 3+ years",
+            "sin promo, contratado <1 year"
+          ],
+          "rehire": [
+            "no",
+            "yes"
+          ]
+        },
+        "columns": [
+          "intercept",
+          "level_grouped=1 - VP & Above",
+          "level_grouped=2 - Sr Dir",
+          "level_grouped=3 - Princ/Directors",
+          "level_grouped=5 - Sr Staff & /Mgr",
+          "level_grouped=6 - Staff & /Mgr",
+          "level_grouped=8 - Assoc & Int/Eng",
+          "tenure_playbook_band=1-2 years",
+          "tenure_playbook_band=10+ years",
+          "tenure_playbook_band=2-3 years",
+          "tenure_playbook_band=3-5 years",
+          "tenure_playbook_band=<1 year",
+          "manager_changes_12m=1",
+          "manager_changes_12m=2+",
+          "team_exits_12m=1",
+          "team_exits_12m=2+",
+          "direct_reports_band=1-5",
+          "direct_reports_band=6+",
+          "time_since_promotion_band=promo 1-2 years",
+          "time_since_promotion_band=promo 2-3 years",
+          "time_since_promotion_band=promo 3+ years",
+          "time_since_promotion_band=promo <1 year",
+          "time_since_promotion_band=sin promo en historial",
+          "time_since_promotion_band=sin promo, contratado 3+ years",
+          "time_since_promotion_band=sin promo, contratado <1 year",
+          "rehire=yes"
+        ],
+        "interactions": {}
+      },
+      "training_r2": 0.8410971918557784,
+      "training_high_fraction": 0.22646166160824469,
+      "maximum_depth": 4
+    },
+    "C_tree16": {
+      "training_snapshot": "2024-06-23",
+      "rules": [
+        {
+          "node": 11,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=2-3 years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=3-5 years",
+              "present": false
+            },
+            {
+              "condition": "region=APAC",
+              "present": false
+            }
+          ],
+          "training_people": 11204,
+          "training_mean_risk": 0.02436878407952828
+        },
+        {
+          "node": 12,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=2-3 years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=3-5 years",
+              "present": false
+            },
+            {
+              "condition": "region=APAC",
+              "present": true
+            }
+          ],
+          "training_people": 1585,
+          "training_mean_risk": 0.015579800613855941
+        },
+        {
+          "node": 7,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=2-3 years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=3-5 years",
+              "present": true
+            },
+            {
+              "condition": "level_grouped=8 - Assoc & Int/Eng",
+              "present": false
+            }
+          ],
+          "training_people": 4403,
+          "training_mean_risk": 0.03343735135342662
+        },
+        {
+          "node": 8,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=2-3 years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=3-5 years",
+              "present": true
+            },
+            {
+              "condition": "level_grouped=8 - Assoc & Int/Eng",
+              "present": true
+            }
+          ],
+          "training_people": 766,
+          "training_mean_risk": 0.06466770380174154
+        },
+        {
+          "node": 19,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=2-3 years",
+              "present": true
+            },
+            {
+              "condition": "level_grouped=8 - Assoc & Int/Eng",
+              "present": false
+            },
+            {
+              "condition": "manager_changes_12m=1",
+              "present": false
+            }
+          ],
+          "training_people": 2447,
+          "training_mean_risk": 0.033271583541816044
+        },
+        {
+          "node": 20,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=2-3 years",
+              "present": true
+            },
+            {
+              "condition": "level_grouped=8 - Assoc & Int/Eng",
+              "present": false
+            },
+            {
+              "condition": "manager_changes_12m=1",
+              "present": true
+            }
+          ],
+          "training_people": 678,
+          "training_mean_risk": 0.03922802714533358
+        },
+        {
+          "node": 13,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=2-3 years",
+              "present": true
+            },
+            {
+              "condition": "level_grouped=8 - Assoc & Int/Eng",
+              "present": true
+            },
+            {
+              "condition": "time_at_level_band=2-3 years",
+              "present": false
+            }
+          ],
+          "training_people": 726,
+          "training_mean_risk": 0.04284262117003183
+        },
+        {
+          "node": 14,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=2-3 years",
+              "present": true
+            },
+            {
+              "condition": "level_grouped=8 - Assoc & Int/Eng",
+              "present": true
+            },
+            {
+              "condition": "time_at_level_band=2-3 years",
+              "present": true
+            }
+          ],
+          "training_people": 895,
+          "training_mean_risk": 0.0528683118886473
+        },
+        {
+          "node": 21,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": true
+            },
+            {
+              "condition": "direct_reports_band=6+",
+              "present": false
+            },
+            {
+              "condition": "region=APAC",
+              "present": false
+            },
+            {
+              "condition": "prior_experience_band=10+ years",
+              "present": false
+            }
+          ],
+          "training_people": 3983,
+          "training_mean_risk": 0.015874716811450834
+        },
+        {
+          "node": 22,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": true
+            },
+            {
+              "condition": "direct_reports_band=6+",
+              "present": false
+            },
+            {
+              "condition": "region=APAC",
+              "present": false
+            },
+            {
+              "condition": "prior_experience_band=10+ years",
+              "present": true
+            }
+          ],
+          "training_people": 1312,
+          "training_mean_risk": 0.012360218002236469
+        },
+        {
+          "node": 23,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": true
+            },
+            {
+              "condition": "direct_reports_band=6+",
+              "present": false
+            },
+            {
+              "condition": "region=APAC",
+              "present": true
+            },
+            {
+              "condition": "direct_reports_band=1-5",
+              "present": false
+            }
+          ],
+          "training_people": 526,
+          "training_mean_risk": 0.0106112254560089
+        },
+        {
+          "node": 24,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": true
+            },
+            {
+              "condition": "direct_reports_band=6+",
+              "present": false
+            },
+            {
+              "condition": "region=APAC",
+              "present": true
+            },
+            {
+              "condition": "direct_reports_band=1-5",
+              "present": true
+            }
+          ],
+          "training_people": 378,
+          "training_mean_risk": 0.008900532165818884
+        },
+        {
+          "node": 27,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": true
+            },
+            {
+              "condition": "direct_reports_band=6+",
+              "present": true
+            },
+            {
+              "condition": "prior_experience_band=5-10 years",
+              "present": false
+            },
+            {
+              "condition": "time_since_promotion_band=sin promo en historial",
+              "present": false
+            }
+          ],
+          "training_people": 405,
+          "training_mean_risk": 0.009544820839358046
+        },
+        {
+          "node": 28,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": true
+            },
+            {
+              "condition": "direct_reports_band=6+",
+              "present": true
+            },
+            {
+              "condition": "prior_experience_band=5-10 years",
+              "present": false
+            },
+            {
+              "condition": "time_since_promotion_band=sin promo en historial",
+              "present": true
+            }
+          ],
+          "training_people": 305,
+          "training_mean_risk": 0.00847823749696694
+        },
+        {
+          "node": 26,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": true
+            },
+            {
+              "condition": "direct_reports_band=6+",
+              "present": true
+            },
+            {
+              "condition": "prior_experience_band=5-10 years",
+              "present": true
+            }
+          ],
+          "training_people": 370,
+          "training_mean_risk": 0.007959898890623273
+        }
+      ],
+      "high_nodes": [
+        8,
+        14,
+        13,
+        20,
+        7
+      ],
+      "features": [
+        "level_grouped",
+        "tenure_playbook_band",
+        "manager_changes_12m",
+        "direct_reports_band",
+        "time_since_promotion_band",
+        "prior_experience_band",
+        "time_at_level_band",
+        "region",
+        "grade_family",
+        "acquisition_recorded"
+      ],
+      "encoder": {
+        "features": [
+          "level_grouped",
+          "tenure_playbook_band",
+          "manager_changes_12m",
+          "direct_reports_band",
+          "time_since_promotion_band",
+          "prior_experience_band",
+          "time_at_level_band",
+          "region",
+          "grade_family",
+          "acquisition_recorded"
+        ],
+        "references": {
+          "level_grouped": "7 - Senior & Lead",
+          "tenure_playbook_band": "5-10 years",
+          "manager_changes_12m": "0",
+          "direct_reports_band": "0",
+          "time_since_promotion_band": "sin promo, contratado 1-3 years",
+          "prior_experience_band": "<1 year",
+          "time_at_level_band": "1-2 years",
+          "region": "INDIA",
+          "grade_family": "R",
+          "acquisition_recorded": "sin registro"
+        },
+        "levels": {
+          "level_grouped": [
+            "1 - VP & Above",
+            "2 - Sr Dir",
+            "3 - Princ/Directors",
+            "5 - Sr Staff & /Mgr",
+            "6 - Staff & /Mgr",
+            "7 - Senior & Lead",
+            "8 - Assoc & Int/Eng"
+          ],
+          "tenure_playbook_band": [
+            "1-2 years",
+            "10+ years",
+            "2-3 years",
+            "3-5 years",
+            "5-10 years",
+            "<1 year"
+          ],
+          "manager_changes_12m": [
+            "0",
+            "1",
+            "2+"
+          ],
+          "direct_reports_band": [
+            "0",
+            "1-5",
+            "6+"
+          ],
+          "time_since_promotion_band": [
+            "promo 1-2 years",
+            "promo 2-3 years",
+            "promo 3+ years",
+            "promo <1 year",
+            "sin promo en historial",
+            "sin promo, contratado 1-3 years",
+            "sin promo, contratado 3+ years",
+            "sin promo, contratado <1 year"
+          ],
+          "prior_experience_band": [
+            "1-3 years",
+            "10+ years",
+            "3-5 years",
+            "5-10 years",
+            "<1 year"
+          ],
+          "time_at_level_band": [
+            "1-2 years",
+            "2-3 years",
+            "3-5 years",
+            "5+ years",
+            "<1 year"
+          ],
+          "region": [
+            "AMERICAS",
+            "APAC",
+            "EMEA",
+            "INDIA"
+          ],
+          "grade_family": [
+            "R",
+            "T",
+            "other"
+          ],
+          "acquisition_recorded": [
+            "registrada",
+            "sin registro"
+          ]
+        },
+        "columns": [
+          "intercept",
+          "level_grouped=1 - VP & Above",
+          "level_grouped=2 - Sr Dir",
+          "level_grouped=3 - Princ/Directors",
+          "level_grouped=5 - Sr Staff & /Mgr",
+          "level_grouped=6 - Staff & /Mgr",
+          "level_grouped=8 - Assoc & Int/Eng",
+          "tenure_playbook_band=1-2 years",
+          "tenure_playbook_band=10+ years",
+          "tenure_playbook_band=2-3 years",
+          "tenure_playbook_band=3-5 years",
+          "tenure_playbook_band=<1 year",
+          "manager_changes_12m=1",
+          "manager_changes_12m=2+",
+          "direct_reports_band=1-5",
+          "direct_reports_band=6+",
+          "time_since_promotion_band=promo 1-2 years",
+          "time_since_promotion_band=promo 2-3 years",
+          "time_since_promotion_band=promo 3+ years",
+          "time_since_promotion_band=promo <1 year",
+          "time_since_promotion_band=sin promo en historial",
+          "time_since_promotion_band=sin promo, contratado 3+ years",
+          "time_since_promotion_band=sin promo, contratado <1 year",
+          "prior_experience_band=1-3 years",
+          "prior_experience_band=10+ years",
+          "prior_experience_band=3-5 years",
+          "prior_experience_band=5-10 years",
+          "time_at_level_band=2-3 years",
+          "time_at_level_band=3-5 years",
+          "time_at_level_band=5+ years",
+          "time_at_level_band=<1 year",
+          "region=AMERICAS",
+          "region=APAC",
+          "region=EMEA",
+          "grade_family=T",
+          "grade_family=other",
+          "acquisition_recorded=registrada"
+        ],
+        "interactions": {}
+      },
+      "training_r2": 0.7961989760437616,
+      "training_high_fraction": 0.24907447553613715,
+      "maximum_depth": 4
+    }
+  },
+  "elapsed_seconds": 23.859663699986413
+}

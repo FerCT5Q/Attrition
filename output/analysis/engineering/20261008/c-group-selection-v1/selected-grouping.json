@@ -1,0 +1,21 @@
+{
+  "status": "retrospective_experiment",
+  "model_hazard_unchanged": true,
+  "model_reference": "output/analysis/engineering/20261008/model-c-v2/folds/fold-4-C-model.json",
+  "model_origin": "2025-08-01",
+  "definition": {
+    "kind": "cut",
+    "name": "antiguedad × salidas_equipo",
+    "dimensions": [
+      "antiguedad",
+      "salidas_equipo"
+    ]
+  },
+  "display_name": "Antigüedad × Salidas en su equipo",
+  "minimum_group_people_each_snapshot": 300,
+  "ranking": "Riesgo medio predicho vigente por grupo en cada foto; resto fuera de prioridad.",
+  "coarse_cut_implementation": "source/tools/engineering_playbook_group_selection.py::coarse_keys",
+  "additional_dimensions": "Bandas almacenadas en el frame de C, sin cambiar sus umbrales.",
+  "interpretation": "Última selección evaluada; no es selección ganadora en los cuatro periodos ni promoción automática.",
+  "qvoice_included": false
+}

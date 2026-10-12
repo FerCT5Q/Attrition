@@ -1,0 +1,26 @@
+{
+  "review_date": "2026-10-08",
+  "reporting_mode": "presentation",
+  "method": "Autorrevisión de figura renderizada y reconciliación con resultados agregados; metodología morgan-vis.",
+  "audience_and_decision": "Responsable del análisis Attrition: decidir si la extensión QVoice justifica sustituir B o conservarse como experimento.",
+  "central_message": "QVoice mejora ranking y Brier en ambos periodos, pero empeora la calibración general frente a B.",
+  "evidence": "comparison-results.json: mismos cohortes para cinco modelos, agosto–diciembre de 2025 y enero–febrero de 2026, seguimiento de salida voluntaria a seis meses.",
+  "chart_choice": "Tres paneles de diferencias con puntos e intervalos pareados. Permiten mostrar magnitud, signo e incertidumbre. Las barras con niveles absolutos harían menos visible la diferencia y la tabla completa se conserva en el informe.",
+  "design": "Azul único, cero como referencia, periodos directamente rotulados, dirección favorable explícita en cada eje, población y tamaños en nota. Enteros sin decimales y no enteros con máximo un decimal.",
+  "checks": {
+    "rendered_image_inspected": true,
+    "title_supported_by_results": true,
+    "both_periods_and_uncertainty_visible": true,
+    "scales_and_units_declared": true,
+    "counts_match_aggregate_results": true,
+    "no_protected_category_labels_or_individual_data": true,
+    "source_cutoff_and_run_date_visible": true,
+    "no_clipped_labels_in_reviewed_render": true
+  },
+  "limits": [
+    "Los intervalos son condicionales al modelo ajustado; no repiten la selección de candidatos.",
+    "Los periodos se revisaron anteriormente; no equivalen a un holdout externo nuevo.",
+    "Cada panel tiene unidades distintas; se indica si mayor o menor es mejor.",
+    "La figura compara con B de referencia; el informe añade los controles de entrenamiento, disponibilidad y calibración comparables."
+  ]
+}

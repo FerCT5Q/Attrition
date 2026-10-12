@@ -1,0 +1,104 @@
+schema_version: 1
+plan_version: 1
+language: es
+created_before_execution: true
+plan_authorship: codex_explicit
+variable: Workplace Connection — versiones histórica y completa
+concept: Versión histórica con Q5/Q7 y versión completa Q5/Q6/Q7, identificadas por
+  separado; la pregunta Q6 no existe en el archivo 2024.
+intended_use: Medir el aporte de pertenencia y autenticidad; probar la accesibilidad
+  del crecimiento sólo donde Q6 tenga historia suficiente.
+knowledge_date: 'Política anual aprobada: wave Y exclusivamente en snapshots Y+1,
+  continuidad del episodio; frontera 2026-09-07.'
+population: Engineering activo Regular sin RF360; cobertura primaria de Q5/Q7 y secundaria
+  del conjunto completo.
+grain: Empleado-wave; se conserva toda la población para evaluar el modelo.
+semantic_type: survey
+source_reasoning: El preflight encuentra Q5/Q7 en las tres waves y Q6 desde 2025.
+  Q6 describe accesibilidad percibida; no se extraen atributos demográficos individuales.
+validation_story:
+- id: source_connection
+  criterion: source
+  evidence_role: supporting
+  question: ¿Se preserva el inventario de Q5/Q6/Q7, incluida la ausencia de Q6 en
+    2024?
+  why: Nombrar el par histórico como KPI completo ocultaría una diferencia material.
+  method: approved_external_access_check
+  sql_reference: queries/audits/qvoice_model_connection_20261008_full.sql
+  acceptance_rule: Tres archivos, cero ambigüedades y separación explícita de versiones.
+  metric_checks:
+  - metric: workbooks_checked
+    aggregate: sum
+    operator: eq
+    threshold: 3
+  - metric: header_ambiguities
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: connection_versions
+  criterion: definition
+  evidence_role: defining
+  question: ¿Q5/Q7 y Q5/Q6/Q7 conservan denominadores de completitud separados?
+  why: La ausencia de Q6 no equivale a una respuesta desfavorable ni debe borrar Q5/Q7.
+  method: Reconciliación independiente de conjuntos completos y parciales.
+  sql_reference: queries/audits/qvoice_model_connection_20261008_full.sql
+  acceptance_rule: La cobertura completa nunca supera a la histórica y los estados
+    se reconcilian.
+  metric_checks:
+  - metric: full_exceeds_primary_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+  - metric: status_reconciliation_difference
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: connection_domain
+  criterion: consistency
+  evidence_role: defining
+  question: ¿Los tres componentes conservan valores binarios válidos por año?
+  why: Comparar versiones requiere distinguir ausencia estructural y faltantes individuales.
+  method: aggregate_domain_and_transition_audit
+  sql_reference: queries/audits/qvoice_model_connection_20261008_full.sql
+  acceptance_rule: Cero valores inválidos; ausencia estructural visible por componente
+    y wave.
+  metric_checks:
+  - metric: invalid_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: connection_join
+  criterion: join
+  evidence_role: supporting
+  question: ¿Pertenencia, autenticidad y crecimiento enlazan al mismo workforce previo?
+  why: Un cambio de población podría parecer una diferencia entre componentes.
+  method: aggregate_join_reconciliation
+  sql_reference: queries/audits/qvoice_model_connection_20261008_full.sql
+  acceptance_rule: Cero duplicados usados y cero múltiples matches.
+  metric_checks:
+  - metric: duplicate_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+  - metric: multi_match_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: connection_history
+  criterion: history
+  evidence_role: defining
+  question: ¿La historia de connection respeta la asignación anual aprobada y la versión
+    de cada componente?
+  why: La política fija el año de uso y no constituye una fecha real de publicación;
+    tampoco completa preguntas ausentes.
+  method: Comprobación de asignación Y a Y+1, caducidad anual y componentes por wave.
+  sql_reference: queries/audits/qvoice_model_connection_20261008_full.sql
+  acceptance_rule: Cero waves sin fecha efectiva asignada por la política aprobada;
+    los componentes ausentes quedan identificados.
+  metric_checks:
+  - metric: unverified_availability_waves
+    aggregate: sum
+    operator: eq
+    threshold: 0
+prior_evidence_policy: Los antecedentes orientan las preguntas; las nuevas métricas
+  se ejecutan bajo esta política. No se elevan scores por asociación predictiva.

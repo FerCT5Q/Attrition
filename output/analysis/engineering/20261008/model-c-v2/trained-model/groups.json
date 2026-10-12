@@ -1,0 +1,367 @@
+{
+  "training_snapshot": "2025-06-29",
+  "rules": [
+    {
+      "node": 7,
+      "conditions": [
+        {
+          "condition": "tenure_playbook_band=10+ years",
+          "present": false
+        },
+        {
+          "condition": "tenure_playbook_band=3-5 years",
+          "present": false
+        },
+        {
+          "condition": "tenure_playbook_band=2-3 years",
+          "present": false
+        }
+      ],
+      "training_people": 14637,
+      "training_mean_risk": 0.02502472155204611
+    },
+    {
+      "node": 8,
+      "conditions": [
+        {
+          "condition": "tenure_playbook_band=10+ years",
+          "present": false
+        },
+        {
+          "condition": "tenure_playbook_band=3-5 years",
+          "present": false
+        },
+        {
+          "condition": "tenure_playbook_band=2-3 years",
+          "present": true
+        }
+      ],
+      "training_people": 3488,
+      "training_mean_risk": 0.041800074994625756
+    },
+    {
+      "node": 5,
+      "conditions": [
+        {
+          "condition": "tenure_playbook_band=10+ years",
+          "present": false
+        },
+        {
+          "condition": "tenure_playbook_band=3-5 years",
+          "present": true
+        },
+        {
+          "condition": "level_grouped=8 - Assoc & Int/Eng",
+          "present": false
+        }
+      ],
+      "training_people": 5414,
+      "training_mean_risk": 0.03576824379049557
+    },
+    {
+      "node": 6,
+      "conditions": [
+        {
+          "condition": "tenure_playbook_band=10+ years",
+          "present": false
+        },
+        {
+          "condition": "tenure_playbook_band=3-5 years",
+          "present": true
+        },
+        {
+          "condition": "level_grouped=8 - Assoc & Int/Eng",
+          "present": true
+        }
+      ],
+      "training_people": 1128,
+      "training_mean_risk": 0.07885234735657994
+    },
+    {
+      "node": 11,
+      "conditions": [
+        {
+          "condition": "tenure_playbook_band=10+ years",
+          "present": true
+        },
+        {
+          "condition": "direct_reports_band=6+",
+          "present": false
+        },
+        {
+          "condition": "team_exits_12m=1",
+          "present": false
+        }
+      ],
+      "training_people": 5550,
+      "training_mean_risk": 0.01327594427685142
+    },
+    {
+      "node": 12,
+      "conditions": [
+        {
+          "condition": "tenure_playbook_band=10+ years",
+          "present": true
+        },
+        {
+          "condition": "direct_reports_band=6+",
+          "present": false
+        },
+        {
+          "condition": "team_exits_12m=1",
+          "present": true
+        }
+      ],
+      "training_people": 733,
+      "training_mean_risk": 0.020184158616292174
+    },
+    {
+      "node": 13,
+      "conditions": [
+        {
+          "condition": "tenure_playbook_band=10+ years",
+          "present": true
+        },
+        {
+          "condition": "direct_reports_band=6+",
+          "present": true
+        },
+        {
+          "condition": "layers_band=<=6",
+          "present": false
+        }
+      ],
+      "training_people": 739,
+      "training_mean_risk": 0.008401200806363697
+    },
+    {
+      "node": 14,
+      "conditions": [
+        {
+          "condition": "tenure_playbook_band=10+ years",
+          "present": true
+        },
+        {
+          "condition": "direct_reports_band=6+",
+          "present": true
+        },
+        {
+          "condition": "layers_band=<=6",
+          "present": true
+        }
+      ],
+      "training_people": 584,
+      "training_mean_risk": 0.005526694547421336
+    }
+  ],
+  "high_nodes": [
+    6,
+    8,
+    5
+  ],
+  "features": [
+    "level_grouped",
+    "tenure_playbook_band",
+    "manager_changes_12m",
+    "team_exits_12m",
+    "direct_reports_band",
+    "time_since_promotion_band",
+    "rehire",
+    "prior_experience_band",
+    "time_at_level_band",
+    "ios_12m",
+    "layers_band",
+    "region",
+    "comp_ratio_band",
+    "acquisition_recorded",
+    "transfer_12m"
+  ],
+  "encoder": {
+    "features": [
+      "level_grouped",
+      "tenure_playbook_band",
+      "manager_changes_12m",
+      "team_exits_12m",
+      "direct_reports_band",
+      "time_since_promotion_band",
+      "rehire",
+      "prior_experience_band",
+      "time_at_level_band",
+      "ios_12m",
+      "layers_band",
+      "region",
+      "comp_ratio_band",
+      "acquisition_recorded",
+      "transfer_12m"
+    ],
+    "references": {
+      "level_grouped": "7 - Senior & Lead",
+      "tenure_playbook_band": "5-10 years",
+      "manager_changes_12m": "0",
+      "team_exits_12m": "0",
+      "direct_reports_band": "0",
+      "time_since_promotion_band": "sin promo en historial",
+      "rehire": "no",
+      "prior_experience_band": "<1 year",
+      "time_at_level_band": "<1 year",
+      "ios_12m": "none",
+      "layers_band": "8",
+      "region": "INDIA",
+      "comp_ratio_band": "0.9-1.0",
+      "acquisition_recorded": "sin registro",
+      "transfer_12m": "no"
+    },
+    "levels": {
+      "level_grouped": [
+        "1 - VP & Above",
+        "2 - Sr Dir",
+        "3 - Princ/Directors",
+        "5 - Sr Staff & /Mgr",
+        "6 - Staff & /Mgr",
+        "7 - Senior & Lead",
+        "8 - Assoc & Int/Eng"
+      ],
+      "tenure_playbook_band": [
+        "1-2 years",
+        "10+ years",
+        "2-3 years",
+        "3-5 years",
+        "5-10 years",
+        "<1 year"
+      ],
+      "manager_changes_12m": [
+        "0",
+        "1",
+        "2+"
+      ],
+      "team_exits_12m": [
+        "0",
+        "1",
+        "2+"
+      ],
+      "direct_reports_band": [
+        "0",
+        "1-5",
+        "6+"
+      ],
+      "time_since_promotion_band": [
+        "promo 1-2 years",
+        "promo 2-3 years",
+        "promo 3+ years",
+        "promo <1 year",
+        "sin promo en historial",
+        "sin promo, contratado 1-3 years",
+        "sin promo, contratado 3+ years",
+        "sin promo, contratado <1 year"
+      ],
+      "rehire": [
+        "no",
+        "yes"
+      ],
+      "prior_experience_band": [
+        "1-3 years",
+        "10+ years",
+        "3-5 years",
+        "5-10 years",
+        "<1 year"
+      ],
+      "time_at_level_band": [
+        "1-2 years",
+        "2-3 years",
+        "3-5 years",
+        "5+ years",
+        "<1 year"
+      ],
+      "ios_12m": [
+        "lateral u otro",
+        "none",
+        "reorg"
+      ],
+      "layers_band": [
+        "10+",
+        "7",
+        "8",
+        "9",
+        "<=6"
+      ],
+      "region": [
+        "AMERICAS",
+        "APAC",
+        "EMEA",
+        "INDIA"
+      ],
+      "comp_ratio_band": [
+        "0.8-0.9",
+        "0.9-1.0",
+        "1.0-1.1",
+        "1.1-1.2",
+        "1.2+",
+        "<0.8"
+      ],
+      "acquisition_recorded": [
+        "registrada",
+        "sin registro"
+      ],
+      "transfer_12m": [
+        "no",
+        "yes"
+      ]
+    },
+    "columns": [
+      "intercept",
+      "level_grouped=1 - VP & Above",
+      "level_grouped=2 - Sr Dir",
+      "level_grouped=3 - Princ/Directors",
+      "level_grouped=5 - Sr Staff & /Mgr",
+      "level_grouped=6 - Staff & /Mgr",
+      "level_grouped=8 - Assoc & Int/Eng",
+      "tenure_playbook_band=1-2 years",
+      "tenure_playbook_band=10+ years",
+      "tenure_playbook_band=2-3 years",
+      "tenure_playbook_band=3-5 years",
+      "tenure_playbook_band=<1 year",
+      "manager_changes_12m=1",
+      "manager_changes_12m=2+",
+      "team_exits_12m=1",
+      "team_exits_12m=2+",
+      "direct_reports_band=1-5",
+      "direct_reports_band=6+",
+      "time_since_promotion_band=promo 1-2 years",
+      "time_since_promotion_band=promo 2-3 years",
+      "time_since_promotion_band=promo 3+ years",
+      "time_since_promotion_band=promo <1 year",
+      "time_since_promotion_band=sin promo, contratado 1-3 years",
+      "time_since_promotion_band=sin promo, contratado 3+ years",
+      "time_since_promotion_band=sin promo, contratado <1 year",
+      "rehire=yes",
+      "prior_experience_band=1-3 years",
+      "prior_experience_band=10+ years",
+      "prior_experience_band=3-5 years",
+      "prior_experience_band=5-10 years",
+      "time_at_level_band=1-2 years",
+      "time_at_level_band=2-3 years",
+      "time_at_level_band=3-5 years",
+      "time_at_level_band=5+ years",
+      "ios_12m=lateral u otro",
+      "ios_12m=reorg",
+      "layers_band=10+",
+      "layers_band=7",
+      "layers_band=9",
+      "layers_band=<=6",
+      "region=AMERICAS",
+      "region=APAC",
+      "region=EMEA",
+      "comp_ratio_band=0.8-0.9",
+      "comp_ratio_band=1.0-1.1",
+      "comp_ratio_band=1.1-1.2",
+      "comp_ratio_band=1.2+",
+      "comp_ratio_band=<0.8",
+      "acquisition_recorded=registrada",
+      "transfer_12m=yes"
+    ],
+    "interactions": {}
+  },
+  "training_r2": 0.5409849913990166,
+  "training_high_fraction": 0.31078610603290674,
+  "maximum_depth": 3
+}

@@ -1,0 +1,36 @@
+{
+  "stages_seconds": {
+    "Consulta Redshift y carga en memoria": 76.34548280003946,
+    "Lectura y enlace wave 2024": 88.38222050003242,
+    "Lectura y enlace wave 2025": 72.53778949996922,
+    "QVoice completo": 166.11649160005618,
+    "Preparación de etiquetas": 1.4345200000097975,
+    "Evaluación aug_dec_2025": 11.029853000072762,
+    "Ajuste auxiliar jan_feb_2026 / 2025-04-27": 4.486422299989499,
+    "Ajuste auxiliar jan_feb_2026 / 2025-05-25": 5.391399699961767,
+    "Ajuste auxiliar jan_feb_2026 / 2025-06-29": 5.993184700026177,
+    "Evaluación jan_feb_2026": 8.21374520007521,
+    "Ajuste auxiliar final / 2025-09-28": 9.03206539992243,
+    "Ajuste auxiliar final / 2025-10-26": 10.03625640005339,
+    "Ajuste auxiliar final / 2025-11-23": 11.042938699945807,
+    "Ajuste auxiliar final / 2025-12-28": 11.877147600054741,
+    "Ajuste auxiliar final / 2026-01-25": 12.80657420004718,
+    "Ajuste auxiliar final / 2026-02-22": 13.514717400074005
+  },
+  "total_seconds": 379.78704659990035,
+  "fit_counts": {
+    "base": 11,
+    "qvoice": 9
+  },
+  "benchmark": {
+    "rows": 20000,
+    "repetitions": 3,
+    "seconds_median": {
+      "original": 0.36871890001930296,
+      "optimized": 0.16265680000651628
+    },
+    "speedup": 2.2668520467913518,
+    "maximum_absolute_difference": 2.498001805406602e-16
+  },
+  "note": "QVoice completo incluye sus dos subetapas; no sumar etapas anidadas."
+}

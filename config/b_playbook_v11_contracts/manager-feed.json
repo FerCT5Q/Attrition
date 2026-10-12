@@ -1,0 +1,23 @@
+{
+  "schema_version": 4,
+  "id": "manager-feed",
+  "title": "Inicio observado de salidas para contexto del manager",
+  "claim": "¿El cero histórico representa un feed observado o un periodo anterior a su primera observación?",
+  "use": "Evitar que falta de historia se convierta en cero salidas.",
+  "semantic_type": "derived_feature",
+  "population": "Fuente de eventos usados para contexto agregado del manager; las asignaciones finales son Engineering",
+  "grain": "evento deduplicado; resultado agregado global",
+  "known_at": "Primera foto con tipo Voluntary y fecha efectiva ya ocurrida",
+  "window": "Contexto desde 2018-10-26 hasta 2026-09-07",
+  "history": "La auditoría previa encontró ausencia de O/E observable antes de 2022; se comprueba la causa antes de finalizar.",
+  "query": "queries/audits/engineering_b_v11_manager_feed_20261011.sql",
+  "zero_fields": [],
+  "positive_fields": [
+    "event_keys"
+  ],
+  "expected_rows": 1,
+  "acceptance_rule": "Obtener fechas extremas y recuentos de historia tardía; el inicio observado se usará para codificar historia incompleta, sin asumir ceros.",
+  "conclusion_if_pass": "Existe evidencia agregada para decidir el inicio admisible de las ventanas",
+  "limitation": "Primera observación no acredita que un evento no existiera antes en otros sistemas.",
+  "action": "Exigir una ventana completa posterior al inicio observado del feed"
+}

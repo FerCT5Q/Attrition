@@ -1,0 +1,27 @@
+{
+  "schema_version": 4,
+  "id": "manager-synthetic",
+  "title": "Prueba sintética de conocimiento tardío de salidas",
+  "claim": "Una salida efectiva en marzo, registrada en mayo, no entra en la señal de abril; sí entra en mayo.",
+  "use": "Comprobar la frontera temporal y el mínimo de dos salidas de la ventana de 18 intervalos.",
+  "semantic_type": "derived_feature",
+  "population": "Noventa personas ficticias en tres equipos; ningún dato HR real",
+  "grain": "persona ficticia-foto",
+  "known_at": "La fecha de conocimiento está definida expresamente en cada evento del fixture",
+  "window": "Veintiséis fotos ficticias; dos fechas objetivo",
+  "history": "Se recrea una secuencia con salidas informadas con retraso.",
+  "query": "queries/audits/engineering_b_v11_manager_synthetic_20261011.sql",
+  "zero_fields": [
+    "delayed_knowledge_mismatches",
+    "future_event_violations",
+    "eighteen_interval_mismatches"
+  ],
+  "positive_fields": [
+    "synthetic_cases"
+  ],
+  "expected_rows": 1,
+  "acceptance_rule": "Cero diferencias frente a los conteos esperados por las fechas explícitas de los eventos.",
+  "conclusion_if_pass": "La implementación respeta la fecha de conocimiento en los casos de prueba",
+  "limitation": "El fixture no sustituye la reconciliación histórica agregada.",
+  "action": "Conservar la evidencia junto con las auditorías de seis y dieciocho intervalos"
+}

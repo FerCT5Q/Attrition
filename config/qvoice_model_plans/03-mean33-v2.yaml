@@ -1,0 +1,81 @@
+schema_version: 1
+plan_version: 2
+plan_revision_reason: La metadata revela dos encabezados de recomendación en 2026; se fija el del cuestionario principal y se audita la columna del bloque de salida por separado.
+language: es
+created_before_execution: true
+plan_authorship: codex_explicit
+variable: Promedio de 33 preguntas comparables
+concept: Cien veces el número de respuestas favorables dividido entre 33; exige 33 binarios válidos y usa las seis bandas del playbook. La variante de 31 retira Q4 y Q12 manteniendo la misma cohorte completa de 33.
+intended_use: Medir información adicional a Intent to Stay y Carrera sin atribuir dos veces su contribución al promedio.
+knowledge_date: Publicación verificable antes del snapshot; máximo 12 meses; frontera 2026-09-07.
+population: Empleados regulares activos de Engineering sin RF360; sólo el promedio exige 33 respuestas válidas.
+grain: Empleado-wave completo para la fórmula; todas las personas permanecen en la comparación general del modelo.
+semantic_type: derived_feature
+source_reasoning: Se congela la whitelist exacta del playbook. Numerador = favorables; denominador = 33, o 31 en la ablación sobre las mismas personas.
+validation_story:
+  - id: source_mean33
+    criterion: source
+    evidence_role: supporting
+    question: ¿Los 33 textos exactos tienen un encabezado único en los tres años?
+    why: Cambiar el conjunto de ítems cambiaría la interpretación del promedio.
+    method: approved_external_access_check
+    sql_reference: queries/audits/qvoice_model_mean33_20261006.sql
+    acceptance_rule: Tres archivos, cero ambigüedades y cero ítems de la whitelist ausentes.
+    metric_checks:
+      - {metric: workbooks_checked, aggregate: sum, operator: eq, threshold: 3}
+      - {metric: header_ambiguities, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: missing_component_headers, aggregate: sum, operator: eq, threshold: 0}
+  - id: exact_formula
+    criterion: definition
+    evidence_role: defining
+    question: ¿El cálculo exacto y las seis bandas coinciden con una implementación independiente?
+    why: Las fronteras de 50, 70, 80, 90 y 100 deben respetarse sin redondear antes de asignar banda.
+    method: independent_recalculation
+    sql_reference: queries/audits/qvoice_model_mean33_20261006.sql
+    acceptance_rule: Cero diferencias entre comparación entera y promedio numérico; 33 componentes válidos para toda fila comparable.
+    metric_checks:
+      - {metric: comparable_count, aggregate: sum, operator: gt, threshold: 0}
+      - {metric: mismatch_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: overlap_cohort_difference, aggregate: sum, operator: eq, threshold: 0}
+  - id: mean33_missing
+    criterion: consistency
+    evidence_role: defining
+    question: ¿Se excluyen del promedio los incompletos sin excluirlos de las otras señales?
+    why: Una muestra común de casos completos puede esconder el costo real de cobertura del promedio.
+    method: aggregate_domain_and_transition_audit
+    sql_reference: queries/audits/qvoice_model_mean33_20261006.sql
+    acceptance_rule: Los estados suman 33 por persona; cero valores inválidos no explicados.
+    metric_checks:
+      - {metric: invalid_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: status_reconciliation_difference, aggregate: sum, operator: eq, threshold: 0}
+  - id: mean33_join
+    criterion: join
+    evidence_role: supporting
+    question: ¿Las bandas se calculan sobre personas únicas de Engineering?
+    why: Los conteos raw del playbook no son el denominador del modelo de Engineering.
+    method: aggregate_join_reconciliation
+    sql_reference: queries/audits/qvoice_model_mean33_20261006.sql
+    acceptance_rule: Cero duplicados usados y cero múltiples matches en workforce.
+    metric_checks:
+      - {metric: duplicate_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: multi_match_count, aggregate: sum, operator: eq, threshold: 0}
+  - id: mean33_history
+    criterion: history
+    evidence_role: defining
+    question: ¿El promedio era conocible en los snapshots de entrenamiento y evaluación?
+    why: Disponer de tres Excel no demuestra tres años de historia predictiva.
+    method: Revisión de disponibilidad y reemplazo de wave.
+    sql_reference: queries/audits/qvoice_model_mean33_20261006.sql
+    acceptance_rule: Fechas acreditadas para toda wave incorporada al modelo.
+    metric_checks:
+      - {metric: unverified_availability_waves, aggregate: sum, operator: eq, threshold: 0}
+  - id: recommendation_primary_vs_exit
+    criterion: definition
+    evidence_role: contextual
+    question: ¿La recomendación del cuestionario principal permanece separada de la del bloque de salida?
+    why: El segundo encabezado está junto a experiencia al salir y posibilidad de reingreso; no debe sustituir al ítem anual.
+    method: Mapping explícito por encabezado exacto, contexto de columnas y comparación agregada de los binarios.
+    sql_reference: queries/audits/qvoice_model_mean33_20261006.sql
+    acceptance_rule: Se audita una columna alternativa en 2026 y se conserva el encabezado principal usado por el playbook; las diferencias no autorizan mezclar contextos.
+    metric_checks:
+      - {metric: alternative_headers_checked, aggregate: sum, operator: eq, threshold: 1}

@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "name": "B + QVoice con escalar de R6",
+  "status": "experimental",
+  "uncalibrated_model": "uncalibrated-model.json",
+  "uncalibrated_model_sha256": "e694ba0b3ae87654de158df03fb369dd0c844029d74340afb41e64b80af27eb6",
+  "calibration": {
+    "target": "final",
+    "cutoff": "2026-09-07",
+    "origins": [
+      "2025-09-28",
+      "2025-10-26",
+      "2025-11-23",
+      "2025-12-28",
+      "2026-01-25",
+      "2026-02-22"
+    ],
+    "log_multiplier": 0.03211708189229098,
+    "multiplier": 1.0326384014857017,
+    "converged": true,
+    "identity_fit_log_loss": 0.1360663001014707,
+    "scalar_fit_log_loss": 0.1360502394234591,
+    "at_bound": false,
+    "status": "fitted",
+    "exposures": 205329,
+    "people": 36058,
+    "event_exposures": 6464
+  },
+  "formula": "1-(1-R6_uncalibrated)^exp(log_multiplier)",
+  "knowledge_boundary": "2026-09-07",
+  "reporting_mode": "presentation",
+  "employee_level_rows_persisted": false,
+  "individual_scores_published": false,
+  "disk_cache_of_rows": false
+}

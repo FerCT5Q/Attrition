@@ -1,0 +1,36 @@
+{
+  "run_id": "engineering-c-group-selection-20261008-v1",
+  "output": "output/analysis/engineering/20261008/c-group-selection-v1",
+  "source_c": "output/analysis/engineering/20261008/model-c-v2",
+  "source_bc": "output/analysis/engineering/20261008/bc-priority-comparison-v1",
+  "authorization": "config/attrition_model_in_memory_training_authorization_20261001.json",
+  "reporting_mode": "presentation",
+  "development_snapshots": 6,
+  "combination_sizes": [
+    2,
+    3
+  ],
+  "minimum_group_people_each_snapshot": 300,
+  "minimum_public_people_each_snapshot": 30,
+  "minimum_distinct_events": 30,
+  "capacity_fractions": [
+    0.2,
+    0.3,
+    0.4
+  ],
+  "primary_capacity_fraction": 0.3,
+  "capture_relative_tolerance": 0.02,
+  "error_tolerance_pp": 0.1,
+  "tree_relative_gain_required": 0.02,
+  "selection": "Cruces dentro del 2% relativo de la máxima captura al 30%; entre ellos, error grupo-snapshot a no más de 0.1 pp del mínimo; después menos variables, menos grupos, mayor captura y nombre estable. Árbol sólo sustituye al cruce si supera su captura por más de 2% relativo y su error no empeora más de 0.1 pp.",
+  "gini_diagnostic_selection": "Cruces a menos del 2% relativo de la máxima eficiencia Gini; menor número de variables, menor número de grupos y mayor eficiencia. Árbol sólo sustituye al cruce si mejora su eficiencia más de 2% relativo.",
+  "preference": "Contra B con cortes: mayor captura media, ganar al menos 3 de 4 periodos, IC95 de diferencia positivo y error de grupos y grupo-snapshot no empeoran más de 0.1 pp. Es evidencia retrospectiva; no promueve modelos.",
+  "bootstrap_repetitions": 500,
+  "seed": 20261008,
+  "extension_snapshot": "2026-02-22",
+  "reproduction_absolute_tolerance": 1e-08,
+  "hazard_refits": 0,
+  "qvoice_included": false,
+  "employee_level_rows_persisted": false,
+  "individual_scores_published": false
+}

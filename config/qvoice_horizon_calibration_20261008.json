@@ -1,0 +1,23 @@
+{
+  "experiment_id": "engineering-b-qvoice-horizon-calibration-20261008-v1",
+  "source_run": "output/analysis/engineering/20261008/qvoice-model-b-calibrated-v1",
+  "source_config": "config/qvoice_model_calibrated_20261008.yaml",
+  "run_root": "output/analysis/engineering/20261008/qvoice-horizon-calibration-v1",
+  "model_query": "queries/profiles/engineering_qvoice_horizon_calibration_20261008.sql",
+  "reporting_mode": "presentation",
+  "knowledge_boundary": "2026-09-07",
+  "horizon_months": 6,
+  "minimum_qvoice_training_intervals": 1,
+  "reserved_monthly_intervals": 2,
+  "minimum_calibration_origins": 3,
+  "maximum_calibration_origins": 6,
+  "log_multiplier_bounds": [-1.5, 1.5],
+  "bootstrap_repetitions": 500,
+  "bootstrap_seed": 20261008,
+  "primary_metric": "six_month_log_loss",
+  "guardrails": ["brier_score", "calibration_error_pp", "top_quintile_calibration_error_pp"],
+  "selection_rule": "Comparar identidad y corrección escalar en retrospectiva. No promover automáticamente; el artefacto escalar final sigue siendo experimental.",
+  "temporal_rule": "Cada coeficiente auxiliar usa únicamente etiquetas mensuales finalizadas al origen; cada calibrador usa únicamente etiquetas de seis meses finalizadas al corte. Selección de variables heredada y retrospectiva, sin repetir la búsqueda.",
+  "short_history_rule": "Con menos de tres orígenes admisibles, usar identidad y registrar historia insuficiente.",
+  "privacy": {"employee_level_rows_persisted": false, "individual_scores_published": false, "disk_cache_of_rows": false}
+}

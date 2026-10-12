@@ -1,0 +1,89 @@
+{
+  "run_id": "engineering-model-d-20261010-v1",
+  "output": "output/analysis/engineering/20261010/model-d-v1",
+  "reporting_mode": "presentation",
+  "plan": "docs/plans/attrition-model-d-20261010.md",
+  "authorization": "config/attrition_model_in_memory_training_authorization_20261001.json",
+  "source_c": "output/analysis/engineering/20261008/model-c-v2",
+  "source_cq": "output/analysis/engineering/20261008/model-c-plus-qvoice-v1",
+  "source_qvoice": "output/analysis/engineering/20261008/qvoice-model-b-calibrated-v1",
+  "source_qvoice_config": "config/qvoice_model_calibrated_20261008.yaml",
+  "base_query": "queries/profiles/engineering_rsf_person_month_20261008.sql",
+  "history_query": "queries/profiles/engineering_model_d_history_person_month_20261010.sql",
+  "audit_queries": [
+    "queries/audits/engineering_model_d_manager_recency_20261010.sql",
+    "queries/audits/engineering_model_d_team_recency_20261010.sql",
+    "queries/audits/engineering_model_d_manager_span_20261010.sql",
+    "queries/audits/engineering_model_d_team_intensity_20261010.sql"
+  ],
+  "knowledge_boundary": "2026-09-07",
+  "training_start": "2025-01-01",
+  "periods": [
+    {"id": "aug_dec_2025", "origin": "2025-08-01", "end": "2025-12-31", "snapshots": 5},
+    {"id": "jan_feb_2026", "origin": "2026-01-01", "end": "2026-02-28", "snapshots": 2}
+  ],
+  "q_representations": {
+    "intent_career": ["qv_Q4", "qv_Q12", "qv_career"],
+    "themes": ["qv_Q4", "qv_Q12", "qv_career", "qv_Q1", "qv_Q2", "qv_Q3", "qv_Q5", "qv_Q7", "qv_Q8", "qv_Q10", "qv_Q11", "qv_Q13", "qv_Q17"],
+    "themes_mean33": ["qv_Q4", "qv_Q12", "qv_career", "qv_Q1", "qv_Q2", "qv_Q3", "qv_Q5", "qv_Q7", "qv_Q8", "qv_Q10", "qv_Q11", "qv_Q13", "qv_Q17", "qv_mean33"]
+  },
+  "l2_hr_grid": [0.1, 1.0, 10.0],
+  "l2_q_grid": [0.1, 1.0, 10.0],
+  "penalty_cell_scale": 8.0,
+  "interaction_blocks": {
+    "career_x_tenure": {"d_career_x_tenure": ["qv_career", "tenure_playbook_band"]},
+    "career_x_promotion": {"d_career_x_promotion": ["qv_career", "time_since_promotion_band"]},
+    "q4_x_team_exits": {"d_q4_x_team_exits": ["qv_Q4", "team_exits_12m"]},
+    "wellbeing_x_manager_changes": {
+      "d_q8_x_manager_changes": ["qv_Q8", "manager_changes_12m"],
+      "d_q10_x_manager_changes": ["qv_Q10", "manager_changes_12m"],
+      "d_q11_x_manager_changes": ["qv_Q11", "manager_changes_12m"]
+    }
+  },
+  "history_blocks": {
+    "manager_recency": ["manager_changes_3m", "manager_changes_6m"],
+    "team_recency": ["team_exits_3m", "team_exits_6m", "team_exit_recency_12m"],
+    "manager_span": ["manager_team_size_band"],
+    "team_intensity": ["team_exit_intensity_12m"]
+  },
+  "selection": {
+    "r6_snapshots": 3,
+    "monthly_fallback_snapshots": 3,
+    "maximum_relative_brier_from_best": 0.005,
+    "minimum_relative_pr_auc": 0.98,
+    "log_loss_parsimony_tolerance": 0.002
+  },
+  "rsf": {
+    "minimum_leaf_grid": [150, 400],
+    "max_features_grid": ["sqrt", 0.5],
+    "selection_trees": 80,
+    "final_trees": 200,
+    "max_samples_per_tree": 40000,
+    "max_depth": 12,
+    "n_jobs": 1,
+    "transferred_default": {"min_samples_leaf": 150, "max_features": 0.5}
+  },
+  "groups": ["antiguedad", "salidas_equipo", "nivel"],
+  "group_diagnostics": ["acquisition_recorded", "qv_career", "qv_Q4"],
+  "minimum_group_people_each_snapshot": 300,
+  "minimum_public_people_each_snapshot": 30,
+  "minimum_distinct_events": 30,
+  "capacity_fractions": [0.2, 0.3, 0.4],
+  "primary_capacity_fraction": 0.3,
+  "group_shrinkage_strength": 1000.0,
+  "bootstrap_repetitions": 500,
+  "seed": 20261010,
+  "promotion": {
+    "capture_gain_pp": 0.5,
+    "capture_noninferiority_pp": 0.2,
+    "precision_relative_improvement": 0.10,
+    "maximum_group_error_worsening_pp": 0.1,
+    "maximum_worst_group_error_worsening_pp": 0.1,
+    "maximum_period_capture_loss_pp": 0.5,
+    "maximum_relative_loss_worsening": 0.005,
+    "equivalent_capture_pp": 0.2,
+    "equivalent_error_relative": 0.05
+  },
+  "employee_level_rows_persisted": false,
+  "individual_scores_published": false
+}

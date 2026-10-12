@@ -1,0 +1,204 @@
+{
+  "family": "RandomSurvivalForest",
+  "library": "scikit-survival",
+  "library_version": "0.28.0",
+  "sklearn_version": "1.9.1",
+  "origin": "2025-08-01",
+  "specification": {
+    "min_samples_leaf": 150,
+    "max_features": 0.5,
+    "features": [
+      "level_grouped",
+      "tenure_playbook_band",
+      "manager_changes_12m",
+      "team_exits_12m",
+      "direct_reports_band",
+      "time_since_promotion_band",
+      "rehire",
+      "prior_experience_band",
+      "time_at_level_band",
+      "manager_left_6m",
+      "ios_12m",
+      "layers_band",
+      "work_arrangement_group",
+      "region",
+      "comp_ratio_band",
+      "grade_family",
+      "acquisition_recorded",
+      "transfer_12m",
+      "qv_Q4",
+      "qv_Q12",
+      "qv_career"
+    ],
+    "id": "transferred_default",
+    "selection_status": "transferred"
+  },
+  "categories": [
+    [
+      "1 - VP & Above",
+      "2 - Sr Dir",
+      "3 - Princ/Directors",
+      "5 - Sr Staff & /Mgr",
+      "6 - Staff & /Mgr",
+      "7 - Senior & Lead",
+      "8 - Assoc & Int/Eng"
+    ],
+    [
+      "1-2 years",
+      "10+ years",
+      "2-3 years",
+      "3-5 years",
+      "5-10 years",
+      "<1 year"
+    ],
+    [
+      "0",
+      "1",
+      "2+"
+    ],
+    [
+      "0",
+      "1",
+      "2+"
+    ],
+    [
+      "0",
+      "1-5",
+      "6+"
+    ],
+    [
+      "promo 1-2 years",
+      "promo 2-3 years",
+      "promo 3+ years",
+      "promo <1 year",
+      "sin promo en historial",
+      "sin promo, contratado 1-3 years",
+      "sin promo, contratado 3+ years",
+      "sin promo, contratado <1 year"
+    ],
+    [
+      "no",
+      "yes"
+    ],
+    [
+      "1-3 years",
+      "10+ years",
+      "3-5 years",
+      "5-10 years",
+      "<1 year"
+    ],
+    [
+      "1-2 years",
+      "2-3 years",
+      "3-5 years",
+      "5+ years",
+      "<1 year"
+    ],
+    [
+      "no",
+      "yes"
+    ],
+    [
+      "lateral u otro",
+      "none",
+      "reorg"
+    ],
+    [
+      "10+",
+      "7",
+      "8",
+      "9",
+      "<=6"
+    ],
+    [
+      "Interim Modified",
+      "Offsite",
+      "Onsite",
+      "otro o desconocido"
+    ],
+    [
+      "AMERICAS",
+      "APAC",
+      "EMEA",
+      "INDIA"
+    ],
+    [
+      "0.8-0.9",
+      "0.9-1.0",
+      "1.0-1.1",
+      "1.1-1.2",
+      "1.2+",
+      "<0.8"
+    ],
+    [
+      "R",
+      "T",
+      "other"
+    ],
+    [
+      "registrada",
+      "sin registro"
+    ],
+    [
+      "no",
+      "yes"
+    ],
+    [
+      "different_employment_episode",
+      "missing",
+      "no_linked_row",
+      "v0",
+      "v1"
+    ],
+    [
+      "different_employment_episode",
+      "missing",
+      "no_linked_row",
+      "v0",
+      "v1"
+    ],
+    [
+      "different_employment_episode",
+      "missing",
+      "no_linked_row",
+      "v0",
+      "v1"
+    ]
+  ],
+  "trees": 200,
+  "time_months": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "calibration": {
+    "status": "identity_insufficient_out_of_fit_history",
+    "log_multiplier": 0.0,
+    "multiplier": 1.0
+  },
+  "training": {
+    "cutoff": "2025-08-01",
+    "first_snapshot": "2025-01-26",
+    "last_snapshot": "2025-06-29",
+    "landmarks": 189111,
+    "people": 33310,
+    "event_landmarks": 3806,
+    "censored_landmarks": 185305,
+    "partial_window_landmarks": 157998,
+    "time_bins": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ]
+  },
+  "parameters_file": "forest-parameters.npz",
+  "employee_level_rows_persisted": false,
+  "individual_scores_published": false,
+  "parameter_contents": "Divisiones y curvas estimadas del modelo; sin muestras, llaves, etiquetas individuales ni conteos por nodo."
+}

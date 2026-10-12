@@ -1,0 +1,247 @@
+{
+  "family": "RandomSurvivalForest",
+  "library": "scikit-survival",
+  "library_version": "0.28.0",
+  "sklearn_version": "1.9.1",
+  "origin": "2026-09-07",
+  "specification": {
+    "id": "all_C_candidates_leaf150_features0.5",
+    "feature_set": "all_C_candidates",
+    "features": [
+      "level_grouped",
+      "tenure_playbook_band",
+      "calendar_month",
+      "manager_changes_12m",
+      "team_exits_12m",
+      "direct_reports_band",
+      "time_since_promotion_band",
+      "rehire",
+      "prior_experience_band",
+      "time_at_level_band",
+      "manager_left_6m",
+      "ios_12m",
+      "layers_band",
+      "work_arrangement_group",
+      "region",
+      "comp_ratio_band",
+      "grade_family",
+      "acquisition_recorded",
+      "transfer_12m"
+    ],
+    "min_samples_leaf": 150,
+    "max_features": 0.5,
+    "global": {
+      "exposures": 100185.0,
+      "event_exposures": 2832.0,
+      "pr_auc": 0.04368246570141994,
+      "lift_at_10_percent": 1.7090395480225988,
+      "brier_score": 0.02732548369724861,
+      "observed_percent": 2.8267704746219495,
+      "predicted_percent": 3.1402309534479746,
+      "calibration_error_pp": 0.31346047882602546,
+      "top_quintile_observed_percent": 4.716274891450816,
+      "top_quintile_predicted_percent": 5.453578116109626,
+      "top_quintile_calibration_error_pp": 0.7373032246588098,
+      "log_loss": 0.12574868574146708
+    },
+    "priority": {
+      "coverage_percent": 30.0,
+      "capture_percent": 42.80458902062604,
+      "observed_percent": 4.033291614061086,
+      "predicted_percent": 4.723732424818817,
+      "bias_pp": 0.6904408107577307,
+      "aggregate_error_pp": 0.6904408107577307,
+      "group_mae_pp": 0.9684298403179173,
+      "group_snapshot_mae_pp": 0.9684298403179173,
+      "lift": 1.426819634020868,
+      "mean_people_per_snapshot": 10018.5,
+      "mean_selected_groups_per_snapshot": 8.0,
+      "distinct_people_with_event": 562,
+      "worst_publishable_group_error_pp": 1.819945479701061,
+      "publishable_group_exposure_percent": 95.90757099366172
+    },
+    "seconds": 15.579858999932185
+  },
+  "categories": [
+    [
+      "1 - VP & Above",
+      "2 - Sr Dir",
+      "3 - Princ/Directors",
+      "5 - Sr Staff & /Mgr",
+      "6 - Staff & /Mgr",
+      "7 - Senior & Lead",
+      "8 - Assoc & Int/Eng",
+      "Misc"
+    ],
+    [
+      "1-2 years",
+      "10+ years",
+      "2-3 years",
+      "3-5 years",
+      "5-10 years",
+      "<1 year"
+    ],
+    [
+      "1",
+      "10",
+      "11",
+      "12",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9"
+    ],
+    [
+      "0",
+      "1",
+      "2+"
+    ],
+    [
+      "(unknown)",
+      "0",
+      "1",
+      "2+"
+    ],
+    [
+      "0",
+      "1-5",
+      "6+"
+    ],
+    [
+      "(unknown)",
+      "promo 1-2 years",
+      "promo 2-3 years",
+      "promo 3+ years",
+      "promo <1 year",
+      "sin promo en historial",
+      "sin promo, contratado 1-3 years",
+      "sin promo, contratado 3+ years",
+      "sin promo, contratado <1 year"
+    ],
+    [
+      "(unknown)",
+      "no",
+      "yes"
+    ],
+    [
+      "(unknown)",
+      "1-3 years",
+      "10+ years",
+      "3-5 years",
+      "5-10 years",
+      "<1 year"
+    ],
+    [
+      "(antes de la fuente)",
+      "(unknown)",
+      "1-2 years",
+      "2-3 years",
+      "3-5 years",
+      "5+ years",
+      "<1 year"
+    ],
+    [
+      "no",
+      "yes"
+    ],
+    [
+      "(antes de la fuente)",
+      "lateral u otro",
+      "none",
+      "reorg"
+    ],
+    [
+      "(antes de la fuente)",
+      "(unknown)",
+      "10+",
+      "7",
+      "8",
+      "9",
+      "<=6"
+    ],
+    [
+      "(antes de la fuente)",
+      "Interim Modified",
+      "Offsite",
+      "Onsite",
+      "otro o desconocido"
+    ],
+    [
+      "(unknown)",
+      "AMERICAS",
+      "APAC",
+      "EMEA",
+      "INDIA"
+    ],
+    [
+      "(unknown)",
+      "0.8-0.9",
+      "0.9-1.0",
+      "1.0-1.1",
+      "1.1-1.2",
+      "1.2+",
+      "<0.8"
+    ],
+    [
+      "R",
+      "T",
+      "other"
+    ],
+    [
+      "registrada",
+      "sin registro"
+    ],
+    [
+      "(historia no confirmada)",
+      "no",
+      "yes"
+    ]
+  ],
+  "trees": 200,
+  "time_months": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "calibration": {
+    "log_multiplier": 0.09023724058423818,
+    "multiplier": 1.0944338970457277,
+    "converged": true,
+    "identity_fit_log_loss": 0.14686195888125608,
+    "scalar_fit_log_loss": 0.14672544218399092,
+    "at_bound": false,
+    "first_snapshot": "2025-12-28",
+    "last_snapshot": "2026-02-22",
+    "latest_outcome": "2026-08-22",
+    "auxiliary_training_cutoff": "2025-09-28"
+  },
+  "training": {
+    "cutoff": "2026-09-07",
+    "first_snapshot": "2020-07-26",
+    "last_snapshot": "2026-07-26",
+    "landmarks": 2171724,
+    "people": 52249,
+    "event_landmarks": 66540,
+    "censored_landmarks": 2105184,
+    "partial_window_landmarks": 180770,
+    "time_bins": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ]
+  },
+  "parameters_file": "forest-parameters.npz",
+  "employee_level_rows_persisted": false,
+  "individual_scores_published": false,
+  "parameter_contents": "Divisiones y curvas estimadas del modelo; sin muestras, llaves, etiquetas individuales ni conteos por nodo."
+}

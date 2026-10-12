@@ -1,0 +1,49 @@
+{
+  "run_id": "engineering-model-d-history-preflight-20261010-v1",
+  "date": "2026-10-10",
+  "reporting_mode": "presentation",
+  "population": "Engineering, Employee, Regular, activo, excluyendo RF360",
+  "grain": "persona-snapshot; sólo métricas agregadas persistidas",
+  "score_changes": false,
+  "evidence": [
+    {
+      "concept": "Cambios de manager 3/6 meses",
+      "semantic_type": "evento histórico temporal",
+      "query": "queries/audits/engineering_model_d_manager_recency_20261010.sql",
+      "sql_sha256": "98bb484cb20f8b886fbf485716837b45b1811df1cf91608aebce3413c4478dcc",
+      "acceptance": "3m <= 6m <= 12m; cero conteos negativos; eventos posteriores o conocidos tarde excluidos",
+      "metrics": {"person_snapshots": 678849, "snapshots": 20, "monotonicity_violations": 0, "negative_count_violations": 0, "covered_percent": 27.1197, "maximum_3m": 3, "maximum_6m": 4, "maximum_12m": 6},
+      "outcome": "pass"
+    },
+    {
+      "concept": "Salidas del equipo 3/6 meses y recencia",
+      "semantic_type": "evento histórico atribuido al manager",
+      "query": "queries/audits/engineering_model_d_team_recency_20261010.sql",
+      "sql_sha256": "20a5541fdae53d91a4eec315b9767c4f60fb8e014b1c93508012e8ee85b586a5",
+      "acceptance": "monotonicidad, última fecha y banda sin contradicciones; eventos futuros o conocidos tarde excluidos",
+      "metrics": {"person_snapshots": 678849, "snapshots": 20, "monotonicity_violations": 0, "last_event_consistency_violations": 0, "band_consistency_violations": 0, "late_known_events_excluded": 668, "covered_percent": 23.8791},
+      "outcome": "pass"
+    },
+    {
+      "concept": "Tamaño del equipo del manager actual",
+      "semantic_type": "estado reconstruido por snapshot",
+      "query": "queries/audits/engineering_model_d_manager_span_20261010.sql",
+      "sql_sha256": "0c466f9e2f61c0c52c1bd16b24e253bebd34c50667db11bb6aeb154352093099",
+      "acceptance": "cobertura completa cuando existe manager; conteos no negativos; comparación almacenada sólo diagnóstica",
+      "metrics": {"person_snapshots": 678849, "manager_known_rows": 678849, "reconstructed_rows": 678849, "negative_span_violations": 0, "mean_absolute_difference_vs_employee_direct_reports": 5.0, "maximum_reconstructed_span": 36},
+      "outcome": "pass",
+      "limitation": "reg_non_intern_dir_reports corresponde al empleado y no es el mismo concepto"
+    },
+    {
+      "concept": "Intensidad de salidas por personas-mes",
+      "semantic_type": "tasa histórica derivada",
+      "query": "queries/audits/engineering_model_d_team_intensity_20261010.sql",
+      "sql_sha256": "f295ef063706e23d1a2ff42ddc07b2acfc89257cddb0d905fe19432f437bae09",
+      "acceptance": "denominador positivo; numerador coherente con exposición; eventos futuros o conocidos tarde excluidos",
+      "metrics": {"person_snapshots": 678849, "nonpositive_denominator_violations": 0, "numerator_exposure_violations": 0, "band_unknown": 0, "maximum_person_months": 433, "maximum_rate_per_100_person_months": 50.0},
+      "outcome": "pass"
+    }
+  ],
+  "employee_level_rows_persisted": false,
+  "individual_scores_published": false
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": 4,
+  "id": "manager-benchmark-precision",
+  "title": "Reconciliación de precisión del benchmark de 18 intervalos",
+  "claim": "¿La discrepancia proviene del redondeo de pesos decimales o de un error en el benchmark principal?",
+  "use": "Resolver la auditoría fallida sin relajar la tolerancia arbitrariamente.",
+  "semantic_type": "derived_feature",
+  "population": "Managers con historia elegible; resultados agregados, sin identidades",
+  "grain": "foto agregada",
+  "known_at": "Historia conocida al 23-ago-2026",
+  "window": "Dieciocho intervalos previos al 23-ago-2026",
+  "history": "La comparación de suma de eventos/exposición con promedio ponderado no cumplió la tolerancia de 1e-8.",
+  "query": "queries/audits/engineering_b_v11_manager_benchmark_precision_20261011.sql",
+  "zero_fields": [],
+  "positive_fields": [
+    "eligible_managers"
+  ],
+  "expected_rows": 1,
+  "acceptance_rule": "Medir las dos fórmulas independientes con pesos de exposición y pesos en doble precisión, además del redondeo de pesos original.",
+  "conclusion_if_pass": "Se dispone de magnitudes para identificar la causa de la discrepancia",
+  "limitation": "Este diagnóstico no habilita por sí solo el uso del indicador; debe cerrar la reconciliación.",
+  "action": "Corregir la implementación que no conserve precisión y repetir la regla original"
+}

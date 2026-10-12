@@ -1,0 +1,27 @@
+{
+  "schema_version": 4,
+  "id": "hierarchy-synthetic",
+  "title": "Casos límite sintéticos de jerarquía",
+  "claim": "El SQL distingue árbol válido, manager ausente, auto-ciclo, ciclo de dos nodos, varias raíces y profundidad mayor de 25.",
+  "use": "Verificar la reconstrucción con un oráculo independiente antes de modelar.",
+  "semantic_type": "hierarchy",
+  "population": "Grafos ficticios; no son datos de empleados",
+  "grain": "nodo sintético",
+  "known_at": "Cada grafo se evalúa por separado en su fecha ficticia",
+  "window": "Seis escenarios sintéticos",
+  "history": "Prueba de límites de la implementación, no evidencia HR.",
+  "query": "queries/audits/engineering_b_v11_hierarchy_synthetic_20261011.sql",
+  "zero_fields": [
+    "depth_mismatches",
+    "cycle_mismatches",
+    "known_mismatches"
+  ],
+  "positive_fields": [
+    "synthetic_cases"
+  ],
+  "expected_rows": 1,
+  "acceptance_rule": "Cero diferencias frente al recorrido independiente en Python.",
+  "conclusion_if_pass": "Los casos límite probados se comportan como se definió",
+  "limitation": "Los fixtures no sustituyen la auditoría agregada de datos históricos.",
+  "action": "Conservar ambas evidencias con hashes"
+}

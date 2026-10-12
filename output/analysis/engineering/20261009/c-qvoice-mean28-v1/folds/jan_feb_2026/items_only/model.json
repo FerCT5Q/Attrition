@@ -1,0 +1,186 @@
+{
+  "name": "items_only",
+  "features": [
+    "qv_career",
+    "qv_Q8",
+    "qv_Q10",
+    "qv_Q11",
+    "qv_Q13",
+    "qv_Q17"
+  ],
+  "l2": 10,
+  "monthly_brier": 0.003466586726190748,
+  "source_candidate": {
+    "id": "career+mean33+wellbeing+confidence",
+    "kind": "blocks",
+    "blocks": [
+      "career",
+      "mean33",
+      "wellbeing",
+      "confidence"
+    ],
+    "features": [
+      "qv_career",
+      "qv_mean33",
+      "qv_Q8",
+      "qv_Q10",
+      "qv_Q11",
+      "qv_Q13",
+      "qv_Q17"
+    ],
+    "l2": 10,
+    "parameters": 33,
+    "converged": true,
+    "iterations": 5,
+    "monthly_brier": 0.003466690593134047
+  },
+  "trials": [
+    {
+      "l2": 0.1,
+      "monthly_brier": 0.003466656310653357,
+      "iterations": 5,
+      "converged": true
+    },
+    {
+      "l2": 1,
+      "monthly_brier": 0.003466638769870506,
+      "iterations": 5,
+      "converged": true
+    },
+    {
+      "l2": 10,
+      "monthly_brier": 0.003466586726190748,
+      "iterations": 5,
+      "converged": true
+    }
+  ],
+  "iterations": 5,
+  "encoder": {
+    "features": [
+      "qv_career",
+      "qv_Q8",
+      "qv_Q10",
+      "qv_Q11",
+      "qv_Q13",
+      "qv_Q17"
+    ],
+    "levels": {
+      "qv_career": [
+        "different_employment_episode",
+        "missing",
+        "no_linked_row",
+        "v0",
+        "v1"
+      ],
+      "qv_Q8": [
+        "different_employment_episode",
+        "missing",
+        "no_linked_row",
+        "v0",
+        "v1"
+      ],
+      "qv_Q10": [
+        "different_employment_episode",
+        "missing",
+        "no_linked_row",
+        "v0",
+        "v1"
+      ],
+      "qv_Q11": [
+        "different_employment_episode",
+        "missing",
+        "no_linked_row",
+        "v0",
+        "v1"
+      ],
+      "qv_Q13": [
+        "different_employment_episode",
+        "missing",
+        "no_linked_row",
+        "v0",
+        "v1"
+      ],
+      "qv_Q17": [
+        "different_employment_episode",
+        "missing",
+        "no_linked_row",
+        "v0",
+        "v1"
+      ]
+    },
+    "references": {
+      "qv_career": "v1",
+      "qv_Q8": "v1",
+      "qv_Q10": "v0",
+      "qv_Q11": "v1",
+      "qv_Q13": "v1",
+      "qv_Q17": "v1"
+    },
+    "columns": [
+      "intercept",
+      "qv_career=different_employment_episode",
+      "qv_career=missing",
+      "qv_career=no_linked_row",
+      "qv_career=v0",
+      "qv_Q8=different_employment_episode",
+      "qv_Q8=missing",
+      "qv_Q8=no_linked_row",
+      "qv_Q8=v0",
+      "qv_Q10=different_employment_episode",
+      "qv_Q10=missing",
+      "qv_Q10=no_linked_row",
+      "qv_Q10=v1",
+      "qv_Q11=different_employment_episode",
+      "qv_Q11=missing",
+      "qv_Q11=no_linked_row",
+      "qv_Q11=v0",
+      "qv_Q13=different_employment_episode",
+      "qv_Q13=missing",
+      "qv_Q13=no_linked_row",
+      "qv_Q13=v0",
+      "qv_Q17=different_employment_episode",
+      "qv_Q17=missing",
+      "qv_Q17=no_linked_row",
+      "qv_Q17=v0"
+    ]
+  },
+  "beta": [
+    -0.29232102940315724,
+    0.033796079985352875,
+    0.23330534602517675,
+    0.04850987998284512,
+    0.4639720955314121,
+    0.03379607998535301,
+    0.006262324077397197,
+    0.04850987998284521,
+    0.13211171887298215,
+    0.03379607998535292,
+    -0.1564450147031933,
+    0.04850987998284512,
+    -0.014670059305707731,
+    0.03379607998535337,
+    0.0486178259168909,
+    0.04850987998284534,
+    0.1602519569894994,
+    0.03379607998535309,
+    0.14534554441868094,
+    0.04850987998284523,
+    -0.1146120695897967,
+    0.0337960799853531,
+    0.2976062348050843,
+    0.04850987998284442,
+    0.13570387567500472
+  ],
+  "base_model_reference": "output\\analysis\\engineering\\20261008\\model-c-v2\\folds\\fold-4-C-model.json",
+  "base_model_origin": "2025-08-01",
+  "cutoff": "2026-01-01",
+  "fit_maximum_label_end": "2025-12-28",
+  "selection_snapshots": [
+    "2025-10-26",
+    "2025-11-23"
+  ],
+  "formula": "cloglog(eta_C + correccion_Q); R6 = 1-product(1-h)",
+  "derivation": null,
+  "parameters": 25,
+  "employee_level_rows_persisted": false
+}

@@ -1,0 +1,5190 @@
+{
+  "experiment": "engineering-qvoice-20261008-annual-lag-v1",
+  "created_at": "2026-10-08T17:25:17+00:00",
+  "reporting_mode": "presentation",
+  "knowledge_boundary": "2026-09-07",
+  "control_reproduced": true,
+  "available_wave_count": 2,
+  "assigned_wave_count": 3,
+  "variants": [
+    {
+      "id": "intent_q4",
+      "candidate": "intent",
+      "columns": [
+        "qv_Q4"
+      ],
+      "eligibility_notes": [],
+      "periods": [
+        {
+          "period": "aug_dec_2025",
+          "main": true,
+          "complete": true,
+          "status": "evaluated",
+          "first_snapshot": "2025-08-24",
+          "last_snapshot": "2025-12-28",
+          "snapshot_count": 5,
+          "people": 35474,
+          "monthly_validation_dates": [
+            "2025-04-27",
+            "2025-05-25",
+            "2025-06-29"
+          ],
+          "fit_cutoff": "2025-08-01",
+          "maximum_inner_label_end": "2025-04-27",
+          "maximum_fit_label_end": "2025-07-27",
+          "maximum_test_label_end": "2026-06-28",
+          "control": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.04385323923124028,
+            "lift_at_10_percent": 1.8206954656862746,
+            "brier_score": 0.028139196862951802,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 2.987969621874269,
+            "calibration_error_pp": 0.07671646296242146,
+            "top_quintile_observed_percent": 4.810465289133344,
+            "top_quintile_predicted_percent": 5.391548600557973,
+            "top_quintile_calibration_error_pp": 0.5810833114246301,
+            "l2": 10,
+            "parameters": 78
+          },
+          "availability": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.044091232754296716,
+            "lift_at_10_percent": 1.8265510861207228,
+            "brier_score": 0.028138883491656826,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 2.975998349730154,
+            "calibration_error_pp": 0.06474519081830638,
+            "top_quintile_observed_percent": 4.863980972201576,
+            "top_quintile_predicted_percent": 5.422224179199137,
+            "top_quintile_calibration_error_pp": 0.5582432069975614,
+            "l2": 10,
+            "parameters": 82
+          },
+          "response": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.04877376178012226,
+            "lift_at_10_percent": 2.0220588235294117,
+            "brier_score": 0.028071777285933044,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 2.9098454219719647,
+            "calibration_error_pp": 0.0014077369398828726,
+            "top_quintile_observed_percent": 5.277240969228482,
+            "top_quintile_predicted_percent": 5.572287810365874,
+            "top_quintile_calibration_error_pp": 0.2950468411373919,
+            "l2": 10,
+            "parameters": 83
+          },
+          "l2_trials": {
+            "control": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.005693717368691651
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.0056937470564546845
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.005693089569535577
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.005688992884021416
+              }
+            ],
+            "availability": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.005695521205114524
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.005695770470964274
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.005696506663512509
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.005690621682842845
+              }
+            ],
+            "response": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.005689492000287108
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.005689725452422552
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.00569013654617386
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.0056846356511463785
+              }
+            ]
+          },
+          "cohort_equality_verified": true,
+          "uncertainty": {
+            "unit": "persona; todas sus observaciones juntas",
+            "people": 35474,
+            "repetitions": 500,
+            "confidence_level": 0.95,
+            "seed": 20261008,
+            "paired_differences": {
+              "availability__minus__control": {
+                "pr_auc": {
+                  "lower": -8.34028809150996e-05,
+                  "upper": 0.0006026709570021206
+                },
+                "lift_at_10_percent": {
+                  "lower": -0.02326306956389596,
+                  "upper": 0.042438114590697795
+                },
+                "brier_score": {
+                  "lower": -5.89286057701005e-06,
+                  "upper": 5.815426276655192e-06
+                },
+                "calibration_error_pp": {
+                  "lower": -0.013407307201481375,
+                  "upper": 0.01279813254611647
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.10268216086388078,
+                  "upper": 0.05048327839908999
+                }
+              },
+              "response__minus__control": {
+                "pr_auc": {
+                  "lower": 0.003004366255039401,
+                  "upper": 0.0072252131289142095
+                },
+                "lift_at_10_percent": {
+                  "lower": 0.03908116180616855,
+                  "upper": 0.3432471901766675
+                },
+                "brier_score": {
+                  "lower": -9.995296042384265e-05,
+                  "upper": -3.561693814711671e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.08344227981452584,
+                  "upper": 0.08195393212394325
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.5532622966324067,
+                  "upper": 0.05569788010657863
+                }
+              },
+              "response__minus__availability": {
+                "pr_auc": {
+                  "lower": 0.002814695170153712,
+                  "upper": 0.0069651178952337255
+                },
+                "lift_at_10_percent": {
+                  "lower": 0.033204143722248274,
+                  "upper": 0.3309509982086434
+                },
+                "brier_score": {
+                  "lower": -9.994104335093151e-05,
+                  "upper": -3.57746705065813e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.07146199898023209,
+                  "upper": 0.07023956704647111
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.5116420436580611,
+                  "upper": 0.07953049100409837
+                }
+              }
+            },
+            "scope": "Incertidumbre de evaluación condicional a los modelos ajustados; no vuelve a seleccionar L2 en cada réplica."
+          },
+          "response_available_cohort": {
+            "published": true,
+            "coverage_percent": 62.281551954808975,
+            "metrics": {
+              "control": {
+                "exposures": 104742.0,
+                "event_exposures": 2940.0,
+                "pr_auc": 0.04292365915977024,
+                "lift_at_10_percent": 1.8201904761904764,
+                "brier_score": 0.02715907337014691,
+                "observed_percent": 2.8068969467835254,
+                "predicted_percent": 3.0557086061025176,
+                "calibration_error_pp": 0.2488116593189923,
+                "top_quintile_observed_percent": 4.725474520000697,
+                "top_quintile_predicted_percent": 5.639035420941449,
+                "top_quintile_calibration_error_pp": 0.9135609009407513
+              },
+              "availability": {
+                "exposures": 104742.0,
+                "event_exposures": 2940.0,
+                "pr_auc": 0.0429566184522811,
+                "lift_at_10_percent": 1.8254663155584816,
+                "brier_score": 0.02715839893437613,
+                "observed_percent": 2.8068969467835254,
+                "predicted_percent": 3.056759409287423,
+                "calibration_error_pp": 0.24986246250389804,
+                "top_quintile_observed_percent": 4.7441816316641665,
+                "top_quintile_predicted_percent": 5.639307786210754,
+                "top_quintile_calibration_error_pp": 0.8951261545465876
+              },
+              "response": {
+                "exposures": 104742.0,
+                "event_exposures": 2940.0,
+                "pr_auc": 0.049980526303947816,
+                "lift_at_10_percent": 2.0558061821219713,
+                "brier_score": 0.02705102413008355,
+                "observed_percent": 2.8068969467835254,
+                "predicted_percent": 2.948885356992022,
+                "calibration_error_pp": 0.14198841020849687,
+                "top_quintile_observed_percent": 5.426117248872046,
+                "top_quintile_predicted_percent": 5.881047815243007,
+                "top_quintile_calibration_error_pp": 0.45493056637096047
+              }
+            }
+          },
+          "usable_wave_count": 1
+        },
+        {
+          "period": "jan_feb_2026",
+          "main": true,
+          "complete": true,
+          "status": "evaluated",
+          "first_snapshot": "2026-01-25",
+          "last_snapshot": "2026-02-22",
+          "snapshot_count": 2,
+          "people": 35448,
+          "monthly_validation_dates": [
+            "2025-09-28",
+            "2025-10-26",
+            "2025-11-23"
+          ],
+          "fit_cutoff": "2026-01-01",
+          "maximum_inner_label_end": "2025-09-28",
+          "maximum_fit_label_end": "2025-12-28",
+          "maximum_test_label_end": "2026-08-22",
+          "control": {
+            "exposures": 70276.0,
+            "event_exposures": 2432.0,
+            "pr_auc": 0.05285423663325542,
+            "lift_at_10_percent": 1.7927845181134654,
+            "brier_score": 0.033262626484562054,
+            "observed_percent": 3.4606409015880244,
+            "predicted_percent": 3.3978019850712418,
+            "calibration_error_pp": 0.06283891651678308,
+            "top_quintile_observed_percent": 5.5729924732144545,
+            "top_quintile_predicted_percent": 6.5964308850061455,
+            "top_quintile_calibration_error_pp": 1.0234384117916904,
+            "l2": 0.1,
+            "parameters": 78
+          },
+          "availability": {
+            "exposures": 70276.0,
+            "event_exposures": 2432.0,
+            "pr_auc": 0.05298223145869909,
+            "lift_at_10_percent": 1.7856816520467838,
+            "brier_score": 0.03325853175961374,
+            "observed_percent": 3.4606409015880244,
+            "predicted_percent": 3.3190496028401886,
+            "calibration_error_pp": 0.14159129874783613,
+            "top_quintile_observed_percent": 5.599825450129964,
+            "top_quintile_predicted_percent": 6.484468585393036,
+            "top_quintile_calibration_error_pp": 0.8846431352630718,
+            "l2": 0.1,
+            "parameters": 82
+          },
+          "response": {
+            "exposures": 70276.0,
+            "event_exposures": 2432.0,
+            "pr_auc": 0.060737600780269255,
+            "lift_at_10_percent": 2.1513905502392343,
+            "brier_score": 0.03314283020552615,
+            "observed_percent": 3.4606409015880244,
+            "predicted_percent": 3.280194786697842,
+            "calibration_error_pp": 0.18044611489018286,
+            "top_quintile_observed_percent": 6.168535488644772,
+            "top_quintile_predicted_percent": 6.968247979686126,
+            "top_quintile_calibration_error_pp": 0.7997124910413544,
+            "l2": 0.1,
+            "parameters": 83
+          },
+          "l2_trials": {
+            "control": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.0034059956533235717
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.003405990053552851
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.003406018102508315
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.0034068448556588008
+              }
+            ],
+            "availability": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.0034053506781243715
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.0034053504131119506
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.00340541224110943
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.0034066206151028905
+              }
+            ],
+            "response": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.0034032990458025313
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.0034032916422915473
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.0034033134418690676
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.0034044011806714744
+              }
+            ]
+          },
+          "cohort_equality_verified": true,
+          "uncertainty": {
+            "unit": "persona; todas sus observaciones juntas",
+            "people": 35448,
+            "repetitions": 500,
+            "confidence_level": 0.95,
+            "seed": 20261008,
+            "paired_differences": {
+              "availability__minus__control": {
+                "pr_auc": {
+                  "lower": -0.0005328529326868007,
+                  "upper": 0.0007071906342258549
+                },
+                "lift_at_10_percent": {
+                  "lower": -0.07305029130426816,
+                  "upper": 0.05198285587088811
+                },
+                "brier_score": {
+                  "lower": -1.525665680732653e-05,
+                  "upper": 5.585999996434231e-06
+                },
+                "calibration_error_pp": {
+                  "lower": -0.07918937156800304,
+                  "upper": 0.08042472948899065
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.22280808007806302,
+                  "upper": -0.04236335505477483
+                }
+              },
+              "response__minus__control": {
+                "pr_auc": {
+                  "lower": 0.004940500440736166,
+                  "upper": 0.011386851672828647
+                },
+                "lift_at_10_percent": {
+                  "lower": 0.1606641948741167,
+                  "upper": 0.5674549619370879
+                },
+                "brier_score": {
+                  "lower": -0.00018899545854653385,
+                  "upper": -5.97193836660145e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.1123946492625826,
+                  "upper": 0.12847677514771835
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.5815752066110617,
+                  "upper": 0.11821085838391382
+                }
+              },
+              "response__minus__availability": {
+                "pr_auc": {
+                  "lower": 0.004795566605766383,
+                  "upper": 0.011229706966798373
+                },
+                "lift_at_10_percent": {
+                  "lower": 0.18443054594731256,
+                  "upper": 0.5684464676015055
+                },
+                "brier_score": {
+                  "lower": -0.00018362081729025696,
+                  "upper": -5.3715146101977606e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.03376545965764593,
+                  "upper": 0.05063454901846866
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.4409850389946315,
+                  "upper": 0.2774254905886841
+                }
+              }
+            },
+            "scope": "Incertidumbre de evaluación condicional a los modelos ajustados; no vuelve a seleccionar L2 en cada réplica."
+          },
+          "response_available_cohort": {
+            "published": true,
+            "coverage_percent": 67.52660936877454,
+            "metrics": {
+              "control": {
+                "exposures": 47455.0,
+                "event_exposures": 1564.0,
+                "pr_auc": 0.05292644873425581,
+                "lift_at_10_percent": 1.7934782608695652,
+                "brier_score": 0.031715013817179505,
+                "observed_percent": 3.295753872089348,
+                "predicted_percent": 3.4866169799915157,
+                "calibration_error_pp": 0.1908631079021679,
+                "top_quintile_observed_percent": 5.545468215672896,
+                "top_quintile_predicted_percent": 6.810116475325296,
+                "top_quintile_calibration_error_pp": 1.2646482596524005
+              },
+              "availability": {
+                "exposures": 47455.0,
+                "event_exposures": 1564.0,
+                "pr_auc": 0.05302372216687208,
+                "lift_at_10_percent": 1.7966751918158568,
+                "brier_score": 0.031701152722058513,
+                "observed_percent": 3.295753872089348,
+                "predicted_percent": 3.3865925483077217,
+                "calibration_error_pp": 0.09083867621837369,
+                "top_quintile_observed_percent": 5.573701401327574,
+                "top_quintile_predicted_percent": 6.61194677331412,
+                "top_quintile_calibration_error_pp": 1.0382453719865465
+              },
+              "response": {
+                "exposures": 47455.0,
+                "event_exposures": 1564.0,
+                "pr_auc": 0.06398471337549808,
+                "lift_at_10_percent": 2.4168797953964196,
+                "brier_score": 0.03153282795892038,
+                "observed_percent": 3.295753872089348,
+                "predicted_percent": 3.3332476412035517,
+                "calibration_error_pp": 0.03749376911420382,
+                "top_quintile_observed_percent": 6.407308471803008,
+                "top_quintile_predicted_percent": 7.351850112938085,
+                "top_quintile_calibration_error_pp": 0.9445416411350771
+              }
+            }
+          },
+          "usable_wave_count": 1
+        },
+        {
+          "period": "supplementary_2026",
+          "main": false,
+          "complete": true,
+          "status": "not_evaluable",
+          "reasons": [
+            "No hay un periodo completo con seguimiento a seis meses."
+          ]
+        }
+      ],
+      "decision": {
+        "status": "sin mejora demostrada",
+        "complete_main_periods": 2,
+        "checks": {
+          "ranking_vs_control": true,
+          "brier_score_vs_control": true,
+          "calibration_error_pp_vs_control": false,
+          "top_quintile_calibration_error_pp_vs_control": true,
+          "ranking_vs_availability": true,
+          "brier_score_vs_availability": true,
+          "calibration_error_pp_vs_availability": true,
+          "top_quintile_calibration_error_pp_vs_availability": true
+        }
+      }
+    },
+    {
+      "id": "intent_q12",
+      "candidate": "intent",
+      "columns": [
+        "qv_Q12"
+      ],
+      "eligibility_notes": [],
+      "periods": [
+        {
+          "period": "aug_dec_2025",
+          "main": true,
+          "complete": true,
+          "status": "evaluated",
+          "first_snapshot": "2025-08-24",
+          "last_snapshot": "2025-12-28",
+          "snapshot_count": 5,
+          "people": 35474,
+          "monthly_validation_dates": [
+            "2025-04-27",
+            "2025-05-25",
+            "2025-06-29"
+          ],
+          "fit_cutoff": "2025-08-01",
+          "maximum_inner_label_end": "2025-04-27",
+          "maximum_fit_label_end": "2025-07-27",
+          "maximum_test_label_end": "2026-06-28",
+          "control": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.04385323923124028,
+            "lift_at_10_percent": 1.8206954656862746,
+            "brier_score": 0.028139196862951802,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 2.987969621874269,
+            "calibration_error_pp": 0.07671646296242146,
+            "top_quintile_observed_percent": 4.810465289133344,
+            "top_quintile_predicted_percent": 5.391548600557973,
+            "top_quintile_calibration_error_pp": 0.5810833114246301,
+            "l2": 10,
+            "parameters": 78
+          },
+          "availability": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.04403438669213942,
+            "lift_at_10_percent": 1.8382352941176472,
+            "brier_score": 0.028139515424472485,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 2.970638982460078,
+            "calibration_error_pp": 0.05938582354822995,
+            "top_quintile_observed_percent": 4.858034785193994,
+            "top_quintile_predicted_percent": 5.415344894919346,
+            "top_quintile_calibration_error_pp": 0.5573101097253514,
+            "l2": 10,
+            "parameters": 82
+          },
+          "response": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.046707295853500634,
+            "lift_at_10_percent": 1.8852124183006536,
+            "brier_score": 0.02810254906596201,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 2.9471456219045074,
+            "calibration_error_pp": 0.035892462992659704,
+            "top_quintile_observed_percent": 5.018581834398692,
+            "top_quintile_predicted_percent": 5.577656519143233,
+            "top_quintile_calibration_error_pp": 0.5590746847445414,
+            "l2": 10,
+            "parameters": 83
+          },
+          "l2_trials": {
+            "control": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.005693717368691651
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.0056937470564546845
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.005693089569535577
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.005688992884021416
+              }
+            ],
+            "availability": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.005695297536148159
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.005695560637085588
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.005696413910719543
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.005690537411342827
+              }
+            ],
+            "response": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.005693179969623124
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.005693475391080022
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.005694355226569861
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.005687549716579341
+              }
+            ]
+          },
+          "cohort_equality_verified": true,
+          "uncertainty": {
+            "unit": "persona; todas sus observaciones juntas",
+            "people": 35474,
+            "repetitions": 500,
+            "confidence_level": 0.95,
+            "seed": 20261008,
+            "paired_differences": {
+              "availability__minus__control": {
+                "pr_auc": {
+                  "lower": -0.00017225118689985754,
+                  "upper": 0.0005880323132259448
+                },
+                "lift_at_10_percent": {
+                  "lower": -0.025348056729648183,
+                  "upper": 0.05574793378497329
+                },
+                "brier_score": {
+                  "lower": -6.1895601204405005e-06,
+                  "upper": 7.0413721720431685e-06
+                },
+                "calibration_error_pp": {
+                  "lower": -0.01904111232252862,
+                  "upper": 0.01824525344469861
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.11259547447042408,
+                  "upper": 0.06799561672124095
+                }
+              },
+              "response__minus__control": {
+                "pr_auc": {
+                  "lower": 0.0013372859730798204,
+                  "upper": 0.004664842123676346
+                },
+                "lift_at_10_percent": {
+                  "lower": -0.0768763523804324,
+                  "upper": 0.19524090782066358
+                },
+                "brier_score": {
+                  "lower": -6.165263809168615e-05,
+                  "upper": -1.0086760577566946e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.047538197691063294,
+                  "upper": 0.04485912719956698
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.27692420228724657,
+                  "upper": 0.21059350153907563
+                }
+              },
+              "response__minus__availability": {
+                "pr_auc": {
+                  "lower": 0.0011600322019736005,
+                  "upper": 0.00447923719723521
+                },
+                "lift_at_10_percent": {
+                  "lower": -0.08408521057374323,
+                  "upper": 0.18267596680745857
+                },
+                "brier_score": {
+                  "lower": -6.286741180916891e-05,
+                  "upper": -1.1407038460685616e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.030472646109605726,
+                  "upper": 0.02728164533531582
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.24015773816149386,
+                  "upper": 0.2238040637419705
+                }
+              }
+            },
+            "scope": "Incertidumbre de evaluación condicional a los modelos ajustados; no vuelve a seleccionar L2 en cada réplica."
+          },
+          "response_available_cohort": {
+            "published": true,
+            "coverage_percent": 60.83781774936822,
+            "metrics": {
+              "control": {
+                "exposures": 102314.0,
+                "event_exposures": 2904.0,
+                "pr_auc": 0.04418509252610317,
+                "lift_at_10_percent": 1.8818331175943441,
+                "brier_score": 0.02743555773113858,
+                "observed_percent": 2.8383212463592473,
+                "predicted_percent": 3.04997638874111,
+                "calibration_error_pp": 0.21165514238186273,
+                "top_quintile_observed_percent": 4.819598193772265,
+                "top_quintile_predicted_percent": 5.632879396333135,
+                "top_quintile_calibration_error_pp": 0.8132812025608706
+              },
+              "availability": {
+                "exposures": 102314.0,
+                "event_exposures": 2904.0,
+                "pr_auc": 0.04421534852343195,
+                "lift_at_10_percent": 1.8826140189776555,
+                "brier_score": 0.02743303446087122,
+                "observed_percent": 2.8383212463592473,
+                "predicted_percent": 3.0285270352813196,
+                "calibration_error_pp": 0.19020578892207268,
+                "top_quintile_observed_percent": 4.839575559846201,
+                "top_quintile_predicted_percent": 5.591563566087333,
+                "top_quintile_calibration_error_pp": 0.7519880062411319
+              },
+              "response": {
+                "exposures": 102314.0,
+                "event_exposures": 2904.0,
+                "pr_auc": 0.04836676405732336,
+                "lift_at_10_percent": 1.9533109828993191,
+                "brier_score": 0.027372456516899596,
+                "observed_percent": 2.8383212463592473,
+                "predicted_percent": 2.990347397141609,
+                "calibration_error_pp": 0.15202615078236148,
+                "top_quintile_observed_percent": 5.13720507457435,
+                "top_quintile_predicted_percent": 5.843615438839271,
+                "top_quintile_calibration_error_pp": 0.7064103642649213
+              }
+            }
+          },
+          "usable_wave_count": 1
+        },
+        {
+          "period": "jan_feb_2026",
+          "main": true,
+          "complete": true,
+          "status": "evaluated",
+          "first_snapshot": "2026-01-25",
+          "last_snapshot": "2026-02-22",
+          "snapshot_count": 2,
+          "people": 35448,
+          "monthly_validation_dates": [
+            "2025-09-28",
+            "2025-10-26",
+            "2025-11-23"
+          ],
+          "fit_cutoff": "2026-01-01",
+          "maximum_inner_label_end": "2025-09-28",
+          "maximum_fit_label_end": "2025-12-28",
+          "maximum_test_label_end": "2026-08-22",
+          "control": {
+            "exposures": 70276.0,
+            "event_exposures": 2432.0,
+            "pr_auc": 0.05285423663325542,
+            "lift_at_10_percent": 1.7927845181134654,
+            "brier_score": 0.033262626484562054,
+            "observed_percent": 3.4606409015880244,
+            "predicted_percent": 3.3978019850712418,
+            "calibration_error_pp": 0.06283891651678308,
+            "top_quintile_observed_percent": 5.5729924732144545,
+            "top_quintile_predicted_percent": 6.5964308850061455,
+            "top_quintile_calibration_error_pp": 1.0234384117916904,
+            "l2": 0.1,
+            "parameters": 78
+          },
+          "availability": {
+            "exposures": 70276.0,
+            "event_exposures": 2432.0,
+            "pr_auc": 0.052649101712597464,
+            "lift_at_10_percent": 1.7710367147707977,
+            "brier_score": 0.03326488017778358,
+            "observed_percent": 3.4606409015880244,
+            "predicted_percent": 3.3208515135426824,
+            "calibration_error_pp": 0.13978938804534227,
+            "top_quintile_observed_percent": 5.597661363765724,
+            "top_quintile_predicted_percent": 6.499787470268618,
+            "top_quintile_calibration_error_pp": 0.9021261065028943,
+            "l2": 0.1,
+            "parameters": 82
+          },
+          "response": {
+            "exposures": 70276.0,
+            "event_exposures": 2432.0,
+            "pr_auc": 0.05679849518333966,
+            "lift_at_10_percent": 1.9481907894736847,
+            "brier_score": 0.033200454005863834,
+            "observed_percent": 3.4606409015880244,
+            "predicted_percent": 3.2682386156317467,
+            "calibration_error_pp": 0.19240228595627795,
+            "top_quintile_observed_percent": 6.040469007911662,
+            "top_quintile_predicted_percent": 6.829524030254405,
+            "top_quintile_calibration_error_pp": 0.7890550223427433,
+            "l2": 0.1,
+            "parameters": 83
+          },
+          "l2_trials": {
+            "control": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.0034059956533235717
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.003405990053552851
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.003406018102508315
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.0034068448556588008
+              }
+            ],
+            "availability": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.003405553181203458
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.0034055483768139507
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.003405580700187637
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.003406603402150176
+              }
+            ],
+            "response": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.003404794502596545
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.0034047855637709405
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.0034047923373670395
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.003405704903024084
+              }
+            ]
+          },
+          "cohort_equality_verified": true,
+          "uncertainty": {
+            "unit": "persona; todas sus observaciones juntas",
+            "people": 35448,
+            "repetitions": 500,
+            "confidence_level": 0.95,
+            "seed": 20261008,
+            "paired_differences": {
+              "availability__minus__control": {
+                "pr_auc": {
+                  "lower": -0.0012121569987902433,
+                  "upper": 0.0004620471007157058
+                },
+                "lift_at_10_percent": {
+                  "lower": -0.08185521280220381,
+                  "upper": 0.04123393580972329
+                },
+                "brier_score": {
+                  "lower": -1.0252825724470225e-05,
+                  "upper": 1.2426357299377337e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.07802105314334512,
+                  "upper": 0.07915086710228122
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.21424606877262062,
+                  "upper": 0.024100460664321047
+                }
+              },
+              "response__minus__control": {
+                "pr_auc": {
+                  "lower": 0.0016671722103937707,
+                  "upper": 0.0060771616545486
+                },
+                "lift_at_10_percent": {
+                  "lower": -0.008101277459265317,
+                  "upper": 0.31808139027036864
+                },
+                "brier_score": {
+                  "lower": -0.00010596330741601284,
+                  "upper": -1.8237614899791094e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.10980434424878414,
+                  "upper": 0.14050445885532686
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.5721858701367929,
+                  "upper": 0.1121641303219226
+                }
+              },
+              "response__minus__availability": {
+                "pr_auc": {
+                  "lower": 0.0021278288924454565,
+                  "upper": 0.006157831711395424
+                },
+                "lift_at_10_percent": {
+                  "lower": 0.011601347864123484,
+                  "upper": 0.3346783326677252
+                },
+                "brier_score": {
+                  "lower": -0.00010747065391856022,
+                  "upper": -2.137537910270059e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.032616216220540416,
+                  "upper": 0.06323473271591896
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.47096404000348946,
+                  "upper": 0.18885326327709154
+                }
+              }
+            },
+            "scope": "Incertidumbre de evaluación condicional a los modelos ajustados; no vuelve a seleccionar L2 en cada réplica."
+          },
+          "response_available_cohort": {
+            "published": true,
+            "coverage_percent": 66.26728897489897,
+            "metrics": {
+              "control": {
+                "exposures": 46570.0,
+                "event_exposures": 1532.0,
+                "pr_auc": 0.05356397787931601,
+                "lift_at_10_percent": 1.8171828006742239,
+                "brier_score": 0.03164225248794692,
+                "observed_percent": 3.289671462314795,
+                "predicted_percent": 3.4757983717414667,
+                "calibration_error_pp": 0.18612690942667182,
+                "top_quintile_observed_percent": 5.592687487882319,
+                "top_quintile_predicted_percent": 6.795872136571258,
+                "top_quintile_calibration_error_pp": 1.2031846486889395
+              },
+              "availability": {
+                "exposures": 46570.0,
+                "event_exposures": 1532.0,
+                "pr_auc": 0.053690271972148935,
+                "lift_at_10_percent": 1.813877780348349,
+                "brier_score": 0.03162739075856804,
+                "observed_percent": 3.289671462314795,
+                "predicted_percent": 3.359445458809953,
+                "calibration_error_pp": 0.06977399649515797,
+                "top_quintile_observed_percent": 5.629233607277413,
+                "top_quintile_predicted_percent": 6.56590217973792,
+                "top_quintile_calibration_error_pp": 0.936668572460507
+              },
+              "response": {
+                "exposures": 46570.0,
+                "event_exposures": 1532.0,
+                "pr_auc": 0.058983792562030256,
+                "lift_at_10_percent": 2.0961161879895562,
+                "brier_score": 0.03153333081799076,
+                "observed_percent": 3.289671462314795,
+                "predicted_percent": 3.284815945555459,
+                "calibration_error_pp": 0.004855516759336154,
+                "top_quintile_observed_percent": 6.262838251202288,
+                "top_quintile_predicted_percent": 7.065597376360788,
+                "top_quintile_calibration_error_pp": 0.8027591251585003
+              }
+            }
+          },
+          "usable_wave_count": 1
+        },
+        {
+          "period": "supplementary_2026",
+          "main": false,
+          "complete": true,
+          "status": "not_evaluable",
+          "reasons": [
+            "No hay un periodo completo con seguimiento a seis meses."
+          ]
+        }
+      ],
+      "decision": {
+        "status": "sin mejora demostrada",
+        "complete_main_periods": 2,
+        "checks": {
+          "ranking_vs_control": true,
+          "brier_score_vs_control": true,
+          "calibration_error_pp_vs_control": false,
+          "top_quintile_calibration_error_pp_vs_control": true,
+          "ranking_vs_availability": true,
+          "brier_score_vs_availability": true,
+          "calibration_error_pp_vs_availability": false,
+          "top_quintile_calibration_error_pp_vs_availability": true
+        }
+      }
+    },
+    {
+      "id": "intent_components",
+      "candidate": "intent",
+      "columns": [
+        "qv_Q4",
+        "qv_Q12"
+      ],
+      "eligibility_notes": [],
+      "periods": [
+        {
+          "period": "aug_dec_2025",
+          "main": true,
+          "complete": true,
+          "status": "evaluated",
+          "first_snapshot": "2025-08-24",
+          "last_snapshot": "2025-12-28",
+          "snapshot_count": 5,
+          "people": 35474,
+          "monthly_validation_dates": [
+            "2025-04-27",
+            "2025-05-25",
+            "2025-06-29"
+          ],
+          "fit_cutoff": "2025-08-01",
+          "maximum_inner_label_end": "2025-04-27",
+          "maximum_fit_label_end": "2025-07-27",
+          "maximum_test_label_end": "2026-06-28",
+          "control": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.04385323923124028,
+            "lift_at_10_percent": 1.8206954656862746,
+            "brier_score": 0.028139196862951802,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 2.987969621874269,
+            "calibration_error_pp": 0.07671646296242146,
+            "top_quintile_observed_percent": 4.810465289133344,
+            "top_quintile_predicted_percent": 5.391548600557973,
+            "top_quintile_calibration_error_pp": 0.5810833114246301,
+            "l2": 10,
+            "parameters": 78
+          },
+          "availability": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.04410911534258069,
+            "lift_at_10_percent": 1.8390708556149733,
+            "brier_score": 0.028140225436760674,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 2.970374767107035,
+            "calibration_error_pp": 0.059121608195187095,
+            "top_quintile_observed_percent": 4.840026333113891,
+            "top_quintile_predicted_percent": 5.436114458038622,
+            "top_quintile_calibration_error_pp": 0.5960881249247312,
+            "l2": 10,
+            "parameters": 86
+          },
+          "response": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.04918365837955452,
+            "lift_at_10_percent": 2.028186274509804,
+            "brier_score": 0.028070130463543164,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 2.9197293638890893,
+            "calibration_error_pp": 0.008476204977241747,
+            "top_quintile_observed_percent": 5.301025717258808,
+            "top_quintile_predicted_percent": 5.693071880551832,
+            "top_quintile_calibration_error_pp": 0.3920461632930236,
+            "l2": 10,
+            "parameters": 88
+          },
+          "l2_trials": {
+            "control": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.005693717368691651
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.0056937470564546845
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.005693089569535577
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.005688992884021416
+              }
+            ],
+            "availability": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.005695660160833454
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.005695944885876543
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.005697113495290836
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.00569154992925333
+              }
+            ],
+            "response": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.005689626794204481
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.005689933644886329
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.005691079640498447
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.005685208156869903
+              }
+            ]
+          },
+          "cohort_equality_verified": true,
+          "uncertainty": {
+            "unit": "persona; todas sus observaciones juntas",
+            "people": 35474,
+            "repetitions": 500,
+            "confidence_level": 0.95,
+            "seed": 20261008,
+            "paired_differences": {
+              "availability__minus__control": {
+                "pr_auc": {
+                  "lower": -0.00018133606039875497,
+                  "upper": 0.0007685583820485738
+                },
+                "lift_at_10_percent": {
+                  "lower": -0.029252325447228236,
+                  "upper": 0.059929042955233866
+                },
+                "brier_score": {
+                  "lower": -6.87491268109852e-06,
+                  "upper": 9.39477363780831e-06
+                },
+                "calibration_error_pp": {
+                  "lower": -0.019746758277295908,
+                  "upper": 0.018692154539336488
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.08964825825453997,
+                  "upper": 0.12711322518771653
+                }
+              },
+              "response__minus__control": {
+                "pr_auc": {
+                  "lower": 0.0032546542564983356,
+                  "upper": 0.007935375843152181
+                },
+                "lift_at_10_percent": {
+                  "lower": 0.03108363704244747,
+                  "upper": 0.3765923339453476
+                },
+                "brier_score": {
+                  "lower": -0.00010601392731042829,
+                  "upper": -3.392381122979248e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.07582155283716438,
+                  "upper": 0.07313964919429267
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.4554615521982952,
+                  "upper": 0.1037409632444306
+                }
+              },
+              "response__minus__availability": {
+                "pr_auc": {
+                  "lower": 0.0029993853900510572,
+                  "upper": 0.007594304417839792
+                },
+                "lift_at_10_percent": {
+                  "lower": 0.02152319934751787,
+                  "upper": 0.34988562998380224
+                },
+                "brier_score": {
+                  "lower": -0.00010658196279284036,
+                  "upper": -3.4379212023057454e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.05824602586118378,
+                  "upper": 0.05567034000291858
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.4807035412491945,
+                  "upper": 0.06126433254891617
+                }
+              }
+            },
+            "scope": "Incertidumbre de evaluación condicional a los modelos ajustados; no vuelve a seleccionar L2 en cada réplica."
+          },
+          "response_available_cohort": {
+            "published": true,
+            "coverage_percent": 60.21941430057976,
+            "metrics": {
+              "control": {
+                "exposures": 101274.0,
+                "event_exposures": 2846.0,
+                "pr_auc": 0.0431407803886974,
+                "lift_at_10_percent": 1.8429244423622497,
+                "brier_score": 0.027186614458228845,
+                "observed_percent": 2.8101980765053223,
+                "predicted_percent": 3.045806288732412,
+                "calibration_error_pp": 0.23560821222709005,
+                "top_quintile_observed_percent": 4.727987825421827,
+                "top_quintile_predicted_percent": 5.625258793650613,
+                "top_quintile_calibration_error_pp": 0.8972709682287874
+              },
+              "availability": {
+                "exposures": 101274.0,
+                "event_exposures": 2846.0,
+                "pr_auc": 0.043192295731924235,
+                "lift_at_10_percent": 1.8426641680331068,
+                "brier_score": 0.027184094307278223,
+                "observed_percent": 2.8101980765053223,
+                "predicted_percent": 3.0300997465227058,
+                "calibration_error_pp": 0.2199016700173837,
+                "top_quintile_observed_percent": 4.74642166215426,
+                "top_quintile_predicted_percent": 5.59342622884511,
+                "top_quintile_calibration_error_pp": 0.8470045666908503
+              },
+              "response": {
+                "exposures": 101274.0,
+                "event_exposures": 2846.0,
+                "pr_auc": 0.05154667768249799,
+                "lift_at_10_percent": 2.210119465917076,
+                "brier_score": 0.02706413866571062,
+                "observed_percent": 2.8101980765053223,
+                "predicted_percent": 2.9510434465744475,
+                "calibration_error_pp": 0.14084537006912556,
+                "top_quintile_observed_percent": 5.447941057020515,
+                "top_quintile_predicted_percent": 6.0180283165597075,
+                "top_quintile_calibration_error_pp": 0.5700872595391933
+              }
+            }
+          },
+          "usable_wave_count": 1
+        },
+        {
+          "period": "jan_feb_2026",
+          "main": true,
+          "complete": true,
+          "status": "evaluated",
+          "first_snapshot": "2026-01-25",
+          "last_snapshot": "2026-02-22",
+          "snapshot_count": 2,
+          "people": 35448,
+          "monthly_validation_dates": [
+            "2025-09-28",
+            "2025-10-26",
+            "2025-11-23"
+          ],
+          "fit_cutoff": "2026-01-01",
+          "maximum_inner_label_end": "2025-09-28",
+          "maximum_fit_label_end": "2025-12-28",
+          "maximum_test_label_end": "2026-08-22",
+          "control": {
+            "exposures": 70276.0,
+            "event_exposures": 2432.0,
+            "pr_auc": 0.05285423663325542,
+            "lift_at_10_percent": 1.7927845181134654,
+            "brier_score": 0.033262626484562054,
+            "observed_percent": 3.4606409015880244,
+            "predicted_percent": 3.3978019850712418,
+            "calibration_error_pp": 0.06283891651678308,
+            "top_quintile_observed_percent": 5.5729924732144545,
+            "top_quintile_predicted_percent": 6.5964308850061455,
+            "top_quintile_calibration_error_pp": 1.0234384117916904,
+            "l2": 0.1,
+            "parameters": 78
+          },
+          "availability": {
+            "exposures": 70276.0,
+            "event_exposures": 2432.0,
+            "pr_auc": 0.05284202530228618,
+            "lift_at_10_percent": 1.758936403508772,
+            "brier_score": 0.0332604310360874,
+            "observed_percent": 3.4606409015880244,
+            "predicted_percent": 3.313424007193518,
+            "calibration_error_pp": 0.1472168943945064,
+            "top_quintile_observed_percent": 5.591549378705831,
+            "top_quintile_predicted_percent": 6.4780410682899,
+            "top_quintile_calibration_error_pp": 0.8864916895840687,
+            "l2": 0.1,
+            "parameters": 86
+          },
+          "response": {
+            "exposures": 70276.0,
+            "event_exposures": 2432.0,
+            "pr_auc": 0.06087191646909192,
+            "lift_at_10_percent": 2.146381578947368,
+            "brier_score": 0.033127420535542365,
+            "observed_percent": 3.4606409015880244,
+            "predicted_percent": 3.2527090870937068,
+            "calibration_error_pp": 0.2079318144943179,
+            "top_quintile_observed_percent": 6.269824432497321,
+            "top_quintile_predicted_percent": 6.900736092294387,
+            "top_quintile_calibration_error_pp": 0.6309116597970649,
+            "l2": 1,
+            "parameters": 88
+          },
+          "l2_trials": {
+            "control": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.0034059956533235717
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.003405990053552851
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.003406018102508315
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.0034068448556588008
+              }
+            ],
+            "availability": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.003405650943336419
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.003405644271643913
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.003405644619464418
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.0034065790257220016
+              }
+            ],
+            "response": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.0034037343109901783
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.003403716178222678
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.003403643391216697
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.003404426823506548
+              }
+            ]
+          },
+          "cohort_equality_verified": true,
+          "uncertainty": {
+            "unit": "persona; todas sus observaciones juntas",
+            "people": 35448,
+            "repetitions": 500,
+            "confidence_level": 0.95,
+            "seed": 20261008,
+            "paired_differences": {
+              "availability__minus__control": {
+                "pr_auc": {
+                  "lower": -0.0008321110947424416,
+                  "upper": 0.0006770128269671506
+                },
+                "lift_at_10_percent": {
+                  "lower": -0.08164344000050464,
+                  "upper": 0.04144962357661602
+                },
+                "brier_score": {
+                  "lower": -1.4971675587694716e-05,
+                  "upper": 9.39389723299405e-06
+                },
+                "calibration_error_pp": {
+                  "lower": -0.08487276114775684,
+                  "upper": 0.08625978771264099
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.24357775006491433,
+                  "upper": -0.032873534684821244
+                }
+              },
+              "response__minus__control": {
+                "pr_auc": {
+                  "lower": 0.00496974876295201,
+                  "upper": 0.011852753854760742
+                },
+                "lift_at_10_percent": {
+                  "lower": 0.17249120586641223,
+                  "upper": 0.5540289754747719
+                },
+                "brier_score": {
+                  "lower": -0.00020424492380406254,
+                  "upper": -7.29507806413461e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.08995895687871215,
+                  "upper": 0.1582901285333814
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.7552139214499174,
+                  "upper": 0.0025540671087706723
+                }
+              },
+              "response__minus__availability": {
+                "pr_auc": {
+                  "lower": 0.004853004305982161,
+                  "upper": 0.011781085693091432
+                },
+                "lift_at_10_percent": {
+                  "lower": 0.1901821073999595,
+                  "upper": 0.5690987124463517
+                },
+                "brier_score": {
+                  "lower": -0.00020051251962668586,
+                  "upper": -6.829207120840793e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.0057878045404516415,
+                  "upper": 0.07411986672872327
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.6244376837565455,
+                  "upper": 0.11991584547532728
+                }
+              }
+            },
+            "scope": "Incertidumbre de evaluación condicional a los modelos ajustados; no vuelve a seleccionar L2 en cada réplica."
+          },
+          "response_available_cohort": {
+            "published": true,
+            "coverage_percent": 65.80055780067163,
+            "metrics": {
+              "control": {
+                "exposures": 46242.0,
+                "event_exposures": 1522.0,
+                "pr_auc": 0.05370690453712741,
+                "lift_at_10_percent": 1.8279578835309969,
+                "brier_score": 0.0316552760607677,
+                "observed_percent": 3.291380130617188,
+                "predicted_percent": 3.475572746922932,
+                "calibration_error_pp": 0.18419261630574432,
+                "top_quintile_observed_percent": 5.585110217262805,
+                "top_quintile_predicted_percent": 6.79654533958132,
+                "top_quintile_calibration_error_pp": 1.211435122318514
+              },
+              "availability": {
+                "exposures": 46242.0,
+                "event_exposures": 1522.0,
+                "pr_auc": 0.05381731688109906,
+                "lift_at_10_percent": 1.8299539247159797,
+                "brier_score": 0.03163984616297115,
+                "observed_percent": 3.291380130617188,
+                "predicted_percent": 3.3515529128440527,
+                "calibration_error_pp": 0.060172782226864535,
+                "top_quintile_observed_percent": 5.60911012906525,
+                "top_quintile_predicted_percent": 6.550196324973561,
+                "top_quintile_calibration_error_pp": 0.9410861959083104
+              },
+              "response": {
+                "exposures": 46242.0,
+                "event_exposures": 1522.0,
+                "pr_auc": 0.06512121902248086,
+                "lift_at_10_percent": 2.40611836368772,
+                "brier_score": 0.03144520925422886,
+                "observed_percent": 3.291380130617188,
+                "predicted_percent": 3.2750708297599296,
+                "calibration_error_pp": 0.01630930085725832,
+                "top_quintile_observed_percent": 6.606548159681674,
+                "top_quintile_predicted_percent": 7.273469447475405,
+                "top_quintile_calibration_error_pp": 0.66692128779373
+              }
+            }
+          },
+          "usable_wave_count": 1
+        },
+        {
+          "period": "supplementary_2026",
+          "main": false,
+          "complete": true,
+          "status": "not_evaluable",
+          "reasons": [
+            "No hay un periodo completo con seguimiento a seis meses."
+          ]
+        }
+      ],
+      "decision": {
+        "status": "sin mejora demostrada",
+        "complete_main_periods": 2,
+        "checks": {
+          "ranking_vs_control": true,
+          "brier_score_vs_control": true,
+          "calibration_error_pp_vs_control": false,
+          "top_quintile_calibration_error_pp_vs_control": true,
+          "ranking_vs_availability": true,
+          "brier_score_vs_availability": true,
+          "calibration_error_pp_vs_availability": false,
+          "top_quintile_calibration_error_pp_vs_availability": true
+        }
+      }
+    },
+    {
+      "id": "intent_both",
+      "candidate": "intent",
+      "columns": [
+        "qv_intent_both"
+      ],
+      "eligibility_notes": [],
+      "periods": [
+        {
+          "period": "aug_dec_2025",
+          "main": true,
+          "complete": true,
+          "status": "evaluated",
+          "first_snapshot": "2025-08-24",
+          "last_snapshot": "2025-12-28",
+          "snapshot_count": 5,
+          "people": 35474,
+          "monthly_validation_dates": [
+            "2025-04-27",
+            "2025-05-25",
+            "2025-06-29"
+          ],
+          "fit_cutoff": "2025-08-01",
+          "maximum_inner_label_end": "2025-04-27",
+          "maximum_fit_label_end": "2025-07-27",
+          "maximum_test_label_end": "2026-06-28",
+          "control": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.04385323923124028,
+            "lift_at_10_percent": 1.8206954656862746,
+            "brier_score": 0.028139196862951802,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 2.987969621874269,
+            "calibration_error_pp": 0.07671646296242146,
+            "top_quintile_observed_percent": 4.810465289133344,
+            "top_quintile_predicted_percent": 5.391548600557973,
+            "top_quintile_calibration_error_pp": 0.5810833114246301,
+            "l2": 10,
+            "parameters": 78
+          },
+          "availability": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.04414520726072485,
+            "lift_at_10_percent": 1.8341503267973858,
+            "brier_score": 0.02813791409004699,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 2.9713514159906818,
+            "calibration_error_pp": 0.06009825707883401,
+            "top_quintile_observed_percent": 4.8699271592091575,
+            "top_quintile_predicted_percent": 5.41760749228691,
+            "top_quintile_calibration_error_pp": 0.5476803330777533,
+            "l2": 10,
+            "parameters": 82
+          },
+          "response": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.047453682122492874,
+            "lift_at_10_percent": 1.9219771241830066,
+            "brier_score": 0.02809002091074752,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 2.9522881673948893,
+            "calibration_error_pp": 0.04103500848304173,
+            "top_quintile_observed_percent": 5.078809501286089,
+            "top_quintile_predicted_percent": 5.614161766694758,
+            "top_quintile_calibration_error_pp": 0.5353522654086694,
+            "l2": 10,
+            "parameters": 83
+          },
+          "l2_trials": {
+            "control": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.005693717368691651
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.0056937470564546845
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.005693089569535577
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.005688992884021416
+              }
+            ],
+            "availability": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.005695315170417474
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.005695583408467987
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.005696480351780084
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.00569054902498875
+              }
+            ],
+            "response": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.005693696040250044
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.005693998022515368
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.005694926364328209
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.005687734646072637
+              }
+            ]
+          },
+          "cohort_equality_verified": true,
+          "uncertainty": {
+            "unit": "persona; todas sus observaciones juntas",
+            "people": 35474,
+            "repetitions": 500,
+            "confidence_level": 0.95,
+            "seed": 20261008,
+            "paired_differences": {
+              "availability__minus__control": {
+                "pr_auc": {
+                  "lower": -5.7904192034634654e-05,
+                  "upper": 0.0007392714415608416
+                },
+                "lift_at_10_percent": {
+                  "lower": -0.028564767810166005,
+                  "upper": 0.05349382913126352
+                },
+                "brier_score": {
+                  "lower": -7.78072130206732e-06,
+                  "upper": 5.133106426436114e-06
+                },
+                "calibration_error_pp": {
+                  "lower": -0.018353271820790135,
+                  "upper": 0.01745899225122088
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.12802114904191433,
+                  "upper": 0.07212246333178499
+                }
+              },
+              "response__minus__control": {
+                "pr_auc": {
+                  "lower": 0.0021328293691092845,
+                  "upper": 0.0054443160731019345
+                },
+                "lift_at_10_percent": {
+                  "lower": -0.03807620740963617,
+                  "upper": 0.24192415541930776
+                },
+                "brier_score": {
+                  "lower": -7.566779635045833e-05,
+                  "upper": -2.3297508288189567e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.042670929360872745,
+                  "upper": 0.0397653724339526
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.28866645073421193,
+                  "upper": 0.20031767063371683
+                }
+              },
+              "response__minus__availability": {
+                "pr_auc": {
+                  "lower": 0.0017800294676422535,
+                  "upper": 0.005130972608838383
+                },
+                "lift_at_10_percent": {
+                  "lower": -0.04933502354173826,
+                  "upper": 0.22470939978244311
+                },
+                "brier_score": {
+                  "lower": -7.411015090458056e-05,
+                  "upper": -2.10629917908399e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.02570001104084547,
+                  "upper": 0.023110936808275043
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.2347040564631772,
+                  "upper": 0.20742092100416473
+                }
+              }
+            },
+            "scope": "Incertidumbre de evaluación condicional a los modelos ajustados; no vuelve a seleccionar L2 en cada réplica."
+          },
+          "response_available_cohort": {
+            "published": true,
+            "coverage_percent": 60.21941430057976,
+            "metrics": {
+              "control": {
+                "exposures": 101274.0,
+                "event_exposures": 2846.0,
+                "pr_auc": 0.0431407803886974,
+                "lift_at_10_percent": 1.8429244423622497,
+                "brier_score": 0.027186614458228845,
+                "observed_percent": 2.8101980765053223,
+                "predicted_percent": 3.045806288732412,
+                "calibration_error_pp": 0.23560821222709005,
+                "top_quintile_observed_percent": 4.727987825421827,
+                "top_quintile_predicted_percent": 5.625258793650613,
+                "top_quintile_calibration_error_pp": 0.8972709682287874
+              },
+              "availability": {
+                "exposures": 101274.0,
+                "event_exposures": 2846.0,
+                "pr_auc": 0.04318387722167159,
+                "lift_at_10_percent": 1.8427943051976783,
+                "brier_score": 0.027183659344064203,
+                "observed_percent": 2.8101980765053223,
+                "predicted_percent": 3.0230296747859344,
+                "calibration_error_pp": 0.21283159828061232,
+                "top_quintile_observed_percent": 4.748064872884057,
+                "top_quintile_predicted_percent": 5.580963198965358,
+                "top_quintile_calibration_error_pp": 0.8328983260813008
+              },
+              "response": {
+                "exposures": 101274.0,
+                "event_exposures": 2846.0,
+                "pr_auc": 0.04835817920495085,
+                "lift_at_10_percent": 1.9840429398793225,
+                "brier_score": 0.027104256962670388,
+                "observed_percent": 2.8101980765053223,
+                "predicted_percent": 2.992088396131895,
+                "calibration_error_pp": 0.18189031962657295,
+                "top_quintile_observed_percent": 5.065825025538278,
+                "top_quintile_predicted_percent": 5.8919033216452155,
+                "top_quintile_calibration_error_pp": 0.8260782961069364
+              }
+            }
+          },
+          "usable_wave_count": 1
+        },
+        {
+          "period": "jan_feb_2026",
+          "main": true,
+          "complete": true,
+          "status": "evaluated",
+          "first_snapshot": "2026-01-25",
+          "last_snapshot": "2026-02-22",
+          "snapshot_count": 2,
+          "people": 35448,
+          "monthly_validation_dates": [
+            "2025-09-28",
+            "2025-10-26",
+            "2025-11-23"
+          ],
+          "fit_cutoff": "2026-01-01",
+          "maximum_inner_label_end": "2025-09-28",
+          "maximum_fit_label_end": "2025-12-28",
+          "maximum_test_label_end": "2026-08-22",
+          "control": {
+            "exposures": 70276.0,
+            "event_exposures": 2432.0,
+            "pr_auc": 0.05285423663325542,
+            "lift_at_10_percent": 1.7927845181134654,
+            "brier_score": 0.033262626484562054,
+            "observed_percent": 3.4606409015880244,
+            "predicted_percent": 3.3978019850712418,
+            "calibration_error_pp": 0.06283891651678308,
+            "top_quintile_observed_percent": 5.5729924732144545,
+            "top_quintile_predicted_percent": 6.5964308850061455,
+            "top_quintile_calibration_error_pp": 1.0234384117916904,
+            "l2": 0.1,
+            "parameters": 78
+          },
+          "availability": {
+            "exposures": 70276.0,
+            "event_exposures": 2432.0,
+            "pr_auc": 0.05256769598781807,
+            "lift_at_10_percent": 1.7772956326987683,
+            "brier_score": 0.03326655473231067,
+            "observed_percent": 3.4606409015880244,
+            "predicted_percent": 3.3141102310302157,
+            "calibration_error_pp": 0.14653067055780886,
+            "top_quintile_observed_percent": 5.549547498434743,
+            "top_quintile_predicted_percent": 6.493239394100095,
+            "top_quintile_calibration_error_pp": 0.9436918956653523,
+            "l2": 0.1,
+            "parameters": 82
+          },
+          "response": {
+            "exposures": 70276.0,
+            "event_exposures": 2432.0,
+            "pr_auc": 0.05770014438044315,
+            "lift_at_10_percent": 1.934974154135338,
+            "brier_score": 0.03319029303432371,
+            "observed_percent": 3.4606409015880244,
+            "predicted_percent": 3.2553950542060823,
+            "calibration_error_pp": 0.20524584738194213,
+            "top_quintile_observed_percent": 6.061279811030793,
+            "top_quintile_predicted_percent": 6.862016004818801,
+            "top_quintile_calibration_error_pp": 0.8007361937880084,
+            "l2": 0.1,
+            "parameters": 83
+          },
+          "l2_trials": {
+            "control": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.0034059956533235717
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.003405990053552851
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.003406018102508315
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.0034068448556588008
+              }
+            ],
+            "availability": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.00340520264277241
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.003405198476027663
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.003405242431449494
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.0034063895459282307
+              }
+            ],
+            "response": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.00340382669255649
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.0034038186568497134
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.0034038463047146496
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.003405007899533169
+              }
+            ]
+          },
+          "cohort_equality_verified": true,
+          "uncertainty": {
+            "unit": "persona; todas sus observaciones juntas",
+            "people": 35448,
+            "repetitions": 500,
+            "confidence_level": 0.95,
+            "seed": 20261008,
+            "paired_differences": {
+              "availability__minus__control": {
+                "pr_auc": {
+                  "lower": -0.0012932445950329897,
+                  "upper": 0.00047436502321965594
+                },
+                "lift_at_10_percent": {
+                  "lower": -0.08228913676209149,
+                  "upper": 0.052117089905392176
+                },
+                "brier_score": {
+                  "lower": -9.359246443106129e-06,
+                  "upper": 1.6621741926267807e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.08455959021075674,
+                  "upper": 0.0865042280972452
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.19234087254463084,
+                  "upper": 0.04017264227768555
+                }
+              },
+              "response__minus__control": {
+                "pr_auc": {
+                  "lower": 0.0025358539071557457,
+                  "upper": 0.00706630581817687
+                },
+                "lift_at_10_percent": {
+                  "lower": -0.025368604075888316,
+                  "upper": 0.30729686109983834
+                },
+                "brier_score": {
+                  "lower": -0.00011671677054151499,
+                  "upper": -2.3662944635961638e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.09732963753228065,
+                  "upper": 0.15370016812497203
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.5659291062073988,
+                  "upper": 0.16400358697160955
+                }
+              },
+              "response__minus__availability": {
+                "pr_auc": {
+                  "lower": 0.0029454506883926845,
+                  "upper": 0.007725025779770517
+                },
+                "lift_at_10_percent": {
+                  "lower": 0.0008194087601179434,
+                  "upper": 0.3261400692179679
+                },
+                "brier_score": {
+                  "lower": -0.0001230761034943354,
+                  "upper": -2.7070897598814073e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.013482716096258918,
+                  "upper": 0.06940176462005494
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.4893259358685393,
+                  "upper": 0.21145025825411587
+                }
+              }
+            },
+            "scope": "Incertidumbre de evaluación condicional a los modelos ajustados; no vuelve a seleccionar L2 en cada réplica."
+          },
+          "response_available_cohort": {
+            "published": true,
+            "coverage_percent": 65.80055780067163,
+            "metrics": {
+              "control": {
+                "exposures": 46242.0,
+                "event_exposures": 1522.0,
+                "pr_auc": 0.05370690453712741,
+                "lift_at_10_percent": 1.8279578835309969,
+                "brier_score": 0.0316552760607677,
+                "observed_percent": 3.291380130617188,
+                "predicted_percent": 3.475572746922932,
+                "calibration_error_pp": 0.18419261630574432,
+                "top_quintile_observed_percent": 5.585110217262805,
+                "top_quintile_predicted_percent": 6.79654533958132,
+                "top_quintile_calibration_error_pp": 1.211435122318514
+              },
+              "availability": {
+                "exposures": 46242.0,
+                "event_exposures": 1522.0,
+                "pr_auc": 0.05384788808729178,
+                "lift_at_10_percent": 1.8291222408889034,
+                "brier_score": 0.03163847008865444,
+                "observed_percent": 3.291380130617188,
+                "predicted_percent": 3.336724204915635,
+                "calibration_error_pp": 0.045344074298447196,
+                "top_quintile_observed_percent": 5.6245601204729265,
+                "top_quintile_predicted_percent": 6.520626538785457,
+                "top_quintile_calibration_error_pp": 0.89606641831253
+              },
+              "response": {
+                "exposures": 46242.0,
+                "event_exposures": 1522.0,
+                "pr_auc": 0.060729794197600294,
+                "lift_at_10_percent": 2.0893561103810776,
+                "brier_score": 0.03152607230806374,
+                "observed_percent": 3.291380130617188,
+                "predicted_percent": 3.2522672857631023,
+                "calibration_error_pp": 0.03911284485408548,
+                "top_quintile_observed_percent": 6.274247788455652,
+                "top_quintile_predicted_percent": 7.084285852699135,
+                "top_quintile_calibration_error_pp": 0.8100380642434832
+              }
+            }
+          },
+          "usable_wave_count": 1
+        },
+        {
+          "period": "supplementary_2026",
+          "main": false,
+          "complete": true,
+          "status": "not_evaluable",
+          "reasons": [
+            "No hay un periodo completo con seguimiento a seis meses."
+          ]
+        }
+      ],
+      "decision": {
+        "status": "sin mejora demostrada",
+        "complete_main_periods": 2,
+        "checks": {
+          "ranking_vs_control": true,
+          "brier_score_vs_control": true,
+          "calibration_error_pp_vs_control": false,
+          "top_quintile_calibration_error_pp_vs_control": true,
+          "ranking_vs_availability": true,
+          "brier_score_vs_availability": true,
+          "calibration_error_pp_vs_availability": false,
+          "top_quintile_calibration_error_pp_vs_availability": true
+        }
+      }
+    },
+    {
+      "id": "career",
+      "candidate": "career",
+      "columns": [
+        "qv_career"
+      ],
+      "eligibility_notes": [
+        "Career goals transporta de forma exploratoria la redacción 2024 a la versión posterior; esta sensibilidad no puede promover la variable por sí sola."
+      ],
+      "periods": [
+        {
+          "period": "aug_dec_2025",
+          "main": true,
+          "complete": true,
+          "status": "evaluated",
+          "first_snapshot": "2025-08-24",
+          "last_snapshot": "2025-12-28",
+          "snapshot_count": 5,
+          "people": 35474,
+          "monthly_validation_dates": [
+            "2025-04-27",
+            "2025-05-25",
+            "2025-06-29"
+          ],
+          "fit_cutoff": "2025-08-01",
+          "maximum_inner_label_end": "2025-04-27",
+          "maximum_fit_label_end": "2025-07-27",
+          "maximum_test_label_end": "2026-06-28",
+          "control": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.04385323923124028,
+            "lift_at_10_percent": 1.8206954656862746,
+            "brier_score": 0.028139196862951802,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 2.987969621874269,
+            "calibration_error_pp": 0.07671646296242146,
+            "top_quintile_observed_percent": 4.810465289133344,
+            "top_quintile_predicted_percent": 5.391548600557973,
+            "top_quintile_calibration_error_pp": 0.5810833114246301,
+            "l2": 10,
+            "parameters": 78
+          },
+          "availability": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.04395329091123805,
+            "lift_at_10_percent": 1.8352353962418302,
+            "brier_score": 0.028140676908554325,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 2.962854787231401,
+            "calibration_error_pp": 0.05160162831955341,
+            "top_quintile_observed_percent": 4.819541048250178,
+            "top_quintile_predicted_percent": 5.404331533249378,
+            "top_quintile_calibration_error_pp": 0.5847904849991994,
+            "l2": 10,
+            "parameters": 82
+          },
+          "response": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.04608218628688608,
+            "lift_at_10_percent": 1.8332749766573297,
+            "brier_score": 0.028113128797945513,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 2.9181728519822476,
+            "calibration_error_pp": 0.0069196930704000514,
+            "top_quintile_observed_percent": 5.0477265256471195,
+            "top_quintile_predicted_percent": 5.484628160550517,
+            "top_quintile_calibration_error_pp": 0.43690163490339784,
+            "l2": 10,
+            "parameters": 83
+          },
+          "l2_trials": {
+            "control": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.005693717368691651
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.0056937470564546845
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.005693089569535577
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.005688992884021416
+              }
+            ],
+            "availability": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.005696821144475243
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.005697049419536439
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.005697420669257443
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.005690495700455195
+              }
+            ],
+            "response": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.005694166951789064
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.005694412198714025
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.005694634370369783
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.005687489721529147
+              }
+            ]
+          },
+          "cohort_equality_verified": true,
+          "uncertainty": {
+            "unit": "persona; todas sus observaciones juntas",
+            "people": 35474,
+            "repetitions": 500,
+            "confidence_level": 0.95,
+            "seed": 20261008,
+            "paired_differences": {
+              "availability__minus__control": {
+                "pr_auc": {
+                  "lower": -0.0002794308677999114,
+                  "upper": 0.0005187466920242532
+                },
+                "lift_at_10_percent": {
+                  "lower": -0.02883345374150148,
+                  "upper": 0.05945034491806875
+                },
+                "brier_score": {
+                  "lower": -4.730945792255289e-06,
+                  "upper": 8.227417395370831e-06
+                },
+                "calibration_error_pp": {
+                  "lower": -0.026810170090731535,
+                  "upper": 0.026110625907221654
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.09213091550114595,
+                  "upper": 0.09336830816793475
+                }
+              },
+              "response__minus__control": {
+                "pr_auc": {
+                  "lower": 0.0007465398761508881,
+                  "upper": 0.004073018181435427
+                },
+                "lift_at_10_percent": {
+                  "lower": -0.1163415567210135,
+                  "upper": 0.12516306128733912
+                },
+                "brier_score": {
+                  "lower": -4.985565352019407e-05,
+                  "upper": -1.92706046648998e-06
+                },
+                "calibration_error_pp": {
+                  "lower": -0.0750713467794352,
+                  "upper": 0.0732396243768111
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.3712269640851637,
+                  "upper": 0.08179620639515922
+                }
+              },
+              "response__minus__availability": {
+                "pr_auc": {
+                  "lower": 0.0006179920875198631,
+                  "upper": 0.003921096904654788
+                },
+                "lift_at_10_percent": {
+                  "lower": -0.11885478157851342,
+                  "upper": 0.10348249202202671
+                },
+                "brier_score": {
+                  "lower": -5.146887003938099e-05,
+                  "upper": -3.970570315039686e-06
+                },
+                "calibration_error_pp": {
+                  "lower": -0.0496340895516343,
+                  "upper": 0.04815675820299582
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.34233942501247333,
+                  "upper": 0.0778283774609511
+                }
+              }
+            },
+            "scope": "Incertidumbre de evaluación condicional a los modelos ajustados; no vuelve a seleccionar L2 en cada réplica."
+          },
+          "response_available_cohort": {
+            "published": true,
+            "coverage_percent": 61.76542292255092,
+            "metrics": {
+              "control": {
+                "exposures": 103874.0,
+                "event_exposures": 2974.0,
+                "pr_auc": 0.0448375907239509,
+                "lift_at_10_percent": 1.8920309347679893,
+                "brier_score": 0.027657002108104407,
+                "observed_percent": 2.863084121146774,
+                "predicted_percent": 3.0539384317175835,
+                "calibration_error_pp": 0.19085431057080937,
+                "top_quintile_observed_percent": 4.87772349401878,
+                "top_quintile_predicted_percent": 5.62591769415734,
+                "top_quintile_calibration_error_pp": 0.7481942001385599
+              },
+              "availability": {
+                "exposures": 103874.0,
+                "event_exposures": 2974.0,
+                "pr_auc": 0.04487031392415842,
+                "lift_at_10_percent": 1.893073301950235,
+                "brier_score": 0.02765350978071805,
+                "observed_percent": 2.863084121146774,
+                "predicted_percent": 3.015256603604805,
+                "calibration_error_pp": 0.15217248245803122,
+                "top_quintile_observed_percent": 4.901930839341948,
+                "top_quintile_predicted_percent": 5.5535397829379285,
+                "top_quintile_calibration_error_pp": 0.6516089435959799
+              },
+              "response": {
+                "exposures": 103874.0,
+                "event_exposures": 2974.0,
+                "pr_auc": 0.048186675639038674,
+                "lift_at_10_percent": 1.8847202067037132,
+                "brier_score": 0.027609096945364807,
+                "observed_percent": 2.863084121146774,
+                "predicted_percent": 2.9419404862777827,
+                "calibration_error_pp": 0.07885636513100883,
+                "top_quintile_observed_percent": 5.265995340508693,
+                "top_quintile_predicted_percent": 5.682737441209027,
+                "top_quintile_calibration_error_pp": 0.4167421007003347
+              }
+            }
+          },
+          "usable_wave_count": 1
+        },
+        {
+          "period": "jan_feb_2026",
+          "main": true,
+          "complete": true,
+          "status": "evaluated",
+          "first_snapshot": "2026-01-25",
+          "last_snapshot": "2026-02-22",
+          "snapshot_count": 2,
+          "people": 35448,
+          "monthly_validation_dates": [
+            "2025-09-28",
+            "2025-10-26",
+            "2025-11-23"
+          ],
+          "fit_cutoff": "2026-01-01",
+          "maximum_inner_label_end": "2025-09-28",
+          "maximum_fit_label_end": "2025-12-28",
+          "maximum_test_label_end": "2026-08-22",
+          "control": {
+            "exposures": 70276.0,
+            "event_exposures": 2432.0,
+            "pr_auc": 0.05285423663325542,
+            "lift_at_10_percent": 1.7927845181134654,
+            "brier_score": 0.033262626484562054,
+            "observed_percent": 3.4606409015880244,
+            "predicted_percent": 3.3978019850712418,
+            "calibration_error_pp": 0.06283891651678308,
+            "top_quintile_observed_percent": 5.5729924732144545,
+            "top_quintile_predicted_percent": 6.5964308850061455,
+            "top_quintile_calibration_error_pp": 1.0234384117916904,
+            "l2": 0.1,
+            "parameters": 78
+          },
+          "availability": {
+            "exposures": 70276.0,
+            "event_exposures": 2432.0,
+            "pr_auc": 0.05311453178320547,
+            "lift_at_10_percent": 1.7648026315789473,
+            "brier_score": 0.03325827809581339,
+            "observed_percent": 3.4606409015880244,
+            "predicted_percent": 3.3070811766363692,
+            "calibration_error_pp": 0.1535597249516553,
+            "top_quintile_observed_percent": 5.613580738801297,
+            "top_quintile_predicted_percent": 6.457723490184117,
+            "top_quintile_calibration_error_pp": 0.8441427513828197,
+            "l2": 0.1,
+            "parameters": 82
+          },
+          "response": {
+            "exposures": 70276.0,
+            "event_exposures": 2432.0,
+            "pr_auc": 0.05611173024458203,
+            "lift_at_10_percent": 1.8667763157894737,
+            "brier_score": 0.03323010039399084,
+            "observed_percent": 3.4606409015880244,
+            "predicted_percent": 3.3033075054189123,
+            "calibration_error_pp": 0.15733339616911257,
+            "top_quintile_observed_percent": 6.01966359479593,
+            "top_quintile_predicted_percent": 6.833389445884147,
+            "top_quintile_calibration_error_pp": 0.8137258510882172,
+            "l2": 0.1,
+            "parameters": 83
+          },
+          "l2_trials": {
+            "control": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.0034059956533235717
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.003405990053552851
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.003406018102508315
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.0034068448556588008
+              }
+            ],
+            "availability": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.0034056954485233953
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.0034056911310649815
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.003405719318391155
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.00340667611058191
+              }
+            ],
+            "response": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.003404097811569797
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.0034040925475031965
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.003404106075752905
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.003405101349452735
+              }
+            ]
+          },
+          "cohort_equality_verified": true,
+          "uncertainty": {
+            "unit": "persona; todas sus observaciones juntas",
+            "people": 35448,
+            "repetitions": 500,
+            "confidence_level": 0.95,
+            "seed": 20261008,
+            "paired_differences": {
+              "availability__minus__control": {
+                "pr_auc": {
+                  "lower": -0.0005057163501408442,
+                  "upper": 0.001272391235485801
+                },
+                "lift_at_10_percent": {
+                  "lower": -0.0852456813641408,
+                  "upper": 0.024565605905611198
+                },
+                "brier_score": {
+                  "lower": -1.4483239689571513e-05,
+                  "upper": 5.241101084299882e-06
+                },
+                "calibration_error_pp": {
+                  "lower": -0.09075770172779538,
+                  "upper": 0.09237991708544044
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.2748476773710226,
+                  "upper": -0.07453979528973781
+                }
+              },
+              "response__minus__control": {
+                "pr_auc": {
+                  "lower": 0.001052935300723301,
+                  "upper": 0.005514945193721824
+                },
+                "lift_at_10_percent": {
+                  "lower": -0.07345335496571403,
+                  "upper": 0.24525125421896332
+                },
+                "brier_score": {
+                  "lower": -7.689803174800323e-05,
+                  "upper": 1.2362697738436772e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.09768717713426113,
+                  "upper": 0.10421640312267168
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.5396687365505306,
+                  "upper": 0.16507213244467636
+                }
+              },
+              "response__minus__availability": {
+                "pr_auc": {
+                  "lower": 0.0006258225719718692,
+                  "upper": 0.0053490437113241935
+                },
+                "lift_at_10_percent": {
+                  "lower": -0.045851579010992294,
+                  "upper": 0.26318100184290677
+                },
+                "brier_score": {
+                  "lower": -7.156401286356055e-05,
+                  "upper": 1.575798294146545e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.00989624539720674,
+                  "upper": 0.013507484013003541
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.367105810555744,
+                  "upper": 0.29701025977600554
+                }
+              }
+            },
+            "scope": "Incertidumbre de evaluación condicional a los modelos ajustados; no vuelve a seleccionar L2 en cada réplica."
+          },
+          "response_available_cohort": {
+            "published": true,
+            "coverage_percent": 67.79697193921112,
+            "metrics": {
+              "control": {
+                "exposures": 47645.0,
+                "event_exposures": 1577.0,
+                "pr_auc": 0.05289397176213418,
+                "lift_at_10_percent": 1.7800429039787369,
+                "brier_score": 0.0318488558796514,
+                "observed_percent": 3.309896106621891,
+                "predicted_percent": 3.488042999171909,
+                "calibration_error_pp": 0.17814689255001778,
+                "top_quintile_observed_percent": 5.597017586580362,
+                "top_quintile_predicted_percent": 6.815867609412798,
+                "top_quintile_calibration_error_pp": 1.2188500228324364
+              },
+              "availability": {
+                "exposures": 47645.0,
+                "event_exposures": 1577.0,
+                "pr_auc": 0.052970920929009804,
+                "lift_at_10_percent": 1.7863840580687813,
+                "brier_score": 0.03183399847048307,
+                "observed_percent": 3.309896106621891,
+                "predicted_percent": 3.375405605155572,
+                "calibration_error_pp": 0.0655094985336814,
+                "top_quintile_observed_percent": 5.624934410746143,
+                "top_quintile_predicted_percent": 6.59306436822643,
+                "top_quintile_calibration_error_pp": 0.9681299574802862
+              },
+              "response": {
+                "exposures": 47645.0,
+                "event_exposures": 1577.0,
+                "pr_auc": 0.05725701010694158,
+                "lift_at_10_percent": 1.9315859930951877,
+                "brier_score": 0.031793202782079026,
+                "observed_percent": 3.309896106621891,
+                "predicted_percent": 3.372530329274364,
+                "calibration_error_pp": 0.06263422265247315,
+                "top_quintile_observed_percent": 6.154211172302399,
+                "top_quintile_predicted_percent": 7.145582529582301,
+                "top_quintile_calibration_error_pp": 0.9913713572799014
+              }
+            }
+          },
+          "usable_wave_count": 1
+        },
+        {
+          "period": "supplementary_2026",
+          "main": false,
+          "complete": true,
+          "status": "not_evaluable",
+          "reasons": [
+            "No hay un periodo completo con seguimiento a seis meses."
+          ]
+        }
+      ],
+      "decision": {
+        "status": "sin mejora demostrada",
+        "complete_main_periods": 2,
+        "checks": {
+          "ranking_vs_control": true,
+          "brier_score_vs_control": true,
+          "calibration_error_pp_vs_control": false,
+          "top_quintile_calibration_error_pp_vs_control": true,
+          "ranking_vs_availability": false,
+          "brier_score_vs_availability": true,
+          "calibration_error_pp_vs_availability": true,
+          "top_quintile_calibration_error_pp_vs_availability": true
+        }
+      }
+    },
+    {
+      "id": "mean33",
+      "candidate": "mean33",
+      "columns": [
+        "qv_mean33"
+      ],
+      "eligibility_notes": [],
+      "periods": [
+        {
+          "period": "aug_dec_2025",
+          "main": true,
+          "complete": true,
+          "status": "evaluated",
+          "first_snapshot": "2025-08-24",
+          "last_snapshot": "2025-12-28",
+          "snapshot_count": 5,
+          "people": 35474,
+          "monthly_validation_dates": [
+            "2025-04-27",
+            "2025-05-25",
+            "2025-06-29"
+          ],
+          "fit_cutoff": "2025-08-01",
+          "maximum_inner_label_end": "2025-04-27",
+          "maximum_fit_label_end": "2025-07-27",
+          "maximum_test_label_end": "2026-06-28",
+          "control": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.04385323923124028,
+            "lift_at_10_percent": 1.8206954656862746,
+            "brier_score": 0.028139196862951802,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 2.987969621874269,
+            "calibration_error_pp": 0.07671646296242146,
+            "top_quintile_observed_percent": 4.810465289133344,
+            "top_quintile_predicted_percent": 5.391548600557973,
+            "top_quintile_calibration_error_pp": 0.5810833114246301,
+            "l2": 10,
+            "parameters": 78
+          },
+          "availability": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.04408577540060994,
+            "lift_at_10_percent": 1.8200948142414861,
+            "brier_score": 0.028139653020874816,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 2.977589995467769,
+            "calibration_error_pp": 0.06633683655592158,
+            "top_quintile_observed_percent": 4.825330756652297,
+            "top_quintile_predicted_percent": 5.431412420625346,
+            "top_quintile_calibration_error_pp": 0.6060816639730487,
+            "l2": 10,
+            "parameters": 82
+          },
+          "response": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.04592707845553338,
+            "lift_at_10_percent": 1.8790849673202614,
+            "brier_score": 0.028112612920576374,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 2.964576037970845,
+            "calibration_error_pp": 0.053322879058997213,
+            "top_quintile_observed_percent": 5.012992418611565,
+            "top_quintile_predicted_percent": 5.516109480376479,
+            "top_quintile_calibration_error_pp": 0.5031170617649141,
+            "l2": 10,
+            "parameters": 87
+          },
+          "l2_trials": {
+            "control": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.005693717368691651
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.0056937470564546845
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.005693089569535577
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.005688992884021416
+              }
+            ],
+            "availability": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.005695827459891062
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.005696127380556212
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.0056972752961393465
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.005690981285104945
+              }
+            ],
+            "response": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.00569259993652736
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.005692981086079372
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.005694245873782503
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.0056881050386116
+              }
+            ]
+          },
+          "cohort_equality_verified": true,
+          "uncertainty": {
+            "unit": "persona; todas sus observaciones juntas",
+            "people": 35474,
+            "repetitions": 500,
+            "confidence_level": 0.95,
+            "seed": 20261008,
+            "paired_differences": {
+              "availability__minus__control": {
+                "pr_auc": {
+                  "lower": -0.00014641650731725978,
+                  "upper": 0.0006317340680581128
+                },
+                "lift_at_10_percent": {
+                  "lower": -0.035229262709219465,
+                  "upper": 0.04448610754009324
+                },
+                "brier_score": {
+                  "lower": -5.890929541435116e-06,
+                  "upper": 7.838204402711533e-06
+                },
+                "calibration_error_pp": {
+                  "lower": -0.011961877372190049,
+                  "upper": 0.011292140337710093
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.07225008650639582,
+                  "upper": 0.10982218184287491
+                }
+              },
+              "response__minus__control": {
+                "pr_auc": {
+                  "lower": 0.0009717291579592289,
+                  "upper": 0.003559723834444536
+                },
+                "lift_at_10_percent": {
+                  "lower": -0.04070662550880203,
+                  "upper": 0.1671119817965334
+                },
+                "brier_score": {
+                  "lower": -4.826516194955024e-05,
+                  "upper": -8.242327602003315e-06
+                },
+                "calibration_error_pp": {
+                  "lower": -0.02878544475504554,
+                  "upper": 0.027060060161218966
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.27457714370195285,
+                  "upper": 0.10339592130339186
+                }
+              },
+              "response__minus__availability": {
+                "pr_auc": {
+                  "lower": 0.0008054121372588266,
+                  "upper": 0.0031994399677303348
+                },
+                "lift_at_10_percent": {
+                  "lower": -0.05215316574081995,
+                  "upper": 0.15785323741321622
+                },
+                "brier_score": {
+                  "lower": -4.719655666601323e-05,
+                  "upper": -9.603191983511612e-06
+                },
+                "calibration_error_pp": {
+                  "lower": -0.017864234957550545,
+                  "upper": 0.016230775167550903
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.27291974677476366,
+                  "upper": 0.07156832937565154
+                }
+              }
+            },
+            "scope": "Incertidumbre de evaluación condicional a los modelos ajustados; no vuelve a seleccionar L2 en cada réplica."
+          },
+          "response_available_cohort": {
+            "published": true,
+            "coverage_percent": 51.78772112382934,
+            "metrics": {
+              "control": {
+                "exposures": 87094.0,
+                "event_exposures": 2418.0,
+                "pr_auc": 0.04283088031470928,
+                "lift_at_10_percent": 1.8155500413564931,
+                "brier_score": 0.026866436964553573,
+                "observed_percent": 2.776310652857832,
+                "predicted_percent": 3.0231065703589994,
+                "calibration_error_pp": 0.24679591750116742,
+                "top_quintile_observed_percent": 4.6315121946049445,
+                "top_quintile_predicted_percent": 5.5935046276061104,
+                "top_quintile_calibration_error_pp": 0.9619924330011659
+              },
+              "availability": {
+                "exposures": 87094.0,
+                "event_exposures": 2418.0,
+                "pr_auc": 0.0428758062668949,
+                "lift_at_10_percent": 1.812501477017606,
+                "brier_score": 0.026861800506765416,
+                "observed_percent": 2.776310652857832,
+                "predicted_percent": 2.9812545971738795,
+                "calibration_error_pp": 0.20494394431604773,
+                "top_quintile_observed_percent": 4.654503796822179,
+                "top_quintile_predicted_percent": 5.513147897005475,
+                "top_quintile_calibration_error_pp": 0.8586441001832957
+              },
+              "response": {
+                "exposures": 87094.0,
+                "event_exposures": 2418.0,
+                "pr_auc": 0.04629671129718464,
+                "lift_at_10_percent": 1.902398676592225,
+                "brier_score": 0.026809668321524094,
+                "observed_percent": 2.776310652857832,
+                "predicted_percent": 2.957245171760164,
+                "calibration_error_pp": 0.18093451890233217,
+                "top_quintile_observed_percent": 5.011826302615565,
+                "top_quintile_predicted_percent": 5.680276531953895,
+                "top_quintile_calibration_error_pp": 0.6684502293383305
+              }
+            }
+          },
+          "usable_wave_count": 1
+        },
+        {
+          "period": "jan_feb_2026",
+          "main": true,
+          "complete": true,
+          "status": "evaluated",
+          "first_snapshot": "2026-01-25",
+          "last_snapshot": "2026-02-22",
+          "snapshot_count": 2,
+          "people": 35448,
+          "monthly_validation_dates": [
+            "2025-09-28",
+            "2025-10-26",
+            "2025-11-23"
+          ],
+          "fit_cutoff": "2026-01-01",
+          "maximum_inner_label_end": "2025-09-28",
+          "maximum_fit_label_end": "2025-12-28",
+          "maximum_test_label_end": "2026-08-22",
+          "control": {
+            "exposures": 70276.0,
+            "event_exposures": 2432.0,
+            "pr_auc": 0.05285423663325542,
+            "lift_at_10_percent": 1.7927845181134654,
+            "brier_score": 0.033262626484562054,
+            "observed_percent": 3.4606409015880244,
+            "predicted_percent": 3.3978019850712418,
+            "calibration_error_pp": 0.06283891651678308,
+            "top_quintile_observed_percent": 5.5729924732144545,
+            "top_quintile_predicted_percent": 6.5964308850061455,
+            "top_quintile_calibration_error_pp": 1.0234384117916904,
+            "l2": 0.1,
+            "parameters": 78
+          },
+          "availability": {
+            "exposures": 70276.0,
+            "event_exposures": 2432.0,
+            "pr_auc": 0.052557901214645465,
+            "lift_at_10_percent": 1.805098684210526,
+            "brier_score": 0.033267756618453694,
+            "observed_percent": 3.4606409015880244,
+            "predicted_percent": 3.317020494873344,
+            "calibration_error_pp": 0.14362040671468054,
+            "top_quintile_observed_percent": 5.535317889464397,
+            "top_quintile_predicted_percent": 6.492864427383603,
+            "top_quintile_calibration_error_pp": 0.9575465379192059,
+            "l2": 0.1,
+            "parameters": 82
+          },
+          "response": {
+            "exposures": 70276.0,
+            "event_exposures": 2432.0,
+            "pr_auc": 0.05791625985879985,
+            "lift_at_10_percent": 2.0421052631578944,
+            "brier_score": 0.033178495515209606,
+            "observed_percent": 3.4606409015880244,
+            "predicted_percent": 3.296107697356865,
+            "calibration_error_pp": 0.1645332042311598,
+            "top_quintile_observed_percent": 6.14007627070408,
+            "top_quintile_predicted_percent": 6.7557524220376335,
+            "top_quintile_calibration_error_pp": 0.615676151333553,
+            "l2": 1,
+            "parameters": 87
+          },
+          "l2_trials": {
+            "control": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.0034059956533235717
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.003405990053552851
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.003406018102508315
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.0034068448556588008
+              }
+            ],
+            "availability": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.003405489539026808
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.0034054862199245552
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.0034055228426450247
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.0034065223326440455
+              }
+            ],
+            "response": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.003405034968982875
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.0034050250758360075
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.003405020752348632
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.003405880423398376
+              }
+            ]
+          },
+          "cohort_equality_verified": true,
+          "uncertainty": {
+            "unit": "persona; todas sus observaciones juntas",
+            "people": 35448,
+            "repetitions": 500,
+            "confidence_level": 0.95,
+            "seed": 20261008,
+            "paired_differences": {
+              "availability__minus__control": {
+                "pr_auc": {
+                  "lower": -0.0012556119612792973,
+                  "upper": 0.0003915019747516212
+                },
+                "lift_at_10_percent": {
+                  "lower": -0.06515810922438173,
+                  "upper": 0.07980111977793183
+                },
+                "brier_score": {
+                  "lower": -7.18930239756079e-06,
+                  "upper": 1.6142252688530584e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.08098251024488816,
+                  "upper": 0.08300222691465695
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.20189760504610893,
+                  "upper": 0.08922341833365852
+                }
+              },
+              "response__minus__control": {
+                "pr_auc": {
+                  "lower": 0.0026457996524923318,
+                  "upper": 0.0076051887061704205
+                },
+                "lift_at_10_percent": {
+                  "lower": 0.08607565133716916,
+                  "upper": 0.42399537715050295
+                },
+                "brier_score": {
+                  "lower": -0.00013503089565225363,
+                  "upper": -3.907633926334559e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.10248158087366874,
+                  "upper": 0.11225492311448114
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.7111175820711446,
+                  "upper": -0.06980410228398191
+                }
+              },
+              "response__minus__availability": {
+                "pr_auc": {
+                  "lower": 0.0028624825324703,
+                  "upper": 0.008133969316802627
+                },
+                "lift_at_10_percent": {
+                  "lower": 0.08633136157677676,
+                  "upper": 0.40858622424243896
+                },
+                "brier_score": {
+                  "lower": -0.00014122659634788326,
+                  "upper": -4.104591801614002e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.02255642093165349,
+                  "upper": 0.03092273480309037
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.6663708337529735,
+                  "upper": 0.002649133627505907
+                }
+              }
+            },
+            "scope": "Incertidumbre de evaluación condicional a los modelos ajustados; no vuelve a seleccionar L2 en cada réplica."
+          },
+          "response_available_cohort": {
+            "published": true,
+            "coverage_percent": 58.79389834367351,
+            "metrics": {
+              "control": {
+                "exposures": 41318.0,
+                "event_exposures": 1371.0,
+                "pr_auc": 0.05332376250726859,
+                "lift_at_10_percent": 1.8179087827691254,
+                "brier_score": 0.03191306669682653,
+                "observed_percent": 3.31816641657389,
+                "predicted_percent": 3.4646113425283627,
+                "calibration_error_pp": 0.14644492595447256,
+                "top_quintile_observed_percent": 5.4951836971779855,
+                "top_quintile_predicted_percent": 6.793288176056723,
+                "top_quintile_calibration_error_pp": 1.298104478878738
+              },
+              "availability": {
+                "exposures": 41318.0,
+                "event_exposures": 1371.0,
+                "pr_auc": 0.053434809993935725,
+                "lift_at_10_percent": 1.8182305745055136,
+                "brier_score": 0.031894582229175475,
+                "observed_percent": 3.31816641657389,
+                "predicted_percent": 3.2864289813519605,
+                "calibration_error_pp": 0.03173743522192976,
+                "top_quintile_observed_percent": 5.538294447940365,
+                "top_quintile_predicted_percent": 6.442841659897796,
+                "top_quintile_calibration_error_pp": 0.90454721195743
+              },
+              "response": {
+                "exposures": 41318.0,
+                "event_exposures": 1371.0,
+                "pr_auc": 0.06166091065419655,
+                "lift_at_10_percent": 2.2465353756382203,
+                "brier_score": 0.03175460717372987,
+                "observed_percent": 3.31816641657389,
+                "predicted_percent": 3.265463453944091,
+                "calibration_error_pp": 0.052702962629799094,
+                "top_quintile_observed_percent": 6.508059441405684,
+                "top_quintile_predicted_percent": 6.996280877330169,
+                "top_quintile_calibration_error_pp": 0.4882214359244852
+              }
+            }
+          },
+          "usable_wave_count": 1
+        },
+        {
+          "period": "supplementary_2026",
+          "main": false,
+          "complete": true,
+          "status": "not_evaluable",
+          "reasons": [
+            "No hay un periodo completo con seguimiento a seis meses."
+          ]
+        }
+      ],
+      "decision": {
+        "status": "sin mejora demostrada",
+        "complete_main_periods": 2,
+        "checks": {
+          "ranking_vs_control": true,
+          "brier_score_vs_control": true,
+          "calibration_error_pp_vs_control": false,
+          "top_quintile_calibration_error_pp_vs_control": true,
+          "ranking_vs_availability": true,
+          "brier_score_vs_availability": true,
+          "calibration_error_pp_vs_availability": false,
+          "top_quintile_calibration_error_pp_vs_availability": true
+        }
+      }
+    },
+    {
+      "id": "intent_career",
+      "candidate": "combination",
+      "columns": [
+        "qv_Q4",
+        "qv_Q12",
+        "qv_career"
+      ],
+      "eligibility_notes": [
+        "Career goals transporta de forma exploratoria la redacción 2024 a la versión posterior; esta sensibilidad no puede promover la variable por sí sola."
+      ],
+      "periods": [
+        {
+          "period": "aug_dec_2025",
+          "main": true,
+          "complete": true,
+          "status": "evaluated",
+          "first_snapshot": "2025-08-24",
+          "last_snapshot": "2025-12-28",
+          "snapshot_count": 5,
+          "people": 35474,
+          "monthly_validation_dates": [
+            "2025-04-27",
+            "2025-05-25",
+            "2025-06-29"
+          ],
+          "fit_cutoff": "2025-08-01",
+          "maximum_inner_label_end": "2025-04-27",
+          "maximum_fit_label_end": "2025-07-27",
+          "maximum_test_label_end": "2026-06-28",
+          "control": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.04385323923124028,
+            "lift_at_10_percent": 1.8206954656862746,
+            "brier_score": 0.028139196862951802,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 2.987969621874269,
+            "calibration_error_pp": 0.07671646296242146,
+            "top_quintile_observed_percent": 4.810465289133344,
+            "top_quintile_predicted_percent": 5.391548600557973,
+            "top_quintile_calibration_error_pp": 0.5810833114246301,
+            "l2": 10,
+            "parameters": 78
+          },
+          "availability": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.04399823354909805,
+            "lift_at_10_percent": 1.8239379084967322,
+            "brier_score": 0.02814322839757101,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 2.965600635699062,
+            "calibration_error_pp": 0.0543474767872143,
+            "top_quintile_observed_percent": 4.786680541103017,
+            "top_quintile_predicted_percent": 5.4450111591056825,
+            "top_quintile_calibration_error_pp": 0.658330618002665,
+            "l2": 10,
+            "parameters": 90
+          },
+          "response": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.04902097606003171,
+            "lift_at_10_percent": 2.037089408412938,
+            "brier_score": 0.028075369863826374,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 2.9171550996682125,
+            "calibration_error_pp": 0.005901940756364646,
+            "top_quintile_observed_percent": 5.198334108575456,
+            "top_quintile_predicted_percent": 5.734479288982522,
+            "top_quintile_calibration_error_pp": 0.5361451804070654,
+            "l2": 10,
+            "parameters": 93
+          },
+          "l2_trials": {
+            "control": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.005693717368691651
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.0056937470564546845
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.005693089569535577
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.005688992884021416
+              }
+            ],
+            "availability": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.005696840008886441
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.00569713406671542
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.005698304247851278
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.005692267644733332
+              }
+            ],
+            "response": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.005690409099019025
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.005690715937943138
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.005691855001268182
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.005685575061626521
+              }
+            ]
+          },
+          "cohort_equality_verified": true,
+          "uncertainty": {
+            "unit": "persona; todas sus observaciones juntas",
+            "people": 35474,
+            "repetitions": 500,
+            "confidence_level": 0.95,
+            "seed": 20261008,
+            "paired_differences": {
+              "availability__minus__control": {
+                "pr_auc": {
+                  "lower": -0.00034583417993185885,
+                  "upper": 0.0007706750372328384
+                },
+                "lift_at_10_percent": {
+                  "lower": -0.04503321391035721,
+                  "upper": 0.05402609282548657
+                },
+                "brier_score": {
+                  "lower": -4.718184653178507e-06,
+                  "upper": 1.3628460862563463e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.024726433170794572,
+                  "upper": 0.02363323329697987
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.05298742695980075,
+                  "upper": 0.1830089915164959
+                }
+              },
+              "response__minus__control": {
+                "pr_auc": {
+                  "lower": 0.003093315286261619,
+                  "upper": 0.007765151044330034
+                },
+                "lift_at_10_percent": {
+                  "lower": 0.03760808429433614,
+                  "upper": 0.3967072219448558
+                },
+                "brier_score": {
+                  "lower": -0.00010304850481593917,
+                  "upper": -2.759509812208838e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.0787214008472149,
+                  "upper": 0.07593591281720358
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.30077990252328135,
+                  "upper": 0.23166684882952707
+                }
+              },
+              "response__minus__availability": {
+                "pr_auc": {
+                  "lower": 0.0029709025386024505,
+                  "upper": 0.007618303484755813
+                },
+                "lift_at_10_percent": {
+                  "lower": 0.03069440921574603,
+                  "upper": 0.3728235248032604
+                },
+                "brier_score": {
+                  "lower": -0.00010730524130815261,
+                  "upper": -3.2626961554005814e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.055820135714268033,
+                  "upper": 0.053776982303732554
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.3716623693035557,
+                  "upper": 0.15416603232216824
+                }
+              }
+            },
+            "scope": "Incertidumbre de evaluación condicional a los modelos ajustados; no vuelve a seleccionar L2 en cada réplica."
+          },
+          "response_available_cohort": {
+            "published": true,
+            "coverage_percent": 58.66805411030177,
+            "metrics": {
+              "control": {
+                "exposures": 98665.0,
+                "event_exposures": 2768.0,
+                "pr_auc": 0.043481250790293254,
+                "lift_at_10_percent": 1.8683766859344892,
+                "brier_score": 0.027132409061706973,
+                "observed_percent": 2.8054527948107233,
+                "predicted_percent": 3.039147986381139,
+                "calibration_error_pp": 0.23369519157041585,
+                "top_quintile_observed_percent": 4.736324803939749,
+                "top_quintile_predicted_percent": 5.604667949137547,
+                "top_quintile_calibration_error_pp": 0.8683431451977974
+              },
+              "availability": {
+                "exposures": 98665.0,
+                "event_exposures": 2768.0,
+                "pr_auc": 0.043544010955062204,
+                "lift_at_10_percent": 1.8677745664739884,
+                "brier_score": 0.02712821330872225,
+                "observed_percent": 2.8054527948107233,
+                "predicted_percent": 3.0047284330677266,
+                "calibration_error_pp": 0.19927563825700365,
+                "top_quintile_observed_percent": 4.7547984882788645,
+                "top_quintile_predicted_percent": 5.5374124157231535,
+                "top_quintile_calibration_error_pp": 0.7826139274442888
+              },
+              "response": {
+                "exposures": 98665.0,
+                "event_exposures": 2768.0,
+                "pr_auc": 0.05187797815276914,
+                "lift_at_10_percent": 2.2434971098265897,
+                "brier_score": 0.02701331080078472,
+                "observed_percent": 2.8054527948107233,
+                "predicted_percent": 2.923649590560373,
+                "calibration_error_pp": 0.11819679574965013,
+                "top_quintile_observed_percent": 5.412253585364617,
+                "top_quintile_predicted_percent": 6.0054901762659645,
+                "top_quintile_calibration_error_pp": 0.5932365909013471
+              }
+            }
+          },
+          "usable_wave_count": 1
+        },
+        {
+          "period": "jan_feb_2026",
+          "main": true,
+          "complete": true,
+          "status": "evaluated",
+          "first_snapshot": "2026-01-25",
+          "last_snapshot": "2026-02-22",
+          "snapshot_count": 2,
+          "people": 35448,
+          "monthly_validation_dates": [
+            "2025-09-28",
+            "2025-10-26",
+            "2025-11-23"
+          ],
+          "fit_cutoff": "2026-01-01",
+          "maximum_inner_label_end": "2025-09-28",
+          "maximum_fit_label_end": "2025-12-28",
+          "maximum_test_label_end": "2026-08-22",
+          "control": {
+            "exposures": 70276.0,
+            "event_exposures": 2432.0,
+            "pr_auc": 0.05285423663325542,
+            "lift_at_10_percent": 1.7927845181134654,
+            "brier_score": 0.033262626484562054,
+            "observed_percent": 3.4606409015880244,
+            "predicted_percent": 3.3978019850712418,
+            "calibration_error_pp": 0.06283891651678308,
+            "top_quintile_observed_percent": 5.5729924732144545,
+            "top_quintile_predicted_percent": 6.5964308850061455,
+            "top_quintile_calibration_error_pp": 1.0234384117916904,
+            "l2": 0.1,
+            "parameters": 78
+          },
+          "availability": {
+            "exposures": 70276.0,
+            "event_exposures": 2432.0,
+            "pr_auc": 0.05302320371349624,
+            "lift_at_10_percent": 1.7645783492822966,
+            "brier_score": 0.0332477272198439,
+            "observed_percent": 3.4606409015880244,
+            "predicted_percent": 3.293341598804215,
+            "calibration_error_pp": 0.16729930278380975,
+            "top_quintile_observed_percent": 5.655202345039558,
+            "top_quintile_predicted_percent": 6.3158553366167585,
+            "top_quintile_calibration_error_pp": 0.6606529915772007,
+            "l2": 1,
+            "parameters": 90
+          },
+          "response": {
+            "exposures": 70276.0,
+            "event_exposures": 2432.0,
+            "pr_auc": 0.060888871095532655,
+            "lift_at_10_percent": 2.1087451007838744,
+            "brier_score": 0.03313252837900511,
+            "observed_percent": 3.4606409015880244,
+            "predicted_percent": 3.249981070532514,
+            "calibration_error_pp": 0.21065983105551037,
+            "top_quintile_observed_percent": 6.430877734025323,
+            "top_quintile_predicted_percent": 6.918402398699264,
+            "top_quintile_calibration_error_pp": 0.4875246646739412,
+            "l2": 1,
+            "parameters": 93
+          },
+          "l2_trials": {
+            "control": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.0034059956533235717
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.003405990053552851
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.003406018102508315
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.0034068448556588008
+              }
+            ],
+            "availability": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.0034059499301285208
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.0034059386491468785
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.0034058935215832615
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.00340662081490119
+              }
+            ],
+            "response": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.0034037466106105244
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.0034037224715899755
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.003403595323417078
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.0034042109849360654
+              }
+            ]
+          },
+          "cohort_equality_verified": true,
+          "uncertainty": {
+            "unit": "persona; todas sus observaciones juntas",
+            "people": 35448,
+            "repetitions": 500,
+            "confidence_level": 0.95,
+            "seed": 20261008,
+            "paired_differences": {
+              "availability__minus__control": {
+                "pr_auc": {
+                  "lower": -0.0006731944132844404,
+                  "upper": 0.0008635649177293006
+                },
+                "lift_at_10_percent": {
+                  "lower": -0.09999337386617999,
+                  "upper": 0.06616333450722531
+                },
+                "brier_score": {
+                  "lower": -2.981955433627517e-05,
+                  "upper": -8.085729398546573e-07
+                },
+                "calibration_error_pp": {
+                  "lower": -0.10421675922297767,
+                  "upper": 0.10720769423717738
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.5008533892170269,
+                  "upper": -0.21489425026061018
+                }
+              },
+              "response__minus__control": {
+                "pr_auc": {
+                  "lower": 0.0047991425798590516,
+                  "upper": 0.011923520818940889
+                },
+                "lift_at_10_percent": {
+                  "lower": 0.12467901457710817,
+                  "upper": 0.5165867591137795
+                },
+                "brier_score": {
+                  "lower": -0.00020347997210455878,
+                  "upper": -6.564751330474103e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.08700165834133788,
+                  "upper": 0.16181041511642894
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.9026979491843612,
+                  "upper": -0.11224369464719855
+                }
+              },
+              "response__minus__availability": {
+                "pr_auc": {
+                  "lower": 0.004539685406437273,
+                  "upper": 0.01161251600486729
+                },
+                "lift_at_10_percent": {
+                  "lower": 0.1501966970149632,
+                  "upper": 0.5283477571829428
+                },
+                "brier_score": {
+                  "lower": -0.00018593284577118736,
+                  "upper": -4.821165803956269e-05
+                },
+                "calibration_error_pp": {
+                  "lower": 0.01721037800083855,
+                  "upper": 0.0565083323100575
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.5155772505233198,
+                  "upper": 0.2218232254221972
+                }
+              }
+            },
+            "scope": "Incertidumbre de evaluación condicional a los modelos ajustados; no vuelve a seleccionar L2 en cada réplica."
+          },
+          "response_available_cohort": {
+            "published": true,
+            "coverage_percent": 65.19010757584381,
+            "metrics": {
+              "control": {
+                "exposures": 45813.0,
+                "event_exposures": 1510.0,
+                "pr_auc": 0.05323586895039172,
+                "lift_at_10_percent": 1.8008452422446848,
+                "brier_score": 0.03170895455875479,
+                "observed_percent": 3.2960076834086394,
+                "predicted_percent": 3.472947575232592,
+                "calibration_error_pp": 0.17693989182395245,
+                "top_quintile_observed_percent": 5.5696590639703665,
+                "top_quintile_predicted_percent": 6.79104574367458,
+                "top_quintile_calibration_error_pp": 1.221386679704213
+              },
+              "availability": {
+                "exposures": 45813.0,
+                "event_exposures": 1510.0,
+                "pr_auc": 0.05363432371805968,
+                "lift_at_10_percent": 1.802649006622517,
+                "brier_score": 0.031676627030064367,
+                "observed_percent": 3.2960076834086394,
+                "predicted_percent": 3.331605006277208,
+                "calibration_error_pp": 0.0355973228685684,
+                "top_quintile_observed_percent": 5.651402272448701,
+                "top_quintile_predicted_percent": 6.380142332194088,
+                "top_quintile_calibration_error_pp": 0.7287400597453877
+              },
+              "response": {
+                "exposures": 45813.0,
+                "event_exposures": 1510.0,
+                "pr_auc": 0.06479125632318615,
+                "lift_at_10_percent": 2.3746481788079468,
+                "brier_score": 0.03150310936206728,
+                "observed_percent": 3.2960076834086394,
+                "predicted_percent": 3.267008022350758,
+                "calibration_error_pp": 0.028999661057881737,
+                "top_quintile_observed_percent": 6.679326828629428,
+                "top_quintile_predicted_percent": 7.287893793024231,
+                "top_quintile_calibration_error_pp": 0.6085669643948022
+              }
+            }
+          },
+          "usable_wave_count": 1
+        },
+        {
+          "period": "supplementary_2026",
+          "main": false,
+          "complete": true,
+          "status": "not_evaluable",
+          "reasons": [
+            "No hay un periodo completo con seguimiento a seis meses."
+          ]
+        }
+      ],
+      "decision": {
+        "status": "sin mejora demostrada",
+        "complete_main_periods": 2,
+        "checks": {
+          "ranking_vs_control": true,
+          "brier_score_vs_control": true,
+          "calibration_error_pp_vs_control": false,
+          "top_quintile_calibration_error_pp_vs_control": true,
+          "ranking_vs_availability": true,
+          "brier_score_vs_availability": true,
+          "calibration_error_pp_vs_availability": true,
+          "top_quintile_calibration_error_pp_vs_availability": true
+        }
+      }
+    },
+    {
+      "id": "intent_career_mean33",
+      "candidate": "combination",
+      "columns": [
+        "qv_Q4",
+        "qv_Q12",
+        "qv_career",
+        "qv_mean33"
+      ],
+      "eligibility_notes": [
+        "Career goals transporta de forma exploratoria la redacción 2024 a la versión posterior; esta sensibilidad no puede promover la variable por sí sola."
+      ],
+      "periods": [
+        {
+          "period": "aug_dec_2025",
+          "main": true,
+          "complete": true,
+          "status": "evaluated",
+          "first_snapshot": "2025-08-24",
+          "last_snapshot": "2025-12-28",
+          "snapshot_count": 5,
+          "people": 35474,
+          "monthly_validation_dates": [
+            "2025-04-27",
+            "2025-05-25",
+            "2025-06-29"
+          ],
+          "fit_cutoff": "2025-08-01",
+          "maximum_inner_label_end": "2025-04-27",
+          "maximum_fit_label_end": "2025-07-27",
+          "maximum_test_label_end": "2026-06-28",
+          "control": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.04385323923124028,
+            "lift_at_10_percent": 1.8206954656862746,
+            "brier_score": 0.028139196862951802,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 2.987969621874269,
+            "calibration_error_pp": 0.07671646296242146,
+            "top_quintile_observed_percent": 4.810465289133344,
+            "top_quintile_predicted_percent": 5.391548600557973,
+            "top_quintile_calibration_error_pp": 0.5810833114246301,
+            "l2": 10,
+            "parameters": 78
+          },
+          "availability": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.0440446968467067,
+            "lift_at_10_percent": 1.8341503267973858,
+            "brier_score": 0.028143485274980482,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 2.9668089275693057,
+            "calibration_error_pp": 0.05555576865745801,
+            "top_quintile_observed_percent": 4.771719167342007,
+            "top_quintile_predicted_percent": 5.456896083331165,
+            "top_quintile_calibration_error_pp": 0.685176915989158,
+            "l2": 10,
+            "parameters": 94
+          },
+          "response": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.04879284372084457,
+            "lift_at_10_percent": 2.0445261437908497,
+            "brier_score": 0.028080585059807997,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 2.9198480651996794,
+            "calibration_error_pp": 0.00859490628783155,
+            "top_quintile_observed_percent": 5.164263416084436,
+            "top_quintile_predicted_percent": 5.76214096490503,
+            "top_quintile_calibration_error_pp": 0.5978775488205946,
+            "l2": 10,
+            "parameters": 102
+          },
+          "l2_trials": {
+            "control": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.005693717368691651
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.0056937470564546845
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.005693089569535577
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.005688992884021416
+              }
+            ],
+            "availability": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.005697141849973315
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.005697455634341842
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.005698858372997593
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.0056932957092577915
+              }
+            ],
+            "response": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.005690958689885367
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.0056913028748594215
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.005692742779721463
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.005686744363137941
+              }
+            ]
+          },
+          "cohort_equality_verified": true,
+          "uncertainty": {
+            "unit": "persona; todas sus observaciones juntas",
+            "people": 35474,
+            "repetitions": 500,
+            "confidence_level": 0.95,
+            "seed": 20261008,
+            "paired_differences": {
+              "availability__minus__control": {
+                "pr_auc": {
+                  "lower": -0.0003483494467461281,
+                  "upper": 0.0008613258581748279
+                },
+                "lift_at_10_percent": {
+                  "lower": -0.041878317760769376,
+                  "upper": 0.07287200541425386
+                },
+                "brier_score": {
+                  "lower": -4.8703704121264525e-06,
+                  "upper": 1.4452109533374856e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.023704849555257458,
+                  "upper": 0.022543827978437354
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.026590254615829985,
+                  "upper": 0.22231141571760601
+                }
+              },
+              "response__minus__control": {
+                "pr_auc": {
+                  "lower": 0.002910588937162736,
+                  "upper": 0.007601488248874088
+                },
+                "lift_at_10_percent": {
+                  "lower": 0.05117503056600637,
+                  "upper": 0.41256023252370705
+                },
+                "brier_score": {
+                  "lower": -0.00010029266877979578,
+                  "upper": -2.315144745043764e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.07645994507409494,
+                  "upper": 0.07309801657474613
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.2447119831654851,
+                  "upper": 0.30017389226455865
+                }
+              },
+              "response__minus__availability": {
+                "pr_auc": {
+                  "lower": 0.002752505187875001,
+                  "upper": 0.007260838783349911
+                },
+                "lift_at_10_percent": {
+                  "lower": 0.037725946844358864,
+                  "upper": 0.3766211908637156
+                },
+                "brier_score": {
+                  "lower": -0.0001029010497433906,
+                  "upper": -2.6608758558596172e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.05413726265955797,
+                  "upper": 0.05294204064075287
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.34960225987087257,
+                  "upper": 0.1889023881379606
+                }
+              }
+            },
+            "scope": "Incertidumbre de evaluación condicional a los modelos ajustados; no vuelve a seleccionar L2 en cada réplica."
+          },
+          "response_available_cohort": {
+            "published": true,
+            "coverage_percent": 51.691987513007284,
+            "metrics": {
+              "control": {
+                "exposures": 86933.0,
+                "event_exposures": 2417.0,
+                "pr_auc": 0.04297684979968602,
+                "lift_at_10_percent": 1.8223890300845207,
+                "brier_score": 0.026901570311313624,
+                "observed_percent": 2.780302071710398,
+                "predicted_percent": 3.0216631429752514,
+                "calibration_error_pp": 0.24136107126485373,
+                "top_quintile_observed_percent": 4.657552367915523,
+                "top_quintile_predicted_percent": 5.5895023501259065,
+                "top_quintile_calibration_error_pp": 0.9319499822103838
+              },
+              "availability": {
+                "exposures": 86933.0,
+                "event_exposures": 2417.0,
+                "pr_auc": 0.04304227207935451,
+                "lift_at_10_percent": 1.8220245483381605,
+                "brier_score": 0.026895860139331873,
+                "observed_percent": 2.780302071710398,
+                "predicted_percent": 2.9723133559862647,
+                "calibration_error_pp": 0.19201128427586667,
+                "top_quintile_observed_percent": 4.655365021301098,
+                "top_quintile_predicted_percent": 5.49347793483203,
+                "top_quintile_calibration_error_pp": 0.8381129135309313
+              },
+              "response": {
+                "exposures": 86933.0,
+                "event_exposures": 2417.0,
+                "pr_auc": 0.050526172205350994,
+                "lift_at_10_percent": 2.250724038063715,
+                "brier_score": 0.02680105913181811,
+                "observed_percent": 2.780302071710398,
+                "predicted_percent": 2.891150295097583,
+                "calibration_error_pp": 0.11084822338718499,
+                "top_quintile_observed_percent": 5.32594066695041,
+                "top_quintile_predicted_percent": 6.0106926870222805,
+                "top_quintile_calibration_error_pp": 0.6847520200718715
+              }
+            }
+          },
+          "usable_wave_count": 1
+        },
+        {
+          "period": "jan_feb_2026",
+          "main": true,
+          "complete": true,
+          "status": "evaluated",
+          "first_snapshot": "2026-01-25",
+          "last_snapshot": "2026-02-22",
+          "snapshot_count": 2,
+          "people": 35448,
+          "monthly_validation_dates": [
+            "2025-09-28",
+            "2025-10-26",
+            "2025-11-23"
+          ],
+          "fit_cutoff": "2026-01-01",
+          "maximum_inner_label_end": "2025-09-28",
+          "maximum_fit_label_end": "2025-12-28",
+          "maximum_test_label_end": "2026-08-22",
+          "control": {
+            "exposures": 70276.0,
+            "event_exposures": 2432.0,
+            "pr_auc": 0.05285423663325542,
+            "lift_at_10_percent": 1.7927845181134654,
+            "brier_score": 0.033262626484562054,
+            "observed_percent": 3.4606409015880244,
+            "predicted_percent": 3.3978019850712418,
+            "calibration_error_pp": 0.06283891651678308,
+            "top_quintile_observed_percent": 5.5729924732144545,
+            "top_quintile_predicted_percent": 6.5964308850061455,
+            "top_quintile_calibration_error_pp": 1.0234384117916904,
+            "l2": 0.1,
+            "parameters": 78
+          },
+          "availability": {
+            "exposures": 70276.0,
+            "event_exposures": 2432.0,
+            "pr_auc": 0.05291692503170148,
+            "lift_at_10_percent": 1.7886513157894735,
+            "brier_score": 0.033249596019748036,
+            "observed_percent": 3.4606409015880244,
+            "predicted_percent": 3.2884142319291905,
+            "calibration_error_pp": 0.17222666965883426,
+            "top_quintile_observed_percent": 5.592236325345779,
+            "top_quintile_predicted_percent": 6.310748997027385,
+            "top_quintile_calibration_error_pp": 0.7185126716816058,
+            "l2": 1,
+            "parameters": 94
+          },
+          "response": {
+            "exposures": 70276.0,
+            "event_exposures": 2432.0,
+            "pr_auc": 0.06115932377377928,
+            "lift_at_10_percent": 2.1148691209406496,
+            "brier_score": 0.03313134886865538,
+            "observed_percent": 3.4606409015880244,
+            "predicted_percent": 3.249234711413095,
+            "calibration_error_pp": 0.21140619017492937,
+            "top_quintile_observed_percent": 6.422469328724664,
+            "top_quintile_predicted_percent": 6.93539085687547,
+            "top_quintile_calibration_error_pp": 0.5129215281508059,
+            "l2": 1,
+            "parameters": 102
+          },
+          "l2_trials": {
+            "control": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.0034059956533235717
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.003405990053552851
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.003406018102508315
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.0034068448556588008
+              }
+            ],
+            "availability": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.0034058975652561997
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.003405885937017763
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.003405835382702487
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.0034065307633531525
+              }
+            ],
+            "response": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.003404064042420261
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.003404038230313987
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.0034038876683916393
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.0034043789064913035
+              }
+            ]
+          },
+          "cohort_equality_verified": true,
+          "uncertainty": {
+            "unit": "persona; todas sus observaciones juntas",
+            "people": 35448,
+            "repetitions": 500,
+            "confidence_level": 0.95,
+            "seed": 20261008,
+            "paired_differences": {
+              "availability__minus__control": {
+                "pr_auc": {
+                  "lower": -0.0008508902022708279,
+                  "upper": 0.0008001330655301305
+                },
+                "lift_at_10_percent": {
+                  "lower": -0.09230051329415223,
+                  "upper": 0.07253810135533056
+                },
+                "brier_score": {
+                  "lower": -2.9672934271205308e-05,
+                  "upper": 1.1108418107516586e-06
+                },
+                "calibration_error_pp": {
+                  "lower": -0.10866240833200291,
+                  "upper": 0.11237739229678807
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.4553222219068525,
+                  "upper": -0.156162073640221
+                }
+              },
+              "response__minus__control": {
+                "pr_auc": {
+                  "lower": 0.005027528675051119,
+                  "upper": 0.012015468560434043
+                },
+                "lift_at_10_percent": {
+                  "lower": 0.13587045412417223,
+                  "upper": 0.5164828097498777
+                },
+                "brier_score": {
+                  "lower": -0.00020161362378377196,
+                  "upper": -6.312688086488119e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.08700809032994,
+                  "upper": 0.1629117866996338
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.8623523728627662,
+                  "upper": -0.09422576640873007
+                }
+              },
+              "response__minus__availability": {
+                "pr_auc": {
+                  "lower": 0.0048559507522724634,
+                  "upper": 0.012039530331226992
+                },
+                "lift_at_10_percent": {
+                  "lower": 0.13241998724049037,
+                  "upper": 0.52937325746167
+                },
+                "brier_score": {
+                  "lower": -0.000193404990761422,
+                  "upper": -4.898669059141113e-05
+                },
+                "calibration_error_pp": {
+                  "lower": 0.016631598228188032,
+                  "upper": 0.05230789703878124
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.5401678410579076,
+                  "upper": 0.18229627419871516
+                }
+              }
+            },
+            "scope": "Incertidumbre de evaluación condicional a los modelos ajustados; no vuelve a seleccionar L2 en cada réplica."
+          },
+          "response_available_cohort": {
+            "published": true,
+            "coverage_percent": 58.67436962832261,
+            "metrics": {
+              "control": {
+                "exposures": 41234.0,
+                "event_exposures": 1367.0,
+                "pr_auc": 0.05294805127620521,
+                "lift_at_10_percent": 1.8089203494126251,
+                "brier_score": 0.03189259862428096,
+                "observed_percent": 3.3152252995101135,
+                "predicted_percent": 3.463433714981764,
+                "calibration_error_pp": 0.1482084154716505,
+                "top_quintile_observed_percent": 5.487053513046565,
+                "top_quintile_predicted_percent": 6.791416363167835,
+                "top_quintile_calibration_error_pp": 1.3043628501212705
+              },
+              "availability": {
+                "exposures": 41234.0,
+                "event_exposures": 1367.0,
+                "pr_auc": 0.05316440570940731,
+                "lift_at_10_percent": 1.7928728184763298,
+                "brier_score": 0.031862364709884065,
+                "observed_percent": 3.3152252995101135,
+                "predicted_percent": 3.282300557872518,
+                "calibration_error_pp": 0.032924741637595234,
+                "top_quintile_observed_percent": 5.545842574750757,
+                "top_quintile_predicted_percent": 6.302385899434874,
+                "top_quintile_calibration_error_pp": 0.7565433246841176
+              },
+              "response": {
+                "exposures": 41234.0,
+                "event_exposures": 1367.0,
+                "pr_auc": 0.06526122094957877,
+                "lift_at_10_percent": 2.3371303166475075,
+                "brier_score": 0.031680120120836104,
+                "observed_percent": 3.3152252995101135,
+                "predicted_percent": 3.2268025114021692,
+                "calibration_error_pp": 0.08842278810794399,
+                "top_quintile_observed_percent": 6.826890430227481,
+                "top_quintile_predicted_percent": 7.26704867439513,
+                "top_quintile_calibration_error_pp": 0.4401582441676488
+              }
+            }
+          },
+          "usable_wave_count": 1
+        },
+        {
+          "period": "supplementary_2026",
+          "main": false,
+          "complete": true,
+          "status": "not_evaluable",
+          "reasons": [
+            "No hay un periodo completo con seguimiento a seis meses."
+          ]
+        }
+      ],
+      "decision": {
+        "status": "sin mejora demostrada",
+        "complete_main_periods": 2,
+        "checks": {
+          "ranking_vs_control": true,
+          "brier_score_vs_control": true,
+          "calibration_error_pp_vs_control": false,
+          "top_quintile_calibration_error_pp_vs_control": true,
+          "ranking_vs_availability": true,
+          "brier_score_vs_availability": true,
+          "calibration_error_pp_vs_availability": true,
+          "top_quintile_calibration_error_pp_vs_availability": true
+        }
+      }
+    },
+    {
+      "id": "intent_career_mean31_same_cohort",
+      "candidate": "combination",
+      "columns": [
+        "qv_Q4",
+        "qv_Q12",
+        "qv_career",
+        "qv_mean31"
+      ],
+      "eligibility_notes": [
+        "Career goals transporta de forma exploratoria la redacción 2024 a la versión posterior; esta sensibilidad no puede promover la variable por sí sola."
+      ],
+      "periods": [
+        {
+          "period": "aug_dec_2025",
+          "main": true,
+          "complete": true,
+          "status": "evaluated",
+          "first_snapshot": "2025-08-24",
+          "last_snapshot": "2025-12-28",
+          "snapshot_count": 5,
+          "people": 35474,
+          "monthly_validation_dates": [
+            "2025-04-27",
+            "2025-05-25",
+            "2025-06-29"
+          ],
+          "fit_cutoff": "2025-08-01",
+          "maximum_inner_label_end": "2025-04-27",
+          "maximum_fit_label_end": "2025-07-27",
+          "maximum_test_label_end": "2026-06-28",
+          "control": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.04385323923124028,
+            "lift_at_10_percent": 1.8206954656862746,
+            "brier_score": 0.028139196862951802,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 2.987969621874269,
+            "calibration_error_pp": 0.07671646296242146,
+            "top_quintile_observed_percent": 4.810465289133344,
+            "top_quintile_predicted_percent": 5.391548600557973,
+            "top_quintile_calibration_error_pp": 0.5810833114246301,
+            "l2": 10,
+            "parameters": 78
+          },
+          "availability": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.0440446968467067,
+            "lift_at_10_percent": 1.8341503267973858,
+            "brier_score": 0.028143485274980482,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 2.9668089275693057,
+            "calibration_error_pp": 0.05555576865745801,
+            "top_quintile_observed_percent": 4.771719167342007,
+            "top_quintile_predicted_percent": 5.456896083331165,
+            "top_quintile_calibration_error_pp": 0.685176915989158,
+            "l2": 10,
+            "parameters": 94
+          },
+          "response": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.048916353859483515,
+            "lift_at_10_percent": 2.0506535947712417,
+            "brier_score": 0.028078095333706414,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 2.919125287894953,
+            "calibration_error_pp": 0.007872128983105187,
+            "top_quintile_observed_percent": 5.179128883603389,
+            "top_quintile_predicted_percent": 5.758683420035192,
+            "top_quintile_calibration_error_pp": 0.5795545364318027,
+            "l2": 10,
+            "parameters": 102
+          },
+          "l2_trials": {
+            "control": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.005693717368691651
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.0056937470564546845
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.005693089569535577
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.005688992884021416
+              }
+            ],
+            "availability": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.005697141849973315
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.005697455634341842
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.005698858372997593
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.0056932957092577915
+              }
+            ],
+            "response": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.005691369770360595
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.005691701857029784
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.005693066805030567
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.005686912649543918
+              }
+            ]
+          },
+          "cohort_equality_verified": true,
+          "uncertainty": {
+            "unit": "persona; todas sus observaciones juntas",
+            "people": 35474,
+            "repetitions": 500,
+            "confidence_level": 0.95,
+            "seed": 20261008,
+            "paired_differences": {
+              "availability__minus__control": {
+                "pr_auc": {
+                  "lower": -0.0003483494467461281,
+                  "upper": 0.0008613258581748279
+                },
+                "lift_at_10_percent": {
+                  "lower": -0.041878317760769376,
+                  "upper": 0.07287200541425386
+                },
+                "brier_score": {
+                  "lower": -4.8703704121264525e-06,
+                  "upper": 1.4452109533374856e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.023704849555257458,
+                  "upper": 0.022543827978437354
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.026590254615829985,
+                  "upper": 0.22231141571760601
+                }
+              },
+              "response__minus__control": {
+                "pr_auc": {
+                  "lower": 0.00302401710108108,
+                  "upper": 0.007679311454857864
+                },
+                "lift_at_10_percent": {
+                  "lower": 0.046597079596722275,
+                  "upper": 0.4137879390169106
+                },
+                "brier_score": {
+                  "lower": -0.00010124872879121943,
+                  "upper": -2.5203719874449848e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.07726452276456178,
+                  "upper": 0.07380840159227493
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.250453581488658,
+                  "upper": 0.2950994059338122
+                }
+              },
+              "response__minus__availability": {
+                "pr_auc": {
+                  "lower": 0.0028895057878845377,
+                  "upper": 0.0073416125647522475
+                },
+                "lift_at_10_percent": {
+                  "lower": 0.03618337500228087,
+                  "upper": 0.3767989079927647
+                },
+                "brier_score": {
+                  "lower": -0.00010454344968238134,
+                  "upper": -2.8813236637690908e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.05473040438394574,
+                  "upper": 0.053572832293391194
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.3391158747953668,
+                  "upper": 0.1929724617437082
+                }
+              }
+            },
+            "scope": "Incertidumbre de evaluación condicional a los modelos ajustados; no vuelve a seleccionar L2 en cada réplica."
+          },
+          "response_available_cohort": {
+            "published": true,
+            "coverage_percent": 51.691987513007284,
+            "metrics": {
+              "control": {
+                "exposures": 86933.0,
+                "event_exposures": 2417.0,
+                "pr_auc": 0.04297684979968602,
+                "lift_at_10_percent": 1.8223890300845207,
+                "brier_score": 0.026901570311313624,
+                "observed_percent": 2.780302071710398,
+                "predicted_percent": 3.0216631429752514,
+                "calibration_error_pp": 0.24136107126485373,
+                "top_quintile_observed_percent": 4.657552367915523,
+                "top_quintile_predicted_percent": 5.5895023501259065,
+                "top_quintile_calibration_error_pp": 0.9319499822103838
+              },
+              "availability": {
+                "exposures": 86933.0,
+                "event_exposures": 2417.0,
+                "pr_auc": 0.04304227207935451,
+                "lift_at_10_percent": 1.8220245483381605,
+                "brier_score": 0.026895860139331873,
+                "observed_percent": 2.780302071710398,
+                "predicted_percent": 2.9723133559862647,
+                "calibration_error_pp": 0.19201128427586667,
+                "top_quintile_observed_percent": 4.655365021301098,
+                "top_quintile_predicted_percent": 5.49347793483203,
+                "top_quintile_calibration_error_pp": 0.8381129135309313
+              },
+              "response": {
+                "exposures": 86933.0,
+                "event_exposures": 2417.0,
+                "pr_auc": 0.05075978916769956,
+                "lift_at_10_percent": 2.2341745966073643,
+                "brier_score": 0.02679617048391942,
+                "observed_percent": 2.780302071710398,
+                "predicted_percent": 2.8890402524248944,
+                "calibration_error_pp": 0.10873818071449673,
+                "top_quintile_observed_percent": 5.302934443767039,
+                "top_quintile_predicted_percent": 5.998713283194967,
+                "top_quintile_calibration_error_pp": 0.695778839427929
+              }
+            }
+          },
+          "usable_wave_count": 1
+        },
+        {
+          "period": "jan_feb_2026",
+          "main": true,
+          "complete": true,
+          "status": "evaluated",
+          "first_snapshot": "2026-01-25",
+          "last_snapshot": "2026-02-22",
+          "snapshot_count": 2,
+          "people": 35448,
+          "monthly_validation_dates": [
+            "2025-09-28",
+            "2025-10-26",
+            "2025-11-23"
+          ],
+          "fit_cutoff": "2026-01-01",
+          "maximum_inner_label_end": "2025-09-28",
+          "maximum_fit_label_end": "2025-12-28",
+          "maximum_test_label_end": "2026-08-22",
+          "control": {
+            "exposures": 70276.0,
+            "event_exposures": 2432.0,
+            "pr_auc": 0.05285423663325542,
+            "lift_at_10_percent": 1.7927845181134654,
+            "brier_score": 0.033262626484562054,
+            "observed_percent": 3.4606409015880244,
+            "predicted_percent": 3.3978019850712418,
+            "calibration_error_pp": 0.06283891651678308,
+            "top_quintile_observed_percent": 5.5729924732144545,
+            "top_quintile_predicted_percent": 6.5964308850061455,
+            "top_quintile_calibration_error_pp": 1.0234384117916904,
+            "l2": 0.1,
+            "parameters": 78
+          },
+          "availability": {
+            "exposures": 70276.0,
+            "event_exposures": 2432.0,
+            "pr_auc": 0.05291692503170148,
+            "lift_at_10_percent": 1.7886513157894735,
+            "brier_score": 0.033249596019748036,
+            "observed_percent": 3.4606409015880244,
+            "predicted_percent": 3.2884142319291905,
+            "calibration_error_pp": 0.17222666965883426,
+            "top_quintile_observed_percent": 5.592236325345779,
+            "top_quintile_predicted_percent": 6.310748997027385,
+            "top_quintile_calibration_error_pp": 0.7185126716816058,
+            "l2": 1,
+            "parameters": 94
+          },
+          "response": {
+            "exposures": 70276.0,
+            "event_exposures": 2432.0,
+            "pr_auc": 0.06103590590175978,
+            "lift_at_10_percent": 2.09703947368421,
+            "brier_score": 0.033131254729341066,
+            "observed_percent": 3.4606409015880244,
+            "predicted_percent": 3.2472381395841547,
+            "calibration_error_pp": 0.21340276200386976,
+            "top_quintile_observed_percent": 6.401448315473019,
+            "top_quintile_predicted_percent": 6.927796289622972,
+            "top_quintile_calibration_error_pp": 0.526347974149953,
+            "l2": 1,
+            "parameters": 102
+          },
+          "l2_trials": {
+            "control": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.0034059956533235717
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.003405990053552851
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.003406018102508315
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.0034068448556588008
+              }
+            ],
+            "availability": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.0034058975652561997
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.003405885937017763
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.003405835382702487
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.0034065307633531525
+              }
+            ],
+            "response": [
+              {
+                "l2": 0,
+                "converged": false,
+                "monthly_brier": null
+              },
+              {
+                "l2": 0.01,
+                "converged": true,
+                "monthly_brier": 0.0034040558765958155
+              },
+              {
+                "l2": 0.1,
+                "converged": true,
+                "monthly_brier": 0.003404031173335083
+              },
+              {
+                "l2": 1,
+                "converged": true,
+                "monthly_brier": 0.0034038888207775023
+              },
+              {
+                "l2": 10,
+                "converged": true,
+                "monthly_brier": 0.0034043871996148954
+              }
+            ]
+          },
+          "cohort_equality_verified": true,
+          "uncertainty": {
+            "unit": "persona; todas sus observaciones juntas",
+            "people": 35448,
+            "repetitions": 500,
+            "confidence_level": 0.95,
+            "seed": 20261008,
+            "paired_differences": {
+              "availability__minus__control": {
+                "pr_auc": {
+                  "lower": -0.0008508902022708279,
+                  "upper": 0.0008001330655301305
+                },
+                "lift_at_10_percent": {
+                  "lower": -0.09230051329415223,
+                  "upper": 0.07253810135533056
+                },
+                "brier_score": {
+                  "lower": -2.9672934271205308e-05,
+                  "upper": 1.1108418107516586e-06
+                },
+                "calibration_error_pp": {
+                  "lower": -0.10866240833200291,
+                  "upper": 0.11237739229678807
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.4553222219068525,
+                  "upper": -0.156162073640221
+                }
+              },
+              "response__minus__control": {
+                "pr_auc": {
+                  "lower": 0.004931600819761778,
+                  "upper": 0.012069052673474611
+                },
+                "lift_at_10_percent": {
+                  "lower": 0.10275674775646015,
+                  "upper": 0.4956235112141289
+                },
+                "brier_score": {
+                  "lower": -0.0002022464853699959,
+                  "upper": -6.486549846834013e-05
+                },
+                "calibration_error_pp": {
+                  "lower": -0.08472555695340969,
+                  "upper": 0.16426185188354292
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.8612493254509522,
+                  "upper": -0.09632845698543926
+                }
+              },
+              "response__minus__availability": {
+                "pr_auc": {
+                  "lower": 0.004795143018210768,
+                  "upper": 0.011802101839936725
+                },
+                "lift_at_10_percent": {
+                  "lower": 0.11266587155393393,
+                  "upper": 0.5008924598808359
+                },
+                "brier_score": {
+                  "lower": -0.00018973285812330063,
+                  "upper": -5.206952778207459e-05
+                },
+                "calibration_error_pp": {
+                  "lower": 0.018829156754960538,
+                  "upper": 0.05424662498045338
+                },
+                "top_quintile_calibration_error_pp": {
+                  "lower": -0.544912701336692,
+                  "upper": 0.16028748460457026
+                }
+              }
+            },
+            "scope": "Incertidumbre de evaluación condicional a los modelos ajustados; no vuelve a seleccionar L2 en cada réplica."
+          },
+          "response_available_cohort": {
+            "published": true,
+            "coverage_percent": 58.67436962832261,
+            "metrics": {
+              "control": {
+                "exposures": 41234.0,
+                "event_exposures": 1367.0,
+                "pr_auc": 0.05294805127620521,
+                "lift_at_10_percent": 1.8089203494126251,
+                "brier_score": 0.03189259862428096,
+                "observed_percent": 3.3152252995101135,
+                "predicted_percent": 3.463433714981764,
+                "calibration_error_pp": 0.1482084154716505,
+                "top_quintile_observed_percent": 5.487053513046565,
+                "top_quintile_predicted_percent": 6.791416363167835,
+                "top_quintile_calibration_error_pp": 1.3043628501212705
+              },
+              "availability": {
+                "exposures": 41234.0,
+                "event_exposures": 1367.0,
+                "pr_auc": 0.05316440570940731,
+                "lift_at_10_percent": 1.7928728184763298,
+                "brier_score": 0.031862364709884065,
+                "observed_percent": 3.3152252995101135,
+                "predicted_percent": 3.282300557872518,
+                "calibration_error_pp": 0.032924741637595234,
+                "top_quintile_observed_percent": 5.545842574750757,
+                "top_quintile_predicted_percent": 6.302385899434874,
+                "top_quintile_calibration_error_pp": 0.7565433246841176
+              },
+              "response": {
+                "exposures": 41234.0,
+                "event_exposures": 1367.0,
+                "pr_auc": 0.06507513824961629,
+                "lift_at_10_percent": 2.333577176298463,
+                "brier_score": 0.031679083854507115,
+                "observed_percent": 3.3152252995101135,
+                "predicted_percent": 3.223193520775806,
+                "calibration_error_pp": 0.09203177873430765,
+                "top_quintile_observed_percent": 6.826890430227481,
+                "top_quintile_predicted_percent": 7.249835742321159,
+                "top_quintile_calibration_error_pp": 0.42294531209367825
+              }
+            }
+          },
+          "usable_wave_count": 1
+        },
+        {
+          "period": "supplementary_2026",
+          "main": false,
+          "complete": true,
+          "status": "not_evaluable",
+          "reasons": [
+            "No hay un periodo completo con seguimiento a seis meses."
+          ]
+        }
+      ],
+      "decision": {
+        "status": "sin mejora demostrada",
+        "complete_main_periods": 2,
+        "checks": {
+          "ranking_vs_control": true,
+          "brier_score_vs_control": true,
+          "calibration_error_pp_vs_control": false,
+          "top_quintile_calibration_error_pp_vs_control": true,
+          "ranking_vs_availability": true,
+          "brier_score_vs_availability": true,
+          "calibration_error_pp_vs_availability": true,
+          "top_quintile_calibration_error_pp_vs_availability": true
+        }
+      }
+    }
+  ],
+  "authorization": "config/attrition_model_in_memory_training_authorization_20261001.json",
+  "employee_level_rows_persisted": false,
+  "individual_scores_published": false,
+  "model_query": "queries\\profiles\\engineering_qvoice_person_month_20261008.sql",
+  "model_query_sha256": "b90330d06a7e7297d17dd026546baf5060b2c23e415155f56289b8e7f6e0add7"
+}

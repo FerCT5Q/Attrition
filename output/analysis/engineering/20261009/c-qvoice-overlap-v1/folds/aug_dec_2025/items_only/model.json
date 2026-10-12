@@ -1,0 +1,167 @@
+{
+  "name": "items_only",
+  "features": [
+    "qv_Q4",
+    "qv_career",
+    "qv_Q1",
+    "qv_Q2",
+    "qv_Q3"
+  ],
+  "l2": 10,
+  "monthly_brier": 0.006014922341445379,
+  "source_candidate": {
+    "id": "q4+career+mean33+engagement",
+    "kind": "blocks",
+    "blocks": [
+      "q4",
+      "career",
+      "mean33",
+      "engagement"
+    ],
+    "features": [
+      "qv_Q4",
+      "qv_career",
+      "qv_mean33",
+      "qv_Q1",
+      "qv_Q2",
+      "qv_Q3"
+    ],
+    "l2": 0.1,
+    "parameters": 29,
+    "converged": true,
+    "iterations": 6,
+    "monthly_brier": 0.006014609018364141
+  },
+  "trials": [
+    {
+      "l2": 0.1,
+      "monthly_brier": 0.006014934822272919,
+      "iterations": 6,
+      "converged": true
+    },
+    {
+      "l2": 1,
+      "monthly_brier": 0.006014940258047122,
+      "iterations": 6,
+      "converged": true
+    },
+    {
+      "l2": 10,
+      "monthly_brier": 0.006014922341445379,
+      "iterations": 6,
+      "converged": true
+    }
+  ],
+  "iterations": 6,
+  "encoder": {
+    "features": [
+      "qv_Q4",
+      "qv_career",
+      "qv_Q1",
+      "qv_Q2",
+      "qv_Q3"
+    ],
+    "levels": {
+      "qv_Q4": [
+        "different_employment_episode",
+        "missing",
+        "no_linked_row",
+        "v0",
+        "v1"
+      ],
+      "qv_career": [
+        "different_employment_episode",
+        "missing",
+        "no_linked_row",
+        "v0",
+        "v1"
+      ],
+      "qv_Q1": [
+        "different_employment_episode",
+        "missing",
+        "no_linked_row",
+        "v0",
+        "v1"
+      ],
+      "qv_Q2": [
+        "different_employment_episode",
+        "missing",
+        "no_linked_row",
+        "v0",
+        "v1"
+      ],
+      "qv_Q3": [
+        "different_employment_episode",
+        "missing",
+        "no_linked_row",
+        "v0",
+        "v1"
+      ]
+    },
+    "references": {
+      "qv_Q4": "v1",
+      "qv_career": "v1",
+      "qv_Q1": "v1",
+      "qv_Q2": "v1",
+      "qv_Q3": "v1"
+    },
+    "columns": [
+      "intercept",
+      "qv_Q4=different_employment_episode",
+      "qv_Q4=missing",
+      "qv_Q4=no_linked_row",
+      "qv_Q4=v0",
+      "qv_career=different_employment_episode",
+      "qv_career=missing",
+      "qv_career=no_linked_row",
+      "qv_career=v0",
+      "qv_Q1=different_employment_episode",
+      "qv_Q1=missing",
+      "qv_Q1=no_linked_row",
+      "qv_Q1=v0",
+      "qv_Q2=different_employment_episode",
+      "qv_Q2=missing",
+      "qv_Q2=no_linked_row",
+      "qv_Q2=v0",
+      "qv_Q3=different_employment_episode",
+      "qv_Q3=missing",
+      "qv_Q3=no_linked_row",
+      "qv_Q3=v0"
+    ]
+  },
+  "beta": [
+    -0.2619195412584382,
+    0.037497643703724826,
+    0.1727388899869908,
+    0.07565971088837296,
+    0.4776409536125926,
+    0.037497643703724784,
+    0.3186404256200819,
+    0.07565971088837256,
+    0.1719687745050065,
+    0.03749764370372493,
+    0.17586013425429253,
+    0.0756597108883731,
+    0.29694749859179387,
+    0.03749764370372496,
+    -0.1705974378594003,
+    0.07565971088837302,
+    0.09851608818893916,
+    0.03749764370372495,
+    -0.12388282807023139,
+    0.07565971088837188,
+    -0.08709956588756293
+  ],
+  "base_model_reference": "output\\analysis\\engineering\\20261008\\model-c-v2\\folds\\fold-4-C-model.json",
+  "base_model_origin": "2025-08-01",
+  "cutoff": "2025-08-01",
+  "fit_maximum_label_end": "2025-07-27",
+  "selection_snapshots": [
+    "2025-05-25",
+    "2025-06-29"
+  ],
+  "formula": "cloglog(eta_C + correccion_Q); R6 = 1-product(1-h)",
+  "derivation": null,
+  "parameters": 21,
+  "employee_level_rows_persisted": false
+}

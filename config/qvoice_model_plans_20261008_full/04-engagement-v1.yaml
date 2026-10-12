@@ -1,0 +1,122 @@
+schema_version: 1
+plan_version: 1
+language: es
+created_before_execution: true
+plan_authorship: codex_explicit
+variable: Engagement — Q1, Q2 y Q3
+concept: Tres componentes binarios separados de recomendación, realización personal
+  y motivación; no se imputa un KPI parcial.
+intended_use: Comparar Q1/Q2/Q3 con el modelo B y con los otros temas de QVoice.
+knowledge_date: 'Política anual aprobada: wave Y exclusivamente en snapshots Y+1,
+  continuidad del episodio; frontera 2026-09-07.'
+population: Empleados regulares activos de Engineering sin RF360; cada componente
+  conserva su propia validez.
+grain: Empleado-wave para el origen y empleado-snapshot para el experimento.
+semantic_type: survey
+source_reasoning: El diccionario relaciona Q1/Q2/Q3 con Engagement; Q8 mide energía
+  y pertenece a Wellbeing.
+validation_story:
+- id: source_engagement
+  criterion: source
+  evidence_role: supporting
+  question: ¿Q1/Q2/Q3 se resuelven por sus textos exactos en 2024–2026?
+  why: Mezclar preguntas de energía con realización cambiaría el bloque acordado.
+  method: approved_external_access_check
+  sql_reference: queries/audits/qvoice_model_engagement_20261008_full.sql
+  acceptance_rule: Los tres archivos deben resolver los componentes sin ambigüedades
+    ni preguntas ausentes.
+  metric_checks:
+  - metric: workbooks_checked
+    aggregate: sum
+    operator: eq
+    threshold: 3
+  - metric: header_ambiguities
+    aggregate: sum
+    operator: eq
+    threshold: 0
+  - metric: missing_component_headers
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: engagement_components
+  criterion: definition
+  evidence_role: defining
+  question: ¿Se conservan los tres binarios y se distinguen respuestas completas y
+    parciales?
+  why: Las respuestas parciales siguen siendo útiles para los componentes presentes
+    sin fabricar el KPI completo.
+  method: Reconciliación del dominio y de completitud por componente.
+  sql_reference: queries/audits/qvoice_model_engagement_20261008_full.sql
+  acceptance_rule: Cero estados sin clasificar; completitud calculada sobre los tres
+    componentes explícitos.
+  metric_checks:
+  - metric: status_reconciliation_difference
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: engagement_domain
+  criterion: consistency
+  evidence_role: defining
+  question: ¿Recomendación, realización y motivación mantienen el dominio binario?
+  why: Un valor inválido no debe contribuir como 0 ni como 1.
+  method: aggregate_domain_and_transition_audit
+  sql_reference: queries/audits/qvoice_model_engagement_20261008_full.sql
+  acceptance_rule: Cero valores inválidos después de distinguir el sentinel 255.
+  metric_checks:
+  - metric: invalid_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: engagement_join
+  criterion: join
+  evidence_role: supporting
+  question: ¿La cobertura y las tasas de los tres componentes usan la población de
+    Engineering?
+  why: Las diferencias entre respuestas no justifican cambiar de denominador.
+  method: aggregate_join_reconciliation
+  sql_reference: queries/audits/qvoice_model_engagement_20261008_full.sql
+  acceptance_rule: Cero duplicados usados y cero múltiples matches.
+  metric_checks:
+  - metric: duplicate_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+  - metric: multi_match_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: engagement_history
+  criterion: history
+  evidence_role: defining
+  question: ¿La historia de engagement respeta la asignación anual aprobada y la versión
+    de cada componente?
+  why: La política fija el año de uso y no constituye una fecha real de publicación;
+    tampoco completa preguntas ausentes.
+  method: Comprobación de asignación Y a Y+1, caducidad anual y componentes por wave.
+  sql_reference: queries/audits/qvoice_model_engagement_20261008_full.sql
+  acceptance_rule: Cero waves sin fecha efectiva asignada por la política aprobada;
+    los componentes ausentes quedan identificados.
+  metric_checks:
+  - metric: unverified_availability_waves
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: recommendation_primary_vs_exit
+  criterion: definition
+  evidence_role: contextual
+  question: ¿La recomendación del cuestionario principal permanece separada de la
+    del bloque de salida?
+  why: El segundo encabezado está junto a experiencia al salir y posibilidad de reingreso;
+    no debe sustituir al ítem anual.
+  method: Mapping explícito por encabezado exacto, contexto de columnas y comparación
+    agregada de los binarios.
+  sql_reference: queries/audits/qvoice_model_engagement_20261008_full.sql
+  acceptance_rule: Se audita una columna alternativa en 2026 y se conserva el encabezado
+    principal usado por el playbook; las diferencias no autorizan mezclar contextos.
+  metric_checks:
+  - metric: alternative_headers_checked
+    aggregate: sum
+    operator: eq
+    threshold: 1
+prior_evidence_policy: Los antecedentes orientan las preguntas; las nuevas métricas
+  se ejecutan bajo esta política. No se elevan scores por asociación predictiva.

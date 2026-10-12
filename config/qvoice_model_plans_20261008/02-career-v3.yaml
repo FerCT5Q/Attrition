@@ -1,0 +1,105 @@
+schema_version: 1
+plan_version: 3
+language: es
+created_before_execution: true
+plan_authorship: codex_explicit
+variable: Career goals - respuesta binaria
+concept: Respuesta favorable binaria al ítem de metas de carrera. La versión de 2024 incluye la palabra Overall y su transporte
+  entre años se mantiene como sensibilidad exploratoria.
+intended_use: Medir si la percepción de oportunidades de carrera aporta información adicional al modelo B y a Intent to Stay.
+knowledge_date: La wave del ano Y se usa exclusivamente en snapshots del ano Y+1; frontera global 2026-09-07.
+population: Empleados regulares activos de Engineering, excluyendo RF360.
+grain: Empleado-wave para auditoria; empleado-snapshot para el modelo; publicacion agregada.
+semantic_type: survey
+source_reasoning: Los encabezados exactos se versionan por año; la semejanza del texto no demuestra equivalencia semántica.
+validation_story:
+- id: source_career
+  criterion: source
+  evidence_role: supporting
+  question: ¿Existe exactamente un item binario de carrera por archivo?
+  why: El mapping debe ser trazable y no aproximado.
+  method: approved_external_access_check
+  sql_reference: queries/audits/qvoice_model_career_20261008.sql
+  acceptance_rule: Los tres archivos deben estar accesibles y ninguno puede presentar encabezados ambiguos para el ítem de
+    metas de carrera.
+  metric_checks:
+  - metric: workbooks_checked
+    aggregate: sum
+    operator: eq
+    threshold: 3
+  - metric: header_ambiguities
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: career_wording
+  criterion: definition
+  evidence_role: defining
+  question: ¿La redaccion Overall de 2024 esta confirmada como equivalente a 2025?
+  why: El modelo aprende con 2024 y confirma en 2025; una version distinta limita la interpretacion.
+  method: Comparacion exacta de encabezados y revision de equivalencia documentada.
+  sql_reference: queries/audits/qvoice_model_career_20261008.sql
+  acceptance_rule: La falta de equivalencia documentada mantiene Definition en 1 y la comparacion como sensibilidad exploratoria.
+  metric_checks:
+  - metric: unresolved_wording_waves
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: career_domain
+  criterion: consistency
+  evidence_role: defining
+  question: ¿El item conserva dominio 0/1 sin convertir 255 en no favorable?
+  why: Los estados faltantes no son respuestas negativas.
+  method: aggregate_domain_and_transition_audit
+  sql_reference: queries/audits/qvoice_model_career_20261008.sql
+  acceptance_rule: Cero valores invalidos y reconciliacion exacta de estados.
+  metric_checks:
+  - metric: invalid_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+  - metric: status_reconciliation_difference
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: career_join
+  criterion: join
+  evidence_role: supporting
+  question: ¿El item enlaza de forma unica a Engineering?
+  why: La evidencia del playbook usa otra poblacion y no sustituye este join.
+  method: aggregate_join_reconciliation
+  sql_reference: queries/audits/qvoice_model_career_20261008.sql
+  acceptance_rule: No debe utilizarse ninguna llave duplicada y cada persona elegible debe producir como máximo una coincidencia
+    en workforce.
+  metric_checks:
+  - metric: duplicate_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+  - metric: multi_match_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: career_annual_lag
+  criterion: history
+  evidence_role: defining
+  question: ¿La politica Y a Y+1 produce las ventanas declaradas antes de entrenar?
+  why: El transporte entre versiones debe ocurrir sin usar informacion futura.
+  method: Reconciliacion agregada de snapshots y ano de wave asignado.
+  sql_reference: queries/audits/qvoice_model_annual_lag_windows_20261008.sql
+  acceptance_rule: Cinco snapshots de ago-dic 2025 usan wave 2024; dos de ene-feb 2026 usan wave 2025; cero contradicciones
+    y cohortes de al menos 30.
+  metric_checks:
+  - metric: snapshot_count
+    aggregate: sum
+    operator: eq
+    threshold: 7
+  - metric: mapping_contradiction_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+  - metric: below_privacy_threshold_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+plan_revision_reason: El validador lingüístico exige reglas de aceptación públicas más explícitas en español; no cambian SQL,
+  métricas ni umbrales.

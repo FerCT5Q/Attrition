@@ -1,0 +1,68 @@
+{
+  "run_id": "engineering-random-survival-forest-20261008-v1",
+  "output": "output/analysis/engineering/20261008/random-survival-forest-v1",
+  "query": "queries/profiles/engineering_rsf_person_month_20261008.sql",
+  "authorization": "config/attrition_model_in_memory_training_authorization_20261001.json",
+  "reporting_mode": "presentation",
+  "source_c": "output/analysis/engineering/20261008/model-c-v2",
+  "knowledge_boundary": "2026-09-07",
+  "origins": [
+    "2024-02-01",
+    "2024-08-01",
+    "2025-02-01",
+    "2025-08-01",
+    "2026-01-01"
+  ],
+  "selection_snapshots": 3,
+  "calibration_snapshots": 3,
+  "feature_sets": [
+    "B",
+    "all_C_candidates"
+  ],
+  "minimum_leaf_grid": [
+    150,
+    400
+  ],
+  "max_features_grid": [
+    "sqrt",
+    0.5
+  ],
+  "selection_trees": 80,
+  "final_trees": 200,
+  "max_samples_per_tree": 40000,
+  "max_depth": 12,
+  "n_jobs": 4,
+  "seed": 20261008,
+  "capacity_fractions": [
+    0.2,
+    0.3,
+    0.4
+  ],
+  "primary_capacity_fraction": 0.3,
+  "groups": [
+    "antiguedad",
+    "salidas_equipo",
+    "nivel"
+  ],
+  "minimum_group_people_each_snapshot": 300,
+  "minimum_public_people_each_snapshot": 30,
+  "minimum_distinct_events": 30,
+  "surrogate_max_depth": 4,
+  "surrogate_max_leaf_nodes": 16,
+  "log_multiplier_bounds": [
+    -1.5,
+    1.5
+  ],
+  "bootstrap_repetitions": 500,
+  "selection_rule": "Captura al 30% con los cortes comunes; entre candidatos a 2% relativo del maximo, menor log-loss R6, menor error grupo-mes y mayor tamano minimo de hoja.",
+  "capture_relative_tolerance": 0.02,
+  "preference": {
+    "minimum_winning_periods": 3,
+    "positive_capture_ci95": true,
+    "maximum_group_error_increase_pp": 0.1,
+    "maximum_relative_loss_increase": 0.005
+  },
+  "employee_level_rows_persisted": false,
+  "individual_scores_published": false,
+  "base_model_refits": 0
+}

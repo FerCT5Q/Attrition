@@ -1,0 +1,149 @@
+{
+  "features": [
+    "qv_Q4",
+    "qv_remaining_20260101",
+    "qv_Q5",
+    "qv_Q7"
+  ],
+  "all_rows": {
+    "rows": 355395,
+    "columns": 20,
+    "rank": 14,
+    "rank_deficiency": 6,
+    "constant_columns": 0,
+    "condition_number": null,
+    "condition_status": "singular",
+    "vif_max": null,
+    "vif_status": "not_identifiable",
+    "vif_by_column": null,
+    "cross_feature_pairs_abs_ge_0_8": [
+      {
+        "left": "qv_Q4=different_employment_episode",
+        "right": "qv_Q5=different_employment_episode",
+        "correlation": 1.0
+      },
+      {
+        "left": "qv_Q4=different_employment_episode",
+        "right": "qv_Q7=different_employment_episode",
+        "correlation": 1.0
+      },
+      {
+        "left": "qv_Q4=no_linked_row",
+        "right": "qv_remaining_20260101=no_linked_row",
+        "correlation": 1.0
+      },
+      {
+        "left": "qv_Q4=no_linked_row",
+        "right": "qv_Q5=no_linked_row",
+        "correlation": 1.0
+      },
+      {
+        "left": "qv_Q4=no_linked_row",
+        "right": "qv_Q7=no_linked_row",
+        "correlation": 1.0
+      },
+      {
+        "left": "qv_remaining_20260101=no_linked_row",
+        "right": "qv_Q5=no_linked_row",
+        "correlation": 1.0
+      },
+      {
+        "left": "qv_remaining_20260101=no_linked_row",
+        "right": "qv_Q7=no_linked_row",
+        "correlation": 1.0
+      },
+      {
+        "left": "qv_Q5=different_employment_episode",
+        "right": "qv_Q7=different_employment_episode",
+        "correlation": 1.0
+      },
+      {
+        "left": "qv_Q5=no_linked_row",
+        "right": "qv_Q7=no_linked_row",
+        "correlation": 1.0
+      },
+      {
+        "left": "qv_Q5=missing",
+        "right": "qv_Q7=missing",
+        "correlation": 0.8352888045802762
+      }
+    ],
+    "limitation": "Diagnóstico de columnas indicadoras QVoice; no es importancia ni causalidad."
+  },
+  "complete_person_wave": {
+    "rows": 18380,
+    "columns": 8,
+    "rank": 8,
+    "rank_deficiency": 0,
+    "constant_columns": 0,
+    "condition_number": 3.5641389098691603,
+    "condition_status": "finite",
+    "vif_max": 2.521548707132839,
+    "vif_status": "identifiable",
+    "vif_by_column": {
+      "qv_Q4=v0": 1.7412125256219995,
+      "qv_remaining_20260101=100": 1.496305185704314,
+      "qv_remaining_20260101=50–69": 1.7044397381897611,
+      "qv_remaining_20260101=70–79": 1.3879221362740464,
+      "qv_remaining_20260101=80–89": 1.4360069364860952,
+      "qv_remaining_20260101=<50": 2.521548707132839,
+      "qv_Q5=v0": 1.6899670184574378,
+      "qv_Q7=v0": 1.4320895018822843
+    },
+    "cross_feature_pairs_abs_ge_0_8": [],
+    "limitation": "Diagnóstico de columnas indicadoras QVoice; no es importancia ni causalidad."
+  },
+  "raw_correlations": [
+    {
+      "left": "qv_Q4",
+      "right": "qv_Q5",
+      "correlation": 0.537783924026917
+    },
+    {
+      "left": "qv_Q4",
+      "right": "qv_Q7",
+      "correlation": 0.37429710202469463
+    },
+    {
+      "left": "qv_Q4",
+      "right": "mean33_continuous",
+      "correlation": 0.6632665035359578
+    },
+    {
+      "left": "qv_Q4",
+      "right": "remaining_continuous",
+      "correlation": 0.6235792449492309
+    },
+    {
+      "left": "qv_Q5",
+      "right": "qv_Q7",
+      "correlation": 0.40693809851490387
+    },
+    {
+      "left": "qv_Q5",
+      "right": "mean33_continuous",
+      "correlation": 0.6476644744511781
+    },
+    {
+      "left": "qv_Q5",
+      "right": "remaining_continuous",
+      "correlation": 0.6046456050828665
+    },
+    {
+      "left": "qv_Q7",
+      "right": "mean33_continuous",
+      "correlation": 0.5932997891896816
+    },
+    {
+      "left": "qv_Q7",
+      "right": "remaining_continuous",
+      "correlation": 0.5599600648837767
+    },
+    {
+      "left": "mean33_continuous",
+      "right": "remaining_continuous",
+      "correlation": 0.9969549283215355
+    }
+  ],
+  "complete_person_wave_count": 18380
+}

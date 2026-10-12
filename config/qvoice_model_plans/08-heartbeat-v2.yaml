@@ -1,0 +1,100 @@
+schema_version: 1
+plan_version: 2
+language: es
+created_before_execution: true
+plan_authorship: codex_explicit
+variable: Heartbeat — signos relativos de seis preguntas
+concept: Signos de Q38/Q37/Q32/Q53/Q10/Q11 frente a la media personal de los 53 ítems ordinales, con al menos 38 respuestas
+  1–5 válidas. La definición no se transporta a un cuestionario distinto sin equivalencia.
+intended_use: Evaluación complementaria de información relativa; la frecuencia del signo no demuestra importancia predictiva.
+knowledge_date: Después de publicación documentada y con definición comparable en ajuste y validación; frontera 2026-09-07.
+population: Engineering activo Regular sin RF360; conservar a las personas sin Heartbeat en la evaluación general.
+grain: Signo por empleado-wave y componente; publicación sólo por cohortes.
+semantic_type: derived_feature
+source_reasoning: La evidencia anterior es de 2026 YTD y usa una media personal. Los 52 ítems de 2025 no equivalen automáticamente
+  a los 53 de 2026.
+validation_story:
+- id: source_heartbeat
+  criterion: source
+  evidence_role: supporting
+  question: ¿Cuáles archivos contienen los 53 ítems ordinales que requiere la definición original?
+  why: El signo relativo depende de su denominador y no sólo de seis preguntas.
+  method: approved_external_access_check
+  sql_reference: queries/audits/qvoice_model_heartbeat_20261006.sql
+  acceptance_rule: Tres archivos accesibles y cero ambigüedades; registrar las waves que no pueden calcularse.
+  metric_checks:
+  - metric: workbooks_checked
+    aggregate: sum
+    operator: eq
+    threshold: 3
+  - metric: header_ambiguities
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: heartbeat_formula
+  criterion: definition
+  evidence_role: defining
+  question: ¿El signo calculado por productos enteros coincide con la comparación contra la media personal?
+  why: Un error de coma flotante puede fabricar signos en respuestas empatadas.
+  method: independent_recalculation
+  sql_reference: queries/audits/qvoice_model_heartbeat_20261006.sql
+  acceptance_rule: Al menos 38 respuestas de 53 y cero diferencias en respuestas comparables; no extrapolar ítems ausentes.
+  metric_checks:
+  - metric: comparable_count
+    aggregate: sum
+    operator: gt
+    threshold: 0
+  - metric: mismatch_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: heartbeat_domain
+  criterion: consistency
+  evidence_role: defining
+  question: ¿Las entradas son ordinales 1–5 y los signos pertenecen a −1/0/1?
+  why: Mezclar binarios con ordinales alteraría la referencia personal.
+  method: aggregate_domain_and_transition_audit
+  sql_reference: queries/audits/qvoice_model_heartbeat_20261006.sql
+  acceptance_rule: Cero valores inválidos y estados totalmente reconciliados.
+  metric_checks:
+  - metric: invalid_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+  - metric: status_reconciliation_difference
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: heartbeat_join
+  criterion: join
+  evidence_role: supporting
+  question: ¿Los signos enlazan sin duplicados a la población de Engineering?
+  why: El análisis complementario debe usar la misma población que los otros bloques.
+  method: aggregate_join_reconciliation
+  sql_reference: queries/audits/qvoice_model_heartbeat_20261006.sql
+  acceptance_rule: Cero duplicados usados y cero múltiples matches.
+  metric_checks:
+  - metric: duplicate_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+  - metric: multi_match_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: heartbeat_history
+  criterion: history
+  evidence_role: defining
+  question: ¿Hay dos periodos principales con cuestionario comparable y disponibilidad acreditada?
+  why: Una sola wave y muchos snapshots no constituyen replicación temporal.
+  method: Revisión del conjunto de 53 ítems y fechas de publicación por wave.
+  sql_reference: queries/audits/qvoice_model_heartbeat_20261006.sql
+  acceptance_rule: Se requieren dos periodos completos; las waves sin equivalencia o fecha acreditada se excluyen de la comparación
+    predictiva.
+  metric_checks:
+  - metric: unverified_availability_waves
+    aggregate: sum
+    operator: eq
+    threshold: 0
+plan_revision_reason: Se precisa la redacción española antes de ejecutar la variable; se conservan los mismos criterios, consultas
+  y umbrales.

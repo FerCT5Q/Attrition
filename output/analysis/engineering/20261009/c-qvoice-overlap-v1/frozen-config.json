@@ -1,0 +1,33 @@
+{
+  "run_id": "engineering-c-qvoice-overlap-20261009-v1",
+  "output": "output/analysis/engineering/20261009/c-qvoice-overlap-v1",
+  "source_cq": "output/analysis/engineering/20261008/model-c-plus-qvoice-v1",
+  "source_bq": "output/analysis/engineering/20261008/qvoice-model-b-calibrated-v1",
+  "query": "queries/profiles/engineering_c_qvoice_overlap_person_month_20261009.sql",
+  "plan": "docs/plans/attrition-c-qvoice-overlap-20261009.md",
+  "knowledge_boundary": "2026-09-07",
+  "reporting_mode": "presentation",
+  "representations": [
+    "overlap",
+    "disjoint",
+    "items_only"
+  ],
+  "l2_grid": [
+    0.1,
+    1,
+    10
+  ],
+  "bootstrap_repetitions": 500,
+  "seed": 20261009,
+  "collinearity_thresholds": {
+    "absolute_correlation": 0.8,
+    "vif": 10,
+    "condition_number": 30
+  },
+  "reconciliation_absolute_tolerance": 1e-08,
+  "hazard_base_refits": 0,
+  "score_changes": false,
+  "employee_level_rows_persisted": false,
+  "individual_scores_published": false,
+  "disk_cache_of_rows": false
+}

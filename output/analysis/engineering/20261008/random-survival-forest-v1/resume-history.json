@@ -1,0 +1,42 @@
+{
+  "reporting_mode": "presentation",
+  "date_local": "2026-10-08",
+  "latest_review_date_local": "2026-10-09",
+  "scope": "Registro explicativo de las reanudaciones del experimento; no modifica resultados de modelos anteriores.",
+  "attempts": [
+    {
+      "stage": "Primer ajuste de seleccion",
+      "interruption": "PermissionError de Windows al crear el canal interno del ThreadPool dentro del sandbox.",
+      "completed_forests": 0,
+      "resolution": "Ejecucion fuera del sandbox con autorizacion explicita."
+    },
+    {
+      "stage": "Primera evaluacion externa",
+      "interruption": "KeyError al combinar IDs numericos y cadenas de las hojas archivadas de C.",
+      "completed_forests": 1,
+      "resolution": "Normalizar los IDs de hojas a enteros y recuperar el bosque completo desde sus parametros."
+    },
+    {
+      "stage": "Conciliacion B + QVoice y sus calibraciones",
+      "interruption": "Diferencias en probabilidades agregadas y ranking frente al archivo historico, con los cinco bosques historicos ya guardados. La consulta C/RSF exige que las salidas del equipo ya estuvieran registradas al snapshot; el SQL legado BQ no tenia ese filtro.",
+      "completed_forests": 5,
+      "resolution": "Restaurar el SQL original BQ, alinear en RAM por persona y foto con etiquetas y episodios identicos, conservar los cortes comunes C para evaluar. Exigir conciliacion estricta de todas las metricas archivadas, incluyendo ranking.",
+      "discarded_hypothesis": "La atribucion provisional a empates numericos no explica las diferencias reales de entradas y fue retirada."
+    },
+    {
+      "stage": "Recarga del 8-oct-2026, reanudada el 9-oct-2026",
+      "interruption": "OperationalError seguido de InterfaceError: conexion Redshift cerrada durante la lectura de 2025. La espera atraveso el cambio de dia; Redshift ya no mostraba una consulta larga activa.",
+      "completed_forests": 5,
+      "resolution": "Nueva carga con una conexion por ano y reintento acotado que conserva los anos completos en RAM. Se reutilizan bosques y evaluaciones guardados; la causa exacta del cierre de conexion no esta confirmada."
+    },
+    {
+      "stage": "Recarga del 9-oct-2026, lectura de 2026",
+      "interruption": "Dos OperationalError consecutivos durante la lectura y reconexion de 2026, tras completar 2020 a 2025 en memoria.",
+      "completed_forests": 5,
+      "resolution": "El probe SELECT 1 posterior paso. Se separaron comparison y final para conservar cada resultado completo; se habilito keepalive del cliente en este proceso y cinco intentos acotados por ano, con pausa de 15 segundos. No cambia ningun criterio estadistico ni el corte de datos."
+    }
+  ],
+  "data_reloads": "Cada proceso nuevo recarga las filas porque el contrato prohibe persistirlas. Los modelos completos se reutilizan.",
+  "timing": "elapsed_seconds de results.json corresponde al ultimo proceso completado, no al tiempo total transcurrido de la tarea.",
+  "note": "Este historial aclara las causas de cada intento; evaluation-interruption.json conserva el registro previo. bq-input-reconciliation.json y qvoice-comparison contienen el resultado de la nueva conciliacion."
+}

@@ -1,0 +1,19 @@
+{
+  "policy_id": "qvoice-annual-lag-for-attrition-model-20261008",
+  "status": "approved",
+  "approved_on": "2026-10-08",
+  "approved_by": "requester (project owner), explicit instruction in session",
+  "purpose": "Evaluate QVoice as an annual lagged feature block in model B without claiming an actual publication date.",
+  "rule": "A QVoice wave from calendar year Y is assigned only to monthly prediction snapshots in calendar year Y+1.",
+  "wave_to_model_year": {
+    "2024": 2025,
+    "2025": 2026,
+    "2026": 2027
+  },
+  "effective_start_rule": "January 1 of Y+1, inclusive",
+  "effective_end_rule": "January 1 of Y+2, exclusive",
+  "replacement_rule": "The next annual wave replaces the prior wave for everyone, including people without a linked response.",
+  "employment_episode_rule": "A response is usable only while the employment episode remains continuous from the survey anchor to the model snapshot.",
+  "interpretation": "This is a business modeling assumption for temporal assignment. It does not certify when QVoice results were actually published or available operationally.",
+  "privacy": "Employee level rows and individual predictions remain in memory only; published artifacts are aggregate and presentation classified."
+}

@@ -1,0 +1,135 @@
+{
+  "manifest_version": 1,
+  "created_at": "2026-10-07T13:56:05+00:00",
+  "experiment": "engineering-qvoice-20261006-v1",
+  "git_base_commit": "3ef93cf3f3bed76b03486133099ba4cc961718a6",
+  "implementation_status": "implemented_and_validated",
+  "predictive_status": "pending_verified_availability",
+  "reporting_mode": "presentation",
+  "knowledge_boundary": "2026-09-07",
+  "authorization": "config/attrition_model_in_memory_training_authorization_20261001.json",
+  "privacy": {
+    "minimum_people": 30,
+    "minimum_events": 30,
+    "employee_level_rows_persisted": false,
+    "individual_scores_published": false
+  },
+  "employee_level_rows_persisted": false,
+  "individual_scores_published": false,
+  "source_sha256": {
+    "data/QVoice/Jan 2024 Qvoice raw data.xlsx": "da39bc5929b972b2c12ff00568521304418028a7186a1949e1809e6b9b444d3a",
+    "data/QVoice/Jan 2025_Qvoice_raw data.xlsx": "241f322c0dda9c6de62e3da9d36f729d1c06a21a4d9a1b53fb3fb08c9876a01e",
+    "data/QVoice/Jan 2026 Qvoice_raw data.xlsx": "7ea357091c07b42da483576a1d3c357ff836179f05316b7ad6d51248940e557b"
+  },
+  "dictionary_sha256": "b545d562087fc1ae71fbc829b832b1a9ceef56cde062891b3d5a71c363266db6",
+  "configuration_sha256": "e5861f9b6054ee3353379f31d3777311d600363775939747052a2ff39cc98d21",
+  "code_sha256": {
+    "tools\\qvoice_model_assessment.py": "7eae22a484cacf4a251423962d189000ac93a08c84d369dac25c57e5b678fd0f",
+    "tools\\qvoice_model_control.py": "0bc22c2babda8b5977c72ba002c6e86d428ea8a898706f89187af1b58c9f8729",
+    "tools\\qvoice_model_data.py": "8933480ab3d30b5799989ce9f3250561f0db76cf6a2db222d95679888b6fe1a7",
+    "tools\\qvoice_model_evidence.py": "5fcf4e4b85635d95f6f2536025d41c2cdb2d982dce6c7a00b6a300411f5f8e8a",
+    "tools\\qvoice_model_experiment.py": "07a6fe4007fd4550f04cd41e4e59fe9718b24d668d72a8f7df538cd137aa6785",
+    "tools\\qvoice_model_preflight.py": "15e01605add2e365ce8e7ade8b8e9e56649912db24cdd03cc6efc9ec913035c1",
+    "tools\\qvoice_model_reconcile.py": "6c3cece9f31fded89d283f2111b2c2d55f4c3ac8b0d37e42aa66d5abffa13fea",
+    "tools\\qvoice_model_validation.py": "f51afd9cf38a3be1b25a3d97f67609a2aa352f30505ca1016ac775b07dc98e59",
+    "tools\\build_qvoice_model_report.py": "c4b630abd0c851d5c5196606615b615388a9284a3d0e92e9e35530be06643dc7",
+    "tools\\verify_qvoice_model_sql.py": "0212cb968cad6e6cae27de62df5e73fd4c88f7c1fe91b3323afb42f171b54334",
+    "tests\\test_qvoice_model_experiment.py": "b84c16673ff29f3a7866e6f39d07955b20781d16c5e26a2be818a4aad4a0a563"
+  },
+  "dependency_sha256": {
+    "tools/critical_tech_discrete_hazard_model.py": "9115c225dfd74a4713989879251a0b4181857fb99f2bf6845b566b332455756b",
+    "tools/engineering_playbook_priority_model.py": "401b84f9875667d4a19cd52c91bbdf0c28c4d1befde83a6232d411fa2e0e9bf2",
+    "tools/engineering_playbook_tenure_confirmation.py": "16ea41e7c0d2d0ceb8c1831f990bf9b3afa45233351a7f04614fbd76c0f852d1",
+    "tools/engineering_hazard_adjustment.py": "e5b7c9ca1c644ff80232acb246a3af06beb8368c40ab32bc45b13ee95e9af842",
+    "tools/engineering_feature_block_selection.py": "e04e679d3972c777c08c846d546f8dc113a7f36247f3ab88b26e89baf84c57c7",
+    "tools/build_qvoice_comment_evidence.py": "5767604f271890d01fb3c43bf23469ed2c2106abb366ad6dc0097ce726cb02a8",
+    "tools/build_qvoice_comparable_favorable_evidence.py": "7880af21ab6c90e1450b27631d16ebfa82f8643b91f940ea3f3bbe809054dc4d",
+    "tools/qvoice_excel_assessment.py": "a2f466650206680d823eefd1100e56b559aebaaab9ec589b6666fc541a409657",
+    "tools/presentations/render_variable_assessment_v2.py": "c9dd3d3113b7d237db2051f47501630f349d39ac3d64b8c719be5cac9c748378",
+    ".codex/skills/attrition-redshift-db/scripts/run_readonly_query.py": "6a5df117f08a69d41d296c988404bfa2ac39ebe44ca313277148391107b079e0",
+    ".codex/skills/evaluate-attrition-variable/scripts/run_assessment.py": "d4fa2432f9d61c6f9ed76d439619d13a62d533ca1f2da0e524d2afea4d58779f",
+    ".codex/skills/evaluate-attrition-variable/scripts/profile_variable.py": "0973e6e071b5def73b0105b41c44337b1c62f42b21d2c5a827e2d6c59643af31",
+    ".codex/skills/evaluate-attrition-variable/scripts/portfolio_workflow.py": "e13e8e15ef6ad22be9c21392e7b91d1c4982cedcbe931dd01f208d7923e0c20d",
+    ".codex/skills/evaluate-attrition-variable/scripts/render_assessment.py": "9cd2153a0af0767288b3083ac1bf7c41e46d8eace4e848c92733a315381727a3",
+    ".codex/skills/evaluate-attrition-variable/references/scoring-rules.yaml": "5558c53d8692418ceba8e72d8f3d6f4121659cb2d7fb814e98c62271b31bcd35"
+  },
+  "artifacts_sha256": {
+    "output\\analysis\\engineering\\20261006\\qvoice-experiment-v1\\comparison-report.md": "290a4c79fd40948e01402a90966c4dac40ef6e490ed3e671f1c316250ad1ec5e",
+    "output\\analysis\\engineering\\20261006\\qvoice-experiment-v1\\comparison-results.json": "ec18ccf490f55a67fa943ba9f2eabd53ad20670ce40e36735f0b8845e5a85dec",
+    "output\\analysis\\engineering\\20261006\\qvoice-experiment-v1\\experiment-config.yaml": "e5861f9b6054ee3353379f31d3777311d600363775939747052a2ff39cc98d21",
+    "output\\analysis\\engineering\\20261006\\qvoice-experiment-v1\\control\\control-reproduction.json": "5704320b04d9e8ec80504336a4db7e9cac4f01db5367478afe1b55501251b362",
+    "output\\analysis\\engineering\\20261006\\qvoice-experiment-v1\\charts\\cobertura-qvoice-engineering.png": "2738adf46e31692bae1687a14cfaf8bcdbe6915f50a3ddc86957ab49517ced82",
+    "output\\analysis\\engineering\\20261006\\qvoice-experiment-v1\\charts\\asociaciones-anuales-intent-career.png": "488fcf326d26199ec62009ee5e6bad42739c7dd4d69afa7bd88af99637b78424",
+    "output\\assessments\\qvoice-experiment-v1-consolidated\\assessment.xlsx": "18cd68faae4e3a6bd994e6af58bed96349a2393687cdf02f120588e01292cc47",
+    "output\\assessments\\qvoice-experiment-v1-consolidated\\profile.json": "0598f46f45316ab76d0cb0b7e3e812132793e5f19f52ff984dd01b0506ec11f6",
+    "output\\assessments\\qvoice-experiment-v1-consolidated\\manifest.json": "40776f36d64c6ddc336ca945548b21cdce0cc5c5001c6fd4d285f172ee11527e",
+    "output\\analysis\\engineering\\20261006\\qvoice-experiment-v1\\validation\\intent-summary-fixed.png": "c96b0e1539e3bb8b57bab0e7d7b6fc2e96c398bd2ff780663b43b5aad15e9f16",
+    "output\\analysis\\engineering\\20261006\\qvoice-experiment-v1\\validation\\heartbeat-summary.png": "49c282e356caafc1248b9983e504b58af628c29dcf000204a9a3ab5b9c594574"
+  },
+  "variable_assessments": [
+    {
+      "candidate": "intent",
+      "path": "output\\assessments\\qvoice-model-20261006-intent-v2-r3",
+      "manifest_sha256": "cab35c950bc2aed409752437fdfc944e79eaefb81117f17ded8f8b38f99c7a3e",
+      "evidence": "output\\analysis\\engineering\\20261006\\qvoice-experiment-v1\\variables\\intent\\revisions\\v2\\evidence.json",
+      "evidence_sha256": "4fb26ed12bcc9165dbe06e8b6d4ebbc378ad2d0b696ac2fa4ddb61ecd8a1a769"
+    },
+    {
+      "candidate": "career",
+      "path": "output\\assessments\\qvoice-model-20261006-career-v2",
+      "manifest_sha256": "fa74b53396c86808e9a707e1153d94dda604ff54a425225d369df89d86301345",
+      "evidence": "output\\analysis\\engineering\\20261006\\qvoice-experiment-v1\\variables\\career\\revisions\\v2\\evidence.json",
+      "evidence_sha256": "697dda219c6ff0d5ffb41199faa21f464271b67208bf0a1cca5e6eca8679a8d9"
+    },
+    {
+      "candidate": "mean33",
+      "path": "output\\assessments\\qvoice-model-20261006-mean33-v1-r2",
+      "manifest_sha256": "ef5ba994c21cd21dec2ad7bb63edf0b02fc7626b630b1632b0467f6468255097",
+      "evidence": "output\\analysis\\engineering\\20261006\\qvoice-experiment-v1\\variables\\mean33\\evidence.json",
+      "evidence_sha256": "d634cc384645cbaea29fe51d8a93b9f796914a94dd9846c56dd82e9d7e86d3b1"
+    },
+    {
+      "candidate": "engagement",
+      "path": "output\\assessments\\qvoice-model-20261006-engagement-v1",
+      "manifest_sha256": "17671fdc6b6e9b734dc2a602aba6ba6723607225e5a66cb2fce8c4ad34f50f31",
+      "evidence": "output\\analysis\\engineering\\20261006\\qvoice-experiment-v1\\variables\\engagement\\evidence.json",
+      "evidence_sha256": "c8c15a53e13449ac60d9ade15a85053888059f80d3030786c920d16f7b55d22b"
+    },
+    {
+      "candidate": "connection",
+      "path": "output\\assessments\\qvoice-model-20261006-connection-v1",
+      "manifest_sha256": "5bfe84bad2c68e2e71407a23977a8b721ce25fa8cb629ed0e5099e067cf6a854",
+      "evidence": "output\\analysis\\engineering\\20261006\\qvoice-experiment-v1\\variables\\connection\\evidence.json",
+      "evidence_sha256": "b2ecd6410461092cfc6c97c3a72208875dc63e7662a5c8e7a7229cd950f21a1d"
+    },
+    {
+      "candidate": "wellbeing",
+      "path": "output\\assessments\\qvoice-model-20261006-wellbeing-v2",
+      "manifest_sha256": "2dfc6b0c92f3da2ba040f99479f6e6ffd4ba6f0dd179c0e757dd88fb94010867",
+      "evidence": "output\\analysis\\engineering\\20261006\\qvoice-experiment-v1\\variables\\wellbeing\\revisions\\v2\\evidence.json",
+      "evidence_sha256": "d6f4370b10310141f70784eaecae29ac8d7e32087a5f702088ed067e888a8b3b"
+    },
+    {
+      "candidate": "confidence",
+      "path": "output\\assessments\\qvoice-model-20261006-confidence-v1",
+      "manifest_sha256": "ec928f93f7747dcc9ce3199465ff72e7a51fdd4062d2925fff8af1a530f80367",
+      "evidence": "output\\analysis\\engineering\\20261006\\qvoice-experiment-v1\\variables\\confidence\\evidence.json",
+      "evidence_sha256": "38b6d10a145bc75e68d926392c413b63a3302f58143bd9fb7847358599a7f40c"
+    },
+    {
+      "candidate": "heartbeat",
+      "path": "output\\assessments\\qvoice-model-20261006-heartbeat-v4",
+      "manifest_sha256": "be2297201ae274d7793276985dee4e029ec96bf84605e8e0615ea93664d396f1",
+      "evidence": "output\\analysis\\engineering\\20261006\\qvoice-experiment-v1\\variables\\heartbeat\\revisions\\v4\\evidence.json",
+      "evidence_sha256": "a5efecd5d4dce958e467a88f8131fb02b54e8374be4b04cd1cc45f900386f89d"
+    }
+  ],
+  "validation": {
+    "output\\analysis\\engineering\\20261006\\qvoice-experiment-v1\\validation\\artifact-checks.json": "953e7db1e35ca0d21985b703f52923153d9a966870cabb31c9516e6f91f466c8",
+    "output\\analysis\\engineering\\20261006\\qvoice-experiment-v1\\validation\\browser-checks.json": "a8ac24464ca561f84afa3e86f162244a1d6717b459db757692e9ae3c657c8870",
+    "output\\analysis\\engineering\\20261006\\qvoice-experiment-v1\\validation\\model-sql-check.json": "f3f47c3f34f71a3ca25d0f534732845abda49c59cdf5450abfca30911a4da3f4",
+    "output\\analysis\\engineering\\20261006\\qvoice-experiment-v1\\validation\\test-results.json": "6c6d3805488780f784dc86dc2e828831d86039573cbfe771ed61c3f75e81e5c0"
+  },
+  "finalized_at": "2026-10-07T14:02:54+00:00",
+  "final_visual_review": "Se desplazaron las leyendas sobre la zona de datos y se verificaron los gráficos finales."
+}

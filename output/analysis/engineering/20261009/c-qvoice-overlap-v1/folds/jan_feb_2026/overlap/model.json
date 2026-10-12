@@ -1,0 +1,158 @@
+{
+  "name": "overlap",
+  "features": [
+    "qv_Q4",
+    "qv_mean33",
+    "qv_Q5",
+    "qv_Q7"
+  ],
+  "l2": 0.1,
+  "monthly_brier": 0.003465569138502658,
+  "source_candidate": {
+    "id": "q4+mean33+connection",
+    "kind": "blocks",
+    "blocks": [
+      "q4",
+      "mean33",
+      "connection"
+    ],
+    "features": [
+      "qv_Q4",
+      "qv_mean33",
+      "qv_Q5",
+      "qv_Q7"
+    ],
+    "l2": 0.1,
+    "parameters": 21,
+    "converged": true,
+    "iterations": 5,
+    "monthly_brier": 0.003465569138502658
+  },
+  "trials": [
+    {
+      "l2": 0.1,
+      "monthly_brier": 0.003465569138502658,
+      "iterations": 5,
+      "converged": true
+    },
+    {
+      "l2": 1,
+      "monthly_brier": 0.003465608464405597,
+      "iterations": 5,
+      "converged": true
+    },
+    {
+      "l2": 10,
+      "monthly_brier": 0.0034658469541286414,
+      "iterations": 5,
+      "converged": true
+    }
+  ],
+  "iterations": 5,
+  "encoder": {
+    "features": [
+      "qv_Q4",
+      "qv_mean33",
+      "qv_Q5",
+      "qv_Q7"
+    ],
+    "levels": {
+      "qv_Q4": [
+        "different_employment_episode",
+        "missing",
+        "no_linked_row",
+        "v0",
+        "v1"
+      ],
+      "qv_mean33": [
+        "100",
+        "50–69",
+        "70–79",
+        "80–89",
+        "90–99",
+        "<50",
+        "different_employment_episode",
+        "missing",
+        "no_linked_row"
+      ],
+      "qv_Q5": [
+        "different_employment_episode",
+        "missing",
+        "no_linked_row",
+        "v0",
+        "v1"
+      ],
+      "qv_Q7": [
+        "different_employment_episode",
+        "missing",
+        "no_linked_row",
+        "v0",
+        "v1"
+      ]
+    },
+    "references": {
+      "qv_Q4": "v1",
+      "qv_mean33": "different_employment_episode",
+      "qv_Q5": "v1",
+      "qv_Q7": "v1"
+    },
+    "columns": [
+      "intercept",
+      "qv_Q4=different_employment_episode",
+      "qv_Q4=missing",
+      "qv_Q4=no_linked_row",
+      "qv_Q4=v0",
+      "qv_mean33=100",
+      "qv_mean33=50–69",
+      "qv_mean33=70–79",
+      "qv_mean33=80–89",
+      "qv_mean33=90–99",
+      "qv_mean33=<50",
+      "qv_mean33=missing",
+      "qv_mean33=no_linked_row",
+      "qv_Q5=different_employment_episode",
+      "qv_Q5=missing",
+      "qv_Q5=no_linked_row",
+      "qv_Q5=v0",
+      "qv_Q7=different_employment_episode",
+      "qv_Q7=missing",
+      "qv_Q7=no_linked_row",
+      "qv_Q7=v0"
+    ]
+  },
+  "beta": [
+    -0.21888861836242934,
+    0.043561590508019506,
+    0.497406006746876,
+    0.054915309468946884,
+    0.5962221147332445,
+    -0.18165436388003445,
+    0.045830220289880104,
+    0.07651765103234912,
+    -0.06747485467946097,
+    -0.20959062625927538,
+    0.1650832639013738,
+    0.07281180946489553,
+    0.05491530946893829,
+    0.04356159050798637,
+    0.053603725604667966,
+    0.054915309468926726,
+    0.04864113337499337,
+    0.04356159050797414,
+    -0.19524013642268523,
+    0.054915309468907346,
+    0.054979531536106296
+  ],
+  "base_model_reference": "output\\analysis\\engineering\\20261008\\model-c-v2\\folds\\fold-4-C-model.json",
+  "base_model_origin": "2025-08-01",
+  "cutoff": "2026-01-01",
+  "fit_maximum_label_end": "2025-12-28",
+  "selection_snapshots": [
+    "2025-10-26",
+    "2025-11-23"
+  ],
+  "formula": "cloglog(eta_C + correccion_Q); R6 = 1-product(1-h)",
+  "derivation": null,
+  "parameters": 21,
+  "employee_level_rows_persisted": false
+}

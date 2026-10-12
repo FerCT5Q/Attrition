@@ -1,0 +1,15 @@
+{
+  "created_on": "2026-10-08",
+  "reporting_mode": "presentation",
+  "suites": [
+    {"command": ".venv/Scripts/python.exe -B -m unittest discover -s tests -p test_qvoice_calibrated_model.py -v", "tests": 5, "status": "passed", "scope": "Likelihood independiente del offset, producto de supervivencia, serialización, cortes temporales, calibración y PCA congelado."},
+    {"command": ".venv/Scripts/python.exe -B -m unittest discover -s tests -p test_qvoice_model_experiment.py -v", "tests": 24, "status": "passed", "scope": "Regresión de disponibilidad, episodios, features, métricas y comparación temporal."},
+    {"command": ".venv/Scripts/python.exe -B -m unittest discover -s .codex/skills/evaluate-attrition-variable/tests -p test_traceable_assessment.py -v", "tests": 53, "status": "passed", "scope": "Contratos v4, evidencia, privacidad y artefactos de assessment."}
+  ],
+  "redshift_validation": "model-sql-check.json",
+  "corrections": [
+    "Se corrigió el nombre de la constante simulada en la prueba histórica: DEFAULT_MODEL_QUERY.",
+    "La prueba del intercepto cloglog comprueba su score de likelihood; el enlace no canónico no obliga a igualdad exacta de medias."
+  ],
+  "employee_data_used_in_unit_tests": false
+}

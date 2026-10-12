@@ -1,0 +1,81 @@
+{
+  "verifier": {
+    "command": "verify_deck.py output/presentations/20261010-2026_evolucion-b-cq/presentacion-eng.html --mode presentation",
+    "errors": [
+      "El elemento <html> debe declarar lang=\"es\"."
+    ],
+    "warnings": [
+      "Etiqueta visible en inglés: Theme",
+      "Etiqueta visible en inglés: Slides",
+      "Etiqueta visible en inglés: Navigation"
+    ],
+    "result": "verificador original con excepción documentada de idioma"
+  },
+  "language_exception": "Texto proyectado en inglés por preferencia explícita del usuario y por coincidir con la base; guion, evidencia y validación en español.",
+  "jargon_visible": [],
+  "privacy": {
+    "aggregates_only": true,
+    "employee_rows": false,
+    "individual_scores": false,
+    "min_group_people": "300+",
+    "protected_labels": false
+  },
+  "browser_review": {
+    "file": "output/preview/20261010-2026_evolucion-b-cq/browser-review.json",
+    "status": "completada",
+    "date": "2026-10-10",
+    "tool": "Playwright (Node, Chromium headless) — no había MCP de Playwright disponible",
+    "viewports": [
+      "1440x810",
+      "1920x1080"
+    ],
+    "themes": [
+      "theme-light-classic",
+      "theme-light-soft",
+      "theme-dark-royal",
+      "theme-dark-carbon"
+    ],
+    "screenshots": 72,
+    "contact_sheets": [
+      "contact-light-classic-1440.png",
+      "contact-dark-royal-1920.png"
+    ],
+    "js_errors": [],
+    "network_requests": [],
+    "starts_on_slide_1": true,
+    "overflow_or_clip_issues": 0,
+    "text_below_13px": 0,
+    "animations": {
+      "A": {
+        "steps": 8,
+        "plays_and_ends_complete": true,
+        "resets_to_complete_on_return": true,
+        "keyboard_play": true
+      },
+      "B": {
+        "steps": 5,
+        "plays_and_ends_complete": true,
+        "resets_to_complete_on_return": true,
+        "keyboard_play": true
+      },
+      "C": {
+        "steps": 5,
+        "plays_and_ends_complete": true,
+        "resets_to_complete_on_return": true,
+        "keyboard_play": true
+      }
+    },
+    "reduced_motion": {
+      "building": false,
+      "on": 5
+    },
+    "morgan_vis_review": "Un mensaje por diapositiva en el título; un solo gráfico o tabla por diapositiva; CQ resaltado con el acento y el resto en gris; sin jerga técnica visible; periodos indicados en cada comparación.",
+    "legibility_slides_3_8": "Diapositiva 3: compromisos a 16–17 px y flujo de grupos legible a 1440. Diapositiva 8: tabla a 18–21 px, sin cortes. Contraste correcto en los 4 temas.",
+    "fixes_applied": [
+      "etiqueta +0.7 points dentro de la tarjeta (s6)",
+      "cabeceras de tabla sin cortes (s5)",
+      "padding del resaltado de columna (s3)",
+      "fuente de la portada a 13.5 px"
+    ]
+  }
+}

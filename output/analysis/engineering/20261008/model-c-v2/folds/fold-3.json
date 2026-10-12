@@ -1,0 +1,565 @@
+{
+  "fold": 3,
+  "origin": "2025-02-01",
+  "first_snapshot": "2025-02-23",
+  "last_snapshot": "2025-07-27",
+  "latest_outcome": "2026-01-27",
+  "train_latest_label": "2025-01-26",
+  "B": {
+    "exposures": 190975.0,
+    "event_exposures": 5865.0,
+    "pr_auc": 0.0555667939966842,
+    "lift_at_10_percent": 2.1114442778610694,
+    "brier_score": 0.02950747498647028,
+    "observed_percent": 3.0710826024348736,
+    "predicted_percent": 3.3244402607907175,
+    "calibration_error_pp": 0.2533576583558437,
+    "top_quintile_observed_percent": 5.5123913045423,
+    "top_quintile_predicted_percent": 5.851512197268721,
+    "top_quintile_calibration_error_pp": 0.339120892726421,
+    "log_loss": 0.1332431121669977
+  },
+  "C": {
+    "exposures": 190975.0,
+    "event_exposures": 5865.0,
+    "pr_auc": 0.056833025571720555,
+    "lift_at_10_percent": 2.1909633418584824,
+    "brier_score": 0.029467613673592033,
+    "observed_percent": 3.0710826024348736,
+    "predicted_percent": 2.7680369564668075,
+    "calibration_error_pp": 0.30304564596806627,
+    "top_quintile_observed_percent": 5.762534363136536,
+    "top_quintile_predicted_percent": 5.293960494507108,
+    "top_quintile_calibration_error_pp": 0.468573868629428,
+    "log_loss": 0.13242362743573927
+  },
+  "C_features": [
+    "level_grouped",
+    "tenure_playbook_band",
+    "calendar_month",
+    "manager_changes_12m",
+    "team_exits_12m",
+    "direct_reports_band",
+    "time_since_promotion_band",
+    "rehire",
+    "level_x_tenure",
+    "prior_experience_band",
+    "time_at_level_band",
+    "layers_band",
+    "region",
+    "comp_ratio_band",
+    "acquisition_recorded"
+  ],
+  "B_l2": 10.0,
+  "C_l2": 10.0,
+  "groups": {
+    "summary": {
+      "all_groups_observed_publishable": false,
+      "high_coverage_percent": 31.939259065322684,
+      "high_capture_percent": 45.67774936061381,
+      "high_lift": 1.430144301944918,
+      "high_observed_percent": 4.392091284674405,
+      "high_B_predicted_percent": 4.986603005483979,
+      "high_C_predicted_percent": 4.276241588524379,
+      "high_B_error_pp": 0.5945117208095742,
+      "high_C_error_pp": 0.11584969615002563,
+      "B_group_mae_pp": 0.2581062358111513,
+      "C_group_mae_pp": 0.3376599397065366
+    },
+    "rows": [
+      {
+        "node": 5,
+        "exposures": 84817,
+        "minimum_people_per_snapshot": 13416,
+        "mean_people_per_snapshot": 14136.166666666666,
+        "event_exposures": 2530,
+        "distinct_people_with_event": 886,
+        "observed_percent": 2.9828925804968343,
+        "B_predicted_percent": 3.034985500935977,
+        "C_predicted_percent": 2.4664110625498705,
+        "B_error_pp": 0.052092920439142376,
+        "C_error_pp": 0.5164815179469641,
+        "high": false
+      },
+      {
+        "node": 6,
+        "exposures": 24413,
+        "minimum_people_per_snapshot": 3149,
+        "mean_people_per_snapshot": 4068.8333333333335,
+        "event_exposures": 1016,
+        "distinct_people_with_event": 389,
+        "observed_percent": 4.161717117928973,
+        "B_predicted_percent": 4.780478585278549,
+        "C_predicted_percent": 4.213089998570083,
+        "B_error_pp": 0.618761467349576,
+        "C_error_pp": 0.05137288064111026,
+        "high": true
+      },
+      {
+        "node": 7,
+        "exposures": 31039,
+        "minimum_people_per_snapshot": 4727,
+        "mean_people_per_snapshot": 5173.166666666667,
+        "event_exposures": 1220,
+        "distinct_people_with_event": 418,
+        "observed_percent": 3.930538999323432,
+        "B_predicted_percent": 4.564584799613571,
+        "C_predicted_percent": 3.7720795482963547,
+        "B_error_pp": 0.6340458002901388,
+        "C_error_pp": 0.15845945102707718,
+        "high": true
+      },
+      {
+        "node": 8,
+        "exposures": 5544,
+        "minimum_people_per_snapshot": 656,
+        "mean_people_per_snapshot": 924.0,
+        "event_exposures": 443,
+        "distinct_people_with_event": 152,
+        "observed_percent": 7.990620490620491,
+        "B_predicted_percent": 8.25701039409993,
+        "C_predicted_percent": 7.376964051040962,
+        "B_error_pp": 0.2663899034794401,
+        "C_error_pp": 0.6136564395795296,
+        "high": true
+      },
+      {
+        "node": 11,
+        "exposures": 31465,
+        "minimum_people_per_snapshot": 5195,
+        "mean_people_per_snapshot": 5244.166666666667,
+        "event_exposures": 555,
+        "distinct_people_with_event": 201,
+        "observed_percent": 1.7638646114730654,
+        "B_predicted_percent": 1.7494540031856445,
+        "C_predicted_percent": 1.4801552362724655,
+        "B_error_pp": 0.014410608287420898,
+        "C_error_pp": 0.2837093752005998,
+        "high": false
+      },
+      {
+        "node": 12,
+        "exposures": 5885,
+        "minimum_people_per_snapshot": 958,
+        "mean_people_per_snapshot": 980.8333333333334,
+        "event_exposures": null,
+        "distinct_people_with_event": null,
+        "observed_percent": null,
+        "B_predicted_percent": 1.681250750804773,
+        "C_predicted_percent": 0.9195523221120607,
+        "B_error_pp": null,
+        "C_error_pp": null,
+        "high": false
+      },
+      {
+        "node": 13,
+        "exposures": 4362,
+        "minimum_people_per_snapshot": 700,
+        "mean_people_per_snapshot": 727.0,
+        "event_exposures": null,
+        "distinct_people_with_event": null,
+        "observed_percent": null,
+        "B_predicted_percent": 1.0844244959093934,
+        "C_predicted_percent": 0.9340871131933253,
+        "B_error_pp": null,
+        "C_error_pp": null,
+        "high": false
+      },
+      {
+        "node": 14,
+        "exposures": 3450,
+        "minimum_people_per_snapshot": 547,
+        "mean_people_per_snapshot": 575.0,
+        "event_exposures": null,
+        "distinct_people_with_event": null,
+        "observed_percent": null,
+        "B_predicted_percent": 1.052981483837821,
+        "C_predicted_percent": 0.7360871949656063,
+        "B_error_pp": null,
+        "C_error_pp": null,
+        "high": false
+      }
+    ],
+    "ranking_of_frozen_groups": {
+      "B": {
+        "exposures": 190975.0,
+        "event_exposures": 5865.0,
+        "pr_auc": 0.042607517139672695,
+        "lift_at_10_percent": 1.7170645005601077,
+        "brier_score": 0.029637612149231163,
+        "observed_percent": 3.0710826024348736,
+        "predicted_percent": 3.5426675997764017,
+        "calibration_error_pp": 0.47158499734152765,
+        "top_quintile_observed_percent": 4.6676209000242554,
+        "top_quintile_predicted_percent": 5.537816488147334,
+        "top_quintile_calibration_error_pp": 0.8701955881230794,
+        "log_loss": 0.13499014825125036
+      },
+      "C": {
+        "exposures": 190975.0,
+        "event_exposures": 5865.0,
+        "pr_auc": 0.04263652129439049,
+        "lift_at_10_percent": 1.7170645005601077,
+        "brier_score": 0.02961227947989021,
+        "observed_percent": 3.0710826024348736,
+        "predicted_percent": 3.1903885657462965,
+        "calibration_error_pp": 0.11930596331142275,
+        "top_quintile_observed_percent": 4.6676209000242554,
+        "top_quintile_predicted_percent": 5.187628803339891,
+        "top_quintile_calibration_error_pp": 0.5200079033156356,
+        "log_loss": 0.13458624639186134
+      },
+      "note": "Comparación de ranking de hojas a igual fracción; empates ponderados. No implica fraccionar grupos en operación."
+    }
+  },
+  "group_definition": {
+    "training_snapshot": "2024-12-29",
+    "rules": [
+      {
+        "node": "5",
+        "conditions": [
+          {
+            "condition": "tenure_playbook_band=10+ years",
+            "present": false
+          },
+          {
+            "condition": "tenure_playbook_band=3-5 years",
+            "present": false
+          },
+          {
+            "condition": "tenure_playbook_band=2-3 years",
+            "present": false
+          }
+        ],
+        "training_people": 13312,
+        "training_mean_risk": 0.028669192897917115
+      },
+      {
+        "node": "6",
+        "conditions": [
+          {
+            "condition": "tenure_playbook_band=10+ years",
+            "present": false
+          },
+          {
+            "condition": "tenure_playbook_band=3-5 years",
+            "present": false
+          },
+          {
+            "condition": "tenure_playbook_band=2-3 years",
+            "present": true
+          }
+        ],
+        "training_people": 5127,
+        "training_mean_risk": 0.04667443508896062
+      },
+      {
+        "node": "7",
+        "conditions": [
+          {
+            "condition": "tenure_playbook_band=10+ years",
+            "present": false
+          },
+          {
+            "condition": "tenure_playbook_band=3-5 years",
+            "present": true
+          },
+          {
+            "condition": "level_grouped=8 - Assoc & Int/Eng",
+            "present": false
+          }
+        ],
+        "training_people": 4688,
+        "training_mean_risk": 0.044532809778177855
+      },
+      {
+        "node": "8",
+        "conditions": [
+          {
+            "condition": "tenure_playbook_band=10+ years",
+            "present": false
+          },
+          {
+            "condition": "tenure_playbook_band=3-5 years",
+            "present": true
+          },
+          {
+            "condition": "level_grouped=8 - Assoc & Int/Eng",
+            "present": true
+          }
+        ],
+        "training_people": 485,
+        "training_mean_risk": 0.08569454376916423
+      },
+      {
+        "node": "11",
+        "conditions": [
+          {
+            "condition": "tenure_playbook_band=10+ years",
+            "present": true
+          },
+          {
+            "condition": "direct_reports_band=6+",
+            "present": false
+          },
+          {
+            "condition": "region=APAC",
+            "present": false
+          }
+        ],
+        "training_people": 5195,
+        "training_mean_risk": 0.016945643466594197
+      },
+      {
+        "node": "12",
+        "conditions": [
+          {
+            "condition": "tenure_playbook_band=10+ years",
+            "present": true
+          },
+          {
+            "condition": "direct_reports_band=6+",
+            "present": false
+          },
+          {
+            "condition": "region=APAC",
+            "present": true
+          }
+        ],
+        "training_people": 942,
+        "training_mean_risk": 0.010156644922692451
+      },
+      {
+        "node": "13",
+        "conditions": [
+          {
+            "condition": "tenure_playbook_band=10+ years",
+            "present": true
+          },
+          {
+            "condition": "direct_reports_band=6+",
+            "present": true
+          },
+          {
+            "condition": "layers_band=<=6",
+            "present": false
+          }
+        ],
+        "training_people": 904,
+        "training_mean_risk": 0.010347097727645936
+      },
+      {
+        "node": "14",
+        "conditions": [
+          {
+            "condition": "tenure_playbook_band=10+ years",
+            "present": true
+          },
+          {
+            "condition": "direct_reports_band=6+",
+            "present": true
+          },
+          {
+            "condition": "layers_band=<=6",
+            "present": true
+          }
+        ],
+        "training_people": 343,
+        "training_mean_risk": 0.0076236651852247105
+      }
+    ],
+    "high_nodes": [
+      "8",
+      "6",
+      "7"
+    ],
+    "features": [
+      "level_grouped",
+      "tenure_playbook_band",
+      "manager_changes_12m",
+      "team_exits_12m",
+      "direct_reports_band",
+      "time_since_promotion_band",
+      "rehire",
+      "prior_experience_band",
+      "time_at_level_band",
+      "layers_band",
+      "region",
+      "comp_ratio_band",
+      "acquisition_recorded"
+    ],
+    "encoder": {
+      "features": [
+        "level_grouped",
+        "tenure_playbook_band",
+        "manager_changes_12m",
+        "team_exits_12m",
+        "direct_reports_band",
+        "time_since_promotion_band",
+        "rehire",
+        "prior_experience_band",
+        "time_at_level_band",
+        "layers_band",
+        "region",
+        "comp_ratio_band",
+        "acquisition_recorded"
+      ],
+      "references": {
+        "level_grouped": "7 - Senior & Lead",
+        "tenure_playbook_band": "5-10 years",
+        "manager_changes_12m": "0",
+        "team_exits_12m": "0",
+        "direct_reports_band": "0",
+        "time_since_promotion_band": "sin promo en historial",
+        "rehire": "no",
+        "prior_experience_band": "<1 year",
+        "time_at_level_band": "<1 year",
+        "layers_band": "10+",
+        "region": "INDIA",
+        "comp_ratio_band": "0.9-1.0",
+        "acquisition_recorded": "sin registro"
+      },
+      "levels": {
+        "level_grouped": [
+          "1 - VP & Above",
+          "2 - Sr Dir",
+          "3 - Princ/Directors",
+          "5 - Sr Staff & /Mgr",
+          "6 - Staff & /Mgr",
+          "7 - Senior & Lead",
+          "8 - Assoc & Int/Eng"
+        ],
+        "tenure_playbook_band": [
+          "1-2 years",
+          "10+ years",
+          "2-3 years",
+          "3-5 years",
+          "5-10 years",
+          "<1 year"
+        ],
+        "manager_changes_12m": [
+          "0",
+          "1",
+          "2+"
+        ],
+        "team_exits_12m": [
+          "0",
+          "1",
+          "2+"
+        ],
+        "direct_reports_band": [
+          "0",
+          "1-5",
+          "6+"
+        ],
+        "time_since_promotion_band": [
+          "promo 1-2 years",
+          "promo 2-3 years",
+          "promo 3+ years",
+          "promo <1 year",
+          "sin promo en historial",
+          "sin promo, contratado 1-3 years",
+          "sin promo, contratado 3+ years",
+          "sin promo, contratado <1 year"
+        ],
+        "rehire": [
+          "no",
+          "yes"
+        ],
+        "prior_experience_band": [
+          "1-3 years",
+          "10+ years",
+          "3-5 years",
+          "5-10 years",
+          "<1 year"
+        ],
+        "time_at_level_band": [
+          "1-2 years",
+          "2-3 years",
+          "3-5 years",
+          "5+ years",
+          "<1 year"
+        ],
+        "layers_band": [
+          "10+",
+          "7",
+          "8",
+          "9",
+          "<=6"
+        ],
+        "region": [
+          "AMERICAS",
+          "APAC",
+          "EMEA",
+          "INDIA"
+        ],
+        "comp_ratio_band": [
+          "0.8-0.9",
+          "0.9-1.0",
+          "1.0-1.1",
+          "1.1-1.2",
+          "1.2+",
+          "<0.8"
+        ],
+        "acquisition_recorded": [
+          "registrada",
+          "sin registro"
+        ]
+      },
+      "columns": [
+        "intercept",
+        "level_grouped=1 - VP & Above",
+        "level_grouped=2 - Sr Dir",
+        "level_grouped=3 - Princ/Directors",
+        "level_grouped=5 - Sr Staff & /Mgr",
+        "level_grouped=6 - Staff & /Mgr",
+        "level_grouped=8 - Assoc & Int/Eng",
+        "tenure_playbook_band=1-2 years",
+        "tenure_playbook_band=10+ years",
+        "tenure_playbook_band=2-3 years",
+        "tenure_playbook_band=3-5 years",
+        "tenure_playbook_band=<1 year",
+        "manager_changes_12m=1",
+        "manager_changes_12m=2+",
+        "team_exits_12m=1",
+        "team_exits_12m=2+",
+        "direct_reports_band=1-5",
+        "direct_reports_band=6+",
+        "time_since_promotion_band=promo 1-2 years",
+        "time_since_promotion_band=promo 2-3 years",
+        "time_since_promotion_band=promo 3+ years",
+        "time_since_promotion_band=promo <1 year",
+        "time_since_promotion_band=sin promo, contratado 1-3 years",
+        "time_since_promotion_band=sin promo, contratado 3+ years",
+        "time_since_promotion_band=sin promo, contratado <1 year",
+        "rehire=yes",
+        "prior_experience_band=1-3 years",
+        "prior_experience_band=10+ years",
+        "prior_experience_band=3-5 years",
+        "prior_experience_band=5-10 years",
+        "time_at_level_band=1-2 years",
+        "time_at_level_band=2-3 years",
+        "time_at_level_band=3-5 years",
+        "time_at_level_band=5+ years",
+        "layers_band=7",
+        "layers_band=8",
+        "layers_band=9",
+        "layers_band=<=6",
+        "region=AMERICAS",
+        "region=APAC",
+        "region=EMEA",
+        "comp_ratio_band=0.8-0.9",
+        "comp_ratio_band=1.0-1.1",
+        "comp_ratio_band=1.1-1.2",
+        "comp_ratio_band=1.2+",
+        "comp_ratio_band=<0.8",
+        "acquisition_recorded=registrada"
+      ],
+      "interactions": {}
+    },
+    "training_r2": 0.5835379722426293,
+    "training_high_fraction": 0.33230094205703964,
+    "maximum_depth": 3
+  },
+  "elapsed_seconds": 460.4205449000001
+}

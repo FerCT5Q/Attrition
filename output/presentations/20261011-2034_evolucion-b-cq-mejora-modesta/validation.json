@@ -1,0 +1,59 @@
+{
+  "verifier": {
+    "command": "verify_deck.py output/presentations/20261011-2034_evolucion-b-cq-mejora-modesta/presentacion-eng.html --mode presentation",
+    "errors": [
+      "El elemento <html> debe declarar lang=\"es\"."
+    ],
+    "warnings": [
+      "Etiqueta visible en inglés: Theme",
+      "Etiqueta visible en inglés: Slides",
+      "Etiqueta visible en inglés: Navigation"
+    ],
+    "result": "verificador original con excepción documentada de idioma"
+  },
+  "language_exception": "Texto proyectado en inglés por preferencia explícita del usuario y por coincidir con la base; guion, evidencia y validación en español.",
+  "jargon_visible": [],
+  "privacy": {
+    "aggregates_only": true,
+    "employee_rows": false,
+    "individual_scores": false,
+    "min_group_people": "300+",
+    "protected_labels": false
+  },
+  "browser_review": {
+    "file": "output/preview/20261011-2034_evolucion-b-cq-mejora-modesta/browser-review.json",
+    "status": "pass",
+    "mode": "presentation",
+    "reviewed_slides": [
+      3
+    ],
+    "screenshots": [
+      "slide-3-theme-light-classic.png",
+      "slide-3-theme-light-soft.png",
+      "slide-3-theme-dark-royal.png",
+      "slide-3-theme-dark-carbon.png"
+    ],
+    "screenshot_size": {
+      "width": 1440,
+      "height": 810
+    },
+    "scope": "Revisión visual de la frase aprobada del slide 3 en los cuatro temas; comparación exacta contra el deck anterior.",
+    "checks": {
+      "approved_text_present": true,
+      "commit_items_inside_slide": true,
+      "commit_item_overflow": false,
+      "navigation_to_slide_3": true,
+      "show_all": true,
+      "remaining_eight_slides_identical": true,
+      "existing_unit_tests": 9
+    },
+    "console": {
+      "javascript_errors": 0,
+      "nonblocking_resource_errors": [
+        "El servidor local no tiene favicon.ico; no afecta al deck."
+      ]
+    },
+    "conclusion": "La mejora modesta queda explícita, con el resultado por periodo. Texto legible, sin recortes ni solapamientos en los cuatro temas.",
+    "previous_deck": "output/presentations/20261011-1121_evolucion-b-cq/presentacion-eng.html"
+  }
+}

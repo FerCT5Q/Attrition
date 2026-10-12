@@ -1,0 +1,95 @@
+schema_version: 1
+plan_version: 2
+language: es
+created_before_execution: true
+plan_authorship: codex_explicit
+variable: Confidence — Q13 y Q17
+concept: Binarios Q13, confianza en el futuro, y Q17, cambios necesarios para competir; no sustituir Q17 por la pregunta Q25
+  de liderazgo.
+intended_use: Comprobar aporte incremental de confianza en futuro y adaptación de la empresa.
+knowledge_date: Publicación verificable previa al snapshot; máximo 12 meses; frontera 2026-09-07.
+population: Engineering activo Regular sin RF360, con tratamiento separado de respuestas faltantes.
+grain: Empleado-wave en origen y empleado-snapshot en predicción.
+semantic_type: survey
+source_reasoning: El diccionario actual asigna Q13/Q17 a Confidence. Una interpretación habitual de confianza en liderazgo
+  no reemplaza este mapping.
+validation_story:
+- id: source_confidence
+  criterion: source
+  evidence_role: supporting
+  question: ¿El mapping exacto resuelve Q13/Q17 sin incorporar Q25?
+  why: La identidad del componente determina la interpretación del bloque.
+  method: approved_external_access_check
+  sql_reference: queries/audits/qvoice_model_confidence_20261006.sql
+  acceptance_rule: Los tres archivos deben resolver ambos componentes sin ambigüedades ni preguntas ausentes.
+  metric_checks:
+  - metric: workbooks_checked
+    aggregate: sum
+    operator: eq
+    threshold: 3
+  - metric: header_ambiguities
+    aggregate: sum
+    operator: eq
+    threshold: 0
+  - metric: missing_component_headers
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: confidence_definition
+  criterion: definition
+  evidence_role: defining
+  question: ¿Los dos componentes mantienen estados y validez independientes?
+  why: Un único promedio parcial perdería la diferencia entre futuro y cambios organizacionales.
+  method: Reconciliación de componentes y completitud.
+  sql_reference: queries/audits/qvoice_model_confidence_20261006.sql
+  acceptance_rule: Clasificar todos los estados de Q13/Q17 sin imputar favorable ni desfavorable.
+  metric_checks:
+  - metric: status_reconciliation_difference
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: confidence_domain
+  criterion: consistency
+  evidence_role: defining
+  question: ¿El dominio 0/1 de ambas preguntas es estable en los archivos disponibles?
+  why: Un cambio técnico de escala podría confundirse con un cambio de confianza.
+  method: aggregate_domain_and_transition_audit
+  sql_reference: queries/audits/qvoice_model_confidence_20261006.sql
+  acceptance_rule: Cero valores inválidos y sentinel separado.
+  metric_checks:
+  - metric: invalid_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: confidence_join
+  criterion: join
+  evidence_role: supporting
+  question: ¿Ambas preguntas se vinculan sin multiplicación al workforce de Engineering?
+  why: Es necesario recalcular el contraste para la población del modelo.
+  method: aggregate_join_reconciliation
+  sql_reference: queries/audits/qvoice_model_confidence_20261006.sql
+  acceptance_rule: Cero duplicados usados y cero múltiples matches.
+  metric_checks:
+  - metric: duplicate_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+  - metric: multi_match_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: confidence_history
+  criterion: history
+  evidence_role: defining
+  question: ¿Existe evidencia de publicación antes de las predicciones?
+  why: El año de archivo no fija la fecha de conocimiento.
+  method: Revisión documental y control de vencimiento por wave.
+  sql_reference: queries/audits/qvoice_model_confidence_20261006.sql
+  acceptance_rule: Incorporar únicamente waves con fecha acreditada.
+  metric_checks:
+  - metric: unverified_availability_waves
+    aggregate: sum
+    operator: eq
+    threshold: 0
+plan_revision_reason: Se precisa la redacción española antes de ejecutar la variable; se conservan los mismos criterios, consultas
+  y umbrales.

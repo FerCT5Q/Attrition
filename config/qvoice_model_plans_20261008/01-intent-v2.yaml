@@ -1,0 +1,108 @@
+schema_version: 1
+plan_version: 2
+language: es
+created_before_execution: true
+plan_authorship: codex_explicit
+variable: Intent to Stay - Q4 y Q12
+concept: Respuestas binarias a Q4 y Q12, evaluadas por separado y en conjunto. La categoría ambas favorables exige dos respuestas
+  válidas y representa la percepción declarada de permanencia.
+intended_use: Medir el aporte incremental de la intención de permanencia sobre el modelo B de salida voluntaria.
+knowledge_date: La wave del ano Y se usa exclusivamente en snapshots del ano Y+1; frontera global 2026-09-07.
+population: Empleados regulares activos de Engineering, excluyendo RF360.
+grain: Empleado-wave para auditoria; empleado-snapshot para el modelo; publicacion agregada.
+semantic_type: survey
+source_reasoning: Q4 y Q12 son las dos señales priorizadas de permanencia en el playbook; se conservan por separado y como
+  conjunción sin imputar faltantes.
+validation_story:
+- id: source_intent
+  criterion: source
+  evidence_role: supporting
+  question: ¿Los tres archivos resuelven de forma unica Q4 y Q12?
+  why: Una pregunta no puede sustituir silenciosamente a la otra.
+  method: approved_external_access_check
+  sql_reference: queries/audits/qvoice_model_intent_20261008.sql
+  acceptance_rule: Tres archivos accesibles, cero encabezados ambiguos y registro explicito de ausencias.
+  metric_checks:
+  - metric: workbooks_checked
+    aggregate: sum
+    operator: eq
+    threshold: 3
+  - metric: header_ambiguities
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: both_favorable
+  criterion: definition
+  evidence_role: defining
+  question: ¿Ambas favorables exige Q4=1 y Q12=1 y excluye respuestas parciales?
+  why: Tratar un faltante como desfavorable cambiaria la senal.
+  method: independent_recalculation
+  sql_reference: queries/audits/qvoice_model_intent_20261008.sql
+  acceptance_rule: La conjuncion debe coincidir con el producto de los dos binarios en todas las filas comparables.
+  metric_checks:
+  - metric: comparable_count
+    aggregate: sum
+    operator: gt
+    threshold: 0
+  - metric: mismatch_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: intent_domain
+  criterion: consistency
+  evidence_role: defining
+  question: ¿Se distinguen 0, 1, vacio, 255, invalido y pregunta ausente?
+  why: Cada estado tiene una interpretacion distinta en el modelo.
+  method: aggregate_domain_and_transition_audit
+  sql_reference: queries/audits/qvoice_model_intent_20261008.sql
+  acceptance_rule: Cero valores invalidos y reconciliacion exacta de estados.
+  metric_checks:
+  - metric: invalid_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+  - metric: status_reconciliation_difference
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: intent_join
+  criterion: join
+  evidence_role: supporting
+  question: ¿Cada respuesta enlaza como maximo con una persona de Engineering en el baseline?
+  why: Un join duplicado multiplicaria personas y salidas.
+  method: aggregate_join_reconciliation
+  sql_reference: queries/audits/qvoice_model_intent_20261008.sql
+  acceptance_rule: Cero llaves duplicadas utilizadas y cero multi-match en workforce.
+  metric_checks:
+  - metric: duplicate_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+  - metric: multi_match_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: intent_annual_lag
+  criterion: history
+  evidence_role: defining
+  question: ¿La politica Y a Y+1 produce las ventanas declaradas antes de entrenar?
+  why: La asignacion temporal determina que informacion conoce cada snapshot.
+  method: Reconciliacion agregada de snapshots y ano de wave asignado.
+  sql_reference: queries/audits/qvoice_model_annual_lag_windows_20261008.sql
+  acceptance_rule: Cinco snapshots de ago-dic 2025 usan wave 2024; dos de ene-feb 2026 usan wave 2025; cero contradicciones
+    y cohortes de al menos 30.
+  metric_checks:
+  - metric: snapshot_count
+    aggregate: sum
+    operator: eq
+    threshold: 7
+  - metric: mapping_contradiction_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+  - metric: below_privacy_threshold_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+plan_revision_reason: Se corrige la redacción pública para cumplir el contrato en español; no cambian las preguntas, SQL ni
+  reglas de aceptación.

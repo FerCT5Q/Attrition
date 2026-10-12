@@ -1,0 +1,285 @@
+{
+  "name": "disjoint",
+  "features": [
+    "qv_career",
+    "qv_remaining_20260907",
+    "qv_Q8",
+    "qv_Q10",
+    "qv_Q11",
+    "qv_Q13",
+    "qv_Q17"
+  ],
+  "l2": 0.1,
+  "monthly_brier": 0.00481193491223988,
+  "source_candidate": {
+    "id": "career+mean33+wellbeing+confidence",
+    "kind": "blocks",
+    "blocks": [
+      "career",
+      "mean33",
+      "wellbeing",
+      "confidence"
+    ],
+    "features": [
+      "qv_career",
+      "qv_mean33",
+      "qv_Q8",
+      "qv_Q10",
+      "qv_Q11",
+      "qv_Q13",
+      "qv_Q17"
+    ],
+    "l2": 0.1,
+    "parameters": 33,
+    "converged": true,
+    "iterations": 5,
+    "monthly_brier": 0.004812189719967369
+  },
+  "trials": [
+    {
+      "l2": 0.1,
+      "monthly_brier": 0.00481193491223988,
+      "iterations": 5,
+      "converged": true
+    },
+    {
+      "l2": 1,
+      "monthly_brier": 0.004811946227770393,
+      "iterations": 5,
+      "converged": true
+    },
+    {
+      "l2": 10,
+      "monthly_brier": 0.004812004095018646,
+      "iterations": 5,
+      "converged": true
+    }
+  ],
+  "iterations": 5,
+  "encoder": {
+    "features": [
+      "qv_career",
+      "qv_remaining_20260907",
+      "qv_Q8",
+      "qv_Q10",
+      "qv_Q11",
+      "qv_Q13",
+      "qv_Q17"
+    ],
+    "levels": {
+      "qv_career": [
+        "different_employment_episode",
+        "missing",
+        "no_linked_row",
+        "v0",
+        "v1"
+      ],
+      "qv_remaining_20260907": [
+        "100",
+        "50–69",
+        "70–79",
+        "80–89",
+        "90–99",
+        "<50",
+        "different_employment_episode",
+        "missing",
+        "no_linked_row"
+      ],
+      "qv_Q8": [
+        "different_employment_episode",
+        "missing",
+        "no_linked_row",
+        "v0",
+        "v1"
+      ],
+      "qv_Q10": [
+        "different_employment_episode",
+        "missing",
+        "no_linked_row",
+        "v0",
+        "v1"
+      ],
+      "qv_Q11": [
+        "different_employment_episode",
+        "missing",
+        "no_linked_row",
+        "v0",
+        "v1"
+      ],
+      "qv_Q13": [
+        "different_employment_episode",
+        "missing",
+        "no_linked_row",
+        "v0",
+        "v1"
+      ],
+      "qv_Q17": [
+        "different_employment_episode",
+        "missing",
+        "no_linked_row",
+        "v0",
+        "v1"
+      ]
+    },
+    "references": {
+      "qv_career": "v1",
+      "qv_remaining_20260907": "different_employment_episode",
+      "qv_Q8": "v1",
+      "qv_Q10": "v0",
+      "qv_Q11": "v1",
+      "qv_Q13": "v1",
+      "qv_Q17": "v1"
+    },
+    "columns": [
+      "intercept",
+      "qv_career=different_employment_episode",
+      "qv_career=missing",
+      "qv_career=no_linked_row",
+      "qv_career=v0",
+      "qv_remaining_20260907=100",
+      "qv_remaining_20260907=50–69",
+      "qv_remaining_20260907=70–79",
+      "qv_remaining_20260907=80–89",
+      "qv_remaining_20260907=90–99",
+      "qv_remaining_20260907=<50",
+      "qv_remaining_20260907=missing",
+      "qv_remaining_20260907=no_linked_row",
+      "qv_Q8=different_employment_episode",
+      "qv_Q8=missing",
+      "qv_Q8=no_linked_row",
+      "qv_Q8=v0",
+      "qv_Q10=different_employment_episode",
+      "qv_Q10=missing",
+      "qv_Q10=no_linked_row",
+      "qv_Q10=v1",
+      "qv_Q11=different_employment_episode",
+      "qv_Q11=missing",
+      "qv_Q11=no_linked_row",
+      "qv_Q11=v0",
+      "qv_Q13=different_employment_episode",
+      "qv_Q13=missing",
+      "qv_Q13=no_linked_row",
+      "qv_Q13=v0",
+      "qv_Q17=different_employment_episode",
+      "qv_Q17=missing",
+      "qv_Q17=no_linked_row",
+      "qv_Q17=v0"
+    ]
+  },
+  "beta": [
+    -0.17887290748372833,
+    0.04316640688130399,
+    0.2359971274099736,
+    0.0277253064099811,
+    0.21662750953591686,
+    -0.30087084876482795,
+    0.19044085793572957,
+    0.11466285948097321,
+    -0.10146744411460405,
+    -0.266474800353775,
+    0.32488454609617884,
+    -0.032066883875677354,
+    0.027725306409927198,
+    0.043166406881373666,
+    0.12902168127616645,
+    0.02772530640994727,
+    0.028586105799544178,
+    0.04316640688150703,
+    -0.5966918554706123,
+    0.027725306410003214,
+    0.05996303587996658,
+    0.04316640688143397,
+    0.3079989642722557,
+    0.027725306410006686,
+    0.10096901080387666,
+    0.04316640688144333,
+    0.18662526987443348,
+    0.027725306409997638,
+    -0.07955330845110022,
+    0.043166406881447614,
+    0.20706376274458296,
+    0.027725306409929013,
+    0.10671103888984941
+  ],
+  "base_model_reference": "output\\analysis\\engineering\\20261008\\model-c-v2\\folds\\fold-4-C-model.json",
+  "base_model_origin": "2025-08-01",
+  "cutoff": "2026-09-07",
+  "fit_maximum_label_end": "2026-08-23",
+  "selection_snapshots": [
+    "2026-06-28",
+    "2026-07-26"
+  ],
+  "formula": "cloglog(eta_C + correccion_Q); R6 = 1-product(1-h)",
+  "derivation": {
+    "feature": "qv_remaining_20260907",
+    "semantic_type": "derived_feature",
+    "formula": "sum(favorable remaining)/count(remaining)",
+    "individual_items_mapping": {
+      "qv_Q8": "qv_M09",
+      "qv_Q10": "qv_M13",
+      "qv_Q11": "qv_M29",
+      "qv_Q13": "qv_M12",
+      "qv_Q17": "qv_M27"
+    },
+    "excluded_items": [
+      "qv_M09",
+      "qv_M12",
+      "qv_M13",
+      "qv_M27",
+      "qv_M29"
+    ],
+    "remaining_items": [
+      "qv_M01",
+      "qv_M02",
+      "qv_M03",
+      "qv_M04",
+      "qv_M05",
+      "qv_M06",
+      "qv_M07",
+      "qv_M08",
+      "qv_M10",
+      "qv_M11",
+      "qv_M14",
+      "qv_M15",
+      "qv_M16",
+      "qv_M17",
+      "qv_M18",
+      "qv_M19",
+      "qv_M20",
+      "qv_M21",
+      "qv_M22",
+      "qv_M23",
+      "qv_M24",
+      "qv_M25",
+      "qv_M26",
+      "qv_M28",
+      "qv_M30",
+      "qv_M31",
+      "qv_M32",
+      "qv_M33"
+    ],
+    "denominator": 28,
+    "required_valid_original_items": 33,
+    "comparable_count": 375184,
+    "matched_count": 375184,
+    "mismatch_count": 0,
+    "original_mean_mismatch_count": 0,
+    "match_rate_percent": 100.0,
+    "eligibility_changed_count": 0,
+    "date": "2026-10-09T16:36:43.094240+00:00",
+    "outcome": "pass",
+    "score_changes": false,
+    "method": "Mapping por texto exacto y reconciliación de todas las combinaciones observadas en RAM.",
+    "acceptance_rule": "Cero discrepancias de mapping, bandas o elegibilidad.",
+    "bands": [
+      "<50",
+      "50–69",
+      "70–79",
+      "80–89",
+      "90–99",
+      "100"
+    ]
+  },
+  "parameters": 33,
+  "employee_level_rows_persisted": false
+}

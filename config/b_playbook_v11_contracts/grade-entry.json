@@ -1,0 +1,22 @@
+{
+  "schema_version": 4,
+  "id": "grade-entry",
+  "title": "Entrada observada al grado actual y pay track",
+  "claim": "¿Puede reconstruirse la última entrada al grado dentro del episodio vigente sin utilizar promociones futuras?",
+  "use": "Distinguir promoción confirmada, cambio sin promoción registrada e historia no observable; contrastar tiempo desde entrada y track completo.",
+  "semantic_type": "derived_feature",
+  "population": "Employee, Regular, activo, Engineering, sin RF360 en cada foto objetivo; historia previa de esas personas sólo dentro del episodio vigente",
+  "grain": "persona-foto mensual",
+  "known_at": "Cambio observado hasta t; promoción efectiva en la ventana de entrada y observada en una foto no posterior a t",
+  "window": "2020-07-26 a 2026-09-07; historia anterior para detectar la entrada",
+  "history": "La preparación V11 reconstruía la entrada al grado en una foto. Se extiende a cada foto, conservando gaps mayores de 45 días, falta de grado e inicios de episodio como historia desconocida.",
+  "query": "queries/audits/engineering_b_v11_grade_entry_20261011.sql",
+  "source_query": "queries/profiles/engineering_b_v11_grade_entry_person_month_20261011.sql",
+  "zero_fields": ["duplicate_keys", "contradictory_cells", "entry_rule_violations", "promotion_future_violations", "band_recalculation_mismatches", "track_rule_violations"],
+  "positive_fields": ["person_snapshots", "observable_entry_rows"],
+  "expected_rows": 7,
+  "acceptance_rule": "Cero duplicación/contradicción, entradas fuera del episodio o con gap mayor de 45 días, confirmaciones futuras y diferencias de bandas frente a aritmética independiente de meses. Track sólo en códigos letra+dígitos.",
+  "conclusion_if_pass": "La entrada observada y sus límites temporales pueden probarse como incorporaciones a B",
+  "limitation": "No acredita el primer ingreso histórico al grado si falta historia. Ausencia de promoción registrada no equivale a promoción imposible; compensation_grade_old no entra a la fórmula.",
+  "action": "Probar las representaciones por separado y mantener desconocido donde no hay transición observada"
+}

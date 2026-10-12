@@ -1,0 +1,175 @@
+{
+  "reporting_mode": "presentation",
+  "rows": [
+    {
+      "id": "ios",
+      "label": "Movimientos IOS",
+      "view_ids": [
+        "slide-5"
+      ],
+      "source": "hrda.workers_ios_transfers",
+      "source_fields": [
+        "business_process_reason",
+        "effective_date",
+        "timestamps de carga/modificación"
+      ],
+      "source_values": "Seis motivos descriptivos de movimiento; no se exporta aquí un dominio de empleados.",
+      "proposed_type": "Eventos por motivo; la variante antigua ios_12m también se excluyó.",
+      "transformation": "No se construye columna seleccionable en esta ronda; no se imputa no movimiento.",
+      "history": "Las cargas y modificaciones actuales son de 2026-10-11; no acreditan disponibilidad de cada evento en las fotos anteriores.",
+      "decision": "Excluida antes de selección",
+      "reason": "No se verificó conocimiento histórico de las resoluciones IOS.",
+      "action": "Obtener historia de versiones o calendario oficial de disponibilidad antes de modelar eventos as-of.",
+      "evidence": [
+        "v11-ios-knowledge.json"
+      ],
+      "documentation": [
+        "docs/variables/ios-movement/b-model-v11-20261011.md"
+      ]
+    },
+    {
+      "id": "applications",
+      "label": "Solicitudes de empleo",
+      "view_ids": [
+        "slide-3"
+      ],
+      "source": "hrda.applications; alternativa hrda.job_applications_vw",
+      "source_fields": [
+        "fechas de solicitud",
+        "llave de enlace (sólo dentro de SQL)"
+      ],
+      "source_values": "Eventos de solicitudes; no se exportan requisiciones ni datos de postulantes.",
+      "proposed_type": "Presencia/conteo de solicitudes anteriores a la foto.",
+      "transformation": "No se construye columna seleccionable; la ausencia de feed o enlace no se convierte en cero.",
+      "history": "applications termina el 2024-10-29 y no tiene eventos de marzo–septiembre de 2026. La vista alternativa llega a 2026, sin historia verificada de enlace y completitud.",
+      "decision": "Excluida antes de selección",
+      "reason": "Falta continuidad del feed exacto V11 y evidencia temporal suficiente de la alternativa.",
+      "action": "Reconstruir fuente histórica y observabilidad del enlace para distinguir ninguna solicitud de dato no disponible.",
+      "evidence": [
+        "v11-applications-history.json",
+        "v11-applications-metadata.json"
+      ],
+      "documentation": [
+        "docs/variables/more-than-3-job-applications/b-model-v11-20261011.md"
+      ]
+    },
+    {
+      "id": "engineering",
+      "label": "Engineering frente a otras funciones",
+      "view_ids": [
+        "slide-15"
+      ],
+      "source": "hrda.post_hire_monthly_worker_dtls",
+      "source_fields": [
+        "eng_or_noneng"
+      ],
+      "source_values": "Engineering es el único valor dentro de la población seleccionada.",
+      "proposed_type": "Filtro de población; sería categórica fuera de esta población.",
+      "transformation": "TRIM(eng_or_noneng)='Engineering' se usa para filtrar; no se agrega una columna constante al modelo.",
+      "history": "Se aplica el mismo filtro en cada foto de la comparación.",
+      "decision": "Constante dentro de la población",
+      "reason": "No permite distinguir riesgos entre personas de Engineering.",
+      "action": "Mantener como criterio de población; una comparación entre funciones sería otra población/modelo.",
+      "evidence": [],
+      "documentation": []
+    },
+    {
+      "id": "gender",
+      "label": "Género",
+      "view_ids": [
+        "slide-13"
+      ],
+      "source": "hrda.post_hire_monthly_worker_dtls",
+      "source_fields": [
+        "gender"
+      ],
+      "source_values": "Etiquetas protegidas no enumeradas en un entregable presentation.",
+      "proposed_type": "Atributo protegido, no autorizado como predictor.",
+      "transformation": "No se incorpora al diseño, no se codifica y no se estima un efecto.",
+      "history": "La autorización de procesamiento excluye atributos protegidos como features en toda la ronda.",
+      "decision": "Fuera de autorización de predicción",
+      "reason": "La autorización vigente excluye su uso como predictor; no es un resultado de desempeño.",
+      "action": "Conservar fuera del modelo bajo la autorización vigente.",
+      "evidence": [],
+      "documentation": [
+        "config/attrition_model_in_memory_training_authorization_20261001.json"
+      ]
+    },
+    {
+      "id": "heartbeat",
+      "label": "Heartbeat exacto de QVoice",
+      "view_ids": [
+        "slide-26"
+      ],
+      "source": "Workbooks QVoice y diccionario de encuesta",
+      "source_fields": [
+        "scale_Q1 … scale_Q53"
+      ],
+      "source_values": "Escalas ordinales 1, 2, 3, 4, 5; blanks/255/otros inválidos fuera del dominio.",
+      "proposed_type": "Signo relativo de cada pregunta respecto al promedio personal de la escala.",
+      "transformation": "Definición propuesta: signo de pregunta−promedio personal; requiere las 53 columnas y al menos 38 respuestas válidas. No se calcula como candidata en esta ronda.",
+      "history": "2024 tiene cero escalas ordinales reconocidas; 2025 tiene 52 de 53 y falta Q42. La wave 2026 sólo corresponde a 2027.",
+      "decision": "Excluida antes de selección",
+      "reason": "No se dispone de la estructura exacta requerida para las waves elegibles.",
+      "action": "Recuperar la estructura faltante o definir y validar una medida diferente; no cambiar silenciosamente el denominador.",
+      "evidence": [
+        "v11-heartbeat-headers.json"
+      ],
+      "documentation": [
+        "docs/variables/qvoice-model/b-heartbeat-v11-20261012.md"
+      ]
+    },
+    {
+      "id": "annual_review",
+      "label": "Flag de promoción de Annual Review",
+      "view_ids": [
+        "slide-34"
+      ],
+      "source": "hrda.annual_review_report",
+      "source_fields": [
+        "promotion_yes_no",
+        "cycle_name",
+        "grade",
+        "last_modified_date",
+        "airflow_execution_date"
+      ],
+      "source_values": "YES/NO después de UPPER/TRIM; ciclos AR20–AR25.",
+      "proposed_type": "Binaria por persona y ciclo, enlazada al último ciclo conocido.",
+      "transformation": "El audit normaliza YES/NO; no se traslada este flag al modelo. La promoción is_promo de B permanece como concepto diferente.",
+      "history": "AR20–AR24 tienen carga/modificación 2025-06-25; AR25, 2025-11-09. No se acreditó el calendario original de publicación ni versiones por ciclo.",
+      "decision": "Representación exacta excluida; concepto parcialmente cubierto",
+      "reason": "El grain y el dominio pasan el control técnico, pero esos timestamps no habilitan usar el flag en años anteriores.",
+      "action": "Obtener publicación/versiones históricas; conservar promoción de B y probar por separado track y entrada observada al grado.",
+      "evidence": [
+        "v11-annual-review-history.json"
+      ],
+      "documentation": [
+        "docs/variables/promotion-history-by-compensation-grade/b-model-annual-review-v11-20261012.md"
+      ]
+    },
+    {
+      "id": "talent",
+      "label": "Talent index",
+      "view_ids": [
+        "slide-50"
+      ],
+      "source": "hrda.master_talent_index",
+      "source_fields": [
+        "metadata de columnas y timestamps técnicos"
+      ],
+      "source_values": "No se extrae el dominio individual del índice: la revisión de esta ronda se detuvo en metadata.",
+      "proposed_type": "Índice almacenado; escala, fórmula y versiones sin acreditar para uso temporal.",
+      "transformation": "Sin columna de modelo, sin imputación, bandas ni efecto estimado.",
+      "history": "Una tabla con 64 columnas y tres timestamps técnicos; no se identificó fecha de negocio ni snapshot del índice.",
+      "decision": "Excluida antes de selección",
+      "reason": "No hay ancla de negocio suficiente para reproducir lo conocido en cada foto.",
+      "action": "Definir fórmula, grain, fecha de disponibilidad e historia de versiones antes de probarlo.",
+      "evidence": [
+        "v11-talent-metadata.json"
+      ],
+      "documentation": [
+        "docs/variables/talent-index/b-model-v11-20261012.md"
+      ]
+    }
+  ]
+}

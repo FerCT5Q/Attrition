@@ -1,0 +1,1477 @@
+{
+  "cutoff": "2024-02-01",
+  "dates": [
+    {
+      "origin": "2022-11-01",
+      "train_latest_label": "2022-10-23",
+      "validation_first": "2022-11-20",
+      "validation_last": "2023-01-22",
+      "validation_latest_outcome": "2023-07-22"
+    },
+    {
+      "origin": "2023-05-01",
+      "train_latest_label": "2023-04-23",
+      "validation_first": "2023-05-21",
+      "validation_last": "2023-07-23",
+      "validation_latest_outcome": "2024-01-23"
+    }
+  ],
+  "screen": [
+    {
+      "C": 0.003,
+      "converged": true,
+      "features": [
+        "tenure_playbook_band",
+        "prior_experience_band"
+      ]
+    },
+    {
+      "C": 0.01,
+      "converged": true,
+      "features": [
+        "level_grouped",
+        "tenure_playbook_band",
+        "calendar_month",
+        "manager_changes_12m",
+        "direct_reports_band",
+        "time_since_promotion_band",
+        "level_x_tenure",
+        "prior_experience_band",
+        "region",
+        "comp_ratio_band",
+        "grade_family",
+        "acquisition_recorded"
+      ]
+    },
+    {
+      "C": 0.03,
+      "converged": true,
+      "features": [
+        "level_grouped",
+        "tenure_playbook_band",
+        "calendar_month",
+        "manager_changes_12m",
+        "direct_reports_band",
+        "time_since_promotion_band",
+        "rehire",
+        "level_x_tenure",
+        "prior_experience_band",
+        "region",
+        "comp_ratio_band",
+        "acquisition_recorded"
+      ]
+    },
+    {
+      "C": 0.1,
+      "converged": true,
+      "features": [
+        "level_grouped",
+        "tenure_playbook_band",
+        "calendar_month",
+        "manager_changes_12m",
+        "direct_reports_band",
+        "time_since_promotion_band",
+        "rehire",
+        "level_x_tenure",
+        "tenure_x_manager_changes",
+        "prior_experience_band",
+        "region",
+        "comp_ratio_band",
+        "acquisition_recorded"
+      ]
+    },
+    {
+      "C": 0.3,
+      "converged": true,
+      "features": [
+        "level_grouped",
+        "tenure_playbook_band",
+        "calendar_month",
+        "manager_changes_12m",
+        "direct_reports_band",
+        "time_since_promotion_band",
+        "rehire",
+        "level_x_tenure",
+        "tenure_x_manager_changes",
+        "prior_experience_band",
+        "region",
+        "comp_ratio_band",
+        "grade_family",
+        "acquisition_recorded"
+      ]
+    },
+    {
+      "C": 1.0,
+      "converged": true,
+      "features": [
+        "level_grouped",
+        "tenure_playbook_band",
+        "calendar_month",
+        "manager_changes_12m",
+        "direct_reports_band",
+        "time_since_promotion_band",
+        "rehire",
+        "level_x_tenure",
+        "tenure_x_manager_changes",
+        "prior_experience_band",
+        "region",
+        "comp_ratio_band",
+        "grade_family",
+        "acquisition_recorded"
+      ]
+    }
+  ],
+  "trials": [
+    {
+      "features": [
+        "level_grouped",
+        "tenure_playbook_band",
+        "calendar_month",
+        "manager_changes_12m",
+        "team_exits_12m",
+        "direct_reports_band",
+        "time_since_promotion_band",
+        "rehire",
+        "level_x_tenure",
+        "tenure_x_manager_changes"
+      ],
+      "l2": 0.1,
+      "folds": [
+        {
+          "exposures": 92189.0,
+          "event_exposures": 1908.0,
+          "pr_auc": 0.030765396067700627,
+          "lift_at_10_percent": 1.8055429264226717,
+          "brier_score": 0.021045261220794236,
+          "observed_percent": 2.069661239410342,
+          "predicted_percent": 4.434468895312958,
+          "calibration_error_pp": 2.364807655902616,
+          "top_quintile_observed_percent": 3.2900115462004984,
+          "top_quintile_predicted_percent": 8.243540720836759,
+          "top_quintile_calibration_error_pp": 4.953529174636261,
+          "log_loss": 0.10773648637301977
+        },
+        {
+          "exposures": 93088.0,
+          "event_exposures": 2165.0,
+          "pr_auc": 0.038172823601539806,
+          "lift_at_10_percent": 1.8424186437119465,
+          "brier_score": 0.02275225431567242,
+          "observed_percent": 2.325756273633551,
+          "predicted_percent": 3.3490711275778975,
+          "calibration_error_pp": 1.0233148539443466,
+          "top_quintile_observed_percent": 3.9711802892878865,
+          "top_quintile_predicted_percent": 6.128297156213045,
+          "top_quintile_calibration_error_pp": 2.1571168669251586,
+          "log_loss": 0.10977154155062091
+        }
+      ],
+      "failed": false,
+      "mean": {
+        "exposures": 92638.5,
+        "event_exposures": 2036.5,
+        "pr_auc": 0.03446910983462022,
+        "lift_at_10_percent": 1.823980785067309,
+        "brier_score": 0.02189875776823333,
+        "observed_percent": 2.197708756521947,
+        "predicted_percent": 3.891770011445428,
+        "calibration_error_pp": 1.6940612549234815,
+        "top_quintile_observed_percent": 3.630595917744192,
+        "top_quintile_predicted_percent": 7.185918938524901,
+        "top_quintile_calibration_error_pp": 3.5553230207807096,
+        "log_loss": 0.10875401396182034
+      }
+    },
+    {
+      "features": [
+        "level_grouped",
+        "tenure_playbook_band",
+        "calendar_month",
+        "manager_changes_12m",
+        "team_exits_12m",
+        "direct_reports_band",
+        "time_since_promotion_band",
+        "rehire",
+        "level_x_tenure",
+        "tenure_x_manager_changes"
+      ],
+      "l2": 1.0,
+      "folds": [
+        {
+          "exposures": 92189.0,
+          "event_exposures": 1908.0,
+          "pr_auc": 0.030721873774279464,
+          "lift_at_10_percent": 1.8100541579315164,
+          "brier_score": 0.020982385386621477,
+          "observed_percent": 2.069661239410342,
+          "predicted_percent": 4.359200857537697,
+          "calibration_error_pp": 2.289539618127355,
+          "top_quintile_observed_percent": 3.3186805327849718,
+          "top_quintile_predicted_percent": 8.017546188975372,
+          "top_quintile_calibration_error_pp": 4.6988656561904,
+          "log_loss": 0.1072670153559884
+        },
+        {
+          "exposures": 93088.0,
+          "event_exposures": 2165.0,
+          "pr_auc": 0.03820878088975754,
+          "lift_at_10_percent": 1.828219743501548,
+          "brier_score": 0.022745724678738928,
+          "observed_percent": 2.325756273633551,
+          "predicted_percent": 3.3414141433556392,
+          "calibration_error_pp": 1.0156578697220884,
+          "top_quintile_observed_percent": 3.960799900916021,
+          "top_quintile_predicted_percent": 6.047656000656962,
+          "top_quintile_calibration_error_pp": 2.0868560997409413,
+          "log_loss": 0.1097400886573633
+        }
+      ],
+      "failed": false,
+      "mean": {
+        "exposures": 92638.5,
+        "event_exposures": 2036.5,
+        "pr_auc": 0.0344653273320185,
+        "lift_at_10_percent": 1.819136950716532,
+        "brier_score": 0.021864055032680203,
+        "observed_percent": 2.197708756521947,
+        "predicted_percent": 3.850307500446668,
+        "calibration_error_pp": 1.6525987439247216,
+        "top_quintile_observed_percent": 3.6397402168504964,
+        "top_quintile_predicted_percent": 7.032601094816167,
+        "top_quintile_calibration_error_pp": 3.3928608779656706,
+        "log_loss": 0.10850355200667586
+      }
+    },
+    {
+      "features": [
+        "level_grouped",
+        "tenure_playbook_band",
+        "calendar_month",
+        "manager_changes_12m",
+        "team_exits_12m",
+        "direct_reports_band",
+        "time_since_promotion_band",
+        "rehire",
+        "level_x_tenure",
+        "tenure_x_manager_changes"
+      ],
+      "l2": 10.0,
+      "folds": [
+        {
+          "exposures": 92189.0,
+          "event_exposures": 1908.0,
+          "pr_auc": 0.030738303283604603,
+          "lift_at_10_percent": 1.8261996273002563,
+          "brier_score": 0.02076850558735878,
+          "observed_percent": 2.069661239410342,
+          "predicted_percent": 4.113920260186334,
+          "calibration_error_pp": 2.0442590207759923,
+          "top_quintile_observed_percent": 3.243784568716237,
+          "top_quintile_predicted_percent": 7.235582291116746,
+          "top_quintile_calibration_error_pp": 3.9917977224005092,
+          "log_loss": 0.10572811778841232
+        },
+        {
+          "exposures": 93088.0,
+          "event_exposures": 2165.0,
+          "pr_auc": 0.03819157232504845,
+          "lift_at_10_percent": 1.8712397425187952,
+          "brier_score": 0.022730292504199327,
+          "observed_percent": 2.325756273633551,
+          "predicted_percent": 3.3525528490695393,
+          "calibration_error_pp": 1.0267965754359885,
+          "top_quintile_observed_percent": 3.899535922997593,
+          "top_quintile_predicted_percent": 5.810051630998601,
+          "top_quintile_calibration_error_pp": 1.9105157080010073,
+          "log_loss": 0.1097881130937413
+        }
+      ],
+      "failed": false,
+      "mean": {
+        "exposures": 92638.5,
+        "event_exposures": 2036.5,
+        "pr_auc": 0.03446493780432653,
+        "lift_at_10_percent": 1.8487196849095258,
+        "brier_score": 0.021749399045779053,
+        "observed_percent": 2.197708756521947,
+        "predicted_percent": 3.7332365546279367,
+        "calibration_error_pp": 1.5355277981059903,
+        "top_quintile_observed_percent": 3.571660245856915,
+        "top_quintile_predicted_percent": 6.522816961057673,
+        "top_quintile_calibration_error_pp": 2.9511567152007583,
+        "log_loss": 0.1077581154410768
+      }
+    },
+    {
+      "features": [
+        "level_grouped",
+        "tenure_playbook_band",
+        "calendar_month",
+        "manager_changes_12m",
+        "team_exits_12m",
+        "direct_reports_band",
+        "time_since_promotion_band",
+        "rehire",
+        "level_x_tenure",
+        "tenure_x_manager_changes",
+        "prior_experience_band",
+        "time_at_level_band",
+        "manager_left_6m",
+        "ios_12m",
+        "layers_band",
+        "work_arrangement_group",
+        "region",
+        "comp_ratio_band",
+        "grade_family",
+        "acquisition_recorded",
+        "transfer_12m"
+      ],
+      "l2": 0.1,
+      "folds": [
+        {
+          "exposures": 92189.0,
+          "event_exposures": 1908.0,
+          "pr_auc": 0.0307364340047001,
+          "lift_at_10_percent": 1.7730607966457015,
+          "brier_score": 0.021189391069346586,
+          "observed_percent": 2.069661239410342,
+          "predicted_percent": 4.565110926800642,
+          "calibration_error_pp": 2.4954496873903005,
+          "top_quintile_observed_percent": 3.465706320710714,
+          "top_quintile_predicted_percent": 8.832334729790336,
+          "top_quintile_calibration_error_pp": 5.366628409079623,
+          "log_loss": 0.10849711577906493
+        },
+        {
+          "exposures": 93088.0,
+          "event_exposures": 2165.0,
+          "pr_auc": 0.03971560872844791,
+          "lift_at_10_percent": 2.133718244803696,
+          "brier_score": 0.02267872736386109,
+          "observed_percent": 2.325756273633551,
+          "predicted_percent": 1.3600770774841873,
+          "calibration_error_pp": 0.9656791961493636,
+          "top_quintile_observed_percent": 4.211069095909246,
+          "top_quintile_predicted_percent": 2.8163658396176303,
+          "top_quintile_calibration_error_pp": 1.3947032562916164,
+          "log_loss": 0.11029537142628973
+        }
+      ],
+      "failed": false,
+      "mean": {
+        "exposures": 92638.5,
+        "event_exposures": 2036.5,
+        "pr_auc": 0.035226021366574004,
+        "lift_at_10_percent": 1.9533895207246987,
+        "brier_score": 0.021934059216603838,
+        "observed_percent": 2.197708756521947,
+        "predicted_percent": 2.962594002142415,
+        "calibration_error_pp": 1.730564441769832,
+        "top_quintile_observed_percent": 3.83838770830998,
+        "top_quintile_predicted_percent": 5.824350284703983,
+        "top_quintile_calibration_error_pp": 3.3806658326856196,
+        "log_loss": 0.10939624360267733
+      }
+    },
+    {
+      "features": [
+        "level_grouped",
+        "tenure_playbook_band",
+        "calendar_month",
+        "manager_changes_12m",
+        "team_exits_12m",
+        "direct_reports_band",
+        "time_since_promotion_band",
+        "rehire",
+        "level_x_tenure",
+        "tenure_x_manager_changes",
+        "prior_experience_band",
+        "time_at_level_band",
+        "manager_left_6m",
+        "ios_12m",
+        "layers_band",
+        "work_arrangement_group",
+        "region",
+        "comp_ratio_band",
+        "grade_family",
+        "acquisition_recorded",
+        "transfer_12m"
+      ],
+      "l2": 1.0,
+      "folds": [
+        {
+          "exposures": 92189.0,
+          "event_exposures": 1908.0,
+          "pr_auc": 0.030768460849042688,
+          "lift_at_10_percent": 1.7948487571129077,
+          "brier_score": 0.02111918211112398,
+          "observed_percent": 2.069661239410342,
+          "predicted_percent": 4.497655739519938,
+          "calibration_error_pp": 2.4279945001095955,
+          "top_quintile_observed_percent": 3.4222870648583044,
+          "top_quintile_predicted_percent": 8.607090582730608,
+          "top_quintile_calibration_error_pp": 5.184803517872303,
+          "log_loss": 0.10801916395022633
+        },
+        {
+          "exposures": 93088.0,
+          "event_exposures": 2165.0,
+          "pr_auc": 0.03957886161126797,
+          "lift_at_10_percent": 2.1247113163972284,
+          "brier_score": 0.02262429067034424,
+          "observed_percent": 2.325756273633551,
+          "predicted_percent": 1.6635031854514128,
+          "calibration_error_pp": 0.6622530881821381,
+          "top_quintile_observed_percent": 4.184212787899622,
+          "top_quintile_predicted_percent": 3.3145568254293303,
+          "top_quintile_calibration_error_pp": 0.8696559624702914,
+          "log_loss": 0.10853015081815584
+        }
+      ],
+      "failed": false,
+      "mean": {
+        "exposures": 92638.5,
+        "event_exposures": 2036.5,
+        "pr_auc": 0.03517366123015533,
+        "lift_at_10_percent": 1.9597800367550682,
+        "brier_score": 0.021871736390734108,
+        "observed_percent": 2.197708756521947,
+        "predicted_percent": 3.0805794624856753,
+        "calibration_error_pp": 1.5451237941458669,
+        "top_quintile_observed_percent": 3.803249926378963,
+        "top_quintile_predicted_percent": 5.960823704079969,
+        "top_quintile_calibration_error_pp": 3.0272297401712973,
+        "log_loss": 0.10827465738419109
+      }
+    },
+    {
+      "features": [
+        "level_grouped",
+        "tenure_playbook_band",
+        "calendar_month",
+        "manager_changes_12m",
+        "team_exits_12m",
+        "direct_reports_band",
+        "time_since_promotion_band",
+        "rehire",
+        "level_x_tenure",
+        "tenure_x_manager_changes",
+        "prior_experience_band",
+        "time_at_level_band",
+        "manager_left_6m",
+        "ios_12m",
+        "layers_band",
+        "work_arrangement_group",
+        "region",
+        "comp_ratio_band",
+        "grade_family",
+        "acquisition_recorded",
+        "transfer_12m"
+      ],
+      "l2": 10.0,
+      "folds": [
+        {
+          "exposures": 92189.0,
+          "event_exposures": 1908.0,
+          "pr_auc": 0.030932968821079883,
+          "lift_at_10_percent": 1.8134171907756813,
+          "brier_score": 0.020870749781870188,
+          "observed_percent": 2.069661239410342,
+          "predicted_percent": 4.250984455246328,
+          "calibration_error_pp": 2.1813232158359854,
+          "top_quintile_observed_percent": 3.3806455578575894,
+          "top_quintile_predicted_percent": 7.7236124142424405,
+          "top_quintile_calibration_error_pp": 4.342966856384852,
+          "log_loss": 0.10638164600259957
+        },
+        {
+          "exposures": 93088.0,
+          "event_exposures": 2165.0,
+          "pr_auc": 0.038502844944428044,
+          "lift_at_10_percent": 1.9846387330913893,
+          "brier_score": 0.022587734881638143,
+          "observed_percent": 2.325756273633551,
+          "predicted_percent": 2.3965306312469603,
+          "calibration_error_pp": 0.07077435761340956,
+          "top_quintile_observed_percent": 4.1639554584295055,
+          "top_quintile_predicted_percent": 4.33923775330202,
+          "top_quintile_calibration_error_pp": 0.17528229487251343,
+          "log_loss": 0.10755081868281774
+        }
+      ],
+      "failed": false,
+      "mean": {
+        "exposures": 92638.5,
+        "event_exposures": 2036.5,
+        "pr_auc": 0.03471790688275396,
+        "lift_at_10_percent": 1.8990279619335353,
+        "brier_score": 0.021729242331754165,
+        "observed_percent": 2.197708756521947,
+        "predicted_percent": 3.3237575432466437,
+        "calibration_error_pp": 1.1260487867246975,
+        "top_quintile_observed_percent": 3.7723005081435472,
+        "top_quintile_predicted_percent": 6.0314250837722305,
+        "top_quintile_calibration_error_pp": 2.2591245756286824,
+        "log_loss": 0.10696623234270866
+      }
+    },
+    {
+      "features": [
+        "tenure_playbook_band",
+        "prior_experience_band"
+      ],
+      "l2": 0.1,
+      "folds": [
+        {
+          "exposures": 92189.0,
+          "event_exposures": 1908.0,
+          "pr_auc": 0.028719433592579707,
+          "lift_at_10_percent": 1.6357019931787602,
+          "brier_score": 0.020545853152055604,
+          "observed_percent": 2.069661239410342,
+          "predicted_percent": 3.6724918458798266,
+          "calibration_error_pp": 1.6028306064694846,
+          "top_quintile_observed_percent": 3.1974659409665347,
+          "top_quintile_predicted_percent": 6.316754952138881,
+          "top_quintile_calibration_error_pp": 3.1192890111723464,
+          "log_loss": 0.10363401076550123
+        },
+        {
+          "exposures": 93088.0,
+          "event_exposures": 2165.0,
+          "pr_auc": 0.035777305013953195,
+          "lift_at_10_percent": 1.9691961407251968,
+          "brier_score": 0.022756231719497148,
+          "observed_percent": 2.325756273633551,
+          "predicted_percent": 3.4673029738751,
+          "calibration_error_pp": 1.141546700241549,
+          "top_quintile_observed_percent": 4.017594874831398,
+          "top_quintile_predicted_percent": 5.899134898535645,
+          "top_quintile_calibration_error_pp": 1.8815400237042466,
+          "log_loss": 0.11025430871976914
+        }
+      ],
+      "failed": false,
+      "mean": {
+        "exposures": 92638.5,
+        "event_exposures": 2036.5,
+        "pr_auc": 0.03224836930326645,
+        "lift_at_10_percent": 1.8024490669519784,
+        "brier_score": 0.021651042435776376,
+        "observed_percent": 2.197708756521947,
+        "predicted_percent": 3.569897409877463,
+        "calibration_error_pp": 1.3721886533555168,
+        "top_quintile_observed_percent": 3.6075304078989667,
+        "top_quintile_predicted_percent": 6.107944925337263,
+        "top_quintile_calibration_error_pp": 2.5004145174382963,
+        "log_loss": 0.10694415974263519
+      }
+    },
+    {
+      "features": [
+        "tenure_playbook_band",
+        "prior_experience_band"
+      ],
+      "l2": 1.0,
+      "folds": [
+        {
+          "exposures": 92189.0,
+          "event_exposures": 1908.0,
+          "pr_auc": 0.028742048090669884,
+          "lift_at_10_percent": 1.6357019931787602,
+          "brier_score": 0.020541603644737613,
+          "observed_percent": 2.069661239410342,
+          "predicted_percent": 3.67190529506846,
+          "calibration_error_pp": 1.6022440556581183,
+          "top_quintile_observed_percent": 3.1974659409665347,
+          "top_quintile_predicted_percent": 6.280786352150114,
+          "top_quintile_calibration_error_pp": 3.0833204111835792,
+          "log_loss": 0.10361945597250341
+        },
+        {
+          "exposures": 93088.0,
+          "event_exposures": 2165.0,
+          "pr_auc": 0.03577859638721046,
+          "lift_at_10_percent": 1.9691961407251968,
+          "brier_score": 0.022754291878845943,
+          "observed_percent": 2.325756273633551,
+          "predicted_percent": 3.465505360840579,
+          "calibration_error_pp": 1.139749087207028,
+          "top_quintile_observed_percent": 4.01886424793111,
+          "top_quintile_predicted_percent": 5.871074555103872,
+          "top_quintile_calibration_error_pp": 1.8522103071727622,
+          "log_loss": 0.11024856994149494
+        }
+      ],
+      "failed": false,
+      "mean": {
+        "exposures": 92638.5,
+        "event_exposures": 2036.5,
+        "pr_auc": 0.032260322238940174,
+        "lift_at_10_percent": 1.8024490669519784,
+        "brier_score": 0.021647947761791776,
+        "observed_percent": 2.197708756521947,
+        "predicted_percent": 3.5687053279545196,
+        "calibration_error_pp": 1.3709965714325731,
+        "top_quintile_observed_percent": 3.6081650944488226,
+        "top_quintile_predicted_percent": 6.075930453626993,
+        "top_quintile_calibration_error_pp": 2.4677653591781707,
+        "log_loss": 0.10693401295699917
+      }
+    },
+    {
+      "features": [
+        "tenure_playbook_band",
+        "prior_experience_band"
+      ],
+      "l2": 10.0,
+      "folds": [
+        {
+          "exposures": 92189.0,
+          "event_exposures": 1908.0,
+          "pr_auc": 0.02876460593729326,
+          "lift_at_10_percent": 1.6357019931787602,
+          "brier_score": 0.020512626731071532,
+          "observed_percent": 2.069661239410342,
+          "predicted_percent": 3.6697168905282496,
+          "calibration_error_pp": 1.6000556511179078,
+          "top_quintile_observed_percent": 3.1974659409665347,
+          "top_quintile_predicted_percent": 5.980602678639405,
+          "top_quintile_calibration_error_pp": 2.7831367376728706,
+          "log_loss": 0.10355603018315024
+        },
+        {
+          "exposures": 93088.0,
+          "event_exposures": 2165.0,
+          "pr_auc": 0.035570083813662765,
+          "lift_at_10_percent": 1.8270407146457837,
+          "brier_score": 0.022741535261161457,
+          "observed_percent": 2.325756273633551,
+          "predicted_percent": 3.4520870034860334,
+          "calibration_error_pp": 1.1263307298524823,
+          "top_quintile_observed_percent": 4.01886424793111,
+          "top_quintile_predicted_percent": 5.62942150671155,
+          "top_quintile_calibration_error_pp": 1.6105572587804393,
+          "log_loss": 0.11023983000859493
+        }
+      ],
+      "failed": false,
+      "mean": {
+        "exposures": 92638.5,
+        "event_exposures": 2036.5,
+        "pr_auc": 0.03216734487547801,
+        "lift_at_10_percent": 1.731371353912272,
+        "brier_score": 0.021627080996116495,
+        "observed_percent": 2.197708756521947,
+        "predicted_percent": 3.5609019470071415,
+        "calibration_error_pp": 1.363193190485195,
+        "top_quintile_observed_percent": 3.6081650944488226,
+        "top_quintile_predicted_percent": 5.805012092675478,
+        "top_quintile_calibration_error_pp": 2.196846998226655,
+        "log_loss": 0.10689793009587259
+      }
+    },
+    {
+      "features": [
+        "level_grouped",
+        "tenure_playbook_band",
+        "calendar_month",
+        "manager_changes_12m",
+        "direct_reports_band",
+        "time_since_promotion_band",
+        "level_x_tenure",
+        "prior_experience_band",
+        "region",
+        "comp_ratio_band",
+        "grade_family",
+        "acquisition_recorded"
+      ],
+      "l2": 0.1,
+      "folds": [],
+      "failed": true,
+      "reason": "No convergió IRLS disperso."
+    },
+    {
+      "features": [
+        "level_grouped",
+        "tenure_playbook_band",
+        "calendar_month",
+        "manager_changes_12m",
+        "direct_reports_band",
+        "time_since_promotion_band",
+        "level_x_tenure",
+        "prior_experience_band",
+        "region",
+        "comp_ratio_band",
+        "grade_family",
+        "acquisition_recorded"
+      ],
+      "l2": 1.0,
+      "folds": [],
+      "failed": true,
+      "reason": "No convergió IRLS disperso."
+    },
+    {
+      "features": [
+        "level_grouped",
+        "tenure_playbook_band",
+        "calendar_month",
+        "manager_changes_12m",
+        "direct_reports_band",
+        "time_since_promotion_band",
+        "level_x_tenure",
+        "prior_experience_band",
+        "region",
+        "comp_ratio_band",
+        "grade_family",
+        "acquisition_recorded"
+      ],
+      "l2": 10.0,
+      "folds": [
+        {
+          "exposures": 92189.0,
+          "event_exposures": 1908.0,
+          "pr_auc": 0.030851385482318625,
+          "lift_at_10_percent": 1.7911799940101827,
+          "brier_score": 0.020872795224174758,
+          "observed_percent": 2.069661239410342,
+          "predicted_percent": 4.258500176217448,
+          "calibration_error_pp": 2.1888389368071066,
+          "top_quintile_observed_percent": 3.3834338653785654,
+          "top_quintile_predicted_percent": 7.725712463309488,
+          "top_quintile_calibration_error_pp": 4.342278597930922,
+          "log_loss": 0.10643124908327488
+        },
+        {
+          "exposures": 93088.0,
+          "event_exposures": 2165.0,
+          "pr_auc": 0.03892506703323484,
+          "lift_at_10_percent": 1.9045979424732313,
+          "brier_score": 0.022751753001673626,
+          "observed_percent": 2.325756273633551,
+          "predicted_percent": 3.489910030953559,
+          "calibration_error_pp": 1.1641537573200078,
+          "top_quintile_observed_percent": 3.972124686932182,
+          "top_quintile_predicted_percent": 6.111295044328034,
+          "top_quintile_calibration_error_pp": 2.1391703573958516,
+          "log_loss": 0.10990976833406962
+        }
+      ],
+      "failed": false,
+      "mean": {
+        "exposures": 92638.5,
+        "event_exposures": 2036.5,
+        "pr_auc": 0.03488822625777673,
+        "lift_at_10_percent": 1.847888968241707,
+        "brier_score": 0.02181227411292419,
+        "observed_percent": 2.197708756521947,
+        "predicted_percent": 3.8742051035855036,
+        "calibration_error_pp": 1.6764963470635572,
+        "top_quintile_observed_percent": 3.6777792761553734,
+        "top_quintile_predicted_percent": 6.9185037538187615,
+        "top_quintile_calibration_error_pp": 3.240724477663387,
+        "log_loss": 0.10817050870867226
+      }
+    },
+    {
+      "features": [
+        "level_grouped",
+        "tenure_playbook_band",
+        "calendar_month",
+        "manager_changes_12m",
+        "direct_reports_band",
+        "time_since_promotion_band",
+        "rehire",
+        "level_x_tenure",
+        "prior_experience_band",
+        "region",
+        "comp_ratio_band",
+        "acquisition_recorded"
+      ],
+      "l2": 0.1,
+      "folds": [
+        {
+          "exposures": 92189.0,
+          "event_exposures": 1908.0,
+          "pr_auc": 0.030822538757767557,
+          "lift_at_10_percent": 1.7872117400419285,
+          "brier_score": 0.021186176025275266,
+          "observed_percent": 2.069661239410342,
+          "predicted_percent": 4.562152859061159,
+          "calibration_error_pp": 2.4924916196508176,
+          "top_quintile_observed_percent": 3.4494353990172364,
+          "top_quintile_predicted_percent": 8.828015267527114,
+          "top_quintile_calibration_error_pp": 5.378579868509878,
+          "log_loss": 0.10847878378176243
+        },
+        {
+          "exposures": 93088.0,
+          "event_exposures": 2165.0,
+          "pr_auc": 0.03882904076577975,
+          "lift_at_10_percent": 1.9538106235565817,
+          "brier_score": 0.022782527738292053,
+          "observed_percent": 2.325756273633551,
+          "predicted_percent": 3.488515447185974,
+          "calibration_error_pp": 1.1627591735524232,
+          "top_quintile_observed_percent": 3.955912684771399,
+          "top_quintile_predicted_percent": 6.495741342898707,
+          "top_quintile_calibration_error_pp": 2.5398286581273086,
+          "log_loss": 0.10991182361831964
+        }
+      ],
+      "failed": false,
+      "mean": {
+        "exposures": 92638.5,
+        "event_exposures": 2036.5,
+        "pr_auc": 0.034825789761773654,
+        "lift_at_10_percent": 1.8705111817992552,
+        "brier_score": 0.02198435188178366,
+        "observed_percent": 2.197708756521947,
+        "predicted_percent": 4.025334153123566,
+        "calibration_error_pp": 1.8276253966016203,
+        "top_quintile_observed_percent": 3.7026740418943174,
+        "top_quintile_predicted_percent": 7.661878305212911,
+        "top_quintile_calibration_error_pp": 3.9592042633185933,
+        "log_loss": 0.10919530370004103
+      }
+    },
+    {
+      "features": [
+        "level_grouped",
+        "tenure_playbook_band",
+        "calendar_month",
+        "manager_changes_12m",
+        "direct_reports_band",
+        "time_since_promotion_band",
+        "rehire",
+        "level_x_tenure",
+        "prior_experience_band",
+        "region",
+        "comp_ratio_band",
+        "acquisition_recorded"
+      ],
+      "l2": 1.0,
+      "folds": [
+        {
+          "exposures": 92189.0,
+          "event_exposures": 1908.0,
+          "pr_auc": 0.030821047229981042,
+          "lift_at_10_percent": 1.8016318204997448,
+          "brier_score": 0.021117249593168096,
+          "observed_percent": 2.069661239410342,
+          "predicted_percent": 4.495311022593998,
+          "calibration_error_pp": 2.425649783183656,
+          "top_quintile_observed_percent": 3.444011758452744,
+          "top_quintile_predicted_percent": 8.606191971940497,
+          "top_quintile_calibration_error_pp": 5.162180213487753,
+          "log_loss": 0.10800925844049766
+        },
+        {
+          "exposures": 93088.0,
+          "event_exposures": 2165.0,
+          "pr_auc": 0.0388036604288909,
+          "lift_at_10_percent": 1.917090069284065,
+          "brier_score": 0.02277368620920326,
+          "observed_percent": 2.325756273633551,
+          "predicted_percent": 3.481751214970931,
+          "calibration_error_pp": 1.15599494133738,
+          "top_quintile_observed_percent": 3.937134754211068,
+          "top_quintile_predicted_percent": 6.409420634012747,
+          "top_quintile_calibration_error_pp": 2.4722858798016785,
+          "log_loss": 0.10986945986713594
+        }
+      ],
+      "failed": false,
+      "mean": {
+        "exposures": 92638.5,
+        "event_exposures": 2036.5,
+        "pr_auc": 0.03481235382943597,
+        "lift_at_10_percent": 1.8593609448919048,
+        "brier_score": 0.021945467901185678,
+        "observed_percent": 2.197708756521947,
+        "predicted_percent": 3.9885311187824644,
+        "calibration_error_pp": 1.790822362260518,
+        "top_quintile_observed_percent": 3.690573256331906,
+        "top_quintile_predicted_percent": 7.507806302976622,
+        "top_quintile_calibration_error_pp": 3.8172330466447155,
+        "log_loss": 0.1089393591538168
+      }
+    },
+    {
+      "features": [
+        "level_grouped",
+        "tenure_playbook_band",
+        "calendar_month",
+        "manager_changes_12m",
+        "direct_reports_band",
+        "time_since_promotion_band",
+        "rehire",
+        "level_x_tenure",
+        "prior_experience_band",
+        "region",
+        "comp_ratio_band",
+        "acquisition_recorded"
+      ],
+      "l2": 10.0,
+      "folds": [
+        {
+          "exposures": 92189.0,
+          "event_exposures": 1908.0,
+          "pr_auc": 0.030876675502752884,
+          "lift_at_10_percent": 1.808176100628931,
+          "brier_score": 0.020867199608445013,
+          "observed_percent": 2.069661239410342,
+          "predicted_percent": 4.249824360443747,
+          "calibration_error_pp": 2.180163121033405,
+          "top_quintile_observed_percent": 3.3735044311143416,
+          "top_quintile_predicted_percent": 7.710367519208285,
+          "top_quintile_calibration_error_pp": 4.336863088093943,
+          "log_loss": 0.10637262879368758
+        },
+        {
+          "exposures": 93088.0,
+          "event_exposures": 2165.0,
+          "pr_auc": 0.038929004775042464,
+          "lift_at_10_percent": 1.903002309468822,
+          "brier_score": 0.022750046435304486,
+          "observed_percent": 2.325756273633551,
+          "predicted_percent": 3.4844234165814933,
+          "calibration_error_pp": 1.1586671429479425,
+          "top_quintile_observed_percent": 3.9710225319541235,
+          "top_quintile_predicted_percent": 6.10176047837206,
+          "top_quintile_calibration_error_pp": 2.1307379464179363,
+          "log_loss": 0.10988674330496566
+        }
+      ],
+      "failed": false,
+      "mean": {
+        "exposures": 92638.5,
+        "event_exposures": 2036.5,
+        "pr_auc": 0.034902840138897676,
+        "lift_at_10_percent": 1.8555892050488765,
+        "brier_score": 0.02180862302187475,
+        "observed_percent": 2.197708756521947,
+        "predicted_percent": 3.8671238885126202,
+        "calibration_error_pp": 1.6694151319906738,
+        "top_quintile_observed_percent": 3.6722634815342325,
+        "top_quintile_predicted_percent": 6.906063998790172,
+        "top_quintile_calibration_error_pp": 3.23380051725594,
+        "log_loss": 0.10812968604932663
+      }
+    },
+    {
+      "features": [
+        "level_grouped",
+        "tenure_playbook_band",
+        "calendar_month",
+        "manager_changes_12m",
+        "direct_reports_band",
+        "time_since_promotion_band",
+        "rehire",
+        "level_x_tenure",
+        "tenure_x_manager_changes",
+        "prior_experience_band",
+        "region",
+        "comp_ratio_band",
+        "acquisition_recorded"
+      ],
+      "l2": 0.1,
+      "folds": [
+        {
+          "exposures": 92189.0,
+          "event_exposures": 1908.0,
+          "pr_auc": 0.03075523622599121,
+          "lift_at_10_percent": 1.7872117400419285,
+          "brier_score": 0.021188586363769468,
+          "observed_percent": 2.069661239410342,
+          "predicted_percent": 4.565889249509215,
+          "calibration_error_pp": 2.4962280100988736,
+          "top_quintile_observed_percent": 3.4722351559562727,
+          "top_quintile_predicted_percent": 8.827052851381469,
+          "top_quintile_calibration_error_pp": 5.354817695425195,
+          "log_loss": 0.10850175331222094
+        },
+        {
+          "exposures": 93088.0,
+          "event_exposures": 2165.0,
+          "pr_auc": 0.0387493455293689,
+          "lift_at_10_percent": 1.926096997690531,
+          "brier_score": 0.022783263718814152,
+          "observed_percent": 2.325756273633551,
+          "predicted_percent": 3.485032008150778,
+          "calibration_error_pp": 1.1592757345172275,
+          "top_quintile_observed_percent": 3.942506015812994,
+          "top_quintile_predicted_percent": 6.5095574189238725,
+          "top_quintile_calibration_error_pp": 2.5670514031108786,
+          "log_loss": 0.1098890919349529
+        }
+      ],
+      "failed": false,
+      "mean": {
+        "exposures": 92638.5,
+        "event_exposures": 2036.5,
+        "pr_auc": 0.03475229087768006,
+        "lift_at_10_percent": 1.8566543688662298,
+        "brier_score": 0.02198592504129181,
+        "observed_percent": 2.197708756521947,
+        "predicted_percent": 4.025460628829997,
+        "calibration_error_pp": 1.8277518723080506,
+        "top_quintile_observed_percent": 3.7073705858846333,
+        "top_quintile_predicted_percent": 7.6683051351526705,
+        "top_quintile_calibration_error_pp": 3.9609345492680372,
+        "log_loss": 0.10919542262358692
+      }
+    },
+    {
+      "features": [
+        "level_grouped",
+        "tenure_playbook_band",
+        "calendar_month",
+        "manager_changes_12m",
+        "direct_reports_band",
+        "time_since_promotion_band",
+        "rehire",
+        "level_x_tenure",
+        "tenure_x_manager_changes",
+        "prior_experience_band",
+        "region",
+        "comp_ratio_band",
+        "acquisition_recorded"
+      ],
+      "l2": 1.0,
+      "folds": [
+        {
+          "exposures": 92189.0,
+          "event_exposures": 1908.0,
+          "pr_auc": 0.03078037817196327,
+          "lift_at_10_percent": 1.8029350104821802,
+          "brier_score": 0.021118801508359264,
+          "observed_percent": 2.069661239410342,
+          "predicted_percent": 4.498131698058703,
+          "calibration_error_pp": 2.4284704586483614,
+          "top_quintile_observed_percent": 3.4200272146230994,
+          "top_quintile_predicted_percent": 8.604233155705767,
+          "top_quintile_calibration_error_pp": 5.184205941082668,
+          "log_loss": 0.10802240205690634
+        },
+        {
+          "exposures": 93088.0,
+          "event_exposures": 2165.0,
+          "pr_auc": 0.03869719313737453,
+          "lift_at_10_percent": 1.8983833718244802,
+          "brier_score": 0.022774510792472707,
+          "observed_percent": 2.325756273633551,
+          "predicted_percent": 3.4782924088550264,
+          "calibration_error_pp": 1.1525361352214756,
+          "top_quintile_observed_percent": 3.9381458152184914,
+          "top_quintile_predicted_percent": 6.41870749400108,
+          "top_quintile_calibration_error_pp": 2.480561678782589,
+          "log_loss": 0.10984752390829879
+        }
+      ],
+      "failed": false,
+      "mean": {
+        "exposures": 92638.5,
+        "event_exposures": 2036.5,
+        "pr_auc": 0.034738785654668904,
+        "lift_at_10_percent": 1.8506591911533303,
+        "brier_score": 0.021946656150415987,
+        "observed_percent": 2.197708756521947,
+        "predicted_percent": 3.9882120534568646,
+        "calibration_error_pp": 1.7905032969349186,
+        "top_quintile_observed_percent": 3.6790865149207956,
+        "top_quintile_predicted_percent": 7.511470324853423,
+        "top_quintile_calibration_error_pp": 3.8323838099326286,
+        "log_loss": 0.10893496298260257
+      }
+    },
+    {
+      "features": [
+        "level_grouped",
+        "tenure_playbook_band",
+        "calendar_month",
+        "manager_changes_12m",
+        "direct_reports_band",
+        "time_since_promotion_band",
+        "rehire",
+        "level_x_tenure",
+        "tenure_x_manager_changes",
+        "prior_experience_band",
+        "region",
+        "comp_ratio_band",
+        "acquisition_recorded"
+      ],
+      "l2": 10.0,
+      "folds": [
+        {
+          "exposures": 92189.0,
+          "event_exposures": 1908.0,
+          "pr_auc": 0.030923800058922764,
+          "lift_at_10_percent": 1.8016852120625702,
+          "brier_score": 0.020869284086786632,
+          "observed_percent": 2.069661239410342,
+          "predicted_percent": 4.249669244960976,
+          "calibration_error_pp": 2.1800080055506337,
+          "top_quintile_observed_percent": 3.3716513539214734,
+          "top_quintile_predicted_percent": 7.721866147208513,
+          "top_quintile_calibration_error_pp": 4.35021479328704,
+          "log_loss": 0.10636440071737369
+        },
+        {
+          "exposures": 93088.0,
+          "event_exposures": 2165.0,
+          "pr_auc": 0.038732522254795475,
+          "lift_at_10_percent": 1.8845265588914548,
+          "brier_score": 0.022752378856465562,
+          "observed_percent": 2.325756273633551,
+          "predicted_percent": 3.4813348255265053,
+          "calibration_error_pp": 1.1555785518929544,
+          "top_quintile_observed_percent": 3.9801048470264693,
+          "top_quintile_predicted_percent": 6.117686109903077,
+          "top_quintile_calibration_error_pp": 2.1375812628766075,
+          "log_loss": 0.1098793860359213
+        }
+      ],
+      "failed": false,
+      "mean": {
+        "exposures": 92638.5,
+        "event_exposures": 2036.5,
+        "pr_auc": 0.03482816115685912,
+        "lift_at_10_percent": 1.8431058854770126,
+        "brier_score": 0.021810831471626095,
+        "observed_percent": 2.197708756521947,
+        "predicted_percent": 3.8655020352437406,
+        "calibration_error_pp": 1.6677932787217942,
+        "top_quintile_observed_percent": 3.6758781004739713,
+        "top_quintile_predicted_percent": 6.919776128555795,
+        "top_quintile_calibration_error_pp": 3.2438980280818237,
+        "log_loss": 0.10812189337664749
+      }
+    },
+    {
+      "features": [
+        "level_grouped",
+        "tenure_playbook_band",
+        "calendar_month",
+        "manager_changes_12m",
+        "direct_reports_band",
+        "time_since_promotion_band",
+        "rehire",
+        "level_x_tenure",
+        "tenure_x_manager_changes",
+        "prior_experience_band",
+        "region",
+        "comp_ratio_band",
+        "grade_family",
+        "acquisition_recorded"
+      ],
+      "l2": 0.1,
+      "folds": [
+        {
+          "exposures": 92189.0,
+          "event_exposures": 1908.0,
+          "pr_auc": 0.0307364340047001,
+          "lift_at_10_percent": 1.7730607966457015,
+          "brier_score": 0.021189391069346586,
+          "observed_percent": 2.069661239410342,
+          "predicted_percent": 4.565110926800642,
+          "calibration_error_pp": 2.4954496873903005,
+          "top_quintile_observed_percent": 3.465706320710714,
+          "top_quintile_predicted_percent": 8.832334729790336,
+          "top_quintile_calibration_error_pp": 5.366628409079623,
+          "log_loss": 0.10849711577906493
+        },
+        {
+          "exposures": 93088.0,
+          "event_exposures": 2165.0,
+          "pr_auc": 0.03886871519574941,
+          "lift_at_10_percent": 1.912240184757506,
+          "brier_score": 0.022782636475054827,
+          "observed_percent": 2.325756273633551,
+          "predicted_percent": 3.484999952173393,
+          "calibration_error_pp": 1.1592436785398426,
+          "top_quintile_observed_percent": 3.9210209694052938,
+          "top_quintile_predicted_percent": 6.51719899882397,
+          "top_quintile_calibration_error_pp": 2.596178029418676,
+          "log_loss": 0.10988021077248354
+        }
+      ],
+      "failed": false,
+      "mean": {
+        "exposures": 92638.5,
+        "event_exposures": 2036.5,
+        "pr_auc": 0.034802574600224755,
+        "lift_at_10_percent": 1.8426504907016037,
+        "brier_score": 0.021986013772200705,
+        "observed_percent": 2.197708756521947,
+        "predicted_percent": 4.0250554394870175,
+        "calibration_error_pp": 1.8273466829650715,
+        "top_quintile_observed_percent": 3.693363645058004,
+        "top_quintile_predicted_percent": 7.674766864307153,
+        "top_quintile_calibration_error_pp": 3.9814032192491497,
+        "log_loss": 0.10918866327577423
+      }
+    },
+    {
+      "features": [
+        "level_grouped",
+        "tenure_playbook_band",
+        "calendar_month",
+        "manager_changes_12m",
+        "direct_reports_band",
+        "time_since_promotion_band",
+        "rehire",
+        "level_x_tenure",
+        "tenure_x_manager_changes",
+        "prior_experience_band",
+        "region",
+        "comp_ratio_band",
+        "grade_family",
+        "acquisition_recorded"
+      ],
+      "l2": 1.0,
+      "folds": [
+        {
+          "exposures": 92189.0,
+          "event_exposures": 1908.0,
+          "pr_auc": 0.030768460849042688,
+          "lift_at_10_percent": 1.7948487571129077,
+          "brier_score": 0.02111918211112398,
+          "observed_percent": 2.069661239410342,
+          "predicted_percent": 4.497655739519938,
+          "calibration_error_pp": 2.4279945001095955,
+          "top_quintile_observed_percent": 3.4222870648583044,
+          "top_quintile_predicted_percent": 8.607090582730608,
+          "top_quintile_calibration_error_pp": 5.184803517872303,
+          "log_loss": 0.10801916395022633
+        },
+        {
+          "exposures": 93088.0,
+          "event_exposures": 2165.0,
+          "pr_auc": 0.0387558901648078,
+          "lift_at_10_percent": 1.903002309468822,
+          "brier_score": 0.022774052486441158,
+          "observed_percent": 2.325756273633551,
+          "predicted_percent": 3.47805099972598,
+          "calibration_error_pp": 1.1522947260924288,
+          "top_quintile_observed_percent": 3.9478772774149187,
+          "top_quintile_predicted_percent": 6.422744227815157,
+          "top_quintile_calibration_error_pp": 2.474866950400238,
+          "log_loss": 0.10983861186401786
+        }
+      ],
+      "failed": false,
+      "mean": {
+        "exposures": 92638.5,
+        "event_exposures": 2036.5,
+        "pr_auc": 0.034762175506925244,
+        "lift_at_10_percent": 1.8489255332908647,
+        "brier_score": 0.02194661729878257,
+        "observed_percent": 2.197708756521947,
+        "predicted_percent": 3.9878533696229588,
+        "calibration_error_pp": 1.7901446131010121,
+        "top_quintile_observed_percent": 3.6850821711366115,
+        "top_quintile_predicted_percent": 7.514917405272882,
+        "top_quintile_calibration_error_pp": 3.8298352341362705,
+        "log_loss": 0.1089288879071221
+      }
+    },
+    {
+      "features": [
+        "level_grouped",
+        "tenure_playbook_band",
+        "calendar_month",
+        "manager_changes_12m",
+        "direct_reports_band",
+        "time_since_promotion_band",
+        "rehire",
+        "level_x_tenure",
+        "tenure_x_manager_changes",
+        "prior_experience_band",
+        "region",
+        "comp_ratio_band",
+        "grade_family",
+        "acquisition_recorded"
+      ],
+      "l2": 10.0,
+      "folds": [
+        {
+          "exposures": 92189.0,
+          "event_exposures": 1908.0,
+          "pr_auc": 0.030932968821079883,
+          "lift_at_10_percent": 1.8134171907756813,
+          "brier_score": 0.020870749781870188,
+          "observed_percent": 2.069661239410342,
+          "predicted_percent": 4.250984455246328,
+          "calibration_error_pp": 2.1813232158359854,
+          "top_quintile_observed_percent": 3.3806455578575894,
+          "top_quintile_predicted_percent": 7.7236124142424405,
+          "top_quintile_calibration_error_pp": 4.342966856384852,
+          "log_loss": 0.10638164600259957
+        },
+        {
+          "exposures": 93088.0,
+          "event_exposures": 2165.0,
+          "pr_auc": 0.038728043161132694,
+          "lift_at_10_percent": 1.879907621247113,
+          "brier_score": 0.022753059673242454,
+          "observed_percent": 2.325756273633551,
+          "predicted_percent": 3.482007046328914,
+          "calibration_error_pp": 1.1562507726953628,
+          "top_quintile_observed_percent": 3.981059737977924,
+          "top_quintile_predicted_percent": 6.118827515264282,
+          "top_quintile_calibration_error_pp": 2.137767777286358,
+          "log_loss": 0.10988826875109149
+        }
+      ],
+      "failed": false,
+      "mean": {
+        "exposures": 92638.5,
+        "event_exposures": 2036.5,
+        "pr_auc": 0.03483050599110629,
+        "lift_at_10_percent": 1.8466624060113972,
+        "brier_score": 0.02181190472755632,
+        "observed_percent": 2.197708756521947,
+        "predicted_percent": 3.866495750787621,
+        "calibration_error_pp": 1.6687869942656741,
+        "top_quintile_observed_percent": 3.6808526479177566,
+        "top_quintile_predicted_percent": 6.921219964753361,
+        "top_quintile_calibration_error_pp": 3.240367316835605,
+        "log_loss": 0.10813495737684553
+      }
+    }
+  ],
+  "B": {
+    "features": [
+      "level_grouped",
+      "tenure_playbook_band",
+      "calendar_month",
+      "manager_changes_12m",
+      "team_exits_12m",
+      "direct_reports_band",
+      "time_since_promotion_band",
+      "rehire",
+      "level_x_tenure",
+      "tenure_x_manager_changes"
+    ],
+    "l2": 10.0,
+    "folds": [
+      {
+        "exposures": 92189.0,
+        "event_exposures": 1908.0,
+        "pr_auc": 0.030738303283604603,
+        "lift_at_10_percent": 1.8261996273002563,
+        "brier_score": 0.02076850558735878,
+        "observed_percent": 2.069661239410342,
+        "predicted_percent": 4.113920260186334,
+        "calibration_error_pp": 2.0442590207759923,
+        "top_quintile_observed_percent": 3.243784568716237,
+        "top_quintile_predicted_percent": 7.235582291116746,
+        "top_quintile_calibration_error_pp": 3.9917977224005092,
+        "log_loss": 0.10572811778841232
+      },
+      {
+        "exposures": 93088.0,
+        "event_exposures": 2165.0,
+        "pr_auc": 0.03819157232504845,
+        "lift_at_10_percent": 1.8712397425187952,
+        "brier_score": 0.022730292504199327,
+        "observed_percent": 2.325756273633551,
+        "predicted_percent": 3.3525528490695393,
+        "calibration_error_pp": 1.0267965754359885,
+        "top_quintile_observed_percent": 3.899535922997593,
+        "top_quintile_predicted_percent": 5.810051630998601,
+        "top_quintile_calibration_error_pp": 1.9105157080010073,
+        "log_loss": 0.1097881130937413
+      }
+    ],
+    "failed": false,
+    "mean": {
+      "exposures": 92638.5,
+      "event_exposures": 2036.5,
+      "pr_auc": 0.03446493780432653,
+      "lift_at_10_percent": 1.8487196849095258,
+      "brier_score": 0.021749399045779053,
+      "observed_percent": 2.197708756521947,
+      "predicted_percent": 3.7332365546279367,
+      "calibration_error_pp": 1.5355277981059903,
+      "top_quintile_observed_percent": 3.571660245856915,
+      "top_quintile_predicted_percent": 6.522816961057673,
+      "top_quintile_calibration_error_pp": 2.9511567152007583,
+      "log_loss": 0.1077581154410768
+    }
+  },
+  "C": {
+    "features": [
+      "level_grouped",
+      "tenure_playbook_band",
+      "calendar_month",
+      "manager_changes_12m",
+      "team_exits_12m",
+      "direct_reports_band",
+      "time_since_promotion_band",
+      "rehire",
+      "level_x_tenure",
+      "tenure_x_manager_changes",
+      "prior_experience_band",
+      "time_at_level_band",
+      "manager_left_6m",
+      "ios_12m",
+      "layers_band",
+      "work_arrangement_group",
+      "region",
+      "comp_ratio_band",
+      "grade_family",
+      "acquisition_recorded",
+      "transfer_12m"
+    ],
+    "l2": 10.0,
+    "folds": [
+      {
+        "exposures": 92189.0,
+        "event_exposures": 1908.0,
+        "pr_auc": 0.030932968821079883,
+        "lift_at_10_percent": 1.8134171907756813,
+        "brier_score": 0.020870749781870188,
+        "observed_percent": 2.069661239410342,
+        "predicted_percent": 4.250984455246328,
+        "calibration_error_pp": 2.1813232158359854,
+        "top_quintile_observed_percent": 3.3806455578575894,
+        "top_quintile_predicted_percent": 7.7236124142424405,
+        "top_quintile_calibration_error_pp": 4.342966856384852,
+        "log_loss": 0.10638164600259957
+      },
+      {
+        "exposures": 93088.0,
+        "event_exposures": 2165.0,
+        "pr_auc": 0.038502844944428044,
+        "lift_at_10_percent": 1.9846387330913893,
+        "brier_score": 0.022587734881638143,
+        "observed_percent": 2.325756273633551,
+        "predicted_percent": 2.3965306312469603,
+        "calibration_error_pp": 0.07077435761340956,
+        "top_quintile_observed_percent": 4.1639554584295055,
+        "top_quintile_predicted_percent": 4.33923775330202,
+        "top_quintile_calibration_error_pp": 0.17528229487251343,
+        "log_loss": 0.10755081868281774
+      }
+    ],
+    "failed": false,
+    "mean": {
+      "exposures": 92638.5,
+      "event_exposures": 2036.5,
+      "pr_auc": 0.03471790688275396,
+      "lift_at_10_percent": 1.8990279619335353,
+      "brier_score": 0.021729242331754165,
+      "observed_percent": 2.197708756521947,
+      "predicted_percent": 3.3237575432466437,
+      "calibration_error_pp": 1.1260487867246975,
+      "top_quintile_observed_percent": 3.7723005081435472,
+      "top_quintile_predicted_percent": 6.0314250837722305,
+      "top_quintile_calibration_error_pp": 2.2591245756286824,
+      "log_loss": 0.10696623234270866
+    }
+  },
+  "candidates": 7,
+  "fits": 42
+}

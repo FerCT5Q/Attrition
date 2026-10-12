@@ -1,0 +1,551 @@
+{
+  "schema_version": 1,
+  "experiment_id": "engineering-b-plus-qvoice-calibrated-20261008-v1",
+  "language": "es",
+  "reporting_mode": "presentation",
+  "knowledge_boundary": "2026-09-07",
+  "authorization": "config/attrition_model_in_memory_training_authorization_20261001.json",
+  "temporal_policy_reference": "config/qvoice_annual_lag_policy_20261008.json",
+  "paths": {
+    "query_suffix": "20261008_full",
+    "model_query": "queries/profiles/engineering_qvoice_person_month_20261008_full.sql",
+    "portfolio_metadata_query": "queries/audits/qvoice_model_portfolio_metadata_20261008.sql",
+    "plan_root": "config/qvoice_model_plans_20261008_full"
+  },
+  "population": {
+    "worker_type": "Employee",
+    "employee_type": "Regular",
+    "active_status": 1,
+    "is_rf360_yes_no": 0,
+    "eng_or_noneng": "Engineering",
+    "display": "Empleados regulares activos de Engineering, excluyendo RF360, en cada snapshot mensual."
+  },
+  "privacy": {
+    "minimum_people": 30,
+    "minimum_events": 30,
+    "employee_level_rows_persisted": false,
+    "individual_scores_published": false
+  },
+  "sources": {
+    "dictionary": "data/QVoice/survey_structure.xlsx",
+    "waves": [
+      {
+        "year": 2024,
+        "file": "data/QVoice/Jan 2024 Qvoice raw data.xlsx",
+        "sheet": "Raw data",
+        "key_column": "Participant's Unique Identifier",
+        "descriptive_anchor": "2024-01-01",
+        "availability": {
+          "date": "2025-01-01",
+          "status": "policy_assigned",
+          "basis": "annual_lag_policy",
+          "evidence_reference": "config/qvoice_annual_lag_policy_20261008.json",
+          "explanation": "La wave 2024 se asigna exclusivamente a snapshots de 2025 por decision de negocio."
+        }
+      },
+      {
+        "year": 2025,
+        "file": "data/QVoice/Jan 2025_Qvoice_raw data.xlsx",
+        "sheet": "Raw data",
+        "key_column": "EmpID",
+        "descriptive_anchor": "2025-01-01",
+        "availability": {
+          "date": "2026-01-01",
+          "status": "policy_assigned",
+          "basis": "annual_lag_policy",
+          "evidence_reference": "config/qvoice_annual_lag_policy_20261008.json",
+          "explanation": "La wave 2025 se asigna exclusivamente a snapshots de 2026 por decision de negocio."
+        }
+      },
+      {
+        "year": 2026,
+        "file": "data/QVoice/Jan 2026 Qvoice_raw data.xlsx",
+        "sheet": "Raw data",
+        "key_column": "Emp ID",
+        "descriptive_anchor": "2026-01-07",
+        "availability": {
+          "date": "2027-01-01",
+          "status": "policy_assigned",
+          "basis": "annual_lag_policy",
+          "evidence_reference": "config/qvoice_annual_lag_policy_20261008.json",
+          "explanation": "La wave 2026 queda fuera del corte actual y se reservaria para snapshots de 2027."
+        }
+      }
+    ]
+  },
+  "source_rules": {
+    "exact_header_matching": true,
+    "binary_header_overrides": {
+      "2026": {
+        "Q1": "I would recommend Qualcomm as a great place to work._favorable",
+        "M19": "I would recommend Qualcomm as a great place to work._favorable"
+      }
+    },
+    "duplicate_header_policy": "Se usa el encabezado exacto del bloque principal reproducido en el playbook; las columnas homonimas se comparan como control y no se mezclan.",
+    "career_wording_2024": "overall, i feel that my career goals can be met at qualcomm",
+    "career_wording_later": "i feel that my career goals can be met at qualcomm",
+    "career_cross_wave_equivalence": "exploratory_transport",
+    "career_modeling_limit": "La variante Career se evalua como sensibilidad exploratoria; la diferencia de redaccion de 2024 impide promoverla por si sola.",
+    "missing_sentinel": 255,
+    "duplicate_policy": "Excluir por completo la llave duplicada; registrar coincidencias y contradicciones sin elegir una respuesta.",
+    "heartbeat_minimum_valid": 38,
+    "heartbeat_expected_scale_items": 53,
+    "heartbeat_cross_wave_equivalence": "pending"
+  },
+  "temporal_rules": {
+    "assignment": "annual_lag",
+    "maximum_age_months": 12,
+    "availability_inclusive": true,
+    "expiration_exclusive": true,
+    "replacement": "La wave del ano Y se usa solo en Y+1 y la siguiente wave la reemplaza aunque no exista una respuesta enlazable.",
+    "employment_episode": "Exigir continuidad del episodio laboral desde el ancla de la encuesta hasta el snapshot.",
+    "unknown_availability": "No aplica en esta ejecucion; la fecha efectiva proviene de la politica anual aprobada y no se interpreta como fecha real de publicacion.",
+    "label_cutoff": "La fecha final del intervalo debe ser menor o igual al corte del ajuste o evaluacion."
+  },
+  "control": {
+    "source": "output/analysis/engineering/20261003/playbook-tenure-confirmation-v1/confirmation-results.json",
+    "source_key": "specs.b",
+    "features": [
+      "level_grouped",
+      "tenure_playbook_band",
+      "calendar_month",
+      "manager_changes_12m",
+      "team_exits_12m",
+      "direct_reports_band",
+      "time_since_promotion_band",
+      "rehire",
+      "level_x_tenure",
+      "tenure_x_manager_changes"
+    ],
+    "link": "cloglog",
+    "trend": "none",
+    "recalibration_months": 0,
+    "penalty_cell_scale": 8,
+    "historical_fold_starts": [
+      "2024-02-01",
+      "2024-08-01",
+      "2025-02-01",
+      "2025-08-01"
+    ],
+    "historical_fold_snapshots": 6,
+    "reproduction_relative_tolerance": 0.01
+  },
+  "candidates": [
+    {
+      "id": "intent",
+      "name": "Intent to Stay — Q4 y Q12",
+      "semantic_type": "survey",
+      "components": [
+        "Q4",
+        "Q12"
+      ],
+      "variants": [
+        {
+          "id": "intent_q4",
+          "components": [
+            "Q4"
+          ],
+          "representation": "binary_components"
+        },
+        {
+          "id": "intent_q12",
+          "components": [
+            "Q12"
+          ],
+          "representation": "binary_components"
+        },
+        {
+          "id": "intent_components",
+          "components": [
+            "Q4",
+            "Q12"
+          ],
+          "representation": "binary_components"
+        },
+        {
+          "id": "intent_both",
+          "components": [
+            "Q4",
+            "Q12"
+          ],
+          "representation": "favorable_both"
+        }
+      ],
+      "hypothesis": "Las dos preguntas de permanencia pueden aportar información distinta sobre la salida posterior."
+    },
+    {
+      "id": "career",
+      "name": "Career goals — respuesta binaria",
+      "semantic_type": "survey",
+      "components": [
+        "career"
+      ],
+      "variants": [
+        {
+          "id": "career",
+          "components": [
+            "career"
+          ],
+          "representation": "binary_components"
+        }
+      ],
+      "hypothesis": "La percepción de oportunidades de carrera puede aportar información adicional a la intención de permanencia."
+    },
+    {
+      "id": "mean33",
+      "name": "Promedio de 33 preguntas comparables",
+      "semantic_type": "derived_feature",
+      "components": "strict_common_33",
+      "variants": [
+        {
+          "id": "mean33",
+          "components": "strict_common_33",
+          "representation": "favorable_bands"
+        },
+        {
+          "id": "pca_items",
+          "components": [
+            "M01",
+            "M02",
+            "M03",
+            "M04",
+            "M05",
+            "M06",
+            "M07",
+            "M08",
+            "M09",
+            "M10",
+            "M11",
+            "M12",
+            "M13",
+            "M14",
+            "M15",
+            "M16",
+            "M17",
+            "M18",
+            "M19",
+            "M20",
+            "M21",
+            "M22",
+            "M23",
+            "M24",
+            "M25",
+            "M26",
+            "M27",
+            "M28",
+            "M29",
+            "M30",
+            "M31",
+            "M32",
+            "M33"
+          ],
+          "representation": "binary_components"
+        }
+      ],
+      "hypothesis": "El promedio puede aportar contexto adicional; incluye Q4 y Q12 y requiere comprobar su solapamiento."
+    },
+    {
+      "id": "engagement",
+      "name": "Engagement — Q1, Q2 y Q3",
+      "semantic_type": "survey",
+      "components": [
+        "Q1",
+        "Q2",
+        "Q3"
+      ],
+      "variants": [
+        {
+          "id": "engagement",
+          "components": [
+            "Q1",
+            "Q2",
+            "Q3"
+          ],
+          "representation": "binary_components"
+        }
+      ],
+      "hypothesis": "Recomendación, realización personal y motivación pueden aportar señal adicional a permanencia y carrera."
+    },
+    {
+      "id": "connection",
+      "name": "Workplace Connection — versiones histórica y completa",
+      "semantic_type": "survey",
+      "components": [
+        "Q5",
+        "Q6",
+        "Q7"
+      ],
+      "primary_components": [
+        "Q5",
+        "Q7"
+      ],
+      "variants": [
+        {
+          "id": "connection_q5_q7",
+          "components": [
+            "Q5",
+            "Q7"
+          ],
+          "representation": "binary_components"
+        },
+        {
+          "id": "connection_q5_q6_q7",
+          "components": [
+            "Q5",
+            "Q6",
+            "Q7"
+          ],
+          "representation": "binary_components"
+        }
+      ],
+      "hypothesis": "El subconjunto Q5/Q7 permite una comparación histórica; Q6 requiere historia propia."
+    },
+    {
+      "id": "wellbeing",
+      "name": "Wellbeing — versiones histórica y completa",
+      "semantic_type": "survey",
+      "components": [
+        "Q8",
+        "Q9",
+        "Q10",
+        "Q11"
+      ],
+      "primary_components": [
+        "Q8",
+        "Q10",
+        "Q11"
+      ],
+      "variants": [
+        {
+          "id": "wellbeing_q8_q10_q11",
+          "components": [
+            "Q8",
+            "Q10",
+            "Q11"
+          ],
+          "representation": "binary_components"
+        },
+        {
+          "id": "wellbeing_q8_q9_q10_q11",
+          "components": [
+            "Q8",
+            "Q9",
+            "Q10",
+            "Q11"
+          ],
+          "representation": "binary_components"
+        }
+      ],
+      "hypothesis": "La energía durante y después del trabajo y el estrés pueden aportar información diferente; Q9 no integra la versión histórica."
+    },
+    {
+      "id": "confidence",
+      "name": "Confidence — Q13 y Q17",
+      "semantic_type": "survey",
+      "components": [
+        "Q13",
+        "Q17"
+      ],
+      "variants": [
+        {
+          "id": "confidence",
+          "components": [
+            "Q13",
+            "Q17"
+          ],
+          "representation": "binary_components"
+        }
+      ],
+      "hypothesis": "La confianza en el futuro y en los cambios necesarios para competir puede complementar las percepciones individuales de carrera."
+    }
+  ],
+  "combinations": [
+    {
+      "id": "intent_career",
+      "blocks": [
+        "intent_components",
+        "career"
+      ]
+    },
+    {
+      "id": "six_themes_common",
+      "blocks": [
+        "intent_components",
+        "career",
+        "engagement",
+        "connection_q5_q7",
+        "wellbeing_q8_q10_q11",
+        "confidence"
+      ]
+    },
+    {
+      "id": "intent_career_mean33",
+      "blocks": [
+        "intent_components",
+        "career",
+        "mean33"
+      ]
+    },
+    {
+      "id": "intent_career_mean31_same_cohort",
+      "blocks": [
+        "intent_components",
+        "career",
+        "mean31"
+      ],
+      "complete_case_basis": "strict_common_33"
+    }
+  ],
+  "assessment": {
+    "as_of_date": "2026-10-08"
+  },
+  "validation": {
+    "training_start": "2024-01-01",
+    "main_periods": [
+      {
+        "id": "aug_dec_2025",
+        "start": "2025-08-01",
+        "end": "2025-12-31",
+        "expected_snapshots": 5
+      },
+      {
+        "id": "jan_feb_2026",
+        "start": "2026-01-01",
+        "end": "2026-02-28",
+        "expected_snapshots": 2
+      }
+    ],
+    "supplementary_start": "2026-03-01",
+    "inner_validation_intervals": 3,
+    "l2_grid": [
+      0,
+      0.01,
+      0.1,
+      1,
+      10
+    ],
+    "l2_selection_metric": "monthly_brier",
+    "bootstrap_repetitions": 500,
+    "bootstrap_seed": 20261008,
+    "confidence_level": 0.95,
+    "bootstrap_unit": "person_all_months",
+    "availability_only_controls": true,
+    "require_components_in_inner_fit_and_validation": true
+  },
+  "decision": {
+    "minimum_complete_main_periods": 2,
+    "minimum_snapshots_per_main_period": 2,
+    "ranking": "Mejorar PR-AUC y lift del decil superior en ambos periodos principales.",
+    "calibration": "No empeorar Brier medio ni error absoluto de calibracion general y del quintil superior.",
+    "incremental": "Demostrar mejora frente al control que usa solo disponibilidad.",
+    "statuses": [
+      "prometedora",
+      "sin mejora demostrada",
+      "evidencia temporal insuficiente"
+    ]
+  },
+  "search": {
+    "blocks": {
+      "q4": [
+        "qv_Q4"
+      ],
+      "q12": [
+        "qv_Q12"
+      ],
+      "career": [
+        "qv_career"
+      ],
+      "mean33": [
+        "qv_mean33"
+      ],
+      "engagement": [
+        "qv_Q1",
+        "qv_Q2",
+        "qv_Q3"
+      ],
+      "connection": [
+        "qv_Q5",
+        "qv_Q7"
+      ],
+      "wellbeing": [
+        "qv_Q8",
+        "qv_Q10",
+        "qv_Q11"
+      ],
+      "confidence": [
+        "qv_Q13",
+        "qv_Q17"
+      ]
+    },
+    "method": "exhaustive_subsets",
+    "nonempty_subsets": 255,
+    "extension": "cloglog additive QVoice correction with fitted B as fixed offset",
+    "l2_grid": [
+      0.1,
+      1,
+      10
+    ],
+    "criterion": "monthly_brier",
+    "selection_intervals": 2,
+    "calibration_intervals": 2,
+    "pca_components": [
+      1,
+      2,
+      3,
+      5,
+      10
+    ],
+    "pca_items": [
+      "qv_M01",
+      "qv_M02",
+      "qv_M03",
+      "qv_M04",
+      "qv_M05",
+      "qv_M06",
+      "qv_M07",
+      "qv_M08",
+      "qv_M09",
+      "qv_M10",
+      "qv_M11",
+      "qv_M12",
+      "qv_M13",
+      "qv_M14",
+      "qv_M15",
+      "qv_M16",
+      "qv_M17",
+      "qv_M18",
+      "qv_M19",
+      "qv_M20",
+      "qv_M21",
+      "qv_M22",
+      "qv_M23",
+      "qv_M24",
+      "qv_M25",
+      "qv_M26",
+      "qv_M27",
+      "qv_M28",
+      "qv_M29",
+      "qv_M30",
+      "qv_M31",
+      "qv_M32",
+      "qv_M33"
+    ],
+    "pca_imputation": "training item means; explicit missingness indicators",
+    "calibration": {
+      "method": "cloglog_intercept_positive_slope",
+      "slope_bounds": [
+        0.25,
+        4.0
+      ],
+      "slope_l2": 10
+    },
+    "refit_after_calibration": false,
+    "evaluation_caveat": "Los periodos retrospectivos ya fueron inspeccionados en el desarrollo anterior; no son un holdout externo virgen.",
+    "excluded": {
+      "heartbeat": "No se reconstruyen los 53 ítems ordinales en 2024/2025; 2026 corresponde a snapshots 2027.",
+      "q6_q9": "Ausentes en la wave 2024 usada para entrenamiento previo a enero 2026; no tienen historia en ambos periodos.",
+      "comments": "Texto libre excluido."
+    },
+    "career_status": "Sensibilidad exploratoria por diferencia de redacción 2024; si se selecciona, el modelo conserva esta limitación."
+  }
+}

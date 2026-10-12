@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "deck": "engineering-model-evolution-b-cq",
+  "plan": "planes/20261010-presentacion-evolucion-b-cq-final.md",
+  "deliverable_classification": "presentation",
+  "language": "en",
+  "language_exception": "Texto proyectado en inglés por preferencia explícita del usuario y por coincidir con la base; guion, evidencia y validación en español.",
+  "cq_version": "engineering-c-qvoice-20261008-v1",
+  "base_registry": "config/presentations/model-selection-base.json",
+  "output_root": "output/presentations",
+  "output_suffix": "evolucion-b-cq",
+  "preview_root": "output/preview",
+  "evidence_cutoff": "2026-10-10",
+  "sources": {
+    "S01": "docs/context/model-selection-current.md",
+    "S02": "references/presentations/model-selection/20261005-julia-8-groups/presentacion-eng.html",
+    "S03": "output/analysis/engineering/20261003/playbook-tenure-confirmation-v1/confirmation-results.json",
+    "S04": "output/analysis/engineering/20261003/playbook-group-selection-v1/group-selection-results.json",
+    "S05": "output/analysis/engineering/20261008/qvoice-model-b-annual-lag-v2/comparison-results.json",
+    "S06": "output/analysis/engineering/20261008/qvoice-model-b-calibrated-v1/comparison-results.json",
+    "S07": "output/analysis/engineering/20261008/qvoice-horizon-calibration-v1/comparison-results.json",
+    "S08": "output/analysis/engineering/20261008/c-group-selection-v1/results.json",
+    "S09": "output/analysis/engineering/20261008/model-c-v2/decision-eleccion-c-con-cortes-b.md",
+    "S10": "docs/context/model-c-plus-qvoice.md",
+    "S11": "output/analysis/engineering/20261009/c-qvoice-mean28-v1/results.json",
+    "S12": "output/analysis/engineering/20261010/model-d-v1/results.json",
+    "S12_decision": "output/analysis/engineering/20261010/model-d-v1/selection-decision.json",
+    "S13": "docs/context/model-c.md",
+    "S14": "config/attrition_model_in_memory_training_authorization_20261001.json"
+  },
+  "visible_names": {
+    "B": "Core HR model (B)",
+    "B_qvoice": "First survey tests (B + QVoice)",
+    "C": "Expanded HR model (C)",
+    "CQ": "HR + employee feedback (CQ)",
+    "disjoint": "Fixed survey questions + revised average",
+    "D": "Additional signals and model tests (D)",
+    "RSF_Q": "Alternative method + feedback"
+  },
+  "risk_groups": {
+    "label_en": "higher-risk groups",
+    "label_es": "grupos de riesgo alto",
+    "definition_en": "Groups with the highest estimated risk of voluntary exits over the next 6 months, selected to cover 30% of Engineering.",
+    "definition_es": "Grupos con mayor riesgo estimado de salida voluntaria en los próximos 6 meses, seleccionados hasta cubrir el 30% de Engineering. Son los grupos que queremos atender primero. La etiqueta expresa su posición relativa en esta comparación."
+  },
+  "timings_seconds": [60, 45, 120, 120, 135, 180, 120, 180, 120],
+  "nav_labels": [
+    "1. Decision",
+    "2. Agenda",
+    "3. Starting point",
+    "4. First survey tests",
+    "5. B vs C",
+    "6. C vs CQ",
+    "7. How CQ works",
+    "8. Further tests",
+    "9. Next steps"
+  ],
+  "pending_confirmations": {
+    "fairness_review": "no confirmada; redacción condicional del plan",
+    "qvoice_use_agreement": "no confirmado; redacción condicional del plan"
+  }
+}

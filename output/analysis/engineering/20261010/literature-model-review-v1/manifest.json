@@ -1,0 +1,656 @@
+{
+  "artifact": "revision_literatura_modelos_attrition",
+  "review_date": "2026-10-10",
+  "created_at_utc": "2026-10-10T16:22:40.651478+00:00",
+  "reporting_mode": "presentation",
+  "language": "es",
+  "stage": "seleccion_de_modelo",
+  "selected_model_unchanged": "engineering-c-qvoice-20261008-v1",
+  "scope": {
+    "official_papers": 43,
+    "previously_reviewed_papers": 42,
+    "metadata_only_candidates": [
+      "P31"
+    ],
+    "basis": "Lectura de fichas oficiales y trazabilidad; contraste con playbooks, resultados agregados, configuraciones y fragmentos pertinentes de implementacion.",
+    "fresh_full_text_reading_of_43_originals": false,
+    "additional_graph_paper_counted_in_official_43": false,
+    "new_database_queries": 0,
+    "model_training_runs": 0,
+    "tests_run": 0,
+    "assessment_scores_changed": false,
+    "prior_models_or_results_modified_by_this_review": false
+  },
+  "population_for_recent_model_metrics": {
+    "scope": "Engineering, Employee, Regular, activo, sin RF360",
+    "snapshot_periods": [
+      "2025-08 a 2025-12",
+      "2026-01 a 2026-02"
+    ],
+    "horizon_months": 6,
+    "knowledge_boundary": "2026-09-07",
+    "latest_outcome": "2026-08-22",
+    "aggregation": "Igual peso a cada periodo; observaciones persona-foto repetidas",
+    "primary_capacity_percent": 30
+  },
+  "limitations": [
+    "Las fichas tienen distintos niveles de acceso; P31 no aporta evidencia empirica.",
+    "Los periodos de los modelos ya fueron explorados y tienen seguimientos solapados.",
+    "BQ y C/RSF difieren en contrato temporal de predictores; los modelos archivados tampoco tienen todas las mismas fechas de reajuste.",
+    "Las tasas descriptivas del playbook tienen otras poblaciones y horizontes.",
+    "Las ganancias de los experimentos propuestos son desconocidas."
+  ],
+  "catalog_discrepancies": [
+    {
+      "paper_id": "P36",
+      "index_authors": "Green & Hu",
+      "ficha_and_doi_authors": "Hanna, Denton, Smart y Smith-Loud",
+      "doi": "10.1145/3351095.3372826",
+      "action": "Usar identidad de ficha/DOI en esta revision; conservar indice historico."
+    }
+  ],
+  "privacy": {
+    "employee_rows_read_or_persisted": false,
+    "individual_scores_published": false,
+    "protected_category_labels_published": false,
+    "sources_used_for_metrics": "Resultados agregados existentes",
+    "small_cohort_metrics_republished": false
+  },
+  "papers": [
+    {
+      "id": "P01",
+      "ficha": "docs/research/attrition-literature/papers/1972-cox-regression-models-life-tables.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P02",
+      "ficha": "docs/research/attrition-literature/papers/1982-allison-discrete-time-event-histories.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P03",
+      "ficha": "docs/research/attrition-literature/papers/1993-singer-willett-discrete-time-survival.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P04",
+      "ficha": "docs/research/attrition-literature/papers/1996-somers-employee-withdrawal.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P05",
+      "ficha": "docs/research/attrition-literature/papers/1999-fine-gray-competing-risks.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P06",
+      "ficha": "docs/research/attrition-literature/papers/2001-morrell-turnover-models-review.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P07",
+      "ficha": "docs/research/attrition-literature/papers/2007-putter-competing-risks-multistate.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P08",
+      "ficha": "docs/research/attrition-literature/papers/2008-ishwaran-random-survival-forests.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P09",
+      "ficha": "docs/research/attrition-literature/papers/2018-madariaga-employee-turnover.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P10",
+      "ficha": "docs/research/attrition-literature/papers/2018-deephit.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P11",
+      "ficha": "docs/research/attrition-literature/papers/2023-lee-discrete-time-turnover-korea.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P12",
+      "ficha": "docs/research/attrition-literature/papers/2026-ke-xu-text-survival-turnover.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P13",
+      "ficha": "docs/research/attrition-literature/papers/2018-rubenstein-voluntary-turnover-meta-analysis.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P14",
+      "ficha": "docs/research/attrition-literature/papers/2004-van-breukelen-planned-behavior-voluntary-turnover.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P15",
+      "ficha": "docs/research/attrition-literature/papers/2001-mitchell-holtom-lee-job-embeddedness.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P16",
+      "ficha": "docs/research/attrition-literature/papers/2004-lee-job-embeddedness-performance-turnover.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P17",
+      "ficha": "docs/research/attrition-literature/papers/2007-crossley-global-job-embeddedness.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P18",
+      "ficha": "docs/research/attrition-literature/papers/2008-tanova-holtom-embeddedness-four-countries.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P19",
+      "ficha": "docs/research/attrition-literature/papers/2009-felps-turnover-contagion.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P20",
+      "ficha": "docs/research/attrition-literature/papers/2007-maertz-supervisor-organizational-support-turnover.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P21",
+      "ficha": "docs/research/attrition-literature/papers/2003-allen-shore-griffeth-support-turnover.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P22",
+      "ficha": "docs/research/attrition-literature/papers/2008-trevor-nyberg-downsizing-turnover.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P23",
+      "ficha": "docs/research/attrition-literature/papers/2002-harter-schmidt-hayes-engagement-business-units.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P24",
+      "ficha": "docs/research/attrition-literature/papers/2006-saks-antecedents-consequences-engagement.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P25",
+      "ficha": "docs/research/attrition-literature/papers/2015-bailey-et-al-engagement-narrative-synthesis.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P26",
+      "ficha": "docs/research/attrition-literature/papers/2014-bakker-demerouti-sanz-vergel-jdr.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P27",
+      "ficha": "docs/research/attrition-literature/papers/2021-mazzetti-work-engagement-jd-r-meta-analysis.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P28",
+      "ficha": "docs/research/attrition-literature/papers/2022-ng-career-development-turnover-meta-analysis.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P29",
+      "ficha": "docs/research/attrition-literature/papers/2005-ito-brotheridge-career-adaptability-turnover.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P30",
+      "ficha": "docs/research/attrition-literature/papers/2021-kasdorf-kayaalp-career-development-turnover.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P31",
+      "ficha": "docs/research/attrition-literature/papers/1992-igbaria-greenhaus-mis-turnover-intentions.md",
+      "estado_catalogo": "candidato_metadatos"
+    },
+    {
+      "id": "P32",
+      "ficha": "docs/research/attrition-literature/papers/2020-jin-rfrsf-employee-turnover.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P33",
+      "ficha": "docs/research/attrition-literature/papers/2023-kanchana-turnover-intentions-sri-lankan-startups.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P34",
+      "ficha": "docs/research/attrition-literature/papers/2020-kochling-wehner-fairness-hr-algorithms.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P35",
+      "ficha": "docs/research/attrition-literature/papers/2019-lee-et-al-procedural-justice-algorithmic-fairness.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P36",
+      "ficha": "docs/research/attrition-literature/papers/2020-hanna-critical-race-fairness.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P37",
+      "ficha": "docs/research/attrition-literature/papers/2023-corbett-davies-et-al-measure-mismeasure-fairness.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P38",
+      "ficha": "docs/research/attrition-literature/papers/2026-dubey-shukla-causal-explainable-ai-retention.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P39",
+      "ficha": "docs/research/attrition-literature/papers/2024-peltokorpi-allen-embeddedness-job-insecurity.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P40",
+      "ficha": "docs/research/attrition-literature/papers/2017-lee-early-career-job-satisfaction-turnover-intention.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P41",
+      "ficha": "docs/research/attrition-literature/papers/2022-chowdhury-explainable-ai-employee-turnover.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P42",
+      "ficha": "docs/research/attrition-literature/papers/2022-lazzari-turnover-intention-xai.md",
+      "estado_catalogo": "revisado_previamente"
+    },
+    {
+      "id": "P43",
+      "ficha": "docs/research/attrition-literature/papers/2023-morrison-employee-voice-silence-decade.md",
+      "estado_catalogo": "revisado_previamente"
+    }
+  ],
+  "sources": [
+    {
+      "path": "config/engineering_model_c_input_contracts_20261008.json",
+      "sha256": "725a51e32a608a28a64cbfce22569b36b5d20aa356c0c36b38bb18bb54b72577"
+    },
+    {
+      "path": "config/engineering_model_c_inventory_20261008.json",
+      "sha256": "a46b88f11ca3caab2cc4d996cb3435c849e59fe1ce01610bea5dfa2e8a54a8be"
+    },
+    {
+      "path": "config/engineering_model_c_qvoice_20261008.json",
+      "sha256": "cf07c2445223c4e0ae8e24820d088b23f54434e4a953abd64002aebeb35a6587"
+    },
+    {
+      "path": "config/qvoice_annual_lag_policy_20261008.json",
+      "sha256": "82645e4b5e1474893031bd6d4beac72d804e17db40561108db1f565bfbb4c985"
+    },
+    {
+      "path": "config/qvoice_model_calibrated_20261008.yaml",
+      "sha256": "ec0ff44edee0c7b05feb17881c016baaa791b685e83c310ba20929ff6cef7133"
+    },
+    {
+      "path": "docs/context/model-b-plus-qvoice-calibrated.md",
+      "sha256": "4559af9a73bab8d049e222847591776c1357989cdaa8172b179974c5227fa22d"
+    },
+    {
+      "path": "docs/context/model-c-plus-qvoice.md",
+      "sha256": "edf422222dd247163b3ac6e5068e32a8adf5a050a1d585ff8914dabeb20b36e1"
+    },
+    {
+      "path": "docs/context/model-c-qvoice-overlap.md",
+      "sha256": "71f2afd5acbc186d72426fdd6cc8f292b43c9e95ce6bc54aef299ba0a19ddeab"
+    },
+    {
+      "path": "docs/context/model-c.md",
+      "sha256": "d030388e9c2693b5de4e7b856480b5f86ac075df5751457cb6b96dc4fe6dcedc"
+    },
+    {
+      "path": "docs/context/model-selection-current.md",
+      "sha256": "f8825a327dae21ade7fb7d1bd44ad381cfbe87956853aee2c0a89efa7f64da33"
+    },
+    {
+      "path": "docs/julia/attrition-variable-playbook-annual-v1.html",
+      "sha256": "2f63845a08172b5c0e93ebc729dd828d58d22d2adeb711b5b6c1f87ec5faf290"
+    },
+    {
+      "path": "docs/research/attrition-literature/literature-matrix.md",
+      "sha256": "e3d5ca2720dfb642c7aa0e8fe5cffb255cfa37c9ffcaef7404e9a86a983aec20"
+    },
+    {
+      "path": "docs/research/attrition-literature/methodological-synthesis.md",
+      "sha256": "0bb6c5a7d76663143368e7d5f7fb6189fa360cc6c0ef6c9b090ac92d44c01932"
+    },
+    {
+      "path": "docs/research/attrition-literature/model-candidates-20260914.md",
+      "sha256": "fb308733ebc2f24bf58c8c84ad1d90668aba3c28a39b72af6039d4993ccc6557"
+    },
+    {
+      "path": "docs/research/attrition-literature/model-decision-log.md",
+      "sha256": "26ccd18180ba968492fa0f3268d9e0d81de6ff539e99b699c70d0d6e7e267f52"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/1972-cox-regression-models-life-tables.md",
+      "sha256": "d7255d34ddb13e88042a200e53793ea8acc5245ea3c63a8dd823ef5984e1e474"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/1982-allison-discrete-time-event-histories.md",
+      "sha256": "740d97427d784f4290b9c91746a2fe027119955a5ea842ad22c302af62124c5e"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/1992-igbaria-greenhaus-mis-turnover-intentions.md",
+      "sha256": "8f11a03e42c24bd970f9479d2690b3c18463b1651c3d4ae8a61ab47188c3fdef"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/1993-singer-willett-discrete-time-survival.md",
+      "sha256": "1857499bc7e3fe5d05350cfc05d08fb169e04706e1fdc8f936cf207572f6d982"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/1996-somers-employee-withdrawal.md",
+      "sha256": "73c94871932e979dd189e61c7a236d7665ea413d46e935da9dbb6841fb1fa8ca"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/1999-fine-gray-competing-risks.md",
+      "sha256": "e36652abaf7d82bbe638dff6cd2d0252f5d54f4485fda0d90edd7bec133a3ce0"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2001-mitchell-holtom-lee-job-embeddedness.md",
+      "sha256": "66aa0ae1729e4fd9c3f51b4600e42556e0ea851e46192ec73a5d1348bc585ee7"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2001-morrell-turnover-models-review.md",
+      "sha256": "bbfeae3922c7e5a66a682e2cc0710f85ba3cf305bff2c7ddf4e5bb1dceeb7297"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2002-harter-schmidt-hayes-engagement-business-units.md",
+      "sha256": "604fa28729ca2aa58da57da3a9b1891d9ccccb016d0a0c39a4f7123ac29e64d3"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2003-allen-shore-griffeth-support-turnover.md",
+      "sha256": "09810d704642f580b441ab11f8cbdfa66b98e6544301675301e1c5459e87206e"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2004-lee-job-embeddedness-performance-turnover.md",
+      "sha256": "9203f4285f9b6b097a036f253a93de41d94283ccdc99489925a59d8a40a3f8a3"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2004-van-breukelen-planned-behavior-voluntary-turnover.md",
+      "sha256": "3c052a06d48c458b8e67c4d7de60c3412ada04d3a100dfa56465029decfa2bf1"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2005-ito-brotheridge-career-adaptability-turnover.md",
+      "sha256": "e46fdef6d1fd496ade67e566cee07d7c848bc07eff2a98f2dd3d74561b778b3a"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2006-saks-antecedents-consequences-engagement.md",
+      "sha256": "de4baf0791eb0a2793f4b1f19d3b7b583e51d92acd3a014e675ee416e6ffe1be"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2007-crossley-global-job-embeddedness.md",
+      "sha256": "9990a9da6b82e22d0bc3b2f66107f5e9a6eba27e35ac0732fb288fd55f2e354c"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2007-maertz-supervisor-organizational-support-turnover.md",
+      "sha256": "31e9fd0ffaf1c6fb47735c253dd60ca375604558f3420efd0c002798ddada75d"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2007-putter-competing-risks-multistate.md",
+      "sha256": "7e11214bf1201a9f65eb22aecc94d3ddbe87a654ae29cc2f08972d0c7df0adca"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2008-ishwaran-random-survival-forests.md",
+      "sha256": "af09e07f848f656e5a28b854d935001ef33f811da2d88227dd24d966559336a5"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2008-tanova-holtom-embeddedness-four-countries.md",
+      "sha256": "c4f6fd78c050b5e2ea7a8125d10f49636a7b03266aa1ce4c5d146db82be71585"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2008-trevor-nyberg-downsizing-turnover.md",
+      "sha256": "88c27ece7250eb76e40686334abe9305c08daaccc77d479a57e1e5af86455d74"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2009-felps-turnover-contagion.md",
+      "sha256": "35be47320f97b1b4309fa5c66e9c5526bc10ea7aca74ea418e0b711a4e1843e0"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2014-bakker-demerouti-sanz-vergel-jdr.md",
+      "sha256": "6fc6343bd7a2a59aced41e0ee0caf8cfed7c49aa6fe11e7a97edb69fcb30f445"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2015-bailey-et-al-engagement-narrative-synthesis.md",
+      "sha256": "0fdb9f21d835dc261a937a4a0edb8db37fcc57e89a83e771711a3ddd4e8ba1d5"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2017-lee-early-career-job-satisfaction-turnover-intention.md",
+      "sha256": "46490b992d1e7fd3d07b7eaa709f5e1543780e0836987ac01c465d18891c0694"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2018-deephit.md",
+      "sha256": "d8f98ea230f3853814369c20125ee332c560922b9de6648a0819f44044101c2c"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2018-madariaga-employee-turnover.md",
+      "sha256": "7fd625c98421a631a3ffd53f9bf35f1f4b69c438a0606d50dc9bc8ae2b523324"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2018-rubenstein-voluntary-turnover-meta-analysis.md",
+      "sha256": "215c5df334b8605522aad8628af8ce8938bea8342ad468064259c5bdbeec8da8"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2019-lee-et-al-procedural-justice-algorithmic-fairness.md",
+      "sha256": "7c4317fd2a1ef7557b6f91913d7ece7ec8bec752f53a36971e2ff8c3c9e3b936"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2020-hanna-critical-race-fairness.md",
+      "sha256": "72c45fd50b9370c69c91242586f4a69fcdc418054c0367cc6e557cf3c2a5c3bd"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2020-jin-rfrsf-employee-turnover.md",
+      "sha256": "eaa5f8d49d6ed86264275e0757b910a0eb6525a90bb8410a83a96e431df86187"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2020-kochling-wehner-fairness-hr-algorithms.md",
+      "sha256": "8f88d45d8c708b5f415d9bddccd09c335939370632876cda6c202b58b6b803a5"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2021-kasdorf-kayaalp-career-development-turnover.md",
+      "sha256": "4d445b02b8dc9a9004857e9e1060f22642d5cd1e9e764cba3ee0e85dcb906cb5"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2021-mazzetti-work-engagement-jd-r-meta-analysis.md",
+      "sha256": "b7d1d8d26ea4ca4313c10dc99e86a31a7e207ba9670b4626204098f0e2ec7a45"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2022-chowdhury-explainable-ai-employee-turnover.md",
+      "sha256": "897e7b69958d549c87084e18b995869ff6f5e494c6658c962584fc5afb36a0c9"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2022-lazzari-turnover-intention-xai.md",
+      "sha256": "68b826328b2c310fe7a1d0445f15e491e2eca6664c24518ab9b52d3aa2451fd2"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2022-ng-career-development-turnover-meta-analysis.md",
+      "sha256": "30aea77104fc350bd6e3a78722772bd2fe25fc3a059a0c2c768ab0b5661edef4"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2023-corbett-davies-et-al-measure-mismeasure-fairness.md",
+      "sha256": "c41aed34b20fe0bd842b2209bf032721f9ec367876d06c670aea745708f80032"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2023-kanchana-turnover-intentions-sri-lankan-startups.md",
+      "sha256": "3daf0e77f24faab73ac5dcc7f3f70149ba3079e5467f8c77430b67f23107271b"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2023-lee-discrete-time-turnover-korea.md",
+      "sha256": "017ac923f67bd61b3e4b2b963055d34aa05241c5c80a01cbfee99ad4144558f8"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2023-morrison-employee-voice-silence-decade.md",
+      "sha256": "2000f3b523e891341946e285bce7ddcbde2cb607dbe3b7b9074ee7cd673a0d7a"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2024-peltokorpi-allen-embeddedness-job-insecurity.md",
+      "sha256": "f715b6257ace52e6ccb819bbe5c754bf6d7d6ebbe6cbc20e60a366957a776d22"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2026-dubey-shukla-causal-explainable-ai-retention.md",
+      "sha256": "08e20aff39fd0ba1c736bf56bbcbe45571f3b05f65817820489ad24d134ed480"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2026-graph-regularized-survival-employee-turnover.md",
+      "sha256": "2a59813159b5965959bd8b26b7fe9a112940687c7bcee177b16aec015b0d42ee"
+    },
+    {
+      "path": "docs/research/attrition-literature/papers/2026-ke-xu-text-survival-turnover.md",
+      "sha256": "a3c82c26b5ab931f5ee540fd4b6c1d68161259311c5a8bf3f593abc9fcc76545"
+    },
+    {
+      "path": "docs/research/attrition-literature/README.md",
+      "sha256": "02eef067147a45cfb81cb2d96136abdf76bfe3a142b636766617d5bbc7c85f3a"
+    },
+    {
+      "path": "docs/research/attrition-literature/source-register.md",
+      "sha256": "aee24fed2f31836b21f243c87471795f6170fb0e7aaf1a945014cd9dafda56e4"
+    },
+    {
+      "path": "output/analysis/engineering/20261001/hazard-adjustment-v2/adjustment-report.md",
+      "sha256": "f1be63a2234bbf56b9893166af8e4ce60a7d9587e218fcaaf5a49a79cf5dcd03"
+    },
+    {
+      "path": "output/analysis/engineering/20261001/model-comparison-rolling-v2-sin-manager/comparison-report.md",
+      "sha256": "5f6e3de634a6ccd4e416d7a875f9916e07a8d85e15b4dd73fd29f5616b8ce543"
+    },
+    {
+      "path": "output/analysis/engineering/20261008/c-fourway-groups-v1/results.json",
+      "sha256": "df4cc7f46a75accff7128e0c05ae25695182fb266de3eb4e22c32cdfb9b8c7d0"
+    },
+    {
+      "path": "output/analysis/engineering/20261008/c-group-selection-v1/results.json",
+      "sha256": "deed2325b1b0edc5834a9cdfdab6980ca63d535dd7f0fd98cae7176de35ac44b"
+    },
+    {
+      "path": "output/analysis/engineering/20261008/model-c-plus-qvoice-v1/results.json",
+      "sha256": "c093dd2bde4f3d6ac4604384d8f3d6959a8afa5737d10cd7d53de0add4b36a4d"
+    },
+    {
+      "path": "output/analysis/engineering/20261008/model-c-plus-qvoice-v1/trained-model/model.json",
+      "sha256": "77e4193f6c13e3859ea2351259317a212f9073c90ed08a03589f67d36c534dee"
+    },
+    {
+      "path": "output/analysis/engineering/20261008/model-c-v2/results.json",
+      "sha256": "b6bed6e1261390996ef84b1a7e6f61087bb81618b9f4fb8aff27d06909922e85"
+    },
+    {
+      "path": "output/analysis/engineering/20261008/random-survival-forest-v1/bq-input-reconciliation.json",
+      "sha256": "151c72212ff663f72ee03059ed84df964357829f2274e48c0968271c4cec9c6b"
+    },
+    {
+      "path": "output/analysis/engineering/20261008/random-survival-forest-v1/bq-label-contract-audit.json",
+      "sha256": "e0dedf3d33c6d269fa9d357c95bea58df18f177965639c85b408c37d4b46c468"
+    },
+    {
+      "path": "output/analysis/engineering/20261008/random-survival-forest-v1/historical-results.json",
+      "sha256": "5b89c51d603c8033c8711e99bb6da5b79c1ca6337177b8f74d5bac63422639c1"
+    },
+    {
+      "path": "output/analysis/engineering/20261008/random-survival-forest-v1/informe.md",
+      "sha256": "1a88d528c68d88e3a2bc165c583a92f2f02e05a0b32387f1935690b88fba3aad"
+    },
+    {
+      "path": "output/analysis/engineering/20261008/random-survival-forest-v1/qvoice-results.json",
+      "sha256": "75170016d4eb1ba26392985738e156c31a57136eeefe169d493048991670983e"
+    },
+    {
+      "path": "output/analysis/engineering/20261009/c-qvoice-mean28-v1/results.json",
+      "sha256": "1cd04f33407a9c64c2b8dacada231f0869e9b0d795c9aa6997d6b2781486a0a0"
+    },
+    {
+      "path": "output/analysis/engineering/20261009/c-qvoice-overlap-v1/results.json",
+      "sha256": "059db5f90b4a9119cc8dce4a138b8dd49549952851f02299a71770680f11b095"
+    },
+    {
+      "path": "output/distribution/attrition-43-variable-distributions-v11.html",
+      "sha256": "24ce87b431406f1e1dd2ebde452b1cb739ee1231c53227fa5a3282d5af6e5b5f"
+    },
+    {
+      "path": "output/distribution/json/attrition-43-variable-distributions-v11-manifest.json",
+      "sha256": "903c5ef1a19a68d6d90ce81e2e37b406afb7425b50e60ee138fb90427ceadcf0"
+    },
+    {
+      "path": "output/distribution/json/qvoice-favorable-unfavorable-question-attrition-evidence-20260923.json",
+      "sha256": "d9803920e82c780b63b8a9ef2f8af49d431909877cec8983356be31346c8fbc1"
+    },
+    {
+      "path": "queries/audits/qvoice_favorable_unfavorable_attrition_window_audit_20260921.sql",
+      "sha256": "09ebc84d1563ec131be7343fe0ba12f52b491f86e01a53d14437615f7bc6b99e"
+    },
+    {
+      "path": "queries/profiles/engineering_c_qvoice_mean28_person_month_20261009.sql",
+      "sha256": "35a873b16f1fc4dddabb47c1cbc07f0cc0903abc55709acbe7f3a44e6e101929"
+    },
+    {
+      "path": "queries/profiles/engineering_c_qvoice_overlap_person_month_20261009.sql",
+      "sha256": "35a873b16f1fc4dddabb47c1cbc07f0cc0903abc55709acbe7f3a44e6e101929"
+    },
+    {
+      "path": "queries/profiles/engineering_model_c_person_month_20261008.sql",
+      "sha256": "dc47958dfc48cfc46dee3c92e7853e71676bc920adc0e7e90fa8dc7d1def2c7a"
+    },
+    {
+      "path": "queries/profiles/engineering_model_c_qvoice_person_month_20261008.sql",
+      "sha256": "35a873b16f1fc4dddabb47c1cbc07f0cc0903abc55709acbe7f3a44e6e101929"
+    },
+    {
+      "path": "queries/profiles/engineering_qvoice_horizon_calibration_20261008.sql",
+      "sha256": "b90330d06a7e7297d17dd026546baf5060b2c23e415155f56289b8e7f6e0add7"
+    },
+    {
+      "path": "queries/profiles/engineering_rsf_person_month_20261008.sql",
+      "sha256": "b85876f30c0ce22c42e79837c4c4ccb2f1de6406b086c5868abe830bfa43310d"
+    },
+    {
+      "path": "tools/critical_tech_lightgbm_challenger.py",
+      "sha256": "797f5ce2e9520a4bf849b1ba949a3a9afba17a62e52b0fb2a4cd3efa0cca4f03"
+    },
+    {
+      "path": "tools/critical_tech_model_comparison_rolling.py",
+      "sha256": "437231249052756be38f5619124e879af088d44656e9afd8e9eecb65422f7b55"
+    },
+    {
+      "path": "tools/critical_tech_model_comparison_rolling_noseg.py",
+      "sha256": "58c52757457f176311e08037a5f8759743b75fb7fa9e572d5a9541fd529dafda"
+    },
+    {
+      "path": "tools/engineering_hazard_adjustment.py",
+      "sha256": "e5b7c9ca1c644ff80232acb246a3af06beb8368c40ab32bc45b13ee95e9af842"
+    },
+    {
+      "path": "tools/engineering_model_c.py",
+      "sha256": "640d69699262119413c130733719e3fcd991b0a400f123bb146ebca34cd4a5e2"
+    },
+    {
+      "path": "tools/engineering_model_c_qvoice.py",
+      "sha256": "db1bee3e20ce3d9917854bcc1fe0cfedb5d4d08225bd5f57f7f8116b83378cd4"
+    },
+    {
+      "path": "tools/engineering_random_survival_forest.py",
+      "sha256": "a98d162a8c4cf57c90ef3d0b3f2f01b47e7cace5aa4f44ac5e5d21a5c5eb1c2f"
+    }
+  ],
+  "deliverables": [
+    {
+      "path": "output/analysis/engineering/20261010/literature-model-review-v1/informe.md",
+      "sha256": "272d02a4e2bf9bc99c32c11dff77ef0cdc97e3f596e248e70c14ed5b82ab8169"
+    },
+    {
+      "path": "output/analysis/engineering/20261010/literature-model-review-v1/matriz-43-papers.md",
+      "sha256": "a77f2393bae20284ca2b6f2ecbd3cee77ca90b4b1068c38b04a47d818de61b0f"
+    }
+  ]
+}

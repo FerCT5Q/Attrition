@@ -1,0 +1,265 @@
+{
+  "name": "disjoint",
+  "features": [
+    "qv_Q4",
+    "qv_career",
+    "qv_remaining_20250801",
+    "qv_Q1",
+    "qv_Q2",
+    "qv_Q3"
+  ],
+  "l2": 0.1,
+  "monthly_brier": 0.006014690291478915,
+  "source_candidate": {
+    "id": "q4+career+mean33+engagement",
+    "kind": "blocks",
+    "blocks": [
+      "q4",
+      "career",
+      "mean33",
+      "engagement"
+    ],
+    "features": [
+      "qv_Q4",
+      "qv_career",
+      "qv_mean33",
+      "qv_Q1",
+      "qv_Q2",
+      "qv_Q3"
+    ],
+    "l2": 0.1,
+    "parameters": 29,
+    "converged": true,
+    "iterations": 6,
+    "monthly_brier": 0.006014609018364141
+  },
+  "trials": [
+    {
+      "l2": 0.1,
+      "monthly_brier": 0.006014690291478915,
+      "iterations": 6,
+      "converged": true
+    },
+    {
+      "l2": 1,
+      "monthly_brier": 0.0060147193273392685,
+      "iterations": 6,
+      "converged": true
+    },
+    {
+      "l2": 10,
+      "monthly_brier": 0.006014824201040487,
+      "iterations": 6,
+      "converged": true
+    }
+  ],
+  "iterations": 6,
+  "encoder": {
+    "features": [
+      "qv_Q4",
+      "qv_career",
+      "qv_remaining_20250801",
+      "qv_Q1",
+      "qv_Q2",
+      "qv_Q3"
+    ],
+    "levels": {
+      "qv_Q4": [
+        "different_employment_episode",
+        "missing",
+        "no_linked_row",
+        "v0",
+        "v1"
+      ],
+      "qv_career": [
+        "different_employment_episode",
+        "missing",
+        "no_linked_row",
+        "v0",
+        "v1"
+      ],
+      "qv_remaining_20250801": [
+        "100",
+        "50–69",
+        "70–79",
+        "80–89",
+        "90–99",
+        "<50",
+        "different_employment_episode",
+        "missing",
+        "no_linked_row"
+      ],
+      "qv_Q1": [
+        "different_employment_episode",
+        "missing",
+        "no_linked_row",
+        "v0",
+        "v1"
+      ],
+      "qv_Q2": [
+        "different_employment_episode",
+        "missing",
+        "no_linked_row",
+        "v0",
+        "v1"
+      ],
+      "qv_Q3": [
+        "different_employment_episode",
+        "missing",
+        "no_linked_row",
+        "v0",
+        "v1"
+      ]
+    },
+    "references": {
+      "qv_Q4": "v1",
+      "qv_career": "v1",
+      "qv_remaining_20250801": "missing",
+      "qv_Q1": "v1",
+      "qv_Q2": "v1",
+      "qv_Q3": "v1"
+    },
+    "columns": [
+      "intercept",
+      "qv_Q4=different_employment_episode",
+      "qv_Q4=missing",
+      "qv_Q4=no_linked_row",
+      "qv_Q4=v0",
+      "qv_career=different_employment_episode",
+      "qv_career=missing",
+      "qv_career=no_linked_row",
+      "qv_career=v0",
+      "qv_remaining_20250801=100",
+      "qv_remaining_20250801=50–69",
+      "qv_remaining_20250801=70–79",
+      "qv_remaining_20250801=80–89",
+      "qv_remaining_20250801=90–99",
+      "qv_remaining_20250801=<50",
+      "qv_remaining_20250801=different_employment_episode",
+      "qv_remaining_20250801=no_linked_row",
+      "qv_Q1=different_employment_episode",
+      "qv_Q1=missing",
+      "qv_Q1=no_linked_row",
+      "qv_Q1=v0",
+      "qv_Q2=different_employment_episode",
+      "qv_Q2=missing",
+      "qv_Q2=no_linked_row",
+      "qv_Q2=v0",
+      "qv_Q3=different_employment_episode",
+      "qv_Q3=missing",
+      "qv_Q3=no_linked_row",
+      "qv_Q3=v0"
+    ]
+  },
+  "beta": [
+    -0.24850535569226012,
+    0.029521358748358432,
+    0.2850128904482325,
+    0.06160258615587156,
+    0.48121471627058754,
+    0.029521358748359556,
+    0.41883984846111655,
+    0.06160258615587085,
+    0.12520853951855113,
+    -0.13284887214098828,
+    0.07366305642858399,
+    0.05509493061021087,
+    -0.026715227027539097,
+    -0.04750953087233677,
+    0.2034242605477783,
+    0.02952135874836402,
+    0.061602586155782596,
+    0.02952135874835883,
+    0.6315412370129657,
+    0.06160258615582392,
+    0.27934693761496465,
+    0.029521358748345872,
+    -0.6877080441546866,
+    0.06160258615586124,
+    0.06363246744931596,
+    0.029521358748340852,
+    -0.2945072980912322,
+    0.061602586155931956,
+    -0.15710931529920794
+  ],
+  "base_model_reference": "output\\analysis\\engineering\\20261008\\model-c-v2\\folds\\fold-4-C-model.json",
+  "base_model_origin": "2025-08-01",
+  "cutoff": "2025-08-01",
+  "fit_maximum_label_end": "2025-07-27",
+  "selection_snapshots": [
+    "2025-05-25",
+    "2025-06-29"
+  ],
+  "formula": "cloglog(eta_C + correccion_Q); R6 = 1-product(1-h)",
+  "derivation": {
+    "feature": "qv_remaining_20250801",
+    "semantic_type": "derived_feature",
+    "formula": "sum(favorable remaining)/count(remaining)",
+    "individual_items_mapping": {
+      "qv_Q4": "qv_M16",
+      "qv_Q1": "qv_M19",
+      "qv_Q2": "qv_M25",
+      "qv_Q3": "qv_M28"
+    },
+    "excluded_items": [
+      "qv_M16",
+      "qv_M19",
+      "qv_M25",
+      "qv_M28"
+    ],
+    "remaining_items": [
+      "qv_M01",
+      "qv_M02",
+      "qv_M03",
+      "qv_M04",
+      "qv_M05",
+      "qv_M06",
+      "qv_M07",
+      "qv_M08",
+      "qv_M09",
+      "qv_M10",
+      "qv_M11",
+      "qv_M12",
+      "qv_M13",
+      "qv_M14",
+      "qv_M15",
+      "qv_M17",
+      "qv_M18",
+      "qv_M20",
+      "qv_M21",
+      "qv_M22",
+      "qv_M23",
+      "qv_M24",
+      "qv_M26",
+      "qv_M27",
+      "qv_M29",
+      "qv_M30",
+      "qv_M31",
+      "qv_M32",
+      "qv_M33"
+    ],
+    "denominator": 29,
+    "required_valid_original_items": 33,
+    "comparable_count": 375184,
+    "matched_count": 375184,
+    "mismatch_count": 0,
+    "original_mean_mismatch_count": 0,
+    "match_rate_percent": 100.0,
+    "eligibility_changed_count": 0,
+    "date": "2026-10-09T16:35:12.410760+00:00",
+    "outcome": "pass",
+    "score_changes": false,
+    "method": "Mapping por texto exacto y reconciliación de todas las combinaciones observadas en RAM.",
+    "acceptance_rule": "Cero discrepancias de mapping, bandas o elegibilidad.",
+    "bands": [
+      "<50",
+      "50–69",
+      "70–79",
+      "80–89",
+      "90–99",
+      "100"
+    ]
+  },
+  "parameters": 29,
+  "employee_level_rows_persisted": false
+}

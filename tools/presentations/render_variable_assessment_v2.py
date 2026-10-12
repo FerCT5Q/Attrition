@@ -636,6 +636,9 @@ def safe_mappings(bundle: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 def data_type_summary(bundle: dict[str, Any]) -> str:
+    configured = (bundle["assessment"].get("analysis") or {}).get("display_data_type")
+    if configured:
+        return clean_text(configured)
     values = []
     for column in bundle["report"].get("columns") or []:
         data_type = clean_text(column.get("data_type"), "")
@@ -724,6 +727,9 @@ def render_summary(bundle: dict[str, Any]) -> str:
     blocker = decision.get("blocker") or {}
     blocker_label = clean_text(blocker.get("label") if isinstance(blocker, dict) else blocker, "Ninguno")
     source_columns = ", ".join(text_list(assessment.get("source_columns")))
+    analysis = assessment.get("analysis") or {}
+    source_description = analysis.get("display_source") or assessment.get("source_table")
+    readiness = analysis.get("readiness_summary") or decision_message(result)
     if not source_columns:
         source_columns = "No documentadas"
     content = f"""
@@ -740,12 +746,12 @@ def render_summary(bundle: dict[str, Any]) -> str:
         <div class="summary-facts">
           <div class="fact-card"><div class="fact-label">Tipo semántico</div><div class="fact-value">{html.escape(semantic_type(bundle))}</div></div>
           <div class="fact-card"><div class="fact-label">Tipo de dato</div><div class="fact-value">{html.escape(data_type_summary(bundle))}</div></div>
-          <div class="fact-card"><div class="fact-label">Fuente</div><div class="fact-value wrap-anywhere">{esc(assessment.get('source_table'))}</div></div>
+          <div class="fact-card"><div class="fact-label">Fuente</div><div class="fact-value wrap-anywhere">{esc(source_description)}</div></div>
           <div class="fact-card"><div class="fact-label">Campos evaluados</div><div class="fact-value wrap-anywhere">{html.escape(source_columns)}</div></div>
         </div>
         <article class="card">
           <div class="card-title">Conclusión central</div>
-          <div class="decision-callout">{html.escape(decision_message(result))}</div>
+          <div class="decision-callout">{html.escape(readiness)}</div>
           <ul class="bullet-list">
             <li><strong>Blocker:</strong> {html.escape(blocker_label)}</li>
             <li><strong>Frecuencia:</strong> {esc(assessment.get('observation_frequency'))}</li>

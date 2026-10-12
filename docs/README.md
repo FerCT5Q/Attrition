@@ -1,12 +1,24 @@
 # Documentación de Attrition
 
-La documentación está separada entre contexto general y explicaciones técnicas por concepto.
+La documentación está separada entre contexto general, explicaciones por concepto y evidencia de cada ejecución de modelado.
 
 ## Contexto
 
+- [Modelo elegido y estado de las comparaciones](context/model-selection-current.md): CQ confirmado el 10-oct-2026 y experimentos posteriores; consultar antes de identificar una versión como vigente.
+- [Ronda B + playbook V11 y documentación por variable](context/b-playbook-v11-documentacion-variables.md): experimento terminado el 12-oct-2026, con enlaces a fichas, resultados y verificaciones; no sustituye a CQ.
 - [Visión del modelo](context/model-overview.md): objetivo, target, gobierno, modelado y formato de salida.
-- [Variables candidatas](context/candidate-variables.md): inventario de las 43 ideas del brainstorming.
+- [Variables candidatas](context/candidate-variables.md): inventario histórico de las 43 ideas del brainstorming; no sustituye el alcance del playbook V11.
 - [Metodología de evaluación](context/assessment-methodology.md): criterios, umbrales, blockers y fuentes oficiales.
+
+## Resumen y detalle de la ronda V11
+
+- [Resumen para Julia](../planes/modelo_c/43_variables_playbook_modelo_final_20261012.md): tabla de 43 filas con uso final, codificación y motivo de inclusión o exclusión.
+- [Diccionario y fichas completas](../output/analysis/engineering/20261011/b-playbook-v11-v1/documentacion/diccionario.md): fuente, valores, transformaciones, faltantes, pruebas y decisiones por representación y corte.
+- [Diccionario en Excel](../output/analysis/engineering/20261011/b-playbook-v11-v1/documentacion/diccionario.xlsx): consulta filtrable de la documentación de esa ejecución.
+
+Las fichas de implementación están en `output/analysis/.../documentacion/fichas/`,
+junto con los resultados del experimento. `docs/variables/` conserva la preparación
+y explicación conceptual. El resumen para Julia no reemplaza ninguno de esos detalles.
 
 ## Planes y revisiones
 

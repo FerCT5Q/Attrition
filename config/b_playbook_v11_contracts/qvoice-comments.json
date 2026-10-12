@@ -1,0 +1,91 @@
+{
+  "schema_version": 4,
+  "id": "qvoice-comments",
+  "reporting_mode": "presentation",
+  "created_at": "2026-10-12T15:11:04.548710+00:00",
+  "semantic_type": "survey",
+  "claim": "Indicadores de mención/presencia del V11, con taxonomía congelada y desfase anual.",
+  "population": "Employee, Regular, Engineering, activo y sin RF360",
+  "grain": "persona-foto con enlace participante-wave",
+  "query": "queries/profiles/engineering_b_v11_qvoice_link_person_month_20261011.sql",
+  "acceptance_rule": "Cero diferencias frente a helpers originales en muestra determinista de al menos 30 registros por wave; población anual reconciliada, sin duplicados usados ni waves futuras.",
+  "sources": [
+    {
+      "year": 2024,
+      "model_year": 2025,
+      "source": "data/QVoice/Jan 2024 Qvoice raw data.xlsx",
+      "sha256": "da39bc5929b972b2c12ff00568521304418028a7186a1949e1809e6b9b444d3a",
+      "prompt_roles": [
+        "doing_well",
+        "can_improve"
+      ],
+      "prompt_headers": {
+        "doing_well": "What is one thing Qualcomm is doing really well? Please describe something that you would like Qualcomm to continue doing.",
+        "can_improve": "What is one thing Qualcomm can do to improve? Please describe something that you would like Qualcomm to do to improve your experience."
+      }
+    },
+    {
+      "year": 2025,
+      "model_year": 2026,
+      "source": "data/QVoice/Jan 2025_Qvoice_raw data.xlsx",
+      "sha256": "241f322c0dda9c6de62e3da9d36f729d1c06a21a4d9a1b53fb3fb08c9876a01e",
+      "prompt_roles": [
+        "doing_well",
+        "can_improve",
+        "processes_to_improve"
+      ],
+      "prompt_headers": {
+        "doing_well": "What is one thing Qualcomm is doing really well? Please describe something that you would like Qualcomm to continue doing.",
+        "can_improve": "What is one thing Qualcomm can do to improve? Please describe something that you would like Qualcomm to do to improve your experience.",
+        "processes_to_improve": "If desired, please describe 1-2 work processes that you would like to see improved or made more efficient."
+      }
+    }
+  ],
+  "features": [
+    "qv_comment_presence",
+    "qv_improvement_comment_presence",
+    "qv_comment_rewards",
+    "qv_comment_career",
+    "qv_comment_leadership",
+    "qv_comment_workload",
+    "qv_comment_arrangement",
+    "qv_comment_processes",
+    "qv_comment_confidence",
+    "qv_comment_remote",
+    "qv_comment_hybrid",
+    "qv_comment_office",
+    "qv_remote_hybrid_request",
+    "qv_onsite_policy_concern"
+  ],
+  "feature_labels": {
+    "qv_comment_presence": "QVoice: presencia de algún comentario",
+    "qv_improvement_comment_presence": "QVoice: presencia de comentario de mejora",
+    "qv_comment_rewards": "QVoice: comentario sobre recompensas",
+    "qv_comment_career": "QVoice: comentario sobre carrera y promoción",
+    "qv_comment_leadership": "QVoice: comentario sobre manager, liderazgo y respeto",
+    "qv_comment_workload": "QVoice: comentario sobre carga de trabajo y equilibrio personal",
+    "qv_comment_arrangement": "QVoice: comentario sobre modalidad y traslado",
+    "qv_comment_processes": "QVoice: comentario sobre herramientas, procesos y burocracia",
+    "qv_comment_confidence": "QVoice: comentario sobre confianza y estabilidad laboral",
+    "qv_comment_remote": "QVoice: mención de trabajo remoto",
+    "qv_comment_hybrid": "QVoice: mención de trabajo híbrido",
+    "qv_comment_office": "QVoice: mención de asistencia a oficina",
+    "qv_remote_hybrid_request": "QVoice: petición de flexibilidad remota o híbrida",
+    "qv_onsite_policy_concern": "QVoice: inquietud de política presencial"
+  },
+  "source_hashes": {
+    "tools/b_v11_qvoice_comments.py": "ce0fe155aaac7f3c66c6d30192f9259cc644a18f2cee1ae1989f83337be419c8",
+    "tools/build_qvoice_comment_evidence.py": "5767604f271890d01fb3c43bf23469ed2c2106abb366ad6dc0097ce726cb02a8",
+    "tools/build_qvoice_retention_concerns_evidence.py": "b85d9c20686474317c7367eb45a25aebc8701da2464b515cc84f3c77c375f7cc",
+    "tools/build_qvoice_open_text_request_concern_evidence.py": "bf097a78ea7bb40f840d2dece2c14d10a77609429151ad75fe2197a15872d4b3"
+  },
+  "header_reconciliation": {
+    "path": "output/analysis/engineering/20261011/b-playbook-v11-v1/input-evidence/v11-qvoice-comment-keys.json",
+    "sha256": "58d94e1d5a435dc9460aad9718880e9a42318d41cf68a736f89d549d274995d7"
+  },
+  "temporal_policy": "config/qvoice_annual_lag_policy_20261008.json",
+  "limitation": "Los temas no equivalen a sentimiento o intención. El prompt de procesos sólo existe desde 2025; no se usan los temas más frecuentes de 2026 para seleccionar.",
+  "employee_level_rows_persisted": false,
+  "comment_text_persisted": false,
+  "assessment_score_changed": false
+}

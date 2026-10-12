@@ -1,0 +1,43 @@
+{
+  "schema_version": 4,
+  "id": "timezone",
+  "title": "Proximidad registrada y diferencia horaria del manager",
+  "claim": "La relación usa empleado y manager de la misma foto y respeta los offsets históricos IANA.",
+  "use": "Probar las representaciones geográficas del V11 sobre B completo.",
+  "semantic_type": "derived_feature",
+  "population": "Employee, Regular, activo, Engineering, sin RF360",
+  "grain": "persona-foto",
+  "known_at": "Ubicación de la foto; geografía pública estática 2026, usada como proxy retrospectivo declarado.",
+  "window": "2020-07-26 a 2026-09-07",
+  "history": "V11 aporta una preparación geográfica descriptiva; se incorpora su proxy, con conflictos de zona explícitos y sin asumir vigencia histórica de direcciones.",
+  "query": "queries/audits/engineering_b_v11_timezone_20261011.sql",
+  "source_query": "queries/profiles/engineering_b_v11_timezone_person_month_20261011.sql",
+  "zero_fields": [
+    "duplicate_source_keys",
+    "multiple_manager_matches",
+    "wrong_snapshot_matches",
+    "invalid_pair_used",
+    "independent_formula_mismatches",
+    "colocation_mismatches"
+  ],
+  "positive_fields": [
+    "person_snapshots",
+    "colocation_observable",
+    "timezone_observable"
+  ],
+  "expected_rows": 7,
+  "acceptance_rule": "Cero duplicados, uniones fuera de fecha, pares inválidos usados o diferencias de cálculo. Mapping ambiguo sigue unknown; sitio igual precede a diferencia horaria.",
+  "conclusion_if_pass": "El proxy puede probarse con su limitación geográfica explícita",
+  "limitation": "Sitio igual no prueba presencia física; catálogo 2026 sin vigencia histórica de direcciones. No cambia score.",
+  "action": "Probar las dos representaciones y conservar missingness",
+  "catalog_diagnostics": {
+    "catalog_office_count": 205,
+    "site_key_count": 293,
+    "city_country_key_count": 200,
+    "ambiguous_site_key_count": 1,
+    "ambiguous_city_country_key_count": 1,
+    "invalid_coordinate_count": 1,
+    "unresolved_timezone_count": 0
+  },
+  "catalog": "output/distribution/json/qualcomm-office-locations-catalog-20260908.json"
+}

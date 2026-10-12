@@ -1,0 +1,20 @@
+{
+  "schema_version": 4,
+  "id": "ios-knowledge",
+  "title": "Fecha de conocimiento de motivos IOS",
+  "claim": "¿Hay eventos con motivo y fecha de conocimiento verificable para las ventanas de modelado?",
+  "use": "Preparar seis indicadores de movilidad previa como B + X, sin adelantar eventos retrospectivos.",
+  "semantic_type": "derived_feature",
+  "population": "Eventos de personas con alguna foto Employee, Regular, activa, Engineering y sin RF360 en el periodo",
+  "grain": "Evento deduplicado por persona, fecha efectiva y motivo; salida agregada por año",
+  "known_at": "Para un evento utilizable se exige fecha efectiva, modificación y carga no posteriores a t; date_initiated sólo acredita el inicio del proceso",
+  "window": "Fotos 2020-07-26 a 2026-09-07; eventos efectivos hasta 2026-09-07",
+  "history": "V11 dispone de una preparación descriptiva por fecha efectiva. Antes de reutilizarla para predicción se comprueba el historial de carga y modificación.",
+  "query": "queries/audits/engineering_b_v11_ios_knowledge_20261011.sql",
+  "zero_fields": ["conflicting_initiation"],
+  "positive_fields": ["distinct_events", "v11_reason_events"],
+  "acceptance_rule": "La consulta debe recuperar eventos de los motivos V11 sin contradicción de inicio. La posibilidad de entrenamiento depende además de eventos conocidos antes de los cortes; se decide al revisar los agregados.",
+  "conclusion_if_pass": "La auditoría temporal quedó ejecutada; el pase técnico no garantiza historia utilizable para predicción",
+  "limitation": "La fecha efectiva o el inicio de un proceso no prueban cuándo se conoció su resolución final. Una tabla vigente puede haber reescrito eventos antiguos.",
+  "action": "Revisar las fechas agregadas y conservar desconocido cuando no se demuestre historia disponible"
+}

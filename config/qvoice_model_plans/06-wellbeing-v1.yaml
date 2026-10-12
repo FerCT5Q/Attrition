@@ -1,0 +1,67 @@
+schema_version: 1
+plan_version: 1
+language: es
+created_before_execution: true
+plan_authorship: codex_explicit
+variable: Wellbeing — versiones histórica y completa
+concept: Versión histórica Q8/Q10/Q11 y versión completa Q8/Q9/Q10/Q11; Q9 está ausente en 2024. La energía durante y después del trabajo y el estrés se mantienen como componentes separados.
+intended_use: Evaluar información de energía y estrés adicional a permanencia y carrera; comprobar por separado la versión con Q9.
+knowledge_date: Publicación acreditada, máximo 12 meses y mismo episodio laboral; frontera 2026-09-07.
+population: Engineering activo Regular sin RF360; ninguna respuesta faltante equivale a desfavorable.
+grain: Empleado-wave y empleado-snapshot; resultados agregados.
+semantic_type: survey
+source_reasoning: Q9 añade capacidad percibida para mejorar bienestar; no es intercambiable con los tres ítems históricos ni con Q47 de balance.
+validation_story:
+  - id: source_wellbeing
+    criterion: source
+    evidence_role: supporting
+    question: ¿Se resuelven Q8/Q10/Q11 y se conserva la ausencia de Q9 en 2024?
+    why: La versión histórica y la completa miden conjuntos distintos.
+    method: approved_external_access_check
+    sql_reference: queries/audits/qvoice_model_wellbeing_20261006.sql
+    acceptance_rule: Tres archivos accesibles y cero encabezados ambiguos; Q9 ausente queda identificado.
+    metric_checks:
+      - {metric: workbooks_checked, aggregate: sum, operator: eq, threshold: 3}
+      - {metric: header_ambiguities, aggregate: sum, operator: eq, threshold: 0}
+  - id: wellbeing_versions
+    criterion: definition
+    evidence_role: defining
+    question: ¿La versión con Q9 conserva una completitud distinta de Q8/Q10/Q11?
+    why: Un promedio parcial ocultaría la evolución del cuestionario.
+    method: Reconciliación de versiones y estados por componente.
+    sql_reference: queries/audits/qvoice_model_wellbeing_20261006.sql
+    acceptance_rule: Cero casos donde la completitud completa supere a la histórica; estados reconciliados.
+    metric_checks:
+      - {metric: full_exceeds_primary_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: status_reconciliation_difference, aggregate: sum, operator: eq, threshold: 0}
+  - id: wellbeing_domain
+    criterion: consistency
+    evidence_role: defining
+    question: ¿Energía y estrés mantienen un dominio válido sin interpretar faltantes como bajo bienestar?
+    why: Esa interpretación introduciría señal artificial por ausencia de respuestas.
+    method: aggregate_domain_and_transition_audit
+    sql_reference: queries/audits/qvoice_model_wellbeing_20261006.sql
+    acceptance_rule: Cero valores inválidos y separación de 255, vacío y ausencia de pregunta.
+    metric_checks:
+      - {metric: invalid_count, aggregate: sum, operator: eq, threshold: 0}
+  - id: wellbeing_join
+    criterion: join
+    evidence_role: supporting
+    question: ¿La cobertura y asociación de Wellbeing usan un enlace único a Engineering?
+    why: La agregación debe respetar la misma población por versión.
+    method: aggregate_join_reconciliation
+    sql_reference: queries/audits/qvoice_model_wellbeing_20261006.sql
+    acceptance_rule: Cero duplicados usados y cero múltiples matches.
+    metric_checks:
+      - {metric: duplicate_count, aggregate: sum, operator: eq, threshold: 0}
+      - {metric: multi_match_count, aggregate: sum, operator: eq, threshold: 0}
+  - id: wellbeing_history
+    criterion: history
+    evidence_role: defining
+    question: ¿Las versiones de Wellbeing tienen disponibilidad y componentes anteriores a cada corte?
+    why: La disponibilidad reciente de Q9 puede limitar la evidencia temporal del bloque completo.
+    method: Revisión de fechas acreditadas y elegibilidad temporal por versión.
+    sql_reference: queries/audits/qvoice_model_wellbeing_20261006.sql
+    acceptance_rule: Fechas acreditadas y componentes válidos en entrenamiento interno y validación.
+    metric_checks:
+      - {metric: unverified_availability_waves, aggregate: sum, operator: eq, threshold: 0}

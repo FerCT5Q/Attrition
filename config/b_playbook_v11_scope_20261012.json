@@ -1,0 +1,558 @@
+{
+  "schema_version": 1,
+  "reporting_mode": "presentation",
+  "created_at": "2026-10-12T15:28:10.100667+00:00",
+  "source": "output/distribution/attrition-43-variable-distributions-v11.html",
+  "source_sha256": "24ce87b431406f1e1dd2ebde452b1cb739ee1231c53227fa5a3282d5af6e5b5f",
+  "source_manifest": "output/distribution/json/attrition-43-variable-distributions-v11-manifest.json",
+  "source_manifest_sha256": "903c5ef1a19a68d6d90ce81e2e37b406afb7425b50e60ee138fb90427ceadcf0",
+  "views": [
+    {
+      "slide": 3,
+      "vista": "Movimientos IOS",
+      "prioritaria": true,
+      "estado": "No seleccionable",
+      "representaciones": [],
+      "explicacion": "Los seis motivos existen descriptivamente, pero sus cargas actuales no acreditan conocimiento histórico. Se retira también ios_12m; B no contiene IOS.",
+      "source_stage_id": "slide-5",
+      "source_title": "IOS movement events"
+    },
+    {
+      "slide": 4,
+      "vista": "Región y mercado laboral",
+      "prioritaria": true,
+      "estado": "Preparada",
+      "representaciones": [
+        "region",
+        "work_country",
+        "labor_market_detail"
+      ],
+      "explicacion": "Se prueban por separado región, país y mercado registrado en la propia foto.",
+      "source_stage_id": "slide-12",
+      "source_title": "Region"
+    },
+    {
+      "slide": 5,
+      "vista": "Modalidad de trabajo",
+      "prioritaria": true,
+      "estado": "Preparada",
+      "representaciones": [
+        "work_arrangement_group",
+        "work_arrangement_v11"
+      ],
+      "explicacion": "Se contrasta la agrupación anterior con los tres grupos exactos del V11, incluido Short-Term Remote Work.",
+      "source_stage_id": "slide-14",
+      "source_title": "Work arrangement"
+    },
+    {
+      "slide": 6,
+      "vista": "Engineering y otras funciones",
+      "prioritaria": true,
+      "estado": "Constante",
+      "representaciones": [],
+      "explicacion": "Engineering define la población de esta ronda; no discrimina dentro de ella.",
+      "source_stage_id": "slide-15",
+      "source_title": "Engineering vs. non-engineering"
+    },
+    {
+      "slide": 7,
+      "vista": "Recontratación",
+      "prioritaria": true,
+      "estado": "Obligatoria en B",
+      "representaciones": [
+        "rehire"
+      ],
+      "explicacion": "Se conserva la variable de B.",
+      "source_stage_id": "slide-16",
+      "source_title": "Rehire"
+    },
+    {
+      "slide": 8,
+      "vista": "Adquisiciones",
+      "prioritaria": true,
+      "estado": "Preparada",
+      "representaciones": [
+        "acquisition_recorded",
+        "acquisition_detail"
+      ],
+      "explicacion": "Se prueba presencia y detalle registrado; sin registro no demuestra contratación orgánica.",
+      "source_stage_id": "slide-acquisition",
+      "source_title": "Acquisitions and attrition"
+    },
+    {
+      "slide": 9,
+      "vista": "Experiencia previa",
+      "prioritaria": true,
+      "estado": "Preparada",
+      "representaciones": [
+        "prior_experience_band"
+      ],
+      "explicacion": "Se conservan las bandas y desconocidos de la fuente histórica.",
+      "source_stage_id": "slide-17",
+      "source_title": "Experience before Qualcomm"
+    },
+    {
+      "slide": 10,
+      "vista": "Distancia estimada",
+      "prioritaria": true,
+      "estado": "Preparada con limitación",
+      "representaciones": [
+        "commute_distance_onsite_v11"
+      ],
+      "explicacion": "Aproximación postal a oficinas de la ciudad para Onsite. Mapping público estático; distancia mínima cuando hay varias oficinas. No es commute real validado.",
+      "source_stage_id": "slide-19",
+      "source_title": "Estimated commute distance and voluntary attrition"
+    },
+    {
+      "slide": 11,
+      "vista": "Temas de retención en comentarios QVoice",
+      "prioritaria": true,
+      "estado": "Preparada",
+      "representaciones": [
+        "qv_improvement_comment_presence",
+        "qv_comment_rewards",
+        "qv_comment_career",
+        "qv_comment_leadership",
+        "qv_comment_workload",
+        "qv_comment_arrangement",
+        "qv_comment_processes",
+        "qv_comment_confidence"
+      ],
+      "explicacion": "Se incorporan los siete temas de la taxonomía completa y presencia de comentario de mejora, con waves 2024/2025 y desfase anual.",
+      "source_stage_id": "slide-21",
+      "source_title": "Retention concerns in QVoice comments"
+    },
+    {
+      "slide": 12,
+      "vista": "Intención de permanecer: preguntas",
+      "prioritaria": true,
+      "estado": "Preparada",
+      "representaciones": [
+        "qv_M16",
+        "qv_M14"
+      ],
+      "explicacion": "Cada pregunta se prueba separada; los aliases Q4/Q12 no duplican variables.",
+      "source_stage_id": "slide-23",
+      "source_title": "Intent to Stay items"
+    },
+    {
+      "slide": 13,
+      "vista": "Metas profesionales",
+      "prioritaria": true,
+      "estado": "Preparada con limitación",
+      "representaciones": [
+        "qv_career"
+      ],
+      "explicacion": "Se mantiene la limitación de cambio de redacción en 2024.",
+      "source_stage_id": "slide-24",
+      "source_title": "Career goals item"
+    },
+    {
+      "slide": 14,
+      "vista": "Promedio de preguntas comparables QVoice",
+      "prioritaria": true,
+      "estado": "Preparada",
+      "representaciones": [
+        "qv_mean33",
+        "qv_availability",
+        "qv_region_relative"
+      ],
+      "explicacion": "Promedio de 33 ítems comunes, sus 33 pruebas individuales y controles de disponibilidad. La media relativa es respecto a la región contemporánea.",
+      "source_stage_id": "slide-25",
+      "source_title": "Average of comparable QVoice items"
+    },
+    {
+      "slide": 15,
+      "vista": "Tiempo en nivel, perfil y rol",
+      "prioritaria": true,
+      "estado": "Preparada con historia corta",
+      "representaciones": [
+        "time_at_level_band",
+        "time_in_job_profile_band",
+        "time_in_role_stored_v11"
+      ],
+      "explicacion": "Tres medidas distintas. Perfil aparece en noviembre de 2025 y rol almacenado en agosto de 2025; cada corte exige seis fotos observables. La fórmula de rol no se declara confirmada.",
+      "source_stage_id": "slide-29",
+      "source_title": "Time at detailed level and time in role"
+    },
+    {
+      "slide": 16,
+      "vista": "Antigüedad en Qualcomm",
+      "prioritaria": true,
+      "estado": "Obligatoria en B",
+      "representaciones": [
+        "tenure_playbook_band"
+      ],
+      "explicacion": "Se conservan las seis bandas de B.",
+      "source_stage_id": "slide-31",
+      "source_title": "Company tenure"
+    },
+    {
+      "slide": 17,
+      "vista": "Tiempo desde la última promoción",
+      "prioritaria": true,
+      "estado": "Obligatoria en B",
+      "representaciones": [
+        "time_since_promotion_band",
+        "current_grade_entry_path",
+        "time_since_grade_entry_band"
+      ],
+      "explicacion": "B conserva su promoción. Las incorporaciones contrastan la entrada observada al grado dentro del episodio, sin afirmar contratación directa.",
+      "source_stage_id": "slide-32",
+      "source_title": "Time since last promotion"
+    },
+    {
+      "slide": 18,
+      "vista": "Promoción y salidas por track",
+      "prioritaria": true,
+      "estado": "Parcial",
+      "representaciones": [
+        "time_since_promotion_band",
+        "grade_family",
+        "compensation_grade_detail",
+        "pay_track_detail"
+      ],
+      "explicacion": "Track y grado se prueban; el flag promotion_yes_no de Annual Review queda fuera por falta de publicación histórica verificada. No se equipara a is_promo.",
+      "source_stage_id": "slide-34",
+      "source_title": "Promotion and attrition by pay track"
+    },
+    {
+      "slide": 19,
+      "vista": "Capas de la jerarquía",
+      "prioritaria": true,
+      "estado": "Preparada con límite semántico",
+      "representaciones": [
+        "layers_band",
+        "hierarchy_depth_band"
+      ],
+      "explicacion": "Se comparan capa almacenada y profundidad reconstruida en la misma foto; una raíz no se denomina CEO sin validación de negocio.",
+      "source_stage_id": "slide-37",
+      "source_title": "Manager layers to the CEO"
+    },
+    {
+      "slide": 20,
+      "vista": "Tamaño del equipo directo",
+      "prioritaria": true,
+      "estado": "Obligatoria en B",
+      "representaciones": [
+        "direct_reports_band"
+      ],
+      "explicacion": "Se conserva el tamaño directo de B; no se confunde con el equipo del manager.",
+      "source_stage_id": "slide-37-span-followup",
+      "source_title": "Direct team size (span)"
+    },
+    {
+      "slide": 21,
+      "vista": "Compa-ratio",
+      "prioritaria": true,
+      "estado": "Preparada con límite semántico",
+      "representaciones": [
+        "comp_ratio_band"
+      ],
+      "explicacion": "Bandas de la razón almacenada; no se afirma que su fórmula de origen esté validada.",
+      "source_stage_id": "slide-39",
+      "source_title": "Comp ratio"
+    },
+    {
+      "slide": 22,
+      "vista": "Salidas recientes bajo el manager actual",
+      "prioritaria": true,
+      "estado": "Preparada",
+      "representaciones": [
+        "team_exits_6m",
+        "team_exits_12m",
+        "manager_team_exits6_v11"
+      ],
+      "explicacion": "Se distingue el contexto de compañeros de B del conteo V11 bajo el manager actual. Seis intervalos completos después del inicio del feed.",
+      "source_stage_id": "slide-45",
+      "source_title": "Recent team exits under the current manager"
+    },
+    {
+      "slide": 23,
+      "vista": "Salida del manager",
+      "prioritaria": true,
+      "estado": "Preparada",
+      "representaciones": [
+        "manager_left_6m"
+      ],
+      "explicacion": "Salida anterior a la foto, con evento conocido y episodio vigente.",
+      "source_stage_id": "slide-47",
+      "source_title": "Manager leaving"
+    },
+    {
+      "slide": 24,
+      "vista": "Solicitudes de empleo",
+      "prioritaria": false,
+      "estado": "No seleccionable",
+      "representaciones": [],
+      "explicacion": "applications termina en octubre de 2024. La vista alternativa tiene eventos recientes, pero falta historial del vínculo y observabilidad. Ausencia de feed no equivale a cero solicitudes.",
+      "source_stage_id": "slide-3",
+      "source_title": "Applied to a job"
+    },
+    {
+      "slide": 25,
+      "vista": "Ubicación laboral",
+      "prioritaria": false,
+      "estado": "Preparada",
+      "representaciones": [
+        "work_country",
+        "work_site",
+        "work_city"
+      ],
+      "explicacion": "País, sitio y ciudad de la foto; no se usan domicilios como categorías.",
+      "source_stage_id": "slide-6",
+      "source_title": "Location"
+    },
+    {
+      "slide": 26,
+      "vista": "Sitio y ciudad de oficina",
+      "prioritaria": false,
+      "estado": "Preparada",
+      "representaciones": [
+        "work_site",
+        "work_city"
+      ],
+      "explicacion": "Se incorpora ciudad; algunos códigos de sitio representan varias ciudades.",
+      "source_stage_id": "slide-7",
+      "source_title": "Office site and city"
+    },
+    {
+      "slide": 27,
+      "vista": "Salidas anteriores del equipo",
+      "prioritaria": false,
+      "estado": "Preparada",
+      "representaciones": [
+        "team_exits_3m",
+        "team_exits_6m",
+        "team_exit_recency_12m"
+      ],
+      "explicacion": "El estudio por evento orienta la hipótesis; sólo se usan salidas conocidas antes de t.",
+      "source_stage_id": "slide-9",
+      "source_title": "Does one team departure precede more departures?"
+    },
+    {
+      "slide": 28,
+      "vista": "Sensibilidad: equipos de seis o más",
+      "prioritaria": false,
+      "estado": "Contexto",
+      "representaciones": [
+        "manager_team_size_band",
+        "team_exit_intensity_12m"
+      ],
+      "explicacion": "El umbral de equipo es una sensibilidad del estudio; tamaño e intensidad se prueban como representaciones adicionales.",
+      "source_stage_id": "slide-10",
+      "source_title": "Sensitivity check: teams with 6+ employees"
+    },
+    {
+      "slide": 29,
+      "vista": "Familia de puesto",
+      "prioritaria": false,
+      "estado": "Preparada",
+      "representaciones": [
+        "job_family_detail",
+        "job_family_group"
+      ],
+      "explicacion": "Detalle y grupo se prueban por separado; categorías raras se agrupan sólo con entrenamiento.",
+      "source_stage_id": "slide-11",
+      "source_title": "Job family"
+    },
+    {
+      "slide": 30,
+      "vista": "Género",
+      "prioritaria": false,
+      "estado": "Fuera de autorización",
+      "representaciones": [],
+      "explicacion": "Atributo protegido excluido de la autorización de predicción; no se usa como feature.",
+      "source_stage_id": "slide-13",
+      "source_title": "Gender"
+    },
+    {
+      "slide": 31,
+      "vista": "Comentarios sobre modalidad",
+      "prioritaria": false,
+      "estado": "Preparada",
+      "representaciones": [
+        "qv_comment_presence",
+        "qv_comment_remote",
+        "qv_comment_hybrid",
+        "qv_comment_office",
+        "qv_remote_hybrid_request",
+        "qv_onsite_policy_concern"
+      ],
+      "explicacion": "Presencia, menciones y peticiones se prueban por separado. No comentario, no enlace y ausencia de pregunta son distintos; mención no demuestra sentimiento.",
+      "source_stage_id": "slide-20",
+      "source_title": "QVoice comments about remote, hybrid, and office work"
+    },
+    {
+      "slide": 32,
+      "vista": "Heartbeat de QVoice",
+      "prioritaria": false,
+      "estado": "No seleccionable",
+      "representaciones": [],
+      "explicacion": "2024 no tiene escalas ordinales; 2025 tiene 52 de 53 y falta Q42. No se cambia el denominador ni se adelanta la wave 2026, asignada a 2027.",
+      "source_stage_id": "slide-26",
+      "source_title": "QVoice heartbeat"
+    },
+    {
+      "slide": 33,
+      "vista": "Nivel",
+      "prioritaria": false,
+      "estado": "Obligatoria en B",
+      "representaciones": [
+        "level_grouped"
+      ],
+      "explicacion": "Se conserva el nivel de B.",
+      "source_stage_id": "slide-35",
+      "source_title": "Level"
+    },
+    {
+      "slide": 34,
+      "vista": "Familia de grado",
+      "prioritaria": false,
+      "estado": "Preparada",
+      "representaciones": [
+        "grade_family",
+        "compensation_grade_detail",
+        "pay_track_detail"
+      ],
+      "explicacion": "Se prueban prefijo de grado, código completo y track V11 por separado.",
+      "source_stage_id": "slide-36",
+      "source_title": "Level grouped by grade family"
+    },
+    {
+      "slide": 35,
+      "vista": "Grados en las capas 0–2",
+      "prioritaria": false,
+      "estado": "Contexto",
+      "representaciones": [
+        "hierarchy_depth_band",
+        "compensation_grade_detail"
+      ],
+      "explicacion": "Es un cruce descriptivo; usa las mismas representaciones de jerarquía y grado, sin duplicarlas.",
+      "source_stage_id": "slide-37-followup",
+      "source_title": "0–2 layers: exact compensation grades"
+    },
+    {
+      "slide": 36,
+      "vista": "Grado de compensación",
+      "prioritaria": false,
+      "estado": "Preparada",
+      "representaciones": [
+        "compensation_grade_detail"
+      ],
+      "explicacion": "Se usa el código, sin importes individuales.",
+      "source_stage_id": "slide-38",
+      "source_title": "Compensation grade"
+    },
+    {
+      "slide": 37,
+      "vista": "Compensación relativa dentro del equipo",
+      "prioritaria": false,
+      "estado": "Preparada",
+      "representaciones": [
+        "within_team_pay_position",
+        "manager_pay_spread_band"
+      ],
+      "explicacion": "Pares comparables de país, grado y moneda. Recálculo independiente; ningún importe sale de SQL.",
+      "source_stage_id": "slide-40",
+      "source_title": "Within-team compensation range"
+    },
+    {
+      "slide": 38,
+      "vista": "Diferencia horaria con el manager",
+      "prioritaria": false,
+      "estado": "Preparada con limitación",
+      "representaciones": [
+        "manager_timezone_relation"
+      ],
+      "explicacion": "Catálogo público estático y offsets de cada foto con DST, verificados en 1,036 casos. No se acredita vigencia histórica de direcciones.",
+      "source_stage_id": "slide-42",
+      "source_title": "Assigned office-site proximity to manager"
+    },
+    {
+      "slide": 39,
+      "vista": "Coincidencia de ubicación con el manager",
+      "prioritaria": false,
+      "estado": "Preparada",
+      "representaciones": [
+        "manager_location_relation",
+        "manager_colocation_v11"
+      ],
+      "explicacion": "Se contrasta relación país/sitio/ciudad con coincidencia V11 de sitio y ciudad. Registro igual no demuestra proximidad física.",
+      "source_stage_id": "slide-43",
+      "source_title": "Office-site relationship with manager"
+    },
+    {
+      "slide": 40,
+      "vista": "Salidas observadas y esperadas del manager",
+      "prioritaria": false,
+      "estado": "Preparada",
+      "representaciones": [
+        "manager_observed_expected6_band"
+      ],
+      "explicacion": "Ratio con exposición histórica, benchmark por estratos y seis intervalos completos; no es una calificación del manager.",
+      "source_stage_id": "slide-44",
+      "source_title": "Manager observed-to-expected exit ratio"
+    },
+    {
+      "slide": 41,
+      "vista": "Salidas del manager sobre el benchmark",
+      "prioritaria": false,
+      "estado": "Preparada",
+      "representaciones": [
+        "manager_above_average18"
+      ],
+      "explicacion": "Dieciocho intervalos completos, equipo promedio de al menos cuatro, dos salidas y umbral 1.3 veces el benchmark; historia desde abril de 2024.",
+      "source_stage_id": "slide-46",
+      "source_title": "Above-average team turnover"
+    },
+    {
+      "slide": 42,
+      "vista": "Cambio de manager",
+      "prioritaria": false,
+      "estado": "Obligatoria en B",
+      "representaciones": [
+        "manager_changes_12m"
+      ],
+      "explicacion": "La presencia del evento está contenida en el conteo obligatorio de B.",
+      "source_stage_id": "slide-48",
+      "source_title": "Manager change"
+    },
+    {
+      "slide": 43,
+      "vista": "Cantidad y recencia de cambios de manager",
+      "prioritaria": false,
+      "estado": "Preparada",
+      "representaciones": [
+        "manager_changes_12m",
+        "manager_changes_3m",
+        "manager_changes_6m"
+      ],
+      "explicacion": "B conserva doce meses y se contrastan tres y seis meses. Las definiciones de grupo no se fuerzan a 22.",
+      "source_stage_id": "slide-49",
+      "source_title": "Number of manager changes"
+    },
+    {
+      "slide": 44,
+      "vista": "Talent index",
+      "prioritaria": false,
+      "estado": "No seleccionable",
+      "representaciones": [],
+      "explicacion": "La metadata actual sólo contiene timestamps técnicos en master_talent_index; no hay fecha de negocio ni snapshot del índice para un enlace as-of.",
+      "source_stage_id": "slide-50",
+      "source_title": "Talent index"
+    }
+  ],
+  "notes": [
+    "El nombre «43 variables» identifica el playbook; contiene 42 vistas analíticas además de portada y navegación. No equivale a 43 columnas independientes.",
+    "Se prepararon 41 incorporaciones RH y 51 QVoice, conservando ocho predictores y dos interacciones de B. Las 33 preguntas comunes están incluidas una sola vez cada una.",
+    "IOS, aplicaciones, Heartbeat exacto y Talent index quedan fuera por las brechas verificadas; Annual Review queda parcialmente representado por promoción y track, con su flag de ciclo pendiente.",
+    "El tiempo en perfil comienza en noviembre de 2025 y el rol almacenado en agosto de 2025. La elegibilidad se determina dentro de cada entrenamiento; preparación no significa historia suficiente.",
+    "La distancia es una aproximación postal a oficinas de la ciudad para Onsite: todo el mapping resolvió por ciudad, hay oficinas alternativas y no hay país de domicilio estructurado. En 2026, 38,044 persona-fotos calculables superan 500 km. No se presenta como commute real validado.",
+    "El catálogo geográfico público de 2026 se usa como aproximación estática retrospectiva. DAL.B está excluido y TIJNA.Z corregido con una entrada válida del catálogo.",
+    "Los catorce indicadores de comentarios usan taxonomías completas congeladas. El prompt de mejora de procesos sólo existe desde 2025; los controles distinguen contenido y disponibilidad.",
+    "Los grupos conservan las dimensiones de B para aislar el aporte de variables. La cantidad se recalcula por foto; el diagnóstico agregado por predicción ayuda a valorar la restricción de esos grupos.",
+    "La búsqueda evalúa todas las incorporaciones individuales y pares/tríos de los seis mejores candidatos internos. No demuestra un óptimo global ni cambia modelos publicados."
+  ],
+  "assessment_score_changed": false
+}

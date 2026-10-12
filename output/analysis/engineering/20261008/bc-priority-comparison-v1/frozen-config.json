@@ -1,0 +1,39 @@
+{
+  "run_id": "engineering-bc-priority-20261008-v1",
+  "reporting_mode": "presentation",
+  "output": "output/analysis/engineering/20261008/bc-priority-comparison-v1",
+  "source_run": "output/analysis/engineering/20261008/model-c-v2",
+  "authorization": "config/attrition_model_in_memory_training_authorization_20261001.json",
+  "capacity_fractions": [
+    0.2,
+    0.3,
+    0.4
+  ],
+  "primary_capacity_fraction": 0.3,
+  "capacity_reason": "Escenarios propuestos al usuario; 30% representa prioridad alta más parte de la media. Es una hipótesis de capacidad, no un presupuesto aprobado ni bandas absolutas de riesgo.",
+  "policy": "Ordenar hojas por riesgo medio de entrenamiento, congelado antes de la evaluación. Llenar capacidad en cada snapshot; el grupo del límite recibe peso fraccional igual para sus integrantes, equivalente a selección aleatoria dentro del grupo. Publicar también coberturas al excluir o incluir la hoja completa.",
+  "priority_metrics": [
+    "capture_percent",
+    "group_mae_pp",
+    "group_snapshot_mae_pp",
+    "worst_publishable_group_error_pp"
+  ],
+  "preference_rule": {
+    "positive_mean_capture_gain": true,
+    "minimum_capture_winning_folds": 3,
+    "capture_difference_ci95_lower_above_zero": true,
+    "maximum_selected_group_mae_worsening_pp": 0.1,
+    "maximum_group_snapshot_mae_worsening_pp": 0.1,
+    "description": "Preferencia retrospectiva por escenario si mejora captura en promedio, en al menos 3 de 4 periodos y con IC95 positivo; error por grupo prioritario y por grupo-snapshot no empeoran más de 0.1 pp. La tolerancia y el criterio temporal provienen del experimento anterior. El peor grupo se reporta para decisión, sin umbral de negocio inventado. No constituye promoción automática ni prueba prospectiva."
+  },
+  "bootstrap_repetitions": 500,
+  "seed": 20261008,
+  "extension_snapshot": "2026-02-22",
+  "reproduction_absolute_tolerance": 1e-08,
+  "qvoice_included": false,
+  "reselect_features": false,
+  "c_models_refitted": false,
+  "b_reconstruction_fits": 4,
+  "employee_level_rows_persisted": false,
+  "individual_scores_published": false
+}

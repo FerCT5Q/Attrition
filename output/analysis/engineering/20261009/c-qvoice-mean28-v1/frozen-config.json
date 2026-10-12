@@ -1,0 +1,44 @@
+{
+  "run_id": "engineering-c-qvoice-mean28-20261009-v1",
+  "output": "output/analysis/engineering/20261009/c-qvoice-mean28-v1",
+  "source_cq": "output/analysis/engineering/20261008/model-c-plus-qvoice-v1",
+  "source_bq": "output/analysis/engineering/20261008/qvoice-model-b-calibrated-v1",
+  "source_overlap": "output/analysis/engineering/20261009/c-qvoice-overlap-v1",
+  "query": "queries/profiles/engineering_c_qvoice_mean28_person_month_20261009.sql",
+  "plan": "docs/plans/attrition-c-qvoice-mean28-20261009.md",
+  "knowledge_boundary": "2026-09-07",
+  "reporting_mode": "presentation",
+  "fixed_qvoice_items": [
+    "qv_career",
+    "qv_Q8",
+    "qv_Q10",
+    "qv_Q11",
+    "qv_Q13",
+    "qv_Q17"
+  ],
+  "fixed_overlap_features": [
+    "qv_career",
+    "qv_mean33",
+    "qv_Q8",
+    "qv_Q10",
+    "qv_Q11",
+    "qv_Q13",
+    "qv_Q17"
+  ],
+  "expected_mean_denominator": 28,
+  "l2_grid": [
+    0.1,
+    1,
+    10
+  ],
+  "bootstrap_repetitions": 500,
+  "seed": 20261009,
+  "reconciliation_absolute_tolerance": 1e-08,
+  "hazard_base_refits": 0,
+  "score_changes": false,
+  "employee_level_rows_persisted": false,
+  "individual_scores_published": false,
+  "disk_cache_of_rows": false,
+  "stage": "model_selection",
+  "main_reference": "CQ"
+}

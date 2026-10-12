@@ -1,0 +1,40 @@
+{
+  "reporting_mode": "presentation",
+  "executed_at": "2026-10-12T02:18:51.697604+00:00",
+  "query": "queries/audits/engineering_b_incremental_manager_span_20261011.sql",
+  "sql_sha256": "73008c2d1945361a9b4b78e9ab3b4fd7283628ff071273582172b5eff2f1ab15",
+  "claim": "Tamaño reconstruido del equipo del manager actual en la misma foto; no es el campo de reportes del empleado.",
+  "acceptance_rule": "Cero en negative_span_violations; grain persona-snapshot, Engineering activo sin RF360.",
+  "rows": [
+    {
+      "person_snapshots": 2209264,
+      "snapshots": 74,
+      "manager_known_rows": 2209263,
+      "reconstructed_rows": 2209263,
+      "negative_span_violations": 0,
+      "stored_field_rows": 2209264,
+      "exact_matches": 63076,
+      "mean_absolute_difference": "5",
+      "band_1_4": 716467,
+      "band_5_9": 1217230,
+      "band_10_14": 218731,
+      "band_15_19": 39037,
+      "band_20_29": 15012,
+      "band_30_plus": 2786,
+      "maximum_reconstructed_span": 74
+    }
+  ],
+  "employee_level_rows_persisted": false,
+  "assessment_score_changed": false,
+  "outcome": "pass",
+  "semantic_type": "derived_feature",
+  "known_at": "snapshot t",
+  "population": "Employee, Regular, Engineering activo, sin RF360",
+  "date_window": [
+    "2020-07-26",
+    "2026-09-07"
+  ],
+  "grain": "persona-snapshot",
+  "original_query": "queries\\audits\\engineering_model_d_manager_span_20261010.sql",
+  "original_sql_sha256": "0c466f9e2f61c0c52c1bd16b24e253bebd34c50667db11bb6aeb154352093099"
+}

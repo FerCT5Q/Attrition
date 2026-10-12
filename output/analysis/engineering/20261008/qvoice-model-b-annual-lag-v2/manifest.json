@@ -1,0 +1,159 @@
+{
+  "manifest_version": 1,
+  "created_at": "2026-10-08T17:25:17+00:00",
+  "finalized_at": "2026-10-08T17:30:00+00:00",
+  "experiment": "engineering-qvoice-20261008-annual-lag-v1",
+  "run_path": "output/analysis/engineering/20261008/qvoice-model-b-annual-lag-v2",
+  "git_base_commit": "3ef93cf3f3bed76b03486133099ba4cc961718a6",
+  "implementation_status": "completed",
+  "predictive_status": "signal_detected_gate_not_passed",
+  "official_model_status": "model_b_unchanged",
+  "reporting_mode": "presentation",
+  "knowledge_boundary": "2026-09-07",
+  "authorization": "config/attrition_model_in_memory_training_authorization_20261001.json",
+  "control": {
+    "model": "B",
+    "link": "cloglog",
+    "feature_count": 10,
+    "risk_horizon_months": 6,
+    "reused_from": "output/analysis/engineering/20261006/qvoice-experiment-v1/control/control-reproduction.json",
+    "reuse_evidence": "output/analysis/engineering/20261008/qvoice-model-b-annual-lag-v2/control/reuse.json"
+  },
+  "temporal_policy": {
+    "reference": "config/qvoice_annual_lag_policy_20261008.json",
+    "assignment": {
+      "2024": 2025,
+      "2025": 2026,
+      "2026": 2027
+    },
+    "main_periods": [
+      {
+        "id": "aug_dec_2025",
+        "snapshot_count": 5,
+        "distinct_people": 35474
+      },
+      {
+        "id": "jan_feb_2026",
+        "snapshot_count": 2,
+        "distinct_people": 35448
+      }
+    ]
+  },
+  "validation": {
+    "variants_evaluated": 9,
+    "complete_main_periods_per_variant": 2,
+    "evaluated_variant_periods": 18,
+    "cohort_equality_verified_count": 18,
+    "bootstrap_repetitions": 500,
+    "bootstrap_unit": "person_all_months",
+    "confidence_level": 0.95,
+    "l2_selection_metric": "monthly_brier",
+    "sql_explain_passed": true,
+    "sql_schema_passed": true
+  },
+  "decision_rule": {
+    "minimum_complete_main_periods": 2,
+    "ranking": "Improve PR-AUC and top-decile lift in both main periods.",
+    "calibration": "Do not worsen mean Brier, overall absolute calibration error, or top-quintile absolute calibration error.",
+    "incremental": "Pass the same checks against the availability-only control.",
+    "promotion_requires_all_checks": true
+  },
+  "result": {
+    "status_counts": {
+      "prometedora": 0,
+      "sin_mejora_demostrada": 9,
+      "evidencia_temporal_insuficiente": 0
+    },
+    "variant_status": {
+      "intent_q4": "sin mejora demostrada",
+      "intent_q12": "sin mejora demostrada",
+      "intent_components": "sin mejora demostrada",
+      "intent_both": "sin mejora demostrada",
+      "career": "sin mejora demostrada",
+      "mean33": "sin mejora demostrada",
+      "intent_career": "sin mejora demostrada",
+      "intent_career_mean33": "sin mejora demostrada",
+      "intent_career_mean31_same_cohort": "sin mejora demostrada"
+    },
+    "shared_failed_check": "calibration_error_pp_vs_control",
+    "recommended_followup_candidate": {
+      "variant": "intent_q4",
+      "checks_passed": 7,
+      "checks_total": 8,
+      "promotion_status": "experimental_only",
+      "failed_checks": [
+        "calibration_error_pp_vs_control"
+      ],
+      "periods": [
+        {
+          "period": "aug_dec_2025",
+          "response_coverage_percent": 62.281551954808975,
+          "delta_pr_auc_vs_control": 0.00492052254888198,
+          "delta_lift_at_10_percent_vs_control": 0.2013633578431371,
+          "delta_brier_score_vs_control": -0.000067419577018758,
+          "delta_calibration_error_pp_vs_control": -0.07530872602253859,
+          "delta_top_quintile_calibration_error_pp_vs_control": -0.2860364702872382
+        },
+        {
+          "period": "jan_feb_2026",
+          "response_coverage_percent": 67.52660936877454,
+          "delta_pr_auc_vs_control": 0.007883364147013835,
+          "delta_lift_at_10_percent_vs_control": 0.3586060321257689,
+          "delta_brier_score_vs_control": -0.000119796279035904,
+          "delta_calibration_error_pp_vs_control": 0.11760719837339978,
+          "delta_top_quintile_calibration_error_pp_vs_control": -0.223725920750336
+        }
+      ]
+    }
+  },
+  "privacy": {
+    "minimum_people": 30,
+    "minimum_events": 30,
+    "employee_level_rows_persisted": false,
+    "individual_scores_published": false,
+    "free_text_used": false
+  },
+  "source_sha256": {
+    "data/QVoice/survey_structure.xlsx": "b545d562087fc1ae71fbc829b832b1a9ceef56cde062891b3d5a71c363266db6",
+    "data/QVoice/Jan 2024 Qvoice raw data.xlsx": "da39bc5929b972b2c12ff00568521304418028a7186a1949e1809e6b9b444d3a",
+    "data/QVoice/Jan 2025_Qvoice_raw data.xlsx": "241f322c0dda9c6de62e3da9d36f729d1c06a21a4d9a1b53fb3fb08c9876a01e",
+    "data/QVoice/Jan 2026 Qvoice_raw data.xlsx": "7ea357091c07b42da483576a1d3c357ff836179f05316b7ad6d51248940e557b"
+  },
+  "configuration_sha256": {
+    "config/qvoice_model_experiment_20261008.yaml": "0a65cbdb39992e91bdee2b7f263d5afd89768cfc972161d184f667347c01ddb7",
+    "config/qvoice_annual_lag_policy_20261008.json": "82645e4b5e1474893031bd6d4beac72d804e17db40561108db1f565bfbb4c985"
+  },
+  "query_sha256": {
+    "queries/audits/qvoice_model_annual_lag_windows_20261008.sql": "f831304f62dfd729cad2b0bd4c403b34ed03a4eea4e3545cd9287f4971b9fe54",
+    "queries/profiles/engineering_qvoice_person_month_20261008.sql": "b90330d06a7e7297d17dd026546baf5060b2c23e415155f56289b8e7f6e0add7"
+  },
+  "code_sha256": {
+    "tools/qvoice_model_data.py": "4841751fd853c6a00ae024ef28b77a3c00b192bc9ce0f4fa0564b84e440366f2",
+    "tools/qvoice_model_experiment.py": "16cef4a44b7794082042e10e830a83797471d1d014e672d9e94c0baa77b3b945",
+    "tools/qvoice_model_validation.py": "e9ccec756600012d85a547ca8655c8795d6436dbf8c59460977deb42683d4641",
+    "tools/qvoice_model_preflight.py": "07b0f60f8b107f86c569575c5e145dab5325e670013925c0adbafc0da05f1722",
+    "tools/qvoice_model_assessment.py": "1e60b8f427b5a74f1cdc20b23d046e8c4b0b612c5b98650dc7007cccc77db465",
+    "tools/qvoice_model_evidence.py": "800eba7fc8607ff7e1a094cab653224344d8741eec8832bb79f28d1b7a753ea8",
+    "tools/qvoice_model_reconcile.py": "6c3cece9f31fded89d283f2111b2c2d55f4c3ac8b0d37e42aa66d5abffa13fea",
+    "tools/verify_qvoice_model_sql.py": "0212cb968cad6e6cae27de62df5e73fd4c88f7c1fe91b3323afb42f171b54334"
+  },
+  "assessment_manifests_sha256": {
+    "output/assessments/qvoice-model-20261008-intent-v2/manifest.json": "9a7f34f08d27c28b6132d5d180623901cb0753d054f8f66034ebc1cdf5d098f8",
+    "output/assessments/qvoice-model-20261008-career-v2/manifest.json": "e1b596d6282ff7c6c133fc2d1d5e8fb7d034dc2ac64dd4d4cc531c4257c44059",
+    "output/assessments/qvoice-model-20261008-mean33-v1/manifest.json": "77c2f3d996ddacb31f8d1f718db787dc7fe00227f5195040c6382e0df028c26d"
+  },
+  "evidence_sha256": {
+    "output/analysis/engineering/20261008/qvoice-model-b-annual-lag-v2/preflight/preflight-manifest.json": "24796c884a05b6189a545844dedf54e526b2f7507b463b61b38ebbeb5b4168b8",
+    "output/analysis/engineering/20261008/qvoice-model-b-annual-lag-v2/preflight/source-metadata.json": "818a6bc5a4d84406cd0c8ff63df04549496bbb4272c80110f6b5d5a2e788493b",
+    "output/analysis/engineering/20261008/qvoice-model-b-annual-lag-v2/preflight/redshift-metadata.json": "a0ad7fb435750fc1a2cb6400cff451eda36a737f8a8ae291aaf562cccd890b20",
+    "output/analysis/engineering/20261008/qvoice-model-b-annual-lag-v2/variables/intent/revisions/v2/evidence.json": "04a320511ac08c145f389fb7506845bb40a3939a04725479b9f475a27f625f0b",
+    "output/analysis/engineering/20261008/qvoice-model-b-annual-lag-v2/variables/career/revisions/v2/evidence.json": "9461850c8576438e261e85bbd8f26424c47395c50692206b01a8935c073a33d6",
+    "output/analysis/engineering/20261008/qvoice-model-b-annual-lag-v2/variables/mean33/evidence.json": "ade44564870fac4ce8679e27235694b01fb7684c058aff1defe5fe1ea64a3235"
+  },
+  "artifacts_sha256": {
+    "output/analysis/engineering/20261008/qvoice-model-b-annual-lag-v2/comparison-results.json": "b7e8e76af32b50d803a9cee9a26f7c19f06711d0a1256e28884c437779ee0d9a",
+    "output/analysis/engineering/20261008/qvoice-model-b-annual-lag-v2/informe-modelo-b-qvoice.md": "621c2ccfc4535b83de1fbba08f3079f909034c78ab5763a19e1bfb75eacd7d14",
+    "output/analysis/engineering/20261008/qvoice-model-b-annual-lag-v2/validation/model-sql-check.json": "7cb4cc0ca485f3845a700ac44575cd78e7bd1fd58610476ae9a2b651d45775cf",
+    "output/analysis/engineering/20261008/qvoice-model-b-annual-lag-v2/control/reuse.json": "b7a3bbc4c232d6ca79f72df57a7dbd78e42ca32719bd27650f23f2b3b9f04c66"
+  }
+}

@@ -1,0 +1,1 @@
+SELECT CAST(NULL AS VARCHAR(128)) AS table_schema, CAST(NULL AS VARCHAR(128)) AS table_name, CAST(NULL AS VARCHAR(128)) AS column_name, CAST(NULL AS VARCHAR(128)) AS data_type, CAST(NULL AS INTEGER) AS ordinal_position, CAST('no_database_sources' AS VARCHAR(32)) AS discovery_reason WHERE 1 = 0

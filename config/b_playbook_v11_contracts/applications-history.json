@@ -1,0 +1,26 @@
+{
+  "schema_version": 4,
+  "id": "applications-history",
+  "title": "Historia verificable de solicitudes del playbook",
+  "claim": "Hay eventos y marcas temporales utilizables antes del corte y el feed alcanza la ventana actual.",
+  "use": "Determinar si el conteo de seis meses puede probarse sin convertir falta de feed en cero.",
+  "semantic_type": "derived_feature",
+  "population": "Eventos cand_applied=1; enlace agregado a quienes fueron Engineering elegibles en 2020–2026",
+  "grain": "fuente de eventos",
+  "known_at": "Fecha de aplicación y fechas técnicas observadas; ninguna de ellas por sí sola demuestra completitud o fecha del enlace.",
+  "window": "2020-07-26 a 2026-09-07",
+  "history": "Se revalida applications, la fuente real del V11, junto con la vista alternativa.",
+  "query": "queries/audits/engineering_b_v11_applications_history_20261011.sql",
+  "zero_fields": [
+    "missing_current_window"
+  ],
+  "positive_fields": [
+    "events_before_boundary",
+    "technical_times_before_boundary"
+  ],
+  "expected_rows": 2,
+  "acceptance_rule": "Debe haber eventos antes del corte y en la última ventana de seis meses, además de registros con fechas técnicas anteriores. Son condiciones necesarias; si pasan todavía falta validar completitud y enlace temporal.",
+  "conclusion_if_pass": "Hay condiciones necesarias para continuar con definición y enlace del feed",
+  "limitation": "Las fechas técnicas no prueban primera disponibilidad y la ausencia de solicitud no equivale a cero.",
+  "action": "Si no se cumplen las condiciones necesarias, excluir del experimento temporal con la brecha concreta."
+}

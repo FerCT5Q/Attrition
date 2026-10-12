@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-09",
+  "stage": "model_selection",
+  "recommended": "CQ",
+  "candidate_evaluated": "disjoint",
+  "conclusion": "Mantener C + Q evaluado anteriormente como candidato preferido en la selección. La combinación fija con promedio de 28 no aporta captura adicional y estima las probabilidades algo peor que ese C + Q. C se conserva como referencia documentada.",
+  "reasons": [
+    "Captura al priorizar 30%: 43.1% tanto para C + Q anterior como para las tres variantes fijas. El promedio de 28 empata con C + Q anterior en los dos periodos; no hay ganancia de captura en esta comparación.",
+    "Frente a C + Q anterior, el promedio de 28 aumenta 4.1% el error de grupo-mes, 0.4% el log-loss y 0.1% el Brier. PR-AUC baja de 5.5% a 5.2%. El error por grupos es mayor en ambos periodos, también al fijar exactamente la prioridad de C.",
+    "El cambio de log-loss frente a C + Q anterior es +0.5 por mil, IC95 [0.2, 0.8]. Es un deterioro pequeño, pero no viene acompañado de mayor captura. Los intervalos son condicionales a los modelos y prioridades ya elegidos.",
+    "Sobre las mismas seis preguntas fijas, añadir el promedio de 28 sí reduce 1.5% el error de grupo-mes y 0.1% el log-loss frente a omitirlo. La diferencia de pérdida tiene un intervalo que incluye cero y no cambia la captura. Esa mejora pequeña no alcanza a C + Q anterior.",
+    "Retirar las cinco preguntas individuales del promedio reduce el VIF máximo de aproximadamente 4.1 a 3.5 en casos completos. Elimina el solapamiento de componentes, aunque permanecen correlaciones y redundancias exactas de ausencia. No produce una mejora predictiva clara frente al promedio de 33.",
+    "La selección interna por Brier conserva C + Q anterior en ambos periodos. Con adquisición registrada como cuarto corte, C + Q anterior captura 43.3% frente a 43.2% del promedio de 28 y tiene menor error por grupos.",
+    "C + Q anterior sigue favorecido frente a C por el objetivo de priorizar grupos: captura 43.1% frente a 42.4%, menor error de grupo-mes y menores pérdidas. Gana un periodo y empata otro. El fallo de la antigua condición de ganar ambos se conserva como diagnóstico y no cambia por sí solo esta decisión de selección."
+  ],
+  "chart_title": "El promedio mantiene la captura; C + Q anterior estima mejor",
+  "limitations": [
+    "Combinación fija elegida después de explorar el histórico; evaluación retrospectiva condicionada.",
+    "Los coeficientes y L2 de cada periodo se ajustaron sólo antes del periodo correspondiente.",
+    "Las dos ventanas comparten personas y parte del seguimiento. Los intervalos no incorporan toda la incertidumbre de selección y ajuste.",
+    "Un IC95 de captura [0, 0] frente a CQ refleja aportaciones iguales de las salidas observadas en esta prioridad fija; no demuestra equivalencia universal.",
+    "El artefacto final del 7-sep-2026 es una copia del ya entrenado; sus coeficientes finales no tienen resultados posteriores a su ajuste."
+  ],
+  "source": "results.json",
+  "source_query": "queries/profiles/engineering_c_qvoice_mean28_person_month_20261009.sql",
+  "population": "Engineering, Employee, Regular, activo, sin RF360",
+  "evaluation_windows": ["agosto–diciembre 2025", "enero–febrero 2026"],
+  "horizon_months": 6,
+  "knowledge_boundary": "2026-09-07",
+  "historical_models_modified": false,
+  "score_changes": false
+}

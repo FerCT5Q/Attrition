@@ -1,0 +1,152 @@
+{
+  "origin": "2025-08-01",
+  "selections": {
+    "C_current": {
+      "definition": {
+        "kind": "cut",
+        "dimensions": [
+          "antiguedad",
+          "salidas_equipo",
+          "nivel"
+        ],
+        "name": "antiguedad × salidas_equipo × nivel"
+      },
+      "fallback": false,
+      "admissible_candidates": 1
+    },
+    "C_plus1": {
+      "definition": {
+        "kind": "cut",
+        "dimensions": [
+          "antiguedad",
+          "salidas_equipo",
+          "nivel",
+          "acquisition_recorded"
+        ],
+        "name": "antiguedad × salidas_equipo × nivel × acquisition_recorded"
+      },
+      "winner_metrics": {
+        "dimensions": [
+          "antiguedad",
+          "salidas_equipo",
+          "nivel",
+          "acquisition_recorded"
+        ],
+        "name": "antiguedad × salidas_equipo × nivel × acquisition_recorded",
+        "kind": "cut",
+        "mean_eligible_groups": 21.5,
+        "minimum_eligible_groups": 21,
+        "maximum_eligible_groups": 22,
+        "minimum_eligible_fraction": 0.8944059326132516,
+        "rest_percent": 10.163735009796111,
+        "admissible": true,
+        "coverage_percent": 30.0,
+        "capture_percent": 46.638572333373,
+        "observed_percent": 4.675036486507111,
+        "predicted_percent": 4.931023130433553,
+        "bias_pp": 0.2559866439264418,
+        "aggregate_error_pp": 0.2559866439264418,
+        "group_mae_pp": 0.3257803097425238,
+        "group_snapshot_mae_pp": 0.44405809996162493,
+        "lift": 1.5546190777791,
+        "mean_people_per_snapshot": 9289.4,
+        "mean_selected_groups_per_snapshot": 7.333333333333333,
+        "control_same_partition_group_snapshot_mae_pp": 0.5166460251216075,
+        "excess_group_snapshot_mae_pp": -0.07258792515998258
+      },
+      "fallback": false,
+      "admissible_candidates": 6,
+      "candidates_after_tolerance": 2
+    },
+    "C_four": {
+      "definition": {
+        "kind": "cut",
+        "dimensions": [
+          "nivel",
+          "time_since_promotion_band",
+          "time_at_level_band",
+          "acquisition_recorded"
+        ],
+        "name": "nivel × time_since_promotion_band × time_at_level_band × acquisition_recorded"
+      },
+      "winner_metrics": {
+        "dimensions": [
+          "nivel",
+          "time_since_promotion_band",
+          "time_at_level_band",
+          "acquisition_recorded"
+        ],
+        "name": "nivel × time_since_promotion_band × time_at_level_band × acquisition_recorded",
+        "kind": "cut",
+        "mean_eligible_groups": 25.833333333333332,
+        "minimum_eligible_groups": 24,
+        "maximum_eligible_groups": 28,
+        "minimum_eligible_fraction": 0.8281158856698425,
+        "rest_percent": 15.756668891424635,
+        "admissible": true,
+        "coverage_percent": 29.999999999999996,
+        "capture_percent": 45.95501133887324,
+        "observed_percent": 4.606516537671697,
+        "predicted_percent": 4.7616498281859165,
+        "bias_pp": 0.15513329051421923,
+        "aggregate_error_pp": 0.15513329051421923,
+        "group_mae_pp": 0.44624122393772536,
+        "group_snapshot_mae_pp": 0.6065686721639099,
+        "lift": 1.5318337112957747,
+        "mean_people_per_snapshot": 9289.4,
+        "mean_selected_groups_per_snapshot": 10.166666666666666,
+        "control_same_partition_group_snapshot_mae_pp": 0.8681455339493293,
+        "excess_group_snapshot_mae_pp": -0.2615768617854194
+      },
+      "fallback": false,
+      "admissible_candidates": 648,
+      "candidates_after_tolerance": 2
+    },
+    "C_near40": {
+      "definition": {
+        "kind": "cut",
+        "dimensions": [
+          "antiguedad",
+          "direct_reports_band",
+          "prior_experience_band",
+          "acquisition_recorded"
+        ],
+        "name": "antiguedad × direct_reports_band × prior_experience_band × acquisition_recorded"
+      },
+      "winner_metrics": {
+        "dimensions": [
+          "antiguedad",
+          "direct_reports_band",
+          "prior_experience_band",
+          "acquisition_recorded"
+        ],
+        "name": "antiguedad × direct_reports_band × prior_experience_band × acquisition_recorded",
+        "kind": "cut",
+        "mean_eligible_groups": 34.833333333333336,
+        "minimum_eligible_groups": 34,
+        "maximum_eligible_groups": 36,
+        "minimum_eligible_fraction": 0.8213316972358564,
+        "rest_percent": 17.211552952827954,
+        "admissible": true,
+        "coverage_percent": 29.999999999999996,
+        "capture_percent": 46.83945051266113,
+        "observed_percent": 4.69517245488115,
+        "predicted_percent": 4.848559885058263,
+        "bias_pp": 0.15338743017711268,
+        "aggregate_error_pp": 0.15338743017711268,
+        "group_mae_pp": 0.41438547397280934,
+        "group_snapshot_mae_pp": 0.6206341327895936,
+        "lift": 1.5613150170887045,
+        "mean_people_per_snapshot": 9289.4,
+        "mean_selected_groups_per_snapshot": 8.333333333333334,
+        "control_same_partition_group_snapshot_mae_pp": 0.944796731148627,
+        "excess_group_snapshot_mae_pp": -0.3241625983590334
+      },
+      "fallback": false,
+      "admissible_candidates": 39,
+      "candidates_after_tolerance": 1
+    }
+  },
+  "model": "output/analysis/engineering/20261008/model-c-v2/trained-model/model-c.json",
+  "minimum_people_each_snapshot": 300
+}

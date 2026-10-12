@@ -1,0 +1,56 @@
+{
+  "region": {
+    "semantic_type": "direct_field",
+    "meaning": "Etiqueta regional almacenada; contexto de mercado, no localización personal.",
+    "known_at": "snapshot t",
+    "population": "Engineering activo, regular, Employee, excluye RF360",
+    "grain": "persona-snapshot; evidencia agregada anual",
+    "acceptance": "Población >0; cero celdas contradictorias. Eventos: populated es prevalencia, no cobertura. Faltantes: categoría explícita. No se asignan scores.",
+    "sql": "queries/audits/engineering_model_c_region_20261008.sql"
+  },
+  "comp_ratio_band": {
+    "semantic_type": "precomputed_metric",
+    "meaning": "Bandas del valor almacenado; no se afirma fórmula salario/punto medio ni se vuelve a validar ese significado económico.",
+    "known_at": "snapshot t",
+    "population": "Engineering activo, regular, Employee, excluye RF360",
+    "grain": "persona-snapshot; evidencia agregada anual",
+    "acceptance": "Población >0; cero celdas contradictorias. Eventos: populated es prevalencia, no cobertura. Faltantes: categoría explícita. No se asignan scores.",
+    "sql": "queries/audits/engineering_model_c_comp_ratio_band_20261008.sql"
+  },
+  "grade_family": {
+    "semantic_type": "grouped_mapping",
+    "meaning": "Prefijo literal R/T/otro, no equivalencia a un nivel detallado.",
+    "known_at": "snapshot t",
+    "population": "Engineering activo, regular, Employee, excluye RF360",
+    "grain": "persona-snapshot; evidencia agregada anual",
+    "acceptance": "Población >0; cero celdas contradictorias. Eventos: populated es prevalencia, no cobertura. Faltantes: categoría explícita. No se asignan scores.",
+    "sql": "queries/audits/engineering_model_c_grade_family_20261008.sql"
+  },
+  "acquisition_recorded": {
+    "semantic_type": "direct_field",
+    "meaning": "Presencia de adquisición registrada; vacío no demuestra ingreso orgánico.",
+    "known_at": "snapshot t",
+    "population": "Engineering activo, regular, Employee, excluye RF360",
+    "grain": "persona-snapshot; evidencia agregada anual",
+    "acceptance": "Población >0; cero celdas contradictorias. Eventos: populated es prevalencia, no cobertura. Faltantes: categoría explícita. No se asignan scores.",
+    "sql": "queries/audits/engineering_model_c_acquisition_recorded_20261008.sql"
+  },
+  "transfer_12m": {
+    "semantic_type": "derived_feature",
+    "meaning": "Evento con flag, fecha efectiva en la ventana previa, observado a más tardar en t y en el episodio laboral. No asumir que sólo representa IOS voluntario.",
+    "known_at": "snapshot t",
+    "population": "Engineering activo, regular, Employee, excluye RF360",
+    "grain": "persona-snapshot; evidencia agregada anual",
+    "acceptance": "Población >0; cero celdas contradictorias. Eventos: populated es prevalencia, no cobertura. Faltantes: categoría explícita. No se asignan scores.",
+    "sql": "queries/audits/engineering_model_c_transfer_12m_20261008.sql"
+  },
+  "transfer_history": {
+    "semantic_type": "derived_feature",
+    "meaning": "Comprobar desde cuándo existe el flag de transferencia, porque 2020 y 2021 no contienen eventos fechados. No interpretar fuente ausente como no transferencia.",
+    "known_at": "snapshot t",
+    "population": "Engineering activo regular excluye RF360",
+    "grain": "persona-snapshot; agregados anuales",
+    "acceptance": "Dominio binario; registrar primer snapshot observable y reservar 12 meses antes de codificar ausencia de evento. Cero eventos previos exige investigar cobertura del flag.",
+    "sql": "queries/audits/engineering_model_c_transfer_history_20261008.sql"
+  }
+}

@@ -1,0 +1,115 @@
+schema_version: 1
+plan_version: 3
+language: es
+created_before_execution: true
+plan_authorship: codex_explicit
+variable: Career goals — respuesta binaria
+concept: Respuesta favorable binaria al ítem de metas de carrera; el texto de 2024 comienza con Overall y requiere equivalencia
+  documentada para combinarlo con 2025–2026.
+intended_use: Comparar el aporte de oportunidades de carrera por encima de Intent to Stay y el modelo B.
+knowledge_date: Publicación verificable anterior al snapshot; reemplazo por nueva wave y vencimiento a 12 meses; frontera
+  2026-09-07.
+population: Empleados regulares activos de Engineering, excluyendo RF360; cobertura descriptiva en la foto previa.
+grain: Empleado-wave; posterior aplicación por empleado-snapshot con episodio laboral continuo.
+semantic_type: survey
+source_reasoning: Los encabezados exactos por año constituyen versiones distintas; su semejanza no demuestra equivalencia
+  semántica.
+validation_story:
+- id: source_career
+  criterion: source
+  evidence_role: supporting
+  question: ¿Se encuentra exactamente un ítem binario de carrera con el texto declarado en cada año?
+  why: La correspondencia debe ser trazable sin búsqueda aproximada ni elección de la primera coincidencia.
+  method: approved_external_access_check
+  sql_reference: queries/audits/qvoice_model_career_20261006.sql
+  acceptance_rule: Los tres archivos deben estar accesibles y sus encabezados deben resolverse sin ambigüedades.
+  metric_checks:
+  - metric: workbooks_checked
+    aggregate: sum
+    operator: eq
+    threshold: 3
+  - metric: header_ambiguities
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: career_wording
+  criterion: definition
+  evidence_role: defining
+  question: ¿La versión Overall de 2024 es equivalente a la de los dos años siguientes?
+  why: Una diferencia de redacción puede cambiar la medición; las tasas anuales por sí solas no resuelven la equivalencia.
+  method: Comparación exacta de encabezados y revisión de equivalencia documentada.
+  sql_reference: queries/audits/qvoice_model_career_20261006.sql
+  acceptance_rule: No combinar versiones no equivalentes en predicción; cualquier equivalencia pendiente limita Definition.
+  metric_checks:
+  - metric: unresolved_wording_waves
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: career_domain
+  criterion: consistency
+  evidence_role: defining
+  question: ¿El ítem mantiene dominio 0/1 sin convertir 255 en desfavorable?
+  why: Las respuestas inválidas y ausentes deben conservar una categoría distinta.
+  method: aggregate_domain_and_transition_audit
+  sql_reference: queries/audits/qvoice_model_career_20261006.sql
+  acceptance_rule: Cero valores inválidos y conteos de estados reconciliados.
+  metric_checks:
+  - metric: invalid_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+  - metric: status_reconciliation_difference
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: career_join
+  criterion: join
+  evidence_role: supporting
+  question: ¿La comparación anual de carrera conserva un único enlace por persona en Engineering?
+  why: La evidencia previa del playbook usa otra población.
+  method: aggregate_join_reconciliation
+  sql_reference: queries/audits/qvoice_model_career_20261006.sql
+  acceptance_rule: Cero duplicados usados y cero múltiples matches; declarar elegibles, enlazados y no enlazados.
+  metric_checks:
+  - metric: duplicate_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+  - metric: multi_match_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: career_publication
+  criterion: history
+  evidence_role: defining
+  question: ¿Cuándo estuvieron disponibles las respuestas de carrera de cada año?
+  why: Ni el nombre del archivo ni el prefijo Overall establecen una fecha de conocimiento.
+  method: Revisión de evidencia documental de publicación.
+  sql_reference: queries/audits/qvoice_model_career_20261006.sql
+  acceptance_rule: Cada wave predictiva necesita una fecha acreditada; las no acreditadas quedan excluidas.
+  metric_checks:
+  - metric: unverified_availability_waves
+    aggregate: sum
+    operator: eq
+    threshold: 0
+- id: career_playbook_reconciliation
+  criterion: consistency
+  evidence_role: contextual
+  question: ¿Se reproducen los conteos, fórmulas y ventanas publicados al usar la población original?
+  why: Una diferencia entre toda la plantilla y Engineering debe atribuirse a la población; el acumulado de 2026 también tiene
+    una frontera más temprana.
+  method: aggregate_historical_reconciliation
+  sql_reference: queries/audits/qvoice_model_career_20261006.sql
+  acceptance_rule: Conciliar exactamente los conteos de la fuente y de las cohortes comparables, y tasas con tolerancia de
+    0.000051 puntos porcentuales. Las salidas de 2026 no se comparan porque cambia el final de la ventana. No eleva scores.
+  metric_checks:
+  - metric: reconciliation_tests
+    aggregate: sum
+    operator: gt
+    threshold: 0
+  - metric: reconciliation_mismatch_count
+    aggregate: sum
+    operator: eq
+    threshold: 0
+plan_revision_reason: Se precisa la redacción española de la regla de acceso y el destino Engineering. Los criterios, SQL
+  y umbrales conservan el mismo significado.

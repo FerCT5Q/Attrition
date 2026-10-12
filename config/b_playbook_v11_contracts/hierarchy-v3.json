@@ -1,0 +1,39 @@
+{
+  "schema_version": 4,
+  "id": "hierarchy-v3",
+  "title": "Profundidad reconstruida de la jerarquía",
+  "claim": "¿Cuántos enlaces separan a cada persona de la raíz técnica de su jerarquía en la misma foto?",
+  "use": "Contrastar la profundidad literal que motiva V11, además de la capa organizacional precalculada de C.",
+  "semantic_type": "hierarchy",
+  "population": "Engineering, Employee, Regular, activo, sin RF360; nodos de soporte: todos los workers activos de la misma foto",
+  "grain": "persona-foto mensual",
+  "known_at": "Todos los enlaces y la raíz se toman exclusivamente de la misma foto",
+  "window": "2020-07-26 a 2026-09-07",
+  "history": "El campo precalculado empieza en 2023; la reconstrucción usa la historia real de managers que exista desde 2020, sin trasladar la jerarquía actual a fechas anteriores. Se ejecuta por año con joins acotados tras una interrupción de conexión en la consulta monolítica; ninguna métrica del intento incompleto se usa. El recorrido desde la raíz visita una sola vez cada nodo resuelto, manteniendo la foto como partición y verificando ciclos en los no resueltos.",
+  "query": "queries/audits/engineering_b_v11_hierarchy_v3_2020_20261011.sql",
+  "source_query": "queries/profiles/engineering_b_v11_hierarchy_person_month_20261011_v3.sql",
+  "zero_fields": [
+    "duplicate_nodes",
+    "contradictory_nodes",
+    "edge_reconciliation_violations",
+    "invalid_known_rows"
+  ],
+  "positive_fields": [
+    "person_snapshots",
+    "observable_rows"
+  ],
+  "expected_rows": 7,
+  "acceptance_rule": "Cero nodos duplicados o conflictivos. La raíz reconstruida tiene profundidad cero y cada enlace resuelto cumple profundidad_hijo=profundidad_manager+1 y misma raíz. Ciclos, enlaces ausentes, más de 25 capas y fechas sin una sola raíz para la población objetivo se codifican desconocidos.",
+  "conclusion_if_pass": "La profundidad técnica puede probarse como incorporación; no se usa la capa almacenada como sustituto",
+  "limitation": "La referencia de CEO aprobada del análisis de agosto no permite acreditar todas las raíces históricas. La nueva feature se denomina profundidad hasta la raíz, sin afirmar semántica histórica de CEO.",
+  "action": "Probar bandas de profundidad y conservar desconocidos; informar raíces, convergencia, ciclos y diferencias con el campo almacenado",
+  "queries": [
+    "queries/audits/engineering_b_v11_hierarchy_v3_2020_20261011.sql",
+    "queries/audits/engineering_b_v11_hierarchy_v3_2021_20261011.sql",
+    "queries/audits/engineering_b_v11_hierarchy_v3_2022_20261011.sql",
+    "queries/audits/engineering_b_v11_hierarchy_v3_2023_20261011.sql",
+    "queries/audits/engineering_b_v11_hierarchy_v3_2024_20261011.sql",
+    "queries/audits/engineering_b_v11_hierarchy_v3_2025_20261011.sql",
+    "queries/audits/engineering_b_v11_hierarchy_v3_2026_20261011.sql"
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "verifier": {
+    "command": "verify_deck.py output/presentations/20261010-2026_evolucion-b-cq/presentacion-eng.html --mode presentation",
+    "errors": [
+      "El elemento <html> debe declarar lang=\"es\"."
+    ],
+    "warnings": [
+      "Etiqueta visible en inglés: Theme",
+      "Etiqueta visible en inglés: Slides",
+      "Etiqueta visible en inglés: Navigation"
+    ],
+    "result": "verificador original con excepción documentada de idioma"
+  },
+  "language_exception": "Texto proyectado en inglés por preferencia explícita del usuario y por coincidir con la base; guion, evidencia y validación en español.",
+  "jargon_visible": [],
+  "privacy": {
+    "aggregates_only": true,
+    "employee_rows": false,
+    "individual_scores": false,
+    "min_group_people": "300+",
+    "protected_labels": false
+  },
+  "browser_review": {
+    "file": "output/preview/20261011-1121_evolucion-b-cq/browser-review.json",
+    "status": "completada",
+    "date": "2026-10-11",
+    "deliverable_classification": "presentation",
+    "scope": "Revisión visual del cambio de terminología en las diapositivas 1, 5, 6, 7 y 8.",
+    "tool": "Renderizador local tools/.tmp/render_html_themes.py con Microsoft Edge sin ventana; inspección de capturas.",
+    "viewports": [
+      "1440x810"
+    ],
+    "slides_reviewed": [
+      1,
+      5,
+      6,
+      7,
+      8
+    ],
+    "themes": [
+      "theme-light-classic",
+      "theme-light-soft",
+      "theme-dark-royal",
+      "theme-dark-carbon"
+    ],
+    "screenshots": 20,
+    "contact_sheets": [
+      "contact-light.png",
+      "contact-dark.png"
+    ],
+    "visual_findings": [
+      "Las etiquetas nuevas son legibles en los cuatro temas, sin recortes ni superposiciones visibles.",
+      "La diapositiva 6 mantiene la expresión higher-risk groups completa en una misma línea mediante white-space: nowrap.",
+      "La tabla de la diapositiva 5 y la estación final del diagrama de la diapositiva 7 admiten la etiqueta nueva sin cambiar su distribución."
+    ],
+    "navigation_exercised": "El renderizador usó los botones de navegación para mostrar las cinco diapositivas revisadas.",
+    "review_limits": "Esta revisión se limita a la terminología y su disposición visual; no vuelve a evaluar la reproducción de animaciones, el teclado, la persistencia del tema ni la consola JavaScript.",
+    "prior_full_review": "output/preview/20261010-2026_evolucion-b-cq/browser-review.json"
+  },
+  "delivery_update": {
+    "updated_at": "2026-10-11T16:36:13-06:00",
+    "copied_from": "output/presentations/20261011-1121_evolucion-b-cq",
+    "previous_version_backup": "output/presentations/20261010-2026_evolucion-b-cq/history/20261011-163547_antes-riesgo-alto",
+    "html_sha256": "27d08c2e1a118d430e7bd012a131860fdc9c40fc6f33c811616a59f87a377711",
+    "identical_to_reviewed_html": true
+  }
+}

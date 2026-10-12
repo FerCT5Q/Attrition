@@ -1,0 +1,186 @@
+schema_version: 1
+experiment_id: engineering-qvoice-20261006-v1
+language: es
+reporting_mode: presentation
+knowledge_boundary: '2026-09-07'
+authorization: config/attrition_model_in_memory_training_authorization_20261001.json
+population:
+  worker_type: Employee
+  employee_type: Regular
+  active_status: 1
+  is_rf360_yes_no: 0
+  eng_or_noneng: Engineering
+  display: Empleados regulares activos de Engineering, excluyendo RF360, en cada snapshot mensual.
+privacy:
+  minimum_people: 30
+  minimum_events: 30
+  employee_level_rows_persisted: false
+  individual_scores_published: false
+sources:
+  dictionary: data/QVoice/survey_structure.xlsx
+  waves:
+    - year: 2024
+      file: data/QVoice/Jan 2024 Qvoice raw data.xlsx
+      sheet: Raw data
+      key_column: Participant's Unique Identifier
+      descriptive_anchor: '2024-01-01'
+      availability:
+        date: null
+        status: pending
+        evidence_reference: null
+        explanation: Falta una fuente que acredite la fecha de publicación o disponibilidad de resultados.
+    - year: 2025
+      file: data/QVoice/Jan 2025_Qvoice_raw data.xlsx
+      sheet: Raw data
+      key_column: EmpID
+      descriptive_anchor: '2025-01-01'
+      availability:
+        date: null
+        status: pending
+        evidence_reference: null
+        explanation: Falta una fuente que acredite la fecha de publicación o disponibilidad de resultados.
+    - year: 2026
+      file: data/QVoice/Jan 2026 Qvoice_raw data.xlsx
+      sheet: Raw data
+      key_column: Emp ID
+      descriptive_anchor: '2026-01-07'
+      availability:
+        date: null
+        status: pending
+        evidence_reference: null
+        explanation: El lanzamiento del 7 de enero no acredita la disponibilidad de los resultados.
+source_rules:
+  exact_header_matching: true
+  binary_header_overrides:
+    '2026':
+      Q1: I would recommend Qualcomm as a great place to work._favorable
+      M19: I would recommend Qualcomm as a great place to work._favorable
+  duplicate_header_policy: Se usa el encabezado exacto del bloque principal reproducido en el playbook; las columnas homónimas se comparan como control y no se mezclan.
+  career_wording_2024: overall, i feel that my career goals can be met at qualcomm
+  career_wording_later: i feel that my career goals can be met at qualcomm
+  career_cross_wave_equivalence: pending
+  missing_sentinel: 255
+  duplicate_policy: Excluir por completo la llave duplicada; registrar coincidencias y contradicciones sin elegir una respuesta.
+  heartbeat_minimum_valid: 38
+  heartbeat_expected_scale_items: 53
+  heartbeat_cross_wave_equivalence: pending
+temporal_rules:
+  maximum_age_months: 12
+  availability_inclusive: true
+  expiration_exclusive: true
+  replacement: La nueva wave disponible sustituye a la anterior aunque no haya una respuesta enlazable.
+  employment_episode: Exigir continuidad del episodio laboral desde el ancla de la encuesta hasta el snapshot.
+  unknown_availability: Excluir de predicción; conservar sólo análisis descriptivo identificado como tal.
+  label_cutoff: La fecha final del intervalo debe ser menor o igual al corte del ajuste o evaluación.
+control:
+  source: output/analysis/engineering/20261003/playbook-tenure-confirmation-v1/confirmation-results.json
+  source_key: specs.b
+  features:
+    - level_grouped
+    - tenure_playbook_band
+    - calendar_month
+    - manager_changes_12m
+    - team_exits_12m
+    - direct_reports_band
+    - time_since_promotion_band
+    - rehire
+    - level_x_tenure
+    - tenure_x_manager_changes
+  link: cloglog
+  trend: none
+  recalibration_months: 0
+  penalty_cell_scale: 8
+  historical_fold_starts: ['2024-02-01', '2024-08-01', '2025-02-01', '2025-08-01']
+  historical_fold_snapshots: 6
+  reproduction_relative_tolerance: 0.01
+candidates:
+  - id: intent
+    name: Intent to Stay — Q4 y Q12
+    semantic_type: survey
+    components: [Q4, Q12]
+    variants:
+      - {id: intent_q4, components: [Q4], representation: binary_components}
+      - {id: intent_q12, components: [Q12], representation: binary_components}
+      - {id: intent_components, components: [Q4, Q12], representation: binary_components}
+      - {id: intent_both, components: [Q4, Q12], representation: favorable_both}
+    hypothesis: Las dos preguntas de permanencia pueden aportar información distinta sobre la salida posterior.
+  - id: career
+    name: Career goals — respuesta binaria
+    semantic_type: survey
+    components: [career]
+    variants:
+      - {id: career, components: [career], representation: binary_components}
+    hypothesis: La percepción de oportunidades de carrera puede aportar información adicional a la intención de permanencia.
+  - id: mean33
+    name: Promedio de 33 preguntas comparables
+    semantic_type: derived_feature
+    components: strict_common_33
+    variants:
+      - {id: mean33, components: strict_common_33, representation: favorable_bands}
+    hypothesis: El promedio puede aportar contexto adicional; incluye Q4 y Q12 y requiere comprobar su solapamiento.
+  - id: engagement
+    name: Engagement — Q1, Q2 y Q3
+    semantic_type: survey
+    components: [Q1, Q2, Q3]
+    variants:
+      - {id: engagement, components: [Q1, Q2, Q3], representation: binary_components}
+    hypothesis: Recomendación, realización personal y motivación pueden aportar señal adicional a permanencia y carrera.
+  - id: connection
+    name: Workplace Connection — versiones histórica y completa
+    semantic_type: survey
+    components: [Q5, Q6, Q7]
+    primary_components: [Q5, Q7]
+    variants:
+      - {id: connection_q5_q7, components: [Q5, Q7], representation: binary_components}
+      - {id: connection_q5_q6_q7, components: [Q5, Q6, Q7], representation: binary_components}
+    hypothesis: El subconjunto Q5/Q7 permite una comparación histórica; Q6 requiere historia propia.
+  - id: wellbeing
+    name: Wellbeing — versiones histórica y completa
+    semantic_type: survey
+    components: [Q8, Q9, Q10, Q11]
+    primary_components: [Q8, Q10, Q11]
+    variants:
+      - {id: wellbeing_q8_q10_q11, components: [Q8, Q10, Q11], representation: binary_components}
+      - {id: wellbeing_q8_q9_q10_q11, components: [Q8, Q9, Q10, Q11], representation: binary_components}
+    hypothesis: La energía durante y después del trabajo y el estrés pueden aportar información diferente; Q9 no integra la versión histórica.
+  - id: confidence
+    name: Confidence — Q13 y Q17
+    semantic_type: survey
+    components: [Q13, Q17]
+    variants:
+      - {id: confidence, components: [Q13, Q17], representation: binary_components}
+    hypothesis: La confianza en el futuro y en los cambios necesarios para competir puede complementar las percepciones individuales de carrera.
+  - id: heartbeat
+    name: Heartbeat — signos relativos de seis preguntas
+    semantic_type: derived_feature
+    components: [Q38, Q37, Q32, Q53, Q10, Q11]
+    representation: relative_to_personal_mean
+    variants:
+      - {id: heartbeat, components: [Q38, Q37, Q32, Q53, Q10, Q11], representation: relative_to_personal_mean}
+    hypothesis: La posición de cada respuesta respecto al promedio personal puede contener señal complementaria; no equivale al valor absoluto ni a importancia predictiva.
+combinations:
+  - {id: intent_career, blocks: [intent_components, career]}
+  - {id: six_themes_common, blocks: [intent_components, career, engagement, connection_q5_q7, wellbeing_q8_q10_q11, confidence]}
+  - {id: intent_career_mean33, blocks: [intent_components, career, mean33]}
+  - {id: intent_career_mean31_same_cohort, blocks: [intent_components, career, mean31], complete_case_basis: strict_common_33}
+validation:
+  training_start: '2024-01-01'
+  main_periods:
+    - {id: feb_jul_2025, start: '2025-02-01', end: '2025-07-31', expected_snapshots: 6}
+    - {id: aug2025_jan2026, start: '2025-08-01', end: '2026-01-31', expected_snapshots: 6}
+  supplementary_start: '2026-02-01'
+  inner_validation_intervals: 3
+  l2_grid: [0, 0.01, 0.1, 1, 10]
+  l2_selection_metric: monthly_brier
+  bootstrap_repetitions: 500
+  bootstrap_seed: 20261006
+  confidence_level: 0.95
+  bootstrap_unit: person_all_months
+  availability_only_controls: true
+  require_components_in_inner_fit_and_validation: true
+decision:
+  minimum_complete_main_periods: 2
+  ranking: Mejorar PR-AUC y lift del decil superior en ambos periodos principales.
+  calibration: No empeorar Brier medio ni error absoluto de calibración general y del quintil superior.
+  incremental: Demostrar mejora frente al control que usa sólo disponibilidad.
+  statuses: [prometedora, sin mejora demostrada, evidencia temporal insuficiente]

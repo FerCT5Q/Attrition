@@ -1,0 +1,100 @@
+{
+  "cutoff": "2026-09-07",
+  "eligible_origins": [
+    "2025-09-28",
+    "2025-10-26",
+    "2025-11-23",
+    "2025-12-28",
+    "2026-01-25",
+    "2026-02-22"
+  ],
+  "used_origins": [
+    {
+      "snapshot": "2025-09-28",
+      "latest_label": "2026-03-28",
+      "C_origin": "2025-08-01",
+      "C_reference": "output\\analysis\\engineering\\20261008\\model-c-v2\\folds\\fold-4-C-model.json",
+      "fit_latest_label": "2025-09-28",
+      "monthly_intervals": 8
+    },
+    {
+      "snapshot": "2025-10-26",
+      "latest_label": "2026-04-26",
+      "C_origin": "2025-08-01",
+      "C_reference": "output\\analysis\\engineering\\20261008\\model-c-v2\\folds\\fold-4-C-model.json",
+      "fit_latest_label": "2025-10-26",
+      "monthly_intervals": 9
+    },
+    {
+      "snapshot": "2025-11-23",
+      "latest_label": "2026-05-23",
+      "C_origin": "2025-08-01",
+      "C_reference": "output\\analysis\\engineering\\20261008\\model-c-v2\\folds\\fold-4-C-model.json",
+      "fit_latest_label": "2025-11-23",
+      "monthly_intervals": 10
+    },
+    {
+      "snapshot": "2025-12-28",
+      "latest_label": "2026-06-28",
+      "C_origin": "2025-08-01",
+      "C_reference": "output\\analysis\\engineering\\20261008\\model-c-v2\\folds\\fold-4-C-model.json",
+      "fit_latest_label": "2025-12-28",
+      "monthly_intervals": 11
+    },
+    {
+      "snapshot": "2026-01-25",
+      "latest_label": "2026-07-25",
+      "C_origin": "2025-08-01",
+      "C_reference": "output\\analysis\\engineering\\20261008\\model-c-v2\\folds\\fold-4-C-model.json",
+      "fit_latest_label": "2026-01-25",
+      "monthly_intervals": 12
+    },
+    {
+      "snapshot": "2026-02-22",
+      "latest_label": "2026-08-22",
+      "C_origin": "2025-08-01",
+      "C_reference": "output\\analysis\\engineering\\20261008\\model-c-v2\\folds\\fold-4-C-model.json",
+      "fit_latest_label": "2026-02-22",
+      "monthly_intervals": 13
+    }
+  ],
+  "calibrators": {
+    "C": {
+      "status": "fitted",
+      "log_multiplier": 0.00498372544172666,
+      "multiplier": 1.0049961648576586,
+      "converged": true,
+      "identity_fit_log_loss": 0.1376126007192069,
+      "scalar_fit_log_loss": 0.1376122104273603,
+      "at_bound": false
+    },
+    "C_refresh": {
+      "status": "fitted",
+      "log_multiplier": -0.0030285521150771985,
+      "multiplier": 0.9969760293226716,
+      "converged": true,
+      "identity_fit_log_loss": 0.137640716412695,
+      "scalar_fit_log_loss": 0.13764057189836393,
+      "at_bound": false
+    },
+    "C_availability": {
+      "status": "fitted",
+      "log_multiplier": 0.005304339302491171,
+      "multiplier": 1.0053184322170576,
+      "converged": true,
+      "identity_fit_log_loss": 0.1377600681523536,
+      "scalar_fit_log_loss": 0.13775962607814818,
+      "at_bound": false
+    },
+    "CQ": {
+      "status": "fitted",
+      "log_multiplier": 0.010418801858618328,
+      "multiplier": 1.0104732665626805,
+      "converged": true,
+      "identity_fit_log_loss": 0.1371587201906681,
+      "scalar_fit_log_loss": 0.137157017608449,
+      "at_bound": false
+    }
+  },
+  "limitation": "Diagnóstico separado. La selección de columnas y L2 del corte se reutiliza retrospectivamente en auxiliares; no es validación anidada completa de la calibración."
+}

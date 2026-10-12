@@ -1,0 +1,286 @@
+{
+  "schema_version": 1,
+  "experiment_id": "engineering-qvoice-20261008-annual-lag-v1",
+  "language": "es",
+  "reporting_mode": "presentation",
+  "knowledge_boundary": "2026-09-07",
+  "authorization": "config/attrition_model_in_memory_training_authorization_20261001.json",
+  "temporal_policy_reference": "config/qvoice_annual_lag_policy_20261008.json",
+  "paths": {
+    "query_suffix": "20261008",
+    "model_query": "queries/profiles/engineering_qvoice_person_month_20261008.sql",
+    "portfolio_metadata_query": "queries/audits/qvoice_model_portfolio_metadata_20261008.sql",
+    "plan_root": "config/qvoice_model_plans_20261008"
+  },
+  "population": {
+    "worker_type": "Employee",
+    "employee_type": "Regular",
+    "active_status": 1,
+    "is_rf360_yes_no": 0,
+    "eng_or_noneng": "Engineering",
+    "display": "Empleados regulares activos de Engineering, excluyendo RF360, en cada snapshot mensual."
+  },
+  "privacy": {
+    "minimum_people": 30,
+    "minimum_events": 30,
+    "employee_level_rows_persisted": false,
+    "individual_scores_published": false
+  },
+  "sources": {
+    "dictionary": "data/QVoice/survey_structure.xlsx",
+    "waves": [
+      {
+        "year": 2024,
+        "file": "data/QVoice/Jan 2024 Qvoice raw data.xlsx",
+        "sheet": "Raw data",
+        "key_column": "Participant's Unique Identifier",
+        "descriptive_anchor": "2024-01-01",
+        "availability": {
+          "date": "2025-01-01",
+          "status": "policy_assigned",
+          "basis": "annual_lag_policy",
+          "evidence_reference": "config/qvoice_annual_lag_policy_20261008.json",
+          "explanation": "La wave 2024 se asigna exclusivamente a snapshots de 2025 por decision de negocio."
+        }
+      },
+      {
+        "year": 2025,
+        "file": "data/QVoice/Jan 2025_Qvoice_raw data.xlsx",
+        "sheet": "Raw data",
+        "key_column": "EmpID",
+        "descriptive_anchor": "2025-01-01",
+        "availability": {
+          "date": "2026-01-01",
+          "status": "policy_assigned",
+          "basis": "annual_lag_policy",
+          "evidence_reference": "config/qvoice_annual_lag_policy_20261008.json",
+          "explanation": "La wave 2025 se asigna exclusivamente a snapshots de 2026 por decision de negocio."
+        }
+      },
+      {
+        "year": 2026,
+        "file": "data/QVoice/Jan 2026 Qvoice_raw data.xlsx",
+        "sheet": "Raw data",
+        "key_column": "Emp ID",
+        "descriptive_anchor": "2026-01-07",
+        "availability": {
+          "date": "2027-01-01",
+          "status": "policy_assigned",
+          "basis": "annual_lag_policy",
+          "evidence_reference": "config/qvoice_annual_lag_policy_20261008.json",
+          "explanation": "La wave 2026 queda fuera del corte actual y se reservaria para snapshots de 2027."
+        }
+      }
+    ]
+  },
+  "source_rules": {
+    "exact_header_matching": true,
+    "binary_header_overrides": {
+      "2026": {
+        "Q1": "I would recommend Qualcomm as a great place to work._favorable",
+        "M19": "I would recommend Qualcomm as a great place to work._favorable"
+      }
+    },
+    "duplicate_header_policy": "Se usa el encabezado exacto del bloque principal reproducido en el playbook; las columnas homonimas se comparan como control y no se mezclan.",
+    "career_wording_2024": "overall, i feel that my career goals can be met at qualcomm",
+    "career_wording_later": "i feel that my career goals can be met at qualcomm",
+    "career_cross_wave_equivalence": "exploratory_transport",
+    "career_modeling_limit": "La variante Career se evalua como sensibilidad exploratoria; la diferencia de redaccion de 2024 impide promoverla por si sola.",
+    "missing_sentinel": 255,
+    "duplicate_policy": "Excluir por completo la llave duplicada; registrar coincidencias y contradicciones sin elegir una respuesta.",
+    "heartbeat_minimum_valid": 38,
+    "heartbeat_expected_scale_items": 53,
+    "heartbeat_cross_wave_equivalence": "pending"
+  },
+  "temporal_rules": {
+    "assignment": "annual_lag",
+    "maximum_age_months": 12,
+    "availability_inclusive": true,
+    "expiration_exclusive": true,
+    "replacement": "La wave del ano Y se usa solo en Y+1 y la siguiente wave la reemplaza aunque no exista una respuesta enlazable.",
+    "employment_episode": "Exigir continuidad del episodio laboral desde el ancla de la encuesta hasta el snapshot.",
+    "unknown_availability": "No aplica en esta ejecucion; la fecha efectiva proviene de la politica anual aprobada y no se interpreta como fecha real de publicacion.",
+    "label_cutoff": "La fecha final del intervalo debe ser menor o igual al corte del ajuste o evaluacion."
+  },
+  "control": {
+    "source": "output/analysis/engineering/20261003/playbook-tenure-confirmation-v1/confirmation-results.json",
+    "source_key": "specs.b",
+    "features": [
+      "level_grouped",
+      "tenure_playbook_band",
+      "calendar_month",
+      "manager_changes_12m",
+      "team_exits_12m",
+      "direct_reports_band",
+      "time_since_promotion_band",
+      "rehire",
+      "level_x_tenure",
+      "tenure_x_manager_changes"
+    ],
+    "link": "cloglog",
+    "trend": "none",
+    "recalibration_months": 0,
+    "penalty_cell_scale": 8,
+    "historical_fold_starts": [
+      "2024-02-01",
+      "2024-08-01",
+      "2025-02-01",
+      "2025-08-01"
+    ],
+    "historical_fold_snapshots": 6,
+    "reproduction_relative_tolerance": 0.01
+  },
+  "candidates": [
+    {
+      "id": "intent",
+      "name": "Intent to Stay - Q4 y Q12",
+      "semantic_type": "survey",
+      "components": [
+        "Q4",
+        "Q12"
+      ],
+      "variants": [
+        {
+          "id": "intent_q4",
+          "components": [
+            "Q4"
+          ],
+          "representation": "binary_components"
+        },
+        {
+          "id": "intent_q12",
+          "components": [
+            "Q12"
+          ],
+          "representation": "binary_components"
+        },
+        {
+          "id": "intent_components",
+          "components": [
+            "Q4",
+            "Q12"
+          ],
+          "representation": "binary_components"
+        },
+        {
+          "id": "intent_both",
+          "components": [
+            "Q4",
+            "Q12"
+          ],
+          "representation": "favorable_both"
+        }
+      ],
+      "hypothesis": "Las preguntas de permanencia pueden aportar informacion incremental al modelo B."
+    },
+    {
+      "id": "career",
+      "name": "Career goals - respuesta binaria",
+      "semantic_type": "survey",
+      "components": [
+        "career"
+      ],
+      "variants": [
+        {
+          "id": "career",
+          "components": [
+            "career"
+          ],
+          "representation": "binary_components"
+        }
+      ],
+      "hypothesis": "La percepcion de oportunidades de carrera puede aportar informacion adicional a Intent to Stay."
+    },
+    {
+      "id": "mean33",
+      "name": "Promedio de 33 preguntas comparables",
+      "semantic_type": "derived_feature",
+      "components": "strict_common_33",
+      "variants": [
+        {
+          "id": "mean33",
+          "components": "strict_common_33",
+          "representation": "favorable_bands"
+        }
+      ],
+      "hypothesis": "El promedio comparable puede aportar contexto adicional, pero incluye Q4 y Q12 y requiere una ablacion."
+    }
+  ],
+  "combinations": [
+    {
+      "id": "intent_career",
+      "blocks": [
+        "intent_components",
+        "career"
+      ]
+    },
+    {
+      "id": "intent_career_mean33",
+      "blocks": [
+        "intent_components",
+        "career",
+        "mean33"
+      ]
+    },
+    {
+      "id": "intent_career_mean31_same_cohort",
+      "blocks": [
+        "intent_components",
+        "career",
+        "mean31"
+      ],
+      "complete_case_basis": "strict_common_33"
+    }
+  ],
+  "assessment": {
+    "as_of_date": "2026-10-08",
+    "history_score_override": 1,
+    "history_reason": "Al corte existen dos waves asignables al modelo, 2024 para 2025 y 2025 para 2026; no hay 24 meses de historia predictiva completa.",
+    "history_action": "Repetir la validacion cuando la wave 2026 pueda evaluarse sobre snapshots y outcomes de 2027."
+  },
+  "validation": {
+    "training_start": "2024-01-01",
+    "main_periods": [
+      {
+        "id": "aug_dec_2025",
+        "start": "2025-08-01",
+        "end": "2025-12-31",
+        "expected_snapshots": 5
+      },
+      {
+        "id": "jan_feb_2026",
+        "start": "2026-01-01",
+        "end": "2026-02-28",
+        "expected_snapshots": 2
+      }
+    ],
+    "supplementary_start": "2026-03-01",
+    "inner_validation_intervals": 3,
+    "l2_grid": [
+      0,
+      0.01,
+      0.1,
+      1,
+      10
+    ],
+    "l2_selection_metric": "monthly_brier",
+    "bootstrap_repetitions": 500,
+    "bootstrap_seed": 20261008,
+    "confidence_level": 0.95,
+    "bootstrap_unit": "person_all_months",
+    "availability_only_controls": true,
+    "require_components_in_inner_fit_and_validation": true
+  },
+  "decision": {
+    "minimum_complete_main_periods": 2,
+    "minimum_snapshots_per_main_period": 2,
+    "ranking": "Mejorar PR-AUC y lift del decil superior en ambos periodos principales.",
+    "calibration": "No empeorar Brier medio ni error absoluto de calibracion general y del quintil superior.",
+    "incremental": "Demostrar mejora frente al control que usa solo disponibilidad.",
+    "statuses": [
+      "prometedora",
+      "sin mejora demostrada",
+      "evidencia temporal insuficiente"
+    ]
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-09T15:24:36.835180+00:00",
+  "outcome": "pass",
+  "reason": "Al reanudar, el periodo se recalculo desde parametros exportados y el promedio PR-AUC conservaba la version anterior. Se recalculan los promedios desde los periodos persistidos.",
+  "changes": [
+    {
+      "model": "RSF_raw",
+      "metric": "pr_auc",
+      "before": 0.055324222291027306,
+      "after": 0.05532482327752259,
+      "difference": 6.009864952846722e-07
+    },
+    {
+      "model": "RSF",
+      "metric": "pr_auc",
+      "before": 0.055324222291027306,
+      "after": 0.05532482327752259,
+      "difference": 6.009864952846722e-07
+    },
+    {
+      "model": "RSF_tree",
+      "metric": "pr_auc",
+      "before": 0.055324222291027306,
+      "after": 0.05532482327752259,
+      "difference": 6.009864952846722e-07
+    }
+  ],
+  "model_parameters_changed": false,
+  "bootstrap_intervals_changed": false,
+  "bootstrap_note": "Los intervalos son de captura, log-loss y Brier; PR-AUC no forma parte de esos intervalos.",
+  "original_training_source": "revisions/before-summary-reconciliation/engineering_random_survival_forest.py",
+  "current_source_change": "Recalcular promedios al reanudar; no modifica ajuste, seleccion, calibracion ni predictor."
+}

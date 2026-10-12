@@ -1,0 +1,128 @@
+{
+  "name": "items_only",
+  "features": [
+    "qv_Q4",
+    "qv_Q5",
+    "qv_Q7"
+  ],
+  "l2": 0.1,
+  "monthly_brier": 0.003465453968658634,
+  "source_candidate": {
+    "id": "q4+mean33+connection",
+    "kind": "blocks",
+    "blocks": [
+      "q4",
+      "mean33",
+      "connection"
+    ],
+    "features": [
+      "qv_Q4",
+      "qv_mean33",
+      "qv_Q5",
+      "qv_Q7"
+    ],
+    "l2": 0.1,
+    "parameters": 21,
+    "converged": true,
+    "iterations": 5,
+    "monthly_brier": 0.003465569138502658
+  },
+  "trials": [
+    {
+      "l2": 0.1,
+      "monthly_brier": 0.003465453968658634,
+      "iterations": 5,
+      "converged": true
+    },
+    {
+      "l2": 1,
+      "monthly_brier": 0.003465505401897034,
+      "iterations": 5,
+      "converged": true
+    },
+    {
+      "l2": 10,
+      "monthly_brier": 0.003465831873313609,
+      "iterations": 5,
+      "converged": true
+    }
+  ],
+  "iterations": 5,
+  "encoder": {
+    "features": [
+      "qv_Q4",
+      "qv_Q5",
+      "qv_Q7"
+    ],
+    "levels": {
+      "qv_Q4": [
+        "different_employment_episode",
+        "missing",
+        "no_linked_row",
+        "v0",
+        "v1"
+      ],
+      "qv_Q5": [
+        "different_employment_episode",
+        "missing",
+        "no_linked_row",
+        "v0",
+        "v1"
+      ],
+      "qv_Q7": [
+        "different_employment_episode",
+        "missing",
+        "no_linked_row",
+        "v0",
+        "v1"
+      ]
+    },
+    "references": {
+      "qv_Q4": "v1",
+      "qv_Q5": "v1",
+      "qv_Q7": "v1"
+    },
+    "columns": [
+      "intercept",
+      "qv_Q4=different_employment_episode",
+      "qv_Q4=missing",
+      "qv_Q4=no_linked_row",
+      "qv_Q4=v0",
+      "qv_Q5=different_employment_episode",
+      "qv_Q5=missing",
+      "qv_Q5=no_linked_row",
+      "qv_Q5=v0",
+      "qv_Q7=different_employment_episode",
+      "qv_Q7=missing",
+      "qv_Q7=no_linked_row",
+      "qv_Q7=v0"
+    ]
+  },
+  "beta": [
+    -0.28974954427545957,
+    0.06717873746841099,
+    0.5841109522549345,
+    0.09683480018322556,
+    0.690966806058386,
+    0.0671787374685091,
+    0.10528315324043354,
+    0.09683480018328845,
+    0.12055095065839332,
+    0.0671787374685106,
+    -0.1839395328429112,
+    0.09683480018328272,
+    0.11494955058608763
+  ],
+  "base_model_reference": "output\\analysis\\engineering\\20261008\\model-c-v2\\folds\\fold-4-C-model.json",
+  "base_model_origin": "2025-08-01",
+  "cutoff": "2026-01-01",
+  "fit_maximum_label_end": "2025-12-28",
+  "selection_snapshots": [
+    "2025-10-26",
+    "2025-11-23"
+  ],
+  "formula": "cloglog(eta_C + correccion_Q); R6 = 1-product(1-h)",
+  "derivation": null,
+  "parameters": 13,
+  "employee_level_rows_persisted": false
+}

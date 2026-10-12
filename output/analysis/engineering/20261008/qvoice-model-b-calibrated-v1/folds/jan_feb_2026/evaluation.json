@@ -1,0 +1,339 @@
+{
+  "period": "jan_feb_2026",
+  "main": true,
+  "complete": true,
+  "status": "evaluated",
+  "snapshot_count": 2,
+  "people": 35448,
+  "first_snapshot": "2026-01-25",
+  "last_snapshot": "2026-02-22",
+  "selected": {
+    "id": "q4+q12+career",
+    "kind": "blocks",
+    "blocks": [
+      "q4",
+      "q12",
+      "career"
+    ],
+    "features": [
+      "qv_Q4",
+      "qv_Q12",
+      "qv_career"
+    ],
+    "l2": 10,
+    "parameters": 13,
+    "converged": true,
+    "iterations": 5,
+    "monthly_brier": 0.004697168737920067
+  },
+  "calibration": {
+    "intercept": 0.5547321921762567,
+    "slope": 1.1306847302113356,
+    "slope_l2": 10,
+    "converged": true
+  },
+  "cohort_equality_verified": true,
+  "control": {
+    "exposures": 70276.0,
+    "event_exposures": 2432.0,
+    "pr_auc": 0.05285423663325542,
+    "lift_at_10_percent": 1.7927845181134654,
+    "brier_score": 0.03326262648456204,
+    "observed_percent": 3.4606409015880244,
+    "predicted_percent": 3.397801985071248,
+    "calibration_error_pp": 0.06283891651677684,
+    "top_quintile_observed_percent": 5.5729924732144545,
+    "top_quintile_predicted_percent": 6.5964308850061455,
+    "top_quintile_calibration_error_pp": 1.0234384117916904
+  },
+  "base_calibrated": {
+    "exposures": 70276.0,
+    "event_exposures": 2432.0,
+    "pr_auc": 0.05273909865801811,
+    "lift_at_10_percent": 1.7871881408065617,
+    "brier_score": 0.033255743205739506,
+    "observed_percent": 3.4606409015880244,
+    "predicted_percent": 2.91745803865159,
+    "calibration_error_pp": 0.5431828629364348,
+    "top_quintile_observed_percent": 5.691424626176471,
+    "top_quintile_predicted_percent": 5.533646017549099,
+    "top_quintile_calibration_error_pp": 0.1577786086273722
+  },
+  "availability": {
+    "exposures": 70276.0,
+    "event_exposures": 2432.0,
+    "pr_auc": 0.052512432924922275,
+    "lift_at_10_percent": 1.7310855263157892,
+    "brier_score": 0.033267031436530044,
+    "observed_percent": 3.4606409015880244,
+    "predicted_percent": 2.886401380970372,
+    "calibration_error_pp": 0.5742395206176528,
+    "top_quintile_observed_percent": 5.6324492002959765,
+    "top_quintile_predicted_percent": 5.51738454027958,
+    "top_quintile_calibration_error_pp": 0.11506466001639584
+  },
+  "uncalibrated": {
+    "exposures": 70276.0,
+    "event_exposures": 2432.0,
+    "pr_auc": 0.060733322465538926,
+    "lift_at_10_percent": 2.15344024122807,
+    "brier_score": 0.03311108880959488,
+    "observed_percent": 3.4606409015880244,
+    "predicted_percent": 3.1846656393611035,
+    "calibration_error_pp": 0.27597526222692126,
+    "top_quintile_observed_percent": 6.3108315783482265,
+    "top_quintile_predicted_percent": 6.473885995078042,
+    "top_quintile_calibration_error_pp": 0.1630544167298159
+  },
+  "response": {
+    "exposures": 70276.0,
+    "event_exposures": 2432.0,
+    "pr_auc": 0.060739994586462814,
+    "lift_at_10_percent": 2.1544682017543857,
+    "brier_score": 0.033153148100303675,
+    "observed_percent": 3.4606409015880244,
+    "predicted_percent": 2.8979495353853855,
+    "calibration_error_pp": 0.5626913662026393,
+    "top_quintile_observed_percent": 6.317946382833399,
+    "top_quintile_predicted_percent": 6.351412502531545,
+    "top_quintile_calibration_error_pp": 0.03346611969814589
+  },
+  "control_reconciliation": {
+    "exposures": 0.0,
+    "event_exposures": 0.0,
+    "pr_auc": 0.0,
+    "lift_at_10_percent": 0.0,
+    "brier_score": -1.3877787807814457e-17
+  },
+  "response_complete_coverage_percent": 65.19010757584381,
+  "uncertainty": {
+    "unit": "persona; todas sus observaciones juntas",
+    "people": 35448,
+    "repetitions": 500,
+    "confidence_level": 0.95,
+    "seed": 20261008,
+    "paired_differences": {
+      "base_calibrated__minus__control": {
+        "pr_auc": {
+          "lower": -0.0013647767571777665,
+          "upper": 0.0010722911965715118
+        },
+        "lift_at_10_percent": {
+          "lower": -0.12355257442652186,
+          "upper": 0.1098621858213088
+        },
+        "brier_score": {
+          "lower": -4.2574368966084325e-05,
+          "upper": 2.7679126045719235e-05
+        },
+        "calibration_error_pp": {
+          "lower": 0.2138038767436852,
+          "upper": 0.48628130815026926
+        },
+        "top_quintile_calibration_error_pp": {
+          "lower": -1.3229451928274625,
+          "upper": 0.09873016510711216
+        }
+      },
+      "availability__minus__control": {
+        "pr_auc": {
+          "lower": -0.001996687215677354,
+          "upper": 0.0008849526866076886
+        },
+        "lift_at_10_percent": {
+          "lower": -0.17603369841686542,
+          "upper": 0.05926607477571343
+        },
+        "brier_score": {
+          "lower": -3.378736868365995e-05,
+          "upper": 4.1862546336991374e-05
+        },
+        "calibration_error_pp": {
+          "lower": 0.24371071732993352,
+          "upper": 0.5178956295195501
+        },
+        "top_quintile_calibration_error_pp": {
+          "lower": -1.3122901416694717,
+          "upper": 0.07263798287528017
+        }
+      },
+      "availability__minus__base_calibrated": {
+        "pr_auc": {
+          "lower": -0.0010990473440308792,
+          "upper": 0.0004050494199569966
+        },
+        "lift_at_10_percent": {
+          "lower": -0.12358961020004186,
+          "upper": 0.00481070263758706
+        },
+        "brier_score": {
+          "lower": 1.07042599178462e-06,
+          "upper": 2.224814748921465e-05
+        },
+        "calibration_error_pp": {
+          "lower": 0.028838029653785496,
+          "upper": 0.03335336413081611
+        },
+        "top_quintile_calibration_error_pp": {
+          "lower": -0.16416882726110688,
+          "upper": 0.1657601697290936
+        }
+      },
+      "uncalibrated__minus__control": {
+        "pr_auc": {
+          "lower": 0.004733371170693775,
+          "upper": 0.01189996150372627
+        },
+        "lift_at_10_percent": {
+          "lower": 0.1710876741073739,
+          "upper": 0.5502685112116232
+        },
+        "brier_score": {
+          "lower": -0.00022005588451474103,
+          "upper": -9.027020620162015e-05
+        },
+        "calibration_error_pp": {
+          "lower": -0.05264330976386733,
+          "upper": 0.2266946872543147
+        },
+        "top_quintile_calibration_error_pp": {
+          "lower": -1.1826247917684058,
+          "upper": -0.2272891994360346
+        }
+      },
+      "uncalibrated__minus__base_calibrated": {
+        "pr_auc": {
+          "lower": 0.004583956486742005,
+          "upper": 0.011631485822219614
+        },
+        "lift_at_10_percent": {
+          "lower": 0.154069780081131,
+          "upper": 0.5715688820040151
+        },
+        "brier_score": {
+          "lower": -0.0002087232280712416,
+          "upper": -8.248832101719652e-05
+        },
+        "calibration_error_pp": {
+          "lower": -0.2800449226100816,
+          "upper": -0.2545652154025135
+        },
+        "top_quintile_calibration_error_pp": {
+          "lower": -0.5009672593675738,
+          "upper": 0.5255715847596817
+        }
+      },
+      "uncalibrated__minus__availability": {
+        "pr_auc": {
+          "lower": 0.004845611806097863,
+          "upper": 0.011699835761732785
+        },
+        "lift_at_10_percent": {
+          "lower": 0.21730462679198723,
+          "upper": 0.6348305821607204
+        },
+        "brier_score": {
+          "lower": -0.00022086911799702562,
+          "upper": -9.368608927724807e-05
+        },
+        "calibration_error_pp": {
+          "lower": -0.31107473373827843,
+          "upper": -0.28598317672361473
+        },
+        "top_quintile_calibration_error_pp": {
+          "lower": -0.4647230294767403,
+          "upper": 0.49462861507879835
+        }
+      },
+      "response__minus__control": {
+        "pr_auc": {
+          "lower": 0.004737975809978626,
+          "upper": 0.011924174567799385
+        },
+        "lift_at_10_percent": {
+          "lower": 0.1656278558414011,
+          "upper": 0.5502685112116232
+        },
+        "brier_score": {
+          "lower": -0.00018506734050578104,
+          "upper": -4.133083446649645e-05
+        },
+        "calibration_error_pp": {
+          "lower": 0.23468777390262932,
+          "upper": 0.5139640245938804
+        },
+        "top_quintile_calibration_error_pp": {
+          "lower": -1.2834153566564832,
+          "upper": -0.10518088796298465
+        }
+      },
+      "response__minus__base_calibrated": {
+        "pr_auc": {
+          "lower": 0.0045851849255015885,
+          "upper": 0.011637299972656726
+        },
+        "lift_at_10_percent": {
+          "lower": 0.15318632288155448,
+          "upper": 0.5708073307801388
+        },
+        "brier_score": {
+          "lower": -0.00017339543755528068,
+          "upper": -3.7977212911971574e-05
+        },
+        "calibration_error_pp": {
+          "lower": 0.006370582037345009,
+          "upper": 0.03310840436033224
+        },
+        "top_quintile_calibration_error_pp": {
+          "lower": -0.44731418593241823,
+          "upper": 0.401981979287868
+        }
+      },
+      "response__minus__availability": {
+        "pr_auc": {
+          "lower": 0.004846106298077786,
+          "upper": 0.011702420835139237
+        },
+        "lift_at_10_percent": {
+          "lower": 0.21767804302118435,
+          "upper": 0.6351104961240077
+        },
+        "brier_score": {
+          "lower": -0.00018364046325303058,
+          "upper": -4.6732036227127254e-05
+        },
+        "calibration_error_pp": {
+          "lower": -0.02506573966595616,
+          "upper": 0.0015286238353580935
+        },
+        "top_quintile_calibration_error_pp": {
+          "lower": -0.3933738374514578,
+          "upper": 0.3833903365896877
+        }
+      },
+      "response__minus__uncalibrated": {
+        "pr_auc": {
+          "lower": -4.587492359304534e-06,
+          "upper": 3.449759168719643e-05
+        },
+        "lift_at_10_percent": {
+          "lower": -0.004486755397539805,
+          "upper": 0.008264987771479037
+        },
+        "brier_score": {
+          "lower": 2.9197274329107772e-05,
+          "upper": 5.5094056851823574e-05
+        },
+        "calibration_error_pp": {
+          "lower": 0.2849591786283617,
+          "upper": 0.2882038679762307
+        },
+        "top_quintile_calibration_error_pp": {
+          "lower": -0.1376666413015209,
+          "upper": 0.1319643475824977
+        }
+      }
+    },
+    "scope": "Incertidumbre de evaluación condicional a los modelos ajustados; no vuelve a seleccionar L2 en cada réplica."
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "schema_version": 4,
+  "id": "annual-review-history",
+  "title": "Annual Review: ciclos y conocimiento histórico",
+  "claim": "Hay registros de ciclo utilizables antes del corte, sin conflictos de flag o grade.",
+  "use": "Determinar si promotion_yes_no puede probarse junto con B sin adelantar una revisión anual.",
+  "semantic_type": "derived_feature",
+  "population": "Ciclos de Annual Review y enlace agregado a Engineering elegible en 2020–2026",
+  "grain": "persona-ciclo, agregado por ciclo con al menos 30 personas",
+  "known_at": "Fecha oficial de publicación o versión histórica requerida; timestamps técnicos son sólo condición necesaria",
+  "window": "26-jul-2020 a 7-sep-2026",
+  "history": "El V11 usa AR25 por track. No se equipara al flag is_promo del historial mensual.",
+  "query": "queries/audits/engineering_b_v11_annual_review_history_20261012.sql",
+  "zero_fields": ["missing_key_groups", "duplicate_groups", "conflicting_groups", "invalid_flags"],
+  "positive_fields": ["technical_before_boundary"],
+  "acceptance_rule": "Cero conflictos, duplicados o flags inválidos y algún registro con carga y modificación anteriores al corte; después sería necesario validar publicación y unión as-of.",
+  "conclusion_if_pass": "Se cumple el requisito técnico necesario, pendiente de publicación y enlace temporal",
+  "limitation": "El año del ciclo y la fecha de carga no demuestran cuándo se comunicó o entró en vigor la promoción.",
+  "action": "Conservar promoción de B y entrada al grado; sólo habilitar Annual Review con conocimiento histórico acreditado."
+}

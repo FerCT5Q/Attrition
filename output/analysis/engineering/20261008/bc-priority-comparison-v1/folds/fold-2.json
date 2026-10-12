@@ -1,0 +1,1611 @@
+{
+  "fold": 2,
+  "origin": "2024-08-01",
+  "first_snapshot": "2024-08-25",
+  "last_snapshot": "2025-01-26",
+  "latest_outcome": "2025-07-26",
+  "exposures": 185788,
+  "reproduction": {
+    "B": {
+      "outcome": "pass",
+      "maximum_absolute_difference": 3.469446951953614e-18,
+      "differences": {
+        "exposures": 0.0,
+        "event_exposures": 0.0,
+        "pr_auc": 0.0,
+        "lift_at_10_percent": 0.0,
+        "log_loss": 0.0,
+        "brier_score": 3.469446951953614e-18,
+        "predicted_percent": 0.0,
+        "observed_percent": 0.0
+      }
+    },
+    "C": {
+      "outcome": "pass",
+      "maximum_absolute_difference": 4.440892098500626e-16,
+      "differences": {
+        "exposures": 0.0,
+        "event_exposures": 0.0,
+        "pr_auc": 0.0,
+        "lift_at_10_percent": 0.0,
+        "log_loss": 0.0,
+        "brier_score": 3.469446951953614e-18,
+        "predicted_percent": 4.440892098500626e-16,
+        "observed_percent": 0.0
+      }
+    },
+    "B_groups": {
+      "outcome": "pass",
+      "maximum_absolute_difference": 2.7755575615628914e-17,
+      "differences": {
+        "exposures": 0.0,
+        "event_exposures": 0.0,
+        "pr_auc": 0.0,
+        "lift_at_10_percent": 0.0,
+        "log_loss": 2.7755575615628914e-17,
+        "brier_score": 3.469446951953614e-18,
+        "predicted_percent": 0.0,
+        "observed_percent": 0.0
+      }
+    },
+    "C_groups": {
+      "outcome": "pass",
+      "maximum_absolute_difference": 6.938893903907228e-18,
+      "differences": {
+        "exposures": 0.0,
+        "event_exposures": 0.0,
+        "pr_auc": 0.0,
+        "lift_at_10_percent": 0.0,
+        "log_loss": 0.0,
+        "brier_score": 6.938893903907228e-18,
+        "predicted_percent": 0.0,
+        "observed_percent": 0.0
+      }
+    }
+  },
+  "group_definitions": {
+    "B": {
+      "training_snapshot": "2024-06-23",
+      "rules": [
+        {
+          "node": 5,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=3-5 years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=2-3 years",
+              "present": false
+            }
+          ],
+          "training_people": 12789,
+          "training_mean_risk": 0.028404234292057233
+        },
+        {
+          "node": 6,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=3-5 years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=2-3 years",
+              "present": true
+            }
+          ],
+          "training_people": 4746,
+          "training_mean_risk": 0.043860607869082864
+        },
+        {
+          "node": 7,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=3-5 years",
+              "present": true
+            },
+            {
+              "condition": "level_grouped=8 - Assoc & Int/Eng",
+              "present": false
+            }
+          ],
+          "training_people": 4403,
+          "training_mean_risk": 0.0409489092358772
+        },
+        {
+          "node": 8,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=3-5 years",
+              "present": true
+            },
+            {
+              "condition": "level_grouped=8 - Assoc & Int/Eng",
+              "present": true
+            }
+          ],
+          "training_people": 766,
+          "training_mean_risk": 0.07558143171607157
+        },
+        {
+          "node": 11,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": true
+            },
+            {
+              "condition": "direct_reports_band=6+",
+              "present": false
+            },
+            {
+              "condition": "direct_reports_band=1-5",
+              "present": false
+            }
+          ],
+          "training_people": 3313,
+          "training_mean_risk": 0.018316381140057784
+        },
+        {
+          "node": 12,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": true
+            },
+            {
+              "condition": "direct_reports_band=6+",
+              "present": false
+            },
+            {
+              "condition": "direct_reports_band=1-5",
+              "present": true
+            }
+          ],
+          "training_people": 2886,
+          "training_mean_risk": 0.01490145289782568
+        },
+        {
+          "node": 13,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": true
+            },
+            {
+              "condition": "direct_reports_band=6+",
+              "present": true
+            },
+            {
+              "condition": "time_since_promotion_band=sin promo en historial",
+              "present": false
+            }
+          ],
+          "training_people": 642,
+          "training_mean_risk": 0.010469433084354902
+        },
+        {
+          "node": 14,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": true
+            },
+            {
+              "condition": "direct_reports_band=6+",
+              "present": true
+            },
+            {
+              "condition": "time_since_promotion_band=sin promo en historial",
+              "present": true
+            }
+          ],
+          "training_people": 438,
+          "training_mean_risk": 0.009900921752694636
+        }
+      ],
+      "high_nodes": [
+        8,
+        6,
+        7
+      ],
+      "features": [
+        "level_grouped",
+        "tenure_playbook_band",
+        "manager_changes_12m",
+        "team_exits_12m",
+        "direct_reports_band",
+        "time_since_promotion_band",
+        "rehire"
+      ],
+      "encoder": {
+        "features": [
+          "level_grouped",
+          "tenure_playbook_band",
+          "manager_changes_12m",
+          "team_exits_12m",
+          "direct_reports_band",
+          "time_since_promotion_band",
+          "rehire"
+        ],
+        "references": {
+          "level_grouped": "7 - Senior & Lead",
+          "tenure_playbook_band": "5-10 years",
+          "manager_changes_12m": "0",
+          "team_exits_12m": "0",
+          "direct_reports_band": "0",
+          "time_since_promotion_band": "sin promo, contratado 1-3 years",
+          "rehire": "no"
+        },
+        "levels": {
+          "level_grouped": [
+            "1 - VP & Above",
+            "2 - Sr Dir",
+            "3 - Princ/Directors",
+            "5 - Sr Staff & /Mgr",
+            "6 - Staff & /Mgr",
+            "7 - Senior & Lead",
+            "8 - Assoc & Int/Eng"
+          ],
+          "tenure_playbook_band": [
+            "1-2 years",
+            "10+ years",
+            "2-3 years",
+            "3-5 years",
+            "5-10 years",
+            "<1 year"
+          ],
+          "manager_changes_12m": [
+            "0",
+            "1",
+            "2+"
+          ],
+          "team_exits_12m": [
+            "0",
+            "1",
+            "2+"
+          ],
+          "direct_reports_band": [
+            "0",
+            "1-5",
+            "6+"
+          ],
+          "time_since_promotion_band": [
+            "promo 1-2 years",
+            "promo 2-3 years",
+            "promo 3+ years",
+            "promo <1 year",
+            "sin promo en historial",
+            "sin promo, contratado 1-3 years",
+            "sin promo, contratado 3+ years",
+            "sin promo, contratado <1 year"
+          ],
+          "rehire": [
+            "no",
+            "yes"
+          ]
+        },
+        "columns": [
+          "intercept",
+          "level_grouped=1 - VP & Above",
+          "level_grouped=2 - Sr Dir",
+          "level_grouped=3 - Princ/Directors",
+          "level_grouped=5 - Sr Staff & /Mgr",
+          "level_grouped=6 - Staff & /Mgr",
+          "level_grouped=8 - Assoc & Int/Eng",
+          "tenure_playbook_band=1-2 years",
+          "tenure_playbook_band=10+ years",
+          "tenure_playbook_band=2-3 years",
+          "tenure_playbook_band=3-5 years",
+          "tenure_playbook_band=<1 year",
+          "manager_changes_12m=1",
+          "manager_changes_12m=2+",
+          "team_exits_12m=1",
+          "team_exits_12m=2+",
+          "direct_reports_band=1-5",
+          "direct_reports_band=6+",
+          "time_since_promotion_band=promo 1-2 years",
+          "time_since_promotion_band=promo 2-3 years",
+          "time_since_promotion_band=promo 3+ years",
+          "time_since_promotion_band=promo <1 year",
+          "time_since_promotion_band=sin promo en historial",
+          "time_since_promotion_band=sin promo, contratado 3+ years",
+          "time_since_promotion_band=sin promo, contratado <1 year",
+          "rehire=yes"
+        ],
+        "interactions": {}
+      },
+      "training_r2": 0.766731493706279,
+      "training_high_fraction": 0.3306873895207284,
+      "maximum_depth": 3
+    },
+    "C": {
+      "training_snapshot": "2024-06-23",
+      "rules": [
+        {
+          "node": 5,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=2-3 years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=3-5 years",
+              "present": false
+            }
+          ],
+          "training_people": 12789,
+          "training_mean_risk": 0.02327952465399926
+        },
+        {
+          "node": 6,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=2-3 years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=3-5 years",
+              "present": true
+            }
+          ],
+          "training_people": 5169,
+          "training_mean_risk": 0.03806541286927286
+        },
+        {
+          "node": 7,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=2-3 years",
+              "present": true
+            },
+            {
+              "condition": "level_grouped=8 - Assoc & Int/Eng",
+              "present": false
+            }
+          ],
+          "training_people": 3125,
+          "training_mean_risk": 0.034563893546035215
+        },
+        {
+          "node": 8,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": false
+            },
+            {
+              "condition": "tenure_playbook_band=2-3 years",
+              "present": true
+            },
+            {
+              "condition": "level_grouped=8 - Assoc & Int/Eng",
+              "present": true
+            }
+          ],
+          "training_people": 1621,
+          "training_mean_risk": 0.0483780889017782
+        },
+        {
+          "node": 11,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": true
+            },
+            {
+              "condition": "direct_reports_band=6+",
+              "present": false
+            },
+            {
+              "condition": "region=APAC",
+              "present": false
+            }
+          ],
+          "training_people": 5295,
+          "training_mean_risk": 0.015003891044181853
+        },
+        {
+          "node": 12,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": true
+            },
+            {
+              "condition": "direct_reports_band=6+",
+              "present": false
+            },
+            {
+              "condition": "region=APAC",
+              "present": true
+            }
+          ],
+          "training_people": 904,
+          "training_mean_risk": 0.009895913438650686
+        },
+        {
+          "node": 13,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": true
+            },
+            {
+              "condition": "direct_reports_band=6+",
+              "present": true
+            },
+            {
+              "condition": "prior_experience_band=5-10 years",
+              "present": false
+            }
+          ],
+          "training_people": 710,
+          "training_mean_risk": 0.00908664067114778
+        },
+        {
+          "node": 14,
+          "conditions": [
+            {
+              "condition": "tenure_playbook_band=10+ years",
+              "present": true
+            },
+            {
+              "condition": "direct_reports_band=6+",
+              "present": true
+            },
+            {
+              "condition": "prior_experience_band=5-10 years",
+              "present": true
+            }
+          ],
+          "training_people": 370,
+          "training_mean_risk": 0.007959898890623273
+        }
+      ],
+      "high_nodes": [
+        8,
+        6
+      ],
+      "features": [
+        "level_grouped",
+        "tenure_playbook_band",
+        "manager_changes_12m",
+        "direct_reports_band",
+        "time_since_promotion_band",
+        "prior_experience_band",
+        "time_at_level_band",
+        "region",
+        "grade_family",
+        "acquisition_recorded"
+      ],
+      "encoder": {
+        "features": [
+          "level_grouped",
+          "tenure_playbook_band",
+          "manager_changes_12m",
+          "direct_reports_band",
+          "time_since_promotion_band",
+          "prior_experience_band",
+          "time_at_level_band",
+          "region",
+          "grade_family",
+          "acquisition_recorded"
+        ],
+        "references": {
+          "level_grouped": "7 - Senior & Lead",
+          "tenure_playbook_band": "5-10 years",
+          "manager_changes_12m": "0",
+          "direct_reports_band": "0",
+          "time_since_promotion_band": "sin promo, contratado 1-3 years",
+          "prior_experience_band": "<1 year",
+          "time_at_level_band": "1-2 years",
+          "region": "INDIA",
+          "grade_family": "R",
+          "acquisition_recorded": "sin registro"
+        },
+        "levels": {
+          "level_grouped": [
+            "1 - VP & Above",
+            "2 - Sr Dir",
+            "3 - Princ/Directors",
+            "5 - Sr Staff & /Mgr",
+            "6 - Staff & /Mgr",
+            "7 - Senior & Lead",
+            "8 - Assoc & Int/Eng"
+          ],
+          "tenure_playbook_band": [
+            "1-2 years",
+            "10+ years",
+            "2-3 years",
+            "3-5 years",
+            "5-10 years",
+            "<1 year"
+          ],
+          "manager_changes_12m": [
+            "0",
+            "1",
+            "2+"
+          ],
+          "direct_reports_band": [
+            "0",
+            "1-5",
+            "6+"
+          ],
+          "time_since_promotion_band": [
+            "promo 1-2 years",
+            "promo 2-3 years",
+            "promo 3+ years",
+            "promo <1 year",
+            "sin promo en historial",
+            "sin promo, contratado 1-3 years",
+            "sin promo, contratado 3+ years",
+            "sin promo, contratado <1 year"
+          ],
+          "prior_experience_band": [
+            "1-3 years",
+            "10+ years",
+            "3-5 years",
+            "5-10 years",
+            "<1 year"
+          ],
+          "time_at_level_band": [
+            "1-2 years",
+            "2-3 years",
+            "3-5 years",
+            "5+ years",
+            "<1 year"
+          ],
+          "region": [
+            "AMERICAS",
+            "APAC",
+            "EMEA",
+            "INDIA"
+          ],
+          "grade_family": [
+            "R",
+            "T",
+            "other"
+          ],
+          "acquisition_recorded": [
+            "registrada",
+            "sin registro"
+          ]
+        },
+        "columns": [
+          "intercept",
+          "level_grouped=1 - VP & Above",
+          "level_grouped=2 - Sr Dir",
+          "level_grouped=3 - Princ/Directors",
+          "level_grouped=5 - Sr Staff & /Mgr",
+          "level_grouped=6 - Staff & /Mgr",
+          "level_grouped=8 - Assoc & Int/Eng",
+          "tenure_playbook_band=1-2 years",
+          "tenure_playbook_band=10+ years",
+          "tenure_playbook_band=2-3 years",
+          "tenure_playbook_band=3-5 years",
+          "tenure_playbook_band=<1 year",
+          "manager_changes_12m=1",
+          "manager_changes_12m=2+",
+          "direct_reports_band=1-5",
+          "direct_reports_band=6+",
+          "time_since_promotion_band=promo 1-2 years",
+          "time_since_promotion_band=promo 2-3 years",
+          "time_since_promotion_band=promo 3+ years",
+          "time_since_promotion_band=promo <1 year",
+          "time_since_promotion_band=sin promo en historial",
+          "time_since_promotion_band=sin promo, contratado 3+ years",
+          "time_since_promotion_band=sin promo, contratado <1 year",
+          "prior_experience_band=1-3 years",
+          "prior_experience_band=10+ years",
+          "prior_experience_band=3-5 years",
+          "prior_experience_band=5-10 years",
+          "time_at_level_band=2-3 years",
+          "time_at_level_band=3-5 years",
+          "time_at_level_band=5+ years",
+          "time_at_level_band=<1 year",
+          "region=AMERICAS",
+          "region=APAC",
+          "region=EMEA",
+          "grade_family=T",
+          "grade_family=other",
+          "acquisition_recorded=registrada"
+        ],
+        "interactions": {}
+      },
+      "training_r2": 0.6297363628855224,
+      "training_high_fraction": 0.22646166160824469,
+      "maximum_depth": 3
+    }
+  },
+  "scenarios": {
+    "20": {
+      "B": {
+        "metrics": {
+          "coverage_percent": 20.000000000000004,
+          "effective_exposures": 37157.600000000006,
+          "mean_people_per_snapshot": 6192.933333333334,
+          "event_exposures": 1577.2040711528466,
+          "distinct_people_with_event": 845,
+          "capture_percent": 28.229892091513275,
+          "observed_percent": 4.244633859971706,
+          "predicted_percent": 5.085519319751421,
+          "lift": 1.4114946045756636,
+          "aggregate_error_pp": 0.8408854597797153,
+          "group_mae_pp": 0.8408854597797063,
+          "group_snapshot_mae_pp": 1.0349107468591425,
+          "worst_publishable_group_error_pp": 0.9680068087582405,
+          "publishable_group_exposure_percent": 95.57129631623138,
+          "selected_group_count": 3
+        },
+        "selected_groups": [
+          {
+            "node": 6,
+            "observed_publishable": true,
+            "effective_exposures": 30840.0,
+            "mean_people_per_snapshot": 5140.0,
+            "selected_snapshots": 6,
+            "minimum_effective_people_selected_snapshot": 5037.0,
+            "distinct_people_with_event": 404,
+            "event_exposures": 1182.0,
+            "observed_percent": 3.832684824902724,
+            "predicted_percent": 4.682232282619315,
+            "error_pp": 0.8495474577165911
+          },
+          {
+            "node": 7,
+            "observed_publishable": false
+          },
+          {
+            "node": 8,
+            "observed_publishable": true,
+            "effective_exposures": 4672.0,
+            "mean_people_per_snapshot": 778.6666666666666,
+            "selected_snapshots": 6,
+            "minimum_effective_people_selected_snapshot": 485.0,
+            "distinct_people_with_event": 120,
+            "event_exposures": 325.0,
+            "observed_percent": 6.9563356164383565,
+            "predicted_percent": 7.924342425196596,
+            "error_pp": 0.9680068087582405
+          }
+        ],
+        "same_selection_other_estimator": {
+          "coverage_percent": 20.000000000000004,
+          "effective_exposures": 37157.600000000006,
+          "mean_people_per_snapshot": 6192.933333333334,
+          "event_exposures": 1577.2040711528466,
+          "distinct_people_with_event": 845,
+          "capture_percent": 28.229892091513275,
+          "observed_percent": 4.244633859971706,
+          "predicted_percent": 4.775177214274113,
+          "lift": 1.4114946045756636,
+          "aggregate_error_pp": 0.5305433543024075,
+          "group_mae_pp": 0.5635420423064116,
+          "group_snapshot_mae_pp": 0.7973679392534607,
+          "worst_publishable_group_error_pp": 0.612207735723165,
+          "publishable_group_exposure_percent": 95.57129631623138,
+          "selected_group_count": 3
+        },
+        "individual_ranking_diagnostic": {
+          "coverage_percent": 20.000000000000004,
+          "effective_exposures": 37157.600000000006,
+          "mean_people_per_snapshot": 6192.933333333334,
+          "event_exposures": 1956.0024708182393,
+          "distinct_people_with_event": 680,
+          "capture_percent": 35.00988850578556,
+          "observed_percent": 5.264071067071714,
+          "predicted_percent": 5.598466044375869,
+          "lift": 1.7504944252892778,
+          "aggregate_error_pp": 0.334394977304156
+        },
+        "outside_selection": {
+          "coverage_percent": 79.99999999999999,
+          "effective_exposures": 148630.39999999997,
+          "mean_people_per_snapshot": 24771.733333333326,
+          "event_exposures": 4009.7959288471557,
+          "distinct_people_with_event": 1293,
+          "capture_percent": 71.77010790848676,
+          "observed_percent": 2.697830274861103,
+          "predicted_percent": 2.83756161705304,
+          "lift": 0.8971263488560849,
+          "aggregate_error_pp": 0.13973134219193717,
+          "group_mae_pp": 0.14585218501838978,
+          "group_snapshot_mae_pp": 0.20893783193089813,
+          "worst_publishable_group_error_pp": 0.18475642888412241,
+          "publishable_group_exposure_percent": 95.03197192498979,
+          "selected_group_count": 6
+        },
+        "whole_group_brackets": [
+          {
+            "snapshot": "2024-08-25",
+            "people": 30858,
+            "lower_whole_group_coverage_percent": 19.414738479486683,
+            "upper_whole_group_coverage_percent": 33.16481949575475
+          },
+          {
+            "snapshot": "2024-09-29",
+            "people": 30838,
+            "lower_whole_group_coverage_percent": 19.69647837084117,
+            "upper_whole_group_coverage_percent": 33.4165639795058
+          },
+          {
+            "snapshot": "2024-10-27",
+            "people": 31015,
+            "lower_whole_group_coverage_percent": 19.99677575366758,
+            "upper_whole_group_coverage_percent": 33.56440432049009
+          },
+          {
+            "snapshot": "2024-11-24",
+            "people": 30968,
+            "lower_whole_group_coverage_percent": 19.416817359855333,
+            "upper_whole_group_coverage_percent": 33.63149057091191
+          },
+          {
+            "snapshot": "2024-12-29",
+            "people": 30996,
+            "lower_whole_group_coverage_percent": 18.105562008001034,
+            "upper_whole_group_coverage_percent": 33.23009420570396
+          },
+          {
+            "snapshot": "2025-01-26",
+            "people": 31113,
+            "lower_whole_group_coverage_percent": 18.063189020666602,
+            "upper_whole_group_coverage_percent": 33.14691608009513
+          }
+        ]
+      },
+      "C": {
+        "metrics": {
+          "coverage_percent": 20.000000000000004,
+          "effective_exposures": 37157.600000000006,
+          "mean_people_per_snapshot": 6192.933333333334,
+          "event_exposures": 1763.7319579701802,
+          "distinct_people_with_event": 660,
+          "capture_percent": 31.568497547345274,
+          "observed_percent": 4.746625072583213,
+          "predicted_percent": 4.608109489358044,
+          "lift": 1.5784248773672633,
+          "aggregate_error_pp": 0.13851558322516971,
+          "group_mae_pp": 0.4584532173300556,
+          "group_snapshot_mae_pp": 0.4769577571851562,
+          "worst_publishable_group_error_pp": 0.5302459693584225,
+          "publishable_group_exposure_percent": 99.99999999999999,
+          "selected_group_count": 2
+        },
+        "selected_groups": [
+          {
+            "node": 6,
+            "observed_publishable": true,
+            "effective_exposures": 25947.6,
+            "mean_people_per_snapshot": 4324.599999999999,
+            "selected_snapshots": 6,
+            "minimum_effective_people_selected_snapshot": 4064.0000000002533,
+            "distinct_people_with_event": 489,
+            "event_exposures": 1210.7319579701798,
+            "observed_percent": 4.666065293014305,
+            "predicted_percent": 4.238628306481625,
+            "error_pp": 0.4274369865326798
+          },
+          {
+            "node": 8,
+            "observed_publishable": true,
+            "effective_exposures": 11210.0,
+            "mean_people_per_snapshot": 1868.3333333333333,
+            "selected_snapshots": 6,
+            "minimum_effective_people_selected_snapshot": 1424.0,
+            "distinct_people_with_event": 197,
+            "event_exposures": 553.0,
+            "observed_percent": 4.933095450490633,
+            "predicted_percent": 5.463341419849056,
+            "error_pp": 0.5302459693584225
+          }
+        ],
+        "same_selection_other_estimator": {
+          "coverage_percent": 20.000000000000004,
+          "effective_exposures": 37157.600000000006,
+          "mean_people_per_snapshot": 6192.933333333334,
+          "event_exposures": 1763.7319579701802,
+          "distinct_people_with_event": 660,
+          "capture_percent": 31.568497547345274,
+          "observed_percent": 4.746625072583213,
+          "predicted_percent": 5.169371421542262,
+          "lift": 1.5784248773672633,
+          "aggregate_error_pp": 0.4227463489590494,
+          "group_mae_pp": 0.422746348959048,
+          "group_snapshot_mae_pp": 0.42292028085226213,
+          "worst_publishable_group_error_pp": 0.8162704802675573,
+          "publishable_group_exposure_percent": 99.99999999999999,
+          "selected_group_count": 2
+        },
+        "individual_ranking_diagnostic": {
+          "coverage_percent": 20.0,
+          "effective_exposures": 37157.6,
+          "mean_people_per_snapshot": 6192.933333333333,
+          "event_exposures": 1914.6433333333334,
+          "distinct_people_with_event": 678,
+          "capture_percent": 34.269613984845776,
+          "observed_percent": 5.152763723527174,
+          "predicted_percent": 5.1694998635841305,
+          "lift": 1.7134806992422889,
+          "aggregate_error_pp": 0.01673614005695545
+        },
+        "outside_selection": {
+          "coverage_percent": 80.0,
+          "effective_exposures": 148630.4,
+          "mean_people_per_snapshot": 24771.733333333334,
+          "event_exposures": 3823.2680420298257,
+          "distinct_people_with_event": 1576,
+          "capture_percent": 68.43150245265484,
+          "observed_percent": 2.572332471708228,
+          "predicted_percent": 2.456259213179072,
+          "lift": 0.8553937806581855,
+          "aggregate_error_pp": 0.11607325852915594,
+          "group_mae_pp": 0.33164457446288237,
+          "group_snapshot_mae_pp": 0.3633015907845023,
+          "worst_publishable_group_error_pp": 0.6590132069890348,
+          "publishable_group_exposure_percent": 91.2097390574203,
+          "selected_group_count": 7
+        },
+        "whole_group_brackets": [
+          {
+            "snapshot": "2024-08-25",
+            "people": 30858,
+            "lower_whole_group_coverage_percent": 6.5007453496662135,
+            "upper_whole_group_coverage_percent": 23.138246159828892
+          },
+          {
+            "snapshot": "2024-09-29",
+            "people": 30838,
+            "lower_whole_group_coverage_percent": 6.774109864452947,
+            "upper_whole_group_coverage_percent": 23.490498735326547
+          },
+          {
+            "snapshot": "2024-10-27",
+            "people": 31015,
+            "lower_whole_group_coverage_percent": 6.896662905045946,
+            "upper_whole_group_coverage_percent": 23.549895211994194
+          },
+          {
+            "snapshot": "2024-11-24",
+            "people": 30968,
+            "lower_whole_group_coverage_percent": 6.664944458796176,
+            "upper_whole_group_coverage_percent": 23.566261947817104
+          },
+          {
+            "snapshot": "2024-12-29",
+            "people": 30996,
+            "lower_whole_group_coverage_percent": 4.594141179507033,
+            "upper_whole_group_coverage_percent": 21.283391405342623
+          },
+          {
+            "snapshot": "2025-01-26",
+            "people": 31113,
+            "lower_whole_group_coverage_percent": 4.782566772731656,
+            "upper_whole_group_coverage_percent": 21.740108636261372
+          }
+        ]
+      },
+      "capture_difference_C_minus_B_pp": 3.338605455831999
+    },
+    "30": {
+      "B": {
+        "metrics": {
+          "coverage_percent": 30.0,
+          "effective_exposures": 55736.4,
+          "mean_people_per_snapshot": 9289.4,
+          "event_exposures": 2364.567264614222,
+          "distinct_people_with_event": 845,
+          "capture_percent": 42.32266448208738,
+          "observed_percent": 4.242411179434305,
+          "predicted_percent": 4.845069076385166,
+          "lift": 1.410755482736246,
+          "aggregate_error_pp": 0.602657896950861,
+          "group_mae_pp": 0.6026578969508594,
+          "group_snapshot_mae_pp": 0.7694441802886135,
+          "worst_publishable_group_error_pp": 0.9680068087582405,
+          "publishable_group_exposure_percent": 100.0,
+          "selected_group_count": 3
+        },
+        "selected_groups": [
+          {
+            "node": 6,
+            "observed_publishable": true,
+            "effective_exposures": 30840.0,
+            "mean_people_per_snapshot": 5140.0,
+            "selected_snapshots": 6,
+            "minimum_effective_people_selected_snapshot": 5037.0,
+            "distinct_people_with_event": 404,
+            "event_exposures": 1182.0,
+            "observed_percent": 3.832684824902724,
+            "predicted_percent": 4.682232282619315,
+            "error_pp": 0.8495474577165911
+          },
+          {
+            "node": 7,
+            "observed_publishable": true,
+            "effective_exposures": 20224.4,
+            "mean_people_per_snapshot": 3370.7333333333336,
+            "selected_snapshots": 6,
+            "minimum_effective_people_selected_snapshot": 3102.5000000001146,
+            "distinct_people_with_event": 380,
+            "event_exposures": 857.5672646142208,
+            "observed_percent": 4.240260599148655,
+            "predicted_percent": 4.3820403405063075,
+            "error_pp": 0.1417797413576524
+          },
+          {
+            "node": 8,
+            "observed_publishable": true,
+            "effective_exposures": 4672.0,
+            "mean_people_per_snapshot": 778.6666666666666,
+            "selected_snapshots": 6,
+            "minimum_effective_people_selected_snapshot": 485.0,
+            "distinct_people_with_event": 120,
+            "event_exposures": 325.0,
+            "observed_percent": 6.9563356164383565,
+            "predicted_percent": 7.924342425196596,
+            "error_pp": 0.9680068087582405
+          }
+        ],
+        "same_selection_other_estimator": {
+          "coverage_percent": 30.0,
+          "effective_exposures": 55736.4,
+          "mean_people_per_snapshot": 9289.4,
+          "event_exposures": 2364.567264614222,
+          "distinct_people_with_event": 845,
+          "capture_percent": 42.32266448208738,
+          "observed_percent": 4.242411179434305,
+          "predicted_percent": 4.4106522185528245,
+          "lift": 1.410755482736246,
+          "aggregate_error_pp": 0.16824103911851976,
+          "group_mae_pp": 0.5611492252873583,
+          "group_snapshot_mae_pp": 0.7170331565853894,
+          "worst_publishable_group_error_pp": 0.612207735723165,
+          "publishable_group_exposure_percent": 100.0,
+          "selected_group_count": 3
+        },
+        "individual_ranking_diagnostic": {
+          "coverage_percent": 29.999999999999996,
+          "effective_exposures": 55736.399999999994,
+          "mean_people_per_snapshot": 9289.4,
+          "event_exposures": 2661.233700086531,
+          "distinct_people_with_event": 925,
+          "capture_percent": 47.63260605130716,
+          "observed_percent": 4.774678127913772,
+          "predicted_percent": 5.087542421693587,
+          "lift": 1.5877535350435723,
+          "aggregate_error_pp": 0.3128642937798153
+        },
+        "outside_selection": {
+          "coverage_percent": 70.0,
+          "effective_exposures": 130051.6,
+          "mean_people_per_snapshot": 21675.266666666666,
+          "event_exposures": 3222.432735385778,
+          "distinct_people_with_event": 1293,
+          "capture_percent": 57.67733551791262,
+          "observed_percent": 2.4778109115041858,
+          "predicted_percent": 2.6194749066816683,
+          "lift": 0.8239619359701802,
+          "aggregate_error_pp": 0.14166399517748263,
+          "group_mae_pp": 0.1486592441219909,
+          "group_snapshot_mae_pp": 0.2047130868999471,
+          "worst_publishable_group_error_pp": 0.18475642888412241,
+          "publishable_group_exposure_percent": 94.32225362855974,
+          "selected_group_count": 6
+        },
+        "whole_group_brackets": [
+          {
+            "snapshot": "2024-08-25",
+            "people": 30858,
+            "lower_whole_group_coverage_percent": 19.414738479486683,
+            "upper_whole_group_coverage_percent": 33.16481949575475
+          },
+          {
+            "snapshot": "2024-09-29",
+            "people": 30838,
+            "lower_whole_group_coverage_percent": 19.69647837084117,
+            "upper_whole_group_coverage_percent": 33.4165639795058
+          },
+          {
+            "snapshot": "2024-10-27",
+            "people": 31015,
+            "lower_whole_group_coverage_percent": 19.99677575366758,
+            "upper_whole_group_coverage_percent": 33.56440432049009
+          },
+          {
+            "snapshot": "2024-11-24",
+            "people": 30968,
+            "lower_whole_group_coverage_percent": 19.416817359855333,
+            "upper_whole_group_coverage_percent": 33.63149057091191
+          },
+          {
+            "snapshot": "2024-12-29",
+            "people": 30996,
+            "lower_whole_group_coverage_percent": 18.105562008001034,
+            "upper_whole_group_coverage_percent": 33.23009420570396
+          },
+          {
+            "snapshot": "2025-01-26",
+            "people": 31113,
+            "lower_whole_group_coverage_percent": 18.063189020666602,
+            "upper_whole_group_coverage_percent": 33.14691608009513
+          }
+        ],
+        "increment_above_20_percent": {
+          "coverage_percent": 9.999999999999998,
+          "effective_exposures": 18578.799999999996,
+          "mean_people_per_snapshot": 3096.466666666666,
+          "event_exposures": 787.3631934613741,
+          "distinct_people_with_event": 380,
+          "capture_percent": 14.092772390574083,
+          "observed_percent": 4.2379658183594975,
+          "predicted_percent": 4.364168589652677,
+          "lift": 1.4092772390574089,
+          "aggregate_error_pp": 0.12620277129317958,
+          "group_mae_pp": 0.12620277129317972,
+          "group_snapshot_mae_pp": 0.23851104714755525,
+          "worst_publishable_group_error_pp": 0.12620277129317972,
+          "publishable_group_exposure_percent": 100.0,
+          "selected_group_count": 1
+        }
+      },
+      "C": {
+        "metrics": {
+          "coverage_percent": 29.999999999999996,
+          "effective_exposures": 55736.399999999994,
+          "mean_people_per_snapshot": 9289.4,
+          "event_exposures": 2430.845075206138,
+          "distinct_people_with_event": 845,
+          "capture_percent": 43.5089506927893,
+          "observed_percent": 4.361324152988242,
+          "predicted_percent": 4.391649358132256,
+          "lift": 1.4502983564263103,
+          "aggregate_error_pp": 0.030325205144014072,
+          "group_mae_pp": 0.4966364683184943,
+          "group_snapshot_mae_pp": 0.5089728282218883,
+          "worst_publishable_group_error_pp": 0.6528609192256555,
+          "publishable_group_exposure_percent": 100.0,
+          "selected_group_count": 3
+        },
+        "selected_groups": [
+          {
+            "node": 6,
+            "observed_publishable": true,
+            "effective_exposures": 31137.0,
+            "mean_people_per_snapshot": 5189.5,
+            "selected_snapshots": 6,
+            "minimum_effective_people_selected_snapshot": 5134.0,
+            "distinct_people_with_event": 489,
+            "event_exposures": 1447.0,
+            "observed_percent": 4.6472042907152264,
+            "predicted_percent": 4.229846949147348,
+            "error_pp": 0.41735734156787796
+          },
+          {
+            "node": 7,
+            "observed_publishable": true,
+            "effective_exposures": 13389.399999999998,
+            "mean_people_per_snapshot": 2231.566666666666,
+            "selected_snapshots": 6,
+            "minimum_effective_people_selected_snapshot": 1992.3999999999887,
+            "distinct_people_with_event": 238,
+            "event_exposures": 430.8450752061394,
+            "observed_percent": 3.2178071848338203,
+            "predicted_percent": 3.8706681040594755,
+            "error_pp": 0.6528609192256555
+          },
+          {
+            "node": 8,
+            "observed_publishable": true,
+            "effective_exposures": 11210.0,
+            "mean_people_per_snapshot": 1868.3333333333333,
+            "selected_snapshots": 6,
+            "minimum_effective_people_selected_snapshot": 1424.0,
+            "distinct_people_with_event": 197,
+            "event_exposures": 553.0,
+            "observed_percent": 4.933095450490633,
+            "predicted_percent": 5.463341419849056,
+            "error_pp": 0.5302459693584225
+          }
+        ],
+        "same_selection_other_estimator": {
+          "coverage_percent": 29.999999999999996,
+          "effective_exposures": 55736.399999999994,
+          "mean_people_per_snapshot": 9289.4,
+          "event_exposures": 2430.845075206138,
+          "distinct_people_with_event": 845,
+          "capture_percent": 43.5089506927893,
+          "observed_percent": 4.361324152988242,
+          "predicted_percent": 4.880631863287248,
+          "lift": 1.4502983564263103,
+          "aggregate_error_pp": 0.5193077102990065,
+          "group_mae_pp": 0.5193077102990208,
+          "group_snapshot_mae_pp": 0.5194369242654765,
+          "worst_publishable_group_error_pp": 0.8692483894223749,
+          "publishable_group_exposure_percent": 100.0,
+          "selected_group_count": 3
+        },
+        "individual_ranking_diagnostic": {
+          "coverage_percent": 29.999999999999996,
+          "effective_exposures": 55736.399999999994,
+          "mean_people_per_snapshot": 9289.4,
+          "event_exposures": 2617.400621372509,
+          "distinct_people_with_event": 887,
+          "capture_percent": 46.848051214829226,
+          "observed_percent": 4.696034586683942,
+          "predicted_percent": 4.6616893249935965,
+          "lift": 1.5616017071609745,
+          "aggregate_error_pp": 0.034345261690346685
+        },
+        "outside_selection": {
+          "coverage_percent": 70.0,
+          "effective_exposures": 130051.6,
+          "mean_people_per_snapshot": 21675.266666666666,
+          "event_exposures": 3156.154924793862,
+          "distinct_people_with_event": 1151,
+          "capture_percent": 56.49104930721071,
+          "observed_percent": 2.426848208552499,
+          "predicted_percent": 2.241620658535987,
+          "lift": 0.80701499010301,
+          "aggregate_error_pp": 0.18522755001651214,
+          "group_mae_pp": 0.29716480362967146,
+          "group_snapshot_mae_pp": 0.3333442508543804,
+          "worst_publishable_group_error_pp": 0.6722131303584133,
+          "publishable_group_exposure_percent": 89.9539874941946,
+          "selected_group_count": 6
+        },
+        "whole_group_brackets": [
+          {
+            "snapshot": "2024-08-25",
+            "people": 30858,
+            "lower_whole_group_coverage_percent": 23.138246159828892,
+            "upper_whole_group_coverage_percent": 33.16481949575475
+          },
+          {
+            "snapshot": "2024-09-29",
+            "people": 30838,
+            "lower_whole_group_coverage_percent": 23.490498735326547,
+            "upper_whole_group_coverage_percent": 33.4165639795058
+          },
+          {
+            "snapshot": "2024-10-27",
+            "people": 31015,
+            "lower_whole_group_coverage_percent": 23.549895211994194,
+            "upper_whole_group_coverage_percent": 33.56440432049009
+          },
+          {
+            "snapshot": "2024-11-24",
+            "people": 30968,
+            "lower_whole_group_coverage_percent": 23.566261947817104,
+            "upper_whole_group_coverage_percent": 33.63149057091191
+          },
+          {
+            "snapshot": "2024-12-29",
+            "people": 30996,
+            "lower_whole_group_coverage_percent": 21.283391405342623,
+            "upper_whole_group_coverage_percent": 33.23009420570396
+          },
+          {
+            "snapshot": "2025-01-26",
+            "people": 31113,
+            "lower_whole_group_coverage_percent": 21.740108636261372,
+            "upper_whole_group_coverage_percent": 33.14691608009513
+          }
+        ],
+        "increment_above_20_percent": {
+          "coverage_percent": 9.999999999999998,
+          "effective_exposures": 18578.799999999996,
+          "mean_people_per_snapshot": 3096.466666666666,
+          "event_exposures": 667.1131172359604,
+          "distinct_people_with_event": 698,
+          "capture_percent": 11.940453145444073,
+          "observed_percent": 3.5907223137983104,
+          "predicted_percent": 3.958729095680717,
+          "lift": 1.1940453145444077,
+          "aggregate_error_pp": 0.36800678188240665,
+          "group_mae_pp": 0.5730029702953569,
+          "group_snapshot_mae_pp": 0.5730029702953544,
+          "worst_publishable_group_error_pp": 0.6528609192256555,
+          "publishable_group_exposure_percent": 100.0,
+          "selected_group_count": 2
+        }
+      },
+      "capture_difference_C_minus_B_pp": 1.1862862107019154
+    },
+    "40": {
+      "B": {
+        "metrics": {
+          "coverage_percent": 40.0,
+          "effective_exposures": 74315.2,
+          "mean_people_per_snapshot": 12385.866666666667,
+          "event_exposures": 2979.0087652745824,
+          "distinct_people_with_event": 1512,
+          "capture_percent": 53.320364511805664,
+          "observed_percent": 4.0086129960957955,
+          "predicted_percent": 4.501638537820265,
+          "lift": 1.3330091127951416,
+          "aggregate_error_pp": 0.4930255417244699,
+          "group_mae_pp": 0.49302554172447943,
+          "group_snapshot_mae_pp": 0.6298217607639703,
+          "worst_publishable_group_error_pp": 0.9680068087582405,
+          "publishable_group_exposure_percent": 100.00000000000001,
+          "selected_group_count": 4
+        },
+        "selected_groups": [
+          {
+            "node": 5,
+            "observed_publishable": true,
+            "effective_exposures": 12338.200000000004,
+            "mean_people_per_snapshot": 2056.3666666666672,
+            "selected_snapshots": 6,
+            "minimum_effective_people_selected_snapshot": 1972.2000000004327,
+            "distinct_people_with_event": 752,
+            "event_exposures": 350.0087652745798,
+            "observed_percent": 2.8367895258188365,
+            "predicted_percent": 3.021906669908267,
+            "error_pp": 0.18511714408943064
+          },
+          {
+            "node": 6,
+            "observed_publishable": true,
+            "effective_exposures": 30840.0,
+            "mean_people_per_snapshot": 5140.0,
+            "selected_snapshots": 6,
+            "minimum_effective_people_selected_snapshot": 5037.0,
+            "distinct_people_with_event": 404,
+            "event_exposures": 1182.0,
+            "observed_percent": 3.832684824902724,
+            "predicted_percent": 4.682232282619315,
+            "error_pp": 0.8495474577165911
+          },
+          {
+            "node": 7,
+            "observed_publishable": true,
+            "effective_exposures": 26465.0,
+            "mean_people_per_snapshot": 4410.833333333333,
+            "selected_snapshots": 6,
+            "minimum_effective_people_selected_snapshot": 4208.0,
+            "distinct_people_with_event": 380,
+            "event_exposures": 1122.0,
+            "observed_percent": 4.239561685244663,
+            "predicted_percent": 4.376826298305711,
+            "error_pp": 0.13726461306104842
+          },
+          {
+            "node": 8,
+            "observed_publishable": true,
+            "effective_exposures": 4672.0,
+            "mean_people_per_snapshot": 778.6666666666666,
+            "selected_snapshots": 6,
+            "minimum_effective_people_selected_snapshot": 485.0,
+            "distinct_people_with_event": 120,
+            "event_exposures": 325.0,
+            "observed_percent": 6.9563356164383565,
+            "predicted_percent": 7.924342425196596,
+            "error_pp": 0.9680068087582405
+          }
+        ],
+        "same_selection_other_estimator": {
+          "coverage_percent": 40.0,
+          "effective_exposures": 74315.2,
+          "mean_people_per_snapshot": 12385.866666666667,
+          "event_exposures": 2979.0087652745824,
+          "distinct_people_with_event": 1512,
+          "capture_percent": 53.320364511805664,
+          "observed_percent": 4.0086129960957955,
+          "predicted_percent": 4.040390821747293,
+          "lift": 1.3330091127951416,
+          "aggregate_error_pp": 0.031777825651497366,
+          "group_mae_pp": 0.5152648726529255,
+          "group_snapshot_mae_pp": 0.635211032803804,
+          "worst_publishable_group_error_pp": 0.612207735723165,
+          "publishable_group_exposure_percent": 100.00000000000001,
+          "selected_group_count": 4
+        },
+        "individual_ranking_diagnostic": {
+          "coverage_percent": 40.00000000000001,
+          "effective_exposures": 74315.20000000001,
+          "mean_people_per_snapshot": 12385.866666666669,
+          "event_exposures": 3216.2547326732424,
+          "distinct_people_with_event": 1062,
+          "capture_percent": 57.56675734156511,
+          "observed_percent": 4.327855852737047,
+          "predicted_percent": 4.7160589415597425,
+          "lift": 1.4391689335391273,
+          "aggregate_error_pp": 0.3882030888226959
+        },
+        "outside_selection": {
+          "coverage_percent": 60.0,
+          "effective_exposures": 111472.8,
+          "mean_people_per_snapshot": 18578.8,
+          "event_exposures": 2607.9912347254176,
+          "distinct_people_with_event": 946,
+          "capture_percent": 46.679635488194336,
+          "observed_percent": 2.3395763224081727,
+          "predicted_percent": 2.4774962374409837,
+          "lift": 0.7779939248032389,
+          "aggregate_error_pp": 0.1379199150328112,
+          "group_mae_pp": 0.14608103880142437,
+          "group_snapshot_mae_pp": 0.20367285101826632,
+          "worst_publishable_group_error_pp": 0.18469001902350352,
+          "publishable_group_exposure_percent": 93.37596256665303,
+          "selected_group_count": 5
+        },
+        "whole_group_brackets": [
+          {
+            "snapshot": "2024-08-25",
+            "people": 30858,
+            "lower_whole_group_coverage_percent": 33.16481949575475,
+            "upper_whole_group_coverage_percent": 76.14232937973945
+          },
+          {
+            "snapshot": "2024-09-29",
+            "people": 30838,
+            "lower_whole_group_coverage_percent": 33.4165639795058,
+            "upper_whole_group_coverage_percent": 75.96471885336274
+          },
+          {
+            "snapshot": "2024-10-27",
+            "people": 31015,
+            "lower_whole_group_coverage_percent": 33.56440432049009,
+            "upper_whole_group_coverage_percent": 75.90198291149444
+          },
+          {
+            "snapshot": "2024-11-24",
+            "people": 30968,
+            "lower_whole_group_coverage_percent": 33.63149057091191,
+            "upper_whole_group_coverage_percent": 76.10113665719453
+          },
+          {
+            "snapshot": "2024-12-29",
+            "people": 30996,
+            "lower_whole_group_coverage_percent": 33.23009420570396,
+            "upper_whole_group_coverage_percent": 76.17757129952251
+          },
+          {
+            "snapshot": "2025-01-26",
+            "people": 31113,
+            "lower_whole_group_coverage_percent": 33.14691608009513,
+            "upper_whole_group_coverage_percent": 76.14180567608395
+          }
+        ],
+        "increment_above_20_percent": {
+          "coverage_percent": 20.000000000000004,
+          "effective_exposures": 37157.600000000006,
+          "mean_people_per_snapshot": 6192.933333333334,
+          "event_exposures": 1401.8046941217367,
+          "distinct_people_with_event": 1099,
+          "capture_percent": 25.090472420292404,
+          "observed_percent": 3.772592132219886,
+          "predicted_percent": 3.9177577558891334,
+          "lift": 1.25452362101462,
+          "aggregate_error_pp": 0.14516562366924737,
+          "group_mae_pp": 0.1451656236692593,
+          "group_snapshot_mae_pp": 0.22473277466879835,
+          "worst_publishable_group_error_pp": 0.18511714408943064,
+          "publishable_group_exposure_percent": 99.99999999999999,
+          "selected_group_count": 2
+        }
+      },
+      "C": {
+        "metrics": {
+          "coverage_percent": 40.0,
+          "effective_exposures": 74315.2,
+          "mean_people_per_snapshot": 12385.866666666667,
+          "event_exposures": 2979.0087652745824,
+          "distinct_people_with_event": 1512,
+          "capture_percent": 53.320364511805664,
+          "observed_percent": 4.0086129960957955,
+          "predicted_percent": 4.040390821747293,
+          "lift": 1.3330091127951416,
+          "aggregate_error_pp": 0.031777825651497366,
+          "group_mae_pp": 0.476341282409926,
+          "group_snapshot_mae_pp": 0.48862676401482313,
+          "worst_publishable_group_error_pp": 0.6590132069890348,
+          "publishable_group_exposure_percent": 100.00000000000001,
+          "selected_group_count": 4
+        },
+        "selected_groups": [
+          {
+            "node": 5,
+            "observed_publishable": true,
+            "effective_exposures": 12338.200000000004,
+            "mean_people_per_snapshot": 2056.3666666666672,
+            "selected_snapshots": 6,
+            "minimum_effective_people_selected_snapshot": 1972.2000000004327,
+            "distinct_people_with_event": 752,
+            "event_exposures": 350.0087652745798,
+            "observed_percent": 2.8367895258188365,
+            "predicted_percent": 2.5512004158637014,
+            "error_pp": 0.2855891099551351
+          },
+          {
+            "node": 6,
+            "observed_publishable": true,
+            "effective_exposures": 31137.0,
+            "mean_people_per_snapshot": 5189.5,
+            "selected_snapshots": 6,
+            "minimum_effective_people_selected_snapshot": 5134.0,
+            "distinct_people_with_event": 489,
+            "event_exposures": 1447.0,
+            "observed_percent": 4.6472042907152264,
+            "predicted_percent": 4.229846949147348,
+            "error_pp": 0.41735734156787796
+          },
+          {
+            "node": 7,
+            "observed_publishable": true,
+            "effective_exposures": 19630.0,
+            "mean_people_per_snapshot": 3271.6666666666665,
+            "selected_snapshots": 6,
+            "minimum_effective_people_selected_snapshot": 3061.0,
+            "distinct_people_with_event": 238,
+            "event_exposures": 629.0,
+            "observed_percent": 3.204279164544065,
+            "predicted_percent": 3.8632923715331002,
+            "error_pp": 0.6590132069890348
+          },
+          {
+            "node": 8,
+            "observed_publishable": true,
+            "effective_exposures": 11210.0,
+            "mean_people_per_snapshot": 1868.3333333333333,
+            "selected_snapshots": 6,
+            "minimum_effective_people_selected_snapshot": 1424.0,
+            "distinct_people_with_event": 197,
+            "event_exposures": 553.0,
+            "observed_percent": 4.933095450490633,
+            "predicted_percent": 5.463341419849056,
+            "error_pp": 0.5302459693584225
+          }
+        ],
+        "same_selection_other_estimator": {
+          "coverage_percent": 40.0,
+          "effective_exposures": 74315.2,
+          "mean_people_per_snapshot": 12385.866666666667,
+          "event_exposures": 2979.0087652745824,
+          "distinct_people_with_event": 1512,
+          "capture_percent": 53.320364511805664,
+          "observed_percent": 4.0086129960957955,
+          "predicted_percent": 4.501638537820265,
+          "lift": 1.3330091127951416,
+          "aggregate_error_pp": 0.4930255417244699,
+          "group_mae_pp": 0.4930255417244726,
+          "group_snapshot_mae_pp": 0.495646634876044,
+          "worst_publishable_group_error_pp": 0.8685507647570001,
+          "publishable_group_exposure_percent": 100.00000000000001,
+          "selected_group_count": 4
+        },
+        "individual_ranking_diagnostic": {
+          "coverage_percent": 40.00000000000001,
+          "effective_exposures": 74315.20000000001,
+          "mean_people_per_snapshot": 12385.866666666669,
+          "event_exposures": 3253.824617976482,
+          "distinct_people_with_event": 1075,
+          "capture_percent": 58.23920919950746,
+          "observed_percent": 4.3784106319790315,
+          "predicted_percent": 4.300444646606166,
+          "lift": 1.4559802299876863,
+          "aggregate_error_pp": 0.07796598537286592
+        },
+        "outside_selection": {
+          "coverage_percent": 60.0,
+          "effective_exposures": 111472.8,
+          "mean_people_per_snapshot": 18578.8,
+          "event_exposures": 2607.9912347254176,
+          "distinct_people_with_event": 946,
+          "capture_percent": 46.679635488194336,
+          "observed_percent": 2.3395763224081727,
+          "predicted_percent": 2.1174548995266123,
+          "lift": 0.7779939248032389,
+          "aggregate_error_pp": 0.22212142288156012,
+          "group_mae_pp": 0.2774496501205915,
+          "group_snapshot_mae_pp": 0.3176368640978408,
+          "worst_publishable_group_error_pp": 0.2860001728165948,
+          "publishable_group_exposure_percent": 88.27965207656038,
+          "selected_group_count": 5
+        },
+        "whole_group_brackets": [
+          {
+            "snapshot": "2024-08-25",
+            "people": 30858,
+            "lower_whole_group_coverage_percent": 33.16481949575475,
+            "upper_whole_group_coverage_percent": 76.14232937973945
+          },
+          {
+            "snapshot": "2024-09-29",
+            "people": 30838,
+            "lower_whole_group_coverage_percent": 33.4165639795058,
+            "upper_whole_group_coverage_percent": 75.96471885336274
+          },
+          {
+            "snapshot": "2024-10-27",
+            "people": 31015,
+            "lower_whole_group_coverage_percent": 33.56440432049009,
+            "upper_whole_group_coverage_percent": 75.90198291149444
+          },
+          {
+            "snapshot": "2024-11-24",
+            "people": 30968,
+            "lower_whole_group_coverage_percent": 33.63149057091191,
+            "upper_whole_group_coverage_percent": 76.10113665719453
+          },
+          {
+            "snapshot": "2024-12-29",
+            "people": 30996,
+            "lower_whole_group_coverage_percent": 33.23009420570396,
+            "upper_whole_group_coverage_percent": 76.17757129952251
+          },
+          {
+            "snapshot": "2025-01-26",
+            "people": 31113,
+            "lower_whole_group_coverage_percent": 33.14691608009513,
+            "upper_whole_group_coverage_percent": 76.14180567608395
+          }
+        ],
+        "increment_above_20_percent": {
+          "coverage_percent": 20.0,
+          "effective_exposures": 37157.6,
+          "mean_people_per_snapshot": 6192.933333333333,
+          "event_exposures": 1215.276807304403,
+          "distinct_people_with_event": 1382,
+          "capture_percent": 21.751866964460408,
+          "observed_percent": 3.2706009196083787,
+          "predicted_percent": 3.4726721541364913,
+          "lift": 1.0875933482230205,
+          "aggregate_error_pp": 0.2020712345281124,
+          "group_mae_pp": 0.49422934748978903,
+          "group_snapshot_mae_pp": 0.500295770844491,
+          "worst_publishable_group_error_pp": 0.6590132069890348,
+          "publishable_group_exposure_percent": 100.00000000000001,
+          "selected_group_count": 3
+        }
+      },
+      "capture_difference_C_minus_B_pp": 0.0
+    }
+  },
+  "stability_from_previous": {
+    "20": {
+      "B": 84.53296601783234,
+      "C": 85.17297386677144
+    },
+    "30": {
+      "B": 97.52115245717063,
+      "C": 97.45300564174876
+    },
+    "40": {
+      "B": 86.79684538022147,
+      "C": 95.63039100278162
+    }
+  },
+  "elapsed_seconds": 21.109979700064287
+}

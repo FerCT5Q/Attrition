@@ -1,0 +1,93 @@
+{
+  "features": [
+    "qv_Q4",
+    "qv_Q5",
+    "qv_Q7"
+  ],
+  "all_rows": {
+    "rows": 355395,
+    "columns": 12,
+    "rank": 8,
+    "rank_deficiency": 4,
+    "constant_columns": 0,
+    "condition_number": null,
+    "condition_status": "singular",
+    "vif_max": null,
+    "vif_status": "not_identifiable",
+    "vif_by_column": null,
+    "cross_feature_pairs_abs_ge_0_8": [
+      {
+        "left": "qv_Q4=different_employment_episode",
+        "right": "qv_Q5=different_employment_episode",
+        "correlation": 1.0
+      },
+      {
+        "left": "qv_Q4=different_employment_episode",
+        "right": "qv_Q7=different_employment_episode",
+        "correlation": 1.0
+      },
+      {
+        "left": "qv_Q4=no_linked_row",
+        "right": "qv_Q5=no_linked_row",
+        "correlation": 1.0
+      },
+      {
+        "left": "qv_Q4=no_linked_row",
+        "right": "qv_Q7=no_linked_row",
+        "correlation": 1.0
+      },
+      {
+        "left": "qv_Q5=different_employment_episode",
+        "right": "qv_Q7=different_employment_episode",
+        "correlation": 1.0
+      },
+      {
+        "left": "qv_Q5=no_linked_row",
+        "right": "qv_Q7=no_linked_row",
+        "correlation": 1.0
+      },
+      {
+        "left": "qv_Q5=missing",
+        "right": "qv_Q7=missing",
+        "correlation": 0.8352888045802762
+      }
+    ],
+    "limitation": "Diagnóstico de columnas indicadoras QVoice; no es importancia ni causalidad."
+  },
+  "complete_person_wave": {
+    "rows": 21902,
+    "columns": 3,
+    "rank": 3,
+    "rank_deficiency": 0,
+    "constant_columns": 0,
+    "condition_number": 1.98498180385552,
+    "condition_status": "finite",
+    "vif_max": 1.4773339691128848,
+    "vif_status": "identifiable",
+    "vif_by_column": {
+      "qv_Q4=v0": 1.443271754591144,
+      "qv_Q5=v0": 1.4773339691128848,
+      "qv_Q7=v0": 1.2391921127946428
+    },
+    "cross_feature_pairs_abs_ge_0_8": [],
+    "limitation": "Diagnóstico de columnas indicadoras QVoice; no es importancia ni causalidad."
+  },
+  "raw_correlations": [
+    {
+      "left": "qv_Q4",
+      "right": "qv_Q5",
+      "correlation": 0.5253788536468702
+    },
+    {
+      "left": "qv_Q4",
+      "right": "qv_Q7",
+      "correlation": 0.36998997671312517
+    },
+    {
+      "left": "qv_Q5",
+      "right": "qv_Q7",
+      "correlation": 0.3959707771314608
+    }
+  ],
+  "complete_person_wave_count": 21902
+}

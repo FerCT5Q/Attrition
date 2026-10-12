@@ -1,0 +1,34 @@
+{
+  "executed_at_utc": "2026-10-12 02:58:08 UTC",
+  "reporting_mode": "presentation",
+  "employee_data_used": false,
+  "tests": [
+    {
+      "command": ".venv\\Scripts\\python.exe -X utf8 -B -m unittest discover -s tests -p test_b_incremental.py",
+      "tests": 15,
+      "outcome": "pass"
+    },
+    {
+      "command": ".venv\\Scripts\\python.exe -X utf8 -B -m unittest discover -s tests -p test_engineering_model_c.py",
+      "tests": 17,
+      "outcome": "pass"
+    },
+    {
+      "command": ".venv\\Scripts\\python.exe -X utf8 -B -m unittest discover -s tests -p test_engineering_model_d.py",
+      "tests": 9,
+      "outcome": "pass"
+    },
+    {
+      "command": ".venv\\Scripts\\python.exe -X utf8 -B -m unittest discover -s .codex/skills/evaluate-attrition-variable/tests -p test_traceable_assessment.py",
+      "tests": 53,
+      "outcome": "pass",
+      "environment": "Fuera del sandbox tras bloqueo de Windows al crear el archivo protegido del kernel Jupyter."
+    }
+  ],
+  "total_tests": 94,
+  "regression": {
+    "before_fix": "Fallaron las dos pruebas de combinaciones en distinto orden.",
+    "after_fix": "Pasan ambas, sin cambiar los umbrales de reproducción."
+  },
+  "scope": "B obligatorio, particiones temporales, compresión exacta, exportación RH/QVoice, consultas read-only y contratos de assessment."
+}

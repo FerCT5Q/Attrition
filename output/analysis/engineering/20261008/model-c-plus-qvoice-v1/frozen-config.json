@@ -1,0 +1,78 @@
+{
+  "run_id": "engineering-c-qvoice-20261008-v1",
+  "output": "output/analysis/engineering/20261008/model-c-plus-qvoice-v1",
+  "source_c": "output/analysis/engineering/20261008/model-c-v2",
+  "source_grouping": "output/analysis/engineering/20261008/c-group-selection-v1",
+  "source_qvoice": "output/analysis/engineering/20261008/qvoice-model-b-calibrated-v1",
+  "source_qvoice_config": "config/qvoice_model_calibrated_20261008.yaml",
+  "authorization": "config/attrition_model_in_memory_training_authorization_20261001.json",
+  "query": "queries/profiles/engineering_model_c_qvoice_person_month_20261008.sql",
+  "knowledge_boundary": "2026-09-07",
+  "training_start": "2025-01-01",
+  "reporting_mode": "presentation",
+  "periods": [
+    {
+      "id": "aug_dec_2025",
+      "origin": "2025-08-01",
+      "end": "2025-12-31",
+      "snapshots": 5
+    },
+    {
+      "id": "jan_feb_2026",
+      "origin": "2026-01-01",
+      "end": "2026-02-28",
+      "snapshots": 2
+    }
+  ],
+  "search": {
+    "method": "255 subconjuntos de los ocho bloques existentes; cinco PCA como diagnóstico; tres penalizaciones",
+    "l2_grid": [
+      0.1,
+      1,
+      10
+    ],
+    "selection_intervals": 2,
+    "metric": "monthly_brier",
+    "tie_break": "Menos parámetros, mayor penalización, identificador estable",
+    "final_refit": "Corrección Q con todas las etiquetas mensuales maduras antes del origen; C archivado como offset fijo."
+  },
+  "calibration": {
+    "method": "Escalar de R6 con predicciones de modelos auxiliares anteriores al origen de cada foto",
+    "minimum_origins": 3,
+    "maximum_origins": 6,
+    "log_multiplier_bounds": [
+      -1.5,
+      1.5
+    ],
+    "short_history": "Identidad si faltan tres orígenes con etiquetas R6 maduras",
+    "scope": "Diagnóstico separado. La selección de columnas y L2 del corte se reutiliza retrospectivamente en auxiliares; no es validación anidada completa de la calibración."
+  },
+  "groups": [
+    "antiguedad",
+    "salidas_equipo",
+    "nivel"
+  ],
+  "minimum_group_people_each_snapshot": 300,
+  "minimum_public_people_each_snapshot": 30,
+  "minimum_distinct_events": 30,
+  "capacity_fractions": [
+    0.2,
+    0.3,
+    0.4
+  ],
+  "primary_capacity_fraction": 0.3,
+  "preference": {
+    "positive_capture_gain_both_periods": true,
+    "positive_capture_mean_ci95": true,
+    "maximum_group_error_worsening_pp": 0.1,
+    "maximum_relative_log_loss_worsening": 0.005,
+    "maximum_relative_brier_worsening": 0.005,
+    "incremental_vs_availability": "Captura media positiva y pérdida media R6 no mayor; reportar comparación pareada"
+  },
+  "bootstrap_repetitions": 500,
+  "seed": 20261008,
+  "hazard_base_refits": 0,
+  "qvoice_included": true,
+  "employee_level_rows_persisted": false,
+  "individual_scores_published": false
+}

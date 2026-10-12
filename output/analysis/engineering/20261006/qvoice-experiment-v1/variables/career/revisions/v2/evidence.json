@@ -1,0 +1,1003 @@
+{
+  "candidate": "career",
+  "variable": "Career goals — respuesta binaria",
+  "created_at": "2026-10-06T19:10:21+00:00",
+  "reporting_mode": "presentation",
+  "knowledge_boundary": "2026-09-07",
+  "waves": [
+    {
+      "year": 2024,
+      "availability": {
+        "date": null,
+        "status": "pending",
+        "evidence_reference": null,
+        "explanation": "Falta una fuente que acredite la fecha de publicación o disponibilidad de resultados."
+      },
+      "source_quality": {
+        "source_rows": 36807,
+        "missing_key_rows": 1,
+        "invalid_key_rows": 0,
+        "duplicate_rows": 0,
+        "conflicting_rows": 0,
+        "excluded_response_type_rows": 0,
+        "distinct_duplicate_keys": 0,
+        "unique_usable_keys": 36806
+      },
+      "raw_summary": {
+        "participants": 36806,
+        "complete_primary": 32573,
+        "mean_favorable_percent": null,
+        "groups": [
+          {
+            "feature": "career",
+            "response": "Sin respuesta",
+            "people": 4233,
+            "events": null,
+            "attrition_percent": null,
+            "cohort_published": true,
+            "rate_published": false,
+            "suppression": "Cohorte menor de 30 o menos de 30 eventos; tasa no publicada."
+          },
+          {
+            "feature": "career",
+            "response": "No favorable",
+            "people": 8398,
+            "events": null,
+            "attrition_percent": null,
+            "cohort_published": true,
+            "rate_published": false,
+            "suppression": "Cohorte menor de 30 o menos de 30 eventos; tasa no publicada."
+          },
+          {
+            "feature": "career",
+            "response": "Favorable",
+            "people": 24175,
+            "events": null,
+            "attrition_percent": null,
+            "cohort_published": true,
+            "rate_published": false,
+            "suppression": "Cohorte menor de 30 o menos de 30 eventos; tasa no publicada."
+          }
+        ]
+      },
+      "component_states_raw": {
+        "Válida": 32573,
+        "Sin respuesta": 4233,
+        "status_reconciliation_difference": 0
+      },
+      "scopes": {
+        "Engineering": {
+          "eligible_people": 29339,
+          "linked_people": 24526,
+          "without_linked_row": 4813,
+          "source_not_in_population": 12280,
+          "with_any_primary": 22973,
+          "complete_primary": 22973,
+          "complete_full": 22973,
+          "coverage_percent": 78.30191894747605,
+          "complete_primary_percent": 78.30191894747605,
+          "groups": [
+            {
+              "feature": "career",
+              "response": "Sin respuesta",
+              "people": 1553,
+              "events": 135,
+              "attrition_percent": 8.692852543464262,
+              "cohort_published": true,
+              "rate_published": true,
+              "suppression": null
+            },
+            {
+              "feature": "career",
+              "response": "No favorable",
+              "people": 6269,
+              "events": 618,
+              "attrition_percent": 9.858031583984687,
+              "cohort_published": true,
+              "rate_published": true,
+              "suppression": null
+            },
+            {
+              "feature": "career",
+              "response": "Favorable",
+              "people": 16704,
+              "events": 614,
+              "attrition_percent": 3.6757662835249043,
+              "cohort_published": true,
+              "rate_published": true,
+              "suppression": null
+            }
+          ],
+          "baseline_snapshot": "2023-12-24",
+          "outcome_start": "2024-01-01",
+          "outcome_end": "2025-01-01",
+          "window_type": "anual descriptiva"
+        },
+        "workforce": {
+          "eligible_people": 40144,
+          "linked_people": 33271,
+          "without_linked_row": 6873,
+          "source_not_in_population": 3535,
+          "with_any_primary": 30218,
+          "complete_primary": 30218,
+          "complete_full": 30218,
+          "coverage_percent": 75.27401355121562,
+          "complete_primary_percent": 75.27401355121562,
+          "groups": [
+            {
+              "feature": "career",
+              "response": "Sin respuesta",
+              "people": 3053,
+              "events": 193,
+              "attrition_percent": 6.321650835244022,
+              "cohort_published": true,
+              "rate_published": true,
+              "suppression": null
+            },
+            {
+              "feature": "career",
+              "response": "No favorable",
+              "people": 8117,
+              "events": 749,
+              "attrition_percent": 9.227547123321424,
+              "cohort_published": true,
+              "rate_published": true,
+              "suppression": null
+            },
+            {
+              "feature": "career",
+              "response": "Favorable",
+              "people": 22101,
+              "events": 754,
+              "attrition_percent": 3.4116103343740103,
+              "cohort_published": true,
+              "rate_published": true,
+              "suppression": null
+            }
+          ],
+          "baseline_snapshot": "2023-12-24",
+          "outcome_start": "2024-01-01",
+          "outcome_end": "2025-01-01",
+          "window_type": "anual descriptiva"
+        }
+      },
+      "component_headers": {
+        "career": {
+          "binary_present": true,
+          "scale_present": false
+        }
+      },
+      "historical_reconciliation": {
+        "status": "requires_review",
+        "checks": [
+          {
+            "check": "baseline_snapshot",
+            "observed": "2023-12-24",
+            "expected": "2023-12-24",
+            "tolerance": 0,
+            "pass": true
+          },
+          {
+            "check": "outcome_start",
+            "observed": "2024-01-01",
+            "expected": "2024-01-01",
+            "tolerance": 0,
+            "pass": true
+          },
+          {
+            "check": "outcome_end",
+            "observed": "2025-01-01",
+            "expected": "2025-01-01",
+            "tolerance": 0,
+            "pass": true
+          },
+          {
+            "check": "career/Favorable/source",
+            "observed": 24175,
+            "expected": 24175,
+            "tolerance": 0,
+            "pass": true
+          },
+          {
+            "check": "career/Favorable/linked",
+            "observed": 22101,
+            "expected": 22102,
+            "tolerance": 0,
+            "pass": false
+          },
+          {
+            "check": "career/Favorable/events",
+            "observed": 754,
+            "expected": 754,
+            "tolerance": 0,
+            "pass": true
+          },
+          {
+            "check": "career/Favorable/rate",
+            "observed": 3.4116103343740103,
+            "expected": 3.4115,
+            "tolerance": 5.1e-05,
+            "pass": false
+          },
+          {
+            "check": "career/No favorable/source",
+            "observed": 8398,
+            "expected": 8398,
+            "tolerance": 0,
+            "pass": true
+          },
+          {
+            "check": "career/No favorable/linked",
+            "observed": 8117,
+            "expected": 8117,
+            "tolerance": 0,
+            "pass": true
+          },
+          {
+            "check": "career/No favorable/events",
+            "observed": 749,
+            "expected": 749,
+            "tolerance": 0,
+            "pass": true
+          },
+          {
+            "check": "career/No favorable/rate",
+            "observed": 9.227547123321424,
+            "expected": 9.2275,
+            "tolerance": 5.1e-05,
+            "pass": true
+          }
+        ],
+        "reference": "output\\distribution\\json\\qvoice-favorable-unfavorable-question-attrition-evidence-20260923.json",
+        "reference_sha256": "d9803920e82c780b63b8a9ef2f8af49d431909877cec8983356be31346c8fbc1",
+        "note": "2024/2025: mismos denominadores y ventanas anuales. 2026: sólo se concilian fuente y enlace; el playbook termina el 27 de septiembre y esta ejecución respeta el corte conocido al 7 de septiembre."
+      }
+    },
+    {
+      "year": 2025,
+      "availability": {
+        "date": null,
+        "status": "pending",
+        "evidence_reference": null,
+        "explanation": "Falta una fuente que acredite la fecha de publicación o disponibilidad de resultados."
+      },
+      "source_quality": {
+        "source_rows": 37837,
+        "missing_key_rows": 0,
+        "invalid_key_rows": 0,
+        "duplicate_rows": 0,
+        "conflicting_rows": 0,
+        "excluded_response_type_rows": 0,
+        "distinct_duplicate_keys": 0,
+        "unique_usable_keys": 37837
+      },
+      "raw_summary": {
+        "participants": 37837,
+        "complete_primary": 34804,
+        "mean_favorable_percent": null,
+        "groups": [
+          {
+            "feature": "career",
+            "response": "Sin respuesta",
+            "people": 3033,
+            "events": null,
+            "attrition_percent": null,
+            "cohort_published": true,
+            "rate_published": false,
+            "suppression": "Cohorte menor de 30 o menos de 30 eventos; tasa no publicada."
+          },
+          {
+            "feature": "career",
+            "response": "No favorable",
+            "people": 8860,
+            "events": null,
+            "attrition_percent": null,
+            "cohort_published": true,
+            "rate_published": false,
+            "suppression": "Cohorte menor de 30 o menos de 30 eventos; tasa no publicada."
+          },
+          {
+            "feature": "career",
+            "response": "Favorable",
+            "people": 25944,
+            "events": null,
+            "attrition_percent": null,
+            "cohort_published": true,
+            "rate_published": false,
+            "suppression": "Cohorte menor de 30 o menos de 30 eventos; tasa no publicada."
+          }
+        ]
+      },
+      "component_states_raw": {
+        "Válida": 34804,
+        "Sin respuesta": 3033,
+        "status_reconciliation_difference": 0
+      },
+      "scopes": {
+        "Engineering": {
+          "eligible_people": 30996,
+          "linked_people": 25525,
+          "without_linked_row": 5471,
+          "source_not_in_population": 12312,
+          "with_any_primary": 25122,
+          "complete_primary": 25122,
+          "complete_full": 25122,
+          "coverage_percent": 81.04916763453349,
+          "complete_primary_percent": 81.04916763453349,
+          "groups": [
+            {
+              "feature": "career",
+              "response": "Sin respuesta",
+              "people": 403,
+              "events": 33,
+              "attrition_percent": 8.188585607940446,
+              "cohort_published": true,
+              "rate_published": true,
+              "suppression": null
+            },
+            {
+              "feature": "career",
+              "response": "No favorable",
+              "people": 6689,
+              "events": 653,
+              "attrition_percent": 9.76229630737031,
+              "cohort_published": true,
+              "rate_published": true,
+              "suppression": null
+            },
+            {
+              "feature": "career",
+              "response": "Favorable",
+              "people": 18433,
+              "events": 650,
+              "attrition_percent": 3.5262843812727174,
+              "cohort_published": true,
+              "rate_published": true,
+              "suppression": null
+            }
+          ],
+          "baseline_snapshot": "2024-12-29",
+          "outcome_start": "2025-01-01",
+          "outcome_end": "2026-01-01",
+          "window_type": "anual descriptiva"
+        },
+        "workforce": {
+          "eligible_people": 42341,
+          "linked_people": 34919,
+          "without_linked_row": 7422,
+          "source_not_in_population": 2918,
+          "with_any_primary": 33045,
+          "complete_primary": 33045,
+          "complete_full": 33045,
+          "coverage_percent": 78.04492099855932,
+          "complete_primary_percent": 78.04492099855932,
+          "groups": [
+            {
+              "feature": "career",
+              "response": "Sin respuesta",
+              "people": 1874,
+              "events": 73,
+              "attrition_percent": 3.895410885805763,
+              "cohort_published": true,
+              "rate_published": true,
+              "suppression": null
+            },
+            {
+              "feature": "career",
+              "response": "No favorable",
+              "people": 8708,
+              "events": 784,
+              "attrition_percent": 9.003215434083602,
+              "cohort_published": true,
+              "rate_published": true,
+              "suppression": null
+            },
+            {
+              "feature": "career",
+              "response": "Favorable",
+              "people": 24337,
+              "events": 803,
+              "attrition_percent": 3.299502814644369,
+              "cohort_published": true,
+              "rate_published": true,
+              "suppression": null
+            }
+          ],
+          "baseline_snapshot": "2024-12-29",
+          "outcome_start": "2025-01-01",
+          "outcome_end": "2026-01-01",
+          "window_type": "anual descriptiva"
+        }
+      },
+      "component_headers": {
+        "career": {
+          "binary_present": true,
+          "scale_present": true
+        }
+      },
+      "historical_reconciliation": {
+        "status": "requires_review",
+        "checks": [
+          {
+            "check": "baseline_snapshot",
+            "observed": "2024-12-29",
+            "expected": "2024-12-29",
+            "tolerance": 0,
+            "pass": true
+          },
+          {
+            "check": "outcome_start",
+            "observed": "2025-01-01",
+            "expected": "2025-01-01",
+            "tolerance": 0,
+            "pass": true
+          },
+          {
+            "check": "outcome_end",
+            "observed": "2026-01-01",
+            "expected": "2026-01-01",
+            "tolerance": 0,
+            "pass": true
+          },
+          {
+            "check": "career/Favorable/source",
+            "observed": 25944,
+            "expected": 25944,
+            "tolerance": 0,
+            "pass": true
+          },
+          {
+            "check": "career/Favorable/linked",
+            "observed": 24337,
+            "expected": 24338,
+            "tolerance": 0,
+            "pass": false
+          },
+          {
+            "check": "career/Favorable/events",
+            "observed": 803,
+            "expected": 804,
+            "tolerance": 0,
+            "pass": false
+          },
+          {
+            "check": "career/Favorable/rate",
+            "observed": 3.299502814644369,
+            "expected": 3.3035,
+            "tolerance": 5.1e-05,
+            "pass": false
+          },
+          {
+            "check": "career/No favorable/source",
+            "observed": 8860,
+            "expected": 8860,
+            "tolerance": 0,
+            "pass": true
+          },
+          {
+            "check": "career/No favorable/linked",
+            "observed": 8708,
+            "expected": 8708,
+            "tolerance": 0,
+            "pass": true
+          },
+          {
+            "check": "career/No favorable/events",
+            "observed": 784,
+            "expected": 784,
+            "tolerance": 0,
+            "pass": true
+          },
+          {
+            "check": "career/No favorable/rate",
+            "observed": 9.003215434083602,
+            "expected": 9.0032,
+            "tolerance": 5.1e-05,
+            "pass": true
+          }
+        ],
+        "reference": "output\\distribution\\json\\qvoice-favorable-unfavorable-question-attrition-evidence-20260923.json",
+        "reference_sha256": "d9803920e82c780b63b8a9ef2f8af49d431909877cec8983356be31346c8fbc1",
+        "note": "2024/2025: mismos denominadores y ventanas anuales. 2026: sólo se concilian fuente y enlace; el playbook termina el 27 de septiembre y esta ejecución respeta el corte conocido al 7 de septiembre."
+      }
+    },
+    {
+      "year": 2026,
+      "availability": {
+        "date": null,
+        "status": "pending",
+        "evidence_reference": null,
+        "explanation": "El lanzamiento del 7 de enero no acredita la disponibilidad de los resultados."
+      },
+      "source_quality": {
+        "source_rows": 42203,
+        "missing_key_rows": 0,
+        "invalid_key_rows": 0,
+        "duplicate_rows": 0,
+        "conflicting_rows": 0,
+        "excluded_response_type_rows": 0,
+        "distinct_duplicate_keys": 0,
+        "unique_usable_keys": 42203
+      },
+      "raw_summary": {
+        "participants": 42203,
+        "complete_primary": 37816,
+        "mean_favorable_percent": null,
+        "groups": [
+          {
+            "feature": "career",
+            "response": "Sin respuesta",
+            "people": 4387,
+            "events": null,
+            "attrition_percent": null,
+            "cohort_published": true,
+            "rate_published": false,
+            "suppression": "Cohorte menor de 30 o menos de 30 eventos; tasa no publicada."
+          },
+          {
+            "feature": "career",
+            "response": "No favorable",
+            "people": 9086,
+            "events": null,
+            "attrition_percent": null,
+            "cohort_published": true,
+            "rate_published": false,
+            "suppression": "Cohorte menor de 30 o menos de 30 eventos; tasa no publicada."
+          },
+          {
+            "feature": "career",
+            "response": "Favorable",
+            "people": 28730,
+            "events": null,
+            "attrition_percent": null,
+            "cohort_published": true,
+            "rate_published": false,
+            "suppression": "Cohorte menor de 30 o menos de 30 eventos; tasa no publicada."
+          }
+        ]
+      },
+      "component_states_raw": {
+        "Sin respuesta": 4387,
+        "Válida": 37816,
+        "status_reconciliation_difference": 0
+      },
+      "scopes": {
+        "Engineering": {
+          "eligible_people": 34868,
+          "linked_people": 28878,
+          "without_linked_row": 5990,
+          "source_not_in_population": 13325,
+          "with_any_primary": 27430,
+          "complete_primary": 27430,
+          "complete_full": 27430,
+          "coverage_percent": 78.66811976597454,
+          "complete_primary_percent": 78.66811976597454,
+          "groups": [
+            {
+              "feature": "career",
+              "response": "Sin respuesta",
+              "people": 1448,
+              "events": 100,
+              "attrition_percent": 6.906077348066298,
+              "cohort_published": true,
+              "rate_published": true,
+              "suppression": null
+            },
+            {
+              "feature": "career",
+              "response": "No favorable",
+              "people": 6745,
+              "events": 431,
+              "attrition_percent": 6.389918458117124,
+              "cohort_published": true,
+              "rate_published": true,
+              "suppression": null
+            },
+            {
+              "feature": "career",
+              "response": "Favorable",
+              "people": 20685,
+              "events": 499,
+              "attrition_percent": 2.4123761179598744,
+              "cohort_published": true,
+              "rate_published": true,
+              "suppression": null
+            }
+          ],
+          "baseline_snapshot": "2025-12-28",
+          "outcome_start": "2026-01-07",
+          "outcome_end": "2026-08-23",
+          "window_type": "acumulado descriptivo de 2026"
+        },
+        "workforce": {
+          "eligible_people": 47134,
+          "linked_people": 39194,
+          "without_linked_row": 7940,
+          "source_not_in_population": 3009,
+          "with_any_primary": 36065,
+          "complete_primary": 36065,
+          "complete_full": 36065,
+          "coverage_percent": 76.51589086434421,
+          "complete_primary_percent": 76.51589086434421,
+          "groups": [
+            {
+              "feature": "career",
+              "response": "Sin respuesta",
+              "people": 3129,
+              "events": 152,
+              "attrition_percent": 4.857782038990092,
+              "cohort_published": true,
+              "rate_published": true,
+              "suppression": null
+            },
+            {
+              "feature": "career",
+              "response": "No favorable",
+              "people": 8915,
+              "events": 547,
+              "attrition_percent": 6.135726303982053,
+              "cohort_published": true,
+              "rate_published": true,
+              "suppression": null
+            },
+            {
+              "feature": "career",
+              "response": "Favorable",
+              "people": 27150,
+              "events": 607,
+              "attrition_percent": 2.2357274401473295,
+              "cohort_published": true,
+              "rate_published": true,
+              "suppression": null
+            }
+          ],
+          "baseline_snapshot": "2025-12-28",
+          "outcome_start": "2026-01-07",
+          "outcome_end": "2026-08-23",
+          "window_type": "acumulado descriptivo de 2026"
+        }
+      },
+      "component_headers": {
+        "career": {
+          "binary_present": true,
+          "scale_present": true
+        }
+      },
+      "historical_reconciliation": {
+        "status": "pass",
+        "checks": [
+          {
+            "check": "baseline_snapshot",
+            "observed": "2025-12-28",
+            "expected": "2025-12-28",
+            "tolerance": 0,
+            "pass": true
+          },
+          {
+            "check": "outcome_start",
+            "observed": "2026-01-07",
+            "expected": "2026-01-07",
+            "tolerance": 0,
+            "pass": true
+          },
+          {
+            "check": "career/Favorable/source",
+            "observed": 28730,
+            "expected": 28730,
+            "tolerance": 0,
+            "pass": true
+          },
+          {
+            "check": "career/Favorable/linked",
+            "observed": 27150,
+            "expected": 27150,
+            "tolerance": 0,
+            "pass": true
+          },
+          {
+            "check": "career/No favorable/source",
+            "observed": 9086,
+            "expected": 9086,
+            "tolerance": 0,
+            "pass": true
+          },
+          {
+            "check": "career/No favorable/linked",
+            "observed": 8915,
+            "expected": 8915,
+            "tolerance": 0,
+            "pass": true
+          }
+        ],
+        "reference": "output\\distribution\\json\\qvoice-favorable-unfavorable-question-attrition-evidence-20260923.json",
+        "reference_sha256": "d9803920e82c780b63b8a9ef2f8af49d431909877cec8983356be31346c8fbc1",
+        "note": "2024/2025: mismos denominadores y ventanas anuales. 2026: sólo se concilian fuente y enlace; el playbook termina el 27 de septiembre y esta ejecución respeta el corte conocido al 7 de septiembre."
+      }
+    }
+  ],
+  "audit_rows": [
+    {
+      "survey_year": 2024,
+      "snapshot_date": "2023-12-24",
+      "workbooks_checked": 1,
+      "header_ambiguities": 0,
+      "missing_component_headers": 0,
+      "unverified_availability_waves": 1,
+      "unresolved_wording_waves": 1,
+      "invalid_count": 0,
+      "valid_count": 32573,
+      "missing_count": 4233,
+      "absent_count": 0,
+      "status_reconciliation_difference": 0,
+      "comparable_count": 0,
+      "recalculated_match_count": 0,
+      "mismatch_count": 0,
+      "eligible_count": 29339,
+      "matched_count": 24526,
+      "unmatched_count": 4813,
+      "duplicate_count": 0,
+      "multi_match_count": 0,
+      "full_exceeds_primary_count": 0,
+      "overlap_cohort_difference": 0,
+      "primary_complete_count": 22973,
+      "full_complete_count": 22973,
+      "source_participants": 36806,
+      "primary_available_count": 22973,
+      "missing_key_rows": 1,
+      "source_duplicate_count": 0,
+      "alternative_headers_checked": 0,
+      "alternate_comparable_count": 0,
+      "alternate_disagreement_count": 0,
+      "reconciliation_tests": 11,
+      "reconciliation_mismatch_count": 2
+    },
+    {
+      "survey_year": 2025,
+      "snapshot_date": "2024-12-29",
+      "workbooks_checked": 1,
+      "header_ambiguities": 0,
+      "missing_component_headers": 0,
+      "unverified_availability_waves": 1,
+      "unresolved_wording_waves": 0,
+      "invalid_count": 0,
+      "valid_count": 34804,
+      "missing_count": 3033,
+      "absent_count": 0,
+      "status_reconciliation_difference": 0,
+      "comparable_count": 0,
+      "recalculated_match_count": 0,
+      "mismatch_count": 0,
+      "eligible_count": 30996,
+      "matched_count": 25525,
+      "unmatched_count": 5471,
+      "duplicate_count": 0,
+      "multi_match_count": 0,
+      "full_exceeds_primary_count": 0,
+      "overlap_cohort_difference": 0,
+      "primary_complete_count": 25122,
+      "full_complete_count": 25122,
+      "source_participants": 37837,
+      "primary_available_count": 25122,
+      "missing_key_rows": 0,
+      "source_duplicate_count": 0,
+      "alternative_headers_checked": 0,
+      "alternate_comparable_count": 0,
+      "alternate_disagreement_count": 0,
+      "reconciliation_tests": 11,
+      "reconciliation_mismatch_count": 3
+    },
+    {
+      "survey_year": 2026,
+      "snapshot_date": "2025-12-28",
+      "workbooks_checked": 1,
+      "header_ambiguities": 0,
+      "missing_component_headers": 0,
+      "unverified_availability_waves": 1,
+      "unresolved_wording_waves": 0,
+      "invalid_count": 0,
+      "valid_count": 37816,
+      "missing_count": 4387,
+      "absent_count": 0,
+      "status_reconciliation_difference": 0,
+      "comparable_count": 0,
+      "recalculated_match_count": 0,
+      "mismatch_count": 0,
+      "eligible_count": 34868,
+      "matched_count": 28878,
+      "unmatched_count": 5990,
+      "duplicate_count": 0,
+      "multi_match_count": 0,
+      "full_exceeds_primary_count": 0,
+      "overlap_cohort_difference": 0,
+      "primary_complete_count": 27430,
+      "full_complete_count": 27430,
+      "source_participants": 42203,
+      "primary_available_count": 27430,
+      "missing_key_rows": 0,
+      "source_duplicate_count": 0,
+      "alternative_headers_checked": 0,
+      "alternate_comparable_count": 0,
+      "alternate_disagreement_count": 0,
+      "reconciliation_tests": 6,
+      "reconciliation_mismatch_count": 0
+    }
+  ],
+  "redshift_executions": [
+    {
+      "template": "queries\\audits\\qvoice_model_engineering_join_20261006.sql",
+      "template_sha256": "d771ce6db80df286367900f1bb6dd80443e06678892cbb4e8a82d96df9fee516",
+      "runtime_statement_sha256": "0eea6027ecb16ae7f298f64d1a1f1ca215fc208eca5f117bb90626d3f6f5cdde",
+      "executed_at": "2026-10-06T19:10:23+00:00",
+      "batch_number": 1,
+      "source_records": 10000,
+      "aggregate_rows": 6,
+      "runtime_sql_persisted": false
+    },
+    {
+      "template": "queries\\audits\\qvoice_model_engineering_join_20261006.sql",
+      "template_sha256": "d771ce6db80df286367900f1bb6dd80443e06678892cbb4e8a82d96df9fee516",
+      "runtime_statement_sha256": "a2d4ef138fbd807ea9bb2b4941bbe86d1345ff2973da477cd15bb448b51003f3",
+      "executed_at": "2026-10-06T19:10:24+00:00",
+      "batch_number": 2,
+      "source_records": 10000,
+      "aggregate_rows": 6,
+      "runtime_sql_persisted": false
+    },
+    {
+      "template": "queries\\audits\\qvoice_model_engineering_join_20261006.sql",
+      "template_sha256": "d771ce6db80df286367900f1bb6dd80443e06678892cbb4e8a82d96df9fee516",
+      "runtime_statement_sha256": "17e8230f413aa9581a35a2f9b67ce428730ebde8c57a2ea58e870dd8ad45826e",
+      "executed_at": "2026-10-06T19:10:24+00:00",
+      "batch_number": 3,
+      "source_records": 10000,
+      "aggregate_rows": 6,
+      "runtime_sql_persisted": false
+    },
+    {
+      "template": "queries\\audits\\qvoice_model_engineering_join_20261006.sql",
+      "template_sha256": "d771ce6db80df286367900f1bb6dd80443e06678892cbb4e8a82d96df9fee516",
+      "runtime_statement_sha256": "effb5ca02717f1d8fe3900205aa0208965c94153219aff98220b6672926a0cda",
+      "executed_at": "2026-10-06T19:10:24+00:00",
+      "batch_number": 4,
+      "source_records": 6806,
+      "aggregate_rows": 6,
+      "runtime_sql_persisted": false
+    },
+    {
+      "template": "queries\\audits\\qvoice_model_engineering_join_20261006.sql",
+      "template_sha256": "d771ce6db80df286367900f1bb6dd80443e06678892cbb4e8a82d96df9fee516",
+      "runtime_statement_sha256": "5df15a4ee9e221244578c9f3aaccd9ddb5c12451104dce786004ffc1258bca94",
+      "executed_at": "2026-10-06T19:10:26+00:00",
+      "batch_number": 1,
+      "source_records": 10000,
+      "aggregate_rows": 6,
+      "runtime_sql_persisted": false
+    },
+    {
+      "template": "queries\\audits\\qvoice_model_engineering_join_20261006.sql",
+      "template_sha256": "d771ce6db80df286367900f1bb6dd80443e06678892cbb4e8a82d96df9fee516",
+      "runtime_statement_sha256": "a8428bb2fb320ea7de2117d744791a4e1680f7d788ea9ef086e7650ef709e57f",
+      "executed_at": "2026-10-06T19:10:27+00:00",
+      "batch_number": 2,
+      "source_records": 10000,
+      "aggregate_rows": 6,
+      "runtime_sql_persisted": false
+    },
+    {
+      "template": "queries\\audits\\qvoice_model_engineering_join_20261006.sql",
+      "template_sha256": "d771ce6db80df286367900f1bb6dd80443e06678892cbb4e8a82d96df9fee516",
+      "runtime_statement_sha256": "a09715c1c66aea3033826ed21a3d71788fc00d19c14f9c9136d14af04b0b0a44",
+      "executed_at": "2026-10-06T19:10:29+00:00",
+      "batch_number": 3,
+      "source_records": 10000,
+      "aggregate_rows": 6,
+      "runtime_sql_persisted": false
+    },
+    {
+      "template": "queries\\audits\\qvoice_model_engineering_join_20261006.sql",
+      "template_sha256": "d771ce6db80df286367900f1bb6dd80443e06678892cbb4e8a82d96df9fee516",
+      "runtime_statement_sha256": "15c65e785243962083a8370d072c0582768af8f65d31c4870b226458e4395f5e",
+      "executed_at": "2026-10-06T19:10:30+00:00",
+      "batch_number": 4,
+      "source_records": 7837,
+      "aggregate_rows": 6,
+      "runtime_sql_persisted": false
+    },
+    {
+      "template": "queries\\audits\\qvoice_model_engineering_join_20261006.sql",
+      "template_sha256": "d771ce6db80df286367900f1bb6dd80443e06678892cbb4e8a82d96df9fee516",
+      "runtime_statement_sha256": "382989304db85bc96bb9b24effad28fcdf7237776f8f9066b4904d337d4364fc",
+      "executed_at": "2026-10-06T19:10:32+00:00",
+      "batch_number": 1,
+      "source_records": 10000,
+      "aggregate_rows": 6,
+      "runtime_sql_persisted": false
+    },
+    {
+      "template": "queries\\audits\\qvoice_model_engineering_join_20261006.sql",
+      "template_sha256": "d771ce6db80df286367900f1bb6dd80443e06678892cbb4e8a82d96df9fee516",
+      "runtime_statement_sha256": "469ad202535999c64877a087cd387266a6c7dc631c51a0e00adb9fa6d2ab4120",
+      "executed_at": "2026-10-06T19:10:32+00:00",
+      "batch_number": 2,
+      "source_records": 10000,
+      "aggregate_rows": 6,
+      "runtime_sql_persisted": false
+    },
+    {
+      "template": "queries\\audits\\qvoice_model_engineering_join_20261006.sql",
+      "template_sha256": "d771ce6db80df286367900f1bb6dd80443e06678892cbb4e8a82d96df9fee516",
+      "runtime_statement_sha256": "f8f0619b7223ebcfb79cdfd9c944652ae30f054e00077af06dfa9db5a8401d2a",
+      "executed_at": "2026-10-06T19:10:33+00:00",
+      "batch_number": 3,
+      "source_records": 10000,
+      "aggregate_rows": 6,
+      "runtime_sql_persisted": false
+    },
+    {
+      "template": "queries\\audits\\qvoice_model_engineering_join_20261006.sql",
+      "template_sha256": "d771ce6db80df286367900f1bb6dd80443e06678892cbb4e8a82d96df9fee516",
+      "runtime_statement_sha256": "27ebd6e8081244eee258484166fa92169f3f401c8cf250689b3c8d8856846d03",
+      "executed_at": "2026-10-06T19:10:33+00:00",
+      "batch_number": 4,
+      "source_records": 10000,
+      "aggregate_rows": 6,
+      "runtime_sql_persisted": false
+    },
+    {
+      "template": "queries\\audits\\qvoice_model_engineering_join_20261006.sql",
+      "template_sha256": "d771ce6db80df286367900f1bb6dd80443e06678892cbb4e8a82d96df9fee516",
+      "runtime_statement_sha256": "4bc5fa5a4672226ab297804620b74b1f4df51b93abdec361831547597b48f348",
+      "executed_at": "2026-10-06T19:10:33+00:00",
+      "batch_number": 5,
+      "source_records": 2203,
+      "aggregate_rows": 6,
+      "runtime_sql_persisted": false
+    }
+  ],
+  "source_hashes": {
+    "data/QVoice/Jan 2024 Qvoice raw data.xlsx": "da39bc5929b972b2c12ff00568521304418028a7186a1949e1809e6b9b444d3a",
+    "data/QVoice/Jan 2025_Qvoice_raw data.xlsx": "241f322c0dda9c6de62e3da9d36f729d1c06a21a4d9a1b53fb3fb08c9876a01e",
+    "data/QVoice/Jan 2026 Qvoice_raw data.xlsx": "7ea357091c07b42da483576a1d3c357ff836179f05316b7ad6d51248940e557b"
+  },
+  "employee_level_rows_persisted": false,
+  "audit_scope": {
+    "domain": "Respuestas raw de la wave",
+    "formula_and_join": "Engineering elegible en la foto previa",
+    "coverage": "Descriptiva, sin certificar disponibilidad temporal"
+  },
+  "execution_hashes": {
+    "configuration": "e9fe6a3d48cb6582217e901ba1a59315a9319ff6896d99ad8460d29e50aea444",
+    "analysis_plan": "51567273f98db62cc8c20c5797edfed3777a97dfe120b88d557e855a7b6ddafa",
+    "parser": "8933480ab3d30b5799989ce9f3250561f0db76cf6a2db222d95679888b6fe1a7",
+    "adapter": "b43ef7c5b4455742dcb5a9cae60c0e077b16870f37a70ecb42a3f3754ff16f09",
+    "reconciliation": "c2ce2be8757156b12236baadbd55c518645d573eb1c9348d30bdb7576cb94a1b"
+  },
+  "extra_queries": {},
+  "coverage_rows": [
+    {
+      "snapshot_date": "2023-12-24",
+      "fiscal_year": 2024,
+      "eligible_employees": 29339,
+      "observable_employees": 22973
+    },
+    {
+      "snapshot_date": "2024-12-29",
+      "fiscal_year": 2025,
+      "eligible_employees": 30996,
+      "observable_employees": 25122
+    },
+    {
+      "snapshot_date": "2025-12-28",
+      "fiscal_year": 2026,
+      "eligible_employees": 34868,
+      "observable_employees": 27430
+    }
+  ],
+  "local_sql_execution": {
+    "engine": "sqlite3 :memory:",
+    "executed_at": "2026-10-06T19:10:33+00:00",
+    "rows_are_aggregated_before_sql": true,
+    "sql_path": "queries/audits/qvoice_model_career_20261006.sql"
+  },
+  "completed_at": "2026-10-06T19:10:33+00:00"
+}

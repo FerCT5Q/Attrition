@@ -1,0 +1,66 @@
+{
+  "verifier": {
+    "command": "verify_deck.py output/presentations/20261012-0833_evolucion-b-cq-error-vs-c/presentacion-eng.html --mode presentation",
+    "errors": [
+      "El elemento <html> debe declarar lang=\"es\"."
+    ],
+    "warnings": [
+      "Etiqueta visible en inglés: Theme",
+      "Etiqueta visible en inglés: Slides",
+      "Etiqueta visible en inglés: Navigation"
+    ],
+    "result": "verificador original con excepción documentada de idioma"
+  },
+  "language_exception": "Texto proyectado en inglés por preferencia explícita del usuario y por coincidir con la base; guion, evidencia y validación en español.",
+  "jargon_visible": [],
+  "privacy": {
+    "aggregates_only": true,
+    "employee_rows": false,
+    "individual_scores": false,
+    "min_group_people": "300+",
+    "protected_labels": false
+  },
+  "browser_review": {
+    "file": "output/preview/20261012-0833_evolucion-b-cq-error-vs-c/browser-review.json",
+    "status": "pass",
+    "mode": "presentation",
+    "reviewed_slides": [
+      1
+    ],
+    "screenshots": [
+      "slide-1-theme-light-classic.png",
+      "slide-1-theme-light-soft.png",
+      "slide-1-theme-dark-royal.png",
+      "slide-1-theme-dark-carbon.png"
+    ],
+    "screenshot_size": {
+      "width": 1440,
+      "height": 810
+    },
+    "scope": "Revisión visual de las tarjetas de la portada en cuatro temas y comprobación del alcance y las cifras contra la versión anterior y S12.",
+    "checks": {
+      "changed_slides": [
+        1
+      ],
+      "cover_title_unchanged": true,
+      "styles_unchanged": true,
+      "remaining_eight_slides_and_scripts_identical": true,
+      "previous_figures_unchanged": true,
+      "new_figures": [
+        "cq_group_gap"
+      ],
+      "source_hashes_unchanged": true,
+      "error_reduction_validated": true,
+      "cq_error_validated": true,
+      "first_card_error_only": true,
+      "second_card_capture_only": true,
+      "previous_deck_sha256": "ba5987d3efc664bfc7813456b4e356d3fd6e520fc026ad44dea459ca37c34df4",
+      "existing_unit_tests": 9,
+      "visible_clipping_or_overlaps": false,
+      "card_text_legible": true
+    },
+    "runtime_scope": "Las capturas usan navegación a la diapositiva 1. No se repitió una revisión completa de consola o navegación; CSS y JavaScript son idénticos a los de la versión anterior.",
+    "conclusion": "La primera tarjeta presenta un 2,3% menos de error promedio frente a C y el error aproximado de CQ por cada 100 personas. La segunda presenta solamente la ganancia de 0,7 puntos de captura. Se evita repetir el 43,1% del título en la primera tarjeta. Texto legible y completo en los cuatro temas.",
+    "previous_deck": "output/presentations/20261012-0822_evolucion-b-cq-captura-clara/presentacion-eng.html"
+  }
+}

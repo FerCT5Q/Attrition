@@ -1,0 +1,225 @@
+{
+  "name": "disjoint",
+  "features": [
+    "qv_Q4",
+    "qv_remaining_20260101",
+    "qv_Q5",
+    "qv_Q7"
+  ],
+  "l2": 0.1,
+  "monthly_brier": 0.0034655360635088084,
+  "source_candidate": {
+    "id": "q4+mean33+connection",
+    "kind": "blocks",
+    "blocks": [
+      "q4",
+      "mean33",
+      "connection"
+    ],
+    "features": [
+      "qv_Q4",
+      "qv_mean33",
+      "qv_Q5",
+      "qv_Q7"
+    ],
+    "l2": 0.1,
+    "parameters": 21,
+    "converged": true,
+    "iterations": 5,
+    "monthly_brier": 0.003465569138502658
+  },
+  "trials": [
+    {
+      "l2": 0.1,
+      "monthly_brier": 0.0034655360635088084,
+      "iterations": 6,
+      "converged": true
+    },
+    {
+      "l2": 1,
+      "monthly_brier": 0.003465576069570621,
+      "iterations": 6,
+      "converged": true
+    },
+    {
+      "l2": 10,
+      "monthly_brier": 0.0034658207914095066,
+      "iterations": 5,
+      "converged": true
+    }
+  ],
+  "iterations": 5,
+  "encoder": {
+    "features": [
+      "qv_Q4",
+      "qv_remaining_20260101",
+      "qv_Q5",
+      "qv_Q7"
+    ],
+    "levels": {
+      "qv_Q4": [
+        "different_employment_episode",
+        "missing",
+        "no_linked_row",
+        "v0",
+        "v1"
+      ],
+      "qv_remaining_20260101": [
+        "100",
+        "50–69",
+        "70–79",
+        "80–89",
+        "90–99",
+        "<50",
+        "different_employment_episode",
+        "missing",
+        "no_linked_row"
+      ],
+      "qv_Q5": [
+        "different_employment_episode",
+        "missing",
+        "no_linked_row",
+        "v0",
+        "v1"
+      ],
+      "qv_Q7": [
+        "different_employment_episode",
+        "missing",
+        "no_linked_row",
+        "v0",
+        "v1"
+      ]
+    },
+    "references": {
+      "qv_Q4": "v1",
+      "qv_remaining_20260101": "different_employment_episode",
+      "qv_Q5": "v1",
+      "qv_Q7": "v1"
+    },
+    "columns": [
+      "intercept",
+      "qv_Q4=different_employment_episode",
+      "qv_Q4=missing",
+      "qv_Q4=no_linked_row",
+      "qv_Q4=v0",
+      "qv_remaining_20260101=100",
+      "qv_remaining_20260101=50–69",
+      "qv_remaining_20260101=70–79",
+      "qv_remaining_20260101=80–89",
+      "qv_remaining_20260101=90–99",
+      "qv_remaining_20260101=<50",
+      "qv_remaining_20260101=missing",
+      "qv_remaining_20260101=no_linked_row",
+      "qv_Q5=different_employment_episode",
+      "qv_Q5=missing",
+      "qv_Q5=no_linked_row",
+      "qv_Q5=v0",
+      "qv_Q7=different_employment_episode",
+      "qv_Q7=missing",
+      "qv_Q7=no_linked_row",
+      "qv_Q7=v0"
+    ]
+  },
+  "beta": [
+    -0.22160702029477908,
+    0.04446760319613889,
+    0.4989107630149678,
+    0.05559483796563258,
+    0.602736890492342,
+    -0.17139541143359327,
+    0.10007913311918096,
+    0.05420319422587432,
+    -0.02784990400027211,
+    -0.24152006982122828,
+    0.12006798013333096,
+    0.06635263635173046,
+    0.05559483796567186,
+    0.044467603196181725,
+    0.05812686574615223,
+    0.055594837965678046,
+    0.05870448397870485,
+    0.04446760319619511,
+    -0.19220317423988983,
+    0.0555948379657568,
+    0.06869270721713482
+  ],
+  "base_model_reference": "output\\analysis\\engineering\\20261008\\model-c-v2\\folds\\fold-4-C-model.json",
+  "base_model_origin": "2025-08-01",
+  "cutoff": "2026-01-01",
+  "fit_maximum_label_end": "2025-12-28",
+  "selection_snapshots": [
+    "2025-10-26",
+    "2025-11-23"
+  ],
+  "formula": "cloglog(eta_C + correccion_Q); R6 = 1-product(1-h)",
+  "derivation": {
+    "feature": "qv_remaining_20260101",
+    "semantic_type": "derived_feature",
+    "formula": "sum(favorable remaining)/count(remaining)",
+    "individual_items_mapping": {
+      "qv_Q4": "qv_M16",
+      "qv_Q5": "qv_M10",
+      "qv_Q7": "qv_M07"
+    },
+    "excluded_items": [
+      "qv_M07",
+      "qv_M10",
+      "qv_M16"
+    ],
+    "remaining_items": [
+      "qv_M01",
+      "qv_M02",
+      "qv_M03",
+      "qv_M04",
+      "qv_M05",
+      "qv_M06",
+      "qv_M08",
+      "qv_M09",
+      "qv_M11",
+      "qv_M12",
+      "qv_M13",
+      "qv_M14",
+      "qv_M15",
+      "qv_M17",
+      "qv_M18",
+      "qv_M19",
+      "qv_M20",
+      "qv_M21",
+      "qv_M22",
+      "qv_M23",
+      "qv_M24",
+      "qv_M25",
+      "qv_M26",
+      "qv_M27",
+      "qv_M28",
+      "qv_M29",
+      "qv_M30",
+      "qv_M31",
+      "qv_M32",
+      "qv_M33"
+    ],
+    "denominator": 30,
+    "required_valid_original_items": 33,
+    "comparable_count": 375184,
+    "matched_count": 375184,
+    "mismatch_count": 0,
+    "original_mean_mismatch_count": 0,
+    "match_rate_percent": 100.0,
+    "eligibility_changed_count": 0,
+    "date": "2026-10-09T16:36:05.207818+00:00",
+    "outcome": "pass",
+    "score_changes": false,
+    "method": "Mapping por texto exacto y reconciliación de todas las combinaciones observadas en RAM.",
+    "acceptance_rule": "Cero discrepancias de mapping, bandas o elegibilidad.",
+    "bands": [
+      "<50",
+      "50–69",
+      "70–79",
+      "80–89",
+      "90–99",
+      "100"
+    ]
+  },
+  "parameters": 21,
+  "employee_level_rows_persisted": false
+}

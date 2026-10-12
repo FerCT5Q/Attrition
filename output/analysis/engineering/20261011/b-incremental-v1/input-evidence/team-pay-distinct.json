@@ -1,0 +1,22 @@
+{
+  "reporting_mode": "presentation",
+  "executed_at": "2026-10-12T02:13:59.355234+00:00",
+  "query": "queries/audits/engineering_b_incremental_team_pay_distinct_20261011.sql",
+  "sql_sha256": "dcbd8fbde9739add1d6e9b3b61a5108dd5605e9afdb08a366669e033eeeabee2",
+  "claim": "Investigar cero coincidencias de dispersión pese a existir posiciones relativas comparables.",
+  "acceptance_rule": "Grupos >=5 implican grupos >=2; reconciliar conteos antes de habilitar dispersión.",
+  "rows": [
+    {
+      "population_rows": 288586,
+      "complete_pay_rows": 353077,
+      "peer_groups_ge2": 87531,
+      "peer_groups_ge5": 5653,
+      "manager_spread_rows": 57725,
+      "positive_spread_rows": 57725,
+      "exact_spread_matches": 257539,
+      "direct_peer_matches": 461451
+    }
+  ],
+  "employee_level_rows_persisted": false,
+  "assessment_score_changed": false
+}

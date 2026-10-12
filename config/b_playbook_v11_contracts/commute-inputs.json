@@ -1,0 +1,29 @@
+{
+  "schema_version": 4,
+  "id": "commute-inputs",
+  "title": "Componentes históricos de la distancia estimada",
+  "claim": "La modalidad y ubicación pertenecen a la foto y no tienen duplicados o contradicciones.",
+  "use": "Probar la distancia del V11 sobre B, usando sólo bandas.",
+  "semantic_type": "external_source",
+  "population": "Employee, Regular, activo, Engineering, sin RF360",
+  "grain": "persona-foto",
+  "known_at": "Ubicación y modalidad en t; catálogos estáticos de 2026 sin vigencia histórica demostrada.",
+  "window": "2020-07-26 a 2026-09-07",
+  "history": "La preparación descriptiva V11 se adapta a la historia mensual; oficinas ambiguas producen un proxy mínimo declarado.",
+  "query": "queries/audits/engineering_b_v11_commute_inputs_20261011.sql",
+  "source_query": "queries/profiles/engineering_b_v11_commute_inputs_20261011.sql",
+  "zero_fields": [
+    "duplicate_source_keys",
+    "conflicting_input_rows"
+  ],
+  "positive_fields": [
+    "person_snapshots",
+    "onsite_rows",
+    "complete_onsite_rows"
+  ],
+  "expected_rows": 7,
+  "acceptance_rule": "Cero duplicados y conflictos de componentes; recálculo geográfico posterior con diferencia máxima de 0.0001 km y población anual reconciliada.",
+  "conclusion_if_pass": "Componentes habilitados para la reconciliación en RAM",
+  "limitation": "No acredita residencia histórica exacta, traslado real ni vigencia histórica del catálogo externo.",
+  "action": "Transformar hashes en bandas sólo en RAM, conservar desconocidos y documentar cobertura"
+}

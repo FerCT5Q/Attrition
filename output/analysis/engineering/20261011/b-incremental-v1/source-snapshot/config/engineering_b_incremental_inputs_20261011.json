@@ -1,0 +1,76 @@
+{
+  "reporting_mode": "presentation",
+  "population": "Employee, Regular, activo, Engineering, excluye RF360",
+  "grain": "persona-snapshot; sólo agregados fuera de RAM",
+  "start": "2020-07-26",
+  "knowledge_boundary": "2026-09-07",
+  "assessment_score_changed": false,
+  "contracts": {
+    "job-family": {
+      "features": ["job_family_detail", "job_family_group"],
+      "semantic_type": "grouped_mapping",
+      "claim": "Familia y grupo registrados en cada foto; conservar el mapping de la fecha, sin aplicar el mapping actual al pasado.",
+      "use": "Contexto ocupacional adicional al nivel y antigüedad de B.",
+      "known_at": "snapshot t",
+      "history": "Campos en la misma tabla mensual de B; se comprueba todo 2020-2026 antes del modelo.",
+      "query": "queries/audits/engineering_b_incremental_job_family_20261011.sql",
+      "zero_fields": ["duplicate_keys", "contradictory_cells", "ambiguous_mappings", "null_misalignment"],
+      "limitation": "Coherencia de mapping no prueba su definición oficial. Las etiquetas raras se agrupan usando sólo entrenamiento."
+    },
+    "work-location": {
+      "features": ["work_country", "work_site"],
+      "semantic_type": "direct_field",
+      "claim": "País laboral y sitio registrado, con el país incluido en la llave del sitio.",
+      "use": "Distinguir contexto de mercado y centro laboral dentro de una región.",
+      "known_at": "snapshot t",
+      "history": "Se revisan las fotos de 2020-2026; faltantes son categorías explícitas.",
+      "query": "queries/audits/engineering_b_incremental_work_location_20261011.sql",
+      "zero_fields": ["duplicate_keys", "contradictory_cells"],
+      "limitation": "El sitio registrado no acredita presencia física. No se usan domicilios ni distancias residenciales."
+    },
+    "grade-detail": {
+      "features": ["compensation_grade_detail"],
+      "semantic_type": "direct_field",
+      "claim": "Código completo de grado almacenado en cada foto; no es un importe ni una traducción a nivel.",
+      "use": "Probar si el detalle del grado aporta más que el nivel y el prefijo R/T.",
+      "known_at": "snapshot t",
+      "history": "Se revisa el código original de las fotos de 2020-2026; no se reetiqueta retrospectivamente.",
+      "query": "queries/audits/engineering_b_incremental_grade_detail_20261011.sql",
+      "zero_fields": ["duplicate_keys", "contradictory_cells"],
+      "limitation": "No se afirma que todos los grados sean ordinales o comparables entre países."
+    },
+    "job-profile-time": {
+      "features": ["time_in_job_profile_band"],
+      "semantic_type": "derived_feature",
+      "claim": "Meses desde el máximo entre la fecha registrada de entrada al perfil y service_date; sólo fechas presentes y no futuras.",
+      "use": "Distinguir permanencia en perfil de permanencia en nivel y antigüedad total.",
+      "known_at": "snapshot t",
+      "history": "Se explicita el inicio de observación; no se sustituye una fecha ausente por antigüedad total.",
+      "query": "queries/audits/engineering_b_incremental_job_profile_time_20261011.sql",
+      "zero_fields": ["duplicate_keys", "contradictory_cells", "invalid_dates_encoded_as_known", "band_recalculation_mismatches"],
+      "limitation": "service_date mantiene la convención de episodio de B. La fórmula operativa no demuestra lineage del campo fuente."
+    },
+    "manager-location": {
+      "features": ["manager_location_relation"],
+      "semantic_type": "derived_feature",
+      "claim": "Relación de ubicación registrada entre persona y manager activo de la misma foto: sitio, ciudad, país o país distinto.",
+      "use": "Probar contexto de coordinación distribuida.",
+      "known_at": "snapshot t; unión sólo a manager de t",
+      "history": "Join histórico de las fotos de 2020-2026; manager no localizado se mantiene desconocido.",
+      "query": "queries/audits/engineering_b_incremental_manager_location_20261011.sql",
+      "zero_fields": ["duplicate_keys", "contradictory_cells", "ambiguous_manager_keys", "relation_violations", "join_count_difference"],
+      "limitation": "Coincidir en etiquetas no prueba trabajo presencial, misma zona horaria ni proximidad residencial."
+    },
+    "team-pay-v2": {
+      "features": ["within_team_pay_position", "manager_pay_spread_band"],
+      "semantic_type": "derived_feature",
+      "claim": "Posición relativa en pago FTE almacenado con mismo manager, país, grado y moneda (mínimo cinco); y proporción de grupos del manager con max/min >=1.10 (mínimo dos por grupo).",
+      "use": "Probar contexto relativo de compensación sin extraer importes ni identificar equipos.",
+      "known_at": "snapshot t",
+      "history": "Cada conjunto comparable se reconstruye en su propia foto; no se usan sueldos actuales para el pasado.",
+      "query": "queries/audits/engineering_b_incremental_team_pay_20261011_v2.sql",
+      "zero_fields": ["duplicate_keys", "contradictory_cells", "rank_bound_violations", "rank_midpoint_violations", "spread_violations", "small_group_position_violations"],
+      "limitation": "Banda experimental de valores almacenados; no acredita equidad salarial ni lineage de normalización FTE. No comparable es una categoría separada."
+    }
+  }
+}
