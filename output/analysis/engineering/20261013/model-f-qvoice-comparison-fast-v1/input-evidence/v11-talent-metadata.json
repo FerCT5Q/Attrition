@@ -1,0 +1,360 @@
+{
+  "reporting_mode": "presentation",
+  "executed_at": "2026-10-12T15:23:09.395020+00:00",
+  "query": "queries/audits/engineering_b_v11_talent_metadata_20261012.sql",
+  "sql_sha256": "96e2cd68e2c0bbd9580c00a7db7b7110fc97e61ea226658f75a1bd060370a8a3",
+  "executions": [
+    {
+      "query": "queries/audits/engineering_b_v11_talent_metadata_20261012.sql",
+      "sql_sha256": "96e2cd68e2c0bbd9580c00a7db7b7110fc97e61ea226658f75a1bd060370a8a3",
+      "executed_at": "2026-10-12T15:23:09.394020+00:00",
+      "aggregate_rows": 64
+    }
+  ],
+  "contract_path": "config/b_playbook_v11_contracts/talent-metadata.json",
+  "contract_sha256": "289e90ad889bcce1efe621f233b71975ab62646608aa020ba2509dadcb129e43",
+  "contract": {
+    "schema_version": 4,
+    "id": "talent-metadata",
+    "title": "Talent index: búsqueda de fuente histórica fechada",
+    "claim": "Se inspeccionan fuentes y columnas de Talent index sin inferir vigencia desde timestamps técnicos.",
+    "use": "Comprobar si puede reconstruirse el valor disponible antes de cada predicción.",
+    "semantic_type": "precomputed_metric",
+    "population": "Metadata de tablas HRDA con talent en el nombre; objetivo Engineering 2020–2026",
+    "grain": "tabla-columna; sin datos de personas",
+    "known_at": "Requiere fecha de negocio o snapshot histórico; los timestamps técnicos no la acreditan",
+    "window": "26-jul-2020 a 7-sep-2026",
+    "history": "La fuente real del V11 es master_talent_index; las revisiones previas sólo describen disponibilidad actual.",
+    "query": "queries/audits/engineering_b_v11_talent_metadata_20261012.sql",
+    "acceptance_rule": "La consulta debe devolver metadata; pass sólo acredita inspección, no historia ni selección de la variable.",
+    "conclusion_if_pass": "Metadata disponible para revisar temporalidad",
+    "limitation": "Fórmula, elegibilidad y fecha de publicación deben verificarse separadamente.",
+    "action": "Si sólo existen timestamps técnicos, conservar la limitación temporal sin cambiar scores."
+  },
+  "rows": [
+    {
+      "table_name": "master_talent_index",
+      "column_name": "empl_id",
+      "data_type": "integer"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "name",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "gender",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "raceethnicity",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "raceethnicity2",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "cycle_number",
+      "data_type": "integer"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "cycle_name",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "employeed",
+      "data_type": "integer"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "ar_eligibility",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "supv_id",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "cost_center_name",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "depthead",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "et_leader",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "et_1_leader",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "et_2_leader",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "et_3_leader",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "vp_name",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "city",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "country",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "region",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "job_function",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "job_family",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "engtype",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "job_title",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "eng_path",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "job_code",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "rewards_group",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "level",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "level_ll",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "eng_1_0",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "support_1_0",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "mgmt_1_0",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "exec_1_0",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "dir_rpt_cnt",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "span_of_control",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "years_in_level",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "yos",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "ar_beforeterm",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "vol_1_0",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "term_reason",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "oncecycle_afterpromo",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "promo_in_cycle",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "rga_afterpromo",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "level_afterpromo",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "level_llafterpromo",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "title_afterpromo",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "newhire_rating",
+      "data_type": "integer"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "hiretype",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "before_ios",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "during_ios",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "after_ios",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "last_modified_date",
+      "data_type": "date"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "airflow_execution_date",
+      "data_type": "date"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "airflow_dagrun_id",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "cost_center_id",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "perf",
+      "data_type": "integer"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "prev_perf",
+      "data_type": "integer"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "stock",
+      "data_type": "integer"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "bonus",
+      "data_type": "integer"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "promo_quartile",
+      "data_type": "integer"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "talent_quartile",
+      "data_type": "integer"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "promo_index",
+      "data_type": "numeric"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "talent_index",
+      "data_type": "numeric"
+    },
+    {
+      "table_name": "master_talent_index",
+      "column_name": "airflow_db_processing_ts",
+      "data_type": "timestamp without time zone"
+    }
+  ],
+  "outcome": "pass",
+  "failed_rules": [],
+  "employee_level_rows_persisted": false,
+  "assessment_score_changed": false
+}

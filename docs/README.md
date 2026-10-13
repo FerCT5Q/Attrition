@@ -22,6 +22,11 @@ y explicación conceptual. El resumen para Julia no reemplaza ninguno de esos de
 
 ## Planes y revisiones
 
+- [Revisión conjunta implementada: CQ, FQ y BU L3](context/julia-rh-review-20261012.md): comparación común, 44 variables, capacidades, calibración, fichas RH y presentación corregida de **9 slides**; CQ sigue elegido.
+- [C + BU L3 con/sin QVoice](context/c-bu-isolation-20261013.md): prueba específica con control C reajustado al mismo corte; BU sin encuesta no supera a CQ, y ciudad mejora la combinación con encuesta.
+- [Plan de revisión conjunta: salida para RH](plans/revision-julia-brian-salida-rh-20261012.md): acciones, QVoice ausente, ficha de grupos, capacidad, calibración, estabilidad y límites de las validaciones actuales.
+- [Plan y cierre de BU L3](plans/attrition-model-bu-l3-20261012.md): auditoría del mapping histórico, efecto predictivo en B/CQ/FQ y prueba de grupos.
+
 - [Revisión de la historia y el plan del modelo](plans/attrition-model-story-review-20260818.md): contraste de las presentaciones, comentarios del equipo, decisiones pendientes y criterios recomendados para el MVP.
 - [Propuesta detallada del modelo](plans/attrition-model-recommendation-20260907.md): arquitectura estadística, target, selección de variables, validación temporal, gobierno y fases de implementación.
 - [Implementación Critical Tech](plans/critical-tech-people-analytics-implementation-20260907.md): población, evidencia de mapping, descubrimiento de cohortes, drivers y acciones.

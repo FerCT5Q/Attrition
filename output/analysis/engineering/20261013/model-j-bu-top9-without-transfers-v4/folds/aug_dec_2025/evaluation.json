@@ -1,0 +1,974 @@
+{
+  "id": "aug_dec_2025",
+  "origin": "2025-08-01",
+  "end": "2025-12-31",
+  "snapshots": 5,
+  "exposures": 168175,
+  "people": 35474,
+  "qvoice_spec_reused": {
+    "id": "q4+q12+career+engagement",
+    "kind": "blocks",
+    "blocks": [
+      "q4",
+      "q12",
+      "career",
+      "engagement"
+    ],
+    "features": [
+      "qv_Q4",
+      "qv_Q12",
+      "qv_career",
+      "qv_Q1",
+      "qv_Q2",
+      "qv_Q3"
+    ],
+    "l2": 10,
+    "parameters": 25,
+    "converged": true,
+    "iterations": 6,
+    "monthly_brier": 0.006014602417278957
+  },
+  "qvoice_refits": {
+    "BQ": 6,
+    "JQ": 6
+  },
+  "top9_for_groups": [
+    "MCX",
+    "Tech",
+    "Central Eng",
+    "Auto",
+    "CBN",
+    "Other Direct",
+    "CSS",
+    "Long Term",
+    "RFFE"
+  ],
+  "top9_for_J_predictor": [
+    "MCX",
+    "Tech",
+    "Central Eng",
+    "Auto",
+    "CBN",
+    "Other Direct",
+    "CSS",
+    "Long Term",
+    "RFFE"
+  ],
+  "group_validation": {
+    "category_count": 10,
+    "labels": [
+      "(other)",
+      "MCX",
+      "Tech",
+      "Central Eng",
+      "Auto",
+      "CBN",
+      "Other Direct",
+      "CSS",
+      "Long Term",
+      "RFFE"
+    ],
+    "snapshot_distribution": [
+      {
+        "snapshot_date": "2025-08-24T00:00:00",
+        "groups": {
+          "Tech": 17334,
+          "Central Eng": 4932,
+          "MCX": 3497,
+          "Auto": 2853,
+          "CBN": 1352,
+          "CSS": 1101,
+          "(other)": 1042,
+          "Long Term": 559,
+          "RFFE": 447,
+          "Other Direct": 5
+        },
+        "total": 33122
+      },
+      {
+        "snapshot_date": "2025-09-28T00:00:00",
+        "groups": {
+          "Tech": 17371,
+          "Central Eng": 4911,
+          "MCX": 3501,
+          "Auto": 2864,
+          "CBN": 1453,
+          "CSS": 1102,
+          "(other)": 1058,
+          "Long Term": 565,
+          "RFFE": 438,
+          "Other Direct": 2
+        },
+        "total": 33265
+      },
+      {
+        "snapshot_date": "2025-10-26T00:00:00",
+        "groups": {
+          "Tech": 17432,
+          "Central Eng": 4920,
+          "MCX": 3502,
+          "Auto": 2867,
+          "CBN": 1453,
+          "CSS": 1117,
+          "(other)": 1070,
+          "Long Term": 568,
+          "RFFE": 438,
+          "Other Direct": 2
+        },
+        "total": 33369
+      },
+      {
+        "snapshot_date": "2025-11-23T00:00:00",
+        "groups": {
+          "Tech": 17513,
+          "Central Eng": 4914,
+          "MCX": 3510,
+          "Auto": 2887,
+          "CBN": 1451,
+          "CSS": 1176,
+          "(other)": 1085,
+          "Long Term": 576,
+          "RFFE": 437,
+          "Other Direct": 2
+        },
+        "total": 33551
+      },
+      {
+        "snapshot_date": "2025-12-28T00:00:00",
+        "groups": {
+          "Tech": 17776,
+          "Central Eng": 4895,
+          "MCX": 3506,
+          "Auto": 2891,
+          "(other)": 2137,
+          "CBN": 1450,
+          "CSS": 1301,
+          "Long Term": 477,
+          "RFFE": 434,
+          "Other Direct": 1
+        },
+        "total": 34868
+      }
+    ]
+  },
+  "evaluation": {
+    "B": {
+      "global": {
+        "exposures": 168175.0,
+        "event_exposures": 4896.0,
+        "pr_auc": 0.04303137806537643,
+        "lift_at_10_percent": 1.7892156862745099,
+        "brier_score": 0.02818098253347549,
+        "observed_percent": 2.9112531589118475,
+        "predicted_percent": 3.0891747047438542,
+        "calibration_error_pp": 0.17792154583200664,
+        "top_quintile_observed_percent": 4.739350404265129,
+        "top_quintile_predicted_percent": 5.719753825460034,
+        "top_quintile_calibration_error_pp": 0.9804034211949059,
+        "log_loss": 0.12957607337271423
+      },
+      "scenarios": {
+        "10": {
+          "metrics": {
+            "coverage_percent": 10.0,
+            "capture_percent": 9.36971116048632,
+            "observed_percent": 2.7277601214057396,
+            "predicted_percent": 3.3267619399477217,
+            "bias_pp": 0.5990018185419818,
+            "group_snapshot_mae_pp": 0.7215270188649214,
+            "group_mae_pp": 0.7215270188649215,
+            "eligible_group_count_min": 9,
+            "eligible_group_count_max": 9,
+            "mean_selected_groups_per_snapshot": 2.0
+          },
+          "group_cards": [
+            {
+              "group": "3",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 313,
+              "observed_publishable": true,
+              "effective_exposures": 2455.500000000001,
+              "observed_percent": 3.69542082742457,
+              "predicted_percent": 3.2758387552537096,
+              "error_pp": 0.4195820721708609
+            },
+            {
+              "group": "4",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 119,
+              "observed_publishable": true,
+              "effective_exposures": 14362.0,
+              "observed_percent": 2.56231722601309,
+              "predicted_percent": 3.335468379163425,
+              "error_pp": 0.7731511531503351
+            }
+          ]
+        },
+        "20": {
+          "metrics": {
+            "coverage_percent": 20.0,
+            "capture_percent": 21.963315108199822,
+            "observed_percent": 3.1970385244461523,
+            "predicted_percent": 3.295694357759796,
+            "bias_pp": 0.09865583331364373,
+            "group_snapshot_mae_pp": 0.5616085853898086,
+            "group_mae_pp": 0.5616085853898086,
+            "eligible_group_count_min": 9,
+            "eligible_group_count_max": 9,
+            "mean_selected_groups_per_snapshot": 2.0
+          },
+          "group_cards": [
+            {
+              "group": "3",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 313,
+              "observed_publishable": true,
+              "effective_exposures": 19273.0,
+              "observed_percent": 3.6700249452470475,
+              "predicted_percent": 3.266055251476432,
+              "error_pp": 0.403969693770616
+            },
+            {
+              "group": "4",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 119,
+              "observed_publishable": true,
+              "effective_exposures": 14362.0,
+              "observed_percent": 2.56231722601309,
+              "predicted_percent": 3.335468379163425,
+              "error_pp": 0.7731511531503351
+            }
+          ]
+        },
+        "30": {
+          "metrics": {
+            "coverage_percent": 30.0,
+            "capture_percent": 32.91200867239799,
+            "observed_percent": 3.193839640455092,
+            "predicted_percent": 3.246351087831435,
+            "bias_pp": 0.05251144737634303,
+            "group_snapshot_mae_pp": 0.4613785934568177,
+            "group_mae_pp": 0.4395904876373542,
+            "eligible_group_count_min": 9,
+            "eligible_group_count_max": 9,
+            "mean_selected_groups_per_snapshot": 3.0
+          },
+          "group_cards": [
+            {
+              "group": "2",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 923,
+              "observed_publishable": true,
+              "effective_exposures": 11518.499999999996,
+              "observed_percent": 2.9897290845214726,
+              "predicted_percent": 3.103449584290858,
+              "error_pp": 0.1137204997693846
+            },
+            {
+              "group": "3",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 313,
+              "observed_publishable": true,
+              "effective_exposures": 24572.0,
+              "observed_percent": 3.6586358456780075,
+              "predicted_percent": 3.2612505030366035,
+              "error_pp": 0.397385342641404
+            },
+            {
+              "group": "4",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 119,
+              "observed_publishable": true,
+              "effective_exposures": 14362.0,
+              "observed_percent": 2.56231722601309,
+              "predicted_percent": 3.335468379163425,
+              "error_pp": 0.7731511531503351
+            }
+          ]
+        }
+      }
+    },
+    "BQ": {
+      "global": {
+        "exposures": 168175.0,
+        "event_exposures": 4896.0,
+        "pr_auc": 0.0476311660836559,
+        "lift_at_10_percent": 1.9526143790849673,
+        "brier_score": 0.028131757402321884,
+        "observed_percent": 2.9112531589118475,
+        "predicted_percent": 2.887812769923561,
+        "calibration_error_pp": 0.023440388988286293,
+        "top_quintile_observed_percent": 5.027501114910064,
+        "top_quintile_predicted_percent": 5.986672387108323,
+        "top_quintile_calibration_error_pp": 0.9591712721982594,
+        "log_loss": 0.12859205501782403
+      },
+      "scenarios": {
+        "10": {
+          "metrics": {
+            "coverage_percent": 10.0,
+            "capture_percent": 9.36971116048632,
+            "observed_percent": 2.7277601214057396,
+            "predicted_percent": 3.1951732888860187,
+            "bias_pp": 0.467413167480279,
+            "group_snapshot_mae_pp": 0.633382277206594,
+            "group_mae_pp": 0.633382277206594,
+            "eligible_group_count_min": 9,
+            "eligible_group_count_max": 9,
+            "mean_selected_groups_per_snapshot": 2.0
+          },
+          "group_cards": [
+            {
+              "group": "3",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 313,
+              "observed_publishable": true,
+              "effective_exposures": 2455.500000000001,
+              "observed_percent": 3.69542082742457,
+              "predicted_percent": 3.127067029252642,
+              "error_pp": 0.5683537981719283
+            },
+            {
+              "group": "4",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 119,
+              "observed_publishable": true,
+              "effective_exposures": 14362.0,
+              "observed_percent": 2.56231722601309,
+              "predicted_percent": 3.2068175529529825,
+              "error_pp": 0.6445003269398922
+            }
+          ]
+        },
+        "20": {
+          "metrics": {
+            "coverage_percent": 20.0,
+            "capture_percent": 21.963315108199822,
+            "observed_percent": 3.1970385244461523,
+            "predicted_percent": 3.156184953181577,
+            "bias_pp": -0.040853571264575055,
+            "group_snapshot_mae_pp": 0.5912512936080119,
+            "group_mae_pp": 0.5912512936080119,
+            "eligible_group_count_min": 9,
+            "eligible_group_count_max": 9,
+            "mean_selected_groups_per_snapshot": 2.0
+          },
+          "group_cards": [
+            {
+              "group": "3",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 313,
+              "observed_publishable": true,
+              "effective_exposures": 19273.0,
+              "observed_percent": 3.6700249452470475,
+              "predicted_percent": 3.118454169291314,
+              "error_pp": 0.5515707759557334
+            },
+            {
+              "group": "4",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 119,
+              "observed_publishable": true,
+              "effective_exposures": 14362.0,
+              "observed_percent": 2.56231722601309,
+              "predicted_percent": 3.2068175529529825,
+              "error_pp": 0.6445003269398922
+            }
+          ]
+        },
+        "30": {
+          "metrics": {
+            "coverage_percent": 30.0,
+            "capture_percent": 32.91200867239799,
+            "observed_percent": 3.193839640455092,
+            "predicted_percent": 3.0898064163446946,
+            "bias_pp": -0.10403322411039753,
+            "group_snapshot_mae_pp": 0.47766677381433204,
+            "group_mae_pp": 0.4709650390060223,
+            "eligible_group_count_min": 9,
+            "eligible_group_count_max": 9,
+            "mean_selected_groups_per_snapshot": 3.0
+          },
+          "group_cards": [
+            {
+              "group": "2",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 923,
+              "observed_publishable": true,
+              "effective_exposures": 11518.499999999996,
+              "observed_percent": 2.9897290845214726,
+              "predicted_percent": 2.8918935193329873,
+              "error_pp": 0.09783556518848505
+            },
+            {
+              "group": "3",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 313,
+              "observed_publishable": true,
+              "effective_exposures": 24572.0,
+              "observed_percent": 3.6586358456780075,
+              "predicted_percent": 3.114189688372239,
+              "error_pp": 0.5444461573057682
+            },
+            {
+              "group": "4",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 119,
+              "observed_publishable": true,
+              "effective_exposures": 14362.0,
+              "observed_percent": 2.56231722601309,
+              "predicted_percent": 3.2068175529529825,
+              "error_pp": 0.6445003269398922
+            }
+          ]
+        }
+      }
+    },
+    "C": {
+      "global": {
+        "exposures": 168175.0,
+        "event_exposures": 4896.0,
+        "pr_auc": 0.04436285173876743,
+        "lift_at_10_percent": 1.7585784313725492,
+        "brier_score": 0.028196492297930035,
+        "observed_percent": 2.9112531589118475,
+        "predicted_percent": 2.941216297048839,
+        "calibration_error_pp": 0.029963138136991294,
+        "top_quintile_observed_percent": 4.813438382637134,
+        "top_quintile_predicted_percent": 6.075451657484867,
+        "top_quintile_calibration_error_pp": 1.2620132748477328,
+        "log_loss": 0.12947235235483306
+      },
+      "scenarios": {
+        "10": {
+          "metrics": {
+            "coverage_percent": 10.0,
+            "capture_percent": 9.276445031370105,
+            "observed_percent": 2.7006079901048334,
+            "predicted_percent": 3.115194234844291,
+            "bias_pp": 0.41458624473945765,
+            "group_snapshot_mae_pp": 0.5406606964267866,
+            "group_mae_pp": 0.5406606964267866,
+            "eligible_group_count_min": 9,
+            "eligible_group_count_max": 9,
+            "mean_selected_groups_per_snapshot": 2.0
+          },
+          "group_cards": [
+            {
+              "group": "2",
+              "selected_snapshots": 1,
+              "distinct_people_with_event": 630,
+              "observed_publishable": false
+            },
+            {
+              "group": "3",
+              "selected_snapshots": 4,
+              "distinct_people_with_event": 265,
+              "observed_publishable": true,
+              "effective_exposures": 1859.7000000000007,
+              "observed_percent": 3.498358587862162,
+              "predicted_percent": 2.9970379429173217,
+              "error_pp": 0.5013206449448401
+            },
+            {
+              "group": "4",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 119,
+              "observed_publishable": true,
+              "effective_exposures": 14362.0,
+              "observed_percent": 2.56231722601309,
+              "predicted_percent": 3.1216009411315726,
+              "error_pp": 0.5592837151184824
+            }
+          ]
+        },
+        "20": {
+          "metrics": {
+            "coverage_percent": 20.0,
+            "capture_percent": 21.324227664880144,
+            "observed_percent": 3.104011257536887,
+            "predicted_percent": 3.0903093562903536,
+            "bias_pp": -0.013701901246533473,
+            "group_snapshot_mae_pp": 0.49132537182965563,
+            "group_mae_pp": 0.4913253718296555,
+            "eligible_group_count_min": 9,
+            "eligible_group_count_max": 9,
+            "mean_selected_groups_per_snapshot": 2.0
+          },
+          "group_cards": [
+            {
+              "group": "2",
+              "selected_snapshots": 1,
+              "distinct_people_with_event": 630,
+              "observed_publishable": false
+            },
+            {
+              "group": "3",
+              "selected_snapshots": 4,
+              "distinct_people_with_event": 265,
+              "observed_publishable": true,
+              "effective_exposures": 15190.4,
+              "observed_percent": 3.4978840571141365,
+              "predicted_percent": 2.996421433889272,
+              "error_pp": 0.5014626232248651
+            },
+            {
+              "group": "4",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 119,
+              "observed_publishable": true,
+              "effective_exposures": 14362.0,
+              "observed_percent": 2.56231722601309,
+              "predicted_percent": 3.1216009411315726,
+              "error_pp": 0.5592837151184824
+            }
+          ]
+        },
+        "30": {
+          "metrics": {
+            "coverage_percent": 30.0,
+            "capture_percent": 32.145748682428405,
+            "observed_percent": 3.119480413243535,
+            "predicted_percent": 3.0784480453554903,
+            "bias_pp": -0.0410323678880448,
+            "group_snapshot_mae_pp": 0.41434169400252385,
+            "group_mae_pp": 0.35944801494346007,
+            "eligible_group_count_min": 9,
+            "eligible_group_count_max": 9,
+            "mean_selected_groups_per_snapshot": 2.8
+          },
+          "group_cards": [
+            {
+              "group": "2",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 923,
+              "observed_publishable": true,
+              "effective_exposures": 16413.499999999996,
+              "observed_percent": 3.155060501975171,
+              "predicted_percent": 3.140488810826908,
+              "error_pp": 0.01457169114826355
+            },
+            {
+              "group": "3",
+              "selected_snapshots": 4,
+              "distinct_people_with_event": 265,
+              "observed_publishable": true,
+              "effective_exposures": 19677.0,
+              "observed_percent": 3.4964679575138486,
+              "predicted_percent": 2.9952001928779164,
+              "error_pp": 0.5012677646359324
+            },
+            {
+              "group": "4",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 119,
+              "observed_publishable": true,
+              "effective_exposures": 14362.0,
+              "observed_percent": 2.56231722601309,
+              "predicted_percent": 3.1216009411315726,
+              "error_pp": 0.5592837151184824
+            }
+          ]
+        }
+      }
+    },
+    "CQ": {
+      "global": {
+        "exposures": 168175.0,
+        "event_exposures": 4896.0,
+        "pr_auc": 0.04863754732284757,
+        "lift_at_10_percent": 2.0302287581699345,
+        "brier_score": 0.028167699253514186,
+        "observed_percent": 2.9112531589118475,
+        "predicted_percent": 2.946148187196194,
+        "calibration_error_pp": 0.03489502828434646,
+        "top_quintile_observed_percent": 5.155344135573063,
+        "top_quintile_predicted_percent": 6.526022600038138,
+        "top_quintile_calibration_error_pp": 1.3706784644650742,
+        "log_loss": 0.12857501410263328
+      },
+      "scenarios": {
+        "10": {
+          "metrics": {
+            "coverage_percent": 10.0,
+            "capture_percent": 9.36971116048632,
+            "observed_percent": 2.7277601214057396,
+            "predicted_percent": 3.1840903091111765,
+            "bias_pp": 0.4563301877054367,
+            "group_snapshot_mae_pp": 0.6159681220892202,
+            "group_mae_pp": 0.6159681220892202,
+            "eligible_group_count_min": 9,
+            "eligible_group_count_max": 9,
+            "mean_selected_groups_per_snapshot": 2.0
+          },
+          "group_cards": [
+            {
+              "group": "3",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 313,
+              "observed_publishable": true,
+              "effective_exposures": 2455.500000000001,
+              "observed_percent": 3.69542082742457,
+              "predicted_percent": 3.148747856237582,
+              "error_pp": 0.5466729711869882
+            },
+            {
+              "group": "4",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 119,
+              "observed_publishable": true,
+              "effective_exposures": 14362.0,
+              "observed_percent": 2.56231722601309,
+              "predicted_percent": 3.1901328792985497,
+              "error_pp": 0.6278156532854594
+            }
+          ]
+        },
+        "20": {
+          "metrics": {
+            "coverage_percent": 20.0,
+            "capture_percent": 21.963315108199822,
+            "observed_percent": 3.1970385244461523,
+            "predicted_percent": 3.160505496039766,
+            "bias_pp": -0.03653302840638638,
+            "group_snapshot_mae_pp": 0.572682183303715,
+            "group_mae_pp": 0.572682183303715,
+            "eligible_group_count_min": 9,
+            "eligible_group_count_max": 9,
+            "mean_selected_groups_per_snapshot": 2.0
+          },
+          "group_cards": [
+            {
+              "group": "3",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 313,
+              "observed_publishable": true,
+              "effective_exposures": 19273.0,
+              "observed_percent": 3.6700249452470475,
+              "predicted_percent": 3.1384275383599682,
+              "error_pp": 0.5315974068870792
+            },
+            {
+              "group": "4",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 119,
+              "observed_publishable": true,
+              "effective_exposures": 14362.0,
+              "observed_percent": 2.56231722601309,
+              "predicted_percent": 3.1901328792985497,
+              "error_pp": 0.6278156532854594
+            }
+          ]
+        },
+        "30": {
+          "metrics": {
+            "coverage_percent": 30.0,
+            "capture_percent": 32.91200867239799,
+            "observed_percent": 3.193839640455092,
+            "predicted_percent": 3.131418906865069,
+            "bias_pp": -0.06242073359002309,
+            "group_snapshot_mae_pp": 0.4736956461833427,
+            "group_mae_pp": 0.4491771105541867,
+            "eligible_group_count_min": 9,
+            "eligible_group_count_max": 9,
+            "mean_selected_groups_per_snapshot": 3.0
+          },
+          "group_cards": [
+            {
+              "group": "2",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 923,
+              "observed_publishable": true,
+              "effective_exposures": 11518.499999999996,
+              "observed_percent": 2.9897290845214726,
+              "predicted_percent": 3.0539496550737404,
+              "error_pp": 0.06422057055226744
+            },
+            {
+              "group": "3",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 313,
+              "observed_publishable": true,
+              "effective_exposures": 24572.0,
+              "observed_percent": 3.6586358456780075,
+              "predicted_percent": 3.1334162821161082,
+              "error_pp": 0.5252195635618994
+            },
+            {
+              "group": "4",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 119,
+              "observed_publishable": true,
+              "effective_exposures": 14362.0,
+              "observed_percent": 2.56231722601309,
+              "predicted_percent": 3.1901328792985497,
+              "error_pp": 0.6278156532854594
+            }
+          ]
+        }
+      }
+    },
+    "J": {
+      "global": {
+        "exposures": 168175.0,
+        "event_exposures": 4896.0,
+        "pr_auc": 0.04565932796496107,
+        "lift_at_10_percent": 1.860702614379085,
+        "brier_score": 0.02819015703219641,
+        "observed_percent": 2.9112531589118475,
+        "predicted_percent": 3.013771421873207,
+        "calibration_error_pp": 0.10251826296135899,
+        "top_quintile_observed_percent": 4.902631187750854,
+        "top_quintile_predicted_percent": 6.312470147089883,
+        "top_quintile_calibration_error_pp": 1.4098389593390277,
+        "log_loss": 0.1293559792485167
+      },
+      "scenarios": {
+        "10": {
+          "metrics": {
+            "coverage_percent": 10.0,
+            "capture_percent": 12.593603947713504,
+            "observed_percent": 3.6663169274865655,
+            "predicted_percent": 4.295662326542763,
+            "bias_pp": 0.629345399056198,
+            "group_snapshot_mae_pp": 0.6293453990561971,
+            "group_mae_pp": 0.6293453990561971,
+            "eligible_group_count_min": 9,
+            "eligible_group_count_max": 9,
+            "mean_selected_groups_per_snapshot": 1.0
+          },
+          "group_cards": [
+            {
+              "group": "3",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 313,
+              "observed_publishable": true,
+              "effective_exposures": 16817.5,
+              "observed_percent": 3.666316927486567,
+              "predicted_percent": 4.295662326542753,
+              "error_pp": 0.6293453990561871
+            }
+          ]
+        },
+        "20": {
+          "metrics": {
+            "coverage_percent": 20.0,
+            "capture_percent": 23.114049512276356,
+            "observed_percent": 3.3645424828929698,
+            "predicted_percent": 3.9984381678757934,
+            "bias_pp": 0.6338956849828234,
+            "group_snapshot_mae_pp": 0.6338956849828238,
+            "group_mae_pp": 0.6338956849828238,
+            "eligible_group_count_min": 9,
+            "eligible_group_count_max": 9,
+            "mean_selected_groups_per_snapshot": 2.0
+          },
+          "group_cards": [
+            {
+              "group": "3",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 313,
+              "observed_publishable": true,
+              "effective_exposures": 24572.0,
+              "observed_percent": 3.6586358456780075,
+              "predicted_percent": 4.290777094193216,
+              "error_pp": 0.6321412485152086
+            },
+            {
+              "group": "4",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 119,
+              "observed_publishable": true,
+              "effective_exposures": 9063.0,
+              "observed_percent": 2.5671837594731373,
+              "predicted_percent": 3.2058361489558007,
+              "error_pp": 0.6386523894826631
+            }
+          ]
+        },
+        "30": {
+          "metrics": {
+            "coverage_percent": 30.0,
+            "capture_percent": 32.91200867239799,
+            "observed_percent": 3.193839640455092,
+            "predicted_percent": 3.660036457591508,
+            "bias_pp": 0.46619681713641603,
+            "group_snapshot_mae_pp": 0.5135939477991645,
+            "group_mae_pp": 0.5076423527938747,
+            "eligible_group_count_min": 9,
+            "eligible_group_count_max": 9,
+            "mean_selected_groups_per_snapshot": 3.0
+          },
+          "group_cards": [
+            {
+              "group": "2",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 923,
+              "observed_publishable": true,
+              "effective_exposures": 11518.499999999996,
+              "observed_percent": 2.9897290845214726,
+              "predicted_percent": 2.8989607167757563,
+              "error_pp": 0.09076836774571669
+            },
+            {
+              "group": "3",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 313,
+              "observed_publishable": true,
+              "effective_exposures": 24572.0,
+              "observed_percent": 3.6586358456780075,
+              "predicted_percent": 4.290777094193216,
+              "error_pp": 0.6321412485152086
+            },
+            {
+              "group": "4",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 119,
+              "observed_publishable": true,
+              "effective_exposures": 14362.0,
+              "observed_percent": 2.56231722601309,
+              "predicted_percent": 3.1912919928936136,
+              "error_pp": 0.6289747668805237
+            }
+          ]
+        }
+      }
+    },
+    "JQ": {
+      "global": {
+        "exposures": 168175.0,
+        "event_exposures": 4896.0,
+        "pr_auc": 0.04978624837124548,
+        "lift_at_10_percent": 2.026143790849673,
+        "brier_score": 0.028156216311663262,
+        "observed_percent": 2.9112531589118475,
+        "predicted_percent": 2.9650683594949956,
+        "calibration_error_pp": 0.053815200583147774,
+        "top_quintile_observed_percent": 5.315891184777762,
+        "top_quintile_predicted_percent": 6.643811188836085,
+        "top_quintile_calibration_error_pp": 1.3279200040583237,
+        "log_loss": 0.12848491987648214
+      },
+      "scenarios": {
+        "10": {
+          "metrics": {
+            "coverage_percent": 10.0,
+            "capture_percent": 12.593603947713504,
+            "observed_percent": 3.6663169274865655,
+            "predicted_percent": 4.3019694964332285,
+            "bias_pp": 0.6356525689466634,
+            "group_snapshot_mae_pp": 0.6356525689466631,
+            "group_mae_pp": 0.6356525689466631,
+            "eligible_group_count_min": 9,
+            "eligible_group_count_max": 9,
+            "mean_selected_groups_per_snapshot": 1.0
+          },
+          "group_cards": [
+            {
+              "group": "3",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 313,
+              "observed_publishable": true,
+              "effective_exposures": 16817.5,
+              "observed_percent": 3.666316927486567,
+              "predicted_percent": 4.301969496433228,
+              "error_pp": 0.6356525689466614
+            }
+          ]
+        },
+        "20": {
+          "metrics": {
+            "coverage_percent": 20.0,
+            "capture_percent": 23.114049512276356,
+            "observed_percent": 3.3645424828929698,
+            "predicted_percent": 4.004895045907663,
+            "bias_pp": 0.6403525630146927,
+            "group_snapshot_mae_pp": 0.6403525630146923,
+            "group_mae_pp": 0.6403525630146923,
+            "eligible_group_count_min": 9,
+            "eligible_group_count_max": 9,
+            "mean_selected_groups_per_snapshot": 2.0
+          },
+          "group_cards": [
+            {
+              "group": "3",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 313,
+              "observed_publishable": true,
+              "effective_exposures": 24572.0,
+              "observed_percent": 3.6586358456780075,
+              "predicted_percent": 4.297239371712093,
+              "error_pp": 0.6386035260340854
+            },
+            {
+              "group": "4",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 119,
+              "observed_publishable": true,
+              "effective_exposures": 9063.0,
+              "observed_percent": 2.5671837594731373,
+              "predicted_percent": 3.212278387663539,
+              "error_pp": 0.6450946281904018
+            }
+          ]
+        },
+        "30": {
+          "metrics": {
+            "coverage_percent": 30.0,
+            "capture_percent": 32.91200867239799,
+            "observed_percent": 3.193839640455092,
+            "predicted_percent": 3.651626945601916,
+            "bias_pp": 0.45778730514682414,
+            "group_snapshot_mae_pp": 0.5264949265048342,
+            "group_mae_pp": 0.5264949265048342,
+            "eligible_group_count_min": 9,
+            "eligible_group_count_max": 9,
+            "mean_selected_groups_per_snapshot": 3.0
+          },
+          "group_cards": [
+            {
+              "group": "2",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 923,
+              "observed_publishable": true,
+              "effective_exposures": 11518.499999999996,
+              "observed_percent": 2.9897290845214726,
+              "predicted_percent": 2.839255009487168,
+              "error_pp": 0.15047407503430443
+            },
+            {
+              "group": "3",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 313,
+              "observed_publishable": true,
+              "effective_exposures": 24572.0,
+              "observed_percent": 3.6586358456780075,
+              "predicted_percent": 4.297239371712093,
+              "error_pp": 0.6386035260340854
+            },
+            {
+              "group": "4",
+              "selected_snapshots": 5,
+              "distinct_people_with_event": 119,
+              "observed_publishable": true,
+              "effective_exposures": 14362.0,
+              "observed_percent": 2.56231722601309,
+              "predicted_percent": 3.1985784573522538,
+              "error_pp": 0.6362612313391633
+            }
+          ]
+        }
+      }
+    }
+  },
+  "reproduction": {
+    "C": {
+      "log_loss_difference": 0.0,
+      "brier_difference": 0.0
+    },
+    "CQ": {
+      "log_loss_difference": 2.7755575615628914e-17,
+      "brier_difference": 0.0
+    }
+  }
+}

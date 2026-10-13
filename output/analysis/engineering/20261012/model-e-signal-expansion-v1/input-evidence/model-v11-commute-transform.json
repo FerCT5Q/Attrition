@@ -1,0 +1,253 @@
+{
+  "reporting_mode": "presentation",
+  "outcome": "pass",
+  "method": "Haversine y recálculo por producto punto; mínimo entre oficinas compatibles; prefijo postal más específico.",
+  "catalog": "output/distribution/json/qualcomm-office-locations-catalog-20260908.json",
+  "catalog_sha256": "d033f634ef013f6641995b95b18a9efca006b45f0faddc3567162bb3e5f32a58",
+  "centroid_sources": {
+    "IN": {
+      "status": "local",
+      "path": "references/geonames-postal-centroids/IN.zip",
+      "sha256": "4fa1e8c00a543efff5496c74afb133b7b811b74811f3295fb054c7419c0238a2",
+      "source_rows": 155570
+    },
+    "US": {
+      "status": "local",
+      "path": "references/geonames-postal-centroids/US.zip",
+      "sha256": "06f614d8ea3d8e73b54667944059089940fdf5908e5f2b62cb44e52c886a1652",
+      "source_rows": 41490
+    },
+    "CN": {
+      "status": "local",
+      "path": "references/geonames-postal-centroids/CN.zip",
+      "sha256": "a55f44580b18c052d95f0d3caaab89513cefddae07b05d185ceca1acd9d55508",
+      "source_rows": 2352
+    },
+    "SG": {
+      "status": "local",
+      "path": "references/geonames-postal-centroids/SG.zip",
+      "sha256": "728a46d58592b5b12f94a3362999947e08c3de718db3c5d684f51bb588e51968",
+      "source_rows": 121154
+    },
+    "KR": {
+      "status": "local",
+      "path": "references/geonames-postal-centroids/KR.zip",
+      "sha256": "b74f93c28e2c1038e641903fe75280acd055864cdbf0c4040c6e696e1e83443a",
+      "source_rows": 35583
+    },
+    "CA": {
+      "status": "local",
+      "path": "references/geonames-postal-centroids/CA.zip",
+      "sha256": "746c5a48167776e8db3bb10eef33edfb9b5420bbc7e33faebc0d0b7a5fcc6d72",
+      "source_rows": 1657
+    },
+    "FI": {
+      "status": "local",
+      "path": "references/geonames-postal-centroids/FI.zip",
+      "sha256": "f5cb3a7b315ddf596dc65129717725e8f83fcbf3707ba913bdd222c52d4b7168",
+      "source_rows": 3576
+    },
+    "GB": {
+      "status": "local",
+      "path": "references/geonames-postal-centroids/GB.zip",
+      "sha256": "a468f551000c792484949f6374768df85ca2fd4190ed7d03c4fc1013b24b5b04",
+      "source_rows": 27450
+    },
+    "FR": {
+      "status": "local",
+      "path": "references/geonames-postal-centroids/FR.zip",
+      "sha256": "b3ba20fabb7424121da36382f81bf311470fa290b0a9c866b96b45f3190c1a7c",
+      "source_rows": 51611
+    },
+    "IE": {
+      "status": "local",
+      "path": "references/geonames-postal-centroids/IE.zip",
+      "sha256": "c13446c3a5a1d6ca969c417064a78344d94613b78cf027420cf47c22598b9da6",
+      "source_rows": 139
+    },
+    "DE": {
+      "status": "local",
+      "path": "references/geonames-postal-centroids/DE.zip",
+      "sha256": "a6bece08947c97b526bdba8bf51b7767157f21f16d0a45bb10854df41a8ec120",
+      "source_rows": 23297
+    },
+    "SE": {
+      "status": "local",
+      "path": "references/geonames-postal-centroids/SE.zip",
+      "sha256": "fad5d512675bf0914d55298c9fe731495fd24e17285f52f183c0a83df9ed2622",
+      "source_rows": 18887
+    },
+    "ES": {
+      "status": "local",
+      "path": "references/geonames-postal-centroids/ES.zip",
+      "sha256": "a0ec88b01272a3024c178cc8cd942c45a2d4d1d01c1cb3206367de8f693019fb",
+      "source_rows": 37867
+    },
+    "JP": {
+      "status": "local",
+      "path": "references/geonames-postal-centroids/JP.zip",
+      "sha256": "727805185a92f12065e8b35aa6cc41604a8df4ae1a2eacd68d7cf448dd2ecfcf",
+      "source_rows": 146883
+    },
+    "RO": {
+      "status": "local",
+      "path": "references/geonames-postal-centroids/RO.zip",
+      "sha256": "b0afac8ca4ab6468ccbbccba26e5c6e0599852eb35d59494ed8acd995625a378",
+      "source_rows": 37915
+    },
+    "AT": {
+      "status": "local",
+      "path": "references/geonames-postal-centroids/AT.zip",
+      "sha256": "ae4c3f71dd53e285e3db566a74b4925a492ad473db50d0f247cd057f3258dcf5",
+      "source_rows": 19225
+    },
+    "NL": {
+      "status": "local",
+      "path": "references/geonames-postal-centroids/NL.zip",
+      "sha256": "d2c8473a5cbdeaf2b8b4fe7532f650fb72b01e9a6a73eacd593552ec00d9df05",
+      "source_rows": 4334
+    },
+    "BR": {
+      "status": "local",
+      "path": "references/geonames-postal-centroids/BR.zip",
+      "sha256": "2a09ab3a9d12d4571ac6af35135ad4bf94864169298956a30ff697436612f31b",
+      "source_rows": 5525
+    },
+    "IT": {
+      "status": "local",
+      "path": "references/geonames-postal-centroids/IT.zip",
+      "sha256": "11ffe787a104288deced0263d93c59a85430b0900bb80ab9e9f2e6930ccb3d46",
+      "source_rows": 18415
+    },
+    "VN": {
+      "status": "no_local_catalog"
+    },
+    "AU": {
+      "status": "local",
+      "path": "references/geonames-postal-centroids/AU.zip",
+      "sha256": "179bb86aaeec0776262ee4133fc4090638a5774c547c4cd72cce58e824623481",
+      "source_rows": 18521
+    },
+    "MX": {
+      "status": "local",
+      "path": "references/geonames-postal-centroids/MX.zip",
+      "sha256": "25c8923f452384f780c143eaff32bf9fd779e3f4853f0ef4031a0190c1a69d27",
+      "source_rows": 144655
+    },
+    "ID": {
+      "status": "local",
+      "path": "references/geonames-postal-centroids/ID.zip",
+      "sha256": "33ef55dd9099ce589adb4e510fb3d78895d2faad228ca9cb9e1272535c0b9715",
+      "source_rows": 81058
+    },
+    "CH": {
+      "status": "local",
+      "path": "references/geonames-postal-centroids/CH.zip",
+      "sha256": "745ead818ba7d496ed7f09d825a55172051480be6c7ee49a68ff9f37e0b3d7d1",
+      "source_rows": 4520
+    },
+    "GR": {
+      "status": "no_local_catalog"
+    }
+  },
+  "first_observed_snapshot": "2024-08-25",
+  "maximum_independent_formula_difference_km": 2.2410975630826613e-08,
+  "unique_geographic_calculations": 12577,
+  "rows": [
+    {
+      "year": 2020,
+      "person_snapshots": 142933,
+      "onsite_rows": 0,
+      "distance_observable": 0,
+      "unmapped_office_rows": 0,
+      "unmapped_centroid_rows": 0,
+      "ambiguous_office_rows": 0,
+      "office_fallback_rows": 0,
+      "over500_km_rows": 0,
+      "independent_formula_mismatches": 0,
+      "employee_count": 24476
+    },
+    {
+      "year": 2021,
+      "person_snapshots": 307054,
+      "onsite_rows": 0,
+      "distance_observable": 0,
+      "unmapped_office_rows": 0,
+      "unmapped_centroid_rows": 0,
+      "ambiguous_office_rows": 0,
+      "office_fallback_rows": 0,
+      "over500_km_rows": 0,
+      "independent_formula_mismatches": 0,
+      "employee_count": 28687
+    },
+    {
+      "year": 2022,
+      "person_snapshots": 347636,
+      "onsite_rows": 0,
+      "distance_observable": 0,
+      "unmapped_office_rows": 0,
+      "unmapped_centroid_rows": 0,
+      "ambiguous_office_rows": 0,
+      "office_fallback_rows": 0,
+      "over500_km_rows": 0,
+      "independent_formula_mismatches": 0,
+      "employee_count": 33308
+    },
+    {
+      "year": 2023,
+      "person_snapshots": 369603,
+      "onsite_rows": 0,
+      "distance_observable": 0,
+      "unmapped_office_rows": 0,
+      "unmapped_centroid_rows": 0,
+      "ambiguous_office_rows": 0,
+      "office_fallback_rows": 0,
+      "over500_km_rows": 0,
+      "independent_formula_mismatches": 0,
+      "employee_count": 33142
+    },
+    {
+      "year": 2024,
+      "person_snapshots": 363189,
+      "onsite_rows": 148455,
+      "distance_observable": 130182,
+      "unmapped_office_rows": 8743,
+      "unmapped_centroid_rows": 7805,
+      "ambiguous_office_rows": 113222,
+      "office_fallback_rows": 130182,
+      "over500_km_rows": 20030,
+      "independent_formula_mismatches": 0,
+      "employee_count": 33555
+    },
+    {
+      "year": 2025,
+      "person_snapshots": 390263,
+      "onsite_rows": 367876,
+      "distance_observable": 322179,
+      "unmapped_office_rows": 21279,
+      "unmapped_centroid_rows": 20281,
+      "ambiguous_office_rows": 279411,
+      "office_fallback_rows": 322179,
+      "over500_km_rows": 51704,
+      "independent_formula_mismatches": 0,
+      "employee_count": 36851
+    },
+    {
+      "year": 2026,
+      "person_snapshots": 288586,
+      "onsite_rows": 262706,
+      "distance_observable": 229116,
+      "unmapped_office_rows": 15836,
+      "unmapped_centroid_rows": 14944,
+      "ambiguous_office_rows": 197956,
+      "office_fallback_rows": 229116,
+      "over500_km_rows": 38044,
+      "independent_formula_mismatches": 0,
+      "employee_count": 39116
+    }
+  ],
+  "employee_level_rows_persisted": false,
+  "location_hashes_persisted": false,
+  "assessment_score_changed": false,
+  "limitation": "Catálogo estático 2026, sin historia de direcciones; la distancia mínima es un proxy inferior, no trayecto real."
+}

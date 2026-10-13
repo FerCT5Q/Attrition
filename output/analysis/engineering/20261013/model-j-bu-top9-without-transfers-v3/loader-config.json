@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "run_id": "engineering-j-bu-top9-without-transfers-20261013-v3",
+  "output": "output/analysis/engineering/20261013/model-j-bu-top9-without-transfers-v3",
+  "reporting_mode": "presentation",
+  "authorization": "config/attrition_model_in_memory_training_authorization_20261001.json",
+  "input_contracts": "config/engineering_b_incremental_inputs_20261011.json",
+  "training_start": "2020-07-26",
+  "knowledge_boundary": "2026-09-07",
+  "base_query": "queries/profiles/engineering_bu_l3_person_month_20261012.sql",
+  "history_query": "queries/profiles/engineering_model_d_history_person_month_20261010.sql",
+  "pending_query": "queries/profiles/engineering_b_incremental_pending_person_month_20261011_v2.sql",
+  "source_c_config": "config/engineering_bu_l3_source_c_city_20261012.json",
+  "source_qvoice_config": "config/qvoice_model_calibrated_20261008.yaml",
+  "source_qvoice_metadata": "output/analysis/engineering/20261008/qvoice-model-b-calibrated-v1/preflight/source-metadata.json",
+  "base_features": [
+    "level_grouped",
+    "tenure_playbook_band",
+    "calendar_month",
+    "manager_changes_12m",
+    "team_exits_12m",
+    "direct_reports_band",
+    "time_since_promotion_band",
+    "rehire",
+    "level_x_tenure",
+    "tenure_x_manager_changes"
+  ],
+  "interactions": {
+    "level_x_tenure": [
+      "level_grouped",
+      "tenure_playbook_band"
+    ],
+    "tenure_x_manager_changes": [
+      "tenure_playbook_band",
+      "manager_changes_12m"
+    ]
+  },
+  "existing_hr_features": [
+    "bu_l3"
+  ],
+  "history_features": [],
+  "pending_features": [],
+  "rare_category_minimum_training_people": 300,
+  "minimum_observable_training_snapshots_for_selection": 6,
+  "groups": [
+    "antiguedad",
+    "salidas_equipo",
+    "nivel"
+  ],
+  "minimum_group_people_each_snapshot": 300,
+  "minimum_public_people_each_snapshot": 30,
+  "minimum_distinct_events": 30,
+  "capacity_fractions": [
+    0.2,
+    0.3,
+    0.4
+  ],
+  "primary_capacity_fraction": 0.3,
+  "bootstrap_repetitions": 500,
+  "seed": 20261012,
+  "penalty_cell_scale": 8.0,
+  "qvoice": {
+    "start": "2025-01-01",
+    "common_items": 33,
+    "extra_features": [],
+    "minimum_people_region_snapshot": 300,
+    "period_ids": [
+      "aug_dec_2025",
+      "jan_feb_2026"
+    ],
+    "wave_2026_included": false,
+    "annual_lag_policy": "config/qvoice_annual_lag_policy_20261008.json"
+  },
+  "periods": [
+    {
+      "id": "aug_dec_2025",
+      "origin": "2025-08-01",
+      "end": "2025-12-31",
+      "snapshots": 5
+    },
+    {
+      "id": "jan_feb_2026",
+      "origin": "2026-01-01",
+      "end": "2026-02-28",
+      "snapshots": 2
+    }
+  ],
+  "employee_level_rows_persisted": false,
+  "individual_scores_published": false,
+  "protected_attributes_as_features": false,
+  "qvoice_alias_features": [
+    "qv_Q1",
+    "qv_Q2",
+    "qv_Q3",
+    "qv_Q4",
+    "qv_Q5",
+    "qv_Q7",
+    "qv_Q8",
+    "qv_Q10",
+    "qv_Q11",
+    "qv_Q12",
+    "qv_Q13",
+    "qv_Q17"
+  ],
+  "skip_extra_hr_queries": true
+}

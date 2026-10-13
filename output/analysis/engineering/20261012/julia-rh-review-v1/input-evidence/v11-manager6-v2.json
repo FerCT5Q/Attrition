@@ -1,0 +1,207 @@
+{
+  "reporting_mode": "presentation",
+  "executed_at": "2026-10-12T14:18:26.653368+00:00",
+  "query": "queries/audits/engineering_b_v11_manager6_v2_2020_20261011.sql",
+  "sql_sha256": "f285b5d330fe0bb6e35697c5c2830b79999eaf4d2a1fbd59d22ebc3a5f70b75e",
+  "executions": [
+    {
+      "query": "queries/audits/engineering_b_v11_manager6_v2_2020_20261011.sql",
+      "sql_sha256": "f285b5d330fe0bb6e35697c5c2830b79999eaf4d2a1fbd59d22ebc3a5f70b75e",
+      "executed_at": "2026-10-12T14:14:09.532858+00:00",
+      "aggregate_rows": 1
+    },
+    {
+      "query": "queries/audits/engineering_b_v11_manager6_v2_2021_20261011.sql",
+      "sql_sha256": "3b82716d6a449d7f13ebf290b67ddc47ba1576731d7c558e297380f4b032bcc9",
+      "executed_at": "2026-10-12T14:14:44.082915+00:00",
+      "aggregate_rows": 1
+    },
+    {
+      "query": "queries/audits/engineering_b_v11_manager6_v2_2022_20261011.sql",
+      "sql_sha256": "9ea5c276fba0108cfcc9fc1814c9acd1e212a2c288ce61ae66906604b994985a",
+      "executed_at": "2026-10-12T14:15:22.299845+00:00",
+      "aggregate_rows": 1
+    },
+    {
+      "query": "queries/audits/engineering_b_v11_manager6_v2_2023_20261011.sql",
+      "sql_sha256": "9a055d6d9a823b518da11ff2ce5b0f0463004ba51cf6f60450e96cd194ec9b9f",
+      "executed_at": "2026-10-12T14:16:10.139068+00:00",
+      "aggregate_rows": 1
+    },
+    {
+      "query": "queries/audits/engineering_b_v11_manager6_v2_2024_20261011.sql",
+      "sql_sha256": "c0791086f9bfe12ef97d33fd007565bb523defe2f346cea15c694c089893e40d",
+      "executed_at": "2026-10-12T14:16:55.980052+00:00",
+      "aggregate_rows": 1
+    },
+    {
+      "query": "queries/audits/engineering_b_v11_manager6_v2_2025_20261011.sql",
+      "sql_sha256": "63be7169e6b6729cab9f04772869dd26c925464bd44c6abe99f57162b2415b63",
+      "executed_at": "2026-10-12T14:17:46.899006+00:00",
+      "aggregate_rows": 1
+    },
+    {
+      "query": "queries/audits/engineering_b_v11_manager6_v2_2026_20261011.sql",
+      "sql_sha256": "f41ae780ebb0e69244cb566488da594f73a585f1cb1480e2cf82e3c2019b9de2",
+      "executed_at": "2026-10-12T14:18:26.650783+00:00",
+      "aggregate_rows": 1
+    }
+  ],
+  "contract_path": "config/b_playbook_v11_contracts/manager6-v2.json",
+  "contract_sha256": "2de6b933a8af091ab5af0c67b02c6ab5ab046899981ed81b1686ca81893c23a5",
+  "contract": {
+    "schema_version": 4,
+    "id": "manager6-v2",
+    "title": "Contexto del manager a seis intervalos",
+    "claim": "Los eventos se asignan al equipo del inicio del intervalo y sólo se cuentan una vez conocidos en t.",
+    "use": "Contrastar las definiciones históricas del V11 manteniendo todos los términos de B.",
+    "semantic_type": "derived_feature",
+    "population": "Employee, Regular, activo y sin RF360 para exposición y benchmark; Engineering para la asignación final",
+    "grain": "persona-foto; historia agregada del manager actual",
+    "known_at": "Exposición en inicio del intervalo; primera observación del evento <= t, sin conflicto de tipo conocido en t",
+    "window": "2020-07-26 a 2026-09-07, con 21 meses anteriores de contexto",
+    "history": "Se reutiliza la definición V11, agregando la puerta explícita de conocimiento del evento para cada fecha. Historia insuficiente sigue desconocida. La primera foto con eventos Voluntary observados es 2022-10-23 (auditoría manager-feed); se exige además una ventana completa posterior a esa fecha.",
+    "query": "queries/audits/engineering_b_v11_manager6_v2_2020_20261011.sql",
+    "source_query": "queries/profiles/engineering_b_v11_manager_history_person_month_20261011_v2.sql",
+    "zero_fields": [
+      "duplicate_exposure_keys",
+      "contradictory_exposure_keys",
+      "duplicate_attributions",
+      "future_event_violations",
+      "history_violations",
+      "independent_formula_mismatches",
+      "bound_violations",
+      "zero_without_feed"
+    ],
+    "positive_fields": [
+      "person_snapshots",
+      "observable_rows"
+    ],
+    "expected_rows": 7,
+    "acceptance_rule": "Seis intervalos globales, estratos con al menos 30 exposiciones o fallback global, prior de 60 exposiciones y reconciliación O/E por identidad algebraica independiente. Cero duplicados, contradicciones, eventos futuros y diferencias de fórmula. No convertir ausencia del feed anterior a 2022-10-23 en cero salidas; exigir seis o dieciocho intervalos posteriores completos, respectivamente.",
+    "conclusion_if_pass": "La representación respeta el contrato temporal y puede probarse como B + X",
+    "limitation": "Describe exposición histórica, no causalidad ni evaluación del manager. Se excluyen eventos sin exposición inicial única y tipos conflictivos; no se publican identidades.",
+    "action": "Probar cada representación por separado y mantener estados desconocidos",
+    "queries": [
+      "queries/audits/engineering_b_v11_manager6_v2_2020_20261011.sql",
+      "queries/audits/engineering_b_v11_manager6_v2_2021_20261011.sql",
+      "queries/audits/engineering_b_v11_manager6_v2_2022_20261011.sql",
+      "queries/audits/engineering_b_v11_manager6_v2_2023_20261011.sql",
+      "queries/audits/engineering_b_v11_manager6_v2_2024_20261011.sql",
+      "queries/audits/engineering_b_v11_manager6_v2_2025_20261011.sql",
+      "queries/audits/engineering_b_v11_manager6_v2_2026_20261011.sql"
+    ],
+    "supersedes": "manager6: la revisión anterior no distinguía explícitamente el inicio de observación del feed."
+  },
+  "rows": [
+    {
+      "year": 2020,
+      "person_snapshots": 142933,
+      "employee_count": 24476,
+      "duplicate_exposure_keys": 0,
+      "contradictory_exposure_keys": 0,
+      "duplicate_attributions": 0,
+      "future_event_violations": 0,
+      "observable_rows": 0,
+      "two_plus_exit_rows": 0,
+      "history_violations": 0,
+      "bound_violations": 0,
+      "independent_formula_mismatches": 0,
+      "zero_without_feed": 0
+    },
+    {
+      "year": 2021,
+      "person_snapshots": 307054,
+      "employee_count": 28687,
+      "duplicate_exposure_keys": 0,
+      "contradictory_exposure_keys": 0,
+      "duplicate_attributions": 0,
+      "future_event_violations": 0,
+      "observable_rows": 0,
+      "two_plus_exit_rows": 0,
+      "history_violations": 0,
+      "bound_violations": 0,
+      "independent_formula_mismatches": 0,
+      "zero_without_feed": 0
+    },
+    {
+      "year": 2022,
+      "person_snapshots": 347636,
+      "employee_count": 33308,
+      "duplicate_exposure_keys": 0,
+      "contradictory_exposure_keys": 0,
+      "duplicate_attributions": 0,
+      "future_event_violations": 0,
+      "observable_rows": 0,
+      "two_plus_exit_rows": 0,
+      "history_violations": 0,
+      "bound_violations": 0,
+      "independent_formula_mismatches": 0,
+      "zero_without_feed": 0
+    },
+    {
+      "year": 2023,
+      "person_snapshots": 369603,
+      "employee_count": 33142,
+      "duplicate_exposure_keys": 0,
+      "contradictory_exposure_keys": 0,
+      "duplicate_attributions": 0,
+      "future_event_violations": 0,
+      "observable_rows": 276049,
+      "two_plus_exit_rows": 3654,
+      "history_violations": 0,
+      "bound_violations": 0,
+      "independent_formula_mismatches": 0,
+      "zero_without_feed": 0
+    },
+    {
+      "year": 2024,
+      "person_snapshots": 363189,
+      "employee_count": 33555,
+      "duplicate_exposure_keys": 0,
+      "contradictory_exposure_keys": 0,
+      "duplicate_attributions": 0,
+      "future_event_violations": 0,
+      "observable_rows": 360771,
+      "two_plus_exit_rows": 8777,
+      "history_violations": 0,
+      "bound_violations": 0,
+      "independent_formula_mismatches": 0,
+      "zero_without_feed": 0
+    },
+    {
+      "year": 2025,
+      "person_snapshots": 390263,
+      "employee_count": 36851,
+      "duplicate_exposure_keys": 0,
+      "contradictory_exposure_keys": 0,
+      "duplicate_attributions": 0,
+      "future_event_violations": 0,
+      "observable_rows": 386470,
+      "two_plus_exit_rows": 8480,
+      "history_violations": 0,
+      "bound_violations": 0,
+      "independent_formula_mismatches": 0,
+      "zero_without_feed": 0
+    },
+    {
+      "year": 2026,
+      "person_snapshots": 288586,
+      "employee_count": 39116,
+      "duplicate_exposure_keys": 0,
+      "contradictory_exposure_keys": 0,
+      "duplicate_attributions": 0,
+      "future_event_violations": 0,
+      "observable_rows": 286338,
+      "two_plus_exit_rows": 6399,
+      "history_violations": 0,
+      "bound_violations": 0,
+      "independent_formula_mismatches": 0,
+      "zero_without_feed": 0
+    }
+  ],
+  "outcome": "pass",
+  "failed_rules": [],
+  "employee_level_rows_persisted": false,
+  "assessment_score_changed": false
+}

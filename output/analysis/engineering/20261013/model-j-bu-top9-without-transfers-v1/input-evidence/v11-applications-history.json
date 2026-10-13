@@ -1,0 +1,90 @@
+{
+  "reporting_mode": "presentation",
+  "executed_at": "2026-10-12T15:16:15.306878+00:00",
+  "query": "queries/audits/engineering_b_v11_applications_history_20261011.sql",
+  "sql_sha256": "08fd5ef373291cf3290dc51053265fc0784452ea7093428f8937757e28119dd3",
+  "executions": [
+    {
+      "query": "queries/audits/engineering_b_v11_applications_history_20261011.sql",
+      "sql_sha256": "08fd5ef373291cf3290dc51053265fc0784452ea7093428f8937757e28119dd3",
+      "executed_at": "2026-10-12T15:16:15.301682+00:00",
+      "aggregate_rows": 2
+    }
+  ],
+  "contract_path": "config/b_playbook_v11_contracts/applications-history.json",
+  "contract_sha256": "805ac214f71d47300370d650023567faea813d63f598ce791c61f000baf66a40",
+  "contract": {
+    "schema_version": 4,
+    "id": "applications-history",
+    "title": "Historia verificable de solicitudes del playbook",
+    "claim": "Hay eventos y marcas temporales utilizables antes del corte y el feed alcanza la ventana actual.",
+    "use": "Determinar si el conteo de seis meses puede probarse sin convertir falta de feed en cero.",
+    "semantic_type": "derived_feature",
+    "population": "Eventos cand_applied=1; enlace agregado a quienes fueron Engineering elegibles en 2020–2026",
+    "grain": "fuente de eventos",
+    "known_at": "Fecha de aplicación y fechas técnicas observadas; ninguna de ellas por sí sola demuestra completitud o fecha del enlace.",
+    "window": "2020-07-26 a 2026-09-07",
+    "history": "Se revalida applications, la fuente real del V11, junto con la vista alternativa.",
+    "query": "queries/audits/engineering_b_v11_applications_history_20261011.sql",
+    "zero_fields": [
+      "missing_current_window"
+    ],
+    "positive_fields": [
+      "events_before_boundary",
+      "technical_times_before_boundary"
+    ],
+    "expected_rows": 2,
+    "acceptance_rule": "Debe haber eventos antes del corte y en la última ventana de seis meses, además de registros con fechas técnicas anteriores. Son condiciones necesarias; si pasan todavía falta validar completitud y enlace temporal.",
+    "conclusion_if_pass": "Hay condiciones necesarias para continuar con definición y enlace del feed",
+    "limitation": "Las fechas técnicas no prueban primera disponibilidad y la ausencia de solicitud no equivale a cero.",
+    "action": "Si no se cumplen las condiciones necesarias, excluir del experimento temporal con la brecha concreta."
+  },
+  "rows": [
+    {
+      "source": "applications",
+      "source_rows": 1496944,
+      "linked_people": 5045,
+      "missing_employee_rows": 1437105,
+      "incomplete_event_rows": 0,
+      "rows_linked_to_ever_eligible_engineering": 50654,
+      "first_application_date": "2020-07-13",
+      "last_application_date": "2024-10-29",
+      "first_added_date": "2020-07-13",
+      "last_added_date": "2024-10-29",
+      "first_modified_date": "2022-10-06",
+      "last_modified_date": "2025-10-02",
+      "first_loaded_date": "2022-10-06",
+      "last_loaded_date": "2025-10-02",
+      "events_before_boundary": 59803,
+      "events_in_current_six_month_window": 0,
+      "technical_times_before_boundary": 59839,
+      "missing_current_window": 1
+    },
+    {
+      "source": "job_applications_vw",
+      "source_rows": 1530877,
+      "linked_people": 8583,
+      "missing_employee_rows": 1455466,
+      "incomplete_event_rows": 0,
+      "rows_linked_to_ever_eligible_engineering": 61129,
+      "first_application_date": "2020-07-13",
+      "last_application_date": "2026-10-12",
+      "first_added_date": "2020-07-13",
+      "last_added_date": "2026-10-12",
+      "first_modified_date": "2022-10-06",
+      "last_modified_date": "2026-10-12",
+      "first_loaded_date": null,
+      "last_loaded_date": null,
+      "events_before_boundary": 75138,
+      "events_in_current_six_month_window": 4085,
+      "technical_times_before_boundary": 74909,
+      "missing_current_window": 0
+    }
+  ],
+  "outcome": "fail",
+  "failed_rules": [
+    "missing_current_window"
+  ],
+  "employee_level_rows_persisted": false,
+  "assessment_score_changed": false
+}

@@ -1,0 +1,30 @@
+{
+  "run_id": "engineering-julia-rh-review-20261012-v1",
+  "output": "output/analysis/engineering/20261012/julia-rh-review-v1",
+  "source_config": "config/engineering_bu_l3_experiment_20261012_v7.json",
+  "authorization": "config/attrition_model_in_memory_training_authorization_20261001.json",
+  "reporting_mode": "presentation",
+  "employee_level_rows_persisted": false,
+  "capacities": [0.1, 0.2, 0.3],
+  "child_minima": [100, 150, 200],
+  "parent_minimum": 300,
+  "public_people_minimum": 30,
+  "public_events_minimum": 30,
+  "bootstrap_repetitions": 500,
+  "seed": 20261012,
+  "period_weights": [0.5, 0.5],
+  "capture_relative_loss_max": 0.02,
+  "error_increase_max_pp": 0.1,
+  "true_rest_increase_max_pp": 0,
+  "calibration_bias_trigger_pp": 0.1,
+  "calibration_maximum_origins": 3,
+  "calibration_minimum_origins": 3,
+  "maximum_primary_base_fits": 4,
+  "maximum_primary_q_fits": 4,
+  "excluded_predictors": ["job_family_detail"],
+  "knowledge_limitations": [
+    "IOS del C histórico carece de acreditación de publicación histórica; conservarlo permite comparación, pero no prueba disponibilidad as-of.",
+    "La política anual QVoice no acredita la fecha real de publicación de cada wave.",
+    "La estructura y las penalizaciones se conservan; evaluación retrospectiva condicionada a elecciones anteriores."
+  ]
+}

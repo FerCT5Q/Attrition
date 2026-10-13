@@ -1,0 +1,62 @@
+{
+  "reporting_mode": "presentation",
+  "executed_at": "2026-10-12T14:40:28.863710+00:00",
+  "query": "queries/audits/engineering_b_v11_timezone_dst_20261011.sql",
+  "sql_sha256": "53aa003af533779ab0f6ba79156c2fc450f8719f1c34bc71e10a41d516fde5c9",
+  "executions": [
+    {
+      "query": "queries/audits/engineering_b_v11_timezone_dst_20261011.sql",
+      "sql_sha256": "53aa003af533779ab0f6ba79156c2fc450f8719f1c34bc71e10a41d516fde5c9",
+      "executed_at": "2026-10-12T14:40:28.862710+00:00",
+      "aggregate_rows": 1
+    }
+  ],
+  "contract_path": "config/b_playbook_v11_contracts/timezone-dst.json",
+  "contract_sha256": "e47552084cfc13bf2318a76bf93deab53e0d1b74eb8669e914a5b2948b808c65",
+  "contract": {
+    "schema_version": 4,
+    "id": "timezone-dst",
+    "title": "Offsets históricos contrastados con zoneinfo",
+    "claim": "La relación usa empleado y manager de la misma foto y respeta los offsets históricos IANA.",
+    "use": "Probar las representaciones geográficas del V11 sobre B completo.",
+    "semantic_type": "external_source",
+    "population": "Fechas y zonas de catálogo público; sin filas de RH",
+    "grain": "zona-fecha",
+    "known_at": "Ubicación de la foto; geografía pública estática 2026, usada como proxy retrospectivo declarado.",
+    "window": "2020-07-26 a 2026-09-07",
+    "history": "V11 aporta una preparación geográfica descriptiva; se incorpora su proxy, con conflictos de zona explícitos y sin asumir vigencia histórica de direcciones.",
+    "query": "queries/audits/engineering_b_v11_timezone_dst_20261011.sql",
+    "source_query": "queries/profiles/engineering_b_v11_timezone_person_month_20261011.sql",
+    "zero_fields": [
+      "offset_mismatches"
+    ],
+    "positive_fields": [
+      "cases_checked"
+    ],
+    "expected_rows": 1,
+    "acceptance_rule": "Cero diferencias en minutos entre Redshift y zoneinfo en enero, marzo, julio y noviembre de 2020–2026.",
+    "conclusion_if_pass": "El proxy puede probarse con su limitación geográfica explícita",
+    "limitation": "Sitio igual no prueba presencia física; catálogo 2026 sin vigencia histórica de direcciones. No cambia score.",
+    "action": "Probar las dos representaciones y conservar missingness",
+    "catalog_diagnostics": {
+      "catalog_office_count": 205,
+      "site_key_count": 293,
+      "city_country_key_count": 200,
+      "ambiguous_site_key_count": 1,
+      "ambiguous_city_country_key_count": 1,
+      "invalid_coordinate_count": 1,
+      "unresolved_timezone_count": 0
+    },
+    "catalog": "output/distribution/json/qualcomm-office-locations-catalog-20260908.json"
+  },
+  "rows": [
+    {
+      "cases_checked": 1036,
+      "offset_mismatches": 0
+    }
+  ],
+  "outcome": "pass",
+  "failed_rules": [],
+  "employee_level_rows_persisted": false,
+  "assessment_score_changed": false
+}

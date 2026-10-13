@@ -1,0 +1,130 @@
+{
+  "reporting_mode": "presentation",
+  "executed_at": "2026-10-12T02:09:42.279907+00:00",
+  "query": "queries/audits/engineering_b_incremental_manager_location_20261011.sql",
+  "sql_sha256": "b56840e71fa8c61577430a6351026e817369a1d80603dae88f503a1de73e1c74",
+  "claim": "Relación de ubicación registrada entre persona y manager activo de la misma foto: sitio, ciudad, país o país distinto.",
+  "acceptance_rule": "Cero en duplicate_keys, contradictory_cells, ambiguous_manager_keys, relation_violations, join_count_difference",
+  "rows": [
+    {
+      "year": 2020,
+      "person_snapshots": 142933,
+      "employee_count": 24476,
+      "duplicate_keys": 0,
+      "contradictory_cells": 0,
+      "ambiguous_manager_keys": 0,
+      "matched_rows": 142100,
+      "unmatched_rows": 833,
+      "relation_unknown": 833,
+      "relation_violations": 0,
+      "join_count_difference": 0
+    },
+    {
+      "year": 2021,
+      "person_snapshots": 307054,
+      "employee_count": 28687,
+      "duplicate_keys": 0,
+      "contradictory_cells": 0,
+      "ambiguous_manager_keys": 0,
+      "matched_rows": 305508,
+      "unmatched_rows": 1546,
+      "relation_unknown": 1546,
+      "relation_violations": 0,
+      "join_count_difference": 0
+    },
+    {
+      "year": 2022,
+      "person_snapshots": 347636,
+      "employee_count": 33308,
+      "duplicate_keys": 0,
+      "contradictory_cells": 0,
+      "ambiguous_manager_keys": 0,
+      "matched_rows": 346201,
+      "unmatched_rows": 1435,
+      "relation_unknown": 1435,
+      "relation_violations": 0,
+      "join_count_difference": 0
+    },
+    {
+      "year": 2023,
+      "person_snapshots": 369603,
+      "employee_count": 33142,
+      "duplicate_keys": 0,
+      "contradictory_cells": 0,
+      "ambiguous_manager_keys": 0,
+      "matched_rows": 368123,
+      "unmatched_rows": 1480,
+      "relation_unknown": 1480,
+      "relation_violations": 0,
+      "join_count_difference": 0
+    },
+    {
+      "year": 2024,
+      "person_snapshots": 363189,
+      "employee_count": 33555,
+      "duplicate_keys": 0,
+      "contradictory_cells": 0,
+      "ambiguous_manager_keys": 0,
+      "matched_rows": 361918,
+      "unmatched_rows": 1271,
+      "relation_unknown": 1271,
+      "relation_violations": 0,
+      "join_count_difference": 0
+    },
+    {
+      "year": 2025,
+      "person_snapshots": 390263,
+      "employee_count": 36851,
+      "duplicate_keys": 0,
+      "contradictory_cells": 0,
+      "ambiguous_manager_keys": 0,
+      "matched_rows": 389220,
+      "unmatched_rows": 1043,
+      "relation_unknown": 1043,
+      "relation_violations": 0,
+      "join_count_difference": 0
+    },
+    {
+      "year": 2026,
+      "person_snapshots": 288586,
+      "employee_count": 39116,
+      "duplicate_keys": 0,
+      "contradictory_cells": 0,
+      "ambiguous_manager_keys": 0,
+      "matched_rows": 287872,
+      "unmatched_rows": 714,
+      "relation_unknown": 714,
+      "relation_violations": 0,
+      "join_count_difference": 0
+    }
+  ],
+  "employee_level_rows_persisted": false,
+  "assessment_score_changed": false,
+  "outcome": "pass",
+  "contract": {
+    "features": [
+      "manager_location_relation"
+    ],
+    "semantic_type": "derived_feature",
+    "claim": "Relación de ubicación registrada entre persona y manager activo de la misma foto: sitio, ciudad, país o país distinto.",
+    "use": "Probar contexto de coordinación distribuida.",
+    "known_at": "snapshot t; unión sólo a manager de t",
+    "history": "Join histórico de las fotos de 2020-2026; manager no localizado se mantiene desconocido.",
+    "query": "queries/audits/engineering_b_incremental_manager_location_20261011.sql",
+    "zero_fields": [
+      "duplicate_keys",
+      "contradictory_cells",
+      "ambiguous_manager_keys",
+      "relation_violations",
+      "join_count_difference"
+    ],
+    "limitation": "Coincidir en etiquetas no prueba trabajo presencial, misma zona horaria ni proximidad residencial."
+  },
+  "population": "Employee, Regular, activo, Engineering, excluye RF360",
+  "grain": "persona-snapshot; sólo agregados fuera de RAM",
+  "date_window": [
+    "2020-07-26",
+    "2026-09-07"
+  ],
+  "method": "Consulta agregada guardada y regla de aceptación previa; resultado revisable por año."
+}

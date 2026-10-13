@@ -1,0 +1,49 @@
+﻿{
+  "run_id": "engineering-bu-l3-20261012-v7",
+  "output": "output/analysis/engineering/20261012/model-bu-l3-v7",
+  "loader_config": "config/engineering_bu_l3_loader_20261012.json",
+  "source_c_config": "config/engineering_bu_l3_source_c_city_20261012.json",
+  "base_query": "queries/profiles/engineering_bu_l3_person_month_20261012.sql",
+  "evidence_source": "output/analysis/engineering/20261013/model-f-qvoice-comparison-fast-v1",
+  "c_config": "config/engineering_model_c_20261008_fast.json",
+  "cq_config": "config/engineering_model_c_qvoice_20261008.json",
+  "b_model_dir": "output/analysis/engineering/20261011/b-playbook-v11-v1/models",
+  "audit_queries": [
+    "queries/audits/engineering_bu_l3_metadata_20261012.sql",
+    "queries/audits/engineering_bu_l3_join_20261012.sql"
+  ],
+  "profile_query": "queries/profiles/engineering_bu_l3_profile_20261012.sql",
+  "skip_extra_hr_queries": true,
+  "disable_qvoice_comments": true,
+  "qvoice_alias_features": [
+    "qv_Q1", "qv_Q2", "qv_Q3", "qv_Q4", "qv_Q5", "qv_Q7",
+    "qv_Q8", "qv_Q10", "qv_Q11", "qv_Q12", "qv_Q13", "qv_Q17"
+  ],
+  "periods": [
+    {"id": "aug_dec_2025", "origin": "2025-08-01", "end": "2025-12-31", "snapshots": 5},
+    {"id": "jan_feb_2026", "origin": "2026-01-01", "end": "2026-02-28", "snapshots": 2}
+  ],
+  "grouping": {
+    "baseline": ["antiguedad", "salidas_equipo", "nivel"],
+    "bu_dimension": "bu_l3",
+    "capacity_fraction": 0.3,
+    "minimum_group_people_each_snapshot": 300,
+    "minimum_public_people_each_snapshot": 30,
+    "minimum_distinct_events": 30,
+    "capture_relative_tolerance": 0.02,
+    "error_tolerance_pp": 0.1,
+    "maximum_rest_worsening_pp": 5.0
+  },
+  "two_stage_grouping": {
+    "enabled": true,
+    "description": "Conservar grupos baseline, seleccionar sus celdas de mayor riesgo y subdividir sÃ³lo esas celdas por BU L3.",
+    "refined_minimum_people_each_snapshot": [100, 150, 200, 300]
+  },
+  "bootstrap_repetitions": 500,
+  "seed": 20261012,
+  "reporting_mode": "presentation",
+  "employee_level_rows_persisted": false,
+  "individual_scores_published": false
+}
+
+

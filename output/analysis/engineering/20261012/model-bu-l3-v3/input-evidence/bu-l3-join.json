@@ -1,0 +1,92 @@
+{
+  "query": "queries/audits/engineering_bu_l3_join_20261012.sql",
+  "sql_sha256": "26685a87ebf8474c468ab6033148372f10287b47532bf47873cd2dde89dc29aa",
+  "executed_at": "2026-10-13T02:42:03.610778+00:00",
+  "reporting_mode": "presentation",
+  "columns": [
+    "metric",
+    "value",
+    "value_2"
+  ],
+  "rows": [
+    {
+      "metric": "department_ids_with_multiple_bu_values",
+      "value": "3538.0000",
+      "value_2": "29025.0000"
+    },
+    {
+      "metric": "duplicate_valid_matches",
+      "value": "0.0000",
+      "value_2": null
+    },
+    {
+      "metric": "employee_snapshot_rows",
+      "value": "2209264.0000",
+      "value_2": "52710.0000"
+    },
+    {
+      "metric": "future_only_mapping_rows",
+      "value": "12.0000",
+      "value_2": null
+    },
+    {
+      "metric": "matched_rows",
+      "value": "2209244.0000",
+      "value_2": null
+    },
+    {
+      "metric": "multi_bu_valid_matches",
+      "value": "0.0000",
+      "value_2": null
+    },
+    {
+      "metric": "rows_with_bu_l3",
+      "value": "2209244.0000",
+      "value_2": null
+    },
+    {
+      "metric": "rows_with_cost_center",
+      "value": "2209256.0000",
+      "value_2": null
+    },
+    {
+      "metric": "rows_with_multiple_cost_centers",
+      "value": "0.0000",
+      "value_2": null
+    },
+    {
+      "metric": "snapshot_dates",
+      "value": "74.0000",
+      "value_2": null
+    },
+    {
+      "metric": "unmatched_rows",
+      "value": "20.0000",
+      "value_2": null
+    }
+  ],
+  "result_sha256": "4f0e563f4ba9d590fbdb706bd748ccd2a8a9d409f530d739a1333a374cba66af",
+  "employee_level_rows_persisted": false,
+  "outcome": "pass",
+  "claim": "Join temporal as-of de BU L3 por cost_centerid y nk_dept_id.",
+  "population": "Employee, Regular, active_status=1, Engineering, RF360=0",
+  "grain": "employee-snapshot deduplicado",
+  "acceptance": {
+    "duplicate_valid_matches": {
+      "observed": 0.0,
+      "rule": "== 0"
+    },
+    "multi_bu_valid_matches": {
+      "observed": 0.0,
+      "rule": "== 0"
+    },
+    "unmatched_rate_percent": {
+      "observed": 0.0009052788621006815,
+      "rule": "<= 5"
+    },
+    "future_only_mapping_rows": {
+      "observed": 12.0,
+      "rule": "no future row is used; encode as (unknown)"
+    }
+  }
+}

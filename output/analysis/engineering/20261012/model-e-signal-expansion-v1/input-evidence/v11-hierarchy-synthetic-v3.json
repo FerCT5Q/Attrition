@@ -1,0 +1,55 @@
+{
+  "reporting_mode": "presentation",
+  "executed_at": "2026-10-12T14:03:35.975688+00:00",
+  "query": "queries/audits/engineering_b_v11_hierarchy_synthetic_v3_20261011.sql",
+  "sql_sha256": "0f0168ab94a060169e06b46e2845c0e307928bf02e5c4dc2cfb8079fec9c83a9",
+  "executions": [
+    {
+      "query": "queries/audits/engineering_b_v11_hierarchy_synthetic_v3_20261011.sql",
+      "sql_sha256": "0f0168ab94a060169e06b46e2845c0e307928bf02e5c4dc2cfb8079fec9c83a9",
+      "executed_at": "2026-10-12T14:03:35.975688+00:00",
+      "aggregate_rows": 1
+    }
+  ],
+  "contract_path": "config/b_playbook_v11_contracts/hierarchy-synthetic-v3.json",
+  "contract_sha256": "84c8e4fc505b28444f729d8233fcf56f3c9dc77b0f4a89b7040e4e99611c53f9",
+  "contract": {
+    "schema_version": 4,
+    "id": "hierarchy-synthetic-v3",
+    "title": "Casos límite sintéticos de jerarquía",
+    "claim": "El SQL distingue árbol válido, manager ausente, auto-ciclo, ciclo de dos nodos, varias raíces y profundidad mayor de 25.",
+    "use": "Verificar la reconstrucción con un oráculo independiente antes de modelar.",
+    "semantic_type": "hierarchy",
+    "population": "Grafos ficticios; no son datos de empleados",
+    "grain": "nodo sintético",
+    "known_at": "Cada grafo se evalúa por separado en su fecha ficticia",
+    "window": "Seis escenarios sintéticos",
+    "history": "Prueba de límites de la implementación, no evidencia HR.",
+    "query": "queries/audits/engineering_b_v11_hierarchy_synthetic_v3_20261011.sql",
+    "zero_fields": [
+      "depth_mismatches",
+      "cycle_mismatches",
+      "known_mismatches"
+    ],
+    "positive_fields": [
+      "synthetic_cases"
+    ],
+    "expected_rows": 1,
+    "acceptance_rule": "Cero diferencias frente al recorrido independiente en Python.",
+    "conclusion_if_pass": "Los casos límite probados se comportan como se definió",
+    "limitation": "Los fixtures no sustituyen la auditoría agregada de datos históricos.",
+    "action": "Conservar ambas evidencias con hashes"
+  },
+  "rows": [
+    {
+      "synthetic_cases": 47,
+      "depth_mismatches": 0,
+      "cycle_mismatches": 0,
+      "known_mismatches": 0
+    }
+  ],
+  "outcome": "pass",
+  "failed_rules": [],
+  "employee_level_rows_persisted": false,
+  "assessment_score_changed": false
+}

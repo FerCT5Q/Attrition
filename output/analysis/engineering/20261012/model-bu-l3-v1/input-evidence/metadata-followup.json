@@ -1,0 +1,816 @@
+{
+  "reporting_mode": "presentation",
+  "executed_at": "2026-10-12T02:05:29.038927+00:00",
+  "query": "queries/audits/engineering_b_incremental_metadata_followup_20261011.sql",
+  "sql_sha256": "4b4f58b227c3f75ed2538f728d70bf5fd7c24aafa6ecd00893a6334dc3c6691c",
+  "claim": "Identificar fechas efectivas y posibles llaves; no confirmar su semántica.",
+  "acceptance_rule": "Sólo metadata de columnas; timestamps técnicos no acreditan conocimiento histórico.",
+  "rows": [
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "added_date",
+      "data_type": "date"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "application_date",
+      "data_type": "date"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "cand_applied",
+      "data_type": "integer"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "candidate_id",
+      "data_type": "integer"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "candidate_name",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "candidate_status",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "cf_lrv_ea_initiator",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "company",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "company_id",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "compensation_grade",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "compensation_grade_pa",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "cost_center_id",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "cost_center_name",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "country_of_job_requisition",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "current_company",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "degree_date",
+      "data_type": "date"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "department_head",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "disability_status",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "disposition_date",
+      "data_type": "date"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "disposition_reason_as_text",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "eeo_job_classification",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "email",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "employee_id",
+      "data_type": "integer"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "eng_non_eng",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "et",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "et_1",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "et_2",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "et_3",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "et_4",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "et_5",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "et_6",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "field_of_study",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "gender",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "highest_degree",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "hired",
+      "data_type": "integer"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "initiator",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "is_evergreen",
+      "data_type": "integer"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "is_rf360_yes_no",
+      "data_type": "integer"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "job_application_step",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "job_code",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "job_family",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "job_family_group",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "job_family_short",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "job_level_compensation",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "job_posted_status",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "job_posting_title",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "last_degree_received",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "last_modified_date",
+      "data_type": "date"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "last_recruiting_stage",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "legal_full_name",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "legal_right_to_work",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "linked_evergreen_requisition",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "manager",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "manager_id",
+      "data_type": "integer"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "offer_status",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "primary_location",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "primary_work_location_country",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "professional_manufacturing",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "race",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "recruiter",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "recruiting_instruction",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "region",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "req_employee_type",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "req_id",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "rf360_comp_grade",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "source",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "source_category",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "technical_non_technical",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "job_applications_vw",
+      "column_name": "veteran_status",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "after_ios",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "airflow_dagrun_id",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "airflow_db_processing_ts",
+      "data_type": "timestamp without time zone"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "airflow_execution_date",
+      "data_type": "date"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "ar_beforeterm",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "ar_eligibility",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "before_ios",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "bonus",
+      "data_type": "integer"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "city",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "cost_center_id",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "cost_center_name",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "country",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "cycle_name",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "cycle_number",
+      "data_type": "integer"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "depthead",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "dir_rpt_cnt",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "during_ios",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "empl_id",
+      "data_type": "integer"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "employeed",
+      "data_type": "integer"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "eng_1_0",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "eng_path",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "engtype",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "et_1_leader",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "et_2_leader",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "et_3_leader",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "et_leader",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "exec_1_0",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "gender",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "hiretype",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "job_code",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "job_family",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "job_function",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "job_title",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "last_modified_date",
+      "data_type": "date"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "level",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "level_afterpromo",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "level_ll",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "level_llafterpromo",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "mgmt_1_0",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "name",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "newhire_rating",
+      "data_type": "integer"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "oncecycle_afterpromo",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "perf",
+      "data_type": "integer"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "prev_perf",
+      "data_type": "integer"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "promo_in_cycle",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "promo_index",
+      "data_type": "numeric"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "promo_quartile",
+      "data_type": "integer"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "raceethnicity",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "raceethnicity2",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "region",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "rewards_group",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "rga_afterpromo",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "span_of_control",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "stock",
+      "data_type": "integer"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "support_1_0",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "supv_id",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "talent_index",
+      "data_type": "numeric"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "talent_quartile",
+      "data_type": "integer"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "term_reason",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "title_afterpromo",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "vol_1_0",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "vp_name",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "years_in_level",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "master_talent_index",
+      "column_name": "yos",
+      "data_type": "character varying"
+    },
+    {
+      "table_schema": "hrda",
+      "table_name": "post_hire_monthly_worker_dtls",
+      "column_name": "max_hire_rehire_date",
+      "data_type": "date"
+    }
+  ],
+  "employee_level_rows_persisted": false,
+  "assessment_score_changed": false
+}

@@ -1,0 +1,49 @@
+{
+  "run_id": "engineering-h-without-transfers-20261013-v3",
+  "output": "output/analysis/engineering/20261013/model-h-without-transfers-v3",
+  "reporting_mode": "presentation",
+  "authorization": "config/attrition_model_in_memory_training_authorization_20261001.json",
+  "knowledge_boundary": "2026-09-07",
+  "training_start": "2025-01-01",
+  "source_c": "output/analysis/engineering/20261008/model-c-v2",
+  "source_cq": "output/analysis/engineering/20261008/model-c-plus-qvoice-v1",
+  "source_qvoice": "output/analysis/engineering/20261008/qvoice-model-b-calibrated-v1",
+  "source_qvoice_config": "config/qvoice_model_calibrated_20261008.yaml",
+  "query": "queries/profiles/engineering_model_c_qvoice_person_month_20261008.sql",
+  "base_origin": "2025-08-01",
+  "removed_predictors": [
+    "transfer_12m"
+  ],
+  "transfer_definition": "Indicador codificado de transferencia efectiva en los 12 meses anteriores al snapshot; no incluye transfer_history porque no fue predictor de C.",
+  "periods": [
+    {
+      "id": "aug_dec_2025",
+      "origin": "2025-08-01",
+      "end": "2025-12-31",
+      "snapshots": 5
+    },
+    {
+      "id": "jan_feb_2026",
+      "origin": "2026-01-01",
+      "end": "2026-02-28",
+      "snapshots": 2
+    }
+  ],
+  "groups": [
+    "antiguedad",
+    "salidas_equipo",
+    "nivel"
+  ],
+  "minimum_group_people_each_snapshot": 300,
+  "minimum_public_people_each_snapshot": 30,
+  "minimum_distinct_events": 30,
+  "capacity_fractions": [
+    0.2,
+    0.3,
+    0.4
+  ],
+  "primary_capacity_fraction": 0.3,
+  "bootstrap_repetitions": 500,
+  "seed": 20261013,
+  "method": "Ablación directa: conserva el conjunto seleccionado de C en 2025-08 y su L2, elimina sólo transfer_12m y reajusta coeficientes con etiquetas maduras antes del mismo origen. Para CQ sin Transfers, conserva por periodo los bloques QVoice y L2 ya seleccionados, y reajusta únicamente su corrección sobre H. No realiza búsqueda de variables ni promueve un modelo final."
+}

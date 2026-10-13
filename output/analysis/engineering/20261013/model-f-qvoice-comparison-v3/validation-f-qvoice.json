@@ -1,0 +1,201 @@
+{
+  "run_id": "engineering-f-qvoice-validation-20261013-v1",
+  "status": "completed_validation",
+  "reporting_mode": "presentation",
+  "primary_results": "output/analysis/engineering/20261013/model-f-qvoice-comparison-v3/results.json",
+  "replica_results": "output/analysis/engineering/20261013/model-f-qvoice-comparison-fast-v1/results.json",
+  "checks": [
+    {
+      "name": "modo_de_reporte",
+      "outcome": "pass",
+      "observed": "presentation",
+      "rule": "presentation"
+    },
+    {
+      "name": "sin_filas_persistidas",
+      "outcome": "pass",
+      "observed": {
+        "employee_level_rows_persisted": false,
+        "individual_scores_published": false
+      },
+      "rule": "ambos false"
+    },
+    {
+      "name": "mismos_cortes",
+      "outcome": "pass",
+      "observed": [
+        "aug_dec_2025",
+        "jan_feb_2026"
+      ],
+      "rule": "dos cortes externos idénticos en ambas ejecuciones"
+    },
+    {
+      "name": "aug_dec_2025:log_loss",
+      "outcome": "pass",
+      "observed": -0.0008059055073919019,
+      "rule": "F + QVoice no empeora"
+    },
+    {
+      "name": "aug_dec_2025:brier_score",
+      "outcome": "pass",
+      "observed": -6.087819058471847e-05,
+      "rule": "F + QVoice no empeora"
+    },
+    {
+      "name": "aug_dec_2025:pr_auc",
+      "outcome": "pass",
+      "observed": 0.0032650266031848674,
+      "rule": "F + QVoice no reduce"
+    },
+    {
+      "name": "aug_dec_2025:lift_at_10_percent",
+      "outcome": "pass",
+      "observed": 0.05718954248366037,
+      "rule": "F + QVoice no reduce"
+    },
+    {
+      "name": "aug_dec_2025:capture_percent",
+      "outcome": "pass",
+      "observed": 0.07931658814431586,
+      "rule": "F + QVoice no reduce"
+    },
+    {
+      "name": "aug_dec_2025:group_snapshot_mae_pp",
+      "outcome": "pass",
+      "observed": -0.019594512224977434,
+      "rule": "F + QVoice no empeora"
+    },
+    {
+      "name": "aug_dec_2025:solo_work_city",
+      "outcome": "pass",
+      "observed": {
+        "added": [
+          "work_city"
+        ],
+        "removed": []
+      },
+      "rule": "F añade únicamente work_city"
+    },
+    {
+      "name": "aug_dec_2025:sin_job_family_detail",
+      "outcome": "pass",
+      "observed": [],
+      "rule": "ninguna característica contiene job_family"
+    },
+    {
+      "name": "aug_dec_2025:qvoice_mismo_selector",
+      "outcome": "pass",
+      "observed": "q4+q12+career+engagement",
+      "rule": "la selección QVoice es idéntica en la ejecución de réplica"
+    },
+    {
+      "name": "jan_feb_2026:log_loss",
+      "outcome": "pass",
+      "observed": -0.001719503285495222,
+      "rule": "F + QVoice no empeora"
+    },
+    {
+      "name": "jan_feb_2026:brier_score",
+      "outcome": "pass",
+      "observed": -0.0001377544979353773,
+      "rule": "F + QVoice no empeora"
+    },
+    {
+      "name": "jan_feb_2026:pr_auc",
+      "outcome": "pass",
+      "observed": 0.005395927231344744,
+      "rule": "F + QVoice no reduce"
+    },
+    {
+      "name": "jan_feb_2026:lift_at_10_percent",
+      "outcome": "pass",
+      "observed": 0.20139745170571288,
+      "rule": "F + QVoice no reduce"
+    },
+    {
+      "name": "jan_feb_2026:capture_percent",
+      "outcome": "pass",
+      "observed": 0.0,
+      "rule": "F + QVoice no reduce"
+    },
+    {
+      "name": "jan_feb_2026:group_snapshot_mae_pp",
+      "outcome": "pass",
+      "observed": -0.1473379725237044,
+      "rule": "F + QVoice no empeora"
+    },
+    {
+      "name": "jan_feb_2026:solo_work_city",
+      "outcome": "pass",
+      "observed": {
+        "added": [
+          "work_city"
+        ],
+        "removed": []
+      },
+      "rule": "F añade únicamente work_city"
+    },
+    {
+      "name": "jan_feb_2026:sin_job_family_detail",
+      "outcome": "pass",
+      "observed": [],
+      "rule": "ninguna característica contiene job_family"
+    },
+    {
+      "name": "jan_feb_2026:qvoice_mismo_selector",
+      "outcome": "pass",
+      "observed": "q4+career+engagement+confidence",
+      "rule": "la selección QVoice es idéntica en la ejecución de réplica"
+    },
+    {
+      "name": "mejora_media_de_captura",
+      "outcome": "pass",
+      "observed": 0.03965829407216148,
+      "rule": "> 0 pp en promedio"
+    },
+    {
+      "name": "error_de_grupo_dentro_de_guarda",
+      "outcome": "pass",
+      "observed": -0.08346624237434086,
+      "rule": "F no empeora el error más de 0.1 pp"
+    },
+    {
+      "name": "captura_gana_en_ambos_cortes",
+      "outcome": "fail",
+      "observed": {
+        "aug_dec_2025": 0.07931658814431586,
+        "jan_feb_2026": 0.0
+      },
+      "rule": "> 0 pp en cada corte; regla de promoción vigente"
+    },
+    {
+      "name": "reproducibilidad_ejecucion_completa_vs_rapida",
+      "outcome": "pass",
+      "observed": "métricas agregadas idénticas dentro de 1e-12",
+      "rule": "la segunda ejecución reproduce los resultados"
+    }
+  ],
+  "period_deltas": {
+    "aug_dec_2025": {
+      "log_loss": -0.0008059055073919019,
+      "brier_score": -6.087819058471847e-05,
+      "pr_auc": 0.0032650266031848674,
+      "lift_at_10_percent": 0.05718954248366037,
+      "capture_percent": 0.07931658814431586,
+      "group_snapshot_mae_pp": -0.019594512224977434
+    },
+    "jan_feb_2026": {
+      "log_loss": -0.001719503285495222,
+      "brier_score": -0.0001377544979353773,
+      "pr_auc": 0.005395927231344744,
+      "lift_at_10_percent": 0.20139745170571288,
+      "capture_percent": 0.0,
+      "group_snapshot_mae_pp": -0.1473379725237044
+    }
+  },
+  "decision": "strong_challenger_but_fails_capture_both_periods_gate",
+  "recommendation": "F + QVoice se registra como nuevo candidato experimental y mejor challenger; C + QVoice sigue elegido por la regla vigente.",
+  "all_checks_pass": false,
+  "employee_level_rows_persisted": false,
+  "individual_scores_published": false
+}

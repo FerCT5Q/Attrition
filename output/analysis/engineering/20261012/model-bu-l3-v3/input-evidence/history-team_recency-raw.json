@@ -1,0 +1,26 @@
+{
+  "reporting_mode": "presentation",
+  "executed_at": "2026-10-12T02:18:45.986506+00:00",
+  "query": "queries/audits/engineering_b_incremental_team_recency_20261011.sql",
+  "sql_sha256": "82f11f3e7dd6e0c9e2fc4aa02ce0405bc185691c08d3f478cce01c3a694f43a3",
+  "claim": "Salidas voluntarias del equipo a tres y seis meses y fecha de última salida; mismo manager previo al evento.",
+  "acceptance_rule": "Cero en monotonicity_violations, last_event_consistency_violations, band_consistency_violations; grain persona-snapshot, Engineering activo sin RF360.",
+  "rows": [
+    {
+      "person_snapshots": 2209264,
+      "snapshots": 74,
+      "monotonicity_violations": 0,
+      "last_event_consistency_violations": 0,
+      "band_consistency_violations": 0,
+      "future_events_excluded": 1803302,
+      "late_known_events_excluded": 214920,
+      "covered_person_snapshots": 356887,
+      "covered_percent": "16.1541",
+      "maximum_3m": 6,
+      "maximum_6m": 9,
+      "maximum_12m": 10
+    }
+  ],
+  "employee_level_rows_persisted": false,
+  "assessment_score_changed": false
+}

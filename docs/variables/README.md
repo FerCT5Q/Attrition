@@ -4,6 +4,7 @@ Cada carpeta agrupa campos que representan un mismo concepto de negocio. Los doc
 
 | Concepto | Campos principales | Documento |
 |---|---|---|
+| BU L3 | `cost_centerid`, `ude_bu_reporting_l3` | [BU L3](bu-l3/README.md) |
 | Job family | `job_family`, `job_family_group` | [Job family](job-family/README.md) |
 | Job level | `job_level_primary_position`, `level_grouped`, `management_level` | [Job level](job-level/README.md) |
 | Organizational layers | `worker_supervisory_organization_level_from_top`, `employee_id`, `manager_employee_id` | [Organizational layers](organizational-layers/README.md) |

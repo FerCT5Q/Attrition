@@ -1,0 +1,342 @@
+{
+  "reporting_mode": "presentation",
+  "sources": [
+    {
+      "year": 2024,
+      "source": "data/QVoice/Jan 2024 Qvoice raw data.xlsx",
+      "sha256": "da39bc5929b972b2c12ff00568521304418028a7186a1949e1809e6b9b444d3a",
+      "prompt_roles": [
+        "doing_well",
+        "can_improve"
+      ],
+      "quality": {
+        "source_rows": 36807,
+        "invalid_key_rows": 1,
+        "excluded_response_type_rows": 0,
+        "duplicate_rows": 0,
+        "independently_checked_records": 392,
+        "independent_mismatches": 0,
+        "unique_usable_keys": 36806,
+        "distinct_duplicate_keys": 0,
+        "keys_with_comment": 20965,
+        "keys_with_improvement_comment": 19318
+      },
+      "model_years": [
+        2025
+      ],
+      "linked_person_snapshots": 269632
+    },
+    {
+      "year": 2025,
+      "source": "data/QVoice/Jan 2025_Qvoice_raw data.xlsx",
+      "sha256": "241f322c0dda9c6de62e3da9d36f729d1c06a21a4d9a1b53fb3fb08c9876a01e",
+      "prompt_roles": [
+        "doing_well",
+        "can_improve",
+        "processes_to_improve"
+      ],
+      "quality": {
+        "source_rows": 37837,
+        "invalid_key_rows": 0,
+        "excluded_response_type_rows": 0,
+        "duplicate_rows": 0,
+        "independently_checked_records": 401,
+        "independent_mismatches": 0,
+        "unique_usable_keys": 37837,
+        "distinct_duplicate_keys": 0,
+        "keys_with_comment": 20161,
+        "keys_with_improvement_comment": 18506
+      },
+      "model_years": [
+        2026
+      ],
+      "linked_person_snapshots": 190454
+    }
+  ],
+  "outcome": "pass",
+  "employee_level_rows_persisted": false,
+  "comment_text_persisted": false,
+  "wave_2026_read": false,
+  "assessment_score_changed": false,
+  "executed_at": "2026-10-12T15:12:44.390952+00:00",
+  "query": "queries/profiles/engineering_b_v11_qvoice_link_person_month_20261011.sql",
+  "sql_sha256": "70ef47309d094a2640c39ede412abd42450996d64b840a2ce6c79541cb4d27fa",
+  "contract_path": "config/b_playbook_v11_contracts/qvoice-comments.json",
+  "contract_sha256": "205e8ddeedaf45f7907414deae74c96adfae1ab705976fe98e3b7f36f1139782",
+  "transformer_source": "tools/b_v11_qvoice_comments.py",
+  "transformer_sha256": "ce0fe155aaac7f3c66c6d30192f9259cc644a18f2cee1ae1989f83337be419c8",
+  "source_hashes": {
+    "tools/b_v11_qvoice_comments.py": "ce0fe155aaac7f3c66c6d30192f9259cc644a18f2cee1ae1989f83337be419c8",
+    "tools/build_qvoice_comment_evidence.py": "5767604f271890d01fb3c43bf23469ed2c2106abb366ad6dc0097ce726cb02a8",
+    "tools/build_qvoice_retention_concerns_evidence.py": "b85d9c20686474317c7367eb45a25aebc8701da2464b515cc84f3c77c375f7cc",
+    "tools/build_qvoice_open_text_request_concern_evidence.py": "bf097a78ea7bb40f840d2dece2c14d10a77609429151ad75fe2197a15872d4b3"
+  },
+  "population": [
+    {
+      "year": 2025,
+      "person_snapshots": 390263,
+      "employee_count": 36851
+    },
+    {
+      "year": 2026,
+      "person_snapshots": 288586,
+      "employee_count": 39116
+    }
+  ],
+  "rows": [
+    {
+      "feature": "qv_comment_presence",
+      "year": 2025,
+      "person_snapshots": 390263,
+      "observable_person_snapshots": 269632,
+      "observable_snapshots": 12,
+      "observed_categories": 2,
+      "first_observed_snapshot": "2025-01-26"
+    },
+    {
+      "feature": "qv_comment_presence",
+      "year": 2026,
+      "person_snapshots": 288586,
+      "observable_person_snapshots": 190454,
+      "observable_snapshots": 8,
+      "observed_categories": 2,
+      "first_observed_snapshot": "2026-01-25"
+    },
+    {
+      "feature": "qv_improvement_comment_presence",
+      "year": 2025,
+      "person_snapshots": 390263,
+      "observable_person_snapshots": 269632,
+      "observable_snapshots": 12,
+      "observed_categories": 2,
+      "first_observed_snapshot": "2025-01-26"
+    },
+    {
+      "feature": "qv_improvement_comment_presence",
+      "year": 2026,
+      "person_snapshots": 288586,
+      "observable_person_snapshots": 190454,
+      "observable_snapshots": 8,
+      "observed_categories": 2,
+      "first_observed_snapshot": "2026-01-25"
+    },
+    {
+      "feature": "qv_comment_rewards",
+      "year": 2025,
+      "person_snapshots": 390263,
+      "observable_person_snapshots": 141174,
+      "observable_snapshots": 12,
+      "observed_categories": 2,
+      "first_observed_snapshot": "2025-01-26"
+    },
+    {
+      "feature": "qv_comment_rewards",
+      "year": 2026,
+      "person_snapshots": 288586,
+      "observable_person_snapshots": 97885,
+      "observable_snapshots": 8,
+      "observed_categories": 2,
+      "first_observed_snapshot": "2026-01-25"
+    },
+    {
+      "feature": "qv_comment_career",
+      "year": 2025,
+      "person_snapshots": 390263,
+      "observable_person_snapshots": 141174,
+      "observable_snapshots": 12,
+      "observed_categories": 2,
+      "first_observed_snapshot": "2025-01-26"
+    },
+    {
+      "feature": "qv_comment_career",
+      "year": 2026,
+      "person_snapshots": 288586,
+      "observable_person_snapshots": 97885,
+      "observable_snapshots": 8,
+      "observed_categories": 2,
+      "first_observed_snapshot": "2026-01-25"
+    },
+    {
+      "feature": "qv_comment_leadership",
+      "year": 2025,
+      "person_snapshots": 390263,
+      "observable_person_snapshots": 141174,
+      "observable_snapshots": 12,
+      "observed_categories": 2,
+      "first_observed_snapshot": "2025-01-26"
+    },
+    {
+      "feature": "qv_comment_leadership",
+      "year": 2026,
+      "person_snapshots": 288586,
+      "observable_person_snapshots": 97885,
+      "observable_snapshots": 8,
+      "observed_categories": 2,
+      "first_observed_snapshot": "2026-01-25"
+    },
+    {
+      "feature": "qv_comment_workload",
+      "year": 2025,
+      "person_snapshots": 390263,
+      "observable_person_snapshots": 141174,
+      "observable_snapshots": 12,
+      "observed_categories": 2,
+      "first_observed_snapshot": "2025-01-26"
+    },
+    {
+      "feature": "qv_comment_workload",
+      "year": 2026,
+      "person_snapshots": 288586,
+      "observable_person_snapshots": 97885,
+      "observable_snapshots": 8,
+      "observed_categories": 2,
+      "first_observed_snapshot": "2026-01-25"
+    },
+    {
+      "feature": "qv_comment_arrangement",
+      "year": 2025,
+      "person_snapshots": 390263,
+      "observable_person_snapshots": 141174,
+      "observable_snapshots": 12,
+      "observed_categories": 2,
+      "first_observed_snapshot": "2025-01-26"
+    },
+    {
+      "feature": "qv_comment_arrangement",
+      "year": 2026,
+      "person_snapshots": 288586,
+      "observable_person_snapshots": 97885,
+      "observable_snapshots": 8,
+      "observed_categories": 2,
+      "first_observed_snapshot": "2026-01-25"
+    },
+    {
+      "feature": "qv_comment_processes",
+      "year": 2025,
+      "person_snapshots": 390263,
+      "observable_person_snapshots": 141174,
+      "observable_snapshots": 12,
+      "observed_categories": 2,
+      "first_observed_snapshot": "2025-01-26"
+    },
+    {
+      "feature": "qv_comment_processes",
+      "year": 2026,
+      "person_snapshots": 288586,
+      "observable_person_snapshots": 97885,
+      "observable_snapshots": 8,
+      "observed_categories": 2,
+      "first_observed_snapshot": "2026-01-25"
+    },
+    {
+      "feature": "qv_comment_confidence",
+      "year": 2025,
+      "person_snapshots": 390263,
+      "observable_person_snapshots": 141174,
+      "observable_snapshots": 12,
+      "observed_categories": 2,
+      "first_observed_snapshot": "2025-01-26"
+    },
+    {
+      "feature": "qv_comment_confidence",
+      "year": 2026,
+      "person_snapshots": 288586,
+      "observable_person_snapshots": 97885,
+      "observable_snapshots": 8,
+      "observed_categories": 2,
+      "first_observed_snapshot": "2026-01-25"
+    },
+    {
+      "feature": "qv_comment_remote",
+      "year": 2025,
+      "person_snapshots": 390263,
+      "observable_person_snapshots": 153450,
+      "observable_snapshots": 12,
+      "observed_categories": 2,
+      "first_observed_snapshot": "2025-01-26"
+    },
+    {
+      "feature": "qv_comment_remote",
+      "year": 2026,
+      "person_snapshots": 288586,
+      "observable_person_snapshots": 106482,
+      "observable_snapshots": 8,
+      "observed_categories": 2,
+      "first_observed_snapshot": "2026-01-25"
+    },
+    {
+      "feature": "qv_comment_hybrid",
+      "year": 2025,
+      "person_snapshots": 390263,
+      "observable_person_snapshots": 153450,
+      "observable_snapshots": 12,
+      "observed_categories": 2,
+      "first_observed_snapshot": "2025-01-26"
+    },
+    {
+      "feature": "qv_comment_hybrid",
+      "year": 2026,
+      "person_snapshots": 288586,
+      "observable_person_snapshots": 106482,
+      "observable_snapshots": 8,
+      "observed_categories": 2,
+      "first_observed_snapshot": "2026-01-25"
+    },
+    {
+      "feature": "qv_comment_office",
+      "year": 2025,
+      "person_snapshots": 390263,
+      "observable_person_snapshots": 153450,
+      "observable_snapshots": 12,
+      "observed_categories": 2,
+      "first_observed_snapshot": "2025-01-26"
+    },
+    {
+      "feature": "qv_comment_office",
+      "year": 2026,
+      "person_snapshots": 288586,
+      "observable_person_snapshots": 106482,
+      "observable_snapshots": 8,
+      "observed_categories": 2,
+      "first_observed_snapshot": "2026-01-25"
+    },
+    {
+      "feature": "qv_remote_hybrid_request",
+      "year": 2025,
+      "person_snapshots": 390263,
+      "observable_person_snapshots": 153450,
+      "observable_snapshots": 12,
+      "observed_categories": 2,
+      "first_observed_snapshot": "2025-01-26"
+    },
+    {
+      "feature": "qv_remote_hybrid_request",
+      "year": 2026,
+      "person_snapshots": 288586,
+      "observable_person_snapshots": 106482,
+      "observable_snapshots": 8,
+      "observed_categories": 2,
+      "first_observed_snapshot": "2026-01-25"
+    },
+    {
+      "feature": "qv_onsite_policy_concern",
+      "year": 2025,
+      "person_snapshots": 390263,
+      "observable_person_snapshots": 153450,
+      "observable_snapshots": 12,
+      "observed_categories": 2,
+      "first_observed_snapshot": "2025-01-26"
+    },
+    {
+      "feature": "qv_onsite_policy_concern",
+      "year": 2026,
+      "person_snapshots": 288586,
+      "observable_person_snapshots": 106482,
+      "observable_snapshots": 8,
+      "observed_categories": 2,
+      "first_observed_snapshot": "2026-01-25"
+    }
+  ],
+  "acceptance_rule": "Cero diferencias frente a helpers originales en muestra determinista de al menos 30 registros por wave; población anual reconciliada, sin duplicados usados ni waves futuras.",
+  "limitation": "Los temas no equivalen a sentimiento o intención. El prompt de procesos sólo existe desde 2025; no se usan los temas más frecuentes de 2026 para seleccionar."
+}

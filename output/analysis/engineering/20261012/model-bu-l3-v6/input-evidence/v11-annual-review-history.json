@@ -1,0 +1,139 @@
+{
+  "reporting_mode": "presentation",
+  "executed_at": "2026-10-12T15:20:53.688965+00:00",
+  "query": "queries/audits/engineering_b_v11_annual_review_history_20261012.sql",
+  "sql_sha256": "e0475221a4abd7d04996ad4260589a4529d14d78395c4e8ee0c6ab80422647e9",
+  "executions": [
+    {
+      "query": "queries/audits/engineering_b_v11_annual_review_history_20261012.sql",
+      "sql_sha256": "e0475221a4abd7d04996ad4260589a4529d14d78395c4e8ee0c6ab80422647e9",
+      "executed_at": "2026-10-12T15:20:53.680117+00:00",
+      "aggregate_rows": 6
+    }
+  ],
+  "contract_path": "config/b_playbook_v11_contracts/annual-review-history.json",
+  "contract_sha256": "b4438203142c1c025e58dd4a347e5e42aa800c60edb80476e7d4b406f13888ef",
+  "contract": {
+    "schema_version": 4,
+    "id": "annual-review-history",
+    "title": "Annual Review: ciclos y conocimiento histórico",
+    "claim": "Hay registros de ciclo utilizables antes del corte, sin conflictos de flag o grade.",
+    "use": "Determinar si promotion_yes_no puede probarse junto con B sin adelantar una revisión anual.",
+    "semantic_type": "derived_feature",
+    "population": "Ciclos de Annual Review y enlace agregado a Engineering elegible en 2020–2026",
+    "grain": "persona-ciclo, agregado por ciclo con al menos 30 personas",
+    "known_at": "Fecha oficial de publicación o versión histórica requerida; timestamps técnicos son sólo condición necesaria",
+    "window": "26-jul-2020 a 7-sep-2026",
+    "history": "El V11 usa AR25 por track. No se equipara al flag is_promo del historial mensual.",
+    "query": "queries/audits/engineering_b_v11_annual_review_history_20261012.sql",
+    "zero_fields": [
+      "missing_key_groups",
+      "duplicate_groups",
+      "conflicting_groups",
+      "invalid_flags"
+    ],
+    "positive_fields": [
+      "technical_before_boundary"
+    ],
+    "acceptance_rule": "Cero conflictos, duplicados o flags inválidos y algún registro con carga y modificación anteriores al corte; después sería necesario validar publicación y unión as-of.",
+    "conclusion_if_pass": "Se cumple el requisito técnico necesario, pendiente de publicación y enlace temporal",
+    "limitation": "El año del ciclo y la fecha de carga no demuestran cuándo se comunicó o entró en vigor la promoción.",
+    "action": "Conservar promoción de B y entrada al grado; sólo habilitar Annual Review con conocimiento histórico acreditado."
+  },
+  "rows": [
+    {
+      "cycle_name": "AR20",
+      "person_cycles": 32392,
+      "source_rows": 32392,
+      "ever_eligible_engineering": 24634,
+      "missing_key_groups": 0,
+      "duplicate_groups": 0,
+      "conflicting_groups": 0,
+      "invalid_flags": 0,
+      "first_modified": "2025-06-25",
+      "last_modified": "2025-06-25",
+      "first_loaded": "2025-06-25",
+      "last_loaded": "2025-06-25",
+      "technical_before_boundary": 32392
+    },
+    {
+      "cycle_name": "AR21",
+      "person_cycles": 36766,
+      "source_rows": 36766,
+      "ever_eligible_engineering": 26787,
+      "missing_key_groups": 0,
+      "duplicate_groups": 0,
+      "conflicting_groups": 0,
+      "invalid_flags": 0,
+      "first_modified": "2025-06-25",
+      "last_modified": "2025-06-25",
+      "first_loaded": "2025-06-25",
+      "last_loaded": "2025-06-25",
+      "technical_before_boundary": 36766
+    },
+    {
+      "cycle_name": "AR22",
+      "person_cycles": 38894,
+      "source_rows": 38894,
+      "ever_eligible_engineering": 29379,
+      "missing_key_groups": 0,
+      "duplicate_groups": 0,
+      "conflicting_groups": 0,
+      "invalid_flags": 0,
+      "first_modified": "2025-06-25",
+      "last_modified": "2025-06-25",
+      "first_loaded": "2025-06-25",
+      "last_loaded": "2025-06-25",
+      "technical_before_boundary": 38894
+    },
+    {
+      "cycle_name": "AR23",
+      "person_cycles": 40729,
+      "source_rows": 40729,
+      "ever_eligible_engineering": 30368,
+      "missing_key_groups": 0,
+      "duplicate_groups": 0,
+      "conflicting_groups": 0,
+      "invalid_flags": 0,
+      "first_modified": "2025-06-25",
+      "last_modified": "2025-06-25",
+      "first_loaded": "2025-06-25",
+      "last_loaded": "2025-06-25",
+      "technical_before_boundary": 40729
+    },
+    {
+      "cycle_name": "AR24",
+      "person_cycles": 41026,
+      "source_rows": 41026,
+      "ever_eligible_engineering": 30602,
+      "missing_key_groups": 0,
+      "duplicate_groups": 0,
+      "conflicting_groups": 0,
+      "invalid_flags": 0,
+      "first_modified": "2025-06-25",
+      "last_modified": "2025-06-25",
+      "first_loaded": "2025-06-25",
+      "last_loaded": "2025-06-25",
+      "technical_before_boundary": 41026
+    },
+    {
+      "cycle_name": "AR25",
+      "person_cycles": 44426,
+      "source_rows": 44426,
+      "ever_eligible_engineering": 33048,
+      "missing_key_groups": 0,
+      "duplicate_groups": 0,
+      "conflicting_groups": 0,
+      "invalid_flags": 0,
+      "first_modified": "2025-11-09",
+      "last_modified": "2025-11-09",
+      "first_loaded": "2025-11-09",
+      "last_loaded": "2025-11-09",
+      "technical_before_boundary": 44426
+    }
+  ],
+  "outcome": "pass",
+  "failed_rules": [],
+  "employee_level_rows_persisted": false,
+  "assessment_score_changed": false
+}

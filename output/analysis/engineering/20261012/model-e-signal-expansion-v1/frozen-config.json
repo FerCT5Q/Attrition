@@ -1,0 +1,85 @@
+{
+  "model_id": "E",
+  "run_id": "engineering-model-e-signal-expansion-20261012-v1",
+  "reporting_mode": "presentation",
+  "output": "output/analysis/engineering/20261012/model-e-signal-expansion-v1",
+  "authorization": "config/attrition_model_in_memory_training_authorization_20261001.json",
+  "loader_config": "config/engineering_b_playbook_v11_20261012.json",
+  "c_config": "config/engineering_model_c_20261008_fast.json",
+  "selection_dir": "output/analysis/engineering/20261008/model-c-v2/selection",
+  "source_c_run": "output/analysis/engineering/20261008/model-c-v2",
+  "periods": [
+    {
+      "id": "feb_jul_2024",
+      "origin": "2024-02-01",
+      "end": "2024-07-31",
+      "snapshots": 6,
+      "fold": 1
+    },
+    {
+      "id": "aug_jan_2024",
+      "origin": "2024-08-01",
+      "end": "2025-01-31",
+      "snapshots": 6,
+      "fold": 2
+    },
+    {
+      "id": "feb_jul_2025",
+      "origin": "2025-02-01",
+      "end": "2025-07-31",
+      "snapshots": 6,
+      "fold": 3
+    },
+    {
+      "id": "aug_jan_2025",
+      "origin": "2025-08-01",
+      "end": "2026-01-31",
+      "snapshots": 6,
+      "fold": 4
+    }
+  ],
+  "variants": [
+    {
+      "id": "C_plus_work_city",
+      "label": "C + ciudad laboral",
+      "additions": [
+        "work_city"
+      ]
+    },
+    {
+      "id": "C_plus_job_family_detail",
+      "label": "C + familia de puesto detallada",
+      "additions": [
+        "job_family_detail"
+      ]
+    },
+    {
+      "id": "C_plus_manager_expected6",
+      "label": "C + salidas observadas/esperadas del manager",
+      "additions": [
+        "manager_observed_expected6_band"
+      ]
+    },
+    {
+      "id": "C_plus_manager_team_exits6",
+      "label": "C + salidas bajo el manager actual",
+      "additions": [
+        "manager_team_exits6_v11"
+      ]
+    },
+    {
+      "id": "C_plus_city_job_family",
+      "label": "C + ciudad laboral + familia de puesto detallada",
+      "additions": [
+        "work_city",
+        "job_family_detail"
+      ]
+    }
+  ],
+  "bootstrap_repetitions": 500,
+  "seed": 20261012,
+  "selection_method": "Se reutilizan las features y L2 seleccionadas en cada fold de C; se añaden las señales V11 y se reajusta el hazard cloglog con la misma penalización.",
+  "primary_capacity_fraction": 0.3,
+  "employee_level_rows_persisted": false,
+  "individual_scores_published": false
+}

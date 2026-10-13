@@ -203,9 +203,12 @@ def load(config,out):
     if ((frame.label_end<=frame.snapshot_date)&frame.label_end.notna()).any():
         raise RuntimeError('Intervalo de entrenamiento inválido.')
     joins = []
-    blocks = [{'name':key,'query':config[key],'features':features}
-              for key,features in [('history_query',config['history_features']),('pending_query',config['pending_features'])]]
-    blocks += config.get('extra_hr_queries',[])
+    blocks = [] if config.get('skip_extra_hr_queries', False) else [
+        {'name':key,'query':config[key],'features':features}
+        for key,features in [('history_query',config['history_features']),('pending_query',config['pending_features'])]
+    ]
+    if not config.get('skip_extra_hr_queries', False):
+        blocks += config.get('extra_hr_queries',[])
     for block in blocks:
         features = block['features']
         transformer = None
@@ -236,13 +239,22 @@ def load(config,out):
     inc.write(out/'input-evidence/hr-feature-support.json',{'reporting_mode':'presentation',
         'method':'Comprobación en RAM del diseño derivado por el SQL guardado; sólo soporte agregado anual.',
         'queries':[config[k] for k in ['base_query','history_query','pending_query']]+[b['query'] for b in config.get('extra_hr_queries',[])],
-        'rows':feature_support(frame,inc.hr_candidates(config)),'assessment_score_changed':False})
+        'rows':feature_support(frame,[f for f in inc.hr_candidates(config) if f in frame.columns]),'assessment_score_changed':False})
+    if config.get('skip_qvoice', False):
+        del salt
+        return frame, None
     qconfig = load_config(ROOT/config['source_qvoice_config'])
     metadata = base.read(ROOT/config['source_qvoice_metadata'])
     if sha256_file(ROOT/qconfig['sources']['dictionary'])!=metadata['dictionary_sha256']:
         raise RuntimeError('Cambió el diccionario QVoice.')
     qframe = frame.loc[frame.snapshot_date>=pd.Timestamp(config['qvoice']['start'])].copy().reset_index(drop=True)
-    qsource_features = [f'qv_M{i:02d}' for i in range(1,34)]+['qv_career','qv_mean33']
+    qsource_features = (
+        [f'qv_M{i:02d}' for i in range(1, 34)]
+        + ['qv_career', 'qv_mean33']
+        + config.get('qvoice_alias_features', [])
+    )
+    if len(qsource_features) != len(set(qsource_features)):
+        raise RuntimeError('Aliases QVoice repetidos en la configuración.')
     timing = {}
     qframe = horizon.attach_selected(qframe,qconfig,metadata,salt,qsource_features,timing)
     if config.get('qvoice_comments_contract'):
@@ -261,7 +273,7 @@ def load(config,out):
     inc.write(out/'input-evidence/qvoice-feature-support.json',{'reporting_mode':'presentation',
         'source_metadata':config['source_qvoice_metadata'],'source_metadata_sha256':base.sha(ROOT/config['source_qvoice_metadata']),
         'source_config_sha256':base.sha(ROOT/config['source_qvoice_config']),'timings':timing,
-        'rows':feature_support(qframe,inc.q_candidates(config)),
+        'rows':feature_support(qframe,[f for f in inc.q_candidates(config) if f in qframe.columns]),
         'common_items_counted_once':33,'wave_2026_included':False,
         'temporal_policy':config['qvoice']['annual_lag_policy'],'employee_level_rows_persisted':False,
         'assessment_score_changed':False,'career_wording_limit':qconfig['source_rules']['career_modeling_limit']})

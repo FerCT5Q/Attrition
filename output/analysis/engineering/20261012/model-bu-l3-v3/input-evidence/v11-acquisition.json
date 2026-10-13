@@ -1,0 +1,127 @@
+{
+  "reporting_mode": "presentation",
+  "executed_at": "2026-10-12T03:22:34.129001+00:00",
+  "query": "queries/audits/engineering_b_v11_acquisition_20261011.sql",
+  "sql_sha256": "1c49a2914c433e012909b91670b94f23f9e98b83fc7bf0d12f75c14b98cc8952",
+  "contract_path": "config/b_playbook_v11_contracts/acquisition.json",
+  "contract_sha256": "6d800d2af0c51be274e1594b8db6a94908cab59af395d41aaba6558fe5582a76",
+  "contract": {
+    "schema_version": 4,
+    "id": "acquisition",
+    "title": "Adquisición registrada, con detalle",
+    "feature": "acquisition_detail",
+    "claim": "La representación conserva el valor de la foto sin conflictos, duplicación ni imputación con datos futuros.",
+    "use": "Contrastar adquisiciones concretas sin perder B ni usar valores posteriores a la foto.",
+    "semantic_type": "direct_field",
+    "population": "Employee, Regular, activo, Engineering, sin RF360",
+    "grain": "persona-foto mensual",
+    "known_at": "valor registrado en la misma foto; no rellenar con una foto posterior",
+    "window": "2020-07-26 a 2026-09-07",
+    "history": "Se conserva la historia mensual disponible y sus estados sin dato; la primera fecha observada se recalcula en esta consulta.",
+    "query": "queries/audits/engineering_b_v11_acquisition_20261011.sql",
+    "source_query": "queries/profiles/engineering_b_v11_categories_person_month_20261011.sql",
+    "zero_fields": [
+      "duplicate_keys",
+      "contradictory_cells",
+      "missing_encoding_violations"
+    ],
+    "positive_fields": [
+      "person_snapshots"
+    ],
+    "expected_rows": 7,
+    "acceptance_rule": "Siete años agregados, al menos 30 personas por fila, cero llaves duplicadas o contradictorias y cero violaciones del mapping/nulos. La cobertura no se fuerza.",
+    "conclusion_if_pass": "Representación disponible para la prueba incremental; su utilidad predictiva aún no se conoce",
+    "limitation": "Sin registro no equivale a contratación orgánica. No se consolidan aliases sin evidencia.",
+    "action": "Agrupar categorías raras sólo con el entrenamiento y probar como B + X"
+  },
+  "rows": [
+    {
+      "year": 2020,
+      "person_snapshots": 142933,
+      "employee_count": 24476,
+      "snapshots": 6,
+      "duplicate_keys": 0,
+      "contradictory_cells": 0,
+      "populated_rows": 14612,
+      "first_observed_snapshot": "2020-07-26",
+      "categories": 59,
+      "missing_encoding_violations": 0
+    },
+    {
+      "year": 2021,
+      "person_snapshots": 307054,
+      "employee_count": 28687,
+      "snapshots": 12,
+      "duplicate_keys": 0,
+      "contradictory_cells": 0,
+      "populated_rows": 31377,
+      "first_observed_snapshot": "2021-01-24",
+      "categories": 64,
+      "missing_encoding_violations": 0
+    },
+    {
+      "year": 2022,
+      "person_snapshots": 347636,
+      "employee_count": 33308,
+      "snapshots": 12,
+      "duplicate_keys": 0,
+      "contradictory_cells": 0,
+      "populated_rows": 39090,
+      "first_observed_snapshot": "2022-01-23",
+      "categories": 72,
+      "missing_encoding_violations": 0
+    },
+    {
+      "year": 2023,
+      "person_snapshots": 369603,
+      "employee_count": 33142,
+      "snapshots": 12,
+      "duplicate_keys": 0,
+      "contradictory_cells": 0,
+      "populated_rows": 38948,
+      "first_observed_snapshot": "2023-01-22",
+      "categories": 76,
+      "missing_encoding_violations": 0
+    },
+    {
+      "year": 2024,
+      "person_snapshots": 363189,
+      "employee_count": 33555,
+      "snapshots": 12,
+      "duplicate_keys": 0,
+      "contradictory_cells": 0,
+      "populated_rows": 33327,
+      "first_observed_snapshot": "2024-01-21",
+      "categories": 76,
+      "missing_encoding_violations": 0
+    },
+    {
+      "year": 2025,
+      "person_snapshots": 390263,
+      "employee_count": 36851,
+      "snapshots": 12,
+      "duplicate_keys": 0,
+      "contradictory_cells": 0,
+      "populated_rows": 34543,
+      "first_observed_snapshot": "2025-01-26",
+      "categories": 82,
+      "missing_encoding_violations": 0
+    },
+    {
+      "year": 2026,
+      "person_snapshots": 288586,
+      "employee_count": 39116,
+      "snapshots": 8,
+      "duplicate_keys": 0,
+      "contradictory_cells": 0,
+      "populated_rows": 32745,
+      "first_observed_snapshot": "2026-01-25",
+      "categories": 89,
+      "missing_encoding_violations": 0
+    }
+  ],
+  "outcome": "pass",
+  "failed_rules": [],
+  "employee_level_rows_persisted": false,
+  "assessment_score_changed": false
+}

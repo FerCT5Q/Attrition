@@ -1,0 +1,55 @@
+{
+  "reporting_mode": "presentation",
+  "executed_at": "2026-10-12T14:12:41.377007+00:00",
+  "query": "queries/audits/engineering_b_v11_manager_feed_20261011.sql",
+  "sql_sha256": "dd6ace7e52dd100bb0964d03fe11104d6b43b9f45e470757060068d297903da2",
+  "executions": [
+    {
+      "query": "queries/audits/engineering_b_v11_manager_feed_20261011.sql",
+      "sql_sha256": "dd6ace7e52dd100bb0964d03fe11104d6b43b9f45e470757060068d297903da2",
+      "executed_at": "2026-10-12T14:12:41.375532+00:00",
+      "aggregate_rows": 1
+    }
+  ],
+  "contract_path": "config/b_playbook_v11_contracts/manager-feed.json",
+  "contract_sha256": "758bf040e8afa27146709274a99b3f44c7bb32599fda9e248fbdba9dcf7f8446",
+  "contract": {
+    "schema_version": 4,
+    "id": "manager-feed",
+    "title": "Inicio observado de salidas para contexto del manager",
+    "claim": "¿El cero histórico representa un feed observado o un periodo anterior a su primera observación?",
+    "use": "Evitar que falta de historia se convierta en cero salidas.",
+    "semantic_type": "derived_feature",
+    "population": "Fuente de eventos usados para contexto agregado del manager; las asignaciones finales son Engineering",
+    "grain": "evento deduplicado; resultado agregado global",
+    "known_at": "Primera foto con tipo Voluntary y fecha efectiva ya ocurrida",
+    "window": "Contexto desde 2018-10-26 hasta 2026-09-07",
+    "history": "La auditoría previa encontró ausencia de O/E observable antes de 2022; se comprueba la causa antes de finalizar.",
+    "query": "queries/audits/engineering_b_v11_manager_feed_20261011.sql",
+    "zero_fields": [],
+    "positive_fields": [
+      "event_keys"
+    ],
+    "expected_rows": 1,
+    "acceptance_rule": "Obtener fechas extremas y recuentos de historia tardía; el inicio observado se usará para codificar historia incompleta, sin asumir ceros.",
+    "conclusion_if_pass": "Existe evidencia agregada para decidir el inicio admisible de las ventanas",
+    "limitation": "Primera observación no acredita que un evento no existiera antes en otros sistemas.",
+    "action": "Exigir una ventana completa posterior al inicio observado del feed"
+  },
+  "rows": [
+    {
+      "event_keys": 29906,
+      "employee_count": 29666,
+      "first_known_voluntary_date": "2022-10-23",
+      "last_known_voluntary_date": "2026-08-23",
+      "first_effective_voluntary_date": "2018-10-29",
+      "known_before_2022": 0,
+      "recorded_over_45_days_after_event": 10530,
+      "conflicting_type_events": 15
+    }
+  ],
+  "outcome": "pass",
+  "failed_rules": [],
+  "employee_level_rows_persisted": false,
+  "assessment_score_changed": false
+}

@@ -1,0 +1,26 @@
+{
+  "authorization_id": "attrition-model-in-memory-person-month-training-20261001",
+  "authorized_on": "2026-10-01",
+  "authorized_by": "requester (project owner), explicit instruction in session",
+  "status": "approved",
+  "purpose": "Train and validate the six-month voluntary attrition model on person-month rows so that multiple feature blocks can be evaluated together; aggregated cells exceed the 1000-row query cap with more than ~5 categorical features.",
+  "scope": {
+    "population": "Employee, Regular, active_status=1, is_rf360_yes_no=0, eng_or_noneng='Engineering' per monthly snapshot",
+    "source_schema": "hrda (read-only)",
+    "rows_in_memory": "person-month feature rows and labels, held only in the Python process during training/validation",
+    "identifiers": "employee_id is never selected; at most a per-query pseudonymous surrogate is used in memory for grouping (dedupe, cluster bootstrap) and discarded with the process"
+  },
+  "non_negotiable_controls": {
+    "employee_rows_persisted": false,
+    "employee_ids_selected_or_persisted": false,
+    "names_emails_free_text": false,
+    "exact_compensation": false,
+    "individual_scores_published": false,
+    "individual_explanations_published": false,
+    "protected_attributes_as_features": false,
+    "published_outputs": "aggregate groups only, minimum 30 people per snapshot and 30 events for observed rates",
+    "disk_cache_of_rows": false,
+    "logs_contain_rows": false
+  },
+  "interpretation": "Processing in memory is permitted; what the audience sees remains group-level. Every run manifest must cite this authorization and declare employee_level_rows_persisted=false."
+}

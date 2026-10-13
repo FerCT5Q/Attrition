@@ -1,0 +1,185 @@
+{
+  "reporting_mode": "presentation",
+  "executed_at": "2026-10-12T15:14:43.663625+00:00",
+  "query": "queries/audits/engineering_b_v11_applications_metadata_20261011.sql",
+  "sql_sha256": "da32413cdb73929825aa79f4a823b4c273ad07bdbd4f251e4e773c7752959619",
+  "executions": [
+    {
+      "query": "queries/audits/engineering_b_v11_applications_metadata_20261011.sql",
+      "sql_sha256": "da32413cdb73929825aa79f4a823b4c273ad07bdbd4f251e4e773c7752959619",
+      "executed_at": "2026-10-12T15:14:43.661614+00:00",
+      "aggregate_rows": 29
+    }
+  ],
+  "contract_path": "config/b_playbook_v11_contracts/applications-metadata.json",
+  "contract_sha256": "4672161ef670df0da8d7e9357eb416cc2a91864ebcf4e338aa13f8082e49722f",
+  "contract": {
+    "schema_version": 4,
+    "id": "applications-metadata",
+    "title": "Metadata de aplicaciones internas",
+    "claim": "Identificar las fuentes y fechas del conteo V11, sin equiparar aplicaciones con una vista distinta.",
+    "use": "Determinar si puede reconstruirse B más solicitudes internas.",
+    "semantic_type": "derived_feature",
+    "population": "Metadata de hrda.applications y job_applications_vw; sin filas de empleados",
+    "grain": "tabla-columna",
+    "known_at": "Metadata actual; no demuestra fecha histórica de los eventos.",
+    "window": "Cortes previstos 2020-07-26 a 2026-09-07",
+    "history": "El playbook tiene preparación en applications; se contrasta con la vista inspeccionada previamente.",
+    "query": "queries/audits/engineering_b_v11_applications_metadata_20261011.sql",
+    "acceptance_rule": "La metadata debe identificar las columnas para formular la comprobación temporal; sin asignar score.",
+    "conclusion_if_pass": "Fuentes disponibles para revisión temporal específica",
+    "limitation": "Los nombres de timestamps no prueban conocimiento ni completitud del feed.",
+    "action": "Revisar agregados de fechas y enlace antes de habilitar una candidata."
+  },
+  "rows": [
+    {
+      "table_name": "applications",
+      "column_name": "added_date",
+      "data_type": "date"
+    },
+    {
+      "table_name": "applications",
+      "column_name": "airflow_execution_date",
+      "data_type": "date"
+    },
+    {
+      "table_name": "applications",
+      "column_name": "application_date",
+      "data_type": "date"
+    },
+    {
+      "table_name": "applications",
+      "column_name": "cand_applied",
+      "data_type": "integer"
+    },
+    {
+      "table_name": "applications",
+      "column_name": "candidate_id",
+      "data_type": "integer"
+    },
+    {
+      "table_name": "applications",
+      "column_name": "candidate_name",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "applications",
+      "column_name": "candidate_status",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "applications",
+      "column_name": "candidate_type",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "applications",
+      "column_name": "country_of_job_requisition",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "applications",
+      "column_name": "disposition_date",
+      "data_type": "date"
+    },
+    {
+      "table_name": "applications",
+      "column_name": "employee_id",
+      "data_type": "integer"
+    },
+    {
+      "table_name": "applications",
+      "column_name": "last_modified_date",
+      "data_type": "date"
+    },
+    {
+      "table_name": "applications",
+      "column_name": "linked_evergreen_requisition",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "applications",
+      "column_name": "req_employee_type",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "applications",
+      "column_name": "req_id",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "job_applications_vw",
+      "column_name": "added_date",
+      "data_type": "date"
+    },
+    {
+      "table_name": "job_applications_vw",
+      "column_name": "application_date",
+      "data_type": "date"
+    },
+    {
+      "table_name": "job_applications_vw",
+      "column_name": "cand_applied",
+      "data_type": "integer"
+    },
+    {
+      "table_name": "job_applications_vw",
+      "column_name": "candidate_id",
+      "data_type": "integer"
+    },
+    {
+      "table_name": "job_applications_vw",
+      "column_name": "candidate_name",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "job_applications_vw",
+      "column_name": "candidate_status",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "job_applications_vw",
+      "column_name": "country_of_job_requisition",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "job_applications_vw",
+      "column_name": "degree_date",
+      "data_type": "date"
+    },
+    {
+      "table_name": "job_applications_vw",
+      "column_name": "disposition_date",
+      "data_type": "date"
+    },
+    {
+      "table_name": "job_applications_vw",
+      "column_name": "employee_id",
+      "data_type": "integer"
+    },
+    {
+      "table_name": "job_applications_vw",
+      "column_name": "last_modified_date",
+      "data_type": "date"
+    },
+    {
+      "table_name": "job_applications_vw",
+      "column_name": "linked_evergreen_requisition",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "job_applications_vw",
+      "column_name": "req_employee_type",
+      "data_type": "character varying"
+    },
+    {
+      "table_name": "job_applications_vw",
+      "column_name": "req_id",
+      "data_type": "character varying"
+    }
+  ],
+  "outcome": "pass",
+  "failed_rules": [],
+  "employee_level_rows_persisted": false,
+  "assessment_score_changed": false
+}

@@ -1,0 +1,141 @@
+{
+  "reporting_mode": "presentation",
+  "executed_at": "2026-10-12T15:25:01.197898+00:00",
+  "query": "queries/audits/engineering_b_v11_stored_role_20261012.sql",
+  "sql_sha256": "4f0e2af7a53b2d148c22c9b173f113f5fddc36e0350123c498ae17cb48be39dc",
+  "executions": [
+    {
+      "query": "queries/audits/engineering_b_v11_stored_role_20261012.sql",
+      "sql_sha256": "4f0e2af7a53b2d148c22c9b173f113f5fddc36e0350123c498ae17cb48be39dc",
+      "executed_at": "2026-10-12T15:25:01.195723+00:00",
+      "aggregate_rows": 7
+    }
+  ],
+  "contract_path": "config/b_playbook_v11_contracts/stored-role.json",
+  "contract_sha256": "78136488f5844c226bcdaaec61051ff33dfb160b121e17ff48a2fafa0be1cef3",
+  "contract": {
+    "schema_version": 4,
+    "id": "stored-role",
+    "title": "Tiempo en rol almacenado y bandas del V11",
+    "claim": "El campo de la misma foto tiene grain único y bandas V11 reproducibles.",
+    "use": "Probar su aporte a B con representación distinta del tiempo calculado en perfil.",
+    "semantic_type": "precomputed_metric",
+    "population": "Engineering, Employee, Regular, activo y sin RF360",
+    "grain": "persona-foto; salida agregada anual",
+    "known_at": "Valor almacenado en la propia foto; no se reconstruye ni completa historia ausente",
+    "window": "26-jul-2020 a 7-sep-2026",
+    "history": "V11 muestra time_in_role separado del perfil. Se revalida la historia de Engineering.",
+    "query": "queries/audits/engineering_b_v11_stored_role_20261012.sql",
+    "zero_fields": [
+      "duplicate_keys",
+      "conflicting_values",
+      "band_mismatches",
+      "invalid_observed"
+    ],
+    "positive_fields": [
+      "observable_rows"
+    ],
+    "expected_rows": 7,
+    "acceptance_rule": "Cero duplicados, conflictos, bandas diferentes o negativos/nulos codificados como observados. La selección exige además seis fotos observables de entrenamiento.",
+    "conclusion_if_pass": "Bandas verificadas para el valor almacenado; revisar historia mínima por corte",
+    "limitation": "El recálculo de bandas no acredita fórmula, unidad ni semántica de resets del campo precalculado.",
+    "action": "Incorporar como valor almacenado explícito, sin cambiar scores ni equipararlo a tiempo en nivel."
+  },
+  "rows": [
+    {
+      "year": 2020,
+      "person_snapshots": 142933,
+      "distinct_people": 24476,
+      "duplicate_keys": 0,
+      "conflicting_values": 0,
+      "negative_values": 0,
+      "observable_rows": 0,
+      "observable_snapshots": 0,
+      "first_observed_date": null,
+      "band_mismatches": 0,
+      "invalid_observed": 0
+    },
+    {
+      "year": 2021,
+      "person_snapshots": 307054,
+      "distinct_people": 28687,
+      "duplicate_keys": 0,
+      "conflicting_values": 0,
+      "negative_values": 0,
+      "observable_rows": 0,
+      "observable_snapshots": 0,
+      "first_observed_date": null,
+      "band_mismatches": 0,
+      "invalid_observed": 0
+    },
+    {
+      "year": 2022,
+      "person_snapshots": 347636,
+      "distinct_people": 33308,
+      "duplicate_keys": 0,
+      "conflicting_values": 0,
+      "negative_values": 0,
+      "observable_rows": 0,
+      "observable_snapshots": 0,
+      "first_observed_date": null,
+      "band_mismatches": 0,
+      "invalid_observed": 0
+    },
+    {
+      "year": 2023,
+      "person_snapshots": 369603,
+      "distinct_people": 33142,
+      "duplicate_keys": 0,
+      "conflicting_values": 0,
+      "negative_values": 0,
+      "observable_rows": 0,
+      "observable_snapshots": 0,
+      "first_observed_date": null,
+      "band_mismatches": 0,
+      "invalid_observed": 0
+    },
+    {
+      "year": 2024,
+      "person_snapshots": 363189,
+      "distinct_people": 33555,
+      "duplicate_keys": 0,
+      "conflicting_values": 0,
+      "negative_values": 0,
+      "observable_rows": 0,
+      "observable_snapshots": 0,
+      "first_observed_date": null,
+      "band_mismatches": 0,
+      "invalid_observed": 0
+    },
+    {
+      "year": 2025,
+      "person_snapshots": 390263,
+      "distinct_people": 36851,
+      "duplicate_keys": 0,
+      "conflicting_values": 0,
+      "negative_values": 0,
+      "observable_rows": 168175,
+      "observable_snapshots": 5,
+      "first_observed_date": "2025-08-24",
+      "band_mismatches": 0,
+      "invalid_observed": 0
+    },
+    {
+      "year": 2026,
+      "person_snapshots": 288586,
+      "distinct_people": 39116,
+      "duplicate_keys": 0,
+      "conflicting_values": 0,
+      "negative_values": 0,
+      "observable_rows": 288586,
+      "observable_snapshots": 8,
+      "first_observed_date": "2026-01-25",
+      "band_mismatches": 0,
+      "invalid_observed": 0
+    }
+  ],
+  "outcome": "pass",
+  "failed_rules": [],
+  "employee_level_rows_persisted": false,
+  "assessment_score_changed": false
+}

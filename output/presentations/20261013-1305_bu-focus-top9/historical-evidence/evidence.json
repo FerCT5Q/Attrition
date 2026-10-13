@@ -1,0 +1,525 @@
+{
+  "deck": "engineering-model-evolution-b-cq",
+  "created_at": "2026-10-12T08:33:12-06:00",
+  "language": "en",
+  "deliverable_classification": "presentation",
+  "cq_version": "engineering-c-qvoice-20261008-v1",
+  "timings_seconds": [
+    60,
+    45,
+    120,
+    120,
+    135,
+    180,
+    120,
+    180,
+    120
+  ],
+  "risk_groups": {
+    "label_en": "higher-risk groups",
+    "label_es": "grupos de riesgo alto",
+    "definition_en": "Groups with the highest estimated risk of voluntary exits over the next 6 months, selected to cover 30% of Engineering.",
+    "definition_es": "Grupos con mayor riesgo estimado de salida voluntaria en los próximos 6 meses, seleccionados hasta cubrir el 30% de Engineering. Son los grupos que queremos atender primero. La etiqueta expresa su posición relativa en esta comparación."
+  },
+  "base": {
+    "path": "references/presentations/model-selection/20261005-julia-8-groups/presentacion-eng.html",
+    "sha256": "1dfc30dd99a6205ce067ed7a3abf4828748f1f09b736045ae2d6e5465b89a9ae"
+  },
+  "sources": {
+    "S01": {
+      "path": "docs/context/model-selection-current.md",
+      "sha256": "b0337641946f371ab93213edf353d0e141467e2d455b2480c35d4842bac882f9"
+    },
+    "S02": {
+      "path": "references/presentations/model-selection/20261005-julia-8-groups/presentacion-eng.html",
+      "sha256": "1dfc30dd99a6205ce067ed7a3abf4828748f1f09b736045ae2d6e5465b89a9ae"
+    },
+    "S03": {
+      "path": "output/analysis/engineering/20261003/playbook-tenure-confirmation-v1/confirmation-results.json",
+      "sha256": "9e9da0564f162a049d66a1fb82c17b88616e9e0d5679b3990fb42d19d61e6426"
+    },
+    "S04": {
+      "path": "output/analysis/engineering/20261003/playbook-group-selection-v1/group-selection-results.json",
+      "sha256": "4113cb232f9c51d42f042ce52fa5a8c951ad71cea54b163173a29c4c83d9a1f7"
+    },
+    "S05": {
+      "path": "output/analysis/engineering/20261008/qvoice-model-b-annual-lag-v2/comparison-results.json",
+      "sha256": "b7e8e76af32b50d803a9cee9a26f7c19f06711d0a1256e28884c437779ee0d9a"
+    },
+    "S06": {
+      "path": "output/analysis/engineering/20261008/qvoice-model-b-calibrated-v1/comparison-results.json",
+      "sha256": "e26eef6d748660b2a4da083dd513252090fee34ac4ae746ff617d660373b3d8f"
+    },
+    "S07": {
+      "path": "output/analysis/engineering/20261008/qvoice-horizon-calibration-v1/comparison-results.json",
+      "sha256": "18ddde5628dcc5613ae3fe306af2d5e4dc6044e37822eeffd65a8382d4d6e280"
+    },
+    "S08": {
+      "path": "output/analysis/engineering/20261008/c-group-selection-v1/results.json",
+      "sha256": "deed2325b1b0edc5834a9cdfdab6980ca63d535dd7f0fd98cae7176de35ac44b"
+    },
+    "S09": {
+      "path": "output/analysis/engineering/20261008/model-c-v2/decision-eleccion-c-con-cortes-b.md",
+      "sha256": "c4ca13324b6b133f8fe5e3239f3e42f18687e7689dcc4c2e30a6e97f479214e9"
+    },
+    "S10": {
+      "path": "docs/context/model-c-plus-qvoice.md",
+      "sha256": "edf422222dd247163b3ac6e5068e32a8adf5a050a1d585ff8914dabeb20b36e1"
+    },
+    "S11": {
+      "path": "output/analysis/engineering/20261009/c-qvoice-mean28-v1/results.json",
+      "sha256": "1cd04f33407a9c64c2b8dacada231f0869e9b0d795c9aa6997d6b2781486a0a0"
+    },
+    "S12": {
+      "path": "output/analysis/engineering/20261010/model-d-v1/results.json",
+      "sha256": "0df17cd496b7e995baa7455761b16d3978695aaa59c8a06dd87f1ffb08ce2317"
+    },
+    "S12_decision": {
+      "path": "output/analysis/engineering/20261010/model-d-v1/selection-decision.json",
+      "sha256": "e40cfee7a2609ae3e83073a74e1ad5f1d2a2e0d55aec5d94cb1248da3363f176"
+    },
+    "S13": {
+      "path": "docs/context/model-c.md",
+      "sha256": "d030388e9c2693b5de4e7b856480b5f86ac075df5751457cb6b96dc4fe6dcedc"
+    },
+    "S14": {
+      "path": "config/attrition_model_in_memory_training_authorization_20261001.json",
+      "sha256": "746e1f79f88880c9a62955791c703eeff4e3d8b6aed8b08e409c715a86b4c4b0"
+    }
+  },
+  "population": "Engineering; Employee, Regular, activos, sin RF360; salida voluntaria a 6 meses",
+  "figures": [
+    {
+      "slide": 5,
+      "id": "b_capture",
+      "source": "S08",
+      "source_path": "output/analysis/engineering/20261008/c-group-selection-v1/results.json",
+      "fields": [
+        "summary[\"30\"].B_cuts.metrics.capture_percent"
+      ],
+      "value": 45.17161487934626,
+      "formula": "valor",
+      "shown": "45.2%",
+      "error_measure": null,
+      "period": "4 periods"
+    },
+    {
+      "slide": 5,
+      "id": "c_capture_4p",
+      "source": "S08",
+      "source_path": "output/analysis/engineering/20261008/c-group-selection-v1/results.json",
+      "fields": [
+        "summary[\"30\"].C_Bcuts.metrics.capture_percent"
+      ],
+      "value": 45.43736894090631,
+      "formula": "valor",
+      "shown": "45.4%",
+      "error_measure": null,
+      "period": "4 periods"
+    },
+    {
+      "slide": 5,
+      "id": "b_gap",
+      "source": "S08",
+      "source_path": "output/analysis/engineering/20261008/c-group-selection-v1/results.json",
+      "fields": [
+        "summary[\"30\"].B_cuts.metrics.group_mae_pp"
+      ],
+      "value": 0.8776865876885518,
+      "formula": "valor",
+      "shown": "0.9",
+      "error_measure": "group_mae_pp",
+      "period": "4 periods"
+    },
+    {
+      "slide": 5,
+      "id": "c_gap_4p",
+      "source": "S08",
+      "source_path": "output/analysis/engineering/20261008/c-group-selection-v1/results.json",
+      "fields": [
+        "summary[\"30\"].C_Bcuts.metrics.group_mae_pp"
+      ],
+      "value": 0.7780308344391014,
+      "formula": "valor",
+      "shown": "0.8",
+      "error_measure": "group_mae_pp",
+      "period": "4 periods"
+    },
+    {
+      "slide": 5,
+      "id": "bc_gap_reduction",
+      "source": "S08",
+      "source_path": "output/analysis/engineering/20261008/c-group-selection-v1/results.json",
+      "fields": [
+        "group_mae_pp B_cuts",
+        "group_mae_pp C_Bcuts"
+      ],
+      "value": 11.354366655174797,
+      "formula": "100*(1-C/B)",
+      "shown": "11%",
+      "error_measure": "group_mae_pp",
+      "period": "4 periods"
+    },
+    {
+      "slide": 5,
+      "id": "bc_capture_diff_notes",
+      "source": "S08",
+      "source_path": "output/analysis/engineering/20261008/c-group-selection-v1/results.json",
+      "fields": [
+        "summary[\"30\"].C_Bcuts.comparison"
+      ],
+      "value": 0.2657540615600485,
+      "formula": "C-B (guion)",
+      "shown": "+0.27 [-0.32, 0.85]",
+      "error_measure": null,
+      "period": "4 periods"
+    },
+    {
+      "slide": 6,
+      "id": "c_capture",
+      "source": "S12",
+      "source_path": "output/analysis/engineering/20261010/model-d-v1/results.json",
+      "fields": [
+        "summary.C.scenarios[\"30\"].capture_percent"
+      ],
+      "value": 42.441570879871044,
+      "formula": "valor",
+      "shown": "42.4%",
+      "error_measure": null,
+      "period": "2 periods"
+    },
+    {
+      "slide": 1,
+      "id": "cq_capture",
+      "source": "S12",
+      "source_path": "output/analysis/engineering/20261010/model-d-v1/results.json",
+      "fields": [
+        "summary.CQ.scenarios[\"30\"].capture_percent"
+      ],
+      "value": 43.10597886408406,
+      "formula": "valor",
+      "shown": "43.1%",
+      "error_measure": null,
+      "period": "2 periods"
+    },
+    {
+      "slide": 1,
+      "id": "cq_gain_vs_c",
+      "source": "S12",
+      "source_path": "output/analysis/engineering/20261010/model-d-v1/results.json",
+      "fields": [
+        "capture_percent CQ",
+        "capture_percent C"
+      ],
+      "value": 0.664407984213014,
+      "formula": "CQ-C",
+      "shown": "+0.7",
+      "error_measure": null,
+      "period": "2 periods"
+    },
+    {
+      "slide": 6,
+      "id": "random_reference",
+      "source": "S12",
+      "source_path": "output/analysis/engineering/20261010/model-d-v1/results.json",
+      "fields": [
+        "summary.CQ.scenarios[\"30\"].coverage_percent"
+      ],
+      "value": 30.0,
+      "formula": "selección al azar = cobertura",
+      "shown": "30%",
+      "error_measure": null,
+      "period": "2 periods"
+    },
+    {
+      "slide": 1,
+      "id": "cq_gap_reduction",
+      "source": "S12",
+      "source_path": "output/analysis/engineering/20261010/model-d-v1/results.json",
+      "fields": [
+        "group_snapshot_mae_pp C",
+        "group_snapshot_mae_pp CQ"
+      ],
+      "value": 2.3212391426329915,
+      "formula": "100*(1-CQ/C)",
+      "shown": "2.3%",
+      "error_measure": "group_snapshot_mae_pp",
+      "period": "2 periods"
+    },
+    {
+      "slide": 1,
+      "id": "cq_group_gap",
+      "source": "S12",
+      "source_path": "output/analysis/engineering/20261010/model-d-v1/results.json",
+      "fields": [
+        "summary.CQ.scenarios[\"30\"].group_snapshot_mae_pp"
+      ],
+      "value": 0.9709330350389753,
+      "formula": "valor; salidas por cada 100 personas",
+      "shown": "1",
+      "error_measure": "group_snapshot_mae_pp",
+      "period": "2 periods"
+    },
+    {
+      "slide": 6,
+      "id": "overestimate_notes",
+      "source": "S12",
+      "source_path": "output/analysis/engineering/20261010/model-d-v1/results.json",
+      "fields": [
+        "bias_pp C",
+        "bias_pp CQ"
+      ],
+      "value": -0.2001351786947404,
+      "formula": "CQ/C-1 (sólo guion)",
+      "shown": "-20%",
+      "error_measure": null,
+      "period": "2 periods"
+    },
+    {
+      "slide": 6,
+      "id": "period_aug_dec_2025",
+      "source": "S12",
+      "source_path": "output/analysis/engineering/20261010/model-d-v1/results.json",
+      "fields": [
+        "periods.aug_dec_2025.evaluation.C.scenarios[\"30\"].metrics.capture_percent",
+        "periods.aug_dec_2025.evaluation.CQ.scenarios[\"30\"].metrics.capture_percent"
+      ],
+      "value": [
+        42.12766895388011,
+        43.45648492230614
+      ],
+      "formula": "C, CQ; lectura por igualdad",
+      "shown": "42.1% → 43.5% (better)",
+      "error_measure": null,
+      "period": "aug_dec_2025"
+    },
+    {
+      "slide": 6,
+      "id": "period_jan_feb_2026",
+      "source": "S12",
+      "source_path": "output/analysis/engineering/20261010/model-d-v1/results.json",
+      "fields": [
+        "periods.jan_feb_2026.evaluation.C.scenarios[\"30\"].metrics.capture_percent",
+        "periods.jan_feb_2026.evaluation.CQ.scenarios[\"30\"].metrics.capture_percent"
+      ],
+      "value": [
+        42.75547280586198,
+        42.75547280586198
+      ],
+      "formula": "C, CQ; lectura por igualdad",
+      "shown": "42.8% → 42.8% (tied)",
+      "error_measure": null,
+      "period": "jan_feb_2026"
+    },
+    {
+      "slide": 8,
+      "id": "row_CQ",
+      "source": "S12",
+      "source_path": "output/analysis/engineering/20261010/model-d-v1/results.json",
+      "fields": [
+        "capture_percent",
+        "group_snapshot_mae_pp",
+        "jan_feb_2026 capture_percent"
+      ],
+      "value": [
+        43.10597886408406,
+        null,
+        42.75547280586198
+      ],
+      "formula": "100*(error_alt/error_CQ-1)",
+      "shown": "43.1% · — · 42.8%",
+      "error_measure": "group_snapshot_mae_pp",
+      "period": "2 periods"
+    },
+    {
+      "slide": 8,
+      "id": "row_disjoint",
+      "source": "S11",
+      "source_path": "output/analysis/engineering/20261009/c-qvoice-mean28-v1/results.json",
+      "fields": [
+        "capture_percent",
+        "group_snapshot_mae_pp",
+        "jan_feb_2026 capture_percent"
+      ],
+      "value": [
+        43.10597886408406,
+        4.071207261750476,
+        42.75547280586198
+      ],
+      "formula": "100*(error_alt/error_CQ-1)",
+      "shown": "43.1% · 4.1% larger · 42.8%",
+      "error_measure": "group_snapshot_mae_pp",
+      "period": "2 periods"
+    },
+    {
+      "slide": 8,
+      "id": "row_D",
+      "source": "S12",
+      "source_path": "output/analysis/engineering/20261010/model-d-v1/results.json",
+      "fields": [
+        "capture_percent",
+        "group_snapshot_mae_pp",
+        "jan_feb_2026 capture_percent"
+      ],
+      "value": [
+        42.82407388033898,
+        -0.8491023095631878,
+        42.1123462502275
+      ],
+      "formula": "100*(error_alt/error_CQ-1)",
+      "shown": "42.8% · 0.8% smaller · 42.1%",
+      "error_measure": "group_snapshot_mae_pp",
+      "period": "2 periods"
+    },
+    {
+      "slide": 8,
+      "id": "row_RSF_Q",
+      "source": "S12",
+      "source_path": "output/analysis/engineering/20261010/model-d-v1/results.json",
+      "fields": [
+        "capture_percent",
+        "group_snapshot_mae_pp",
+        "jan_feb_2026 capture_percent"
+      ],
+      "value": [
+        43.08888698461092,
+        10.2771973210378,
+        42.681183463134914
+      ],
+      "formula": "100*(error_alt/error_CQ-1)",
+      "shown": "43.1% · 10.3% larger · 42.7%",
+      "error_measure": "group_snapshot_mae_pp",
+      "period": "2 periods"
+    },
+    {
+      "slide": 3,
+      "id": "groups_eligible",
+      "source": "S04",
+      "source_path": "output/analysis/engineering/20261003/playbook-group-selection-v1/group-selection-results.json",
+      "fields": [
+        "final.groups_eligible"
+      ],
+      "value": 22,
+      "formula": "valor",
+      "shown": "22",
+      "error_measure": null,
+      "period": null
+    },
+    {
+      "slide": 3,
+      "id": "min_group_people",
+      "source": "S04",
+      "source_path": "output/analysis/engineering/20261003/playbook-group-selection-v1/group-selection-results.json",
+      "fields": [
+        "design.min_group_people"
+      ],
+      "value": 300,
+      "formula": "valor",
+      "shown": "300+",
+      "error_measure": null,
+      "period": null
+    },
+    {
+      "slide": 3,
+      "id": "possible_combinations",
+      "source": "S04",
+      "source_path": "output/analysis/engineering/20261003/playbook-group-selection-v1/group-selection-results.json",
+      "fields": [
+        "final.all_groups[].parts"
+      ],
+      "value": 36,
+      "formula": "producto de valores distintos por corte",
+      "shown": "36",
+      "error_measure": null,
+      "period": null
+    },
+    {
+      "slide": 4,
+      "id": "survey_variants",
+      "source": "S05",
+      "source_path": "output/analysis/engineering/20261008/qvoice-model-b-annual-lag-v2/comparison-results.json",
+      "fields": [
+        "variants[]"
+      ],
+      "value": 9,
+      "formula": "conteo",
+      "shown": "9",
+      "error_measure": null,
+      "period": null
+    },
+    {
+      "slide": 4,
+      "id": "variants_better_ranking",
+      "source": "S05",
+      "source_path": "output/analysis/engineering/20261008/qvoice-model-b-annual-lag-v2/comparison-results.json",
+      "fields": [
+        "variants[].decision.checks.ranking_vs_control"
+      ],
+      "value": 9,
+      "formula": "conteo true",
+      "shown": "9",
+      "error_measure": null,
+      "period": null
+    },
+    {
+      "slide": 4,
+      "id": "variants_all_checks",
+      "source": "S05",
+      "source_path": "output/analysis/engineering/20261008/qvoice-model-b-annual-lag-v2/comparison-results.json",
+      "fields": [
+        "variants[].decision.checks"
+      ],
+      "value": 0,
+      "formula": "conteo todas true",
+      "shown": "None",
+      "error_measure": null,
+      "period": null
+    }
+  ],
+  "qualitative_claims": [
+    {
+      "claim": "Se conservan las definiciones de grupo (años, salidas del equipo, nivel)",
+      "source": "S08",
+      "scope": "B_cuts y C_Bcuts usan los mismos cortes"
+    },
+    {
+      "claim": "Fairness no se encontró en los estudios revisados",
+      "source": "plan alterno H1/O08",
+      "scope": "Estudios S01–S14 revisados hasta 2026-10-10"
+    },
+    {
+      "claim": "Las señales de historia del equipo de D no quedaron en su versión final",
+      "source": "S12",
+      "scope": "final_selected.features sin señales de historia del equipo"
+    },
+    {
+      "claim": "La versión final de septiembre requiere evaluación con datos posteriores",
+      "source": "S01/S10",
+      "scope": "Modelos históricos usaron el modelo disponible en cada fecha"
+    },
+    {
+      "claim": "Procesamiento en memoria; sin filas de empleados persistidas; sin scores individuales publicados",
+      "source": "S11, S12, S14",
+      "scope": "employee_level_rows_persisted=false, individual_scores_published=false"
+    },
+    {
+      "claim": "El piloto no ha empezado",
+      "source": "S01",
+      "scope": "Alcance de la decisión"
+    },
+    {
+      "claim": "Compromisos del deck anterior",
+      "source": "S02",
+      "scope": "Diapositiva 9 de la base"
+    },
+    {
+      "claim": "time_at_level_band forma parte de C",
+      "source": "S13",
+      "scope": "Términos de C"
+    }
+  ],
+  "pending_confirmations": {
+    "fairness_review": "no confirmada; redacción condicional del plan",
+    "qvoice_use_agreement": "no confirmado; redacción condicional del plan"
+  }
+}

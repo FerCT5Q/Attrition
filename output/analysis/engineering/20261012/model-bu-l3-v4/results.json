@@ -1,0 +1,3935 @@
+{
+  "run_id": "engineering-bu-l3-20261012-v4",
+  "reporting_mode": "presentation",
+  "status": "completed_experimental",
+  "created_at": "2026-10-13T03:05:04.495974+00:00",
+  "knowledge_boundary": "2026-09-07",
+  "data_quality": {
+    "metadata": {
+      "query": "queries/audits/engineering_bu_l3_metadata_20261012.sql",
+      "sql_sha256": "bcb3ec8918475785fe363c23edf011d31b735c89f57b0cc63befabbf0ff8721f",
+      "executed_at": "2026-10-13T02:51:51.333189+00:00",
+      "reporting_mode": "presentation",
+      "columns": [
+        "table_name",
+        "column_name",
+        "data_type",
+        "ordinal_position"
+      ],
+      "rows": [
+        {
+          "table_name": "d_department",
+          "column_name": "nk_dept_id",
+          "data_type": "character varying",
+          "ordinal_position": 2
+        },
+        {
+          "table_name": "d_department",
+          "column_name": "edw_effective_dt",
+          "data_type": "date",
+          "ordinal_position": 87
+        },
+        {
+          "table_name": "d_department",
+          "column_name": "edw_end_dt",
+          "data_type": "date",
+          "ordinal_position": 89
+        },
+        {
+          "table_name": "d_department",
+          "column_name": "edw_cur_indicator",
+          "data_type": "character varying",
+          "ordinal_position": 90
+        },
+        {
+          "table_name": "d_department",
+          "column_name": "ude_bu_reporting_l3",
+          "data_type": "character varying",
+          "ordinal_position": 213
+        },
+        {
+          "table_name": "post_hire_monthly_worker_dtls",
+          "column_name": "employee_id",
+          "data_type": "bigint",
+          "ordinal_position": 2
+        },
+        {
+          "table_name": "post_hire_monthly_worker_dtls",
+          "column_name": "cost_centerid",
+          "data_type": "character varying",
+          "ordinal_position": 24
+        },
+        {
+          "table_name": "post_hire_monthly_worker_dtls",
+          "column_name": "fis_mo_end_dt",
+          "data_type": "date",
+          "ordinal_position": 128
+        }
+      ],
+      "result_sha256": "3b7521f3739ff92791335843df347fe8c3e76f58e6bcdbb706660983012abed7",
+      "employee_level_rows_persisted": false,
+      "outcome": "pass"
+    },
+    "join": {
+      "query": "queries/audits/engineering_bu_l3_join_20261012.sql",
+      "sql_sha256": "26685a87ebf8474c468ab6033148372f10287b47532bf47873cd2dde89dc29aa",
+      "executed_at": "2026-10-13T02:51:52.476773+00:00",
+      "reporting_mode": "presentation",
+      "columns": [
+        "metric",
+        "value",
+        "value_2"
+      ],
+      "rows": [
+        {
+          "metric": "department_ids_with_multiple_bu_values",
+          "value": "3538.0000",
+          "value_2": "29025.0000"
+        },
+        {
+          "metric": "duplicate_valid_matches",
+          "value": "0.0000",
+          "value_2": null
+        },
+        {
+          "metric": "employee_snapshot_rows",
+          "value": "2209264.0000",
+          "value_2": "52710.0000"
+        },
+        {
+          "metric": "future_only_mapping_rows",
+          "value": "12.0000",
+          "value_2": null
+        },
+        {
+          "metric": "matched_rows",
+          "value": "2209244.0000",
+          "value_2": null
+        },
+        {
+          "metric": "multi_bu_valid_matches",
+          "value": "0.0000",
+          "value_2": null
+        },
+        {
+          "metric": "rows_with_bu_l3",
+          "value": "2209244.0000",
+          "value_2": null
+        },
+        {
+          "metric": "rows_with_cost_center",
+          "value": "2209256.0000",
+          "value_2": null
+        },
+        {
+          "metric": "rows_with_multiple_cost_centers",
+          "value": "0.0000",
+          "value_2": null
+        },
+        {
+          "metric": "snapshot_dates",
+          "value": "74.0000",
+          "value_2": null
+        },
+        {
+          "metric": "unmatched_rows",
+          "value": "20.0000",
+          "value_2": null
+        }
+      ],
+      "result_sha256": "4f0e563f4ba9d590fbdb706bd748ccd2a8a9d409f530d739a1333a374cba66af",
+      "employee_level_rows_persisted": false,
+      "outcome": "pass",
+      "claim": "Join temporal as-of de BU L3 por cost_centerid y nk_dept_id.",
+      "population": "Employee, Regular, active_status=1, Engineering, RF360=0",
+      "grain": "employee-snapshot deduplicado",
+      "acceptance": {
+        "duplicate_valid_matches": {
+          "observed": 0.0,
+          "rule": "== 0"
+        },
+        "multi_bu_valid_matches": {
+          "observed": 0.0,
+          "rule": "== 0"
+        },
+        "unmatched_rate_percent": {
+          "observed": 0.0009052788621006815,
+          "rule": "<= 5"
+        },
+        "future_only_mapping_rows": {
+          "observed": 12.0,
+          "rule": "no future row is used; encode as (unknown)"
+        }
+      }
+    },
+    "metrics": {
+      "department_ids_with_multiple_bu_values": 3538.0,
+      "duplicate_valid_matches": 0.0,
+      "employee_snapshot_rows": 2209264.0,
+      "future_only_mapping_rows": 12.0,
+      "matched_rows": 2209244.0,
+      "multi_bu_valid_matches": 0.0,
+      "rows_with_bu_l3": 2209244.0,
+      "rows_with_cost_center": 2209256.0,
+      "rows_with_multiple_cost_centers": 0.0,
+      "snapshot_dates": 74.0,
+      "unmatched_rows": 20.0
+    },
+    "unmatched_rate_percent": 0.0009052788621006815,
+    "profile_rows": 882
+  },
+  "model_effects": [
+    {
+      "label": "B",
+      "candidate_label": "B + BU L3",
+      "control": {
+        "log_loss": 0.1386705534725089,
+        "brier_score": 0.030715751403187004,
+        "pr_auc": 0.04765955149922031,
+        "lift_at_10_percent": 1.8181734361168267
+      },
+      "candidate": {
+        "log_loss": 0.1381793077622216,
+        "brier_score": 0.030685177880804125,
+        "pr_auc": 0.050081085382351655,
+        "lift_at_10_percent": 1.9121657905471459
+      },
+      "delta": {
+        "log_loss": -0.0004912457102873025,
+        "brier_score": -3.0573522382879026e-05,
+        "pr_auc": 0.0024215338831313424,
+        "lift_at_10_percent": 0.09399235443031917
+      }
+    },
+    {
+      "label": "C + QVoice",
+      "candidate_label": "C + QVoice + BU L3",
+      "control": {
+        "log_loss": 0.13769617659446426,
+        "brier_score": 0.030680776966789898,
+        "pr_auc": 0.05459098890428644,
+        "lift_at_10_percent": 2.075533614596681
+      },
+      "candidate": {
+        "log_loss": 0.1369536276928726,
+        "brier_score": 0.03063218771360514,
+        "pr_auc": 0.056885397626814715,
+        "lift_at_10_percent": 2.133037966522408
+      },
+      "delta": {
+        "log_loss": -0.000742548901591672,
+        "brier_score": -4.858925318475954e-05,
+        "pr_auc": 0.002294408722528278,
+        "lift_at_10_percent": 0.057504351925727004
+      }
+    },
+    {
+      "label": "F + QVoice",
+      "candidate_label": "F + QVoice + BU L3",
+      "control": {
+        "log_loss": 0.1364334721980207,
+        "brier_score": 0.03058146062252986,
+        "pr_auc": 0.05892146582155124,
+        "lift_at_10_percent": 2.204827111691368
+      },
+      "candidate": {
+        "log_loss": 0.13597001485559695,
+        "brier_score": 0.030558750568977253,
+        "pr_auc": 0.06038436788738956,
+        "lift_at_10_percent": 2.2590032981955623
+      },
+      "delta": {
+        "log_loss": -0.00046345734242375647,
+        "brier_score": -2.2710053552605497e-05,
+        "pr_auc": 0.001462902065838316,
+        "lift_at_10_percent": 0.05417618650419431
+      }
+    }
+  ],
+  "group_effects": [
+    {
+      "label": "B",
+      "model": "B",
+      "baseline": {
+        "id": "baseline",
+        "dimensions": [
+          "antiguedad",
+          "salidas_equipo",
+          "nivel"
+        ],
+        "is_bu": false,
+        "label": "Antigüedad x Salidas en su equipo x Nivel",
+        "capture_percent": 41.64846192451968,
+        "group_snapshot_mae_pp": 0.8098265354708432,
+        "group_mae_pp": 0.8045834924706827,
+        "rest_percent": 5.335607415364626,
+        "mean_eligible_groups": 19.8,
+        "periods": 2
+      },
+      "winner_all": null,
+      "winner_bu": null,
+      "best_bu_candidate": {
+        "id": "bu_l3__antiguedad__salidas_equipo",
+        "dimensions": [
+          "bu_l3",
+          "antiguedad",
+          "salidas_equipo"
+        ],
+        "is_bu": true,
+        "label": "BU L3 x Antigüedad x Salidas en su equipo",
+        "capture_percent": 43.62546721131403,
+        "group_snapshot_mae_pp": 0.9425004972884901,
+        "group_mae_pp": 0.8733065844838044,
+        "rest_percent": 21.48567767329212,
+        "mean_eligible_groups": 27.5,
+        "periods": 2
+      },
+      "best_bu_candidate_failures": [
+        "error de grupo fuera de la tolerancia respecto a las candidatas cercanas en captura",
+        "rest 21.5% > maximo 10.3%"
+      ],
+      "best_bu_candidate_rule": "Mayor captura media; desempate por menor error de grupo, menor rest y menor complejidad.",
+      "candidates": [
+        {
+          "id": "baseline",
+          "dimensions": [
+            "antiguedad",
+            "salidas_equipo",
+            "nivel"
+          ],
+          "is_bu": false,
+          "label": "Antigüedad x Salidas en su equipo x Nivel",
+          "capture_percent": 41.64846192451968,
+          "group_snapshot_mae_pp": 0.8098265354708432,
+          "group_mae_pp": 0.8045834924706827,
+          "rest_percent": 5.335607415364626,
+          "mean_eligible_groups": 19.8,
+          "periods": 2
+        },
+        {
+          "id": "bu_l3",
+          "dimensions": [
+            "bu_l3"
+          ],
+          "is_bu": true,
+          "label": "BU L3",
+          "capture_percent": 32.82769058995764,
+          "group_snapshot_mae_pp": 0.6407500493153035,
+          "group_mae_pp": 0.6298559964055701,
+          "rest_percent": 1.9946367679405586,
+          "mean_eligible_groups": 9.0,
+          "periods": 2
+        },
+        {
+          "id": "bu_l3__antiguedad",
+          "dimensions": [
+            "bu_l3",
+            "antiguedad"
+          ],
+          "is_bu": true,
+          "label": "BU L3 x Antigüedad",
+          "capture_percent": 42.959087059898266,
+          "group_snapshot_mae_pp": 0.8053131670121975,
+          "group_mae_pp": 0.7780620705567738,
+          "rest_percent": 14.004142590945309,
+          "mean_eligible_groups": 21.9,
+          "periods": 2
+        },
+        {
+          "id": "bu_l3__salidas_equipo",
+          "dimensions": [
+            "bu_l3",
+            "salidas_equipo"
+          ],
+          "is_bu": true,
+          "label": "BU L3 x Salidas en su equipo",
+          "capture_percent": 35.96240750371693,
+          "group_snapshot_mae_pp": 0.6885396495320628,
+          "group_mae_pp": 0.6616672409337592,
+          "rest_percent": 4.6947629657671275,
+          "mean_eligible_groups": 12.6,
+          "periods": 2
+        },
+        {
+          "id": "bu_l3__nivel",
+          "dimensions": [
+            "bu_l3",
+            "nivel"
+          ],
+          "is_bu": true,
+          "label": "BU L3 x Nivel",
+          "capture_percent": 37.21408676368138,
+          "group_snapshot_mae_pp": 0.6812965419196491,
+          "group_mae_pp": 0.638669089618477,
+          "rest_percent": 6.144132519419725,
+          "mean_eligible_groups": 17.2,
+          "periods": 2
+        },
+        {
+          "id": "bu_l3__antiguedad__salidas_equipo",
+          "dimensions": [
+            "bu_l3",
+            "antiguedad",
+            "salidas_equipo"
+          ],
+          "is_bu": true,
+          "label": "BU L3 x Antigüedad x Salidas en su equipo",
+          "capture_percent": 43.62546721131403,
+          "group_snapshot_mae_pp": 0.9425004972884901,
+          "group_mae_pp": 0.8733065844838044,
+          "rest_percent": 21.48567767329212,
+          "mean_eligible_groups": 27.5,
+          "periods": 2
+        },
+        {
+          "id": "bu_l3__antiguedad__nivel",
+          "dimensions": [
+            "bu_l3",
+            "antiguedad",
+            "nivel"
+          ],
+          "is_bu": true,
+          "label": "BU L3 x Antigüedad x Nivel",
+          "capture_percent": 41.36438250289011,
+          "group_snapshot_mae_pp": 1.0600101535776254,
+          "group_mae_pp": 1.0451488263899218,
+          "rest_percent": 23.740446500295892,
+          "mean_eligible_groups": 27.85,
+          "periods": 2
+        },
+        {
+          "id": "bu_l3__salidas_equipo__nivel",
+          "dimensions": [
+            "bu_l3",
+            "salidas_equipo",
+            "nivel"
+          ],
+          "is_bu": true,
+          "label": "BU L3 x Salidas en su equipo x Nivel",
+          "capture_percent": 36.25300842801536,
+          "group_snapshot_mae_pp": 0.7409530878178245,
+          "group_mae_pp": 0.7174899831342842,
+          "rest_percent": 11.56195728277733,
+          "mean_eligible_groups": 21.8,
+          "periods": 2
+        },
+        {
+          "id": "bu_l3__antiguedad__salidas_equipo__nivel",
+          "dimensions": [
+            "bu_l3",
+            "antiguedad",
+            "salidas_equipo",
+            "nivel"
+          ],
+          "is_bu": true,
+          "label": "BU L3 x Antigüedad x Salidas en su equipo x Nivel",
+          "capture_percent": 40.014356179631946,
+          "group_snapshot_mae_pp": 1.043590394404649,
+          "group_mae_pp": 1.01719486463475,
+          "rest_percent": 36.99335521470811,
+          "mean_eligible_groups": 28.55,
+          "periods": 2
+        }
+      ],
+      "selection_rule": {
+        "capture_relative_tolerance": 0.02,
+        "error_tolerance_pp": 0.1,
+        "maximum_rest_worsening_pp": 5.0
+      }
+    },
+    {
+      "label": "C + QVoice",
+      "model": "Cq",
+      "baseline": {
+        "id": "baseline",
+        "dimensions": [
+          "antiguedad",
+          "salidas_equipo",
+          "nivel"
+        ],
+        "is_bu": false,
+        "label": "Antigüedad x Salidas en su equipo x Nivel",
+        "capture_percent": 43.10597886408406,
+        "group_snapshot_mae_pp": 0.9709330350389759,
+        "group_mae_pp": 0.9697732809802093,
+        "rest_percent": 5.335607415364626,
+        "mean_eligible_groups": 19.8,
+        "periods": 2
+      },
+      "winner_all": {
+        "id": "baseline",
+        "dimensions": [
+          "antiguedad",
+          "salidas_equipo",
+          "nivel"
+        ],
+        "is_bu": false,
+        "label": "Antigüedad x Salidas en su equipo x Nivel",
+        "capture_percent": 43.10597886408406,
+        "group_snapshot_mae_pp": 0.9709330350389759,
+        "group_mae_pp": 0.9697732809802093,
+        "rest_percent": 5.335607415364626,
+        "mean_eligible_groups": 19.8,
+        "periods": 2
+      },
+      "winner_bu": null,
+      "best_bu_candidate": {
+        "id": "bu_l3__antiguedad__salidas_equipo",
+        "dimensions": [
+          "bu_l3",
+          "antiguedad",
+          "salidas_equipo"
+        ],
+        "is_bu": true,
+        "label": "BU L3 x Antigüedad x Salidas en su equipo",
+        "capture_percent": 43.957609787834,
+        "group_snapshot_mae_pp": 0.9239067679447016,
+        "group_mae_pp": 0.865850666892392,
+        "rest_percent": 21.48567767329212,
+        "mean_eligible_groups": 27.5,
+        "periods": 2
+      },
+      "best_bu_candidate_failures": [
+        "rest 21.5% > maximo 10.3%"
+      ],
+      "best_bu_candidate_rule": "Mayor captura media; desempate por menor error de grupo, menor rest y menor complejidad.",
+      "candidates": [
+        {
+          "id": "baseline",
+          "dimensions": [
+            "antiguedad",
+            "salidas_equipo",
+            "nivel"
+          ],
+          "is_bu": false,
+          "label": "Antigüedad x Salidas en su equipo x Nivel",
+          "capture_percent": 43.10597886408406,
+          "group_snapshot_mae_pp": 0.9709330350389759,
+          "group_mae_pp": 0.9697732809802093,
+          "rest_percent": 5.335607415364626,
+          "mean_eligible_groups": 19.8,
+          "periods": 2
+        },
+        {
+          "id": "bu_l3",
+          "dimensions": [
+            "bu_l3"
+          ],
+          "is_bu": true,
+          "label": "BU L3",
+          "capture_percent": 32.58846752677026,
+          "group_snapshot_mae_pp": 0.6555399857815408,
+          "group_mae_pp": 0.6432807179669652,
+          "rest_percent": 1.9946367679405586,
+          "mean_eligible_groups": 9.0,
+          "periods": 2
+        },
+        {
+          "id": "bu_l3__antiguedad",
+          "dimensions": [
+            "bu_l3",
+            "antiguedad"
+          ],
+          "is_bu": true,
+          "label": "BU L3 x Antigüedad",
+          "capture_percent": 41.98129407291448,
+          "group_snapshot_mae_pp": 0.7359203078183165,
+          "group_mae_pp": 0.7141420815810696,
+          "rest_percent": 14.004142590945309,
+          "mean_eligible_groups": 21.9,
+          "periods": 2
+        },
+        {
+          "id": "bu_l3__salidas_equipo",
+          "dimensions": [
+            "bu_l3",
+            "salidas_equipo"
+          ],
+          "is_bu": true,
+          "label": "BU L3 x Salidas en su equipo",
+          "capture_percent": 35.48832345156303,
+          "group_snapshot_mae_pp": 0.5802373623034824,
+          "group_mae_pp": 0.5776288084018433,
+          "rest_percent": 4.6947629657671275,
+          "mean_eligible_groups": 12.6,
+          "periods": 2
+        },
+        {
+          "id": "bu_l3__nivel",
+          "dimensions": [
+            "bu_l3",
+            "nivel"
+          ],
+          "is_bu": true,
+          "label": "BU L3 x Nivel",
+          "capture_percent": 37.73897445044279,
+          "group_snapshot_mae_pp": 0.5522043405537089,
+          "group_mae_pp": 0.5383336942815083,
+          "rest_percent": 6.144132519419725,
+          "mean_eligible_groups": 17.2,
+          "periods": 2
+        },
+        {
+          "id": "bu_l3__antiguedad__salidas_equipo",
+          "dimensions": [
+            "bu_l3",
+            "antiguedad",
+            "salidas_equipo"
+          ],
+          "is_bu": true,
+          "label": "BU L3 x Antigüedad x Salidas en su equipo",
+          "capture_percent": 43.957609787834,
+          "group_snapshot_mae_pp": 0.9239067679447016,
+          "group_mae_pp": 0.865850666892392,
+          "rest_percent": 21.48567767329212,
+          "mean_eligible_groups": 27.5,
+          "periods": 2
+        },
+        {
+          "id": "bu_l3__antiguedad__nivel",
+          "dimensions": [
+            "bu_l3",
+            "antiguedad",
+            "nivel"
+          ],
+          "is_bu": true,
+          "label": "BU L3 x Antigüedad x Nivel",
+          "capture_percent": 41.43166332930572,
+          "group_snapshot_mae_pp": 1.0708494767538173,
+          "group_mae_pp": 1.0635101852715003,
+          "rest_percent": 23.740446500295892,
+          "mean_eligible_groups": 27.85,
+          "periods": 2
+        },
+        {
+          "id": "bu_l3__salidas_equipo__nivel",
+          "dimensions": [
+            "bu_l3",
+            "salidas_equipo",
+            "nivel"
+          ],
+          "is_bu": true,
+          "label": "BU L3 x Salidas en su equipo x Nivel",
+          "capture_percent": 38.01008992767446,
+          "group_snapshot_mae_pp": 0.7875446169334892,
+          "group_mae_pp": 0.7875446169334892,
+          "rest_percent": 11.56195728277733,
+          "mean_eligible_groups": 21.8,
+          "periods": 2
+        },
+        {
+          "id": "bu_l3__antiguedad__salidas_equipo__nivel",
+          "dimensions": [
+            "bu_l3",
+            "antiguedad",
+            "salidas_equipo",
+            "nivel"
+          ],
+          "is_bu": true,
+          "label": "BU L3 x Antigüedad x Salidas en su equipo x Nivel",
+          "capture_percent": 39.92323114630072,
+          "group_snapshot_mae_pp": 1.0438847862938647,
+          "group_mae_pp": 1.0192575924812997,
+          "rest_percent": 36.99335521470811,
+          "mean_eligible_groups": 28.55,
+          "periods": 2
+        }
+      ],
+      "selection_rule": {
+        "capture_relative_tolerance": 0.02,
+        "error_tolerance_pp": 0.1,
+        "maximum_rest_worsening_pp": 5.0
+      }
+    },
+    {
+      "label": "F + QVoice",
+      "model": "Fq",
+      "baseline": {
+        "id": "baseline",
+        "dimensions": [
+          "antiguedad",
+          "salidas_equipo",
+          "nivel"
+        ],
+        "is_bu": false,
+        "label": "Antigüedad x Salidas en su equipo x Nivel",
+        "capture_percent": 43.14563715815622,
+        "group_snapshot_mae_pp": 0.887466792664581,
+        "group_mae_pp": 0.8864189893890433,
+        "rest_percent": 5.335607415364626,
+        "mean_eligible_groups": 19.8,
+        "periods": 2
+      },
+      "winner_all": null,
+      "winner_bu": null,
+      "best_bu_candidate": {
+        "id": "bu_l3__antiguedad__salidas_equipo",
+        "dimensions": [
+          "bu_l3",
+          "antiguedad",
+          "salidas_equipo"
+        ],
+        "is_bu": true,
+        "label": "BU L3 x Antigüedad x Salidas en su equipo",
+        "capture_percent": 44.08400414479203,
+        "group_snapshot_mae_pp": 0.8207887332956554,
+        "group_mae_pp": 0.7506914053499962,
+        "rest_percent": 21.48567767329212,
+        "mean_eligible_groups": 27.5,
+        "periods": 2
+      },
+      "best_bu_candidate_failures": [
+        "rest 21.5% > maximo 10.3%"
+      ],
+      "best_bu_candidate_rule": "Mayor captura media; desempate por menor error de grupo, menor rest y menor complejidad.",
+      "candidates": [
+        {
+          "id": "baseline",
+          "dimensions": [
+            "antiguedad",
+            "salidas_equipo",
+            "nivel"
+          ],
+          "is_bu": false,
+          "label": "Antigüedad x Salidas en su equipo x Nivel",
+          "capture_percent": 43.14563715815622,
+          "group_snapshot_mae_pp": 0.887466792664581,
+          "group_mae_pp": 0.8864189893890433,
+          "rest_percent": 5.335607415364626,
+          "mean_eligible_groups": 19.8,
+          "periods": 2
+        },
+        {
+          "id": "bu_l3",
+          "dimensions": [
+            "bu_l3"
+          ],
+          "is_bu": true,
+          "label": "BU L3",
+          "capture_percent": 33.41839721528011,
+          "group_snapshot_mae_pp": 0.45383978800339636,
+          "group_mae_pp": 0.4412537070809014,
+          "rest_percent": 1.9946367679405586,
+          "mean_eligible_groups": 9.0,
+          "periods": 2
+        },
+        {
+          "id": "bu_l3__antiguedad",
+          "dimensions": [
+            "bu_l3",
+            "antiguedad"
+          ],
+          "is_bu": true,
+          "label": "BU L3 x Antigüedad",
+          "capture_percent": 42.92350999983952,
+          "group_snapshot_mae_pp": 0.7037540967138188,
+          "group_mae_pp": 0.6727764089062853,
+          "rest_percent": 14.004142590945309,
+          "mean_eligible_groups": 21.9,
+          "periods": 2
+        },
+        {
+          "id": "bu_l3__salidas_equipo",
+          "dimensions": [
+            "bu_l3",
+            "salidas_equipo"
+          ],
+          "is_bu": true,
+          "label": "BU L3 x Salidas en su equipo",
+          "capture_percent": 38.30843855442852,
+          "group_snapshot_mae_pp": 0.5914533523866696,
+          "group_mae_pp": 0.5706199020710242,
+          "rest_percent": 4.6947629657671275,
+          "mean_eligible_groups": 12.6,
+          "periods": 2
+        },
+        {
+          "id": "bu_l3__nivel",
+          "dimensions": [
+            "bu_l3",
+            "nivel"
+          ],
+          "is_bu": true,
+          "label": "BU L3 x Nivel",
+          "capture_percent": 37.73897445044279,
+          "group_snapshot_mae_pp": 0.5057719013111729,
+          "group_mae_pp": 0.47626631950002385,
+          "rest_percent": 6.144132519419725,
+          "mean_eligible_groups": 17.2,
+          "periods": 2
+        },
+        {
+          "id": "bu_l3__antiguedad__salidas_equipo",
+          "dimensions": [
+            "bu_l3",
+            "antiguedad",
+            "salidas_equipo"
+          ],
+          "is_bu": true,
+          "label": "BU L3 x Antigüedad x Salidas en su equipo",
+          "capture_percent": 44.08400414479203,
+          "group_snapshot_mae_pp": 0.8207887332956554,
+          "group_mae_pp": 0.7506914053499962,
+          "rest_percent": 21.48567767329212,
+          "mean_eligible_groups": 27.5,
+          "periods": 2
+        },
+        {
+          "id": "bu_l3__antiguedad__nivel",
+          "dimensions": [
+            "bu_l3",
+            "antiguedad",
+            "nivel"
+          ],
+          "is_bu": true,
+          "label": "BU L3 x Antigüedad x Nivel",
+          "capture_percent": 42.009395225974046,
+          "group_snapshot_mae_pp": 0.936517913861296,
+          "group_mae_pp": 0.9091438851045506,
+          "rest_percent": 23.740446500295892,
+          "mean_eligible_groups": 27.85,
+          "periods": 2
+        },
+        {
+          "id": "bu_l3__salidas_equipo__nivel",
+          "dimensions": [
+            "bu_l3",
+            "salidas_equipo",
+            "nivel"
+          ],
+          "is_bu": true,
+          "label": "BU L3 x Salidas en su equipo x Nivel",
+          "capture_percent": 40.56232864546778,
+          "group_snapshot_mae_pp": 0.8957337413858134,
+          "group_mae_pp": 0.8769076401442559,
+          "rest_percent": 11.56195728277733,
+          "mean_eligible_groups": 21.8,
+          "periods": 2
+        },
+        {
+          "id": "bu_l3__antiguedad__salidas_equipo__nivel",
+          "dimensions": [
+            "bu_l3",
+            "antiguedad",
+            "salidas_equipo",
+            "nivel"
+          ],
+          "is_bu": true,
+          "label": "BU L3 x Antigüedad x Salidas en su equipo x Nivel",
+          "capture_percent": 40.23851417249392,
+          "group_snapshot_mae_pp": 0.9330102189861449,
+          "group_mae_pp": 0.8926543685304926,
+          "rest_percent": 36.99335521470811,
+          "mean_eligible_groups": 28.55,
+          "periods": 2
+        }
+      ],
+      "selection_rule": {
+        "capture_relative_tolerance": 0.02,
+        "error_tolerance_pp": 0.1,
+        "maximum_rest_worsening_pp": 5.0
+      }
+    }
+  ],
+  "paired_intervals": {
+    "B_plus_bu_l3": {
+      "log_loss_delta_candidate_minus_control": {
+        "point": -0.0003863085702984413,
+        "ci95": [
+          -0.000640832507344784,
+          -0.0001299279926610845
+        ]
+      },
+      "brier_delta_candidate_minus_control": {
+        "point": -2.132953417981564e-05,
+        "ci95": [
+          -4.334454615797827e-05,
+          1.2339534171045585e-06
+        ]
+      },
+      "group_capture_delta_bu_winner_minus_baseline_pp": {
+        "point": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "Cq_plus_bu_l3": {
+      "log_loss_delta_candidate_minus_control": {
+        "point": -0.0005878257176900631,
+        "ci95": [
+          -0.0008946704789147502,
+          -0.0003355117563765752
+        ]
+      },
+      "brier_delta_candidate_minus_control": {
+        "point": -3.866779186319976e-05,
+        "ci95": [
+          -6.735096340568118e-05,
+          -1.0653774839945584e-05
+        ]
+      },
+      "group_capture_delta_bu_winner_minus_baseline_pp": {
+        "point": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "Fq_plus_bu_l3": {
+      "log_loss_delta_candidate_minus_control": {
+        "point": -0.00035465485018382306,
+        "ci95": [
+          -0.0005718472763469863,
+          -0.00018086314399813258
+        ]
+      },
+      "brier_delta_candidate_minus_control": {
+        "point": -1.5910980407071186e-05,
+        "ci95": [
+          -3.9787456861838884e-05,
+          4.538597754346588e-06
+        ]
+      },
+      "group_capture_delta_bu_winner_minus_baseline_pp": {
+        "point": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      }
+    }
+  },
+  "periods": [
+    {
+      "id": "aug_dec_2025",
+      "origin": "2025-08-01",
+      "end": "2025-12-31",
+      "snapshots": 5,
+      "base_model_origin": "2025-08-01",
+      "base_model_reference": "output\\analysis\\engineering\\20261008\\model-c-v2\\folds\\fold-4-C-model.json",
+      "q_selection": {
+        "id": "q4+q12+career+engagement",
+        "kind": "blocks",
+        "blocks": [
+          "q4",
+          "q12",
+          "career",
+          "engagement"
+        ],
+        "features": [
+          "qv_Q4",
+          "qv_Q12",
+          "qv_career",
+          "qv_Q1",
+          "qv_Q2",
+          "qv_Q3"
+        ],
+        "l2": 10,
+        "parameters": 25,
+        "converged": true,
+        "iterations": 6,
+        "monthly_brier": 0.006014602417278957
+      },
+      "q_selection_source": "output/analysis/engineering/20261008/model-c-plus-qvoice-v1/folds/aug_dec_2025/selection.json",
+      "b_l2": 0.1,
+      "models": {
+        "B": {
+          "global": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.04303137806537643,
+            "lift_at_10_percent": 1.7892156862745099,
+            "brier_score": 0.02818098253347549,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 3.0891747047438542,
+            "calibration_error_pp": 0.17792154583200664,
+            "top_quintile_observed_percent": 4.739350404265129,
+            "top_quintile_predicted_percent": 5.719753825460034,
+            "top_quintile_calibration_error_pp": 0.9804034211949059,
+            "log_loss": 0.1295760733727142
+          },
+          "groups": {
+            "baseline": {
+              "coverage_percent": 30.0,
+              "capture_percent": 41.808546058292684,
+              "observed_percent": 4.0571753927238685,
+              "predicted_percent": 4.899669178633523,
+              "bias_pp": 0.8424937859096553,
+              "aggregate_error_pp": 0.8424937859096553,
+              "group_mae_pp": 0.9319692974642506,
+              "group_snapshot_mae_pp": 0.9357096220950648,
+              "lift": 1.3936182019430894,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 7.0,
+              "status": "ok",
+              "dimensions": [
+                "antiguedad",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "Antigüedad x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 19,
+              "maximum_eligible_groups": 20,
+              "mean_eligible_groups": 19.6,
+              "rest_percent": 5.31945889698231
+            },
+            "bu_l3": {
+              "coverage_percent": 30.0,
+              "capture_percent": 33.39045479877276,
+              "observed_percent": 3.240268900347682,
+              "predicted_percent": 3.2479233498108067,
+              "bias_pp": 0.007654449463124088,
+              "aggregate_error_pp": 0.007654449463124088,
+              "group_mae_pp": 0.4718685132431784,
+              "group_snapshot_mae_pp": 0.4936566190626453,
+              "lift": 1.113015159959092,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 3.8,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3"
+              ],
+              "label": "BU L3",
+              "minimum_eligible_groups": 9,
+              "maximum_eligible_groups": 9,
+              "mean_eligible_groups": 9.0,
+              "rest_percent": 2.052623755017095
+            },
+            "bu_l3__antiguedad": {
+              "coverage_percent": 30.0,
+              "capture_percent": 43.34892128778897,
+              "observed_percent": 4.2066561344832225,
+              "predicted_percent": 4.466714349897319,
+              "bias_pp": 0.26005821541409607,
+              "aggregate_error_pp": 0.26005821541409607,
+              "group_mae_pp": 0.8191388803763267,
+              "group_snapshot_mae_pp": 0.848006603009549,
+              "lift": 1.444964042926299,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 7.6,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad"
+              ],
+              "label": "BU L3 x Antigüedad",
+              "minimum_eligible_groups": 21,
+              "maximum_eligible_groups": 23,
+              "mean_eligible_groups": 21.8,
+              "rest_percent": 14.248253307566523
+            },
+            "bu_l3__salidas_equipo": {
+              "coverage_percent": 30.0,
+              "capture_percent": 37.24351668957346,
+              "observed_percent": 3.614176853716896,
+              "predicted_percent": 3.6652547658756323,
+              "bias_pp": 0.05107791215873611,
+              "aggregate_error_pp": 0.05107791215873611,
+              "group_mae_pp": 0.5035072174080496,
+              "group_snapshot_mae_pp": 0.5572520346046567,
+              "lift": 1.2414505563191156,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 6.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "salidas_equipo"
+              ],
+              "label": "BU L3 x Salidas en su equipo",
+              "minimum_eligible_groups": 12,
+              "maximum_eligible_groups": 13,
+              "mean_eligible_groups": 12.2,
+              "rest_percent": 4.883008770625836
+            },
+            "bu_l3__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 36.8109051159073,
+              "observed_percent": 3.5721954600363146,
+              "predicted_percent": 4.119339453824451,
+              "bias_pp": 0.5471439937881364,
+              "aggregate_error_pp": 0.5471439937881364,
+              "group_mae_pp": 0.5494672078680087,
+              "group_snapshot_mae_pp": 0.6347221124703527,
+              "lift": 1.2270301705302433,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 3.2,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "nivel"
+              ],
+              "label": "BU L3 x Nivel",
+              "minimum_eligible_groups": 16,
+              "maximum_eligible_groups": 18,
+              "mean_eligible_groups": 16.4,
+              "rest_percent": 6.623457707744908
+            },
+            "bu_l3__antiguedad__salidas_equipo": {
+              "coverage_percent": 29.999999999999993,
+              "capture_percent": 43.247333262188604,
+              "observed_percent": 4.196797852468667,
+              "predicted_percent": 4.4301913689537855,
+              "bias_pp": 0.23339351648511789,
+              "aggregate_error_pp": 0.23339351648511789,
+              "group_mae_pp": 0.8028669339459102,
+              "group_snapshot_mae_pp": 0.9114025483414111,
+              "lift": 1.4415777754062873,
+              "mean_people_per_snapshot": 10090.499999999998,
+              "mean_selected_groups_per_snapshot": 13.2,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "salidas_equipo"
+              ],
+              "label": "BU L3 x Antigüedad x Salidas en su equipo",
+              "minimum_eligible_groups": 26,
+              "maximum_eligible_groups": 28,
+              "mean_eligible_groups": 27.0,
+              "rest_percent": 22.100787869778504
+            },
+            "bu_l3__antiguedad__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 41.844159101270726,
+              "observed_percent": 4.060631345519478,
+              "predicted_percent": 4.6478967192680205,
+              "bias_pp": 0.5872653737485425,
+              "aggregate_error_pp": 0.5872653737485425,
+              "group_mae_pp": 1.0220902939852141,
+              "group_snapshot_mae_pp": 1.0418119993238981,
+              "lift": 1.3948053033756906,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 10.4,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "nivel"
+              ],
+              "label": "BU L3 x Antigüedad x Nivel",
+              "minimum_eligible_groups": 27,
+              "maximum_eligible_groups": 28,
+              "mean_eligible_groups": 27.2,
+              "rest_percent": 24.007730043109856
+            },
+            "bu_l3__salidas_equipo__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 37.075428133978775,
+              "observed_percent": 3.5978652424351636,
+              "predicted_percent": 4.215328980437646,
+              "bias_pp": 0.6174637380024832,
+              "aggregate_error_pp": 0.6174637380024832,
+              "group_mae_pp": 0.6746554962661043,
+              "group_snapshot_mae_pp": 0.7215817056331847,
+              "lift": 1.2358476044659592,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 7.8,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "BU L3 x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 21,
+              "maximum_eligible_groups": 23,
+              "mean_eligible_groups": 21.6,
+              "rest_percent": 11.356027947078935
+            },
+            "bu_l3__antiguedad__salidas_equipo__nivel": {
+              "coverage_percent": 29.999999999999993,
+              "capture_percent": 39.632470515715305,
+              "observed_percent": 3.8460051661452286,
+              "predicted_percent": 4.343630171674126,
+              "bias_pp": 0.49762500552889644,
+              "aggregate_error_pp": 0.49762500552889644,
+              "group_mae_pp": 1.00407016038143,
+              "group_snapshot_mae_pp": 1.056861219921228,
+              "lift": 1.3210823505238436,
+              "mean_people_per_snapshot": 10090.499999999998,
+              "mean_selected_groups_per_snapshot": 15.4,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "BU L3 x Antigüedad x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 27,
+              "maximum_eligible_groups": 28,
+              "mean_eligible_groups": 27.6,
+              "rest_percent": 37.66136464991824
+            }
+          }
+        },
+        "B_plus_bu_l3": {
+          "global": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.04457626761678987,
+            "lift_at_10_percent": 1.8852124183006536,
+            "brier_score": 0.028172924442619058,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 3.190712976260742,
+            "calibration_error_pp": 0.2794598173488944,
+            "top_quintile_observed_percent": 4.935747328263375,
+            "top_quintile_predicted_percent": 6.009886932319638,
+            "top_quintile_calibration_error_pp": 1.074139604056263,
+            "log_loss": 0.12934042134538068
+          },
+          "groups": {
+            "baseline": {
+              "coverage_percent": 30.0,
+              "capture_percent": 41.72922947014836,
+              "observed_percent": 4.049478370464226,
+              "predicted_percent": 5.000853680692032,
+              "bias_pp": 0.9513753102278061,
+              "aggregate_error_pp": 0.9513753102278061,
+              "group_mae_pp": 1.0353950002759147,
+              "group_snapshot_mae_pp": 1.0353950002759147,
+              "lift": 1.3909743156716121,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 7.2,
+              "status": "ok",
+              "dimensions": [
+                "antiguedad",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "Antigüedad x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 19,
+              "maximum_eligible_groups": 20,
+              "mean_eligible_groups": 19.6,
+              "rest_percent": 5.31945889698231
+            },
+            "bu_l3": {
+              "coverage_percent": 30.0,
+              "capture_percent": 33.03036215682535,
+              "observed_percent": 3.205324872302005,
+              "predicted_percent": 3.829671557023066,
+              "bias_pp": 0.6243466847210616,
+              "aggregate_error_pp": 0.6243466847210616,
+              "group_mae_pp": 0.6821215693496177,
+              "group_snapshot_mae_pp": 0.7191917391316198,
+              "lift": 1.1010120718941783,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 4.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3"
+              ],
+              "label": "BU L3",
+              "minimum_eligible_groups": 9,
+              "maximum_eligible_groups": 9,
+              "mean_eligible_groups": 9.0,
+              "rest_percent": 2.052623755017095
+            },
+            "bu_l3__antiguedad": {
+              "coverage_percent": 30.0,
+              "capture_percent": 43.534432015836956,
+              "observed_percent": 4.22465842425128,
+              "predicted_percent": 4.7671100088218825,
+              "bias_pp": 0.5424515845706018,
+              "aggregate_error_pp": 0.5424515845706018,
+              "group_mae_pp": 0.675161524451209,
+              "group_snapshot_mae_pp": 0.7334540529899176,
+              "lift": 1.451147733861232,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 8.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad"
+              ],
+              "label": "BU L3 x Antigüedad",
+              "minimum_eligible_groups": 21,
+              "maximum_eligible_groups": 23,
+              "mean_eligible_groups": 21.8,
+              "rest_percent": 14.248253307566523
+            },
+            "bu_l3__salidas_equipo": {
+              "coverage_percent": 30.0,
+              "capture_percent": 38.359751363320726,
+              "observed_percent": 3.722498244384684,
+              "predicted_percent": 4.052749973555522,
+              "bias_pp": 0.3302517291708382,
+              "aggregate_error_pp": 0.3302517291708382,
+              "group_mae_pp": 0.5938702315607105,
+              "group_snapshot_mae_pp": 0.6059942036667676,
+              "lift": 1.2786583787773576,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 5.2,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "salidas_equipo"
+              ],
+              "label": "BU L3 x Salidas en su equipo",
+              "minimum_eligible_groups": 12,
+              "maximum_eligible_groups": 13,
+              "mean_eligible_groups": 12.2,
+              "rest_percent": 4.883008770625836
+            },
+            "bu_l3__nivel": {
+              "coverage_percent": 29.999999999999993,
+              "capture_percent": 36.53796027025606,
+              "observed_percent": 3.5457084085659516,
+              "predicted_percent": 4.402265451700336,
+              "bias_pp": 0.856557043134384,
+              "aggregate_error_pp": 0.856557043134384,
+              "group_mae_pp": 0.9067156164848211,
+              "group_snapshot_mae_pp": 0.9067156164848211,
+              "lift": 1.2179320090085353,
+              "mean_people_per_snapshot": 10090.499999999998,
+              "mean_selected_groups_per_snapshot": 4.2,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "nivel"
+              ],
+              "label": "BU L3 x Nivel",
+              "minimum_eligible_groups": 16,
+              "maximum_eligible_groups": 18,
+              "mean_eligible_groups": 16.4,
+              "rest_percent": 6.623457707744908
+            },
+            "bu_l3__antiguedad__salidas_equipo": {
+              "coverage_percent": 30.0,
+              "capture_percent": 43.969574927310404,
+              "observed_percent": 4.26688546343812,
+              "predicted_percent": 4.633160991163263,
+              "bias_pp": 0.36627552772514316,
+              "aggregate_error_pp": 0.36627552772514316,
+              "group_mae_pp": 0.7079646478611659,
+              "group_snapshot_mae_pp": 0.80684343259597,
+              "lift": 1.4656524975770135,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 12.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "salidas_equipo"
+              ],
+              "label": "BU L3 x Antigüedad x Salidas en su equipo",
+              "minimum_eligible_groups": 26,
+              "maximum_eligible_groups": 28,
+              "mean_eligible_groups": 27.0,
+              "rest_percent": 22.100787869778504
+            },
+            "bu_l3__antiguedad__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 41.7808540460557,
+              "observed_percent": 4.054488110787151,
+              "predicted_percent": 4.814556891888451,
+              "bias_pp": 0.7600687811012993,
+              "aggregate_error_pp": 0.7600687811012993,
+              "group_mae_pp": 0.8911127537408392,
+              "group_snapshot_mae_pp": 0.9230311372363661,
+              "lift": 1.3926951348685235,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 10.2,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "nivel"
+              ],
+              "label": "BU L3 x Antigüedad x Nivel",
+              "minimum_eligible_groups": 27,
+              "maximum_eligible_groups": 28,
+              "mean_eligible_groups": 27.2,
+              "rest_percent": 24.007730043109856
+            },
+            "bu_l3__salidas_equipo__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 39.79750234115974,
+              "observed_percent": 3.862020146916765,
+              "predicted_percent": 4.506712206284817,
+              "bias_pp": 0.6446920593680523,
+              "aggregate_error_pp": 0.6446920593680523,
+              "group_mae_pp": 0.9984286284306911,
+              "group_snapshot_mae_pp": 1.006132867976325,
+              "lift": 1.3265834113719914,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 9.2,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "BU L3 x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 21,
+              "maximum_eligible_groups": 23,
+              "mean_eligible_groups": 21.6,
+              "rest_percent": 11.356027947078935
+            },
+            "bu_l3__antiguedad__salidas_equipo__nivel": {
+              "coverage_percent": 29.999999999999993,
+              "capture_percent": 38.93697356472962,
+              "observed_percent": 3.778512909626208,
+              "predicted_percent": 4.425798587352079,
+              "bias_pp": 0.6472856777258711,
+              "aggregate_error_pp": 0.6472856777258711,
+              "group_mae_pp": 0.8597385400120653,
+              "group_snapshot_mae_pp": 0.9365612409385594,
+              "lift": 1.2978991188243207,
+              "mean_people_per_snapshot": 10090.499999999998,
+              "mean_selected_groups_per_snapshot": 16.2,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "BU L3 x Antigüedad x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 27,
+              "maximum_eligible_groups": 28,
+              "mean_eligible_groups": 27.6,
+              "rest_percent": 37.66136464991824
+            }
+          }
+        },
+        "Cq": {
+          "global": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.04863754732284757,
+            "lift_at_10_percent": 2.0302287581699345,
+            "brier_score": 0.028167699253514197,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 2.946148187196224,
+            "calibration_error_pp": 0.034895028284376295,
+            "top_quintile_observed_percent": 5.155344135573063,
+            "top_quintile_predicted_percent": 6.526022600038174,
+            "top_quintile_calibration_error_pp": 1.3706784644651102,
+            "log_loss": 0.12857501410263328
+          },
+          "groups": {
+            "baseline": {
+              "coverage_percent": 30.0,
+              "capture_percent": 43.45648492230614,
+              "observed_percent": 4.217094300175627,
+              "predicted_percent": 4.9094314395628205,
+              "bias_pp": 0.6923371393871927,
+              "aggregate_error_pp": 0.6923371393871927,
+              "group_mae_pp": 1.0183275664275089,
+              "group_snapshot_mae_pp": 1.0204412102501588,
+              "lift": 1.4485494974102044,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 8.2,
+              "status": "ok",
+              "dimensions": [
+                "antiguedad",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "Antigüedad x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 19,
+              "maximum_eligible_groups": 20,
+              "mean_eligible_groups": 19.6,
+              "rest_percent": 5.31945889698231
+            },
+            "bu_l3": {
+              "coverage_percent": 30.0,
+              "capture_percent": 32.91200867239799,
+              "observed_percent": 3.193839640455092,
+              "predicted_percent": 3.1314189068650977,
+              "bias_pp": -0.06242073358999425,
+              "aggregate_error_pp": 0.06242073358999425,
+              "group_mae_pp": 0.44917711055418913,
+              "group_snapshot_mae_pp": 0.47369564618334054,
+              "lift": 1.0970669557465995,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 3.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3"
+              ],
+              "label": "BU L3",
+              "minimum_eligible_groups": 9,
+              "maximum_eligible_groups": 9,
+              "mean_eligible_groups": 9.0,
+              "rest_percent": 2.052623755017095
+            },
+            "bu_l3__antiguedad": {
+              "coverage_percent": 29.999999999999993,
+              "capture_percent": 41.426840184487936,
+              "observed_percent": 4.020133978360893,
+              "predicted_percent": 4.386784036839535,
+              "bias_pp": 0.366650058478642,
+              "aggregate_error_pp": 0.366650058478642,
+              "group_mae_pp": 0.6275138863980685,
+              "group_snapshot_mae_pp": 0.6686054055388779,
+              "lift": 1.3808946728162648,
+              "mean_people_per_snapshot": 10090.499999999998,
+              "mean_selected_groups_per_snapshot": 6.8,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad"
+              ],
+              "label": "BU L3 x Antigüedad",
+              "minimum_eligible_groups": 21,
+              "maximum_eligible_groups": 23,
+              "mean_eligible_groups": 21.8,
+              "rest_percent": 14.248253307566523
+            },
+            "bu_l3__salidas_equipo": {
+              "coverage_percent": 30.0,
+              "capture_percent": 37.00695542182183,
+              "observed_percent": 3.591220529116291,
+              "predicted_percent": 3.9241567991462345,
+              "bias_pp": 0.33293627002994347,
+              "aggregate_error_pp": 0.33293627002994347,
+              "group_mae_pp": 0.5566814821856928,
+              "group_snapshot_mae_pp": 0.5618985899889711,
+              "lift": 1.2335651807273942,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 6.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "salidas_equipo"
+              ],
+              "label": "BU L3 x Salidas en su equipo",
+              "minimum_eligible_groups": 12,
+              "maximum_eligible_groups": 13,
+              "mean_eligible_groups": 12.2,
+              "rest_percent": 4.883008770625836
+            },
+            "bu_l3__nivel": {
+              "coverage_percent": 29.999999999999993,
+              "capture_percent": 36.98330107851175,
+              "observed_percent": 3.5889250697268436,
+              "predicted_percent": 3.9953782049491973,
+              "bias_pp": 0.40645313522235393,
+              "aggregate_error_pp": 0.40645313522235393,
+              "group_mae_pp": 0.514506443007321,
+              "group_snapshot_mae_pp": 0.5422477355517221,
+              "lift": 1.2327767026170586,
+              "mean_people_per_snapshot": 10090.499999999998,
+              "mean_selected_groups_per_snapshot": 3.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "nivel"
+              ],
+              "label": "BU L3 x Nivel",
+              "minimum_eligible_groups": 16,
+              "maximum_eligible_groups": 18,
+              "mean_eligible_groups": 16.4,
+              "rest_percent": 6.623457707744908
+            },
+            "bu_l3__antiguedad__salidas_equipo": {
+              "coverage_percent": 29.999999999999993,
+              "capture_percent": 43.30265352952297,
+              "observed_percent": 4.202166229236301,
+              "predicted_percent": 4.430960469413064,
+              "bias_pp": 0.22879424017676245,
+              "aggregate_error_pp": 0.22879424017676245,
+              "group_mae_pp": 0.6360451923885578,
+              "group_snapshot_mae_pp": 0.7521573944931768,
+              "lift": 1.4434217843174324,
+              "mean_people_per_snapshot": 10090.499999999998,
+              "mean_selected_groups_per_snapshot": 12.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "salidas_equipo"
+              ],
+              "label": "BU L3 x Antigüedad x Salidas en su equipo",
+              "minimum_eligible_groups": 26,
+              "maximum_eligible_groups": 28,
+              "mean_eligible_groups": 27.0,
+              "rest_percent": 22.100787869778504
+            },
+            "bu_l3__antiguedad__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 41.93095086252687,
+              "observed_percent": 4.0690537718236275,
+              "predicted_percent": 4.6182568319798945,
+              "bias_pp": 0.5492030601562671,
+              "aggregate_error_pp": 0.5492030601562671,
+              "group_mae_pp": 1.0369715666206614,
+              "group_snapshot_mae_pp": 1.0484281454381577,
+              "lift": 1.3976983620842292,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 10.4,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "nivel"
+              ],
+              "label": "BU L3 x Antigüedad x Nivel",
+              "minimum_eligible_groups": 27,
+              "maximum_eligible_groups": 28,
+              "mean_eligible_groups": 27.2,
+              "rest_percent": 24.007730043109856
+            },
+            "bu_l3__salidas_equipo__nivel": {
+              "coverage_percent": 29.999999999999993,
+              "capture_percent": 38.13080784193414,
+              "observed_percent": 3.700281159389715,
+              "predicted_percent": 4.234500570769308,
+              "bias_pp": 0.5342194113795928,
+              "aggregate_error_pp": 0.5342194113795928,
+              "group_mae_pp": 0.7924805665423683,
+              "group_snapshot_mae_pp": 0.7924805665423683,
+              "lift": 1.2710269280644717,
+              "mean_people_per_snapshot": 10090.499999999998,
+              "mean_selected_groups_per_snapshot": 7.4,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "BU L3 x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 21,
+              "maximum_eligible_groups": 23,
+              "mean_eligible_groups": 21.6,
+              "rest_percent": 11.356027947078935
+            },
+            "bu_l3__antiguedad__salidas_equipo__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 39.90525545946477,
+              "observed_percent": 3.872476700451702,
+              "predicted_percent": 4.254077750416221,
+              "bias_pp": 0.381601049964519,
+              "aggregate_error_pp": 0.381601049964519,
+              "group_mae_pp": 0.9486377851162267,
+              "group_snapshot_mae_pp": 0.9860113895642784,
+              "lift": 1.3301751819821588,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 15.4,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "BU L3 x Antigüedad x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 27,
+              "maximum_eligible_groups": 28,
+              "mean_eligible_groups": 27.6,
+              "rest_percent": 37.66136464991824
+            }
+          }
+        },
+        "Cq_plus_bu_l3": {
+          "global": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.050316680077155874,
+            "lift_at_10_percent": 2.042483660130719,
+            "brier_score": 0.028143275542097865,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 2.976514627740927,
+            "calibration_error_pp": 0.06526146882907952,
+            "top_quintile_observed_percent": 5.378326148357366,
+            "top_quintile_predicted_percent": 6.669150140633069,
+            "top_quintile_calibration_error_pp": 1.2908239922757032,
+            "log_loss": 0.12820932194038032
+          },
+          "groups": {
+            "baseline": {
+              "coverage_percent": 30.0,
+              "capture_percent": 43.38123487791128,
+              "observed_percent": 4.2097919025272015,
+              "predicted_percent": 4.940173175073218,
+              "bias_pp": 0.7303812725460163,
+              "aggregate_error_pp": 0.7303812725460163,
+              "group_mae_pp": 1.0342488995007397,
+              "group_snapshot_mae_pp": 1.0345564084706231,
+              "lift": 1.4460411625970429,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 8.2,
+              "status": "ok",
+              "dimensions": [
+                "antiguedad",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "Antigüedad x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 19,
+              "maximum_eligible_groups": 20,
+              "mean_eligible_groups": 19.6,
+              "rest_percent": 5.31945889698231
+            },
+            "bu_l3": {
+              "coverage_percent": 30.0,
+              "capture_percent": 34.162262218485324,
+              "observed_percent": 3.315166459971342,
+              "predicted_percent": 3.7073260963823325,
+              "bias_pp": 0.39215963641099005,
+              "aggregate_error_pp": 0.39215963641099005,
+              "group_mae_pp": 0.5764974160154153,
+              "group_snapshot_mae_pp": 0.5904201443476298,
+              "lift": 1.1387420739495109,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 4.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3"
+              ],
+              "label": "BU L3",
+              "minimum_eligible_groups": 9,
+              "maximum_eligible_groups": 9,
+              "mean_eligible_groups": 9.0,
+              "rest_percent": 2.052623755017095
+            },
+            "bu_l3__antiguedad": {
+              "coverage_percent": 30.0,
+              "capture_percent": 43.3825641764252,
+              "observed_percent": 4.20992090001046,
+              "predicted_percent": 4.583778480977765,
+              "bias_pp": 0.37385758096730376,
+              "aggregate_error_pp": 0.37385758096730376,
+              "group_mae_pp": 0.5026109957097368,
+              "group_snapshot_mae_pp": 0.60712399656455,
+              "lift": 1.4460854725475067,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 8.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad"
+              ],
+              "label": "BU L3 x Antigüedad",
+              "minimum_eligible_groups": 21,
+              "maximum_eligible_groups": 23,
+              "mean_eligible_groups": 21.8,
+              "rest_percent": 14.248253307566523
+            },
+            "bu_l3__salidas_equipo": {
+              "coverage_percent": 30.0,
+              "capture_percent": 38.46971659465141,
+              "observed_percent": 3.7331694652874146,
+              "predicted_percent": 4.21690390616677,
+              "bias_pp": 0.48373444087935535,
+              "aggregate_error_pp": 0.48373444087935535,
+              "group_mae_pp": 0.48373444087935563,
+              "group_snapshot_mae_pp": 0.5657741819996939,
+              "lift": 1.2823238864883804,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 5.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "salidas_equipo"
+              ],
+              "label": "BU L3 x Salidas en su equipo",
+              "minimum_eligible_groups": 12,
+              "maximum_eligible_groups": 13,
+              "mean_eligible_groups": 12.2,
+              "rest_percent": 4.883008770625836
+            },
+            "bu_l3__nivel": {
+              "coverage_percent": 29.999999999999993,
+              "capture_percent": 36.98330107851175,
+              "observed_percent": 3.5889250697268436,
+              "predicted_percent": 4.175373016521251,
+              "bias_pp": 0.5864479467944075,
+              "aggregate_error_pp": 0.5864479467944075,
+              "group_mae_pp": 0.5864479467944076,
+              "group_snapshot_mae_pp": 0.6135088024482129,
+              "lift": 1.2327767026170586,
+              "mean_people_per_snapshot": 10090.499999999998,
+              "mean_selected_groups_per_snapshot": 3.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "nivel"
+              ],
+              "label": "BU L3 x Nivel",
+              "minimum_eligible_groups": 16,
+              "maximum_eligible_groups": 18,
+              "mean_eligible_groups": 16.4,
+              "rest_percent": 6.623457707744908
+            },
+            "bu_l3__antiguedad__salidas_equipo": {
+              "coverage_percent": 29.999999999999993,
+              "capture_percent": 43.97112004541831,
+              "observed_percent": 4.267035404437205,
+              "predicted_percent": 4.501385690805584,
+              "bias_pp": 0.23435028636837915,
+              "aggregate_error_pp": 0.23435028636837915,
+              "group_mae_pp": 0.5268346568015171,
+              "group_snapshot_mae_pp": 0.6282822200480002,
+              "lift": 1.4657040015139442,
+              "mean_people_per_snapshot": 10090.499999999998,
+              "mean_selected_groups_per_snapshot": 11.8,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "salidas_equipo"
+              ],
+              "label": "BU L3 x Antigüedad x Salidas en su equipo",
+              "minimum_eligible_groups": 26,
+              "maximum_eligible_groups": 28,
+              "mean_eligible_groups": 27.0,
+              "rest_percent": 22.100787869778504
+            },
+            "bu_l3__antiguedad__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 42.05227492328484,
+              "observed_percent": 4.080827273661416,
+              "predicted_percent": 4.66583418095424,
+              "bias_pp": 0.585006907292824,
+              "aggregate_error_pp": 0.585006907292824,
+              "group_mae_pp": 0.7557754446692221,
+              "group_snapshot_mae_pp": 0.784504009763749,
+              "lift": 1.401742497442828,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 10.2,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "nivel"
+              ],
+              "label": "BU L3 x Antigüedad x Nivel",
+              "minimum_eligible_groups": 27,
+              "maximum_eligible_groups": 28,
+              "mean_eligible_groups": 27.2,
+              "rest_percent": 24.007730043109856
+            },
+            "bu_l3__salidas_equipo__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 40.55071583540044,
+              "observed_percent": 3.935113319064874,
+              "predicted_percent": 4.4507265012728565,
+              "bias_pp": 0.5156131822079828,
+              "aggregate_error_pp": 0.5156131822079828,
+              "group_mae_pp": 0.9147048975946808,
+              "group_snapshot_mae_pp": 0.9373045147810595,
+              "lift": 1.3516905278466815,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 9.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "BU L3 x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 21,
+              "maximum_eligible_groups": 23,
+              "mean_eligible_groups": 21.6,
+              "rest_percent": 11.356027947078935
+            },
+            "bu_l3__antiguedad__salidas_equipo__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 40.191918432937634,
+              "observed_percent": 3.9002949833539002,
+              "predicted_percent": 4.152957395821929,
+              "bias_pp": 0.2526624124680285,
+              "aggregate_error_pp": 0.2526624124680285,
+              "group_mae_pp": 0.6836953197863812,
+              "group_snapshot_mae_pp": 0.792673264708102,
+              "lift": 1.3397306144312546,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 15.2,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "BU L3 x Antigüedad x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 27,
+              "maximum_eligible_groups": 28,
+              "mean_eligible_groups": 27.6,
+              "rest_percent": 37.66136464991824
+            }
+          }
+        },
+        "Fq": {
+          "global": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.05190257392603244,
+            "lift_at_10_percent": 2.087418300653595,
+            "brier_score": 0.028106821062929468,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 2.9591745933011704,
+            "calibration_error_pp": 0.04792143438932285,
+            "top_quintile_observed_percent": 5.419949457410436,
+            "top_quintile_predicted_percent": 6.721783237982113,
+            "top_quintile_calibration_error_pp": 1.3018337805716782,
+            "log_loss": 0.12776910859524138
+          },
+          "groups": {
+            "baseline": {
+              "coverage_percent": 30.0,
+              "capture_percent": 43.535801510450455,
+              "observed_percent": 4.224791322435269,
+              "predicted_percent": 4.939240317118889,
+              "bias_pp": 0.7144489946836193,
+              "aggregate_error_pp": 0.7144489946836193,
+              "group_mae_pp": 1.000026090402945,
+              "group_snapshot_mae_pp": 1.0008466980250665,
+              "lift": 1.4511933836816822,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 8.0,
+              "status": "ok",
+              "dimensions": [
+                "antiguedad",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "Antigüedad x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 19,
+              "maximum_eligible_groups": 20,
+              "mean_eligible_groups": 19.6,
+              "rest_percent": 5.31945889698231
+            },
+            "bu_l3": {
+              "coverage_percent": 30.0,
+              "capture_percent": 33.22617499782071,
+              "observed_percent": 3.224326897365447,
+              "predicted_percent": 3.2552836209018245,
+              "bias_pp": 0.03095672353637778,
+              "aggregate_error_pp": 0.03095672353637778,
+              "group_mae_pp": 0.32761891461259096,
+              "group_snapshot_mae_pp": 0.3527910764575809,
+              "lift": 1.1075391665940237,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 3.6,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3"
+              ],
+              "label": "BU L3",
+              "minimum_eligible_groups": 9,
+              "maximum_eligible_groups": 9,
+              "mean_eligible_groups": 9.0,
+              "rest_percent": 2.052623755017095
+            },
+            "bu_l3__antiguedad": {
+              "coverage_percent": 30.0,
+              "capture_percent": 43.311272038338004,
+              "observed_percent": 4.2030025846033965,
+              "predicted_percent": 4.468251292679375,
+              "bias_pp": 0.26524870807597833,
+              "aggregate_error_pp": 0.26524870807597833,
+              "group_mae_pp": 0.6418547689891752,
+              "group_snapshot_mae_pp": 0.7038101446042425,
+              "lift": 1.4437090679446,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 7.4,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad"
+              ],
+              "label": "BU L3 x Antigüedad",
+              "minimum_eligible_groups": 21,
+              "maximum_eligible_groups": 23,
+              "mean_eligible_groups": 21.8,
+              "rest_percent": 14.248253307566523
+            },
+            "bu_l3__salidas_equipo": {
+              "coverage_percent": 30.0,
+              "capture_percent": 38.46971659465141,
+              "observed_percent": 3.7331694652874146,
+              "predicted_percent": 3.992712014682081,
+              "bias_pp": 0.2595425493946662,
+              "aggregate_error_pp": 0.2595425493946662,
+              "group_mae_pp": 0.49852738023519355,
+              "group_snapshot_mae_pp": 0.5401942808664845,
+              "lift": 1.2823238864883804,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 5.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "salidas_equipo"
+              ],
+              "label": "BU L3 x Salidas en su equipo",
+              "minimum_eligible_groups": 12,
+              "maximum_eligible_groups": 13,
+              "mean_eligible_groups": 12.2,
+              "rest_percent": 4.883008770625836
+            },
+            "bu_l3__nivel": {
+              "coverage_percent": 29.999999999999993,
+              "capture_percent": 36.98330107851175,
+              "observed_percent": 3.5889250697268436,
+              "predicted_percent": 4.089543227092973,
+              "bias_pp": 0.5006181573661296,
+              "aggregate_error_pp": 0.5006181573661296,
+              "group_mae_pp": 0.500618157366129,
+              "group_snapshot_mae_pp": 0.5596293209884271,
+              "lift": 1.2327767026170586,
+              "mean_people_per_snapshot": 10090.499999999998,
+              "mean_selected_groups_per_snapshot": 3.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "nivel"
+              ],
+              "label": "BU L3 x Nivel",
+              "minimum_eligible_groups": 16,
+              "maximum_eligible_groups": 18,
+              "mean_eligible_groups": 16.4,
+              "rest_percent": 6.623457707744908
+            },
+            "bu_l3__antiguedad__salidas_equipo": {
+              "coverage_percent": 29.999999999999993,
+              "capture_percent": 43.30265352952297,
+              "observed_percent": 4.202166229236301,
+              "predicted_percent": 4.482244232590309,
+              "bias_pp": 0.28007800335400795,
+              "aggregate_error_pp": 0.28007800335400795,
+              "group_mae_pp": 0.5204948131792668,
+              "group_snapshot_mae_pp": 0.6606894690705852,
+              "lift": 1.4434217843174324,
+              "mean_people_per_snapshot": 10090.499999999998,
+              "mean_selected_groups_per_snapshot": 12.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "salidas_equipo"
+              ],
+              "label": "BU L3 x Antigüedad x Salidas en su equipo",
+              "minimum_eligible_groups": 26,
+              "maximum_eligible_groups": 28,
+              "mean_eligible_groups": 27.0,
+              "rest_percent": 22.100787869778504
+            },
+            "bu_l3__antiguedad__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 42.34893646449212,
+              "observed_percent": 4.109615835293661,
+              "predicted_percent": 4.6727542755736815,
+              "bias_pp": 0.5631384402800209,
+              "aggregate_error_pp": 0.5631384402800209,
+              "group_mae_pp": 0.905832591313214,
+              "group_snapshot_mae_pp": 0.9500785836412309,
+              "lift": 1.4116312154830706,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 10.2,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "nivel"
+              ],
+              "label": "BU L3 x Antigüedad x Nivel",
+              "minimum_eligible_groups": 27,
+              "maximum_eligible_groups": 28,
+              "mean_eligible_groups": 27.2,
+              "rest_percent": 24.007730043109856
+            },
+            "bu_l3__salidas_equipo__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 40.78986716003709,
+              "observed_percent": 3.9583209873750875,
+              "predicted_percent": 4.3186225059449965,
+              "bias_pp": 0.3603015185699098,
+              "aggregate_error_pp": 0.3603015185699098,
+              "group_mae_pp": 0.8428240176369554,
+              "group_snapshot_mae_pp": 0.8804762201200702,
+              "lift": 1.359662238667903,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 9.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "BU L3 x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 21,
+              "maximum_eligible_groups": 23,
+              "mean_eligible_groups": 21.6,
+              "rest_percent": 11.356027947078935
+            },
+            "bu_l3__antiguedad__salidas_equipo__nivel": {
+              "coverage_percent": 29.999999999999993,
+              "capture_percent": 40.14619636988294,
+              "observed_percent": 3.8958580333372357,
+              "predicted_percent": 4.27764180004374,
+              "bias_pp": 0.3817837667065044,
+              "aggregate_error_pp": 0.3817837667065044,
+              "group_mae_pp": 0.8511827328342906,
+              "group_snapshot_mae_pp": 0.900043008075698,
+              "lift": 1.3382065456627648,
+              "mean_people_per_snapshot": 10090.499999999998,
+              "mean_selected_groups_per_snapshot": 15.4,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "BU L3 x Antigüedad x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 27,
+              "maximum_eligible_groups": 28,
+              "mean_eligible_groups": 27.6,
+              "rest_percent": 37.66136464991824
+            }
+          }
+        },
+        "Fq_plus_bu_l3": {
+          "global": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.05278790059412159,
+            "lift_at_10_percent": 2.179330065359477,
+            "brier_score": 0.028100671401113504,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 2.9800806434928635,
+            "calibration_error_pp": 0.06882748458101572,
+            "top_quintile_observed_percent": 5.39319161587632,
+            "top_quintile_predicted_percent": 6.83024616696198,
+            "top_quintile_calibration_error_pp": 1.4370545510856605,
+            "log_loss": 0.12757065971130135
+          },
+          "groups": {
+            "baseline": {
+              "coverage_percent": 30.0,
+              "capture_percent": 43.45648492230614,
+              "observed_percent": 4.217094300175627,
+              "predicted_percent": 4.955153055073594,
+              "bias_pp": 0.7380587548979671,
+              "aggregate_error_pp": 0.7380587548979671,
+              "group_mae_pp": 1.0134456602051591,
+              "group_snapshot_mae_pp": 1.0143398016416363,
+              "lift": 1.4485494974102044,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 8.2,
+              "status": "ok",
+              "dimensions": [
+                "antiguedad",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "Antigüedad x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 19,
+              "maximum_eligible_groups": 20,
+              "mean_eligible_groups": 19.6,
+              "rest_percent": 5.31945889698231
+            },
+            "bu_l3": {
+              "coverage_percent": 30.0,
+              "capture_percent": 34.162262218485324,
+              "observed_percent": 3.315166459971342,
+              "predicted_percent": 3.71678674049229,
+              "bias_pp": 0.40162028052094767,
+              "aggregate_error_pp": 0.40162028052094767,
+              "group_mae_pp": 0.570962343197588,
+              "group_snapshot_mae_pp": 0.589143585569278,
+              "lift": 1.1387420739495109,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 4.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3"
+              ],
+              "label": "BU L3",
+              "minimum_eligible_groups": 9,
+              "maximum_eligible_groups": 9,
+              "mean_eligible_groups": 9.0,
+              "rest_percent": 2.052623755017095
+            },
+            "bu_l3__antiguedad": {
+              "coverage_percent": 30.0,
+              "capture_percent": 43.3825641764252,
+              "observed_percent": 4.20992090001046,
+              "predicted_percent": 4.587904772100599,
+              "bias_pp": 0.377983872090139,
+              "aggregate_error_pp": 0.377983872090139,
+              "group_mae_pp": 0.5163461821908919,
+              "group_snapshot_mae_pp": 0.593345824471329,
+              "lift": 1.4460854725475067,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 8.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad"
+              ],
+              "label": "BU L3 x Antigüedad",
+              "minimum_eligible_groups": 21,
+              "maximum_eligible_groups": 23,
+              "mean_eligible_groups": 21.8,
+              "rest_percent": 14.248253307566523
+            },
+            "bu_l3__salidas_equipo": {
+              "coverage_percent": 30.0,
+              "capture_percent": 38.46971659465141,
+              "observed_percent": 3.7331694652874146,
+              "predicted_percent": 4.228628065057902,
+              "bias_pp": 0.49545859977048684,
+              "aggregate_error_pp": 0.49545859977048684,
+              "group_mae_pp": 0.4954585997704865,
+              "group_snapshot_mae_pp": 0.5831753995489974,
+              "lift": 1.2823238864883804,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 5.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "salidas_equipo"
+              ],
+              "label": "BU L3 x Salidas en su equipo",
+              "minimum_eligible_groups": 12,
+              "maximum_eligible_groups": 13,
+              "mean_eligible_groups": 12.2,
+              "rest_percent": 4.883008770625836
+            },
+            "bu_l3__nivel": {
+              "coverage_percent": 29.999999999999993,
+              "capture_percent": 36.975332381024366,
+              "observed_percent": 3.5881517732024246,
+              "predicted_percent": 4.192982838897657,
+              "bias_pp": 0.6048310656952322,
+              "aggregate_error_pp": 0.6048310656952322,
+              "group_mae_pp": 0.6112300309252128,
+              "group_snapshot_mae_pp": 0.6372620556522095,
+              "lift": 1.2325110793674792,
+              "mean_people_per_snapshot": 10090.499999999998,
+              "mean_selected_groups_per_snapshot": 3.2,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "nivel"
+              ],
+              "label": "BU L3 x Nivel",
+              "minimum_eligible_groups": 16,
+              "maximum_eligible_groups": 18,
+              "mean_eligible_groups": 16.4,
+              "rest_percent": 6.623457707744908
+            },
+            "bu_l3__antiguedad__salidas_equipo": {
+              "coverage_percent": 29.999999999999993,
+              "capture_percent": 44.013971356587625,
+              "observed_percent": 4.271193771604045,
+              "predicted_percent": 4.5014554112198155,
+              "bias_pp": 0.2302616396157708,
+              "aggregate_error_pp": 0.2302616396157708,
+              "group_mae_pp": 0.5049545130892543,
+              "group_snapshot_mae_pp": 0.605063109099162,
+              "lift": 1.4671323785529213,
+              "mean_people_per_snapshot": 10090.499999999998,
+              "mean_selected_groups_per_snapshot": 11.8,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "salidas_equipo"
+              ],
+              "label": "BU L3 x Antigüedad x Salidas en su equipo",
+              "minimum_eligible_groups": 26,
+              "maximum_eligible_groups": 28,
+              "mean_eligible_groups": 27.0,
+              "rest_percent": 22.100787869778504
+            },
+            "bu_l3__antiguedad__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 42.05227492328484,
+              "observed_percent": 4.080827273661416,
+              "predicted_percent": 4.670795132246987,
+              "bias_pp": 0.5899678585855709,
+              "aggregate_error_pp": 0.5899678585855709,
+              "group_mae_pp": 0.757931412038294,
+              "group_snapshot_mae_pp": 0.775826304766922,
+              "lift": 1.401742497442828,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 10.2,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "nivel"
+              ],
+              "label": "BU L3 x Antigüedad x Nivel",
+              "minimum_eligible_groups": 27,
+              "maximum_eligible_groups": 28,
+              "mean_eligible_groups": 27.2,
+              "rest_percent": 24.007730043109856
+            },
+            "bu_l3__salidas_equipo__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 41.18117561575724,
+              "observed_percent": 3.996294253302561,
+              "predicted_percent": 4.472885232799064,
+              "bias_pp": 0.47659097949650325,
+              "aggregate_error_pp": 0.47659097949650325,
+              "group_mae_pp": 0.9440720372092865,
+              "group_snapshot_mae_pp": 0.9579547527318736,
+              "lift": 1.3727058538585746,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 9.4,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "BU L3 x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 21,
+              "maximum_eligible_groups": 23,
+              "mean_eligible_groups": 21.6,
+              "rest_percent": 11.356027947078935
+            },
+            "bu_l3__antiguedad__salidas_equipo__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 40.191918432937634,
+              "observed_percent": 3.9002949833539002,
+              "predicted_percent": 4.151362994976509,
+              "bias_pp": 0.2510680116226081,
+              "aggregate_error_pp": 0.2510680116226081,
+              "group_mae_pp": 0.6562140133015466,
+              "group_snapshot_mae_pp": 0.7667125361643764,
+              "lift": 1.3397306144312546,
+              "mean_people_per_snapshot": 10090.5,
+              "mean_selected_groups_per_snapshot": 15.2,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "BU L3 x Antigüedad x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 27,
+              "maximum_eligible_groups": 28,
+              "mean_eligible_groups": 27.6,
+              "rest_percent": 37.66136464991824
+            }
+          }
+        }
+      },
+      "elapsed_seconds": 160.35185400000773
+    },
+    {
+      "id": "jan_feb_2026",
+      "origin": "2026-01-01",
+      "end": "2026-02-28",
+      "snapshots": 2,
+      "base_model_origin": "2025-08-01",
+      "base_model_reference": "output\\analysis\\engineering\\20261008\\model-c-v2\\folds\\fold-4-C-model.json",
+      "q_selection": {
+        "id": "q4+career+engagement+confidence",
+        "kind": "blocks",
+        "blocks": [
+          "q4",
+          "career",
+          "engagement",
+          "confidence"
+        ],
+        "features": [
+          "qv_Q4",
+          "qv_career",
+          "qv_Q1",
+          "qv_Q2",
+          "qv_Q3",
+          "qv_Q13",
+          "qv_Q17"
+        ],
+        "l2": 1,
+        "parameters": 29,
+        "converged": true,
+        "iterations": 6,
+        "monthly_brier": 0.0034653846627092843
+      },
+      "q_selection_source": "output/analysis/engineering/20261008/model-c-plus-qvoice-v1/folds/jan_feb_2026/selection.json",
+      "b_l2": 0.1,
+      "models": {
+        "B": {
+          "global": {
+            "exposures": 70276.0,
+            "event_exposures": 2433.0,
+            "pr_auc": 0.0522877249330642,
+            "lift_at_10_percent": 1.8471311859591435,
+            "brier_score": 0.033250520272898515,
+            "observed_percent": 3.462063862485059,
+            "predicted_percent": 3.427667831508178,
+            "calibration_error_pp": 0.03439603097688121,
+            "top_quintile_observed_percent": 5.493738972053048,
+            "top_quintile_predicted_percent": 6.138008398645669,
+            "top_quintile_calibration_error_pp": 0.6442694265926203,
+            "log_loss": 0.14776503357230358
+          },
+          "groups": {
+            "baseline": {
+              "coverage_percent": 30.0,
+              "capture_percent": 41.48837779074667,
+              "observed_percent": 4.787847115415725,
+              "predicted_percent": 5.300806691240905,
+              "bias_pp": 0.5129595758251791,
+              "aggregate_error_pp": 0.5129595758251791,
+              "group_mae_pp": 0.677197687477115,
+              "group_snapshot_mae_pp": 0.6839434488466216,
+              "lift": 1.3829459263582224,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 7.0,
+              "status": "ok",
+              "dimensions": [
+                "antiguedad",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "Antigüedad x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 20,
+              "maximum_eligible_groups": 20,
+              "mean_eligible_groups": 20.0,
+              "rest_percent": 5.351755933746941
+            },
+            "bu_l3": {
+              "coverage_percent": 30.000000000000007,
+              "capture_percent": 32.26492638114253,
+              "observed_percent": 3.723441188329812,
+              "predicted_percent": 3.596453300301939,
+              "bias_pp": -0.1269878880278727,
+              "aggregate_error_pp": 0.1269878880278727,
+              "group_mae_pp": 0.7878434795679619,
+              "group_snapshot_mae_pp": 0.7878434795679619,
+              "lift": 1.075497546038084,
+              "mean_people_per_snapshot": 10541.400000000001,
+              "mean_selected_groups_per_snapshot": 3.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3"
+              ],
+              "label": "BU L3",
+              "minimum_eligible_groups": 9,
+              "maximum_eligible_groups": 9,
+              "mean_eligible_groups": 9.0,
+              "rest_percent": 1.936649780864022
+            },
+            "bu_l3__antiguedad": {
+              "coverage_percent": 30.0,
+              "capture_percent": 42.56925283200756,
+              "observed_percent": 4.912582396089437,
+              "predicted_percent": 4.7732784828015795,
+              "bias_pp": -0.1393039132878585,
+              "aggregate_error_pp": 0.1393039132878585,
+              "group_mae_pp": 0.7369852607372209,
+              "group_snapshot_mae_pp": 0.7626197310148459,
+              "lift": 1.418975094400252,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 8.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad"
+              ],
+              "label": "BU L3 x Antigüedad",
+              "minimum_eligible_groups": 22,
+              "maximum_eligible_groups": 22,
+              "mean_eligible_groups": 22.0,
+              "rest_percent": 13.760031874324094
+            },
+            "bu_l3__salidas_equipo": {
+              "coverage_percent": 30.0,
+              "capture_percent": 34.681298317860396,
+              "observed_percent": 4.002295653677612,
+              "predicted_percent": 4.083110969185555,
+              "bias_pp": 0.08081531550794444,
+              "aggregate_error_pp": 0.08081531550794444,
+              "group_mae_pp": 0.8198272644594689,
+              "group_snapshot_mae_pp": 0.8198272644594689,
+              "lift": 1.1560432772620133,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 6.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "salidas_equipo"
+              ],
+              "label": "BU L3 x Salidas en su equipo",
+              "minimum_eligible_groups": 13,
+              "maximum_eligible_groups": 13,
+              "mean_eligible_groups": 13.0,
+              "rest_percent": 4.506517160908418
+            },
+            "bu_l3__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 37.61726841145546,
+              "observed_percent": 4.341112852423357,
+              "predicted_percent": 4.541334348850765,
+              "bias_pp": 0.20022149642740827,
+              "aggregate_error_pp": 0.20022149642740827,
+              "group_mae_pp": 0.7278709713689453,
+              "group_snapshot_mae_pp": 0.7278709713689453,
+              "lift": 1.2539089470485154,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 4.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "nivel"
+              ],
+              "label": "BU L3 x Nivel",
+              "minimum_eligible_groups": 18,
+              "maximum_eligible_groups": 18,
+              "mean_eligible_groups": 18.0,
+              "rest_percent": 5.664807331094542
+            },
+            "bu_l3__antiguedad__salidas_equipo": {
+              "coverage_percent": 30.000000000000007,
+              "capture_percent": 44.003601160439466,
+              "observed_percent": 5.0781092465587685,
+              "predicted_percent": 4.765861321105287,
+              "bias_pp": -0.3122479254534801,
+              "aggregate_error_pp": 0.3122479254534801,
+              "group_mae_pp": 0.9437462350216986,
+              "group_snapshot_mae_pp": 0.9735984462355691,
+              "lift": 1.4667867053479817,
+              "mean_people_per_snapshot": 10541.400000000001,
+              "mean_selected_groups_per_snapshot": 13.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "salidas_equipo"
+              ],
+              "label": "BU L3 x Antigüedad x Salidas en su equipo",
+              "minimum_eligible_groups": 28,
+              "maximum_eligible_groups": 28,
+              "mean_eligible_groups": 28.0,
+              "rest_percent": 20.870567476805736
+            },
+            "bu_l3__antiguedad__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 40.88460590450949,
+              "observed_percent": 4.7181705544648525,
+              "predicted_percent": 4.994645020720342,
+              "bias_pp": 0.2764744662554896,
+              "aggregate_error_pp": 0.2764744662554896,
+              "group_mae_pp": 1.0682073587946295,
+              "group_snapshot_mae_pp": 1.0782083078313527,
+              "lift": 1.362820196816983,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 12.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "nivel"
+              ],
+              "label": "BU L3 x Antigüedad x Nivel",
+              "minimum_eligible_groups": 28,
+              "maximum_eligible_groups": 29,
+              "mean_eligible_groups": 28.5,
+              "rest_percent": 23.47316295748193
+            },
+            "bu_l3__salidas_equipo__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 35.43058872205195,
+              "observed_percent": 4.088765361372892,
+              "predicted_percent": 4.595056346219106,
+              "bias_pp": 0.5062909848462144,
+              "aggregate_error_pp": 0.5062909848462144,
+              "group_mae_pp": 0.7603244700024643,
+              "group_snapshot_mae_pp": 0.7603244700024643,
+              "lift": 1.1810196240683983,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 7.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "BU L3 x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 22,
+              "maximum_eligible_groups": 22,
+              "mean_eligible_groups": 22.0,
+              "rest_percent": 11.767886618475725
+            },
+            "bu_l3__antiguedad__salidas_equipo__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 40.396241843548594,
+              "observed_percent": 4.661812302225213,
+              "predicted_percent": 4.6687216781281204,
+              "bias_pp": 0.006909375902906579,
+              "aggregate_error_pp": 0.006909375902906579,
+              "group_mae_pp": 1.03031956888807,
+              "group_snapshot_mae_pp": 1.0303195688880702,
+              "lift": 1.3465413947849532,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 17.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "BU L3 x Antigüedad x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 29,
+              "maximum_eligible_groups": 30,
+              "mean_eligible_groups": 29.5,
+              "rest_percent": 36.32534577949798
+            }
+          }
+        },
+        "B_plus_bu_l3": {
+          "global": {
+            "exposures": 70276.0,
+            "event_exposures": 2433.0,
+            "pr_auc": 0.05558590314791344,
+            "lift_at_10_percent": 1.9391191627936384,
+            "brier_score": 0.033197431318989196,
+            "observed_percent": 3.462063862485059,
+            "predicted_percent": 3.5366819544573644,
+            "calibration_error_pp": 0.07461809197230537,
+            "top_quintile_observed_percent": 5.795567273525609,
+            "top_quintile_predicted_percent": 6.382005378843639,
+            "top_quintile_calibration_error_pp": 0.5864381053180295,
+            "log_loss": 0.1470181941790625
+          },
+          "groups": {
+            "baseline": {
+              "coverage_percent": 30.0,
+              "capture_percent": 42.13150434638114,
+              "observed_percent": 4.862065288991278,
+              "predicted_percent": 5.36623442132033,
+              "bias_pp": 0.5041691323290529,
+              "aggregate_error_pp": 0.5041691323290529,
+              "group_mae_pp": 0.7406631722174976,
+              "group_snapshot_mae_pp": 0.7555089117930778,
+              "lift": 1.4043834782127045,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 8.0,
+              "status": "ok",
+              "dimensions": [
+                "antiguedad",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "Antigüedad x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 20,
+              "maximum_eligible_groups": 20,
+              "mean_eligible_groups": 20.0,
+              "rest_percent": 5.351755933746941
+            },
+            "bu_l3": {
+              "coverage_percent": 30.0,
+              "capture_percent": 33.955062216287224,
+              "observed_percent": 3.9184864615813275,
+              "predicted_percent": 4.194458637761683,
+              "bias_pp": 0.2759721761803548,
+              "aggregate_error_pp": 0.2759721761803548,
+              "group_mae_pp": 0.7353713950173169,
+              "group_snapshot_mae_pp": 0.7353713950173169,
+              "lift": 1.1318354072095742,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 4.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3"
+              ],
+              "label": "BU L3",
+              "minimum_eligible_groups": 9,
+              "maximum_eligible_groups": 9,
+              "mean_eligible_groups": 9.0,
+              "rest_percent": 1.936649780864022
+            },
+            "bu_l3__antiguedad": {
+              "coverage_percent": 30.0,
+              "capture_percent": 43.965383527427896,
+              "observed_percent": 5.073698850353467,
+              "predicted_percent": 5.0675039295507265,
+              "bias_pp": -0.006194920802739674,
+              "aggregate_error_pp": 0.006194920802739674,
+              "group_mae_pp": 0.6976493161378634,
+              "group_snapshot_mae_pp": 0.7066801199772176,
+              "lift": 1.4655127842475966,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 8.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad"
+              ],
+              "label": "BU L3 x Antigüedad",
+              "minimum_eligible_groups": 22,
+              "maximum_eligible_groups": 22,
+              "mean_eligible_groups": 22.0,
+              "rest_percent": 13.760031874324094
+            },
+            "bu_l3__salidas_equipo": {
+              "coverage_percent": 30.0,
+              "capture_percent": 39.144199616612994,
+              "observed_percent": 4.517323963952578,
+              "predicted_percent": 4.4384938711868855,
+              "bias_pp": -0.07883009276569287,
+              "aggregate_error_pp": 0.07883009276569287,
+              "group_mae_pp": 0.5846058334494901,
+              "group_snapshot_mae_pp": 0.6068764043577212,
+              "lift": 1.3048066538871,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 6.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "salidas_equipo"
+              ],
+              "label": "BU L3 x Salidas en su equipo",
+              "minimum_eligible_groups": 13,
+              "maximum_eligible_groups": 13,
+              "mean_eligible_groups": 13.0,
+              "rest_percent": 4.506517160908418
+            },
+            "bu_l3__nivel": {
+              "coverage_percent": 30.000000000000007,
+              "capture_percent": 38.36760882210912,
+              "observed_percent": 4.427703733099563,
+              "predicted_percent": 4.796297233421525,
+              "bias_pp": 0.36859350032196125,
+              "aggregate_error_pp": 0.36859350032196125,
+              "group_mae_pp": 0.6789773160692322,
+              "group_snapshot_mae_pp": 0.6789773160692323,
+              "lift": 1.2789202940703037,
+              "mean_people_per_snapshot": 10541.400000000001,
+              "mean_selected_groups_per_snapshot": 5.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "nivel"
+              ],
+              "label": "BU L3 x Nivel",
+              "minimum_eligible_groups": 18,
+              "maximum_eligible_groups": 18,
+              "mean_eligible_groups": 18.0,
+              "rest_percent": 5.664807331094542
+            },
+            "bu_l3__antiguedad__salidas_equipo": {
+              "coverage_percent": 30.000000000000007,
+              "capture_percent": 44.424122869434015,
+              "observed_percent": 5.1266383469621175,
+              "predicted_percent": 4.947684825161314,
+              "bias_pp": -0.17895352180080362,
+              "aggregate_error_pp": 0.17895352180080362,
+              "group_mae_pp": 0.6451540781493279,
+              "group_snapshot_mae_pp": 0.6624464549815681,
+              "lift": 1.4808040956478001,
+              "mean_people_per_snapshot": 10541.400000000001,
+              "mean_selected_groups_per_snapshot": 12.5,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "salidas_equipo"
+              ],
+              "label": "BU L3 x Antigüedad x Salidas en su equipo",
+              "minimum_eligible_groups": 28,
+              "maximum_eligible_groups": 28,
+              "mean_eligible_groups": 28.0,
+              "rest_percent": 20.870567476805736
+            },
+            "bu_l3__antiguedad__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 42.05447600191901,
+              "observed_percent": 4.853176054066298,
+              "predicted_percent": 5.167933575925611,
+              "bias_pp": 0.3147575218593129,
+              "aggregate_error_pp": 0.3147575218593129,
+              "group_mae_pp": 0.7753591045751976,
+              "group_snapshot_mae_pp": 0.7753591045751975,
+              "lift": 1.4018158667306335,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 11.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "nivel"
+              ],
+              "label": "BU L3 x Antigüedad x Nivel",
+              "minimum_eligible_groups": 28,
+              "maximum_eligible_groups": 29,
+              "mean_eligible_groups": 28.5,
+              "rest_percent": 23.47316295748193
+            },
+            "bu_l3__salidas_equipo__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 39.50280575840673,
+              "observed_percent": 4.558707876098222,
+              "predicted_percent": 4.878745118887392,
+              "bias_pp": 0.3200372427891706,
+              "aggregate_error_pp": 0.3200372427891706,
+              "group_mae_pp": 0.850036447299146,
+              "group_snapshot_mae_pp": 0.8554146696436312,
+              "lift": 1.316760191946891,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 9.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "BU L3 x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 22,
+              "maximum_eligible_groups": 22,
+              "mean_eligible_groups": 22.0,
+              "rest_percent": 11.767886618475725
+            },
+            "bu_l3__antiguedad__salidas_equipo__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 41.01941345012013,
+              "observed_percent": 4.733727632199816,
+              "predicted_percent": 4.782102778810572,
+              "bias_pp": 0.04837514661075496,
+              "aggregate_error_pp": 0.04837514661075496,
+              "group_mae_pp": 0.8139446031099395,
+              "group_snapshot_mae_pp": 0.8180783055304337,
+              "lift": 1.367313781670671,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 16.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "BU L3 x Antigüedad x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 29,
+              "maximum_eligible_groups": 30,
+              "mean_eligible_groups": 29.5,
+              "rest_percent": 36.32534577949798
+            }
+          }
+        },
+        "Cq": {
+          "global": {
+            "exposures": 70276.0,
+            "event_exposures": 2433.0,
+            "pr_auc": 0.060544430485725304,
+            "lift_at_10_percent": 2.120838471023428,
+            "brier_score": 0.0331938546800656,
+            "observed_percent": 3.462063862485059,
+            "predicted_percent": 3.211237938011282,
+            "calibration_error_pp": 0.25082592447377705,
+            "top_quintile_observed_percent": 6.4175536456258175,
+            "top_quintile_predicted_percent": 7.12371206786557,
+            "top_quintile_calibration_error_pp": 0.7061584222397527,
+            "log_loss": 0.1468173390862952
+          },
+          "groups": {
+            "baseline": {
+              "coverage_percent": 30.0,
+              "capture_percent": 42.75547280586198,
+              "observed_percent": 4.934072577487915,
+              "predicted_percent": 5.331904521761909,
+              "bias_pp": 0.39783194427399493,
+              "aggregate_error_pp": 0.39783194427399493,
+              "group_mae_pp": 0.9212189955329096,
+              "group_snapshot_mae_pp": 0.921424859827793,
+              "lift": 1.4251824268620659,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 9.0,
+              "status": "ok",
+              "dimensions": [
+                "antiguedad",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "Antigüedad x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 20,
+              "maximum_eligible_groups": 20,
+              "mean_eligible_groups": 20.0,
+              "rest_percent": 5.351755933746941
+            },
+            "bu_l3": {
+              "coverage_percent": 30.000000000000007,
+              "capture_percent": 32.26492638114253,
+              "observed_percent": 3.723441188329812,
+              "predicted_percent": 3.458312802817017,
+              "bias_pp": -0.2651283855127947,
+              "aggregate_error_pp": 0.2651283855127947,
+              "group_mae_pp": 0.8373843253797412,
+              "group_snapshot_mae_pp": 0.8373843253797412,
+              "lift": 1.075497546038084,
+              "mean_people_per_snapshot": 10541.400000000001,
+              "mean_selected_groups_per_snapshot": 3.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3"
+              ],
+              "label": "BU L3",
+              "minimum_eligible_groups": 9,
+              "maximum_eligible_groups": 9,
+              "mean_eligible_groups": 9.0,
+              "rest_percent": 1.936649780864022
+            },
+            "bu_l3__antiguedad": {
+              "coverage_percent": 30.0,
+              "capture_percent": 42.53574796134103,
+              "observed_percent": 4.908715862691044,
+              "predicted_percent": 4.7533604759214105,
+              "bias_pp": -0.1553553867696336,
+              "aggregate_error_pp": 0.1553553867696336,
+              "group_mae_pp": 0.8007702767640708,
+              "group_snapshot_mae_pp": 0.8032352100977551,
+              "lift": 1.4178582653780345,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 7.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad"
+              ],
+              "label": "BU L3 x Antigüedad",
+              "minimum_eligible_groups": 22,
+              "maximum_eligible_groups": 22,
+              "mean_eligible_groups": 22.0,
+              "rest_percent": 13.760031874324094
+            },
+            "bu_l3__salidas_equipo": {
+              "coverage_percent": 30.0,
+              "capture_percent": 33.96969148130423,
+              "observed_percent": 3.9201747099063313,
+              "predicted_percent": 4.3111962206813095,
+              "bias_pp": 0.3910215107749782,
+              "aggregate_error_pp": 0.3910215107749782,
+              "group_mae_pp": 0.5985761346179939,
+              "group_snapshot_mae_pp": 0.5985761346179939,
+              "lift": 1.1323230493768077,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 6.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "salidas_equipo"
+              ],
+              "label": "BU L3 x Salidas en su equipo",
+              "minimum_eligible_groups": 13,
+              "maximum_eligible_groups": 13,
+              "mean_eligible_groups": 13.0,
+              "rest_percent": 4.506517160908418
+            },
+            "bu_l3__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 38.49464782237383,
+              "observed_percent": 4.44236430416432,
+              "predicted_percent": 4.404703751990244,
+              "bias_pp": -0.037660552174076,
+              "aggregate_error_pp": 0.037660552174076,
+              "group_mae_pp": 0.5621609455556957,
+              "group_snapshot_mae_pp": 0.5621609455556956,
+              "lift": 1.283154927412461,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 3.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "nivel"
+              ],
+              "label": "BU L3 x Nivel",
+              "minimum_eligible_groups": 18,
+              "maximum_eligible_groups": 18,
+              "mean_eligible_groups": 18.0,
+              "rest_percent": 5.664807331094542
+            },
+            "bu_l3__antiguedad__salidas_equipo": {
+              "coverage_percent": 30.0,
+              "capture_percent": 44.61256604614503,
+              "observed_percent": 5.148385090702888,
+              "predicted_percent": 4.791593592553481,
+              "bias_pp": -0.356791498149408,
+              "aggregate_error_pp": 0.356791498149408,
+              "group_mae_pp": 1.095656141396226,
+              "group_snapshot_mae_pp": 1.0956561413962265,
+              "lift": 1.487085534871501,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 12.5,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "salidas_equipo"
+              ],
+              "label": "BU L3 x Antigüedad x Salidas en su equipo",
+              "minimum_eligible_groups": 28,
+              "maximum_eligible_groups": 28,
+              "mean_eligible_groups": 28.0,
+              "rest_percent": 20.870567476805736
+            },
+            "bu_l3__antiguedad__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 40.932375796084564,
+              "observed_percent": 4.723683301642748,
+              "predicted_percent": 4.98176287523652,
+              "bias_pp": 0.25807957359377104,
+              "aggregate_error_pp": 0.25807957359377104,
+              "group_mae_pp": 1.0900488039223395,
+              "group_snapshot_mae_pp": 1.093270808069477,
+              "lift": 1.3644125265361522,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 12.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "nivel"
+              ],
+              "label": "BU L3 x Antigüedad x Nivel",
+              "minimum_eligible_groups": 28,
+              "maximum_eligible_groups": 29,
+              "mean_eligible_groups": 28.5,
+              "rest_percent": 23.47316295748193
+            },
+            "bu_l3__salidas_equipo__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 37.88937201341477,
+              "observed_percent": 4.372514187329868,
+              "predicted_percent": 4.593042403712118,
+              "bias_pp": 0.2205282163822485,
+              "aggregate_error_pp": 0.2205282163822485,
+              "group_mae_pp": 0.7826086673246102,
+              "group_snapshot_mae_pp": 0.7826086673246102,
+              "lift": 1.262979067113826,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 7.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "BU L3 x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 22,
+              "maximum_eligible_groups": 22,
+              "mean_eligible_groups": 22.0,
+              "rest_percent": 11.767886618475725
+            },
+            "bu_l3__antiguedad__salidas_equipo__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 39.94120683313668,
+              "observed_percent": 4.609300293368127,
+              "predicted_percent": 4.586468343002545,
+              "bias_pp": -0.022831950365583345,
+              "aggregate_error_pp": 0.022831950365583345,
+              "group_mae_pp": 1.0898773998463727,
+              "group_snapshot_mae_pp": 1.101758183023451,
+              "lift": 1.3313735611045563,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 17.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "BU L3 x Antigüedad x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 29,
+              "maximum_eligible_groups": 30,
+              "mean_eligible_groups": 29.5,
+              "rest_percent": 36.32534577949798
+            }
+          }
+        },
+        "Cq_plus_bu_l3": {
+          "global": {
+            "exposures": 70276.0,
+            "event_exposures": 2433.0,
+            "pr_auc": 0.06345411517647355,
+            "lift_at_10_percent": 2.2235922729140976,
+            "brier_score": 0.033121099885112415,
+            "observed_percent": 3.462063862485059,
+            "predicted_percent": 3.2702089940373513,
+            "calibration_error_pp": 0.19185486844770783,
+            "top_quintile_observed_percent": 6.666571802606865,
+            "top_quintile_predicted_percent": 7.205046704440768,
+            "top_quintile_calibration_error_pp": 0.5384749018339032,
+            "log_loss": 0.14569793344536486
+          },
+          "groups": {
+            "baseline": {
+              "coverage_percent": 30.0,
+              "capture_percent": 42.75547280586198,
+              "observed_percent": 4.934072577487915,
+              "predicted_percent": 5.31369039104301,
+              "bias_pp": 0.3796178135550961,
+              "aggregate_error_pp": 0.3796178135550961,
+              "group_mae_pp": 0.8114202700390588,
+              "group_snapshot_mae_pp": 0.8124019491557232,
+              "lift": 1.4251824268620659,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 9.0,
+              "status": "ok",
+              "dimensions": [
+                "antiguedad",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "Antigüedad x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 20,
+              "maximum_eligible_groups": 20,
+              "mean_eligible_groups": 20.0,
+              "rest_percent": 5.351755933746941
+            },
+            "bu_l3": {
+              "coverage_percent": 30.000000000000007,
+              "capture_percent": 35.344300542751256,
+              "observed_percent": 4.078807521795672,
+              "predicted_percent": 4.022759980424703,
+              "bias_pp": -0.056047541370969116,
+              "aggregate_error_pp": 0.056047541370969116,
+              "group_mae_pp": 0.7373106469790434,
+              "group_snapshot_mae_pp": 0.7373106469790432,
+              "lift": 1.1781433514250415,
+              "mean_people_per_snapshot": 10541.400000000001,
+              "mean_selected_groups_per_snapshot": 4.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3"
+              ],
+              "label": "BU L3",
+              "minimum_eligible_groups": 9,
+              "maximum_eligible_groups": 9,
+              "mean_eligible_groups": 9.0,
+              "rest_percent": 1.936649780864022
+            },
+            "bu_l3__antiguedad": {
+              "coverage_percent": 30.0,
+              "capture_percent": 42.56925283200756,
+              "observed_percent": 4.912582396089437,
+              "predicted_percent": 4.88129228953962,
+              "bias_pp": -0.031290106549817884,
+              "aggregate_error_pp": 0.031290106549817884,
+              "group_mae_pp": 0.686648992653045,
+              "group_snapshot_mae_pp": 0.6906421516824426,
+              "lift": 1.418975094400252,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 8.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad"
+              ],
+              "label": "BU L3 x Antigüedad",
+              "minimum_eligible_groups": 22,
+              "maximum_eligible_groups": 22,
+              "mean_eligible_groups": 22.0,
+              "rest_percent": 13.760031874324094
+            },
+            "bu_l3__salidas_equipo": {
+              "coverage_percent": 30.0,
+              "capture_percent": 38.23314021484817,
+              "observed_percent": 4.41218576957167,
+              "predicted_percent": 4.589933817625164,
+              "bias_pp": 0.17774804805349428,
+              "aggregate_error_pp": 0.17774804805349428,
+              "group_mae_pp": 0.6074234649362524,
+              "group_snapshot_mae_pp": 0.6074234649362524,
+              "lift": 1.2744380071616057,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 5.5,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "salidas_equipo"
+              ],
+              "label": "BU L3 x Salidas en su equipo",
+              "minimum_eligible_groups": 13,
+              "maximum_eligible_groups": 13,
+              "mean_eligible_groups": 13.0,
+              "rest_percent": 4.506517160908418
+            },
+            "bu_l3__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 37.4419696204001,
+              "observed_percent": 4.320882998768354,
+              "predicted_percent": 4.511379616638797,
+              "bias_pp": 0.19049661787044245,
+              "aggregate_error_pp": 0.19049661787044245,
+              "group_mae_pp": 0.4393774008667346,
+              "group_snapshot_mae_pp": 0.4393774008667347,
+              "lift": 1.2480656540133368,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 3.5,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "nivel"
+              ],
+              "label": "BU L3 x Nivel",
+              "minimum_eligible_groups": 18,
+              "maximum_eligible_groups": 18,
+              "mean_eligible_groups": 18.0,
+              "rest_percent": 5.664807331094542
+            },
+            "bu_l3__antiguedad__salidas_equipo": {
+              "coverage_percent": 30.000000000000007,
+              "capture_percent": 44.82108383464734,
+              "observed_percent": 5.172448487378193,
+              "predicted_percent": 4.823655718745998,
+              "bias_pp": -0.3487927686321941,
+              "aggregate_error_pp": 0.3487927686321941,
+              "group_mae_pp": 0.8255353972128313,
+              "group_snapshot_mae_pp": 0.8413585818894154,
+              "lift": 1.4940361278215777,
+              "mean_people_per_snapshot": 10541.400000000001,
+              "mean_selected_groups_per_snapshot": 12.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "salidas_equipo"
+              ],
+              "label": "BU L3 x Antigüedad x Salidas en su equipo",
+              "minimum_eligible_groups": 28,
+              "maximum_eligible_groups": 28,
+              "mean_eligible_groups": 28.0,
+              "rest_percent": 20.870567476805736
+            },
+            "bu_l3__antiguedad__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 41.37156744653838,
+              "observed_percent": 4.774366953034127,
+              "predicted_percent": 5.017430057264273,
+              "bias_pp": 0.24306310423014724,
+              "aggregate_error_pp": 0.24306310423014724,
+              "group_mae_pp": 0.6150104860402203,
+              "group_snapshot_mae_pp": 0.6154376074099602,
+              "lift": 1.379052248217946,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 11.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "nivel"
+              ],
+              "label": "BU L3 x Antigüedad x Nivel",
+              "minimum_eligible_groups": 28,
+              "maximum_eligible_groups": 29,
+              "mean_eligible_groups": 28.5,
+              "rest_percent": 23.47316295748193
+            },
+            "bu_l3__salidas_equipo__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 39.711674366642775,
+              "observed_percent": 4.582811758117606,
+              "predicted_percent": 4.770472841759978,
+              "bias_pp": 0.18766108364237188,
+              "aggregate_error_pp": 0.18766108364237188,
+              "group_mae_pp": 1.0006631643196766,
+              "group_snapshot_mae_pp": 1.0006631643196766,
+              "lift": 1.3237224788880924,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 9.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "BU L3 x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 22,
+              "maximum_eligible_groups": 22,
+              "mean_eligible_groups": 22.0,
+              "rest_percent": 11.767886618475725
+            },
+            "bu_l3__antiguedad__salidas_equipo__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 41.07370093862015,
+              "observed_percent": 4.739992523937182,
+              "predicted_percent": 4.488403462290612,
+              "bias_pp": -0.2515890616465696,
+              "aggregate_error_pp": 0.2515890616465696,
+              "group_mae_pp": 0.9719230292116755,
+              "group_snapshot_mae_pp": 0.9794889558476145,
+              "lift": 1.3691233646206715,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 16.5,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "BU L3 x Antigüedad x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 29,
+              "maximum_eligible_groups": 30,
+              "mean_eligible_groups": 29.5,
+              "rest_percent": 36.32534577949798
+            }
+          }
+        },
+        "Fq": {
+          "global": {
+            "exposures": 70276.0,
+            "event_exposures": 2433.0,
+            "pr_auc": 0.06594035771707005,
+            "lift_at_10_percent": 2.3222359227291407,
+            "brier_score": 0.033056100182130246,
+            "observed_percent": 3.462063862485059,
+            "predicted_percent": 3.2413958117918273,
+            "calibration_error_pp": 0.2206680506932318,
+            "top_quintile_observed_percent": 6.638112584666173,
+            "top_quintile_predicted_percent": 7.278809463598446,
+            "top_quintile_calibration_error_pp": 0.6406968789322731,
+            "log_loss": 0.14509783580080005
+          },
+          "groups": {
+            "baseline": {
+              "coverage_percent": 30.0,
+              "capture_percent": 42.75547280586198,
+              "observed_percent": 4.934072577487915,
+              "predicted_percent": 5.294123751271206,
+              "bias_pp": 0.3600511737832923,
+              "aggregate_error_pp": 0.3600511737832923,
+              "group_mae_pp": 0.7728118883751416,
+              "group_snapshot_mae_pp": 0.7740868873040953,
+              "lift": 1.4251824268620659,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 9.0,
+              "status": "ok",
+              "dimensions": [
+                "antiguedad",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "Antigüedad x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 20,
+              "maximum_eligible_groups": 20,
+              "mean_eligible_groups": 20.0,
+              "rest_percent": 5.351755933746941
+            },
+            "bu_l3": {
+              "coverage_percent": 30.0,
+              "capture_percent": 33.61061943273951,
+              "observed_percent": 3.878737031127518,
+              "predicted_percent": 3.569603689830677,
+              "bias_pp": -0.3091333412968407,
+              "aggregate_error_pp": 0.3091333412968407,
+              "group_mae_pp": 0.5548884995492118,
+              "group_snapshot_mae_pp": 0.5548884995492118,
+              "lift": 1.120353981091317,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 2.5,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3"
+              ],
+              "label": "BU L3",
+              "minimum_eligible_groups": 9,
+              "maximum_eligible_groups": 9,
+              "mean_eligible_groups": 9.0,
+              "rest_percent": 1.936649780864022
+            },
+            "bu_l3__antiguedad": {
+              "coverage_percent": 30.0,
+              "capture_percent": 42.53574796134103,
+              "observed_percent": 4.908715862691044,
+              "predicted_percent": 4.760283946044867,
+              "bias_pp": -0.14843191664617708,
+              "aggregate_error_pp": 0.14843191664617708,
+              "group_mae_pp": 0.7036980488233954,
+              "group_snapshot_mae_pp": 0.7036980488233952,
+              "lift": 1.4178582653780345,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 7.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad"
+              ],
+              "label": "BU L3 x Antigüedad",
+              "minimum_eligible_groups": 22,
+              "maximum_eligible_groups": 22,
+              "mean_eligible_groups": 22.0,
+              "rest_percent": 13.760031874324094
+            },
+            "bu_l3__salidas_equipo": {
+              "coverage_percent": 30.0,
+              "capture_percent": 38.14716051420563,
+              "observed_percent": 4.402263529088276,
+              "predicted_percent": 4.357555716524076,
+              "bias_pp": -0.04470781256419944,
+              "aggregate_error_pp": 0.04470781256419944,
+              "group_mae_pp": 0.6427124239068548,
+              "group_snapshot_mae_pp": 0.6427124239068548,
+              "lift": 1.2715720171401874,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 5.5,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "salidas_equipo"
+              ],
+              "label": "BU L3 x Salidas en su equipo",
+              "minimum_eligible_groups": 13,
+              "maximum_eligible_groups": 13,
+              "mean_eligible_groups": 13.0,
+              "rest_percent": 4.506517160908418
+            },
+            "bu_l3__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 38.49464782237383,
+              "observed_percent": 4.44236430416432,
+              "predicted_percent": 4.462526922898075,
+              "bias_pp": 0.020162618733754897,
+              "aggregate_error_pp": 0.020162618733754897,
+              "group_mae_pp": 0.45191448163391873,
+              "group_snapshot_mae_pp": 0.45191448163391873,
+              "lift": 1.283154927412461,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 3.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "nivel"
+              ],
+              "label": "BU L3 x Nivel",
+              "minimum_eligible_groups": 18,
+              "maximum_eligible_groups": 18,
+              "mean_eligible_groups": 18.0,
+              "rest_percent": 5.664807331094542
+            },
+            "bu_l3__antiguedad__salidas_equipo": {
+              "coverage_percent": 30.000000000000007,
+              "capture_percent": 44.8653547600611,
+              "observed_percent": 5.177557446412651,
+              "predicted_percent": 4.793780317473328,
+              "bias_pp": -0.3837771289393239,
+              "aggregate_error_pp": 0.3837771289393239,
+              "group_mae_pp": 0.9808879975207256,
+              "group_snapshot_mae_pp": 0.9808879975207256,
+              "lift": 1.4955118253353699,
+              "mean_people_per_snapshot": 10541.400000000001,
+              "mean_selected_groups_per_snapshot": 12.5,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "salidas_equipo"
+              ],
+              "label": "BU L3 x Antigüedad x Salidas en su equipo",
+              "minimum_eligible_groups": 28,
+              "maximum_eligible_groups": 28,
+              "mean_eligible_groups": 28.0,
+              "rest_percent": 20.870567476805736
+            },
+            "bu_l3__antiguedad__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 41.669853987455966,
+              "observed_percent": 4.808789854833341,
+              "predicted_percent": 4.974710834902091,
+              "bias_pp": 0.16592098006874978,
+              "aggregate_error_pp": 0.16592098006874978,
+              "group_mae_pp": 0.912455178895887,
+              "group_snapshot_mae_pp": 0.9229572440813612,
+              "lift": 1.3889951329151988,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 11.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "nivel"
+              ],
+              "label": "BU L3 x Antigüedad x Nivel",
+              "minimum_eligible_groups": 28,
+              "maximum_eligible_groups": 29,
+              "mean_eligible_groups": 28.5,
+              "rest_percent": 23.47316295748193
+            },
+            "bu_l3__salidas_equipo__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 40.33479013089847,
+              "observed_percent": 4.654720643770086,
+              "predicted_percent": 4.68031900017799,
+              "bias_pp": 0.02559835640790356,
+              "aggregate_error_pp": 0.02559835640790356,
+              "group_mae_pp": 0.9109912626515566,
+              "group_snapshot_mae_pp": 0.9109912626515566,
+              "lift": 1.3444930043632823,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 8.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "BU L3 x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 22,
+              "maximum_eligible_groups": 22,
+              "mean_eligible_groups": 22.0,
+              "rest_percent": 11.767886618475725
+            },
+            "bu_l3__antiguedad__salidas_equipo__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 40.33083197510491,
+              "observed_percent": 4.6542638641655865,
+              "predicted_percent": 4.5924095241882945,
+              "bias_pp": -0.06185433997729264,
+              "aggregate_error_pp": 0.06185433997729264,
+              "group_mae_pp": 0.9341260042266946,
+              "group_snapshot_mae_pp": 0.9659774298965917,
+              "lift": 1.3443610658368301,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 17.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "BU L3 x Antigüedad x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 29,
+              "maximum_eligible_groups": 30,
+              "mean_eligible_groups": 29.5,
+              "rest_percent": 36.32534577949798
+            }
+          }
+        },
+        "Fq_plus_bu_l3": {
+          "global": {
+            "exposures": 70276.0,
+            "event_exposures": 2433.0,
+            "pr_auc": 0.06798083518065753,
+            "lift_at_10_percent": 2.338676531031648,
+            "brier_score": 0.033016829736841,
+            "observed_percent": 3.462063862485059,
+            "predicted_percent": 3.2783604924365446,
+            "calibration_error_pp": 0.1837033700485144,
+            "top_quintile_observed_percent": 6.787523478854801,
+            "top_quintile_predicted_percent": 7.374793641942404,
+            "top_quintile_calibration_error_pp": 0.5872701630876026,
+            "log_loss": 0.14436936999989253
+          },
+          "groups": {
+            "baseline": {
+              "coverage_percent": 30.0,
+              "capture_percent": 42.75547280586198,
+              "observed_percent": 4.934072577487915,
+              "predicted_percent": 5.297915039909914,
+              "bias_pp": 0.3638424624219995,
+              "aggregate_error_pp": 0.3638424624219995,
+              "group_mae_pp": 0.758062560175457,
+              "group_snapshot_mae_pp": 0.7642168687400289,
+              "lift": 1.4251824268620659,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 9.0,
+              "status": "ok",
+              "dimensions": [
+                "antiguedad",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "Antigüedad x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 20,
+              "maximum_eligible_groups": 20,
+              "mean_eligible_groups": 20.0,
+              "rest_percent": 5.351755933746941
+            },
+            "bu_l3": {
+              "coverage_percent": 30.000000000000007,
+              "capture_percent": 35.344300542751256,
+              "observed_percent": 4.078807521795672,
+              "predicted_percent": 4.0314797622895435,
+              "bias_pp": -0.047327759506128476,
+              "aggregate_error_pp": 0.047327759506128476,
+              "group_mae_pp": 0.6963794977940762,
+              "group_snapshot_mae_pp": 0.6963794977940762,
+              "lift": 1.1781433514250415,
+              "mean_people_per_snapshot": 10541.400000000001,
+              "mean_selected_groups_per_snapshot": 4.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3"
+              ],
+              "label": "BU L3",
+              "minimum_eligible_groups": 9,
+              "maximum_eligible_groups": 9,
+              "mean_eligible_groups": 9.0,
+              "rest_percent": 1.936649780864022
+            },
+            "bu_l3__antiguedad": {
+              "coverage_percent": 30.0,
+              "capture_percent": 42.56925283200756,
+              "observed_percent": 4.912582396089437,
+              "predicted_percent": 4.86718260849245,
+              "bias_pp": -0.04539978759698776,
+              "aggregate_error_pp": 0.04539978759698776,
+              "group_mae_pp": 0.6603899355507249,
+              "group_snapshot_mae_pp": 0.6639805067180695,
+              "lift": 1.418975094400252,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 8.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad"
+              ],
+              "label": "BU L3 x Antigüedad",
+              "minimum_eligible_groups": 22,
+              "maximum_eligible_groups": 22,
+              "mean_eligible_groups": 22.0,
+              "rest_percent": 13.760031874324094
+            },
+            "bu_l3__salidas_equipo": {
+              "coverage_percent": 30.0,
+              "capture_percent": 38.23314021484817,
+              "observed_percent": 4.41218576957167,
+              "predicted_percent": 4.592463346743914,
+              "bias_pp": 0.18027757717224394,
+              "aggregate_error_pp": 0.18027757717224394,
+              "group_mae_pp": 0.5775515028581342,
+              "group_snapshot_mae_pp": 0.5775515028581342,
+              "lift": 1.2744380071616057,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 5.5,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "salidas_equipo"
+              ],
+              "label": "BU L3 x Salidas en su equipo",
+              "minimum_eligible_groups": 13,
+              "maximum_eligible_groups": 13,
+              "mean_eligible_groups": 13.0,
+              "rest_percent": 4.506517160908418
+            },
+            "bu_l3__nivel": {
+              "coverage_percent": 30.000000000000007,
+              "capture_percent": 39.231217156457234,
+              "observed_percent": 4.527365973289148,
+              "predicted_percent": 4.518846323485851,
+              "bias_pp": -0.008519649803295363,
+              "aggregate_error_pp": 0.008519649803295363,
+              "group_mae_pp": 0.6611430306228797,
+              "group_snapshot_mae_pp": 0.6611430306228797,
+              "lift": 1.3077072385485742,
+              "mean_people_per_snapshot": 10541.400000000001,
+              "mean_selected_groups_per_snapshot": 4.5,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "nivel"
+              ],
+              "label": "BU L3 x Nivel",
+              "minimum_eligible_groups": 18,
+              "maximum_eligible_groups": 18,
+              "mean_eligible_groups": 18.0,
+              "rest_percent": 5.664807331094542
+            },
+            "bu_l3__antiguedad__salidas_equipo": {
+              "coverage_percent": 30.000000000000007,
+              "capture_percent": 44.82108383464734,
+              "observed_percent": 5.172448487378193,
+              "predicted_percent": 4.819400597549372,
+              "bias_pp": -0.3530478898288204,
+              "aggregate_error_pp": 0.3530478898288204,
+              "group_mae_pp": 0.7476957332357748,
+              "group_snapshot_mae_pp": 0.784858700703064,
+              "lift": 1.4940361278215777,
+              "mean_people_per_snapshot": 10541.400000000001,
+              "mean_selected_groups_per_snapshot": 12.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "salidas_equipo"
+              ],
+              "label": "BU L3 x Antigüedad x Salidas en su equipo",
+              "minimum_eligible_groups": 28,
+              "maximum_eligible_groups": 28,
+              "mean_eligible_groups": 28.0,
+              "rest_percent": 20.870567476805736
+            },
+            "bu_l3__antiguedad__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 41.37156744653838,
+              "observed_percent": 4.774366953034127,
+              "predicted_percent": 5.001395238082035,
+              "bias_pp": 0.22702828504790873,
+              "aggregate_error_pp": 0.22702828504790873,
+              "group_mae_pp": 0.5397714338565337,
+              "group_snapshot_mae_pp": 0.5402894002144548,
+              "lift": 1.379052248217946,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 11.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "nivel"
+              ],
+              "label": "BU L3 x Antigüedad x Nivel",
+              "minimum_eligible_groups": 28,
+              "maximum_eligible_groups": 29,
+              "mean_eligible_groups": 28.5,
+              "rest_percent": 23.47316295748193
+            },
+            "bu_l3__salidas_equipo__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 41.79419991120776,
+              "observed_percent": 4.823139639135622,
+              "predicted_percent": 4.79436918496069,
+              "bias_pp": -0.02877045417493162,
+              "aggregate_error_pp": 0.02877045417493162,
+              "group_mae_pp": 0.9482569014139,
+              "group_snapshot_mae_pp": 0.9482569014139,
+              "lift": 1.3931399970402587,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 9.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "BU L3 x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 22,
+              "maximum_eligible_groups": 22,
+              "mean_eligible_groups": 22.0,
+              "rest_percent": 11.767886618475725
+            },
+            "bu_l3__antiguedad__salidas_equipo__nivel": {
+              "coverage_percent": 30.0,
+              "capture_percent": 42.00640607693755,
+              "observed_percent": 4.8476286823946095,
+              "predicted_percent": 4.49921742228024,
+              "bias_pp": -0.34841126011436974,
+              "aggregate_error_pp": 0.34841126011436974,
+              "group_mae_pp": 0.962784704490861,
+              "group_snapshot_mae_pp": 0.9745175208996838,
+              "lift": 1.4002135358979184,
+              "mean_people_per_snapshot": 10541.4,
+              "mean_selected_groups_per_snapshot": 16.0,
+              "status": "ok",
+              "dimensions": [
+                "bu_l3",
+                "antiguedad",
+                "salidas_equipo",
+                "nivel"
+              ],
+              "label": "BU L3 x Antigüedad x Salidas en su equipo x Nivel",
+              "minimum_eligible_groups": 29,
+              "maximum_eligible_groups": 30,
+              "mean_eligible_groups": 29.5,
+              "rest_percent": 36.32534577949798
+            }
+          }
+        }
+      },
+      "elapsed_seconds": 181.13529870007187
+    }
+  ],
+  "group_definitions": [
+    {
+      "id": "baseline",
+      "dimensions": [
+        "antiguedad",
+        "salidas_equipo",
+        "nivel"
+      ],
+      "is_bu": false
+    },
+    {
+      "id": "bu_l3",
+      "dimensions": [
+        "bu_l3"
+      ],
+      "is_bu": true
+    },
+    {
+      "id": "bu_l3__antiguedad",
+      "dimensions": [
+        "bu_l3",
+        "antiguedad"
+      ],
+      "is_bu": true
+    },
+    {
+      "id": "bu_l3__salidas_equipo",
+      "dimensions": [
+        "bu_l3",
+        "salidas_equipo"
+      ],
+      "is_bu": true
+    },
+    {
+      "id": "bu_l3__nivel",
+      "dimensions": [
+        "bu_l3",
+        "nivel"
+      ],
+      "is_bu": true
+    },
+    {
+      "id": "bu_l3__antiguedad__salidas_equipo",
+      "dimensions": [
+        "bu_l3",
+        "antiguedad",
+        "salidas_equipo"
+      ],
+      "is_bu": true
+    },
+    {
+      "id": "bu_l3__antiguedad__nivel",
+      "dimensions": [
+        "bu_l3",
+        "antiguedad",
+        "nivel"
+      ],
+      "is_bu": true
+    },
+    {
+      "id": "bu_l3__salidas_equipo__nivel",
+      "dimensions": [
+        "bu_l3",
+        "salidas_equipo",
+        "nivel"
+      ],
+      "is_bu": true
+    },
+    {
+      "id": "bu_l3__antiguedad__salidas_equipo__nivel",
+      "dimensions": [
+        "bu_l3",
+        "antiguedad",
+        "salidas_equipo",
+        "nivel"
+      ],
+      "is_bu": true
+    }
+  ],
+  "source_hashes": {
+    "queries/profiles/engineering_bu_l3_person_month_20261012.sql": "7f00acdb72b2e516ee10b06809b5a689cc55ad6296ea5b0649e91d292add5718",
+    "config/engineering_bu_l3_source_c_city_20261012.json": "ddbd08136637941eb139758f2c6c9473624bf563db28c5ce73aac7b85ce61a58",
+    "config/engineering_bu_l3_loader_20261012.json": "b84662d916e715118dd824123921529f7d77ddf360d7147a8a9dbed6ae4a5688",
+    "config/engineering_model_c_20261008_fast.json": "9d199d98097b82212a59aaa30ffe4030ff8218903765bce51ff1ec0bcdad7526",
+    "config/engineering_model_c_qvoice_20261008.json": "cf07c2445223c4e0ae8e24820d088b23f54434e4a953abd64002aebeb35a6587",
+    "queries/audits/engineering_bu_l3_metadata_20261012.sql": "bcb3ec8918475785fe363c23edf011d31b735c89f57b0cc63befabbf0ff8721f",
+    "queries/audits/engineering_bu_l3_join_20261012.sql": "26685a87ebf8474c468ab6033148372f10287b47532bf47873cd2dde89dc29aa",
+    "queries/profiles/engineering_bu_l3_profile_20261012.sql": "dce8b7632a6905efe3d01f9eed76a1b8e6434ef1895f944de64d28aa9f45afa9",
+    "tools/engineering_bu_l3_experiment.py": "ef767c0a01de6ace38019fadc34c1cd09291c5d5dba23d9bc122fca0b799484f"
+  },
+  "elapsed_seconds": 795.8800401999615,
+  "employee_level_rows_persisted": false,
+  "individual_scores_published": false,
+  "job_family_used": false,
+  "model_comparisons": [
+    {
+      "label": "F + QVoice + BU L3 frente a C + QVoice + BU L3",
+      "control_name": "Cq_plus_bu_l3",
+      "candidate_name": "Fq_plus_bu_l3",
+      "control": {
+        "log_loss": 0.1369536276928726,
+        "brier_score": 0.03063218771360514,
+        "pr_auc": 0.056885397626814715,
+        "lift_at_10_percent": 2.133037966522408
+      },
+      "candidate": {
+        "log_loss": 0.13597001485559695,
+        "brier_score": 0.030558750568977253,
+        "pr_auc": 0.06038436788738956,
+        "lift_at_10_percent": 2.2590032981955623
+      },
+      "delta": {
+        "log_loss": -0.0009836128372756325,
+        "brier_score": -7.343714462788517e-05,
+        "pr_auc": 0.0034989702605748435,
+        "lift_at_10_percent": 0.12596533167315416
+      },
+      "periods": [
+        {
+          "id": "aug_dec_2025",
+          "control": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.050316680077155874,
+            "lift_at_10_percent": 2.042483660130719,
+            "brier_score": 0.028143275542097865,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 2.976514627740927,
+            "calibration_error_pp": 0.06526146882907952,
+            "top_quintile_observed_percent": 5.378326148357366,
+            "top_quintile_predicted_percent": 6.669150140633069,
+            "top_quintile_calibration_error_pp": 1.2908239922757032,
+            "log_loss": 0.12820932194038032
+          },
+          "candidate": {
+            "exposures": 168175.0,
+            "event_exposures": 4896.0,
+            "pr_auc": 0.05278790059412159,
+            "lift_at_10_percent": 2.179330065359477,
+            "brier_score": 0.028100671401113504,
+            "observed_percent": 2.9112531589118475,
+            "predicted_percent": 2.9800806434928635,
+            "calibration_error_pp": 0.06882748458101572,
+            "top_quintile_observed_percent": 5.39319161587632,
+            "top_quintile_predicted_percent": 6.83024616696198,
+            "top_quintile_calibration_error_pp": 1.4370545510856605,
+            "log_loss": 0.12757065971130135
+          },
+          "delta": {
+            "log_loss": -0.0006386622290789623,
+            "brier_score": -4.2604140984361244e-05,
+            "pr_auc": 0.0024712205169657164,
+            "lift_at_10_percent": 0.13684640522875835
+          }
+        },
+        {
+          "id": "jan_feb_2026",
+          "control": {
+            "exposures": 70276.0,
+            "event_exposures": 2433.0,
+            "pr_auc": 0.06345411517647355,
+            "lift_at_10_percent": 2.2235922729140976,
+            "brier_score": 0.033121099885112415,
+            "observed_percent": 3.462063862485059,
+            "predicted_percent": 3.2702089940373513,
+            "calibration_error_pp": 0.19185486844770783,
+            "top_quintile_observed_percent": 6.666571802606865,
+            "top_quintile_predicted_percent": 7.205046704440768,
+            "top_quintile_calibration_error_pp": 0.5384749018339032,
+            "log_loss": 0.14569793344536486
+          },
+          "candidate": {
+            "exposures": 70276.0,
+            "event_exposures": 2433.0,
+            "pr_auc": 0.06798083518065753,
+            "lift_at_10_percent": 2.338676531031648,
+            "brier_score": 0.033016829736841,
+            "observed_percent": 3.462063862485059,
+            "predicted_percent": 3.2783604924365446,
+            "calibration_error_pp": 0.1837033700485144,
+            "top_quintile_observed_percent": 6.787523478854801,
+            "top_quintile_predicted_percent": 7.374793641942404,
+            "top_quintile_calibration_error_pp": 0.5872701630876026,
+            "log_loss": 0.14436936999989253
+          },
+          "delta": {
+            "log_loss": -0.0013285634454723305,
+            "brier_score": -0.00010427014827141257,
+            "pr_auc": 0.0045267200041839845,
+            "lift_at_10_percent": 0.11508425811755041
+          }
+        }
+      ]
+    }
+  ]
+}

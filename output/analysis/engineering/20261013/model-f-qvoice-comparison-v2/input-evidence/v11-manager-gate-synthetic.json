@@ -1,0 +1,53 @@
+{
+  "reporting_mode": "presentation",
+  "executed_at": "2026-10-12T14:21:46.608893+00:00",
+  "query": "queries/audits/engineering_b_v11_manager_gate_synthetic_20261011.sql",
+  "sql_sha256": "68e657c2c5bd218b117fca84c217a4c2e319d45b98576645ac63d477dec1e9d2",
+  "executions": [
+    {
+      "query": "queries/audits/engineering_b_v11_manager_gate_synthetic_20261011.sql",
+      "sql_sha256": "68e657c2c5bd218b117fca84c217a4c2e319d45b98576645ac63d477dec1e9d2",
+      "executed_at": "2026-10-12T14:21:46.607488+00:00",
+      "aggregate_rows": 1
+    }
+  ],
+  "contract_path": "config/b_playbook_v11_contracts/manager-gate-synthetic.json",
+  "contract_sha256": "c9fe3d99176e836fd9aff85adebab9bedc447dba0032a3ebc894fadd5ed18c0d",
+  "contract": {
+    "schema_version": 4,
+    "id": "manager-gate-synthetic",
+    "title": "Casos sintéticos de conocimiento y ventana de eventos",
+    "claim": "El filtro excluye eventos aún no conocidos, conflictos de tipo ya conocidos e intervalos futuros o fuera de ventana.",
+    "use": "Verificar el filtro temporal exacto usado por las señales del manager.",
+    "semantic_type": "derived_feature",
+    "population": "Eventos y managers ficticios; ninguna fila HR",
+    "grain": "equipo ficticio-fecha",
+    "known_at": "Fechas explícitas de conocimiento, conflicto e intervalo en cada fixture",
+    "window": "Dos fechas ficticias y cinco escenarios",
+    "history": "Prueba enfocada, independiente de los agregados históricos.",
+    "query": "queries/audits/engineering_b_v11_manager_gate_synthetic_20261011.sql",
+    "zero_fields": [
+      "knowledge_window_mismatches",
+      "future_event_violations"
+    ],
+    "positive_fields": [
+      "synthetic_cases"
+    ],
+    "expected_rows": 1,
+    "acceptance_rule": "Cero diferencias entre el SQL real y el conteo independiente por fechas explícitas.",
+    "conclusion_if_pass": "El filtro temporal se comporta como se definió en los casos probados",
+    "limitation": "No sustituye las auditorías de exposición, suavizado y benchmark sobre el histórico completo.",
+    "action": "Conservar los dos tipos de evidencia"
+  },
+  "rows": [
+    {
+      "synthetic_cases": 10,
+      "knowledge_window_mismatches": 0,
+      "future_event_violations": 0
+    }
+  ],
+  "outcome": "pass",
+  "failed_rules": [],
+  "employee_level_rows_persisted": false,
+  "assessment_score_changed": false
+}

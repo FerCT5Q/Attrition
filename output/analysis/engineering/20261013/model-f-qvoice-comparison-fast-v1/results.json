@@ -1,0 +1,287 @@
+{
+  "run_id": "engineering-f-qvoice-comparison-20261013-fast-v1",
+  "model_id": "FQ",
+  "output": "output/analysis/engineering/20261013/model-f-qvoice-comparison-fast-v1",
+  "reporting_mode": "presentation",
+  "summary": {
+    "C_plus_city_Q": {
+      "label": "C + ciudad + QVoice",
+      "log_loss": 0.1364334721980207,
+      "brier_score": 0.03058146062252986,
+      "pr_auc": 0.05892146582155124,
+      "lift_at_10_percent": 2.204827111691368,
+      "capture_percent": 43.14563715815622,
+      "group_snapshot_mae_pp": 0.8874667926646138,
+      "group_mae_pp": 0.8864189893890768
+    },
+    "C_Q": {
+      "label": "C + QVoice",
+      "log_loss": 0.13769617659446426,
+      "brier_score": 0.030680776966789905,
+      "pr_auc": 0.05459098890428644,
+      "lift_at_10_percent": 2.075533614596681,
+      "capture_percent": 43.10597886408406,
+      "group_snapshot_mae_pp": 0.9709330350389751,
+      "group_mae_pp": 0.9697732809802069
+    },
+    "B_Q_archived": {
+      "label": "B + QVoice (B_Q archivado)",
+      "log_loss": 0.13744282485292236,
+      "brier_score": 0.030623568790930603,
+      "pr_auc": 0.05376155895290491,
+      "lift_at_10_percent": 2.0348350499262593,
+      "capture_percent": 41.64846192451968,
+      "group_snapshot_mae_pp": 0.6176097865658948
+    }
+  },
+  "deltas": {
+    "FQ_minus_CQ": {
+      "log_loss": -0.001262704396443548,
+      "brier_score": -9.931634426004615e-05,
+      "pr_auc": 0.0043304769172648055,
+      "lift_at_10_percent": 0.12929349709468685,
+      "capture_percent": 0.03965829407216148,
+      "group_snapshot_mae_pp": -0.08346624237436129
+    }
+  },
+  "periods": [
+    {
+      "id": "aug_dec_2025",
+      "origin": "2025-08-01",
+      "end": "2025-12-31",
+      "snapshots": 5,
+      "base_model_origin": "2025-08-01",
+      "base_model_reference": "output\\analysis\\engineering\\20261008\\model-c-v2\\folds\\fold-4-C-model.json",
+      "q_selection": {
+        "id": "q4+q12+career+engagement",
+        "kind": "blocks",
+        "blocks": [
+          "q4",
+          "q12",
+          "career",
+          "engagement"
+        ],
+        "features": [
+          "qv_Q4",
+          "qv_Q12",
+          "qv_career",
+          "qv_Q1",
+          "qv_Q2",
+          "qv_Q3"
+        ],
+        "l2": 10,
+        "parameters": 25,
+        "converged": true,
+        "iterations": 6,
+        "monthly_brier": 0.006014602417278957
+      },
+      "q_selection_source": "output/analysis/engineering/20261008/model-c-plus-qvoice-v1/folds/aug_dec_2025/selection.json",
+      "training_snapshots": 60,
+      "evaluation_snapshots": 5,
+      "metrics": {
+        "C": {
+          "log_loss": 0.12947235235483306,
+          "brier_score": 0.028196492297930035,
+          "pr_auc": 0.04436285173876743,
+          "lift_at_10_percent": 1.7585784313725492,
+          "capture_percent": 42.12766895388011,
+          "group_snapshot_mae_pp": 1.0447090524796236,
+          "group_mae_pp": 1.0447090524796236
+        },
+        "C_Q": {
+          "log_loss": 0.12857501410263325,
+          "brier_score": 0.028167699253514193,
+          "pr_auc": 0.04863754732284757,
+          "lift_at_10_percent": 2.0302287581699345,
+          "capture_percent": 43.45648492230614,
+          "group_snapshot_mae_pp": 1.0204412102501144,
+          "group_mae_pp": 1.0183275664274634
+        },
+        "C_plus_city_Q": {
+          "log_loss": 0.12776910859524138,
+          "brier_score": 0.028106821062929468,
+          "pr_auc": 0.05190257392603244,
+          "lift_at_10_percent": 2.087418300653595,
+          "capture_percent": 43.535801510450455,
+          "group_snapshot_mae_pp": 1.0008466980251134,
+          "group_mae_pp": 1.0000260904029923
+        }
+      },
+      "models": {
+        "C_Q": {
+          "features": [
+            "level_grouped",
+            "tenure_playbook_band",
+            "calendar_month",
+            "manager_changes_12m",
+            "team_exits_12m",
+            "direct_reports_band",
+            "time_since_promotion_band",
+            "rehire",
+            "level_x_tenure",
+            "prior_experience_band",
+            "time_at_level_band",
+            "ios_12m",
+            "layers_band",
+            "region",
+            "comp_ratio_band",
+            "acquisition_recorded",
+            "transfer_12m"
+          ],
+          "l2": 0.1,
+          "q_iterations": 6
+        },
+        "C_plus_city_Q": {
+          "features": [
+            "level_grouped",
+            "tenure_playbook_band",
+            "calendar_month",
+            "manager_changes_12m",
+            "team_exits_12m",
+            "direct_reports_band",
+            "time_since_promotion_band",
+            "rehire",
+            "level_x_tenure",
+            "prior_experience_band",
+            "time_at_level_band",
+            "ios_12m",
+            "layers_band",
+            "region",
+            "comp_ratio_band",
+            "acquisition_recorded",
+            "transfer_12m",
+            "work_city"
+          ],
+          "l2": 0.1,
+          "q_iterations": 6
+        }
+      }
+    },
+    {
+      "id": "jan_feb_2026",
+      "origin": "2026-01-01",
+      "end": "2026-02-28",
+      "snapshots": 2,
+      "base_model_origin": "2025-08-01",
+      "base_model_reference": "output\\analysis\\engineering\\20261008\\model-c-v2\\folds\\fold-4-C-model.json",
+      "q_selection": {
+        "id": "q4+career+engagement+confidence",
+        "kind": "blocks",
+        "blocks": [
+          "q4",
+          "career",
+          "engagement",
+          "confidence"
+        ],
+        "features": [
+          "qv_Q4",
+          "qv_career",
+          "qv_Q1",
+          "qv_Q2",
+          "qv_Q3",
+          "qv_Q13",
+          "qv_Q17"
+        ],
+        "l2": 1,
+        "parameters": 29,
+        "converged": true,
+        "iterations": 6,
+        "monthly_brier": 0.0034653846627092843
+      },
+      "q_selection_source": "output/analysis/engineering/20261008/model-c-plus-qvoice-v1/folds/jan_feb_2026/selection.json",
+      "training_snapshots": 65,
+      "evaluation_snapshots": 2,
+      "metrics": {
+        "C": {
+          "log_loss": 0.14807084839494858,
+          "brier_score": 0.03328382439216944,
+          "pr_auc": 0.053167830872873495,
+          "lift_at_10_percent": 1.8577887381833125,
+          "capture_percent": 42.75547280586198,
+          "group_snapshot_mae_pp": 0.9433035441518175,
+          "group_mae_pp": 0.9414126787564109
+        },
+        "C_Q": {
+          "log_loss": 0.14681733908629524,
+          "brier_score": 0.03319385468006562,
+          "pr_auc": 0.060544430485725304,
+          "lift_at_10_percent": 2.120838471023428,
+          "capture_percent": 42.75547280586198,
+          "group_snapshot_mae_pp": 0.9214248598278357,
+          "group_mae_pp": 0.9212189955329503
+        },
+        "C_plus_city_Q": {
+          "log_loss": 0.14509783580080005,
+          "brier_score": 0.033056100182130246,
+          "pr_auc": 0.06594035771707005,
+          "lift_at_10_percent": 2.3222359227291407,
+          "capture_percent": 42.75547280586198,
+          "group_snapshot_mae_pp": 0.7740868873041142,
+          "group_mae_pp": 0.7728118883751615
+        }
+      },
+      "models": {
+        "C_Q": {
+          "features": [
+            "level_grouped",
+            "tenure_playbook_band",
+            "calendar_month",
+            "manager_changes_12m",
+            "team_exits_12m",
+            "direct_reports_band",
+            "time_since_promotion_band",
+            "rehire",
+            "level_x_tenure",
+            "prior_experience_band",
+            "time_at_level_band",
+            "ios_12m",
+            "layers_band",
+            "region",
+            "comp_ratio_band",
+            "acquisition_recorded",
+            "transfer_12m"
+          ],
+          "l2": 0.1,
+          "q_iterations": 6
+        },
+        "C_plus_city_Q": {
+          "features": [
+            "level_grouped",
+            "tenure_playbook_band",
+            "calendar_month",
+            "manager_changes_12m",
+            "team_exits_12m",
+            "direct_reports_band",
+            "time_since_promotion_band",
+            "rehire",
+            "level_x_tenure",
+            "prior_experience_band",
+            "time_at_level_band",
+            "ios_12m",
+            "layers_band",
+            "region",
+            "comp_ratio_band",
+            "acquisition_recorded",
+            "transfer_12m",
+            "work_city"
+          ],
+          "l2": 0.1,
+          "q_iterations": 6
+        }
+      }
+    }
+  ],
+  "source_hashes": {
+    "config/engineering_model_c_20261008_fast.json": "9d199d98097b82212a59aaa30ffe4030ff8218903765bce51ff1ec0bcdad7526",
+    "config/engineering_model_c_qvoice_20261008.json": "cf07c2445223c4e0ae8e24820d088b23f54434e4a953abd64002aebeb35a6587",
+    "config/engineering_b_playbook_v11_20261012.json": "e24d718915ae78b28063db32fd39ebd9f205c507c5dc1f91eb1d48854fae4364",
+    "config/engineering_f_qvoice_source_c_city_20261013.json": "02637f8f78df5f3717fc2a3b375399f2d707caeb6e246d82b0a64b6496a774ad",
+    "queries/profiles/engineering_f_qvoice_person_month_20261013.sql": "99228401c40bf8ff3e1c288d0a9fcaccc0a07a09d0c8ce09b27c696cab713d93",
+    "output/analysis/engineering/20261008/model-c-plus-qvoice-v1/folds/aug_dec_2025/selection.json": "6dd88960783dafb44a2f7f1e48cda86c3e9cafa208fb0536d95b88304fbfd0e3",
+    "output/analysis/engineering/20261008/model-c-plus-qvoice-v1/folds/jan_feb_2026/selection.json": "cbce8d7ad232a91982cd34cd2d5d9883c9196ad63226b1a169e6016a6ea863ed"
+  },
+  "bq_source": "output/analysis/engineering/20261011/b-playbook-v11-v1/results.json",
+  "employee_level_rows_persisted": false,
+  "individual_scores_published": false,
+  "elapsed_seconds": 515.6335333001334
+}

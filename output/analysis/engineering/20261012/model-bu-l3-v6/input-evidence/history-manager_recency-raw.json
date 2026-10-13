@@ -1,0 +1,25 @@
+{
+  "reporting_mode": "presentation",
+  "executed_at": "2026-10-12T02:18:40.791036+00:00",
+  "query": "queries/audits/engineering_b_incremental_manager_recency_20261011.sql",
+  "sql_sha256": "dac0435e4bc0eb4821ecfd973e9180df3807dc589e0384f77efd5da6f2bc2b8f",
+  "claim": "Cambios de manager observados a tres y seis meses; fechas efectivas y conocidas no posteriores a cada foto.",
+  "acceptance_rule": "Cero en monotonicity_violations, negative_count_violations; grain persona-snapshot, Engineering activo sin RF360.",
+  "rows": [
+    {
+      "person_snapshots": 2209264,
+      "snapshots": 74,
+      "monotonicity_violations": 0,
+      "negative_count_violations": 0,
+      "future_events_excluded": 1531785,
+      "late_known_events_excluded": 0,
+      "covered_person_snapshots": 557977,
+      "covered_percent": "25.2562",
+      "maximum_3m": 3,
+      "maximum_6m": 4,
+      "maximum_12m": 6
+    }
+  ],
+  "employee_level_rows_persisted": false,
+  "assessment_score_changed": false
+}

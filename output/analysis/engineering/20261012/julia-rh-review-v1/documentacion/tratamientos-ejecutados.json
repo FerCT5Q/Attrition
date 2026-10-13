@@ -1,0 +1,1181 @@
+{
+  "source_query": "queries/profiles/engineering_bu_l3_person_month_20261012.sql",
+  "rows": [
+    {
+      "period": "aug_dec_2025",
+      "model": "CQ",
+      "component": "RH",
+      "feature": "level_grouped",
+      "expression_or_rule": "COALESCE(f.level_grouped, '(unknown)') AS level_grouped",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "CQ",
+      "component": "RH",
+      "feature": "tenure_playbook_band",
+      "expression_or_rule": "CASE\n    WHEN f.tenure_months IS NULL THEN '(unknown)'\n    WHEN f.tenure_months < 12 THEN '<1 year'\n    WHEN f.tenure_months < 24 THEN '1-2 years'\n    WHEN f.tenure_months < 36 THEN '2-3 years'\n    WHEN f.tenure_months < 60 THEN '3-5 years'\n    WHEN f.tenure_months < 120 THEN '5-10 years'\n    ELSE '10+ years'\n  END AS tenure_playbook_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "CQ",
+      "component": "RH",
+      "feature": "calendar_month",
+      "expression_or_rule": "Mes calendario de snapshot_date como categoría; avanza durante los seis hazards del R6.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "CQ",
+      "component": "RH",
+      "feature": "manager_changes_12m",
+      "expression_or_rule": "CASE\n    WHEN f.mgr_changes = 0 THEN '0'\n    WHEN f.mgr_changes = 1 THEN '1'\n    ELSE '2+'\n  END AS manager_changes_12m",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "CQ",
+      "component": "RH",
+      "feature": "team_exits_12m",
+      "expression_or_rule": "CASE\n    WHEN f.manager_id IS NULL THEN '(unknown)'\n    WHEN COALESCE(f.team_exit_count, 0) = 0 THEN '0'\n    WHEN f.team_exit_count = 1 THEN '1'\n    ELSE '2+'\n  END AS team_exits_12m",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "CQ",
+      "component": "RH",
+      "feature": "direct_reports_band",
+      "expression_or_rule": "CASE\n    WHEN f.dir_reports IS NULL THEN '(unknown)'\n    WHEN f.dir_reports = 0 THEN '0'\n    WHEN f.dir_reports <= 5 THEN '1-5'\n    ELSE '6+'\n  END AS direct_reports_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "CQ",
+      "component": "RH",
+      "feature": "time_since_promotion_band",
+      "expression_or_rule": "CASE\n    WHEN f.promo_months IS NOT NULL AND f.promo_months < 12 THEN 'promo <1 year'\n    WHEN f.promo_months IS NOT NULL AND f.promo_months < 24 THEN 'promo 1-2 years'\n    WHEN f.promo_months IS NOT NULL AND f.promo_months < 36 THEN 'promo 2-3 years'\n    WHEN f.promo_months IS NOT NULL THEN 'promo 3+ years'\n    WHEN f.hire_months IS NULL THEN '(unknown)'\n    WHEN f.service_date < DATE '2020-08-01' THEN 'sin promo en historial'\n    WHEN f.hire_months < 12 THEN 'sin promo, contratado <1 year'\n    WHEN f.hire_months < 36 THEN 'sin promo, contratado 1-3 years'\n    ELSE 'sin promo, contratado 3+ years'\n  END AS time_since_promotion_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "CQ",
+      "component": "RH",
+      "feature": "rehire",
+      "expression_or_rule": "CASE\n    WHEN f.service_date IS NULL OR f.original_hire_date IS NULL OR f.service_date > f.snapshot_date THEN '(unknown)'\n    WHEN f.service_date > f.original_hire_date THEN 'yes'\n    ELSE 'no'\n  END AS rehire",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "CQ",
+      "component": "RH",
+      "feature": "level_x_tenure",
+      "expression_or_rule": "Indicador de combinación level_grouped × tenure_playbook_band; categorías observadas, junto a los efectos principales.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "CQ",
+      "component": "RH",
+      "feature": "prior_experience_band",
+      "expression_or_rule": "CASE\n    WHEN f.prior_years IS NULL OR f.prior_years < 0 THEN '(unknown)'\n    WHEN f.prior_years < 1 THEN '<1 year'\n    WHEN f.prior_years < 3 THEN '1-3 years'\n    WHEN f.prior_years < 5 THEN '3-5 years'\n    WHEN f.prior_years < 10 THEN '5-10 years'\n    ELSE '10+ years'\n  END AS prior_experience_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "CQ",
+      "component": "RH",
+      "feature": "time_at_level_band",
+      "expression_or_rule": "CASE\n    WHEN f.snapshot_date < DATE '2022-10-23' THEN '(antes de la fuente)'\n    WHEN f.level_months IS NULL THEN '(unknown)'\n    WHEN f.level_months < 12 THEN '<1 year'\n    WHEN f.level_months < 24 THEN '1-2 years'\n    WHEN f.level_months < 36 THEN '2-3 years'\n    WHEN f.level_months < 60 THEN '3-5 years'\n    ELSE '5+ years'\n  END AS time_at_level_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "CQ",
+      "component": "RH",
+      "feature": "ios_12m",
+      "expression_or_rule": "CASE\n    WHEN f.snapshot_date < DATE '2023-10-22' THEN '(antes de la fuente)'\n    WHEN f.ios_moves IS NULL THEN 'none'\n    WHEN f.ios_other = 1 THEN 'lateral u otro'\n    ELSE 'reorg'\n  END AS ios_12m",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "CQ",
+      "component": "RH",
+      "feature": "layers_band",
+      "expression_or_rule": "CASE\n    WHEN f.snapshot_date < DATE '2023-03-26' THEN '(antes de la fuente)'\n    WHEN f.layers IS NULL THEN '(unknown)'\n    WHEN f.layers <= 6 THEN '<=6'\n    WHEN f.layers >= 10 THEN '10+'\n    ELSE CAST(f.layers AS VARCHAR)\n  END AS layers_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "CQ",
+      "component": "RH",
+      "feature": "region",
+      "expression_or_rule": "COALESCE(f.region, '(unknown)') AS region",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "CQ",
+      "component": "RH",
+      "feature": "comp_ratio_band",
+      "expression_or_rule": "CASE WHEN f.cr IS NULL OR f.cr <= 0 THEN '(unknown)'\n       WHEN f.cr < 0.8 THEN '<0.8' WHEN f.cr < 0.9 THEN '0.8-0.9'\n       WHEN f.cr < 1.0 THEN '0.9-1.0' WHEN f.cr < 1.1 THEN '1.0-1.1'\n       WHEN f.cr < 1.2 THEN '1.1-1.2' ELSE '1.2+' END AS comp_ratio_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "CQ",
+      "component": "RH",
+      "feature": "acquisition_recorded",
+      "expression_or_rule": "CASE WHEN f.acquisition_recorded = 1 THEN 'registrada' ELSE 'sin registro' END AS acquisition_recorded",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "CQ",
+      "component": "RH",
+      "feature": "transfer_12m",
+      "expression_or_rule": "CASE WHEN f.snapshot_date < DATE '2023-10-23' THEN '(historia no confirmada)'\n       WHEN f.transfer_12m = 1 THEN 'yes' ELSE 'no' END AS transfer_12m",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "CQ",
+      "component": "QVoice",
+      "feature": "qv_Q4",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "CQ",
+      "component": "QVoice",
+      "feature": "qv_Q12",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "CQ",
+      "component": "QVoice",
+      "feature": "qv_career",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "CQ",
+      "component": "QVoice",
+      "feature": "qv_Q1",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "CQ",
+      "component": "QVoice",
+      "feature": "qv_Q2",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "CQ",
+      "component": "QVoice",
+      "feature": "qv_Q3",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "level_grouped",
+      "expression_or_rule": "COALESCE(f.level_grouped, '(unknown)') AS level_grouped",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "tenure_playbook_band",
+      "expression_or_rule": "CASE\n    WHEN f.tenure_months IS NULL THEN '(unknown)'\n    WHEN f.tenure_months < 12 THEN '<1 year'\n    WHEN f.tenure_months < 24 THEN '1-2 years'\n    WHEN f.tenure_months < 36 THEN '2-3 years'\n    WHEN f.tenure_months < 60 THEN '3-5 years'\n    WHEN f.tenure_months < 120 THEN '5-10 years'\n    ELSE '10+ years'\n  END AS tenure_playbook_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "calendar_month",
+      "expression_or_rule": "Mes calendario de snapshot_date como categoría; avanza durante los seis hazards del R6.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "manager_changes_12m",
+      "expression_or_rule": "CASE\n    WHEN f.mgr_changes = 0 THEN '0'\n    WHEN f.mgr_changes = 1 THEN '1'\n    ELSE '2+'\n  END AS manager_changes_12m",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "team_exits_12m",
+      "expression_or_rule": "CASE\n    WHEN f.manager_id IS NULL THEN '(unknown)'\n    WHEN COALESCE(f.team_exit_count, 0) = 0 THEN '0'\n    WHEN f.team_exit_count = 1 THEN '1'\n    ELSE '2+'\n  END AS team_exits_12m",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "direct_reports_band",
+      "expression_or_rule": "CASE\n    WHEN f.dir_reports IS NULL THEN '(unknown)'\n    WHEN f.dir_reports = 0 THEN '0'\n    WHEN f.dir_reports <= 5 THEN '1-5'\n    ELSE '6+'\n  END AS direct_reports_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "time_since_promotion_band",
+      "expression_or_rule": "CASE\n    WHEN f.promo_months IS NOT NULL AND f.promo_months < 12 THEN 'promo <1 year'\n    WHEN f.promo_months IS NOT NULL AND f.promo_months < 24 THEN 'promo 1-2 years'\n    WHEN f.promo_months IS NOT NULL AND f.promo_months < 36 THEN 'promo 2-3 years'\n    WHEN f.promo_months IS NOT NULL THEN 'promo 3+ years'\n    WHEN f.hire_months IS NULL THEN '(unknown)'\n    WHEN f.service_date < DATE '2020-08-01' THEN 'sin promo en historial'\n    WHEN f.hire_months < 12 THEN 'sin promo, contratado <1 year'\n    WHEN f.hire_months < 36 THEN 'sin promo, contratado 1-3 years'\n    ELSE 'sin promo, contratado 3+ years'\n  END AS time_since_promotion_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "rehire",
+      "expression_or_rule": "CASE\n    WHEN f.service_date IS NULL OR f.original_hire_date IS NULL OR f.service_date > f.snapshot_date THEN '(unknown)'\n    WHEN f.service_date > f.original_hire_date THEN 'yes'\n    ELSE 'no'\n  END AS rehire",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "level_x_tenure",
+      "expression_or_rule": "Indicador de combinación level_grouped × tenure_playbook_band; categorías observadas, junto a los efectos principales.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "prior_experience_band",
+      "expression_or_rule": "CASE\n    WHEN f.prior_years IS NULL OR f.prior_years < 0 THEN '(unknown)'\n    WHEN f.prior_years < 1 THEN '<1 year'\n    WHEN f.prior_years < 3 THEN '1-3 years'\n    WHEN f.prior_years < 5 THEN '3-5 years'\n    WHEN f.prior_years < 10 THEN '5-10 years'\n    ELSE '10+ years'\n  END AS prior_experience_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "time_at_level_band",
+      "expression_or_rule": "CASE\n    WHEN f.snapshot_date < DATE '2022-10-23' THEN '(antes de la fuente)'\n    WHEN f.level_months IS NULL THEN '(unknown)'\n    WHEN f.level_months < 12 THEN '<1 year'\n    WHEN f.level_months < 24 THEN '1-2 years'\n    WHEN f.level_months < 36 THEN '2-3 years'\n    WHEN f.level_months < 60 THEN '3-5 years'\n    ELSE '5+ years'\n  END AS time_at_level_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "ios_12m",
+      "expression_or_rule": "CASE\n    WHEN f.snapshot_date < DATE '2023-10-22' THEN '(antes de la fuente)'\n    WHEN f.ios_moves IS NULL THEN 'none'\n    WHEN f.ios_other = 1 THEN 'lateral u otro'\n    ELSE 'reorg'\n  END AS ios_12m",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "layers_band",
+      "expression_or_rule": "CASE\n    WHEN f.snapshot_date < DATE '2023-03-26' THEN '(antes de la fuente)'\n    WHEN f.layers IS NULL THEN '(unknown)'\n    WHEN f.layers <= 6 THEN '<=6'\n    WHEN f.layers >= 10 THEN '10+'\n    ELSE CAST(f.layers AS VARCHAR)\n  END AS layers_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "region",
+      "expression_or_rule": "COALESCE(f.region, '(unknown)') AS region",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "comp_ratio_band",
+      "expression_or_rule": "CASE WHEN f.cr IS NULL OR f.cr <= 0 THEN '(unknown)'\n       WHEN f.cr < 0.8 THEN '<0.8' WHEN f.cr < 0.9 THEN '0.8-0.9'\n       WHEN f.cr < 1.0 THEN '0.9-1.0' WHEN f.cr < 1.1 THEN '1.0-1.1'\n       WHEN f.cr < 1.2 THEN '1.1-1.2' ELSE '1.2+' END AS comp_ratio_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "acquisition_recorded",
+      "expression_or_rule": "CASE WHEN f.acquisition_recorded = 1 THEN 'registrada' ELSE 'sin registro' END AS acquisition_recorded",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "transfer_12m",
+      "expression_or_rule": "CASE WHEN f.snapshot_date < DATE '2023-10-23' THEN '(historia no confirmada)'\n       WHEN f.transfer_12m = 1 THEN 'yes' ELSE 'no' END AS transfer_12m",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "work_city",
+      "expression_or_rule": "CASE WHEN f.work_country IS NOT NULL AND f.work_city_raw IS NOT NULL\n       THEN f.work_country || ' | ' || f.work_city_raw\n       ELSE '(unknown)' END AS work_city",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ",
+      "component": "QVoice",
+      "feature": "qv_Q4",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ",
+      "component": "QVoice",
+      "feature": "qv_Q12",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ",
+      "component": "QVoice",
+      "feature": "qv_career",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ",
+      "component": "QVoice",
+      "feature": "qv_Q1",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ",
+      "component": "QVoice",
+      "feature": "qv_Q2",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ",
+      "component": "QVoice",
+      "feature": "qv_Q3",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "level_grouped",
+      "expression_or_rule": "COALESCE(f.level_grouped, '(unknown)') AS level_grouped",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "tenure_playbook_band",
+      "expression_or_rule": "CASE\n    WHEN f.tenure_months IS NULL THEN '(unknown)'\n    WHEN f.tenure_months < 12 THEN '<1 year'\n    WHEN f.tenure_months < 24 THEN '1-2 years'\n    WHEN f.tenure_months < 36 THEN '2-3 years'\n    WHEN f.tenure_months < 60 THEN '3-5 years'\n    WHEN f.tenure_months < 120 THEN '5-10 years'\n    ELSE '10+ years'\n  END AS tenure_playbook_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "calendar_month",
+      "expression_or_rule": "Mes calendario de snapshot_date como categoría; avanza durante los seis hazards del R6.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "manager_changes_12m",
+      "expression_or_rule": "CASE\n    WHEN f.mgr_changes = 0 THEN '0'\n    WHEN f.mgr_changes = 1 THEN '1'\n    ELSE '2+'\n  END AS manager_changes_12m",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "team_exits_12m",
+      "expression_or_rule": "CASE\n    WHEN f.manager_id IS NULL THEN '(unknown)'\n    WHEN COALESCE(f.team_exit_count, 0) = 0 THEN '0'\n    WHEN f.team_exit_count = 1 THEN '1'\n    ELSE '2+'\n  END AS team_exits_12m",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "direct_reports_band",
+      "expression_or_rule": "CASE\n    WHEN f.dir_reports IS NULL THEN '(unknown)'\n    WHEN f.dir_reports = 0 THEN '0'\n    WHEN f.dir_reports <= 5 THEN '1-5'\n    ELSE '6+'\n  END AS direct_reports_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "time_since_promotion_band",
+      "expression_or_rule": "CASE\n    WHEN f.promo_months IS NOT NULL AND f.promo_months < 12 THEN 'promo <1 year'\n    WHEN f.promo_months IS NOT NULL AND f.promo_months < 24 THEN 'promo 1-2 years'\n    WHEN f.promo_months IS NOT NULL AND f.promo_months < 36 THEN 'promo 2-3 years'\n    WHEN f.promo_months IS NOT NULL THEN 'promo 3+ years'\n    WHEN f.hire_months IS NULL THEN '(unknown)'\n    WHEN f.service_date < DATE '2020-08-01' THEN 'sin promo en historial'\n    WHEN f.hire_months < 12 THEN 'sin promo, contratado <1 year'\n    WHEN f.hire_months < 36 THEN 'sin promo, contratado 1-3 years'\n    ELSE 'sin promo, contratado 3+ years'\n  END AS time_since_promotion_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "rehire",
+      "expression_or_rule": "CASE\n    WHEN f.service_date IS NULL OR f.original_hire_date IS NULL OR f.service_date > f.snapshot_date THEN '(unknown)'\n    WHEN f.service_date > f.original_hire_date THEN 'yes'\n    ELSE 'no'\n  END AS rehire",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "level_x_tenure",
+      "expression_or_rule": "Indicador de combinación level_grouped × tenure_playbook_band; categorías observadas, junto a los efectos principales.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "prior_experience_band",
+      "expression_or_rule": "CASE\n    WHEN f.prior_years IS NULL OR f.prior_years < 0 THEN '(unknown)'\n    WHEN f.prior_years < 1 THEN '<1 year'\n    WHEN f.prior_years < 3 THEN '1-3 years'\n    WHEN f.prior_years < 5 THEN '3-5 years'\n    WHEN f.prior_years < 10 THEN '5-10 years'\n    ELSE '10+ years'\n  END AS prior_experience_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "time_at_level_band",
+      "expression_or_rule": "CASE\n    WHEN f.snapshot_date < DATE '2022-10-23' THEN '(antes de la fuente)'\n    WHEN f.level_months IS NULL THEN '(unknown)'\n    WHEN f.level_months < 12 THEN '<1 year'\n    WHEN f.level_months < 24 THEN '1-2 years'\n    WHEN f.level_months < 36 THEN '2-3 years'\n    WHEN f.level_months < 60 THEN '3-5 years'\n    ELSE '5+ years'\n  END AS time_at_level_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "ios_12m",
+      "expression_or_rule": "CASE\n    WHEN f.snapshot_date < DATE '2023-10-22' THEN '(antes de la fuente)'\n    WHEN f.ios_moves IS NULL THEN 'none'\n    WHEN f.ios_other = 1 THEN 'lateral u otro'\n    ELSE 'reorg'\n  END AS ios_12m",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "layers_band",
+      "expression_or_rule": "CASE\n    WHEN f.snapshot_date < DATE '2023-03-26' THEN '(antes de la fuente)'\n    WHEN f.layers IS NULL THEN '(unknown)'\n    WHEN f.layers <= 6 THEN '<=6'\n    WHEN f.layers >= 10 THEN '10+'\n    ELSE CAST(f.layers AS VARCHAR)\n  END AS layers_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "region",
+      "expression_or_rule": "COALESCE(f.region, '(unknown)') AS region",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "comp_ratio_band",
+      "expression_or_rule": "CASE WHEN f.cr IS NULL OR f.cr <= 0 THEN '(unknown)'\n       WHEN f.cr < 0.8 THEN '<0.8' WHEN f.cr < 0.9 THEN '0.8-0.9'\n       WHEN f.cr < 1.0 THEN '0.9-1.0' WHEN f.cr < 1.1 THEN '1.0-1.1'\n       WHEN f.cr < 1.2 THEN '1.1-1.2' ELSE '1.2+' END AS comp_ratio_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "acquisition_recorded",
+      "expression_or_rule": "CASE WHEN f.acquisition_recorded = 1 THEN 'registrada' ELSE 'sin registro' END AS acquisition_recorded",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "transfer_12m",
+      "expression_or_rule": "CASE WHEN f.snapshot_date < DATE '2023-10-23' THEN '(historia no confirmada)'\n       WHEN f.transfer_12m = 1 THEN 'yes' ELSE 'no' END AS transfer_12m",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "work_city",
+      "expression_or_rule": "CASE WHEN f.work_country IS NOT NULL AND f.work_city_raw IS NOT NULL\n       THEN f.work_country || ' | ' || f.work_city_raw\n       ELSE '(unknown)' END AS work_city",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "bu_l3",
+      "expression_or_rule": "COALESCE(f.bu_l3, '(unknown)') AS bu_l3",
+      "pooling": "BU de menos de 300 personas de entrenamiento → (other); conservar pool aprendido"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ_BU_L3",
+      "component": "QVoice",
+      "feature": "qv_Q4",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ_BU_L3",
+      "component": "QVoice",
+      "feature": "qv_Q12",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ_BU_L3",
+      "component": "QVoice",
+      "feature": "qv_career",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ_BU_L3",
+      "component": "QVoice",
+      "feature": "qv_Q1",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ_BU_L3",
+      "component": "QVoice",
+      "feature": "qv_Q2",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "aug_dec_2025",
+      "model": "FQ_BU_L3",
+      "component": "QVoice",
+      "feature": "qv_Q3",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "CQ",
+      "component": "RH",
+      "feature": "level_grouped",
+      "expression_or_rule": "COALESCE(f.level_grouped, '(unknown)') AS level_grouped",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "CQ",
+      "component": "RH",
+      "feature": "tenure_playbook_band",
+      "expression_or_rule": "CASE\n    WHEN f.tenure_months IS NULL THEN '(unknown)'\n    WHEN f.tenure_months < 12 THEN '<1 year'\n    WHEN f.tenure_months < 24 THEN '1-2 years'\n    WHEN f.tenure_months < 36 THEN '2-3 years'\n    WHEN f.tenure_months < 60 THEN '3-5 years'\n    WHEN f.tenure_months < 120 THEN '5-10 years'\n    ELSE '10+ years'\n  END AS tenure_playbook_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "CQ",
+      "component": "RH",
+      "feature": "calendar_month",
+      "expression_or_rule": "Mes calendario de snapshot_date como categoría; avanza durante los seis hazards del R6.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "CQ",
+      "component": "RH",
+      "feature": "manager_changes_12m",
+      "expression_or_rule": "CASE\n    WHEN f.mgr_changes = 0 THEN '0'\n    WHEN f.mgr_changes = 1 THEN '1'\n    ELSE '2+'\n  END AS manager_changes_12m",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "CQ",
+      "component": "RH",
+      "feature": "team_exits_12m",
+      "expression_or_rule": "CASE\n    WHEN f.manager_id IS NULL THEN '(unknown)'\n    WHEN COALESCE(f.team_exit_count, 0) = 0 THEN '0'\n    WHEN f.team_exit_count = 1 THEN '1'\n    ELSE '2+'\n  END AS team_exits_12m",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "CQ",
+      "component": "RH",
+      "feature": "direct_reports_band",
+      "expression_or_rule": "CASE\n    WHEN f.dir_reports IS NULL THEN '(unknown)'\n    WHEN f.dir_reports = 0 THEN '0'\n    WHEN f.dir_reports <= 5 THEN '1-5'\n    ELSE '6+'\n  END AS direct_reports_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "CQ",
+      "component": "RH",
+      "feature": "time_since_promotion_band",
+      "expression_or_rule": "CASE\n    WHEN f.promo_months IS NOT NULL AND f.promo_months < 12 THEN 'promo <1 year'\n    WHEN f.promo_months IS NOT NULL AND f.promo_months < 24 THEN 'promo 1-2 years'\n    WHEN f.promo_months IS NOT NULL AND f.promo_months < 36 THEN 'promo 2-3 years'\n    WHEN f.promo_months IS NOT NULL THEN 'promo 3+ years'\n    WHEN f.hire_months IS NULL THEN '(unknown)'\n    WHEN f.service_date < DATE '2020-08-01' THEN 'sin promo en historial'\n    WHEN f.hire_months < 12 THEN 'sin promo, contratado <1 year'\n    WHEN f.hire_months < 36 THEN 'sin promo, contratado 1-3 years'\n    ELSE 'sin promo, contratado 3+ years'\n  END AS time_since_promotion_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "CQ",
+      "component": "RH",
+      "feature": "rehire",
+      "expression_or_rule": "CASE\n    WHEN f.service_date IS NULL OR f.original_hire_date IS NULL OR f.service_date > f.snapshot_date THEN '(unknown)'\n    WHEN f.service_date > f.original_hire_date THEN 'yes'\n    ELSE 'no'\n  END AS rehire",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "CQ",
+      "component": "RH",
+      "feature": "level_x_tenure",
+      "expression_or_rule": "Indicador de combinación level_grouped × tenure_playbook_band; categorías observadas, junto a los efectos principales.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "CQ",
+      "component": "RH",
+      "feature": "prior_experience_band",
+      "expression_or_rule": "CASE\n    WHEN f.prior_years IS NULL OR f.prior_years < 0 THEN '(unknown)'\n    WHEN f.prior_years < 1 THEN '<1 year'\n    WHEN f.prior_years < 3 THEN '1-3 years'\n    WHEN f.prior_years < 5 THEN '3-5 years'\n    WHEN f.prior_years < 10 THEN '5-10 years'\n    ELSE '10+ years'\n  END AS prior_experience_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "CQ",
+      "component": "RH",
+      "feature": "time_at_level_band",
+      "expression_or_rule": "CASE\n    WHEN f.snapshot_date < DATE '2022-10-23' THEN '(antes de la fuente)'\n    WHEN f.level_months IS NULL THEN '(unknown)'\n    WHEN f.level_months < 12 THEN '<1 year'\n    WHEN f.level_months < 24 THEN '1-2 years'\n    WHEN f.level_months < 36 THEN '2-3 years'\n    WHEN f.level_months < 60 THEN '3-5 years'\n    ELSE '5+ years'\n  END AS time_at_level_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "CQ",
+      "component": "RH",
+      "feature": "ios_12m",
+      "expression_or_rule": "CASE\n    WHEN f.snapshot_date < DATE '2023-10-22' THEN '(antes de la fuente)'\n    WHEN f.ios_moves IS NULL THEN 'none'\n    WHEN f.ios_other = 1 THEN 'lateral u otro'\n    ELSE 'reorg'\n  END AS ios_12m",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "CQ",
+      "component": "RH",
+      "feature": "layers_band",
+      "expression_or_rule": "CASE\n    WHEN f.snapshot_date < DATE '2023-03-26' THEN '(antes de la fuente)'\n    WHEN f.layers IS NULL THEN '(unknown)'\n    WHEN f.layers <= 6 THEN '<=6'\n    WHEN f.layers >= 10 THEN '10+'\n    ELSE CAST(f.layers AS VARCHAR)\n  END AS layers_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "CQ",
+      "component": "RH",
+      "feature": "region",
+      "expression_or_rule": "COALESCE(f.region, '(unknown)') AS region",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "CQ",
+      "component": "RH",
+      "feature": "comp_ratio_band",
+      "expression_or_rule": "CASE WHEN f.cr IS NULL OR f.cr <= 0 THEN '(unknown)'\n       WHEN f.cr < 0.8 THEN '<0.8' WHEN f.cr < 0.9 THEN '0.8-0.9'\n       WHEN f.cr < 1.0 THEN '0.9-1.0' WHEN f.cr < 1.1 THEN '1.0-1.1'\n       WHEN f.cr < 1.2 THEN '1.1-1.2' ELSE '1.2+' END AS comp_ratio_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "CQ",
+      "component": "RH",
+      "feature": "acquisition_recorded",
+      "expression_or_rule": "CASE WHEN f.acquisition_recorded = 1 THEN 'registrada' ELSE 'sin registro' END AS acquisition_recorded",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "CQ",
+      "component": "RH",
+      "feature": "transfer_12m",
+      "expression_or_rule": "CASE WHEN f.snapshot_date < DATE '2023-10-23' THEN '(historia no confirmada)'\n       WHEN f.transfer_12m = 1 THEN 'yes' ELSE 'no' END AS transfer_12m",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "CQ",
+      "component": "QVoice",
+      "feature": "qv_Q4",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "CQ",
+      "component": "QVoice",
+      "feature": "qv_career",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "CQ",
+      "component": "QVoice",
+      "feature": "qv_Q1",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "CQ",
+      "component": "QVoice",
+      "feature": "qv_Q2",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "CQ",
+      "component": "QVoice",
+      "feature": "qv_Q3",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "CQ",
+      "component": "QVoice",
+      "feature": "qv_Q13",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "CQ",
+      "component": "QVoice",
+      "feature": "qv_Q17",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "level_grouped",
+      "expression_or_rule": "COALESCE(f.level_grouped, '(unknown)') AS level_grouped",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "tenure_playbook_band",
+      "expression_or_rule": "CASE\n    WHEN f.tenure_months IS NULL THEN '(unknown)'\n    WHEN f.tenure_months < 12 THEN '<1 year'\n    WHEN f.tenure_months < 24 THEN '1-2 years'\n    WHEN f.tenure_months < 36 THEN '2-3 years'\n    WHEN f.tenure_months < 60 THEN '3-5 years'\n    WHEN f.tenure_months < 120 THEN '5-10 years'\n    ELSE '10+ years'\n  END AS tenure_playbook_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "calendar_month",
+      "expression_or_rule": "Mes calendario de snapshot_date como categoría; avanza durante los seis hazards del R6.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "manager_changes_12m",
+      "expression_or_rule": "CASE\n    WHEN f.mgr_changes = 0 THEN '0'\n    WHEN f.mgr_changes = 1 THEN '1'\n    ELSE '2+'\n  END AS manager_changes_12m",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "team_exits_12m",
+      "expression_or_rule": "CASE\n    WHEN f.manager_id IS NULL THEN '(unknown)'\n    WHEN COALESCE(f.team_exit_count, 0) = 0 THEN '0'\n    WHEN f.team_exit_count = 1 THEN '1'\n    ELSE '2+'\n  END AS team_exits_12m",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "direct_reports_band",
+      "expression_or_rule": "CASE\n    WHEN f.dir_reports IS NULL THEN '(unknown)'\n    WHEN f.dir_reports = 0 THEN '0'\n    WHEN f.dir_reports <= 5 THEN '1-5'\n    ELSE '6+'\n  END AS direct_reports_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "time_since_promotion_band",
+      "expression_or_rule": "CASE\n    WHEN f.promo_months IS NOT NULL AND f.promo_months < 12 THEN 'promo <1 year'\n    WHEN f.promo_months IS NOT NULL AND f.promo_months < 24 THEN 'promo 1-2 years'\n    WHEN f.promo_months IS NOT NULL AND f.promo_months < 36 THEN 'promo 2-3 years'\n    WHEN f.promo_months IS NOT NULL THEN 'promo 3+ years'\n    WHEN f.hire_months IS NULL THEN '(unknown)'\n    WHEN f.service_date < DATE '2020-08-01' THEN 'sin promo en historial'\n    WHEN f.hire_months < 12 THEN 'sin promo, contratado <1 year'\n    WHEN f.hire_months < 36 THEN 'sin promo, contratado 1-3 years'\n    ELSE 'sin promo, contratado 3+ years'\n  END AS time_since_promotion_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "rehire",
+      "expression_or_rule": "CASE\n    WHEN f.service_date IS NULL OR f.original_hire_date IS NULL OR f.service_date > f.snapshot_date THEN '(unknown)'\n    WHEN f.service_date > f.original_hire_date THEN 'yes'\n    ELSE 'no'\n  END AS rehire",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "level_x_tenure",
+      "expression_or_rule": "Indicador de combinación level_grouped × tenure_playbook_band; categorías observadas, junto a los efectos principales.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "prior_experience_band",
+      "expression_or_rule": "CASE\n    WHEN f.prior_years IS NULL OR f.prior_years < 0 THEN '(unknown)'\n    WHEN f.prior_years < 1 THEN '<1 year'\n    WHEN f.prior_years < 3 THEN '1-3 years'\n    WHEN f.prior_years < 5 THEN '3-5 years'\n    WHEN f.prior_years < 10 THEN '5-10 years'\n    ELSE '10+ years'\n  END AS prior_experience_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "time_at_level_band",
+      "expression_or_rule": "CASE\n    WHEN f.snapshot_date < DATE '2022-10-23' THEN '(antes de la fuente)'\n    WHEN f.level_months IS NULL THEN '(unknown)'\n    WHEN f.level_months < 12 THEN '<1 year'\n    WHEN f.level_months < 24 THEN '1-2 years'\n    WHEN f.level_months < 36 THEN '2-3 years'\n    WHEN f.level_months < 60 THEN '3-5 years'\n    ELSE '5+ years'\n  END AS time_at_level_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "ios_12m",
+      "expression_or_rule": "CASE\n    WHEN f.snapshot_date < DATE '2023-10-22' THEN '(antes de la fuente)'\n    WHEN f.ios_moves IS NULL THEN 'none'\n    WHEN f.ios_other = 1 THEN 'lateral u otro'\n    ELSE 'reorg'\n  END AS ios_12m",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "layers_band",
+      "expression_or_rule": "CASE\n    WHEN f.snapshot_date < DATE '2023-03-26' THEN '(antes de la fuente)'\n    WHEN f.layers IS NULL THEN '(unknown)'\n    WHEN f.layers <= 6 THEN '<=6'\n    WHEN f.layers >= 10 THEN '10+'\n    ELSE CAST(f.layers AS VARCHAR)\n  END AS layers_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "region",
+      "expression_or_rule": "COALESCE(f.region, '(unknown)') AS region",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "comp_ratio_band",
+      "expression_or_rule": "CASE WHEN f.cr IS NULL OR f.cr <= 0 THEN '(unknown)'\n       WHEN f.cr < 0.8 THEN '<0.8' WHEN f.cr < 0.9 THEN '0.8-0.9'\n       WHEN f.cr < 1.0 THEN '0.9-1.0' WHEN f.cr < 1.1 THEN '1.0-1.1'\n       WHEN f.cr < 1.2 THEN '1.1-1.2' ELSE '1.2+' END AS comp_ratio_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "acquisition_recorded",
+      "expression_or_rule": "CASE WHEN f.acquisition_recorded = 1 THEN 'registrada' ELSE 'sin registro' END AS acquisition_recorded",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "transfer_12m",
+      "expression_or_rule": "CASE WHEN f.snapshot_date < DATE '2023-10-23' THEN '(historia no confirmada)'\n       WHEN f.transfer_12m = 1 THEN 'yes' ELSE 'no' END AS transfer_12m",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ",
+      "component": "RH",
+      "feature": "work_city",
+      "expression_or_rule": "CASE WHEN f.work_country IS NOT NULL AND f.work_city_raw IS NOT NULL\n       THEN f.work_country || ' | ' || f.work_city_raw\n       ELSE '(unknown)' END AS work_city",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ",
+      "component": "QVoice",
+      "feature": "qv_Q4",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ",
+      "component": "QVoice",
+      "feature": "qv_career",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ",
+      "component": "QVoice",
+      "feature": "qv_Q1",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ",
+      "component": "QVoice",
+      "feature": "qv_Q2",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ",
+      "component": "QVoice",
+      "feature": "qv_Q3",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ",
+      "component": "QVoice",
+      "feature": "qv_Q13",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ",
+      "component": "QVoice",
+      "feature": "qv_Q17",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "level_grouped",
+      "expression_or_rule": "COALESCE(f.level_grouped, '(unknown)') AS level_grouped",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "tenure_playbook_band",
+      "expression_or_rule": "CASE\n    WHEN f.tenure_months IS NULL THEN '(unknown)'\n    WHEN f.tenure_months < 12 THEN '<1 year'\n    WHEN f.tenure_months < 24 THEN '1-2 years'\n    WHEN f.tenure_months < 36 THEN '2-3 years'\n    WHEN f.tenure_months < 60 THEN '3-5 years'\n    WHEN f.tenure_months < 120 THEN '5-10 years'\n    ELSE '10+ years'\n  END AS tenure_playbook_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "calendar_month",
+      "expression_or_rule": "Mes calendario de snapshot_date como categoría; avanza durante los seis hazards del R6.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "manager_changes_12m",
+      "expression_or_rule": "CASE\n    WHEN f.mgr_changes = 0 THEN '0'\n    WHEN f.mgr_changes = 1 THEN '1'\n    ELSE '2+'\n  END AS manager_changes_12m",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "team_exits_12m",
+      "expression_or_rule": "CASE\n    WHEN f.manager_id IS NULL THEN '(unknown)'\n    WHEN COALESCE(f.team_exit_count, 0) = 0 THEN '0'\n    WHEN f.team_exit_count = 1 THEN '1'\n    ELSE '2+'\n  END AS team_exits_12m",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "direct_reports_band",
+      "expression_or_rule": "CASE\n    WHEN f.dir_reports IS NULL THEN '(unknown)'\n    WHEN f.dir_reports = 0 THEN '0'\n    WHEN f.dir_reports <= 5 THEN '1-5'\n    ELSE '6+'\n  END AS direct_reports_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "time_since_promotion_band",
+      "expression_or_rule": "CASE\n    WHEN f.promo_months IS NOT NULL AND f.promo_months < 12 THEN 'promo <1 year'\n    WHEN f.promo_months IS NOT NULL AND f.promo_months < 24 THEN 'promo 1-2 years'\n    WHEN f.promo_months IS NOT NULL AND f.promo_months < 36 THEN 'promo 2-3 years'\n    WHEN f.promo_months IS NOT NULL THEN 'promo 3+ years'\n    WHEN f.hire_months IS NULL THEN '(unknown)'\n    WHEN f.service_date < DATE '2020-08-01' THEN 'sin promo en historial'\n    WHEN f.hire_months < 12 THEN 'sin promo, contratado <1 year'\n    WHEN f.hire_months < 36 THEN 'sin promo, contratado 1-3 years'\n    ELSE 'sin promo, contratado 3+ years'\n  END AS time_since_promotion_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "rehire",
+      "expression_or_rule": "CASE\n    WHEN f.service_date IS NULL OR f.original_hire_date IS NULL OR f.service_date > f.snapshot_date THEN '(unknown)'\n    WHEN f.service_date > f.original_hire_date THEN 'yes'\n    ELSE 'no'\n  END AS rehire",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "level_x_tenure",
+      "expression_or_rule": "Indicador de combinación level_grouped × tenure_playbook_band; categorías observadas, junto a los efectos principales.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "prior_experience_band",
+      "expression_or_rule": "CASE\n    WHEN f.prior_years IS NULL OR f.prior_years < 0 THEN '(unknown)'\n    WHEN f.prior_years < 1 THEN '<1 year'\n    WHEN f.prior_years < 3 THEN '1-3 years'\n    WHEN f.prior_years < 5 THEN '3-5 years'\n    WHEN f.prior_years < 10 THEN '5-10 years'\n    ELSE '10+ years'\n  END AS prior_experience_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "time_at_level_band",
+      "expression_or_rule": "CASE\n    WHEN f.snapshot_date < DATE '2022-10-23' THEN '(antes de la fuente)'\n    WHEN f.level_months IS NULL THEN '(unknown)'\n    WHEN f.level_months < 12 THEN '<1 year'\n    WHEN f.level_months < 24 THEN '1-2 years'\n    WHEN f.level_months < 36 THEN '2-3 years'\n    WHEN f.level_months < 60 THEN '3-5 years'\n    ELSE '5+ years'\n  END AS time_at_level_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "ios_12m",
+      "expression_or_rule": "CASE\n    WHEN f.snapshot_date < DATE '2023-10-22' THEN '(antes de la fuente)'\n    WHEN f.ios_moves IS NULL THEN 'none'\n    WHEN f.ios_other = 1 THEN 'lateral u otro'\n    ELSE 'reorg'\n  END AS ios_12m",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "layers_band",
+      "expression_or_rule": "CASE\n    WHEN f.snapshot_date < DATE '2023-03-26' THEN '(antes de la fuente)'\n    WHEN f.layers IS NULL THEN '(unknown)'\n    WHEN f.layers <= 6 THEN '<=6'\n    WHEN f.layers >= 10 THEN '10+'\n    ELSE CAST(f.layers AS VARCHAR)\n  END AS layers_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "region",
+      "expression_or_rule": "COALESCE(f.region, '(unknown)') AS region",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "comp_ratio_band",
+      "expression_or_rule": "CASE WHEN f.cr IS NULL OR f.cr <= 0 THEN '(unknown)'\n       WHEN f.cr < 0.8 THEN '<0.8' WHEN f.cr < 0.9 THEN '0.8-0.9'\n       WHEN f.cr < 1.0 THEN '0.9-1.0' WHEN f.cr < 1.1 THEN '1.0-1.1'\n       WHEN f.cr < 1.2 THEN '1.1-1.2' ELSE '1.2+' END AS comp_ratio_band",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "acquisition_recorded",
+      "expression_or_rule": "CASE WHEN f.acquisition_recorded = 1 THEN 'registrada' ELSE 'sin registro' END AS acquisition_recorded",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "transfer_12m",
+      "expression_or_rule": "CASE WHEN f.snapshot_date < DATE '2023-10-23' THEN '(historia no confirmada)'\n       WHEN f.transfer_12m = 1 THEN 'yes' ELSE 'no' END AS transfer_12m",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "work_city",
+      "expression_or_rule": "CASE WHEN f.work_country IS NOT NULL AND f.work_city_raw IS NOT NULL\n       THEN f.work_country || ' | ' || f.work_city_raw\n       ELSE '(unknown)' END AS work_city",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ_BU_L3",
+      "component": "RH",
+      "feature": "bu_l3",
+      "expression_or_rule": "COALESCE(f.bu_l3, '(unknown)') AS bu_l3",
+      "pooling": "BU de menos de 300 personas de entrenamiento → (other); conservar pool aprendido"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ_BU_L3",
+      "component": "QVoice",
+      "feature": "qv_Q4",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ_BU_L3",
+      "component": "QVoice",
+      "feature": "qv_career",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ_BU_L3",
+      "component": "QVoice",
+      "feature": "qv_Q1",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ_BU_L3",
+      "component": "QVoice",
+      "feature": "qv_Q2",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ_BU_L3",
+      "component": "QVoice",
+      "feature": "qv_Q3",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ_BU_L3",
+      "component": "QVoice",
+      "feature": "qv_Q13",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    },
+    {
+      "period": "jan_feb_2026",
+      "model": "FQ_BU_L3",
+      "component": "QVoice",
+      "feature": "qv_Q17",
+      "expression_or_rule": "Indicador favorable 1 → v1, 0 → v0. missing, no_linked_row, different_employment_episode, no_available_wave y question_absent se conservan. Wave Y → fotos Y+1, mismo episodio laboral. Sin imputar ausencia como 0 favorable.",
+      "pooling": "Sin pool adicional en CQ/FQ de esta revisión; niveles observados del encoder"
+    }
+  ]
+}

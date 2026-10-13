@@ -1,0 +1,31 @@
+{
+  "run_id": "engineering-f-qvoice-source-c-city-20261013-v1",
+  "candidate_features": [
+    "level_grouped",
+    "tenure_playbook_band",
+    "calendar_month",
+    "manager_changes_12m",
+    "team_exits_12m",
+    "direct_reports_band",
+    "time_since_promotion_band",
+    "rehire",
+    "level_x_tenure",
+    "tenure_x_manager_changes",
+    "prior_experience_band",
+    "time_at_level_band",
+    "manager_left_6m",
+    "ios_12m",
+    "layers_band",
+    "work_arrangement_group",
+    "region",
+    "comp_ratio_band",
+    "grade_family",
+    "acquisition_recorded",
+    "transfer_12m",
+    "work_city"
+  ],
+  "interactions": {
+    "level_x_tenure": ["level_grouped", "tenure_playbook_band"],
+    "tenure_x_manager_changes": ["tenure_playbook_band", "manager_changes_12m"]
+  }
+}
